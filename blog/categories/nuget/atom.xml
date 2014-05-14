@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Category: NuGet - Developing on Staxmanade]]></title>
+    <link href="http://staxmanade.com"/>
+    <updated>2014-05-14T14:32:45Z</updated>
+    <id>http://staxmanade.com</id>
+    <author>
+        <name>Jason Jarrett</name>
+        <uri>http://staxmanade.com/about</uri>
+    </author>
+    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="self" href="/blog/categories/nuget/atom.xml"/>
+    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: SpecificationExtensions.[MSTest | NUnit | Xunit]]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered_22/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered_22/">
+        </link>
+        <updated>2012-02-23T05:05:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.      NOTE: this project...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p>The SpecificationExtensions.[MSTest | NUnit | Xunit] are a set of NuGet packages that add C# <a href="/2009/02/fluent-specification-extensions" target="_blank">fluent specification extensions</a> to your test project. I first blogged about this in early 2009 and have had a set of these that I take with me for every project I work on.</p>  <p>There are a number of other options out there for specification extensions, but since I first created my original set, I haven’t used anything else (although I should as I might be able to learn a little from each).</p>  <p><a href="http://lh5.ggpht.com/-uJQhZwjPHio/Tx-N8pcbXNI/AAAAAAAAAXk/-25MlBkeCDE/s1600-h/image_thumb10_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb10_thumb" border="0" alt="image_thumb10_thumb" src="http://lh6.ggpht.com/-2Bi6oO8kpwo/Tx-N9KJezHI/AAAAAAAAAXs/QGkMIlrCWSs/image_thumb10_thumb_thumb.png?imgmax=800" width="339" height="202" /></a></p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: EventAggregator.Net]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered_21/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">
+        </link>
+        <updated>2012-02-22T05:04:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.      NOTE: this project...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/EventAggregator.Net" target="_blank">EventAggregator.Net</a> is a single C# file that can provide a basis for a simple in memory Pub/Sub event aggregator.</p>  <p>I extracted this out of my <a href="http://StatLight.codeplex.com" target="_blank">StatLight</a> project as I found that I often wanted a similar one and kept finding myself copy/pasting this into projects. I figured a single location for this project would be better and I use StatLight as the first dog bowl when I need to dog food the project.</p>  <p>If you’re familiar with the…</p>  <blockquote>   <p>Install-Package Caliburn.Micro.EventAggregator      <br /></p> </blockquote>  <p>…then you know probably know what this project is like. </p>  <p>Its history starts a few years ago when I read <a href="http://jeremydmiller.com/" target="_blank">Jeremey Miller’s</a> Braindump on <a href="http://codebetter.com/jeremymiller/2009/07/22/braindump-on-the-event-aggregator-pattern/" target="_blank">Event Aggregator Pattern</a> and decided I wanted rip out StatLight’s usage of the Prism event aggregator and replace it with a similar one to the one found in StoryTeller. It’s gone through quite a few revisions inside of StatLight since then and eventually made its way into its own project.</p>  <p>Some thanks have to go out to the great feedback and pull requests from <a href="https://github.com/JakeGinnivan" target="_blank">Jake Ginnivan</a> who found this project on his own (before I publicized it).</p>  <p>If you’re interested in using it, I’d recommend checking out the source’s test project and the SampleUsage project. The SampleUsage project demonstrates how you can configure the tool to publish events in an async mode.</p>  <p>One concept introduced in this EventAggregator is taking the IEventAggregator interface and breaking it up into two interfaces (<strong>IEventPublisher</strong> and <strong>IEventSubscriptionManager</strong>). This proved extremely useful when trying to diagnose components that did both aggregator subscription management vs ones that only published events. It even helped to easily diagnose components that did not correctly unregister objects.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: DumpToText]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-dumptotext/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-dumptotext/">
+        </link>
+        <updated>2012-02-21T05:01:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.      NOTE: this project...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become its introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/DumpToText" target="_blank">DumpToText</a> is a single C# extension I wrote a little while back. The inspiration from this came from the need to view the values of an object graph quickly and easily during a TDD session.</p>  <p>Have you ever been doing TDD and something isn’t working quite as expected? Would it be nice to just dump out the values of an object quickly without having to spin up the debugger?</p>  <p>The inspiration for this project came from an amazing feature of <a href="http://www.linqpad.net/" target="_blank">LINQPad</a>. If you have ever used <a href="http://www.linqpad.net/" target="_blank">LINQPad</a> then you’re aware of the amazing ability for it to take any object and create a view of it’s data. Take the simple anonymous type below.</p>  <p><a href="http://lh5.ggpht.com/-FUvQoj6frYE/Tx-M2hAvSBI/AAAAAAAAAVw/Y4i1otS5L1k/s1600-h/image_thumb2_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb2_thumb" border="0" alt="image_thumb2_thumb" src="http://lh3.ggpht.com/-al7xfLogmlo/Tx-M28w8cWI/AAAAAAAAAV4/1okKyOMCZXo/image_thumb2_thumb_thumb.png?imgmax=800" width="471" height="315" /></a></p>  <p>Now wouldn’t it be great to have that “.Dump()” extension method at hand anywhere in your code and during a TDD session?</p>  <p>That’s why I create <a href="https://github.com/staxmanade/DumpToText" target="_blank">DumpToText</a>.</p>  <p>Now if I have a test as follows and want to see it’s data. I can use the ‘.DumpToText()” extension method to have it print out an ASCII based representation of the object graph.</p>  <p><a href="http://lh3.ggpht.com/-skkqYdCd2xM/Tx-M3FJvFuI/AAAAAAAAAWA/Pj8HLy2gP2E/s1600-h/image_thumb4_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb4_thumb" border="0" alt="image_thumb4_thumb" src="http://lh4.ggpht.com/-AAcGZRujy6o/Tx-M3YkzlsI/AAAAAAAAAWI/tB5hBy3iff8/image_thumb4_thumb_thumb.png?imgmax=800" width="323" height="178" /></a></p>  <p><a href="http://lh4.ggpht.com/-yhBKG4UbDVo/Tx-M3isuUYI/AAAAAAAAAWQ/e4StcIAJXwY/s1600-h/image_thumb6_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb" border="0" alt="image_thumb6_thumb" src="http://lh4.ggpht.com/-4NWr0JakVmU/Tx-M4OgEzYI/AAAAAAAAAWY/Y5spI1MEfTo/image_thumb6_thumb_thumb.png?imgmax=800" width="390" height="156" /></a></p>  <p>By default this just uses the System.Diagnostics.Trace(…) to write the output to, but you can override the “write” implementation by giving your own delegate as shown below.</p>  <p><a href="http://lh3.ggpht.com/-WqWFeyFE9-w/Tx-M4J_zk_I/AAAAAAAAAWg/PgFlXKctwzk/s1600-h/image_thumb8_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb" border="0" alt="image_thumb8_thumb" src="http://lh3.ggpht.com/-ZVMsOTKUgRo/Tx-M4ftO9JI/AAAAAAAAAWo/7MzVtczsP3o/image_thumb8_thumb_thumb.png?imgmax=800" width="871" height="52" /></a></p>  <p>The below shows an example of a nested object that also has an array of items.</p>  <p><a href="http://lh6.ggpht.com/-ggox20Cy7Uo/Tx-M478HrOI/AAAAAAAAAWw/evox5Gb8UoU/s1600-h/image_thumb14_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb14_thumb" border="0" alt="image_thumb14_thumb" src="http://lh5.ggpht.com/-YAC_6gYOxPk/Tx-M5PrZCnI/AAAAAAAAAW4/hYIHCALLCVg/image_thumb14_thumb_thumb.png?imgmax=800" width="264" height="171" /></a></p>  <p><a href="http://lh5.ggpht.com/-BG258OCC7hw/Tx-M5JXdreI/AAAAAAAAAXA/7gusCQdc-EA/s1600-h/image_thumb13_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb1" border="0" alt="image_thumb13_thumb1" src="http://lh6.ggpht.com/-ALeIoiAbOSA/Tx-M5oEQkJI/AAAAAAAAAXI/0ldXcIpDxmM/image_thumb13_thumb1_thumb.png?imgmax=800" width="573" height="349" /></a></p>  <h5>Anyone out there using <a href="http://approvaltests.sourceforge.net/" target="_blank">ApprovalTests</a>? (You can get it on NuGet)</h5>  <p>I’ve not taken the chance to use ApprovalTests yet in a project, but I have a strong feeling that my DumpToText helper could be very useful when leveraged in conjunction with ApprovalTests. If anyone out there is using ApprovalTests, I’d love to hear how it’s going, and if you think that DumpToText would be useful there.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Nancy]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/">
+        </link>
+        <updated>2012-02-20T04:59:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Nancy is another proj...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nancy" target="_blank">Nancy</a> is another project founded by an elegant coder. <a href="http://elegantcode.com/about/andreas-hakansson/" target="_blank">Andreas</a> has blogged about it a <a href="http://bit.ly/xIlUmy" target="_blank">number of times here</a> on ElegantCode. </p>  <blockquote>   <p>Nancy is a lightweight HTTP framework for building web services and sites. The framework runs on both the .net framework and <a href="http://mono-project.com/">Mono</a>.</p> </blockquote>  <p>I have not used this project myself, but as I started to look it over I think I might have to spin up a site quickly just to try it out.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Extended.Wpf.Toolkit]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered_18/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered_18/">
+        </link>
+        <updated>2012-02-19T04:58:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Extended.Wpf.Toolkit ...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Extended.Wpf.Toolkit" target="_blank">Extended.Wpf.Toolkit</a> is a project that should not need an introduction, and if you follow this blog you’ve probably heard <a href="http://elegantcode.com/about/brian-lagunas/" target="_blank">Brian</a> talk about it. If not, check out some of the posts on the <a href="http://bit.ly/yV7cma" target="_blank">Extended WPF Toolkit! </a></p>  <p>This project is one of the most download on codeplex, discussed on <a href="http://channel9.msdn.com" target="_blank">Channel9</a>, Coding4Fun, and is being leveraged by <a href="http://www.telerik.com" target="_blank">Telerik</a> in their <a href="http://www.telerik.com/products/orm.aspx" target="_blank">Open Access ORM</a> product.</p>  <h5>Below is a sample of some of the controls you can find in the toolkit:    <br />(but make sure you check out the <a href="http://wpftoolkit.codeplex.com/" target="_blank">project site</a> for the full list of controls)</h5>  <ul>   <li>BusyIndicator </li>    <li>Calculator </li>    <li>ChildWindow </li>    <li>ColorCanvas </li>    <li>ColorPicker </li>    <li>DateTimePicker </li>    <li>Magnifier </li>    <li>MultiLineTextEditor </li>    <li>PrimitiveTypeCollectionEditor </li>    <li>RichTextBox </li>    <li>SplitButton </li>    <li>WatermarkTextBox </li>    <li>Wizard</li> </ul>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: TranslatorService.Speech]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered/">
+        </link>
+        <updated>2012-02-18T04:56:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   TranslatorService.Spe...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/TranslatorService.Speech" target="_blank">TranslatorService.Speech</a> is a small little wrapper around the Bing text to speech API. You will need to get a Bing api key to leverage this.</p>  <p>Below is a sample usage of the library.</p>  <blockquote>   <pre>SpeechSynthesizer speech = new SpeechSynthesizer(APP_ID);   </pre><br /><br />  <pre>// To obtain a Bing Application ID, go to http://msdn.microsoft.com/en-us/library/ff512420.aspx  <br /> <br />string text = &quot;Have a nice day!&quot;; <br />string language = &quot;en&quot;; <br /> <br />using (Stream stream = speech.GetSpeakStream(text, language)) <br />{     <br />    using (SoundPlayer player = new SoundPlayer(stream)) <br />        player.PlaySync(); <br />}</pre><br /></blockquote><br /><br /><p>I threw that into a quick test and was quite impress with how fast it worked.</p><br /><br /><p>Unfortunately I tried to translate a larger “paragraph” or so of text and saw.</p><br /><br /><blockquote><br />  <p>System.Net.WebException : The remote server returned an error: (400) Bad Request. </p><br /><br />  <p>at System.Net.HttpWebRequest.GetResponse() <br />    <br />at TranslatorService.Speech.SpeechSynthesizer.GetSpeakStream(String text, String language) <br /><br />    <br />at NuGetTestProject.Sample.SampleTest() in <a href="projectfile:8A4BCF1F-3D9C-404F-AEC9-AB7DC9F7BFE9%2Ff%3AClass1.cs%3F14%3F1">Class1.cs: line 14</a></p><br /></blockquote><br /><br /><p>I didn’t take the time to diagnose why, whether it’s a Bing problem or this library.</p><br /><br /><p>Some other observations:</p><br /><br /><ul><br />  <li>+ It supports some Async methods as well </li><br /><br />  <li>- The Async methods don’t support the standard APM so I couldn’t easily wrap a task around. (I know there are some ways to make it work, but it’s not out of the box easy…) </li><br /></ul>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: JsValidator]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/">
+        </link>
+        <updated>2012-02-17T04:55:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   JsValidator, on first...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/JsValidator" target="_blank">JsValidator</a>, on first glance, is a down right awesome gem of a NuGet. I’ve heard of <a href="http://code.google.com/closure/compiler/" target="_blank">Google’s Closure Compiler</a> before, but have never used it. This NuGet makes it a snap to use inside Visual Studio.</p>  <p>When you first install the package:</p>  <blockquote>   <p><font style="background-color: #ffffff">Install-Package JsValidator;</font></p> </blockquote>  <p>This NuGet tool automatically updates your project so it will execute the tool on compilation. Awesome if you are not an MSBuild expert as it just configures itself for you straight from the package install.</p>  <p>Once installed, run a build on your solution. On first build you get an error. You’re probably thinking '”How can this tool be erroring, we just added it to the project”. This error is a good thing. It’s telling you that you now have a manual step to configure it correctly.</p>  <p>Go check out the <a href="http://jsvalidator.codeplex.com/" target="_blank">codeplex site</a> as it will explain more on how to use it.</p>  <p>I just might consider this on my next new javascript project in Visual Studio.net.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: FastMember]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">
+        </link>
+        <updated>2012-02-16T04:48:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   FastMember would be s...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FastMember" target="_blank">FastMember</a> would be something you pull in if you’re trying to do reflection to read properties of your objects, but starting to notice some performance issues. This project will emit some IL at runtime that can read your properties much faster than good old reflection (like below)</p>  <blockquote>   <p><font style="background-color: #ffffff">var value = typeof(MyObject).GetProperty(“MyProp”).GetValue(myObjInstance, new object[0]);</font></p> </blockquote>  <p>Replace the above with.</p>  <blockquote>   <pre>var accessor = TypeAccessor.Create(typeof(MyObject)); <br />var value = accessor[obj, “MyProp”];<br /></pre><br /></blockquote><br /><br /><p>This project lets you either read or assign values to properties. (See my test below)</p><br /><br /><p><a href="http://lh5.ggpht.com/-c07wZnNp_JQ/Tx-LBUyYFVI/AAAAAAAAAVg/hiErRW7eAqw/s1600-h/image_thumb1_thumb%25255B2%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image_thumb1_thumb" border="0" alt="image_thumb1_thumb" src="http://lh5.ggpht.com/-O9Oa3Z61lfc/Tx-LBzkyDtI/AAAAAAAAAVo/NtmF_YwKEfk/image_thumb1_thumb_thumb.png?imgmax=800" width="466" height="343" /></a></p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: FakeO]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">
+        </link>
+        <updated>2012-02-15T04:46:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   FakeO is a fake objec...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FakeO" target="_blank">FakeO</a> is a fake object generation library. It doesn’t seem to play nicely with objects that require parameters in the constructor. However if you have lots of classes that have a default constructor and plain old get/set properties this project might be very useful.</p>  <p>You can even specify not just random text or numbers to generate, but some specific context driven data.</p>  <p>For example:</p>  <ul>   <li>Random company name </li>    <li>Lorem Ipsum to various lengths. </li>    <li>Phone numbers </li>    <li>Random strings based on a regex. </li>    <li>etc…      <br /></li> </ul>  <blockquote>   <pre>// example FakeO call<br />var comp = FakeO.Create.Fake&lt;Company&gt;(<br />                c =&gt; c.Name = FakeO.Company.Name(),<br />                c =&gt; c.Phone = FakeO.Phone.Number(),<br />                c =&gt; c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200</pre></blockquote>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: NaturalSpec]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/">
+        </link>
+        <updated>2012-02-14T04:45:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   NaturalSpec is a BDD ...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NaturalSpec" target="_blank">NaturalSpec</a> is a BDD framework written in F#. This one is interesting due to F#’s concise nature and can give you very readable tests/specs.</p>  <p>The below sample was pulled from the <a href="https://github.com/forki/NaturalSpec" target="_blank">github readme</a>.</p>  <blockquote>   <pre>[&lt;Scenario&gt;]<br />let ``When removing an element from a list it should not contain the element``() =<br />  Given [1;2;3;4;5]                 // &quot;Arrange&quot; test context<br />    |&gt; When removing 3              // &quot;Act&quot;<br />    |&gt; It shouldn't contain 3       // &quot;Assert&quot;<br />    |&gt; It should contain 4          // another assertion<br />    |&gt; It should have (length 4)    // Assertion for length<br />    |&gt; It shouldn't have duplicates // Tests if the context contains duplicates<br />    |&gt; Verify                       // Verify scenario</pre><br /></blockquote><br /><br /><p>It says you don’t have to learn F# to use it. Which I’d argue you may not have to learn F# as deep as you might to be able to code a production product in it, but you will definitely benefit from learning some as you go. You will also spend a bit of time learning the DSL that this project has created.</p><br /><br /><p>Regardless, this project has enough interest factor for me to play around with someday.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: SpecsFor]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">
+        </link>
+        <updated>2012-02-13T04:41:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   SpecsFor is a BDD fra...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/SpecsFor" target="_blank">SpecsFor</a> is a BDD framework. This project is nice in that it has packaged many of my favorite testing tools all into one package. Instead of pulling down <a href="http://nunit.org/" target="_blank">NUnit</a>, <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>, <a href="http://should.codeplex.com/" target="_blank">Should</a>, <a href="http://structuremap.net/structuremap/AutoMocker.htm" target="_blank">Automocking</a>, and <a href="https://github.com/derekgreer/expectedObjects" target="_blank">ExpectedObjects</a> creating your own base fixture class. This project wraps all that up for you with a solid base spec class.</p>  <p>The creator of this project spent some time and created a <a href="http://specsfor.com/" target="_blank">nice project site</a> with examples and documentation. </p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Disruptor-net]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/">
+        </link>
+        <updated>2012-02-12T04:40:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Disruptor-net is a po...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Disruptor" target="_blank">Disruptor-net</a> is a port of the LMAX Disruptor which is a concurrent programming framework. The answer in this <a href="http://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work" target="_blank">StackOverflow question</a> gave a pretty good explanation of the project/pattern used.</p>  <p>Project Source: <a href="https://github.com/odeheurles/Disruptor-net">https://github.com/odeheurles/Disruptor-net</a></p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Nukito]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">
+        </link>
+        <updated>2012-02-11T04:39:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Nukito is a project t...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: StudioShell]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/">
+        </link>
+        <updated>2012-02-10T04:38:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   StudioShell is a proj...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/StudioShell" target="_blank">StudioShell</a> is a project that sort of blew my mind. The crazy PowerShell integration they’ve packaged into this visual studio extension is plain amazing.</p>  <p>I’d highly recommend watching the demo videos near the bottom of the project’s home codeplex site.</p>  <blockquote>   <p><a href="http://studioshell.codeplex.com/">http://studioshell.codeplex.com/</a></p></blockquote></div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: AboditNLP]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/">
+        </link>
+        <updated>2012-02-09T04:29:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   AboditNLP is a Natura...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/AboditNLP" target="_blank">AboditNLP</a> is a <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank">Natural Language Processor</a> library. This kind of stuff in interesting, but not something I have chosen to spend my time on.</p>  <p>It has a demo <a href="http://nlp.abodit.com/home/demo">http://nlp.abodit.com/home/demo</a> which gives you sample things to type to the library. I noticed it was a bit case sensitive, but still, project is one to look into if you were to say build a home automation system.</p></div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Northwind.Db]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">
+        </link>
+        <updated>2012-02-08T04:34:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Northwind.Db is a ver...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Deleporter]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">
+        </link>
+        <updated>2012-02-07T04:32:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Deleporter is a proje...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: DynamicXaml]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">
+        </link>
+        <updated>2012-02-06T04:31:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   DynamicXaml takes a f...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: IntX]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-intx/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-intx/">
+        </link>
+        <updated>2012-02-04T04:28:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Have you ever wanted ...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p>Have you ever wanted to generate a number that could potentially have millions of digits and do arbitrary mathematical operations against it? Ya, me neither. But if I did, I would take a look at this project.</p>  <p><a href="http://nuget.org/packages/IntX" target="_blank">IntX</a> is </p>  <blockquote>   <p>an arbitrary precision integers class written in pure C# with fast - about O(N * log N) - multiplication/division algorithms implementation. Runs on .NET 2.0+.</p> </blockquote>  <p>The <a href="http://intx.codeplex.com/" target="_blank">intx.codeplex</a> site has quite a bit of info about the project (<a href="http://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read" target="_blank">TL;DR</a>). If you’d like to learn more I’d suggest checking it out.</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Generic Cialis</div>
+<div class='content'>
+Honey is sweet, but the bee stings</div>
+</div>
+</div>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NuGet Project Uncovered: Burro]]></title>
+        <id>http://staxmanade.com/2012/02/nuget-project-uncovered-burro/</id>
+        <link href="http://staxmanade.com/2012/02/nuget-project-uncovered-burro/">
+        </link>
+        <updated>2012-02-03T04:25:00Z</updated>
+        <summary type="html"><![CDATA[   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Burro is a project th...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/thenathanjones/burro" target="_blank">Burro</a> is a project that I only quickly looked at. I don’t know all that it does, or how to get it up and running. In the project’s readme it says </p>  <blockquote>   <p>I'll put some examples up as things progress, for now you'll just have to work it out yourself.</p> </blockquote>  <p>What I do know is that it is supposed to parse build output from a build server in a consistent way. How do I know that? (The github project says).</p>  <blockquote>   <h3>What is it?</h3>    <p>Burro is a tool for parsing output from build servers in a consistent way.</p> </blockquote>  <p>I only put this in here as a project to look at. I think that parsing build output sounds very challenging and props to this project for giving it a go…</p>  </div>
+]]></content>
+    </entry>
+</feed>

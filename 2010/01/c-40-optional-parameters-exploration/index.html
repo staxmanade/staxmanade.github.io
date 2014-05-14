@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>C# 4.0 Optional Parameters – Exploration. - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="{… Removed big long story about how I ended up writing this post which provides no value to the blog…}  Summary of big long story to at least give a l...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">C# 4.0 Optional Parameters – Exploration.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-01-28T22:09:00.000Z" pubdate>Jan 28th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>{… Removed big long story about how I ended up writing this post which provides no value to the blog…}</p>  <p>Summary of big long story to at least give a little context as to why (yet another post on optional parameters):</p>  <blockquote>   <p>I threw an idea out to the <a href="http://code.google.com/p/moq/">Moq</a> discussion group of how we could use the <a href="http://msdn.microsoft.com/en-us/library/dd264739(VS.100).aspx">named/optional</a> parameters in a future version of Moq. (<a href="http://groups.google.com/group/moqdisc/browse_thread/thread/de73db381cacee9b/a6fa5cff1e7b0cc8?lnk=gst&amp;q=Ideas+for+v4+sugar#a6fa5cff1e7b0cc8">you can read the thread here</a>) In my original feature request I displayed my lack of concrete knowledge in the named/optional parameters support that is eventually coming with .net 4.0.</p> </blockquote>  <p>Once I learned that you could place default values on interfaces it left me with questions… So, what better way to figure them out? Go test it…</p>  <p><strong>Disclaimer</strong>: (Shouldn’t every blog have some context enlightening disclaimer?)     <br />I haven’t looked up best practices or lessons learned from people that have had this language feature (VB), so I’m just doing this as an experiment for myself. Hope some of my findings help the other C#’ers wanting to learn a little about the feature.</p>  <h4>What are optional parameters? </h4>  <p><a href="http://www.dimecasts.net">DimeCasts.Net</a>, <a href="http://www.dimecasts.net/Casts/ByAuthor/Derik%20Whittaker">Derik Whittaker</a> has a nice intro video <a href="http://www.dimecasts.net/Casts/CastFeedDetails/153?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Dimecastsnet--InformAndEducateIn10MinutesOrLess+(DimeCasts.Net+--+Inform+and+Educate+in+~+10+minutes+or+less)&amp;utm_content=Google+Reader"># 153 - Exploring .Net 4 Features - Named and Optional Parameters</a></p>  <p>OR check out - <a href="http://tinyurl.com/yz3pc9o">http://tinyurl.com/yz3pc9o</a></p>  <p>&#160;</p>  <h4>Can an interface define a default value?</h4>  <p><strong>Yes!</strong>     <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILApwzkNI/AAAAAAAAANU/Ydi4SHTsePA/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILA63cf3I/AAAAAAAAANY/WnbpitXg4IM/image_thumb3.png?imgmax=800" width="286" height="124" /></a> </p>  <h5>&#160;</h5>  <h4>Can I specify a default in the concrete implementation, if the interface has a default also?</h4>  <p><strong>Yes!</strong></p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILBNcSRYI/AAAAAAAAANc/mZmlaInB4OQ/s1600-h/image13.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILBmlHVtI/AAAAAAAAANg/gagdT5CuMVs/image_thumb5.png?imgmax=800" width="370" height="276" /></a> </p>  <h4>What happens when the concrete implementation has a different default value than the interface’s default?</h4>  <p><strong>If the interface has a default value specified, that is different from the concrete implementation, then it depends on what reference you’re using when executing the method.</strong></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILB0Ic0PI/AAAAAAAAANk/TDRVo_bYV5w/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILCJiKGfI/AAAAAAAAANo/yQ15IDDZnc0/image_thumb7.png?imgmax=800" width="381" height="275" /></a> </p>  <p>In the case below we are executing the method directly off of the Foo instance and will therefore get the concrete implementation’s default value when executing.</p>  <blockquote>   <p><strong>(new Foo()).Bar()</strong> – would use the value of ‘1000’.<strong> </strong><strong></strong></p> </blockquote>  <p>And in the case below we cast the Foo instance to an IFoo and it will then use the interfaces default value when executing.</p>  <blockquote>   <p><strong>((IFoo) new Foo()).Bar() </strong>– would use the value of ‘1’. </p> </blockquote>  <p>Below are some examples of the different use cases.</p>  <pre class="brush: csharp;">[TestClass]<br />public class UnitTest1<br />{<br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value()<br />    {<br />        Foo f1 = new Foo();<br />        f1.Bar();<br />        f1.ParamValue.ShouldBeEqualTo(1000);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value()<br />    {<br />        IFoo f = new Foo();<br />        f.Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value_because_of_explicit_cast()<br />    {<br />        Foo f = new Foo();<br />        ((IFoo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value_because_of_explicit_cast()<br />    {<br />        IFoo f = new Foo();<br />        ((Foo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1000);<br />    }<br />}<br /><br />interface IFoo<br />{<br />    int ParamValue { get; }<br /><br />    void Bar(int paramValue = 1);<br />}<br /><br />class Foo : IFoo<br />{<br />    public int ParamValue { get; private set; }<br />    public void Bar(int paramValue = 1000)<br />    {<br />        ParamValue = paramValue;<br />    }<br />} </pre><br /><br /><p>&#160;</p><br /><br /><h4>The next experiment - Extract Interface.</h4><br /><br /><p>Next I tried removing the IFoo interface that I’d created manually, because I wanted to exercise the “<a href="http://msdn.microsoft.com/en-us/library/fb3dyx26.aspx">Extract Interface…</a>” functionality, just to see how it dealt with the these defaults.</p><br /><br /><p>Luckily, <strong>there were no surprises.</strong> The interface it created was exactly (less spacing) the same as I originally had. </p><br /><br /><p>Although it didn’t display the default constant value in the dialog during creation, there was a hint that the method signature had a default by placing [] around the int resulting in “Bar([int])”.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/S2ILCUb7m1I/AAAAAAAAANs/1r4ZBNlQUUU/s1600-h/image221.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILCwi2KSI/AAAAAAAAANw/pHnAuYpcab4/image22_thumb.png?imgmax=800" width="411" height="341" /></a></p><br /><br /><blockquote><br />  <p><strong>Side <strong>Tool </strong>Issue:</strong> Can’t say I like how it forced me to put the interface in a different file, I guess it’s enforcing “best practice” here, but I prefer to do this later in the dev cycle than immediately (kind of like how R# allows you to place in the file next to the original class). #ToolGettingInWay</p><br /></blockquote><br /><br /><blockquote><br />  <p><strong>Optional Parameter Issue:</strong> One issues I see with this solution was the dirty/icky copy/paste feeling I got when extracting the interface – the default was copied from the class to the interface. </p><br /></blockquote><br /><br /><h5>Possible solutions to the “dirty/icky copy/paste feeling” the extract interface gives.</h5><br /><br /><p>(in no particular order of preference)</p><br /><br /><ul><br />  <li>Place all defaults into a constant and reference the constant in both the interface and the concrete implementation(s). </li><br /><br />  <li>Don’t place the defaults in the concrete implementation (only in the interface). As you should probably not be depending on the concrete implementation to begin with, you wouldn’t need it there (and wouldn’t even call it). This would also help in the case that there are multiple concrete implementation and having to sift through the code looking for all instances to updated defaults for could be very error prone. </li><br /></ul><br /><br /><p>On the surface named parameters seem like a very simple feature to the C# language. But after delving into the feature a little, I can see there are many complicated scenarios you can get your self caught up into.</p><br /><br /><p>As with anything…<strong>Use with care</strong>!</p>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2010-01-28T22:09:00.000Z" pubdate>Jan 28th 2010</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/csharp/'>C#</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2010/01/networking-brain-fart/" title="Previous Post: Networking Brain Fart.">&laquo; Networking Brain Fart.</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2010/02/powershell-background-task-that-speaks/" title="Next Post: PowerShell – background task that speaks to me"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

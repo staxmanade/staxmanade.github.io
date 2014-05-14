@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>i4o with Silverlight (Compiles first try) - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="So I&#x27;ve been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...  1. User selects some set ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">i4o with Silverlight (Compiles first try)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-03T06:48:00.000Z" pubdate>Dec 2nd 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2008-12-03T06:48:00.000Z" pubdate>Dec 2nd 2008</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/silverlight/'>Silverlight</a>
+    
+    <a class='category' href='/blog/categories/i4o/'>i4o</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2008/11/db4o-with-systemtransactionstransaction/" title="Previous Post: Db4o with System.Transactions.TransactionScope">&laquo; Db4o with System.Transactions.TransactionScope</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2008/12/is-my-hsa-trying-to-tell-me-something/" title="Next Post: Is my HSA trying to tell me something?"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

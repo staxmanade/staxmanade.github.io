@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>T4 Text Templating in Silverlight (Thanks Oleg Sych!) - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="First if you&#x27;re new text templating, please go read Oleg Sych&#x27;s blog. This, as far as I&#x27;ve found, is the (Bible, Koran, TheWord, etc...) of visual stu...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">T4 Text Templating in Silverlight (Thanks Oleg Sych!)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-13T19:33:00.000Z" pubdate>Dec 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>First if you're new text templating, please go read <a href="http://www.olegsych.com/"><strong>Oleg Sych's blog</strong></a>. This, as far as I've found, is the (Bible, Koran, TheWord, etc...) of visual studio's T4 Text Templating.</p>  <p>If you already know how to add a T4 template to a project, skip this how to and go to &quot;How to make a T4 template work with a Silverlight project:&quot;.</p>  <h4>How to add a T4 template to a Visual Studio .Net Project:</h4>  <p>Given the following project:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUQN_Pr532I/AAAAAAAAAC4/_x4OMFOOwK4/s1600-h/image%5B2%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="113" alt="Initial Silverlight Project" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUQN_fxvVsI/AAAAAAAAAC8/jzH_-wBKdgM/image_thumb.png?imgmax=800" width="198" border="0" /></a> </p>  <p>Bring up the add new item dialog.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQN_qg5PxI/AAAAAAAAADA/cABtBqHGrN4/s1600-h/image%5B6%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="171" alt="Add New Item" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQN_wRvlHI/AAAAAAAAADE/KXKPDylPW98/image_thumb%5B2%5D.png?imgmax=800" width="384" border="0" /></a> </p>  <p>Select a &quot;Text File&quot; and rename the extension to a .tt.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOAGcv8AI/AAAAAAAAADI/Fu1hXUKYd5k/s1600-h/image%5B19%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="264" alt="Add a new t4 template" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQOApnwZlI/AAAAAAAAADM/cbKFl7fmKBE/image_thumb%5B13%5D.png?imgmax=800" width="428" border="0" /></a> </p>  <p>You should end up with a .tt template file and under it where the generated out put of the template will land.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBOBPYtI/AAAAAAAAADQ/OqjSBzOcaM8/s1600-h/image%5B22%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="137" alt="T4Sample.tt" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBW7qKTI/AAAAAAAAADU/q3NVgQXtvFA/image_thumb%5B14%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>You may also notice the following errors in your errors pane.</p>  <ul>   <li>Compiling transformation: The type or namespace name 'CompilerError' does not exist in the namespace 'System.CodeDom.Compiler' (are you missing an assembly reference?) </li>    <li>Compiling transformation: The type 'System.CodeDom.Compiler.CompilerErrorCollection' is defined in an assembly that is not referenced. You must add a reference to assembly 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.      <br />Compiling transformation: 'System.CodeDom.Compiler.CompilerErrorCollection' does not contain a definition for 'Add' </li>    <li>A namespace does not directly contain members such as fields or methods </li> </ul>  <p> This is where Oleg Sych comes to the rescue...</p>  <h4>How to make a T4 template work with a Silverlight project:</h4>  <blockquote>   <p><strong>Side Note:</strong> So, I had a couple emails back and fourth with Oleg about trying to get T4 to work in Silverlight. Almost all of his emails had some sort of sentence that went like this. <em>&quot;Try adding {S<strong>omeSpecialT4RelatedWord</strong>} and then do {<strong>this special thing</strong>} and report your findings back to me&quot;. This is where the {S<strong>omeSpecialT4RelatedWord</strong>} would stump me. So I would search Google for &quot;T4 {S<strong>omeSpecialT4RelatedWord</strong>}&quot; </em>and <a href="http://www.olegsych.com/">Oleg Sych's blog</a> was the first hit for each search. And not only was it the first hit, but when I would look the post for that {S<strong>omeSpecialT4RelatedWord</strong>} the answer was there and exactly what I needed. Thanks Oleg.</p> </blockquote>  <p>&#160;</p>  <p>Fortunately, to get the T4 templates to work within a Silverlight project you only need to put an &lt;#@ assembly #&gt; directive telling the template where to get a reference to the System.dll.</p>  <p>Below is a sample template:</p>  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">&lt;#@ template language=<span style="color: #006080">&quot;C#&quot;</span> #&gt;<br />&lt;#@ assembly name=<span style="color: #006080">&quot;C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&quot;</span> #&gt;<br /><span style="color: #0000ff">namespace</span> SampleT4 <br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>And below is the output:</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #0000ff">namespace</span> SampleT4<br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>That's it!!!</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+@Bill I&#39;m afraid I don&#39;t have enough context to really help you. On top of that I haven&#39;t worked with silverlight in a long time :(.<br /><br />Hope you get it figured out.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bill Lanza</div>
+<div class='content'>
+I know this post is old, but....<br />I am using VS2010 and Silverlight and am trying to implement T4 templates with inheritence.  I create a baseclass.tt in a separate assembly and it compiles. However, when I try to inherit from it I get the error:<br /><br />An invalid base class was specified for the Transformation class. The base class must derive from Microsoft.VisualStudio.TextTemplating.TextTransformation. <br /><br />Is this not possible in SL?<br /><br />Thanks,<br />Bill</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Could you help me understand why you have to have a reference to the two different assemblies with the same type?</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Regarding Aquilax comment, using objects defined in both assemblies. Is there any solution for that problem ?<br /><br />Regards Swan B</div>
+</div>
+<div class='comment'>
+<div class='author'>Aquilax</div>
+<div class='content'>
+It works as long that you don&#39;t use objects defined in both assemblies, for example System.Text.RegularExpressions.Regex, otherwise it throws the exception:<br />Compiling transformation: The type &#39;System.Text.RegularExpressions.Regex&#39; exists in both &#39;c:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&#39; and &#39;c:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v3.0\system.dll&#39;</div>
+</div>
+<div class='comment'>
+<div class='author'>timvw</div>
+<div class='content'>
+Thanks for publishing this knowledge. Saved me a lot of time.</div>
+</div>
+<div class='comment'>
+<div class='author'>br1</div>
+<div class='content'>
+Thank you.</div>
+</div>
+<div class='comment'>
+<div class='author'>Алексей</div>
+<div class='content'>
+Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblogs.asp.net/alexeyzakharov/</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2008-12-13T19:33:00.000Z" pubdate>Dec 13th 2008</time>
+
+
+
+                        
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2008/12/i4o-silverlight-unit-tests-little-more/" title="Previous Post: i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)">&laquo; i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2008/12/i-can-stand-mass-mailings-especially/" title="Next Post: I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Leave yourself a breadcrumb for tomorrow.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-12-06T05:56:00.000Z" pubdate>Dec 5th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Have you ever arrived at work and sat down, not exactly sure what you were working on the day before? You spend some time going through emails. Start looking at your codebase, maybe the last couple commits you made trying to get back into the mental groove you were in the day before.</p>  <p>There is a <a href="http://lmgtfy.com/?q=get+back+into+programming+after+interruption" target="_blank">lot of information</a> about how long it takes to get back into the programming zone. <strong>If you leave yourself a breadcrumb or two, it is much easier to get started when you come back to your task.</strong></p>  <h3>Some of my favorite breadcrumbs.</h3>  <h4>Leave a failing unit test.</h4>  <p>If you practice any sort of test driven development, leaving a failing test to pick up the next day can be one of the most useful methods to get going again when you come back to the problem. If you’ve spent the time to think through the problem enough to write a failing unit test, this can help to ease you into the task at hand and get rolling the next day. </p>  <h4>Explicitly leave a note or compiler error in the code.</h4>  <p>Now, it’s probably common to check your working code in at the end of the day, but sometimes you just can’t work it to completion. That’s ok, and if you use a tool that supports something like this, leave yourself a breadcrumb of one or more compiler errors.</p>  <p>If I’m writing some C# I sometimes use the <a href="http://msdn.microsoft.com/en-us/library/vstudio/x5hedts0.aspx" target="_blank">#error precompiler</a> directive with a helpful message.</p>  <p><a href="http://lh4.ggpht.com/-3BSP6C9ismg/UqFnBqT43GI/AAAAAAAAAiI/BvwY-gpVO-o/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh6.ggpht.com/-XgX7jyzCT_c/UqFnCTtDw7I/AAAAAAAAAiQ/o5EgtBxl_vA/image_thumb1.png?imgmax=800" width="531" height="177" /></a></p>  <p>This allows me to come in the next day. Hit build on the project and immediately see where I was in the codebase last and need to pick up again.</p>  <h4>Other, less specific, but useful options:</h4>  <ul>   <li>Send yourself an email describing what you’re working on and what still needs to be done. </li>    <li>Write in your favorite notes app. I like to use OneNote to keep track of my ‘scrum notes’ which help me describe what I did today and what I plan on doing tomorrow. </li>    <li>Sticky note? (can’t say I’ve used a pen/paper in a while – but if it works for you go for it)</li> </ul>  <p>It doesn’t have to be anything special, just a little note to yourself that can help you get a jump start on your next task at hand.</p>  <p>What other methods do you use to get back into the problem at hand?</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Convert an existing WinJS app to use TypeScript</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-11-29T19:38:00.000Z" pubdate>Nov 29th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8" target="_blank">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD" target="_blank">ToTypeScriptD</a> github organization that walks through converting a new Windows 8 WinJS application to TypeScript.</p>  <p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>  <p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>  <p>Happy Scripting!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-11-01T05:06:00.000Z" pubdate>Oct 31st 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>If you’re unfamiliar with <a href="http://typescriptlang.org" target="_blank">TypeScript</a>, I’d highly recommend checking it out. <strong>It’s my new preferred way to write JavaScript based applications.</strong></p>  <p>If you write an application in TypeScript and need to interact with an external set of either JavaScript or <a href="http://en.wikipedia.org/wiki/C%2B%2B/CX" target="_blank">C++/CX</a> dependencies then you will quickly find that you are going to be mucking with some TypeScript Definition files and the more you take a dependency on the WinRT runtime the more type definitions you probably need to manually create.</p>  <p>It’s true that the TypeScript team has created a set of TypeScript Definition files for WinRT and WinJS, but I <a href="https://typescript.codeplex.com/discussions/462409" target="_blank">couldn’t get any comment</a> as to how they were generated. And the more I looked into what was provided, the more I realized that there were inconsistencies and inaccuracies that were not good. Which led me to believe that they weren’t working on a super-secret tool to automatically generate these for us.</p>  <h3>What is <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> ?</h3>  <p><a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> is a quick little attempt at automatically taking the type system provided to us by a C++/CX winmd or .Net assembly file and projecting that into a set of TypeScript Definition files. This tool can basically take anything that is <a href="http://www.ecma-international.org/publications/standards/Ecma-335.htm">Ecma 355</a> Common Language Infrastructure (CLI) and spit out a .d.ts file for you automatically.</p>  <h3>Why would I need this?</h3>  <p>In the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD#can-you-tell-me-why-i-would-use-this" target="_blank">project readme</a> I describe two use-cases that I know of (so far).</p>  <ol>   <li>If you build a 'Modern' (come on, we still call it Metro) Windows 8 app with <code>WinJS</code> and want to leverage <code>TypeScript</code>, wouldn't it be nice to get a set of TypeScript Definition files that reflect the native API's you're calling in the platform without manually creating the definition files?       <br></li>    <li>Say your building an MVC/WebAPI server application. It would be useful if your C.I./Build system could generate a set of TypeScript interfaces that were based on the server objects used to render your JSON API. This can be useful for client side JavaScript/TypeScript libraries that need to consume these objects and also provide a simple way to document the format of the input and output API response objects. </li> </ol>  <h3>How do I get the project and start using it?</h3>  <blockquote>   <p>Before you install the tool and dive in head first, I would like warn you that I have only been working on this for about 2 weeks (in my off-hours) and there is going to be lots of room for improvement. But it’s currently generating a solid set of .d.ts files for .winmd files.</p> </blockquote>  <p>Head over to the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">project home page</a> and check out the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">Readme</a> for some quick-start information.</p>  <p>I’d would love to hear feedback. If anyone is interested in helping out, you can submit new issues or review the open issues list and start submitting pull requests.</p>  <p>Happy TypeScripting!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-08-31T17:33:00.000Z" pubdate>Aug 31st 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This past week I gave a talk on <a href="http://typescriptlang.org" target="_blank">TypeScript</a> which was fun and well received.</p>  <p>If you have any interest in the slides they are hosted up on GitHub</p>  <ul>   <li><a href="http://staxmanade.github.io/TypeScriptPresentation/#/1">http://staxmanade.github.io/TypeScriptPresentation/#/1</a> </li> </ul>  <p>Or if you just want to look at the talk in <a href="http://daringfireball.net/projects/markdown/" target="_blank">MarkDown</a></p>  <ul>   <li><a href="https://github.com/staxmanade/TypeScriptPresentation/blob/master/TypeScriptPresentation.md">https://github.com/staxmanade/TypeScriptPresentation/blob/master/TypeScriptPresentation.md</a> </li> </ul>  <p><font style="background-color: #ffffff">The markdown page is useful for a quick lookup on syntax if you forgot how something should look. I’d like to continue to evolve the presentation, so if you have any feedback or suggestions, please feel free to open a pull request and start a conversation.</font></p>  <p>Thanks to those who attended!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Authentication error connecting to Git on TFS</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-06-20T17:46:00.000Z" pubdate>Jun 20th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Developer humor</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-05-09T17:43:00.000Z" pubdate>May 9th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-03-20T04:06:00.000Z" pubdate>Mar 19th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Windows 8 Share Charm Data Inspector</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-03-13T04:12:00.000Z" pubdate>Mar 12th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>In a previous <a href="http://elegantcode.com/2013/03/03/windows-8-hackathon-good-for-participants-bad-for-microsoft/" target="_blank">post</a> I mentioned I would share the app I created during a Windows 8 hackathon event.</p>  <p>I spent some more time adding polish, testing, re-thinking my initial designs and today, I’m excited to say that it is now in the <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">app store</a>!</p>  <h4>What does this app do?</h4>  <p>The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> is an application that allows you to inspect the details of data being shared from other applications through the Windows 8 Share Charm (Win+H).</p>  <p>For example, if you open the <a href="http://apps.microsoft.com/windows/en-us/app/video/64b22df1-5a9c-4c88-aa1f-42cefaf8b281" target="_blank">Video</a> app, select a movie and use the share charm (Win+H) to share the video, what data is actually shared? The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> will appear up as an application you can share the just about any data with and you can inspect at a lower level what values are shared.</p>  <p><strong>This application will give you insights into data that you never thought was being shared.</strong></p>  <h4>How do I get the app?</h4>  <p>Open your Windows 8 App Store and search for “<a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a>”. (or click the link “View in Windows Store” button.</p>  <h4>I’d like to suggest a feature:</h4>  <p>If you’ve downloaded the trial app and would like to see some improvements. Head <a href="https://github.com/staxmanade/ShareDataInspector/issues" target="_blank">over to this site, suggest a feature</a> and help this application grow from a hackathon created app into a full-fledged application.</p>  <p>Happy Sharing!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Windows 8 Hackathon: Good for participants. Bad for Microsoft.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-03-08T06:55:00.000Z" pubdate>Mar 7th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+Last weekend I participated in a <a href="http://renohackathon.com/" target="_blank">Windows 8 hackathon</a>. In 24 hours of coding I had an app created and submitted to the App Store for certification.<br /><h4>24 hours to create an app?</h4>I'll share details about the app I created in a future post. <strong>For now, I have since removed my app from the review process in the Developer Portal.</strong><br />Before I get into why I (temporarily) removed my app. I would like to first talk about a number of the real benefits I saw with the hackathon.<br /><ul><li>I work from home as a remote employee. <a href="http://www.bobcowherd.com/2013/03/managing-remote-teams.html?m=1">Don't worry I'm not at Yahoo</a>. The event was a fun change of pace; working in a room of developers hacking away on their own ideas. You could feel the energy and this energy is probably why it was possible to burn the midnight oil hacking on my own app. </li><li>This contest forced me to work all the way through submitting an app to the store which I believe to be more of a mental hurdle than an actual one. This process was definitely made easier with Microsoft on hand to answer questions and get over some of the non-obvious steps in the process. </li><li>Working in a room with the others proved to be useful when you got stuck on something. Shouting out <a href="http://twitter.com/#!/jessetanderson/status/308087741256704001">'I'm stuck on problem X</a>’ and have someone there to point you in the right direction and unblock you is great. </li><li>The short timeframe forces you to focus on your <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a>. Work on what is necessary and avoid getting side tracked. </li><li>Related to the focus above I really got into the zone hacking away at my app; this certainly reminded me of why I love this profession. </li><li>Meet developers in the area. </li><li>Learn interesting problem domains and how others tackle them in their apps. </li></ul><h4>Now, why am I really writing this post?</h4><strong>I believe Microsoft is shooting themselves in the foot with how they are running these hackathons.</strong><br />I can’t say I speak for how the hackathons are being run, but my experience showed me the following.<br />With Microsoft’s own employees running these events and <a href="http://idioms.thefreedictionary.com/give+a+lick+and+a+promise" target="_blank">not giving a lick</a> to the quality of the applications being submitted they are setting themselves up for failure.<br /><strike>I can see from a marketing perspective that having a large number of apps in the store will help them drive more people to their platform.</strike> That’s crap. There are far too many reasons Microsoft should be driving <strong>QUALITY</strong> into the store and not quantity.<br />Let’s list a few reasons this is going to backfire:<br /><ul><li>NOBODY wants to use crappy apps developed in 24 hours. NOBODY! </li><li>There are very few apps that can be written in 24 hours without maintaining some sort of a quality bar. </li><li>The certification process will get clogged causing the testers to care less about finding quality issues and pounding through “numbers”. </li><li>We'll have a huge collection of crappy apps where the sheer number of apps will make finding a good quality app nearly impossible. </li></ul><h4>How can they make this better?</h4>Something interesting about this is generally when you talk about Pros/Cons to something, you have to give-up something to fix a Con and that sometimes means taking away from the Pros.<br />However, I feel like we can keep ALL of the pros I listed above while also reducing the amount of Cons if only Microsoft incentivized their employees to drive quality into the store.<br /><ul><li><strong>Do</strong> – push people to get an app done and help them through the app store </li><li><strong>Do</strong> – provide guidance around how to build-in quality </li><li><strong>Do</strong> – provide some metrics that will help the app succeed in the end (design, best practices, possibly even saying, “That’s been done”) </li><li><strong>Do</strong> – recommend they cancel submitting their application if it hasn’t met the developers quality metric. (This isn’t going to save the app store, but would help to reduce the number of write-once-let-die-in-the-store apps) </li><li><strong>Don't – </strong>offer a prize for "the most apps submitted" within 24 hours. </li></ul>I’ve developed on the Microsoft platform for a long time and really hope there is a place for the Microsoft App Store in the future, but with their push for a large number of apps they’re not setting themselves up for an easy road back in the game.</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">DefinitelyTyped TypeScript definitions now on NuGet</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-02-24T18:06:00.000Z" pubdate>Feb 24th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/1/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

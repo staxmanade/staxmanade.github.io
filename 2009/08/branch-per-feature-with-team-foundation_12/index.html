@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="  Lessons learned by doing Branch-Per-Feature with Team Foundation Server. Branch-Per-Feature with Team Foundation Server (TFS)  Series Links  How we ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-08-12T20:54:00.000Z" pubdate>Aug 12th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p></p>  <h4>Lessons learned by doing Branch-Per-Feature with Team Foundation Server.</h4> <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol> <p>In this post I’ll outline several of the issues/hiccups/<em>features</em> we found while attempting to apply Branch-Per-Feature with TFS.</p>  <h4>260 Characters limit.</h4>  <p>One of the first obstacles we ran into when attempting the Branch-Per-Feature with our TFS was the 260 Characters limit (you can read more here <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx">http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx</a>).</p>  <p>The largest offenders of this were artifacts added to a project as a result of doing an “Add Service Reference”. This <em>feature</em> created file names with the entire namespace in the file path. The way we got around this was the <a href="/2009/04/t4-replacement-for-add-service">T4 replacement for &quot;Add Service Reference&quot;</a> which helped keep some of the longer file paths shorter in our Silverlight projects. However it still rears it’s ugly head when we create a new branch and give a descriptive name that’s too long.</p>  <p>Which bring me to the next hiccup we run into. </p>  <h4>Don’t RENAME a newly created branch. Delete it and re-create it with new name. </h4>  <p>After a branch was created, if we decide the name for the branch wasn not good enough (either causes file path length issues, or it’s description isn’t clear enough), <strong>DON’T RENAME THE NEW BRANCH</strong>. Instead, choose to <strong>delete and re-create it</strong>. Clearly this has to be <strong>caught before commits are made to the new branch</strong>. </p>  <h5>Why is this an issue? </h5>  <p>In TFS, when you follow the simple steps to merge a feature from a branch into the trunk, you get to a point where all the changes made in the branch are checked out and staged to be merged into the trunk in your development environment. However when (or if) you’ve applied a rename to the branch at some stage in the lifetime of the branch, you don’t get a nice pretty list of files that changed and ready to be checked in, instead you get <strong>every file in the branch </strong>as though it were changed at some point in time. Sadly, this is usually not the case, and why I said earlier to catch the problem as soon as possible. </p>  <p>One of the great benefits of the branch/merge strategy is the final merge into the trunk is typically all changes required for a particular feature. When you have to go back to grapple some <strong>source control history debugging</strong>, it’s much easier to detect large changes from branch merges than sifting through tens of check-ins per file.</p>  <p>After the feature is complete and you start the steps required to merge the feature into the trunk, typically you only see the files that have changed get checked out and ready to be merged into the trunk. However, when a rename occurs on the branch it somehow tags every item as though it were changed. <strong>So the Merge back into the trunk ends up looking like the entire project changed.</strong> This makes the source diffing extremely difficult as I described in the <strong>Tester Pass 1</strong> step in our kanban steps.</p>  <h4>Can’t easily merge between different branches or grand-child branches (or at all, didn’t push hard enough to make it)</h4>  <p>Another issue we’ve come across (which hasn’t road blocked us too bad) was the in-ability to merge between two different branches that stemmed from the same trunk or merging a grandchild branch into the grandparent (bypassing the child/parent).</p>  <p>A specific scenario we ran into was when Feature A was under development on a branch, and a developer was ready to start working on Feature B. Feature B had a dependency on some of the changes that had taken place in Feature A, however we wanted to deploy Feature A before Feature B was complete. As an experiment we thought we would just create Feature B’s branch straight from Feature A’s branch, however what this would have left us with when Feature A was merged into the Trunk was Feature B two levels away from the Trunk. </p>  <p>Although TFS allows this scenario, any changes to the trunk had to be pushed into Feature A’s branch before it could be pushed into Feature B’s branch, and come final merge time for Feature B, we couldn’t merge straight into the trunk. We would have had to first merge into Feature A’s branch and then do the final merge into the trunk. In the end we just held back the deployment of Feature A and both Feature A &amp; B were developed in Feature A’s branch.</p>  <blockquote>   <p>I read somewhere that this “could” be possible through some command line tools, however it wasn’t important enough to go through the pain and this would be much better if we could just use the existing TFS interface to accomplish this simple scenario.</p> </blockquote>  <p>&#160;</p>  <p>I’m sure there are other tips/tricks I could outline here, but either they’re not coming to mind or they’re too basic to really care about. If I think of any, I’ll update this post further.</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Bealer</div>
+<div class='content'>
+Cool, thanks for the update.<br /><br />Yeah, I thought it would come down to planning and communication. I only mentioned as I&#39;ve read Martin Fowler&#39;s recent blog about it. He didn&#39;t seem to favour it, and mentioned CI is the preferred point of communication. <br /><br />Basically branching per feature makes increased work in terms of planning and communication.<br /><br />I&#39;m still in favour of it though, especially for the work we do (Broken down, smallish stories, with WIP limits).</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+There are a number of things to consider. <br /><br />Branch-Per-Feature is not for every project.<br /><br />The fear of a merge. This was big for everyone on the team in the beginning; however, with practice and repetiong, this has become just a part of the process. I think the biggest thing here was to just start doing it, learn as you go, and frequent merging will give you enough practice that a merge becomes simple.<br /><br />Regularly forward merge (pull changes from the trunk into your branch). (I almost do it after every check-in to the trunk)<br /><br />As far as code merges stomping on each other’s code, it does come down to careful planning and communication. And enough separation of concerns that one feature should NEVER be stomping on another feature’s code.<br /><br />Think of having a project as described in Ayande’s blog here http://ayende.com/Blog/archive/2009/07/22/the-tale-of-the-lazy-architect.aspx<br /><br />Focus on branching features that are separate enough in context that they don’t collide in difficult areas of the code. <br /><br />Focus on keeping the features in each branch small. We deploy weekly, and it&#39;s unfortunate and rare for a branch to live more than 2 weeks. (It happens, but we try not to)<br /><br />Even following the two ideas above, you will still run into merging conflicts. We run into them more frequently than I’d like, but it’s really up to the developer to be careful. I&#39;ve come to not trust the &quot;auto-merge&quot; within TFS. Well, I trust it to do the bulk of the work, but I still scrutinize and diff every file before checking those merged changes in.<br /><br />TODO: One item still on my plate is to setup our C.I. server to do things like build/run unit tests on each branch automatically. (Without having to setup/configure a build per branch manually) This is unfortunately one large flaw with the existing C.I. tooling. Most of my team is pretty good about running unit and integration (database) tests on their dev box so we hopefully don’t see too many failing tests after a merge into the trunk.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bealer</div>
+<div class='content'>
+How did you deal with the issue of merging?<br /><br />Branching per feature is a move away from Continuous Integration, and conflicts can occur when trying to merge your work back into the trunk because someone else has made changes to the same code.<br /><br />Was this not an issue for you? Or did it come down to careful planning and communication?</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Jason<br /><br />Thanks for the feed back. I did consider the scenario you proposed where after A is merged into the trunk B becomes A. However, we would run into the Rename issue I described above in this blog post.<br /><br />I do agree that most of these issues can best be mitigated through careful team planning, and is what we will probably continue to do.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason</div>
+<div class='content'>
+Either approach is fine.  You could probably do a baseless merge (with the cmd line) up from B straight to the trunk if necessary, but IMHO it muddies the cleanliness of the branch hierarchy and causes confusion.<br /><br />We&#39;ve used both strategies on our team, and these days we tend to favor the &quot;A&amp;B in the same branch&quot; approach.  I think it really comes down to planning out your dependencies in advance and trying to align your team&#39;s work to do the most parallel development possible.  <br /><br />Another subtle variation is that if A is ready to go up to trunk before B, then after you mrege A back up, go ahead and merge B in its current state to A, then delete branch B.  This way, you can take integrations from trunk down to B as new features come in (while you&#39;re still developing B), and you won&#39;t have to do the double-merge from B-&gt;A-&gt;trunk when you&#39;re done with B.</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2009-08-12T20:54:00.000Z" pubdate>Aug 12th 2009</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/tfs/'>TFS</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2009/08/branch-per-feature-with-team-foundation_9077/" title="Previous Post: Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…">&laquo; Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2009/08/development-environment-mergecompare/" title="Next Post: Development Environment Merge/Compare Tools Setup in Visual Studio/TFS"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

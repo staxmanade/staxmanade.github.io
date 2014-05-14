@@ -1,0 +1,851 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Silverlight - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div class="blog-index">
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Silverlight – DataBind to an Anonymous type (Who knew?)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-05-23T02:36:00.000Z" pubdate>May 22nd 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I searched the web for the idea first. I was certain somebody had blogged about this before, and just wanted to quickly confirm it’s truth. Unfortunately all I came across were work-a-rounds and people telling you it’s not possible. So hopefully this post will help the next guy.</p>  <p>Since anonymous types are generated in an assembly as <a href="http://msdn.microsoft.com/en-us/library/7c5ka91b(VS.80).aspx">internal</a> types, by default, if you try to DataBind to an anonymous type, you’ll probably receive a binding error much like the following.</p>  <pre>System.Windows.Data Error: <br />    Cannot get 'Age' value (type 'System.Int32') from '{ Name = World, Age = 23 }' (type '&lt;&gt;f__AnonymousType0`2[System.String,System.Int32]'). <br />    BindingExpression: Path='Age' DataItem='{ Name = World, Age = 23 }' (HashCode=-172495608);<br />    target element is 'System.Windows.Controls.TextBlock' (Name=''); <br />    target property is 'Text' (type 'System.String').. <br />    System.MethodAccessException: Attempt by method 'System.Windows.CLRPropertyListener.get_Value()' <br />    to access method '&lt;&gt;f__AnonymousType0`2&lt;System.__Canon,System.Int32&gt;.get_Age()' failed.<br /><br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Windows.CLRPropertyListener.get_Value()<br />   at System.Windows.PropertyAccessPathStep.ConnectToPropertyInSo...</pre><br /><br /><h4>Turns out, it _IS_ possible to DataBind to an anonymous type in Silverlight.</h4><br /><br /><p>All you have to do is expose your privates. Placing the following into your AssemblyInfo.cs will give the built in bindings the ability DataBind to your object(s).</p><br /><br /><p><strong><br />    <br />[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Windows&quot;)]</strong></p><br /><br /><p>&#160;</p><br /><br /><p>I’m not going to say whether this is or is not a good idea, and I’m sure there’s many ways to abuse it.</p><br /><br /><p>Don’t inhale too much of this stuff.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+W.Meints<br /><br />I&#39;m not sure I understand your question. Could you elaborate a little?</div>
+</div>
+<div class='comment'>
+<div class='author'>W.Meints</div>
+<div class='content'>
+What about dynamics, does the same trick apply to those kind of objects as well?</div>
+</div>
+<div class='comment'>
+<div class='author'>Obsidience</div>
+<div class='content'>
+I prefer to keep my privates unexposed, thank you very much! ;)</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">StatLight – Goes Open Source</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-12-11T03:27:00.000Z" pubdate>Dec 10th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">StatLight (Silverlight Test Automation Tool) V0.8 Released</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-10-07T12:30:00.000Z" pubdate>Oct 7th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><a href="http://www.statlight.net"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SsyYPDL-d7I/AAAAAAAAAME/hSwnRB1lDcw/image%5B6%5D.png?imgmax=800" width="244" height="79" /></a> </p>  <h4>A new version of the StatLight tool has been released.</h4>  <h4>Download: <a href="http://www.statlight.net">http://www.statlight.net</a></h4>  <h3>Major Feature Updates:</h3>  <ul>   <li>Support for 64bit </li>    <li>Back support for previous Microsoft.Testing.Silverlight assemblies      <ul>       <li>By giving the tool a specific -v=[December2008 | March2009 | July2009], StatLight can now run the asynchronous tests supported by the Microsoft Testing library. </li>     </ul>   </li>    <li>Xml report output.      <ul>       <li>By giving the tool the -r=&lt;FilePath.xml&gt;. StatLight will write out an xml report of the test run. </li>     </ul>   </li>    <li>Update to the Silverlight 3.0 Runtime – Should be compatible with Silverlight 2.0 assemblies. </li> </ul>  <h4>Minor Updates: </h4>  <ul>   <li>Support for auto-closing modal Silverlight MessageBox dialogs. </li>    <li>Update feedback to the end user for when access to run statlight web service is not allowed (Added better feedback on how to get it up and running). </li>    <li>Added a timeout monitor to detect when the StatLight browser has not communicated with the StatLight server within a reasonable amount of time. StatLight will stop running if communication (a test message) has not arrived within 5 minutes. (Will look into making this configurable) </li> </ul>  <h5>Also to note:</h5>  <ul>   <li>I’ve setup a user voice account where you can suggest or vote on future features.      <br /><a title="http://statlight.uservoice.com" href="http://statlight.uservoice.com">http://statlight.uservoice.com</a> </li> </ul>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Silverlight Unity &amp; Moq backed AutoMocker</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-06-19T15:06:00.000Z" pubdate>Jun 19th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’ve pushed the <a href="http://code.google.com/p/moq-contrib/source/detail?r=22">Silverlight Unity/Moq AutoMocker</a> into the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>  <p>Well the other day I need the automocker and ended up running into a bug that was in my old-old-old pre-release version of <a href="http://code.google.com/p/moq-contrib/">moq for Silverlight</a>, so I took the time to get the released version and re-compile the automocker.</p>  <p>I published it to the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project. Haven’t taken the time to create a binary release, but should be able to get latest build, execute the build.Silverlight.cmd and in the drops\Current-Silverlight should be Moq.Contrib.UnityAutoMocker.Silverlight.dll</p>  <p>Enjoy!</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">StatLight – V0.5 released!</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-05-12T05:28:00.000Z" pubdate>May 11th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>A new version of <a href="http://statlight.net/" target="_blank">StatLight</a> has been released!</p>  <h4>Major Features Added:</h4>  <ul>   <li>NUnit support      <ul>       <li>Will work with any version of NUnit compiled to run under <a href="http://silverlight.com/" target="_blank">silverlight</a>.           <ul>           <li>EX: <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/" target="_blank">Jeff Wilcox’s</a> port </li>         </ul>       </li>     </ul>   </li>    <li>Further MSTest support </li>    <ul>     <li>In the previous version (0.4) you could only use <a href="http://statlight.net/" target="_blank">StatLight</a> with the <a href="http://silverlight.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=20430" target="_blank">March 2009</a> build of Microsoft.Silverlight.Testing.dll. <strong>It will now work with any version.</strong>         <br />(<strong>Update</strong>: the Silverlight Asynchronous testing style is not currently supported)</li>   </ul> </ul>  <h4>Minor Tweaks:</h4>  <ul>   <li>The debug.assertion creates a failure test event      <ul>       <li>It used to write a message to the console. It will now create a failure event, similar to a test that fails. </li>     </ul>   </li>    <li>Support for [Ignore]’d tests for each supported framework (MSTest, NUnit, Xunit) </li> </ul>  <h5>Soon to come:</h5>  <ul>   <li>Xml report file export </li>    <li>Basic <a href="http://confluence.public.thoughtworks.org/display/CCNET/Welcome+to+CruiseControl.NET" target="_blank">Cruise Control .net</a> support </li> </ul>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">T4 replacement for “Add Service Reference”</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-04-10T23:22:00.000Z" pubdate>Apr 10th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>My company has been developing out parts of our website using <a href="http://silverlight.com/" target="_blank">Silverlight</a> to enable some rich client LOB scenarios. Since the companies inception, we developed in a Scrum/Agile manner 3-6 week iterations. However, recently we started experimenting with a more “feature driven” attempt at “lean” approach. </p>  <p>With this new development approach, we made the decision that the trunk of the project’s source will be ready to deploy to production at all times. And as such would develop features out on branches. This is where the problem lies… We started running into a <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx" target="_blank">“Maximum file path length…”</a> issue when branching the source. It’s a relatively old project (5 years or so now) with layers of projects/namespaces. </p>  <p>We traced the issue down to files generated by the Visual Studio’s Add Service Reference dialog.    <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sd_UnpimHkI/AAAAAAAAAF4/2Pzl6l7mgD4/s1600-h/image%5B2%5D.png"><img title="image" style="border-top-width: 0px; display: inline; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="202" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sd_Un_Ie61I/AAAAAAAAAF8/jRJOfQb0rNI/image_thumb.png?imgmax=800" width="244" border="0" /></a> <a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sd_UoJFQQoI/AAAAAAAAAGA/WvFyDYrCkKk/s1600-h/image%5B5%5D.png"><img title="image" style="border-top-width: 0px; display: inline; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="188" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sd_UoYBaSGI/AAAAAAAAAGE/p6ei3NVsi20/image_thumb%5B1%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>In our case the generated files had the full namespace + service name which were, in some cases, greater than 90 characters long just for the file. Coupled with the fact they were already nested in a directory structure (that helped keep things organized). We ended bumping into the <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx" target="_blank">“Maximum file path length…”</a> when trying to branch the project.</p>  <p>After researching a hunch I’d had</p>  <blockquote>   <p>Most of those files generated by the tool are garbage and never used, so why does VS generate them, and have to check them into TFS?</p>    <p>Here’s a good post describing the meta data files.     <br /><a href="http://www.scottseely.com/blog/09-01-26/Misunderstood_Add_Service_Reference.aspx">http://www.scottseely.com/blog/09-01-26/Misunderstood_Add_Service_Reference.aspx</a></p> </blockquote>  <p>I found out that the only thing we cared about was the “References.cs” file in that whole batch of files.</p>  <p>Now, we would like to, and have thought about writing our own code in place of using the VS generated, (I know I’ve heard from the WCF pros at <a href="http://www.idesign.net/" target="_blank">IDesign</a> that you should never use the “Add Service Reference” generated stuff…) however it does what we need with the exception of the super long file names generated and…every time we update the service reference it keeps trying to add the ServiceReferences.ClientConfig back into the project. Since we are not using a config file to store the WCF connection information. We are following a similar path you can read about here (<a href="http://geekswithblogs.net/mwatson/archive/2009/02/24/129655.aspx">http://geekswithblogs.net/mwatson/archive/2009/02/24/129655.aspx</a>) This way we don’t have to have separate configs for Dev/Test/Production. </p>  <p>The built in VS Service Reference tooling has become more of a hindrance to development than providing any benefit.</p>  <h4>What is the solution we came up with to these two issues?</h4>  <blockquote>   <p>What were the problems again?</p>    <p>1. Files generated by “Add Service Reference” tools are too long for TFS (Not the fault of the tool, more the fault of the (TFS/.net api/win api) for not supporting longer file names…</p>    <p>2. Every time we update/add new service reference it tries to re-add the ServiceReferences.ClientConfig file (DON”T WANT THAT)</p> </blockquote>  <p>After about 1/2 a day looking for alternatives to using the built in tool, and since the wcf svcutil doesn’t generate code Silverlight can use. I stumbled upon this blog <b><a href="http://www.atrevido.net/blog/2008/12/02/Command+Line+WCF+Proxy+Generation+For+Silverlight+2+RTM.aspx">Command line WCF Proxy Generation for Silverlight 2 RTM</a></b> where he figured out how to use the same dll VS uses to generate the source and wrapped it into a little console app… After chatting w/ him on his blog’s Live Messenger plugin, (very cool by the way) he emailed me the exe he’s using in his production app (that had a couple bug fixes since his original blog post. He told me just to use <a href="http://www.red-gate.com/products/reflector/" target="_blank">Reflector</a> to get at the source because it was very basic.</p>  <p>And so I did, and ended up with a pretty good solution to the problems above. (Sucks that I spent a day of dev time on this crap, but oh well…)</p>  <p>I wrote a T4 template that will generate all the reference.cs code needed in our Silverlight project. Instead of describing the template itself (since this post has gotten long alredy) I’ll include a project with a sample of how it works.</p>  <p>Some of the features you get using this template are:</p>  <ol>   <li>It solves the two issues stated above      <ol>       <li>Only one file generated.&#160; (None of the VS generated garbage metadata files)</li>        <li>No re-add of the ServiceReferences.ClientConfig file to the project.</li>     </ol>   </li>    <li>With the use of the T4 template (this is in our app, not in the sample below) you can put other logic needed when generating a service reference.      <ol>       <li>We are using it to update the Web.Config’s WCF aspnet compatibility flag so we can get at the wsdl and setting it back when done updating the service reference…          <br />&lt;serviceHostingEnvironment aspNetCompatibilityEnabled=&quot;true&quot;&gt; </li>     </ol>   </li>    <li>You can set some properties that will tell the tool to generate the types as “internal” (if you want)      <blockquote>       <p>Note: you have to add the correct InternalsVisibleTo for this to work</p>        <p>[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Runtime.Serialization&quot;)]          <br /></p>     </blockquote>   </li> </ol>  <p>Here’s the sample project with examples of both a normal reference, and the same reference using the T4 template.</p>  <p><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/CustomAddServiceReferenceSpike.zip" frameborder="0" scrolling="no"></iframe></p>  <p>Hope this helps someone else…</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Mega</div>
+<div class='content'>
+How to reuse types in referenced assemblies ?</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Nice! Thanks for the feedback!</div>
+</div>
+<div class='comment'>
+<div class='author'>Chris</div>
+<div class='content'>
+This was great.  We used the concept to modify the code dom and add DebuggerNonUser code attributes to every class.  This allowed us to ignore the web service proxies when performing code coverage.<br /><br />Thanks for the post.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I just tried it and it appears to be working (possibly you ran into a temporary skydrive issue?)<br /><br />Try it again if you can.</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+than you for the article. <br />But the skydrive link doesn&#39;t work.<br />I allways end up with<br />&quot;There&#39;s a temporary problem<br /><br />There&#39;s a temporary problem with the service. Please try again. If you continue to get this message, try again later.<br />&quot;</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Jason,<br /><br />Awesome post, thanks. I just figured out that i couldn&#39;t use overloading on my wcf service methods. But if you create the reference.cs your self it is possible. But writing the whole service ref. is to time-costly. This is the perfect solution for that. Thanks for posting!<br /><br />Vincent Ottens</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+James,<br /><br />I&#39;m not sure what you&#39;re asking. If you read up on T4 templates, you should be able to find out that you can put any logic you want in there...</div>
+</div>
+<div class='comment'>
+<div class='author'>James</div>
+<div class='content'>
+Great post, thanks. I&#39;m interested in putting in custom logic, as you mentioned, but not sure where to start via the source provided...can you point me in the right direction? Thanks.</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Can you please provide a VS 2010 Beta 2 sample of this, I tried but I can&#39;t get it to work, looks really promising thouhg.</div>
+</div>
+<div class='comment'>
+<div class='author'>Voleti</div>
+<div class='content'>
+This is very useful. I was trying to figure out whether or not use Add Service Reference. Got some questions answered here. Thanks.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Introducing StatLight (Silverlight Testing Automation Tool)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-04-07T14:10:00.000Z" pubdate>Apr 7th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <p>What is it?</p>  <p>StatLight is your first class TDD/BDD/(Insert your testing style here) tool for Silverlight. Its main focus is developer productivity.</p>  <p>(The website is young, however the tool is ready to go… <a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a>)</p>  <p>In the realm of Silverlight, the tooling support has not had the chance to catch up to what you might have come to expect from normal .net development. When developing Silverlight applications using a test driven style, with the current tooling, it can become a little more tedious than one might like. </p>  <p>A number of testing methodologies have sprung up to enable some sort of testing for Silverlight developers; however, few actually run the tests in the browser.</p>  <p>Below is a short list of features StatLight currently has.</p>  <h4>Features:</h4>  <ol>   <li>In browser runner to test how your code will “actually” run in the wild. </li>    <li>TeamCity Continuous Integration support </li>    <li>Smooth Console Runner      <ol>       <li>One time runner (screenshot below)<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sdtexix3VSI/AAAAAAAAAFw/tj48fdwRad8/s1600-h/image8.png">           <br /><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; margin-left: 0px; border-left-width: 0px; margin-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SdteyAUbPZI/AAAAAAAAAF0/23thaH-98lI/image_thumb6.png?imgmax=800" width="521" height="292" /></a> </li>        <li>Continuous Integration runner          <ol>           <li>This runner will startup and watches for any re-builds of your text xap file. Every time you re-build it will pick up the new test xap and immediately start running the tests. </li>            <li>This feature gives the most as far as developer productivity. </li>            <li>I will put out a video to show how best to use it soon… </li>         </ol>       </li>     </ol>   </li>    <li>Tag/Filtering support (to narrow down the tests run at a given time) </li>    <li>XUnit support leveraging <a href="/2009/02/xunit-light-for-silverlight">XUnit (Light)</a> </li>    <li>MSTest support. (March 09 build) </li> </ol>  <h4>On the way:</h4>  <ol>   <li>Better Documentation and how to/help videos </li>    <li>NUnit support leveraging <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">Jeff Wilcox’s NUnit</a> port </li>    <li>CruiseControl.net support </li>    <li>MSBuild </li> </ol>  <p><a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a></p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Silverlight DataGrid NOT sorting when binding to IEnumerable&lt;T&gt;</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-03-26T04:36:00.000Z" pubdate>Mar 25th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This may be common knowledge when working with a Silverlight DataGrid, or any grid control in .net. However, I fought through this lesson the other week.</p>  <p>We are using <a href="http://www.codeplex.com/CompositeWPF">Prism V2</a> in a business application at work. When databinding several grids to a presenter I tried to enable sorting and ran into an issue where the grid wouldn’t sort if the property being bound to was an IEnumerable&lt;T&gt;…</p>  <p>Once I changed the property’s type to a List&lt;T&gt; on the presentation model (and all the correct sorting xaml tags were set) the grid became sortable.</p>  <p>The other strange thing about this was I couldn’t find anything about it on the net… Is this something that is inherent with other data grids?</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Radenko Zec</div>
+<div class='content'>
+IEnumerable does not have sort method but generic List have Sort method.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I probably left a few details out of this post...<BR/><BR/>I Set the grid's allows sorting property to true and every cell was a custom data template with the SortMember path set</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+That is weird. How are you doing the binding? Maybe it's just calling into the IList.Sort method? Seems like it should just use Enumerable.Sort though.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Silverlight AutoMocker with Unity container and Moq</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-01-24T07:14:00.000Z" pubdate>Jan 23rd 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>A couple weeks back I threw out a <a href="/2009/01/silverlight-moq-automocker-teaser" target="_blank">Teaser about a Silverlight AutoMocker</a>... Here's the follow up I promised.</p>  <p><strong><u> UPDATE: Moq 3.0 released with full Silverlight support </u></strong><a href="http://moq.me/get"><strong><u>http://moq.me/get </u></strong></a></p>  <p>I've been working on this off and on for a while now, and finally decided to sit down and finalize (at least this version) of both Moq for Silverlight and an AutoMocking container backed by the <a href="http://codeplex.com/Unity" target="_blank">Unity IoC</a> from Microsoft.</p>  <p>This isn't by any means &quot;Official&quot;, but probably not far from what will be coming out when it's done... </p>  <p>Below are the necessary steps (I can come up with) to get an official version of Moq.</p>  <ol>   <li>We need an &quot;Official&quot; build of the Castle.DynamicProxy2 dependency      <ol>       <li>Create NAnt build scripts (Jonathon Rossi said he'd try to work on it this weekend 1/23) Thank God! It tried porting the NAnt build to Silverlight and each of the 3 times I got so lost I gave up... :( </li>        <li>Fix the Castle.Core-Silverlight build (some changes have occurred to the main without being pushed to the Silverlight Version) </li>        <li>Create an official binaries of          <ol>           <li>Castle.Core </li>            <li>Castle.DynamicProxy </li>         </ol>       </li>     </ol>   </li>    <li>Port Moq to Silverlight      <ol>       <li>I supplied a patch to Daniel a while ago, but he said he wouldn't include it until #1 above. </li>     </ol>   </li> </ol>  <p>But until the official versions become available, here are what I have so far!!!</p>  <p><strong>UPDATE</strong>: oops, realized I posted the files below as .7z. You can download and install the free open source zip utility here <a href="http://www.7-zip.org/">http://www.7-zip.org/</a></p>  <p>&#160;</p>  <p>This contains the Moq, Moq-Contrib (w/unity AutoMocker) source    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/src-MoqAndMoqContribForSilverlight.7z" frameborder="0" scrolling="no"></iframe></p>  <p>This contains all the binaries you need to run Moq...    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/bin-MoqAndMoqContribForSilverlight.7z" frameborder="0" scrolling="no"></iframe></p>  <p>&#160;</p>  <p>Please keep in mind I'm by no means an IoC pro and the whole AutoMocker was a one afternoon attempt at throwing one together that I could use in Silverlight. It's very basic, but seems to support most of what I need for now.</p>  <p>Could an AutoMocking container backed by Moq and Unity be a project that the community needs?</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Mark<br /><br />I&#39;ve been disconnected from the castle dynamic proxy for quite a while. (Last I knew Mr. Rossi was going to get it into the build process) If that&#39;s true, building from src would be your best bet. If it&#39;s not possible through the NAnt script, then, the way I originally did it, was opening up the Silverlight project in VS and building that way... (I think you have to run the NAnt build at least once for it to setup the AssemblyInfo.cs stuff before you try to vs build)<br /><br />Hope this helps. (sorry I don&#39;t have more info than this)</div>
+</div>
+<div class='comment'>
+<div class='author'>Mark</div>
+<div class='content'>
+Re: the error with generic constraints - I created a test for this and it is fixed on the main build see here: http://support.castleproject.org/projects/DYNPROXY/issues/view/DYNPROXY-ISSUE-92<br /><br />I&#39;m not sure how to get this into a silverlight version - there doesn&#39;t seem to be a Silverlight build. Can you help?<br /><br />Thanks<br /><br />Mark</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Any chance you could send an example test?</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Hi Jason, <BR/>This is really cool...thanks!<BR/><BR/>I thought you might want to know about an error I received. When mocking an interface containing generic parameter constraints, I receive the error... <BR/><BR/>System.BadImageFormatException: An attempt was made to load a program with an incorrect format.<BR/><BR/>...when running the test. <BR/><BR/>Thanks!</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Adam - There's two things you can do.<BR/><BR/>1. Moq-contrib at google code already has an AutoMocker that uses the AutoFac IoC.<BR/><BR/>or<BR/><BR/>2. Take my source, recompile the AutoMocker in .net (make sure to get the correct full-framework dependencies)<BR/><BR/>Hope that helps...</div>
+</div>
+<div class='comment'>
+<div class='author'>Adam</div>
+<div class='content'>
+I would really like an Automocker for the *WPF* side of things.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Silverlight Moq AutoMocker Teaser...</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-01-05T02:12:00.000Z" pubdate>Jan 4th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Although we don't have an official Moq for Silverlight yet. You can go to the email list and pull the <a href="http://groups.google.com/group/moqdisc/browse_thread/thread/957e056bd3458fb1" target="_blank">patch I submitted</a> to get an early version up and running.</p>  <p>I have, in the queue of blog posts, a Silverlight AutoMocker leveraging the new <a href="http://msdn.microsoft.com/en-us/library/dd362339.aspx" target="_blank">Microsoft Unity container for Silverlight</a>.</p>  <p>I'll wait till we get a full Silverlight version of Moq before posting.</p>  <p>&#160;</p>  <p>P.S.</p>  <p>The existing Moq automocker for the full .NET framework, over at <a href="http://code.google.com/p/moq-contrib/wiki/Automocking" target="_blank">Moq-contrib</a>, is leveraging the <a href="http://code.google.com/p/autofac/" target="_blank">Autofac</a> contianer, and when I threw my Silverlight version together Autofac hadn't been ported (yet), however just <a href="http://blogs.msdn.com/nblumhardt/archive/2009/01/04/ioc-on-silverlight.aspx" target="_blank">read a blog today</a> that said it has an early port available.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Not sure what you mean bout the "trick"... Mocking just works in Silverlight with Moq. There is one unit test that fails in the Silverlight version when trying to mock the System.Stream class. I didn't dig too far into the specific failure, however I'm sure there are lots of things out there that you won't be allowed to mock because of the security restrictions...</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+In a nutshell, what's the trick to mocking with the given security constraints (on reflection) in Silverlight?</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Castle.DynamicProxy2 now ported to Silverlight!!!</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-01-05T02:02:00.000Z" pubdate>Jan 4th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I know what you're thinking (or at least what I was thinking before I knew better). What is the Castle.DynamicProxy and who cares it was ported to Silverlight?</p>  <p>To be honest I didn't know it existed until I tried to find a mocking framework for doing Silverlight unit testing. Then I found <a href="http://code.google.com/p/moq/issues/detail?id=73" target="_blank">this thread</a> over on the <a href="http://code.google.com/p/moq/" target="_blank">Moq</a> mocking framework's home site which talked about needing to get the Castle.DynamicProxy ported before Moq could be ported to Silverlight.</p>  <p>Turns out, the DynamicProxy is one of the core dependencies of the two major open source mocking frameworks out there. <em>(Moq, and Rhino Mocks)...</em><em>(I'm sure there's others out there, but for now I only care about Moq because it's what we use at work)</em></p>  <p>After sitting around for about three months since I first read the thread and not hearing any word about the DynamicProxy being ported, I thought I'd take a stab.</p>  <p>Joined the castle devl email group, threw a ping about the port and I was off...after a couple weeks several late nights, and a few patch submittal turn-backs by hammett I finally got the patch in a place he liked and he applied it on Jan 3 2009.</p>  <p>What a great feeling of relief, this was a big step forward to getting full mocking support in Silverlight.</p>  <p>There is still one pending thing with the DynamicProxy &amp; all Castle.Silverlight projects to date...we need to integrate the build and testing into their NAnt builds. Once that's done and a binary release is out, Moq port to Silverlight...here I come. </p>  <p>p.s. I already have a patch for Moq, but <a href="http://code.google.com/u/kzu.net/" target="_blank">Daniel</a> said he won't apply it till he can get the &quot;official&quot; binaries, which is fine. I would probably do the same if I were overseeing a decent sized open source project like Moq.</p>  <p>Soon enough...we'll have Silverlight mocking...</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>timvw</div>
+<div class='content'>
+Great job ;)</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+This is very good news. Thanks for the work.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">What do when Silverlight is missing some Base Class Library (BCL) functionality?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-01-02T19:24:00.000Z" pubdate>Jan 2nd 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-08T06:37:00.000Z" pubdate>Dec 7th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Follow up to my post on <a href="/2008/12/i4o-with-silverlight-compiles-first-try" target="_blank">i4o &amp; Silverlight (compiles first try)</a>...</p>  <p>&#160;</p>  <p>I took a stab at porting the i4o unit tests to <a href="http://silverlight.com/" target="_blank">Silverlight</a> which was quite a bit more work than I initially expected.</p>  <p>After creating a <a href="http://code.msdn.microsoft.com/silverlightut" target="_blank">Silverlight Unit Test</a> project and linking the original test files into the Silverlight project, I compiled...</p>  <ul>   <li>First the VB using statement wasn't even needed, so I removed that. <span style="color: #0000ff">using</span> Microsoft.VisualBasic;       <br /></li>    <li>Second there is no System.Diagnostics.Stopwatch() class in Silverlight, so I basically implemented a quick one using DateTime to get the unit tests to compile in Silverlight. Here's the class, except the Frequency property has been commented out (didn't spend time to figure how to make that correct, or what is correct???) </li> </ul>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Stopwatch<br />{<br />	<span style="color: #0000ff">private</span> DateTime _StartUtcDateTime;<br />	<span style="color: #0000ff">private</span> DateTime? _EndUtcDateTime;<br />	<span style="color: #0000ff">private</span> <span style="color: #0000ff">bool</span> _IsRunning = <span style="color: #0000ff">false</span>;<br /><br />	<span style="color: #008000">//public static readonly long Frequency { get { throw new NotImplementedException(); } }</span><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">readonly</span> <span style="color: #0000ff">bool</span> IsHighResolution = <span style="color: #0000ff">false</span>;<br />	<span style="color: #0000ff">public</span> Stopwatch()<br />	{}<br /><br />	<span style="color: #0000ff">public</span> TimeSpan Elapsed<br />	{<br />		<span style="color: #0000ff">get</span><br />		{<br />			<span style="color: #0000ff">if</span> (_EndUtcDateTime.HasValue)<br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(_EndUtcDateTime.Value.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />			<span style="color: #0000ff">else</span><br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(DateTime.UtcNow.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />		}<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedMilliseconds { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Milliseconds; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedTicks { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Ticks; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">bool</span> IsRunning { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> _IsRunning; } }<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">long</span> GetTimestamp()<br />	{<br />		<span style="color: #0000ff">return</span> DateTime.Now.Ticks;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Reset()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Start()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_IsRunning = <span style="color: #0000ff">true</span>;<br />		<span style="color: #0000ff">this</span>._StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> Stopwatch StartNew()<br />	{<br />		var w = <span style="color: #0000ff">new</span> Stopwatch();<br />		w.Start();<br />		<span style="color: #0000ff">return</span> w;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Stop()<br />	{<br />		_EndUtcDateTime = DateTime.UtcNow;<br />		_IsRunning = <span style="color: #0000ff">false</span>;<br />	}<br />}</pre><br /><br /><p>The only other issue that came up was some of the Stopwatch dependent tests happened so fast that they would fail intermittently... the quick hack/solution for this was to up the iteration count of whatever they were testing.</p><br /><p>After all the above taking care of all the above issues, I was able to get the unit tests to pass. </p><br /><p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAmsr9cuI/AAAAAAAAACU/ImLvor4RNNQ/s1600-h/image%5B4%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="372" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAm05AF3I/AAAAAAAAACY/HKajhxLiWtk/image_thumb%5B2%5D.png?imgmax=800" width="367" border="0" /></a></p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Tiaan</div>
+<div class='content'>
+You might also want to look at my implementation of the <A HREF="http://blog.tiaan.com/link/2009/02/03/stopwatch-silverlight" REL="nofollow">Stopwatch for Silverlight</A>, which supports resuming.</div>
+</div>
+<div class='comment'>
+<div class='author'>Tiaan</div>
+<div class='content'>
+For the Frequency property's implementation, you probably just need to return the System.TimeSpan.TicksPerSecond value.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">i4o with Silverlight (Compiles first try)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-03T06:48:00.000Z" pubdate>Dec 2nd 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">WCF - Silverlight - Default constructor not called??</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-11-25T06:02:00.000Z" pubdate>Nov 24th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">WCF Service Proxy inside Silverlight with a generic type</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-09-14T01:32:00.000Z" pubdate>Sep 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...<br /><br />On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.<br /><br />public interface IValidatedResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br />Now if you had a method that exposed this generic result object through your web service...<br /><br /><br />public ValidatedResult&lt;long&gt; StringLength(string param1)<br />{<br />    return new ValidatedResult&lt;long&gt;(param1.Length);<br />}<br /><br /><br />Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...<br /><br /><br />public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged<br />{<br /><br />    private long ResultField;<br /><br />    private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public long Result<br />    {<br />        get<br />        {<br />            return this.ResultField;<br />        }<br />        set<br />        {<br />            if ((this.ResultField.Equals(value) != true))<br />            {<br />                this.ResultField = value;<br />                this.RaisePropertyChanged("Result");<br />            }<br />        }<br />    }<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues<br />    {<br />        get<br />        {<br />            return this.ValidationIssuesField;<br />        }<br />        set<br />        {<br />            if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))<br />            {<br />                this.ValidationIssuesField = value;<br />                this.RaisePropertyChanged("ValidationIssues");<br />            }<br />        }<br />    }<br /><br />    // stripped out the INotifyPropertyChanged goo<br />}<br /><br /><br />Notice the non generic type ValidatedResultOflong  that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...<br /><br />Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.<br /><br />Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a "Result" and a "ValidationIssues" property and another partial class in a different location that declares it implements an interface which defines that "Result" and "ValidationIssues" property... and would that compile?<br /><br />So I wrote my first test...<br /><br />Here is our auto generated partial class simulated...<br /><br />public partial class Foo<br />{<br />    public bool Result { get; set; }<br />}<br /><br /><br />I then wrote a generic result of T to define the object has a Result property.<br /><br />public interface IResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />}<br /><br /><br />And now the specific implementation with a long Result type.<br /><br />public partial class Foo : IResult&lt;long&gt; {}<br /><br /><br />After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...<br /><br />I defined the validated result contract as follows...<br />public interface IResultProperty&lt;T&gt;<br />{<br />    T Result { get; }<br />}<br /><br />public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;<br />{<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br /><br />This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.<br /><br />Here's an example of the partial class for the ValidatedResultOflong <br /><br />public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }<br /><br />With that in place, this meant I could create some generic handling methods for all of my objects that now implement IValidatedResult&lt;T&gt;...<br /><br /><br />public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)<br />    where T : IValidatedResult&lt;T&gt;<br />{<br />    if (validatedResult != null &amp;&amp;<br />        validatedResult.ValidationIssues != null &amp;&amp;<br />        validatedResult.ValidationIssues.Count > 0)<br />        return true;<br />    else<br />        return false;<br />}<br /><br /><br />Don't know if i've very heard anyone talk about one partial class containg some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...<br /><script type="text/javascript"><br />var pageTracker = _gat._getTracker("UA-1017448-3");<br />pageTracker._trackPageview();<br /></script></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Interesting observation. Thanks for sharing.<BR/><BR/>I haven't pushed it very far (bool, string, MyCustomObject, etc)</div>
+</div>
+<div class='comment'>
+<div class='author'>Boris Modylevsky</div>
+<div class='content'>
+Thanks for the post. It's really exciting to receive a proxy of Generic class. It really works smoothly with "simple" classes. But more complex ones result with random names in Silverlight proxy. For example, my <I>SimpleTree&lt;Item&gt;</I> became <I>SimpleTreeNodeOfItemErNMAaNV</I></div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Ok, I quickly threw an example together. I didn't comment much, but the code's there and "works on my box..." <BR/><BR/>Let me know if you have any troubles either understanding it, or getting it working. <BR/><BR/>I've never used this file host service, but giving it a try... I've placed the project here <A HREF="http://www.filesavr.com/validatedresultsample" REL="nofollow"> http://www.filesavr.com/validatedresultsample</A><BR/><BR/>Also the only concepts to really look at here are the ValidatedResult&lt;T&gt; and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.<BR/><BR/>Good luck!</div>
+</div>
+<div class='comment'>
+<div class='author'>greg</div>
+<div class='content'>
+... very much appreciated!!</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Greg, <BR/><BR/>I will try to put together an example and post it here soon.</div>
+</div>
+<div class='comment'>
+<div class='author'>greg</div>
+<div class='content'>
+... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.<BR/>Thanks in advance.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">UnitDriven&#x27;s UI Gets a Minor Makeover</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-08-31T05:57:00.000Z" pubdate>Aug 30th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+I had some time to play around with and learn WPF within Silverlight. It's a modest start, but I just had to blog about it...<br /><br />We've started a project at my current job using Silverlight. Researching different framework options I ran across the <a href="http://codeplex.com/UnitDriven">UnitDriven</a> project on codeplex. After downloading and checking out the silverlight testing UI...<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s1600-h/Csla.net.Original.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s320/Csla.net.Original.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559412476544802" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />I decided this was a place I could take a stab at learning some silverlight UI. ok... So it's getting late and it's certainly not perfect, but here's where I am now.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s1600-h/Csla.net.NewSkin.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s320/Csla.net.NewSkin.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559787065086786" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />The only really tricky piece was... The original UI used nested ListBox controls which threw me down a path of thinking the program was broken... basically with a ListBox inside of a ListBox you have to select the first item, then the sub item, and in this application, only then, can you select the "Run" button to execute the unit test... I spent time looking through code trying to figure out if there was a bug in the testing contexts.<br /><br />The solution to this was to convert the ListBox to an ItemsControl. Which allowed me to select multiple buttons without having to first select the ListBox sub item...<br /><br />I then had to wrap everything inside of a ScrollViewer because the ItemsControl doesn't create one automatically like the ListBox does.<br />[EDIT]<br />Unfortunately wrapping everything in the ScrollViewer removed a feature the older version had, namely, at the top of the control is a display of the # succeeded/# Total. Wrapping everything in the ScrollViewer removed the ability to scroll through tests while that value was being updated during tests...<br /><br />So I updated the main grid in the XAML, and shifted a few things around to allow this old feature to be seen in the new UI.<br />[/EDIT]<br /><br />after that was done, it was basically playing around with different styling elements to end up with the UI above.<br /><br />It was a good simple exploratoin into some of the Silverlight's WPF capabilities.</div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Nermin</div>
+<div class='content'>
+Your work on this patch is trully appreciated.  That listbox issue was trully annoying one.</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+Thanks for the patch, I applied it today.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <div class="pagination">
+                
+                <a href="/blog/archives">Blog Archives</a>
+                
+            </div>
+        </div>
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+ 
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">StatLight release (V1.2 &amp; V1.3)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-12-15T05:33:00.000Z" pubdate>Dec 14th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This post is coming a little late (just realized I still had it in my local drafts and had not published it)…</p>  <p>Although I put out these blog posts (sometimes), the best way to learn about new releases is to subscribe to any of the myriad of Codeplex rss feeds for the project.</p>  <h4><a href="http://statlight.codeplex.com/releases/view/48242" target="_blank">StatLight V1.2</a> </h4>  <p>Released way back on Sep 25, 2010. Mostly a bug fix release, but came with a couple small features that could help out your Silverlight testing.</p>  <p>Features added:</p>  <ul>   <li>Support to test multiple Xaps at once:      <br />EX: StatLight.exe -x=&quot;C:\Project1\Test<i>1.xap&quot; -x=&quot;C:\Project2\Test</i>2.xap&quot; </li>    <li>QueryString command line parameter. This will pass a querystring along to the browser instance running the StatLight Silverlight host. Allowing you to grab the querystring and pull some information (config or other) into your test.      <ul>       <li><strong>EX:</strong> You may want to run some Silverlight Integration tests that talk back to some self hosted web server. Since detecting this automatically is not realistic, because the server and port your tests will detect is the StatLight server, you can’t just call back to “home base” (because that is StatLight’s web server) you need to somehow know where to configure your endpoints. With the QueryString parameter in StatLight, your build scripts can now pass in a known port of your self hosted web server, where your tests can then use to configure any test service calls. </li>     </ul>   </li> </ul>  <h4><a href="http://statlight.codeplex.com/releases/view/53742" target="_blank">StatLight V1.3</a> </h4>  <p>Released Nov 20, 2010. <strong>NOTE: This is the first build running on the .net 4.0 framework. If you need 3.5 support stick with the V1.2 build.</strong> Much like I did back on the V1.2 release, this release is marked as a “beta” build which I will change the status on the release page to stable if I don’t hear any issue come out of it in the next couple weeks.</p>  <p>This release comes with a feature I’ve been wishing for, for a while now. StatLight uses a web server internally to serve the content and receive messages from the Silverlight(StatLight) test runner. This web server was originally implemented with the WCF WebServiceHost. Unfortunately this required special administrative privileges to get up and running and although most developers have enough rights to not make this a problem, there are some who are not allowed to adjust these port privileges. Looking through Jeff Wilcox’s Microsoft Silverlight Testing framework server side code, I noticed he implemented a very simple web server with the HttpListener. After a quick spike I realized I could port his web server over into StatLight and gain some benefits other than just not requiring administrative privileges on a certain port. </p>  <p>Features added:</p>  <ul>   <li>New WebServer implementation      <ul>       <li>No requirement for elevated privileges </li>        <li>Faster startup time </li>        <li>With easier &amp; full control of the request/response cycle StatLight now prints out warnings if your tests are making service requests that they shouldn’t be. </li>     </ul>   </li>    <li>Introductory support to run external web browsers (instead of the self hosted control)      <ul>       <li>Firefox </li>        <li>Chrome </li>     </ul>   </li>    <li>Added support for NUnit’s TestCaseAttribute      <ul>       <li>Note this is not full support, but should work for many general cases. </li>     </ul>   </li> </ul>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Duplicate DOM elements with the same ID</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-12-09T13:41:00.000Z" pubdate>Dec 9th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This is a short post. Saving this snippet it for myself for later.</p>  <p>If you ever have a html DOM element with a duplicate ID value, how do you detect the issue? It’s sometimes hard to find/debug until you really understand what has happened.</p>  <p>Taking inspiration from the solution in the following stackoverflow question. <a href="http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom">http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom</a></p>  <p>I wrote little helper that will alert you early in the development phase if you do something that causes a DOM element with duplicate ID’s.</p>  <p>Place the following script at the bottom of your global master page footer during development, and you will be notified of any issues early in the process.</p>  <pre class="">// Requires: jQuery<br />(function(document, $){<br />    // little debug helper script to notify us when the <br />    // dom is updated with a contains duplicate ID'd elements<br />    $(document).bind('DOMNodeInserted', function (event) {<br /><br />        var duplicateDomElements = [];<br /><br />        $('[id]').map(function () {<br />            var ids = $('[id=' + this.id + ']');<br />            if (ids.length &gt; 1 &amp;&amp; ids[0] == this) {<br />                duplicateDomElements.push(this.id);<br />            }<br />        });<br /><br />        if (duplicateDomElements.length &gt; 0) {<br />            alert('Recent action duplicated a dom element ID with name(s) [' + duplicateDomElements + ']');<br />        }<br /><br />    });<br />})(document, jQuery);<br /><br /><br /><font face="Arial">How do others typically deal with the issue?</font></pre></div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">PowerShell url checker (Check if a list of url’s is valid)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-11-11T02:20:00.000Z" pubdate>Nov 10th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-10-18T00:56:00.000Z" pubdate>Oct 17th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>In a <a href="/2010/09/odatas-dataservicequery-and-removing" target="_blank">previous post</a> I elaborated on the problem of magic strings in <a href="http://www.odata.org/" target="_blank">OData</a> service queries, and gave a quick (but lacking in depth) statically typed helper solution.</p>  <p>A commenter <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> left a note stating that my solution would not work with nested objects. I initially replied asking if he could give an example (as I hadn’t run into that scenario yet being a noob to OData). He didn’t get back to me, but it wasn’t long before I ran into the problem he was talking about.</p>  <p>If we go back to <a href="http://www.linqpad.net/">LinqPad</a> and look again at the Netflix OData api. Let’s say we want to pull down the <strong>People</strong>, their related <strong>TitlesDirected</strong> and the TitlesDirected <strong>ScreenFormats</strong>. (No real world scenario there – just made it up because they’re related properties). The OData query (with magic strings) would look like:</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(&quot;TitlesDirected/ScreenFormats&quot;)        <br />select x).Take(5)</font></p> </blockquote>  <p>If you tried to take the above and translate it to my “no magic string” fix from the previous post you would get something like.</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected /* Now what? dead end. /ScreenFormats*/ )        <br />select x).Take(5)         <br /></font></p> </blockquote>  <p>Now that the problem in my solution was apparent, and using his example as a quick guide (It wasn’t quite what I was looking for, but had the general theme). The solution became more than a few lines of code and I wanted to wrap some tests around the whole thing just to verify it was all working correctly…</p>  <h4>ODataMuscle was born:</h4>  <p><a href="http://github.com/Staxmanade/ODataMuscle">http://github.com/Staxmanade/ODataMuscle</a></p>  <p>Sorry for the name. Just think of “Strong Typing” your OData queries and giving them a little Muscle. I threw this little project up on github since this blog is not the best place to version code and if anyone felt inclined to extend it they could easily fork it and do so.</p>  <p>I hacked the initial version together, and once a co-worker of mine was done with it I think he cleaned it up nicely.</p>  <p>This new version now supports expanding not only <strong>child properties</strong>, but <strong>grandchild properties</strong> and <strong>grandchild properties of collections</strong>. (That doesn’t seem to translate well…)</p>  <p>EX: our little Netflix example from above would now look like </p>  <blockquote><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected.Expand(p2 =&gt; p2.ScreenFormats))      <br />select x).Take(5)</font></blockquote>  <p>Which would translate into the following query</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats" href="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats">http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats</a></p> </blockquote>  <p>Thanks to <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> for the initial feedback and I hope this helps someone else…</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-09-21T13:52:00.000Z" pubdate>Sep 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was experimenting recently with the .Net implementation of <a href="http://www.odata.org/" target="_blank">OData</a> and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net community’s definition of magic strings is close but seems slightly different from <a href="http://en.wikipedia.org/wiki/Magic_string_(programming)" target="_blank">Wikipedia</a>. Therefore the magic strings I’m talking about here are what you’ll find on such posts as “<a href="http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/19/functional-net-lose-the-magic-strings.aspx" target="_blank">Functional .Net – Lose the Magic Strings</a>.”</p>  <p>I don’t want to get into the magic string debate here, just that I want to snapshot this little helper (for when I need to remember to write it again and don’t want to “figure it out”). This is also not intended to be a complete overview of OData, but I will provide some getter starter links and tips (if you haven’t touched it).</p>  <h4>Enough background show me the code: (scroll to the bottom if you don’t care about the post)</h4>  <p>Let’s pretend we want to request a “Title” from the NetFlix OData api.</p>  <p>You can do this by going to the web browser and typing the following URL</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog/Titles()?$top=1">http://odata.netflix.com/catalog/Titles()?$top=1</a></p> </blockquote>  <p>Sweet. XML, yippie. Um, no thanks. Let’s try that again. Go download <a href="http://www.linqpad.net/" target="_blank">LinqPad</a> (read up on using <a href="http://coderjournal.com/2010/06/using-linqpad-to-query-stack-overflow/" target="_blank">LinqPad for querying an OData</a> store)</p>  <p>Once you’ve connected LinqPad to the NetFlix OData service (<a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog">http://odata.netflix.com/catalog</a>). Now we’re ready to play around. Our URL “query” above translates in to a C# LINQ statement that looks like the below in LinqPad.</p>  <pre class="brush: csharp;">(from title in Titles<br />select title).Take(1).Dump()</pre><br /><br /><blockquote><br />  <p>The<strong> .Dump()</strong> is a LinqPad extension method that displays the object in the results window.</p><br /></blockquote><br /><br /><p>If you execute this in LinqPad you will see some data about the first Title form the Netflix OData service. In the results window scroll all the way to the right. Notice all the properties that are supposed to be a Collection&lt;T&gt; but have no data? To retrieve these through OData you have to extend your LINQ query with the Expand(“{propertyName}”) method. </p><br /><br /><p>Let’s say we want to include AudioFormats collection when we ask for the first Title.</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(&quot;AudioFormats&quot;)<br />select title).Take(1).Dump()</pre><br /><br /><p>Notice how we have to explicitly tell the OData service to include this property when we retrieve it form the service. Not only do we explicitly tell the property name, but it’s a magic string (gag, hack, baaa) none the less. If you click on “SQL” in LinqPad result window it will show the URL used for OData queries. Our URL shows the expanded property. </p><br /><br /><blockquote><a title="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats&#13;&#10;" href="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats">http://odata.netflix.com/catalog/Titles()?$top=1&amp;<strong>$expand=AudioFormats</strong> <br /><br />    <br /></a></blockquote><br /><br /><p>Now let’s pretend (just for the sake of pretending) that your front end application’s entire data access strategy was going to sit on top of OData. Not saying this is a good thing (or a bad thing). Just sayin…</p><br /><br /><p>If you have a fairly complex data model and each screen in your application requests slightly different data in a slightly different way, but in the end it all essentially comes down to a set of entities and their relationships. What would you do if you had to “.Expand” all those magic stringed property names. Now, I know we’re all great at search and replace (of the magic strings). However every little step along the way where I can avoid a refactor that will break every other screen in the app, well, I think I just might take that.</p><br /><br /><p>Now, if you change your LinqPad query from a “C# Expression” to a “C# Program”. Copy the helper class at the bottom of this post in to the bottom of the LinqPad code window. You can now write your linq statement as follows</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(x=&gt; x.AudioFormats)<br />select title).Take(1).Dump();</pre><br /><br /><p>Notice the switch from magic strings to an intellisense helping, refactoring safe lambda? This trick is not new. You’ll see it in many .Net open source projects such as mocking frameworks, asp.net MVC projects etc…</p><br /><br /><p>Just wanted to write this little goodie down for the next time I need it. Hope this helps someone else as well.</p><br /><br /><pre class="brush: csharp;">public static class ServiceQueryExtension<br />{<br />    public static DataServiceQuery&lt;T&gt; Expand&lt;T, TProperty&gt;(<br />        this DataServiceQuery&lt;T&gt; entities, <br />        Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpressions)<br />    {<br />        string propertyName = propertyExpressions.GetMemberName();<br />        return entities.Expand(propertyName);<br />    }<br /><br />    public static string GetMemberName&lt;T, TProperty&gt;(this Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpression)<br />    {<br />        return ((MemberExpression)(propertyExpression.Body)).Member.Name;<br />    }<br />}</pre>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-05-31T03:00:00.000Z" pubdate>May 30th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=StatLight&amp;DownloadId=95275&amp;Build=16586" /></p>  <p>About a week ago (May 21st 2010) I uploaded the v1.0 release of <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a>. You can review the list of changes on the <a href="http://statlight.codeplex.com/releases/view/40090" target="_blank">StatLight v1.0 release page</a>. </p>  <p>I knew once I marked it v1.0, I would probably have updates to it &amp; sure enough… Microsoft’s <a href="http://www.jeff.wilcox.name" target="_blank">Jeff Wilcox</a> released a new version of the <a href="http://www.jeff.wilcox.name/2010/05/sl3-utf-bits/" target="_blank">Microsoft.Silverlight.Testing</a>.</p>  <p>I also incorporated some work done by <a href="http://www.justnbusiness.com/" target="_blank">Justin</a> who recently released a version of the <a href="http://unitdriven.codeplex.com/" target="_blank">UnitDriven</a> framework.</p>  <p>So there’s now a <a href="http://statlight.codeplex.com/releases/view/46227" target="_blank">v1.1</a> build out.</p>  <p>Happy Silverlight Testing!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Silverlight – DataBind to an Anonymous type (Who knew?)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-05-23T02:36:00.000Z" pubdate>May 22nd 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I searched the web for the idea first. I was certain somebody had blogged about this before, and just wanted to quickly confirm it’s truth. Unfortunately all I came across were work-a-rounds and people telling you it’s not possible. So hopefully this post will help the next guy.</p>  <p>Since anonymous types are generated in an assembly as <a href="http://msdn.microsoft.com/en-us/library/7c5ka91b(VS.80).aspx">internal</a> types, by default, if you try to DataBind to an anonymous type, you’ll probably receive a binding error much like the following.</p>  <pre>System.Windows.Data Error: <br />    Cannot get 'Age' value (type 'System.Int32') from '{ Name = World, Age = 23 }' (type '&lt;&gt;f__AnonymousType0`2[System.String,System.Int32]'). <br />    BindingExpression: Path='Age' DataItem='{ Name = World, Age = 23 }' (HashCode=-172495608);<br />    target element is 'System.Windows.Controls.TextBlock' (Name=''); <br />    target property is 'Text' (type 'System.String').. <br />    System.MethodAccessException: Attempt by method 'System.Windows.CLRPropertyListener.get_Value()' <br />    to access method '&lt;&gt;f__AnonymousType0`2&lt;System.__Canon,System.Int32&gt;.get_Age()' failed.<br /><br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Windows.CLRPropertyListener.get_Value()<br />   at System.Windows.PropertyAccessPathStep.ConnectToPropertyInSo...</pre><br /><br /><h4>Turns out, it _IS_ possible to DataBind to an anonymous type in Silverlight.</h4><br /><br /><p>All you have to do is expose your privates. Placing the following into your AssemblyInfo.cs will give the built in bindings the ability DataBind to your object(s).</p><br /><br /><p><strong><br />    <br />[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Windows&quot;)]</strong></p><br /><br /><p>&#160;</p><br /><br /><p>I’m not going to say whether this is or is not a good idea, and I’m sure there’s many ways to abuse it.</p><br /><br /><p>Don’t inhale too much of this stuff.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+W.Meints<br /><br />I&#39;m not sure I understand your question. Could you elaborate a little?</div>
+</div>
+<div class='comment'>
+<div class='author'>W.Meints</div>
+<div class='content'>
+What about dynamics, does the same trick apply to those kind of objects as well?</div>
+</div>
+<div class='comment'>
+<div class='author'>Obsidience</div>
+<div class='content'>
+I prefer to keep my privates unexposed, thank you very much! ;)</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Silverlight Profiling PowerShell helper.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-05-15T16:50:00.000Z" pubdate>May 15th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was playing around with some Silverlight profiling the other night to see if I could find any obvious issues with my open source project <a href="http://statlight.net" target="_blank">StatLight</a> and wound up writing a little script in PowerShell I hoped someone might find helpful.</p>  <h4>But I didn’t know you could profile a Silverlight app.</h4>  <p>I didn’t until I started doing some digging online. Now, the Silverlight profiling story (at least from what I’ve seen/tried) is not near the easy of say <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">Redgate ANTS Performance Profiler</a>. However, it’s do-able. (And with this helper script – hopefully a little simpler?)</p>  <h4>How can I profile a Silverlight Application?</h4>  <p>I would recommend you read the following blog, which explains one way of doing it very well.</p>  <p><a title="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx" href="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx">http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx</a></p>  <h4>So… what’s this script for?</h4>  <p>If you read the blog above, or have done this before, then you probably noticed that there was quite a series of commands you had to execute before you could wind up with a performance report. </p>  <p>I threw together a quick little PowerShell script in an attempt to automate smooth out the process.</p>  <h4>Hot do I use it?</h4>  <ol>   <li>Download the script &amp; save it somewhere. <a href="http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1"><strong>http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1</strong></a> </li>    <li>Open the PowerShell console. cd to the directory your xap/assemblies are stored.      <br />(EX: {myProject}\Bin\Debug\ ) </li>    <li>Execute:      <br />{pathToScript}\SilverlightProfiler.ps1 -urlPath &quot;{myProject}\Bin\Debug\TestPage.html&quot; </li>    <li>When your done profiling press enter to signal that your done.      <p></p> Once complete, it will print the location your profiling report was saved. You can then open it with Visual Studio. </li> </ol>  <h5>Couple of disclaimers.</h5>  <ul>   <li>Some paths are hard-coded to my x86 machine. </li>    <li>I had troubles running the built in visual studio .bat files (from powershell) that are supposed to set the environment variables. So I extracted out what vars I could find to make it work. </li>    <li>I’m not a profiling expert – just hacked this together to get it to work for me. </li> </ul>  <p>I hope this is useful, and if you know of a better way, I’m always interested in hearing your feedback.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Diffing tool feature request</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-03-22T04:08:00.000Z" pubdate>Mar 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Most of us have probably tried different versions of a file diffing tool. Some are picky about their choice. Personally I’m fond of two different tools (mostly because they’re easy to find/install and setup). Here’s a post where I talk about how I like to integrate these tools when working with <a href="http://msdn.microsoft.com/en-us/teamsystem/dd408382.aspx">TFS</a> and Visual Studio - <a href="/2009/08/development-environment-mergecompare">/2009/08/development-environment-mergecompare.html</a></p>  <p>A couple months ago, I _slowly_ started learning <a href="http://git-scm.com/">Git</a>. Since that initial plunge, I’m now in a place where much of it still scary unknown; however, I know enough get what I need done. And when I get to the point where I need to do something I’ve never done, well I go figure it out, and it becomes another part of the personal Git toolbox.</p>  <p>I’ve been working git solely through the command line (in PowerShell actually). I know it’s not the best place to take full advantage of <a href="http://git-scm.com/">Git</a>; however, it’s working for me. </p>  <p>The other day needed to review changes in a file back in the commit history. Up until this point I had only diff’d uncommitted files with the most recent version of that file, and I already wired a visual diffing tool where I could then use the “git difftool …” command to review differences. </p>  <p>However this was the first time I had to look at a file further back in time than the head. After a quick search I came across the “<a href="http://ftp.sunet.se/pub/Linux/kernel.org/software/scm/git/docs/gitk.html">gitk</a>” command. gitk is “The git repository browser”. I’ve known about this tool, however am trying to keep with the command line tools. (Except for diffing files)</p>  <p>Below is the UI when running the “gitk build-tasks.ps1” in the root of the <a href="http://statlight.net" target="_blank">StatLight</a> project.</p>  <p>Notice how there’s a list of changes to the file, and under that the diff of the previous version to the selected version.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btMyZortI/AAAAAAAAAN4/TTo1Bfy1OQc/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btONpjuqI/AAAAAAAAAN8/mrgvUVTrIj8/image_thumb2.png?imgmax=800" width="810" height="638" /></a> </p>  <p>One thing do like about the above, is the list of revisions and how they are right there in your face. Going back in time is really easy. My only problem is I’m not accustomed to the linux style diffing, and still prefer the side/by side file diffing.</p>  <p>On to the feature request…</p>  <h4>What problem is this new feature trying to solve?</h4>  <p>The problem of having a file diff between version E &amp; F and then needing to look at the previous version to E. (easily) <strong>AND</strong> show the different versioned files side by side <strong>AND</strong> make it easy and intuitive to go back in time.</p>  <h4>How might this feature request look?<img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://i.zdnet.com/blogs/iphone-touchscreen.png" width="130" height="129" /></h4>  <p>Maybe someone is doing this, maybe not. It would be interesting to leverage a (mouse drag – or text command [EX: Ctrl+Alt+Right Arrow]) to “pan” between versions through file diffing view. Kind of like you can drag the pictures on an iPhone to view the previous or next one. I could drag the mouse across the screen to pan to the previous/next view of the diff. </p>  <p>&#160;</p>  <p>Below is a quick mockup of the thought – definitely far from refined. </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S6btOnz3LRI/AAAAAAAAAOA/FDCh-WJo2_k/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S6btPwPn4pI/AAAAAAAAAOE/YrXZIPjUtUQ/image_thumb5.png?imgmax=800" width="1017" height="380" /></a></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <h4>One challenge to true implementation?</h4>  <p>The main problem to solve (if you write a generic text diffing tool) is needing to interface with different <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a>’s so you can retrieve the the previous/next versions of the file. Basically having to know what <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a> the file is under.</p>  <p>&#160;</p>  <p>Anyone mind taking this project on and implementing this in one of the decent open source file diffing tools out there? (ex: <a href="http://winmerge.org/">http://winmerge.org/</a>)&#160; I would love you for it. Well… I’d buy you a beer.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">PowerShell – background task that speaks to me</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-02-16T05:11:00.000Z" pubdate>Feb 15th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Today I was testing a long running task where my basic scenario was to execute at the PowerShell prompt.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test1.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test2.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test3.txt</p> </blockquote>  <p>Change some code and do it all over again.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test4.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test5.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test6.txt</p> </blockquote>  <p>Although seemingly simple and really not that tough. It became really inefficient because I didn’t like sitting there waiting for it to finish. I was off reading blogs, responding to email, investigating other coding issues and generally forgetting about the long running tasks in the background. On top of that, when I came back to it I couldn’t remember what the last run was (was that test 2 or 3 or 5?) without querying disk to see what it was.</p>  <p>Sine I had all this time to kill in between test runs, I wrote a quick PowerShell script that would fully automate test 1,2,3 and stop. This was great and the first time I ran it was much more efficient as I didn’t have to keep checking back to see when to start it up again.</p>  <p>However, I not only had time to kill, but now I had 3 times that time to kill. I decided to elaborate on the script. I searched the tubes for a way to play a sound when a task was done, so I could be notified as to it’s progress, and completion.</p>  <p>I stumbled upon this blog, which was great for showing me how to play sounds within PowerShell.</p>  <p><a href="http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html">http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html</a></p>  <p>I implemented the sounds and was off and running on another batch of testing, all tuned in to the sounds of progress.</p>  <p>Her we go again, more time to think about how to improve the process (that I’m not even trying to improve).</p>  <p>What if the script talked back to me? Some more googlefoo and I found this great example blog.</p>  <p><a href="http://huddledmasses.org/powershell-speaks/">http://huddledmasses.org/powershell-speaks/</a></p>  <p>Basically using the built in <a href="http://en.wikipedia.org/wiki/Microsoft_Speech_API">Microsoft speech api’s</a> you can get PowerShell to talk to you. This was just too much fun for the day. </p>  <p>At the end of the day the script below is basically what I was using. Don’t have too much fun, as you might not get any real work done…</p>  <p>The content of this blog isn’t necessarily top notch, but I just had to blog about it, as I was very impressed as to how easy it was to work with the speech api’s. Never knew it could be so easy to make a script verbally interactive.</p>  <pre>$Voice = new-object -com SAPI.SpVoice<br /><br />function speak([string] $msg)<br />{<br />    $Voice.Speak( $msg, 1 )<br />}<br /><br />function execScriptWithNotify([string] $completionMessage, [scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br />    speak $completionMessage<br />}<br /><br />function execLongRunningTask([scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br /><br />    Write-Host &quot;Long running task complete!&quot;<br />    speak &quot;All tasks are done!&quot;<br />}<br /><br /><br /># Start the long running task<br />execLongRunningTask {<br /><br />    #***************************************************************<br />    #***************** How many times to run task? ***************** <br />    #***************************************************************<br />    $iterationCount = 3<br />    <br />    for ($i=1; $i -le $iterationCount; $i++)<br />    {<br />        execScriptWithNotify &quot;Task $i Complete&quot; {<br />        <br />            #***************************************************************<br />            #***************** Long Running Task Goes Here ***************** <br />            #***************************************************************<br />            Write-Host &quot;begin long running task # $i&quot;<br />            [System.Threading.Thread]::Sleep(3000);<br />            Write-Host &quot;end   long running task # $i&quot;<br />            #***************************************************************<br />            #***************************************************************<br />            #***************************************************************<br />        }<br />    }<br /><br />}</pre>  </div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/9/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/7/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

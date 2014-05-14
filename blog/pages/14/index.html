@@ -1,0 +1,483 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">unbound TFS project - how do I get the offline changes checked in?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-10-01T14:10:00.000Z" pubdate>Oct 1st 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+Our company's code is currently hosted at a third party development shop and once in a while my solution gets marked as "offline". When I right click on the root of the solution node I get an option to "Go Online". If I'm in this state and I go online, it connects to TFS and scans through the entire solution looking for modified files.<br /><br />So yesterday their internet was down ALL DAY (what a pain, I never realized how dependent I was on source control). So I was trying to edit a file and V.S. kept trying to check it out from TFS before making the edit, which would fail, and leave the file in a read only state. This sucked because I wasn't able make changes to any file.<br /><br />I did the first thing I knew of on how to get my files in a state that I could work with for the day. I went to File -> Source Control -> Change Source Control and proceeded to "Unbind" each project from tfs. This allowed me to work for the day, make changes, etc without being road blocked by TFS.<br /><br />Then this morning I came to work and the companies internet was working, and I was able to get to TFS successfully. I re-opened the solution, and unfortuantely in my "Pending Changes" tab there was only a couple files checked out. This was not good because I knew I made many more changes than it thought I had.<br /><br />This is where the first paragraph above comes into play... I wanted visual studio to figure out all the things I did yesterday because I knew I wasn't going to remember all the files I touched. So I googled about VS's offline/online modes and ran across this blog.<br /><br /><a href="http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx">http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx</a><br /><br />After reading some of the details about how VS works with TFS I decided to try and get my solution "offline" so I could bring it back online and allow it to figure out my changed files...<br /><br />To accomplish this I opened up regedit. Followed Ben's pointer to<br /><br />HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\9.0\TeamFoundation\Servers\<myexternalcompaniestfs>\<br /><br />In there I set<br />AutoReconnect=0<br />Offline=1<br /><br /><br />When I re-opened my solution. It opened in offline mode. I was then able to bring the solution online and as expected, it noticed all the changes I made yesterday. (THANK YOU TFS, would have been nice to do this w/out hacking the registry though).<br /><br /><br /></myexternalcompaniestfs></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Staxmanade</div>
+<div class='content'>
+If I click on my solution in the "Solution Explorer" the only buttons if have are...  "Properties", "Add New Solution Folder", and "Refresh Status" (this is a VisualSVN button)...<BR/><BR/>is there some sort of option I need to enable to see this command?</div>
+</div>
+<div class='comment'>
+<div class='author'>justncase</div>
+<div class='content'>
+There is a button on the top of the solution explorer for going offline/online. It's awfully convenient.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">How can C# variable have an @ sign in front of it?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-09-14T04:26:00.000Z" pubdate>Sep 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn't find anything on the net describing this and why it compiled.<br /><br />basically what I'm talking about is if you have some code<br /><br />private void MyMethod(string myparam)<br />{<br />   int a = @myparam.Length;<br />}<br /><br />Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...<br /><br />now, nearly a year later I was perusing through the SLUnity framework on codeplex [<a href="http://www.codeplex.com/unitycontributions">http://www.codeplex.com/unitycontributions</a>] and saw the @ sign again...<br /><br /><br />public void UnregisterSubscriber(string publishedEventName, EventHandler subscriber)<br />{<br />   PublishedEvent @event = GetEvent(publishedEventName);<br />   @event.RemoveSubscriber(subscriber);<br />   RemoveDeadEvents();<br />}<br /><br />I did some more googling and still can't find anything, (I'm sure it's out there, just can't put together the right search criteria)...<br /><br />Then I went back to the code, looked at it for a minute, and it dawned on me that "event" is a keyword in c#... Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.<br /><br />So I wrote a little test to see if this hypothesis was correct.<br /><br />private static void MyMethod(string class)<br />{<br />   int a = class.Length;<br />}<br /><br />this won't compile because of the "class" keyword...<br /><br />then I put the @ sign in front of class<br /><br />private static void MyMethod(string @class)<br />{<br />   int a = @class.Length;<br />}<br /><br />and it not only compiled, but you also get intellasense on the variable...<br /><br />How cool...<br /><br />I'm not sure I would do that on a regular basis, seems like it might be  a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it's consumers? Anyone know why on this?</div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+nice one :), had me fooled for a bit too when I found a variable named @@delegate</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+That is exactly what it is for, so you can use reserved words for variable names. You'll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won't have a compile error if it happens to be a C# keyword.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">WCF Service Proxy inside Silverlight with a generic type</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-09-14T01:32:00.000Z" pubdate>Sep 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...<br /><br />On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.<br /><br />public interface IValidatedResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br />Now if you had a method that exposed this generic result object through your web service...<br /><br /><br />public ValidatedResult&lt;long&gt; StringLength(string param1)<br />{<br />    return new ValidatedResult&lt;long&gt;(param1.Length);<br />}<br /><br /><br />Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...<br /><br /><br />public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged<br />{<br /><br />    private long ResultField;<br /><br />    private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public long Result<br />    {<br />        get<br />        {<br />            return this.ResultField;<br />        }<br />        set<br />        {<br />            if ((this.ResultField.Equals(value) != true))<br />            {<br />                this.ResultField = value;<br />                this.RaisePropertyChanged("Result");<br />            }<br />        }<br />    }<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues<br />    {<br />        get<br />        {<br />            return this.ValidationIssuesField;<br />        }<br />        set<br />        {<br />            if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))<br />            {<br />                this.ValidationIssuesField = value;<br />                this.RaisePropertyChanged("ValidationIssues");<br />            }<br />        }<br />    }<br /><br />    // stripped out the INotifyPropertyChanged goo<br />}<br /><br /><br />Notice the non generic type ValidatedResultOflong  that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...<br /><br />Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.<br /><br />Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a "Result" and a "ValidationIssues" property and another partial class in a different location that declares it implements an interface which defines that "Result" and "ValidationIssues" property... and would that compile?<br /><br />So I wrote my first test...<br /><br />Here is our auto generated partial class simulated...<br /><br />public partial class Foo<br />{<br />    public bool Result { get; set; }<br />}<br /><br /><br />I then wrote a generic result of T to define the object has a Result property.<br /><br />public interface IResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />}<br /><br /><br />And now the specific implementation with a long Result type.<br /><br />public partial class Foo : IResult&lt;long&gt; {}<br /><br /><br />After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...<br /><br />I defined the validated result contract as follows...<br />public interface IResultProperty&lt;T&gt;<br />{<br />    T Result { get; }<br />}<br /><br />public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;<br />{<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br /><br />This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.<br /><br />Here's an example of the partial class for the ValidatedResultOflong <br /><br />public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }<br /><br />With that in place, this meant I could create some generic handling methods for all of my objects that now implement IValidatedResult&lt;T&gt;...<br /><br /><br />public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)<br />    where T : IValidatedResult&lt;T&gt;<br />{<br />    if (validatedResult != null &amp;&amp;<br />        validatedResult.ValidationIssues != null &amp;&amp;<br />        validatedResult.ValidationIssues.Count > 0)<br />        return true;<br />    else<br />        return false;<br />}<br /><br /><br />Don't know if i've very heard anyone talk about one partial class containg some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...<br /><script type="text/javascript"><br />var pageTracker = _gat._getTracker("UA-1017448-3");<br />pageTracker._trackPageview();<br /></script></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Interesting observation. Thanks for sharing.<BR/><BR/>I haven't pushed it very far (bool, string, MyCustomObject, etc)</div>
+</div>
+<div class='comment'>
+<div class='author'>Boris Modylevsky</div>
+<div class='content'>
+Thanks for the post. It's really exciting to receive a proxy of Generic class. It really works smoothly with "simple" classes. But more complex ones result with random names in Silverlight proxy. For example, my <I>SimpleTree&lt;Item&gt;</I> became <I>SimpleTreeNodeOfItemErNMAaNV</I></div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Ok, I quickly threw an example together. I didn't comment much, but the code's there and "works on my box..." <BR/><BR/>Let me know if you have any troubles either understanding it, or getting it working. <BR/><BR/>I've never used this file host service, but giving it a try... I've placed the project here <A HREF="http://www.filesavr.com/validatedresultsample" REL="nofollow"> http://www.filesavr.com/validatedresultsample</A><BR/><BR/>Also the only concepts to really look at here are the ValidatedResult&lt;T&gt; and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.<BR/><BR/>Good luck!</div>
+</div>
+<div class='comment'>
+<div class='author'>greg</div>
+<div class='content'>
+... very much appreciated!!</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Greg, <BR/><BR/>I will try to put together an example and post it here soon.</div>
+</div>
+<div class='comment'>
+<div class='author'>greg</div>
+<div class='content'>
+... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.<BR/>Thanks in advance.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">UnitDriven&#x27;s UI Gets a Minor Makeover</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-08-31T05:57:00.000Z" pubdate>Aug 30th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+I had some time to play around with and learn WPF within Silverlight. It's a modest start, but I just had to blog about it...<br /><br />We've started a project at my current job using Silverlight. Researching different framework options I ran across the <a href="http://codeplex.com/UnitDriven">UnitDriven</a> project on codeplex. After downloading and checking out the silverlight testing UI...<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s1600-h/Csla.net.Original.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s320/Csla.net.Original.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559412476544802" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />I decided this was a place I could take a stab at learning some silverlight UI. ok... So it's getting late and it's certainly not perfect, but here's where I am now.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s1600-h/Csla.net.NewSkin.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s320/Csla.net.NewSkin.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559787065086786" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />The only really tricky piece was... The original UI used nested ListBox controls which threw me down a path of thinking the program was broken... basically with a ListBox inside of a ListBox you have to select the first item, then the sub item, and in this application, only then, can you select the "Run" button to execute the unit test... I spent time looking through code trying to figure out if there was a bug in the testing contexts.<br /><br />The solution to this was to convert the ListBox to an ItemsControl. Which allowed me to select multiple buttons without having to first select the ListBox sub item...<br /><br />I then had to wrap everything inside of a ScrollViewer because the ItemsControl doesn't create one automatically like the ListBox does.<br />[EDIT]<br />Unfortunately wrapping everything in the ScrollViewer removed a feature the older version had, namely, at the top of the control is a display of the # succeeded/# Total. Wrapping everything in the ScrollViewer removed the ability to scroll through tests while that value was being updated during tests...<br /><br />So I updated the main grid in the XAML, and shifted a few things around to allow this old feature to be seen in the new UI.<br />[/EDIT]<br /><br />after that was done, it was basically playing around with different styling elements to end up with the UI above.<br /><br />It was a good simple exploratoin into some of the Silverlight's WPF capabilities.</div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Nermin</div>
+<div class='content'>
+Your work on this patch is trully appreciated.  That listbox issue was trully annoying one.</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+Thanks for the patch, I applied it today.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">How best to expose a value that could throw an error?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-05-14T22:46:00.000Z" pubdate>May 14th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">BinarySearchOrDefault()</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-04-14T03:52:00.000Z" pubdate>Apr 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Timing Debug Code Using Lambda&#x27;s</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-04-11T15:29:00.000Z" pubdate>Apr 11th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+whoops - Thanks for the suggested update...</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Lambda, not lamda. ;)</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/15/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/13/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

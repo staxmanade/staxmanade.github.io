@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Category: Octopress - Developing on Staxmanade]]></title>
+    <link href="http://staxmanade.com"/>
+    <updated>2014-05-14T14:32:45Z</updated>
+    <id>http://staxmanade.com</id>
+    <author>
+        <name>Jason Jarrett</name>
+        <uri>http://staxmanade.com/about</uri>
+    </author>
+    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="self" href="/blog/categories/octopress/atom.xml"/>
+    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 1 - Introduction]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 1 - Introduction]]></summary>
+        <content type="html"><![CDATA[<p>After hosting my blog on <a href="http://blogspot.com">BlogSpot.com</a> for over 5 years, it was time to move.</p>
+<p>As someone with the development background I have and constantly growing knowledge of the web, it always bugged me that my blog was hosted on BlogSpot. </p>
+<p>When I first started blogging over 5 years ago, it was a great starter site. Free, simple, easy to configure and it was a great place to throw content up with very little friction. But my desire to write posts using <a href="http://en.m.wikipedia.org/wiki/Markdown">Markdown</a>, host my content on a site where I felt like I had complete control, and lets face it, I just wanted a codebase I could tinker with and throw up coding experiments.</p>
+<p>I recently completed migration of my <a href="http://staxmanade.blogspot.com">staxmanade.blogspot.com</a> site to its new location here on <a href="http://staxmanade.com">staxmanade.com</a> which is graciously being hosted for free by <a href="https://github.com">GitHub</a>.</p>
+<p>If you currently have a blog on BlogSpot/Blogger and are interested in migrating to Octopress or any other blog, the following series of posts may be of use.</p>
+<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 1</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - (current) - Introduction
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 3</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - (current) - Export BlogSpot Content
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
+<h1 id="steps-to-export-content-">Steps to export content.</h1>
+<ol>
+<li>Log in to your [BlogSpot.com(<a href="http://BlogSpot.com">http://BlogSpot.com</a>) admin portal</li>
+<li>Go to the <code>Settings</code> tab</li>
+<li>Select the <code>Other</code> option under Settings</li>
+<li>Under Blog tools select <code>Export blog</code></li>
+<li>Save the file somewhere safe so we can refer to it later</li>
+</ol>
+<p><img src="/images/posts/blogger_settings.png" alt="Blogger Settings"></p>
+<h2 id="what-s-in-this-export-file-">What&#39;s in this export file?</h2>
+<p>This file contains the raw content and metadata around each of your blog posts. You won&#39;t get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that&#39;s lower on the priority).</p>
+<p>Here is a snippet of a single entry from the exported file. In later posts we&#39;ll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
+<h2 id="sample-entry-from-blogspot-export-file">Sample Entry from Blogspot Export File</h2>
+<pre><code class="lang-xml">  &lt;entry&gt;
+    &lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
+    &lt;published&gt;2013-12-18T19:50:00.001-08:00&lt;/published&gt;
+    &lt;updated&gt;2013-12-18T19:50:18.725-08:00&lt;/updated&gt;
+    &lt;category scheme=&#39;http://schemas.google.com/g/2005#kind&#39; term=&#39;http://schemas.google.com/blogger/2008/kind#post&#39;/&gt;
+    &lt;title type=&#39;text&#39;&gt;Format your .Net exceptions to see the StackTrace.&lt;/title&gt;
+    &lt;content type=&#39;html&#39;&gt;&amp;lt;h4&amp;gt;TL;DR&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;Check out a dinky little &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;Exception Message Beautifier&amp;lt;/a&amp;gt; site I threw together so you can quickly format .net exception messages and easily see the StackTrace.&amp;lt;/p&amp;gt;  &amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;  &amp;lt;h4&amp;gt;Go to the site: &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;&amp;lt;font size=&quot;4&quot;&amp;gt;CLICK HERE&amp;lt;/font&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;  &amp;lt;h4&amp;gt;Background&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.&amp;lt;/p&amp;gt;  &amp;lt;blockquote&amp;gt;   &amp;lt;pre&amp;gt;System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34&amp;lt;/pre&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/blockquote&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like &amp;lt;a href=&quot;http://notepad-plus-plus.org/&quot; target=&quot;_blank&quot;&amp;gt;NotePad++&amp;lt;/a&amp;gt; and enter a search/replace as I show below over and over with each exception message you review.&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;lt;a href=&quot;http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png&quot;&amp;gt;&amp;lt;img title=&quot;image&quot; style=&quot;border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800&quot; width=&quot;443&quot; height=&quot;286&quot; /&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Just so I could see an exception that looked more like:&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;blockquote&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;p&amp;gt;System.Exception: Hello Exception! &amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Spike.GetException() in …&amp;amp;lt;cut off for brevity&amp;amp;gt; &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Spike.b__0() in …&amp;amp;lt;cut off for brevity&amp;amp;gt; &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in …&amp;amp;#160;&amp;amp;#160; &amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/blockquote&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;I finally buckled down and threw together a tool for this. &amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;h3&amp;gt;You can check go check out &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;Exception Message Beautifier&amp;lt;/a&amp;gt; where you can see the sample below.&amp;lt;/h3&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;lt;a href=&quot;http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png&quot;&amp;gt;&amp;lt;img title=&quot;image&quot; style=&quot;border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800&quot; width=&quot;689&quot; height=&quot;354&quot; /&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;h4&amp;gt;I’d like to thank.&amp;lt;/h4&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Below are a list of tools/resources I leveraged to put the site together relatively quickly over the weekend.&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://codepen.io/&quot; target=&quot;_blank&quot;&amp;gt;CodePen.io&amp;lt;/a&amp;gt; where I first prototyped/built my site before porting it into the GitHub pages. &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot;&amp;gt;GitHub&amp;lt;/a&amp;gt; for providing us with &amp;lt;a href=&quot;http://pages.github.com/&quot; target=&quot;_blank&quot;&amp;gt;GitHub Pages&amp;lt;/a&amp;gt;. Made this site a piece of cake to setup. &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://github.com/approvals/Approvals.NodeJS&quot; target=&quot;_blank&quot;&amp;gt;Approvals.NodeJS&amp;lt;/a&amp;gt; – easily test/verify output. (&amp;lt;em&amp;gt;Disclaimer – I created this nodejs port of &amp;lt;a href=&quot;http://approvaltests.sourceforge.net/&quot; target=&quot;_blank&quot;&amp;gt;Approvals&amp;lt;/a&amp;gt; for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to &amp;lt;a href=&quot;http://en.wikipedia.org/wiki/Eating_your_own_dog_food&quot; target=&quot;_blank&quot;&amp;gt;dog-food&amp;lt;/a&amp;gt; it&amp;lt;/em&amp;gt;) &amp;lt;img class=&quot;wlEmoticon wlEmoticon-smile&quot; style=&quot;border-top-style: none; border-bottom-style: none; border-right-style: none; border-left-style: none&quot; alt=&quot;Smile&quot; src=&quot;http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800&quot; /&amp;gt; &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://angularjs.org/&quot; target=&quot;_blank&quot;&amp;gt;AngularJS&amp;lt;/a&amp;gt; (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.) &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;https://developers.google.com/speed/libraries/devguide&quot; target=&quot;_blank&quot;&amp;gt;Google CDN&amp;lt;/a&amp;gt; for hosting AngularJS &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://google.com/analytics/&quot; target=&quot;_blank&quot;&amp;gt;Google Analytics&amp;lt;/a&amp;gt; (so I can see if anyone cares) &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/ul&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;If you take a look, find a bug. Submit a GitHub issue and/or a pull request. Or if you find it useful, feel free to let me know.&amp;lt;/ul&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;Enjoy!&amp;lt;/ul&amp;gt;  &lt;/content&gt;
+    &lt;link rel=&#39;replies&#39; type=&#39;application/atom+xml&#39; href=&#39;http://staxmanade.blogspot.com/feeds/7515836382847059837/comments/default&#39; title=&#39;Post Comments&#39;/&gt;
+    &lt;link rel=&#39;replies&#39; type=&#39;text/html&#39; href=&#39;https://www.blogger.com/comment.g?blogID=4726251688144615011&amp;amp;postID=7515836382847059837&#39; title=&#39;0 Comments&#39;/&gt;
+    &lt;link rel=&#39;edit&#39; type=&#39;application/atom+xml&#39; href=&#39;https://www.blogger.com/feeds/4726251688144615011/posts/default/7515836382847059837&#39;/&gt;
+    &lt;link rel=&#39;self&#39; type=&#39;application/atom+xml&#39; href=&#39;https://www.blogger.com/feeds/4726251688144615011/posts/default/7515836382847059837&#39;/&gt;
+    &lt;link rel=&#39;alternate&#39; type=&#39;text/html&#39; href=&#39;http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html&#39; title=&#39;Format your .Net exceptions to see the StackTrace.&#39;/&gt;
+    &lt;author&gt;
+      &lt;name&gt;Jason Jarrett&lt;/name&gt;
+      &lt;uri&gt;https://plus.google.com/112910204617314300568&lt;/uri&gt;
+      &lt;email&gt;noreply@blogger.com&lt;/email&gt;
+      &lt;gd:image rel=&#39;http://schemas.google.com/g/2005#thumbnail&#39; width=&#39;32&#39; height=&#39;32&#39; src=&#39;//lh6.googleusercontent.com/-Lz16PAsLf5Q/AAAAAAAAAAI/AAAAAAAAAg8/FYSu9U-1tCw/s512-c/photo.jpg&#39;/&gt;
+    &lt;/author&gt;
+    &lt;media:thumbnail xmlns:media=&#39;http://search.yahoo.com/mrss/&#39; url=&#39;http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/s72-c/image_thumb9.png?imgmax=800&#39; height=&#39;72&#39; width=&#39;72&#39;/&gt;
+    &lt;thr:total&gt;0&lt;/thr:total&gt;
+  &lt;/entry&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 5 - Fix Links]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 5 - Fix Links]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - (current) - Fix Links
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>Once you&#39;ve ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
+<ol>
+<li>Cross-Post links (where I referenced one of my other posts)</li>
+<li>Broken links.</li>
+</ol>
+<h2 id="cross-post-links">Cross post links</h2>
+<p>I used a text editor and some command line magic to search for <code>http://staxmanade.blogspot.com/</code> and replace it with <code>/blog/</code> so that my cross-referencing posts could link to a relative version of the blog instead of the full blogspot domain.</p>
+<p>Depending on how you configure your <a href="http://jekyllrb.com/docs/permalinks/">permalinks</a> you may need to do some more link manipulation. I had to search <code>.html</code> at the end of my cross-referencign posts and be sure to delete it since my old reference would look like</p>
+<pre><code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html
+</code></pre><p>but now should link to</p>
+<pre><code>/blog/2013/12/format-your-net-exceptions-to-see
+</code></pre><p>If you&#39;re on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
+<p>I don&#39;t recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I&#39;ll let you figure out the rest of how to get that task done.</p>
+<h2 id="fix-broken-links">Fix broken links</h2>
+<p>Once you&#39;re done fixing up cross-post links, we want to make sure we didn&#39;t mess anything up, and while we&#39;re at it, fix any old or out-dated links.</p>
+<p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
+<p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
+<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn&#39;t able to fix up all of my external links, but that&#39;s the way of the web unfortunately. I haven&#39;t done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 6</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - (current) - 301 Redirect Old Posts to New Location
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I&#39;ll talk about how I setup automatic redirection from the old blog to the new blog.</p>
+<blockquote>
+<p>Sorry, this post gets a little long, mostly because there is lots evolved, and I took some time to explain it along the way.</p>
+</blockquote>
+<p>So, I&#39;m not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let&#39;s not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
+<h3 id="reasons-for-redirection-">Reasons for redirection:</h3>
+<ul>
+<li>I&#39;d like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
+<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to &#39;migrate&#39; not, start fresh.</li>
+</ul>
+<p>I probably won&#39;t ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I&#39;ve made in the past, but at least they will end up at my new blog.</p>
+<h3 id="goals-for-the-redirection-">Goals for the redirection.</h3>
+<ul>
+<li>Users who click on a link to the old blog should redirect successfully to the new site.</li>
+<li><p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog&#39;s search rankings would carry over to my new blog.</p>
+<blockquote>
+<p>DISCLAIMER: Given the steps in the post, I&#39;m not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
+</blockquote>
+</li>
+</ul>
+<p>Now, while I&#39;m not 100% confident my search rankings carried over, I&#39;m fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
+<h1 id="what-s-involved-for-redirection-">What&#39;s involved for redirection?</h1>
+<ol>
+<li>Tell BlogSpot to redirect each post at <code>staxmanade.blogspot.com</code> to the new location.</li>
+<li>Handle that redirection on the Octopress side.</li>
+</ol>
+<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don&#39;t have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
+<h3 id="let-s-get-into-why-this-wasn-t-as-straight-forward-">Let&#39;s get into why this wasn&#39;t as straight forward.</h3>
+<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you&#39;ll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
+<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don&#39;t provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can&#39;t use on our static site.</p>
+<p>The direction I took was to use the <code>&lt;$BlogItemNumber$&gt;</code> which is like a really long <code>id</code> value, leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">Jekyll alias generator</a> and end up doing two redirects.</p>
+<ol>
+<li>from <code>staxmanade.blogspot.com/SomeBlogUrl</code> -&gt; <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code></li>
+<li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
+</ol>
+<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that&#39;s installed, we need to update all of our blog posts to add in the &#39;alias&#39; that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you&#39;re reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you&#39;re not on Windows)* and I wrote the below script to help in the task. Even if you don&#39;t know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
+<p>{% gist 10562366 InsertBloggerAliasIntoJekyllPost.ps1 %} </p>
+<p>In summary, the above code is:</p>
+<ol>
+<li>Parsing the blogger xml</li>
+<li>Extracting the post url (slug) and BlogSpot blog <code>id</code></li>
+<li>Matching each post with a post in our Octopress <code>_posts</code> <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content">that we recently exported</a></li>
+<li>And injecting an <code>alias: /blog/{id}</code> into the header <code>YAML</code></li>
+</ol>
+<p>Look in your blogger xml for a sample ID, it looks like</p>
+<pre><code>&lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
+</code></pre><p>What we care about is the <code>BigNumber</code> after the &quot;...post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
+<p>If you completed the above and run <code>rake generate</code> and <code>rake preview</code>, test out that your redirections are correct.</p>
+<p>After I completed this and on my blog, <a href="https://staxmanade.com/blog/7515836382847059837">staxmanade.com/blog/7515836382847059837</a> should redirect me to an actual post.</p>
+<p>Once you&#39;re happy with your Octopress&#39;s blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
+<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url&#39;s, we can go back to BlogSpot and update our template to redirect to our static site.</p>
+<p>I used the below template (note search/replace your domain etc) before dropping this into your site.</p>
+<h1 id="update-blogger-template-to-redirect-">Update Blogger template to redirect.</h1>
+<ol>
+<li>Go back to your BlogSpot admin page and select the <code>Template</code> tab.</li>
+<li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
+<li>Modify the below template for your own site.</li>
+</ol>
+<p>{% gist 10562366 BloggerRedirect.html %} </p>
+<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don&#39;t see the middle/transition page.</p>
+<blockquote>
+<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I&#39;m not that cool, so my blog could handle some downtime :P</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - (current) - Import Content into Octopress
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
+<h1 id="translate-export-xml-to-octopress-posts">Translate export <code>xml</code> to Octopress posts</h1>
+<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it&#39;s fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
+<ol>
+<li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code><ul>
+<li>Note: there are a number of forks of the script - if one doesn&#39;t work, browse other changes and see if something fits your needs.</li>
+</ul>
+</li>
+<li><p>From the command line go to a temporary folder and execute</p>
+<p> <code>ruby {pathToImporterFile}/BloggerImporter.rb &#39;{PathToBloggerExport}/blog-03-19-2014.xml&#39;</code></p>
+<p> When I tried it on my windows machine I received the following error. Sorry Windows folks, I don&#39;t have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn&#39;t port it back then. I&#39;m sure it&#39;s possible, but wasn&#39;t worth my time (since it works on my mac and was a one-time task).</p>
+<pre><code class="lang-ruby"> C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;: cannot load such file -- nokogiri (LoadE
+ rror)
+         from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;
+         from BloggerImporter.rb:2:in `&lt;main&gt;&#39;
+</code></pre>
+<p> (One possible issue noted by a colleague: the ruby script requires a gem, <a href="http://nokogiri.org/">Nokigiri</a>, which is not supported on Windows by Ruby 2 at the time of this writing. This can be circumvented by either reinstalling Ruby 1.9.3 or by leveraging a tool like yari which allows you to pick the version of Ruby you wish to leverage with a script - a helpful StackOverflow answer exists <a href="http://stackoverflow.com/a/17318410/64">here</a>.)</p>
+</li>
+<li><p>You should now you have your content.</p>
+<p> After you&#39;ve run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
+<pre><code> ~/code/temp&gt; ls
+ _drafts     _posts    BloggerImporter.rb
+</code></pre><p> I didn&#39;t end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
+</li>
+<li><p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
+</li>
+<li>At this point you&#39;ve successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</li>
+<li>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked. </li>
+<li>If your preview looks right use <code>rake deploy</code> to put your changes on github.</li>
+</ol>
+<p>Hopefully it all worked out and you&#39;re looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn&#39;t necessary (I can&#39;t recall anymore) but it was quick to work through.</p>
+<blockquote>
+<p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">
+        </link>
+        <updated>2014-04-13T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 2</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - (current) - Setup Octopress
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - (coming soon) - Setup a Custom Domain
+        </li>
+        
+        <li>
+            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - (coming soon) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>Luckily for all of us, this post will be short as the <a href="http://octopress.org/docs/setup/">Octopress Setup</a> guide is a great place to start. Only additions I have to add are that I&#39;ve set this up on both a Mac and a Windows 8 machine.</p>
+<p>I had to execute the <code>rake setup_github_pages[repo]</code> on both machines. I should probably <a href="http://www.hanselman.com/blog/PleaseLearnToThinkAboutAbstractions.aspx">look under the abstraction</a> and understand a little deeper - but I&#39;ll have to save that for later. For now I have work to do...</p>
+<h3 id="on-my-mac-">On my Mac:</h3>
+<ul>
+<li>Things worked out quite smoothly on the Mac.</li>
+<li>This is where I ran my initial import of the blog (see later posts in the series).</li>
+</ul>
+<h3 id="on-my-windows-8-machine-">On my Windows 8 machine:</h3>
+<ul>
+<li>This environment seemed harder to get going</li>
+<li>The hardest part on Windows 8 was getting the right combination of ruby, ruby dev kit, and various other dependencies installed. The dependencies for Octopress installation are compatible with later versions of Ruby but the gems needed for blog import are only supported in Ruby 1.9.3 at the time of this writing. Since I don&#39;t use Ruby on Windows for anything else, I eventually ended up uninstalling all versions I&#39;d previously had (including cleaning up any environment path variables). Re-installing just what I needed and eventually got it working. Another route is to use <a href="https://github.com/scottmuc/yari">Scott Muc&#39;s yari</a> which allows you to toggle the version of Ruby that you&#39;re using.</li>
+<li><a href="http://blog.zerosharp.com/setting-up-octopress-on-windows/">Thanks to this post</a> to get started on the windows. Some steps I excluded since I&#39;d alredy setup the blog initially on my Mac.</li>
+</ul>
+<p>Now I can use the power of git to manage my website and blog and I can leverage whatever development tools I would like depending on the platform. If you are new to Octopress it is helpful to study the documentation and structure of the files within your cloned repository. The first thing to note is that you have two branches in the repository: the source branch contains the Ruby scripts and utilities you will use to generate your blog content. The master branch is where your published content will live. The second thing to note is that while you can do the git integrations yourself for deploying the blog, it is best to stick to the RAKE task for deploying your content. This will automate copying your content to the _deploy subdirectory and pushing the update to the master branch. </p>
+]]></content>
+    </entry>
+</feed>

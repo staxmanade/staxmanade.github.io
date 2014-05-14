@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StatLight v1.6 is Out - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Get The Build  What is StatLight?    In short, it allows you to run your Silverlight tests on a Continuous Integration server or alongside your daily ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2011/12/statlight-v16-is-out/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">StatLight v1.6 is Out</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2011-12-31T19:16:00.000Z" pubdate>Dec 31st 2011</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<h4><a href="http://statlight.codeplex.com/releases/view/73869" target="_blank">Get The Build</a></h4>  <h4>What is StatLight?</h4>  <p><img src="http://download.codeplex.com/Download?ProjectName=statlight&amp;DownloadId=95275&amp;Build=18337" width="216" height="81" /></p>  <p>In short, it allows you to run your Silverlight tests on a Continuous Integration server or alongside your daily development.</p>  <p>Fore more information go check out the project site <a href="http://statlight.codeplex.com">http://statlight.codeplex.com</a></p>  <h4>Some ramblings (about the project).</h4>  <p>It’s funny how the release cycle of this open source project has turned out. I don’t have any sort of calendar reminder that pops up saying “it’s been 4 or 5 months and time to get out a new release”. However, since I first open sourced the project I’ve put out a new release on a pretty consistent 4/5 month cycle and have done so since December 2009. It just so happens about every 4/5 months there is enough features and or fixes piled on top that It’s time to put out an “official” build. Not bad for a part time (free to the community) gig.</p>  <p>Thanks to the guys at <a href="http://codebetter.com/" target="_blank">CodeBetter</a> and <a href="http://www.jetbrains.com/" target="_blank">JetBrains</a> for giving us a <a href="http://teamcity.codebetter.com" target="_blank">TeamCity</a> build server, I put a build of StatLight up on their TeamCity server. This has been great for myself. When issues or feature request come in, all I have to do is dev them out, push the code out to GitHub and the <a href="http://teamcity.codebetter.com" target="_blank">TeamCity</a> build produces an artifact that people can pull down and use/test right away.</p>  <p><strong>What’s the difference between a TeamCity build and an “official” release of StatLight? </strong>To be honest, NOTHING. When I decide it’s time to release an “official” build, I head over to the TeamCity, download the latest build and throw it up on CodePlex and NuGet and call it the “official” release. I guess the biggest difference is this means I now have to go update the documentation out on the CodePlex site. I’m not particular happy with this process and hoping my new pet project using <a href="http://sphinx.pocoo.org/">http://sphinx.pocoo.org/</a> to generate a CHM documentation file will help with future versioning of the tool. I’m working on a new blog post for how I got this working…</p>  <h4>Some more ramblings (about this release)</h4>  <p>This build comes with some pretty major internal refactorings. Finally, after 3 years, I’ve put in an IOC container (really liking <a href="https://github.com/grumpydev/TinyIoC" target="_blank">TinyIOC</a> for this task). This cleaned up quite a bit of the codebase. Introduced a couple regressions, bug the community was great in helping me figure this out and I’ve beefed up my test coverage to avoid this in the future. There is more cleanup to do in the codebase, but much of the hard work was done and it’ll be small refactorings as I see them going forward.</p>  <h4>Some of this build’s highlights:</h4>  <p>I’d highly recommend reading the release notes on the download page to get a full list of features/fixes. <a href="http://statlight.codeplex.com/releases/view/73869">http://statlight.codeplex.com/releases/view/73869</a></p>  <ul>   <li>Support for <a href="http://www.silverlight.net/learn/overview/what's-new-in-silverlight-5" target="_blank">Silverlight 5</a>. </li>    <li>Overhauled the “Continuous” mode. (Provide better U.I. and support for multiple xaps/dlls)      <ul>       <li>Note: I was getting a bug report that it could occasionally run a xap multiple times. Hopefully it’s fixed now, but if you see it and can reproduce it. <a href="http://statlight.codeplex.com/discussions" target="_blank">Let&#160; me know</a>. </li>     </ul>   </li>    <li>MSTest TRX output format. (Note: This was requested heavily, but when it was added I didn’t receive much feedback on whether it was working or not… So if you have issues, first start a <a href="http://statlight.codeplex.com/discussions" target="_blank">Discussion</a> or file an&#160; <a href="http://statlight.codeplex.com/workitem/list/basic" target="_blank">Issue</a>) </li> </ul>  <p>Special thanks to <a href="https://github.com/brumfb" target="_blank">Bob Brumfield</a> for fixing a number of pathing issues after a directory re-structuring I made in the project. With his fixes we were able to get Silverlight 5 support into the project sooner than later.</p>  <h4>Sort-of known issue with this build.</h4>  <p>Due to the large scale refactoring that happened within StatLight I wouldn’t be surprised if a few regressions were introduced. Hopefully not as I’ve setup a large amount of automated tests around the project. But It’s hard to get everything.</p>  <p>I’ve had a few people report an issue with symptoms similar to the following.</p>  <ul>   <li><a href="http://statlight.codeplex.com/discussions/284494">http://statlight.codeplex.com/discussions/284494</a></li>    <li><a href="http://statlight.codeplex.com/workitem/14579">http://statlight.codeplex.com/workitem/14579</a></li> </ul>  <p>If you experience any sort of “<strong>Invalid or malformed application: check manifest</strong>” error. This is probably due to a StatLight web server side exception not being reported out correctly. Try downloading the latest from the TeamCity build (follow the link on the <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a> home page).</p>  <h4>What’s to come?</h4>  <p>If you feel brave, and <a href="https://github.com/staxmanade/StatLight" target="_blank">clone the current codebase</a> you could get some early access to a version I have working with the <strong>Windows Phone Emulator</strong>. This was actually an early branch of the project I created many moons ago, and one that a user forked and added a couple fixes to a while back. I’ve since merged this into the main-line of StatLight.</p>  <p>This early version doesn’t yet support the full gamut of what StatLight’s Silverlight version supports, but I’m hoping to get it in there. It should work with the recent builds of the Microsoft.Silverlight.Testing that work on the phone. If you’re interested in helping out here, the big reason I don’t support most everything on the phone is related to the big <a href="https://github.com/staxmanade/StatLight/blob/master/default.ps1" target="_blank">ol monster build script</a> in StatLight. I have to add some magic dust to this script and make dual compile other projects for both Silverlight and the phone. The codebase itself shouldn’t have to change much, but the build scripts and integration tests will require the majority of the effort.</p>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2011-12-31T19:16:00.000Z" pubdate>Dec 31st 2011</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/statlight/'>StatLight</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/12/statlight-v16-is-out/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/12/statlight-v16-is-out/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2011/10/excited-to-announce-my-new-career/" title="Previous Post: Excited to Announce My New Career Opportunity">&laquo; Excited to Announce My New Career Opportunity</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2012/01/you-are-responsible-for-making-that/" title="Next Post: You are responsible for making that feature work. Write a test. Just do it…"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

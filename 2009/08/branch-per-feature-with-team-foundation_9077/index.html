@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages… - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Branch-Per-Feature with Team Foundation Server (TFS)  Series Links  How we got here…   Kanban Stages   Lessons LearnedIn the previous post (“How we go...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-08-06T14:21:00.000Z" pubdate>Aug 6th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol><p>In the <a href="/2009/08/branch-per-feature-with-team-foundation_06">previous post (“How we got here”)</a> I provided a small intro into why and how my team arrived at a Branch-Per-Feature/Kanban development lifecycle.</p><p>In this post I’ll describe each stage of our current development lifecycle.</p><ol><li><strong>Triage</strong> – Initial drop point for <em><u>most</u></em> features. <ul><li>I say <em><u>most</u></em> because some head straight into other steps further along in the pipeline. </li><li><strong>Items are categorized by area or department </strong>(These map to an actual TFS Area)<br />   EX: Infrastructure, Operations, Billing, Client Services, etc… </li><li>Items are <strong>prioritized</strong>.<br />   Each department head &amp; higher gets the opportunity to prioritize within each Area. </li><li>The WIP in Triage is basically N/A. </li></ul></li><li><strong>Backlog</strong> – Items in the Backlog have been deemed important enough to begin their life in the pipeline and start being pulled through each stage. <ul><li>These items need extra <strong>research, design, and requirements gathering</strong>. </li><li>This is where items that were priority #1 in their respective Area go head to head with the #1’s in other Areas and can be further prioritized. </li><li>We try to keep the WIP in the Backlog to about 10 or less. </li></ul></li><li><strong>Queue</strong> – Items in the Queue are items that have no further design/requirements gathering needed and when a developer is ready can pull an item straight into development. <ul><li>We keep the WIP in the Queue to about 7 or less. </li></ul></li><li><strong>Development</strong> <ul><li>When the developer pulls an item from the Queue into development we <strong>create a branch in a <em>Branches</em></strong> folder and give it a name related to the feature being developed. All development for the feature is done in this branch. </li><li>In our current workflow,<strong> after the development of the feature is complete, the developer does a first pass of testing</strong>. (We have a fairly small shop, where all of the developers are testers and all of the testers are developers.) </li><li>When the developer is done testing the feature is (pushed) into Tester Pass 1. (this is part of why I stated above we have a semi-kanban &amp; not a true pull based kanban) </li><li><strong>IMPORTANT NOTE: <u>frequently forward merge from the trunk into the branch</u></strong> this helps to avoid issues later, and is a requirement before the next stage (testing). </li></ul></li><li><strong>Tester Pass 1</strong> <ul><li>A different person from the implementing developer needs to be brought up to speed as to what the feature is and the needed changes to accomplish the feature. </li><li>The tester here pounds away at the changes and gives feedback to the original developer of any issues/changes that may need to be made.<br /></li></ul><blockquote><p><strong>TFS Hint</strong>: When I become Tester 1 for a feature, one trick I use is to “pretend merge” the branch back into the trunk. I say pretend merge because I take all the normal steps to merge into the trunk up until the check-in part. I do this so I can see all the changed files easily and can diff each file with the trunk to find the exact source code changes. After a visual code review is complete I undo any changes and begin testing the branch.</p></blockquote></li><li><strong>User Acceptance</strong> – Before we merge the feature into the trunk, we do a review with the customer.  <ul><li>This allows us to get solid feedback before it gets merged into the trunk, one more testing pass, and deployed to production. This way we <strong>DON’T </strong>get feedback like <strong>“this is not what I need because it needs to do/be like…“ (after it’s been deployed)</strong> and instead get more of a <strong>“could you tweak it to be like…” which allows us to deliver what the customer actually needs</strong> and not what we interpreted the design to be. </li><li>Also since it’s not merged into the trunk, any changes requests as a result of the User Acceptance review allow us to take our time to get the change done right and not feel like we have to hurry the feature to catch the week’s deployment. We are able to correctly make the changes, and we can usually communicate to the user at the meeting what changes to the system mean, (if we change Feature A and add/remove/change how it operates it may not end up shipping in the next scheduled deployment (or next etc…)) </li></ul></li><li><strong>Merge Into Trunk</strong> - original developer is now responsible for merging the feature branch back into the trunk. <ul><li>If the changes made in the branch are more system-wide or architectural in nature, we will pair on complicated merges. </li><li>There is usually some coordination that may need to happen before a merge can be done. We don’t want to merge a new feature into the trunk when we’re creating a deployment snapshot and anything else that may determine we hold off on merging the feature. </li></ul></li><li><strong>Tester Pass 2</strong> <ul><li>After merging the new feature into the trunk is complete we have one more tester take a shot testing the newly merged features. We added this step to the kanban to help reduce potential regression bugs and help keep the quality band high before the feature was marked as done and queued for deployment. </li></ul></li><li><strong>Deployment</strong> – After all testing and user acceptance is complete the feature is moved to <strong>Deployment</strong>. <ul><li>This step is only to keep track of what is queued up for the next deployment cycle.<br /></li></ul><blockquote>When we started this new process, we attempted to <strong>deploy each feature as soon as it became available</strong>.<strong> </strong>This caused some issues, in part related to source control management and timing of pending Merges; however, <strong>the biggest issue revolved around deployment and interruption to the users</strong>. When we deployed once every 4-6 weeks with our old process, this wasn’t much of a problem for the users. However, deploying whenever a feature was ready caused some issues with our users. We settled on a<strong> weekly deployment (same day and time every week)</strong>, if there is something to be deployed it’s now on a regular schedule.<br /></blockquote><blockquote><strong>One other benefit of deploying on a regular weekly schedule is the cadence the team has adjusted to. </strong>There’s less confusion around “are we deploying today, tomorrow” etc… With deployments scheduled for a regular cadence, it’s much easier for us to create a process that is consistent, efficient and <strong>less error prone</strong>. </blockquote></li><li><strong>Completed</strong> - After the deployment is complete the task is moved to <strong>Completed</strong> and considered DONE! </li></ol><h5>Below is a screen shot of how it looks in our TFS work item view.</h5><blockquote><p>Yes, we hacked and crammed our kanban into the MSF-Agile template, and although it’s rough, it’s working better than our previous non-kanban ways.</p></blockquote><p>To move a feature though the kanban we select it in the “iteration path” drop down.<br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SnrlDlU10VI/AAAAAAAAAKI/U_1Y8ZaFvHw/s1600-h/image4.png"><img style="BORDER-RIGHT-WIDTH: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SnrlDyxXpTI/AAAAAAAAAKM/9kFKc4JMbeU/image_thumb2.png?imgmax=800" width="417" height="395" /></a></p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I don&#39;t disagree with the impression that another pass of testing once a branch has been merged could seem a little redundant. However, I think it really depends on your development shop and the context of the work being tested. We have a small shop (5 devs, 0 testers). So each pass of testing done by a different dev is a completely different set of experiences/backgrounds taking a look at a feature under test. In fact we&#39;ve found the second pass of testing to be extremely valuable and cost effective (finding/fixing bugs before they get deployed).<br /><br />About the automation part - we run a full automated test suite &amp; integration tests after each check-in to the trunk. However, (in our context -- 6yr old code base - very little code coverage, etc...) automated tests are just not enough to give the confidence that every merge means everything&#39;s green.<br /><br />There are many factors to take into consideration when deciding how your kanban should be setup and all the stages you will need. I&#39;m am certainly not speaking with authority on the subject, just experience (and only a small experience at that). But one of the great parts of this process is it&#39;s ability to change when a need is discovered.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bealer</div>
+<div class='content'>
+Interesting approach. The main issue for me is the merge back into the trunk. You solve that with a 2nd round of testing.<br /><br />I&#39;m not sure if this is wasteful though. It&#39;s definitely needed to check the merge went ok, but it&#39;s a lot of inspection.<br /><br />The developer inspects his code, after working on it. Then a tester inspects it. Then another round of inspection takes place after the merge.<br /><br />That said, automation would solve a lot of that. The same tests could be re-run quickly (plus a bit of manual testing) to ensure everything was ok.<br /><br />What we may do in fact, is just have automation tests running constantly on our trunk. Do the merge, and if nothing breaks it&#39;s ok. If there were conflicts in merging, then we may do some manually testing around that area.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Have you seen the kanban process template over at codeplex?<br /><br />http://www.codeplex.com/site/search?projectSearchText=kanban<br /><br />I haven&#39;t taken a thorough look at the template myself, just know it&#39;s out there...</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason</div>
+<div class='content'>
+For process template customization, there are some great tips and tricks in this blog post: <br /><br />http://weblogs.asp.net/dmckinstry/archive/2006/01/03/434440.aspx<br /><br />I&#39;d really like to see someone develop a Lean/Kanban process template something like the Conchango Scrum template &amp; share it with the community.  Maybe even something that integrates with AgileZen or something similar to help visualize the Kanban.  Lots of opportunities in this space!</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Jason As far as TFS is concerned my blog title is probably a little misleading... I will have a very TFS centric post coming with the gotcha&#39;s and others I&#39;ve learned while implementing the process. We haven&#39;t gone as far as customizing the template or written any specific reports. I have a sql statement that gives a rough estimate of the time it takes for a feature to get through the pipeline, but feels more like a hack than a useful report.<br /><br />The big thing lacking for us in the tool at this point is the visibility of the kanban. Given time I could probably write a report or something else to display this information, but don&#39;t feel my time would best be spent there.<br /><br />If you have any good tips on how to slowly customize an existing template and morph it into something else, I would like to do things like you state in your comment &quot;remove iterations altogether and replace...&quot;.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason</div>
+<div class='content'>
+I like this approach.  I&#39;m curious if you&#39;ve developed any reports around your new template?  Have you looked into customizing your process template in such a way that you remove iterations altogether and replace with something like a &quot;Kanban Stage&quot; field?</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2009-08-06T14:21:00.000Z" pubdate>Aug 6th 2009</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/tfs/'>TFS</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2009/08/branch-per-feature-with-team-foundation_06/" title="Previous Post: Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…">&laquo; Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2009/08/branch-per-feature-with-team-foundation_12/" title="Next Post: Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

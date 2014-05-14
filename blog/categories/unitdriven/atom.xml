@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Category: UnitDriven - Developing on Staxmanade]]></title>
+    <link href="http://staxmanade.com"/>
+    <updated>2014-05-14T14:32:46Z</updated>
+    <id>http://staxmanade.com</id>
+    <author>
+        <name>Jason Jarrett</name>
+        <uri>http://staxmanade.com/about</uri>
+    </author>
+    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="self" href="/blog/categories/unitdriven/atom.xml"/>
+    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[StatLight – Goes Open Source]]></title>
+        <id>http://staxmanade.com/2009/12/statlight-goes-open-source/</id>
+        <link href="http://staxmanade.com/2009/12/statlight-goes-open-source/">
+        </link>
+        <updated>2009-12-11T03:27:00Z</updated>
+        <summary type="html"><![CDATA[Although I made a very minor attempt at making StatLight a “for-sale” product, I knew when I started that open-source was most likely going to be my l...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+<p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
+]]></content>
+    </entry>
+</feed>

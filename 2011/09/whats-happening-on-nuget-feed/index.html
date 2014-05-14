@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What’s happening on the NuGet feed (leveraging OData in an RSS reader) - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Ever since NuGet came online I’ve been wanting a way to find out about new packages, and updates to packages.  Since OData extends the ATOM feed and y...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2011-09-27T14:09:00.000Z" pubdate>Sep 27th 2011</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Ever since <a href="http://nuget.org/" target="_blank">NuGet</a> came online I’ve been wanting a way to find out about new packages, and updates to packages.</p>  <p>Since <a href="http://www.odata.org/" target="_blank">OData</a> extends the <a href="http://www.ietf.org/rfc/rfc4287.txt" target="_blank">ATOM</a> feed and you can hook an OData feed up to any RSS reader I set out to find a way to get at those recent updates to the NuGet feed and find out when new packages were published.</p>  <p>If you’re not completely familiar with OData, later in this post I explain how I arrived at the URL below. However, if you don’t care how I arrived at the solution, below is the final RSS link I’m currently using in my RSS reader (Google Reader) to monitor updates to the NuGet feed.</p>  <blockquote>   <p><a href="http://packages.nuget.org/v1/FeedService.svc/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://packages.nuget.org/v1/FeedService.svc/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <h4>How did I discover or build that URL?</h4>  <p>I could have memorized the <a href="http://www.odata.org/developers/protocols/uri-conventions">OData URI spec</a> and constructed the above link by hand but I’m far more familiar with C# and LINQ and instead used <a href="http://www.linqpad.net/">LINQPad</a>.</p>  <p>Open up LINQPad and add a WCF Data Services (OData) connection to the following URL</p>  <blockquote>   <p><a href="http://packages.nuget.org/v1/FeedService.svc">http://packages.nuget.org/v1/FeedService.svc</a></p> </blockquote>  <p>Now You can query the OData feed with some LINQ.</p>  <blockquote>   <p>from p in Packages      <br />where p.Id != &quot;SymbolSource.TestPackage&quot;       <br />orderby p.Published descending       <br />select p</p> </blockquote>  <p>When you execute this LINQ query in LINQPad, you can click on the “SQL” in the results pane to view the URL that was generated to execute the operation.</p>  <p>Now my original linq expression didn’t have the <u>where p.Id != &quot;SymbolSource.TestPackage&quot;</u> as I didn’t know this package would become a regular pain to view in the RSS Reader.</p>  <p>One great thing about OData is the ability to re-craft the URL for this feed to ignore items that either show up so much that I want to exclude them (like the “SymbolSource.TestPackage”) or a certain class of items that I just don’t want to be alerted on (maybe filtering by the NuGet Tag property).</p>  <h4>Some observations of the feed.</h4>  <p>I’ve been monitoring this feed for almost a month now and have learned about some very interesting projects, check the next section of this post with a list of some of the more interesting ones (to me) that I’ve found. </p>  <p>So far the feed has become just a regular part of my daily blog reading. It’s the quickest one to do as I’m typically skimming the titles of the RSS items and only slowing down to dig into projects I’ve never heard and sound interesting.</p>  <p>Google Reader trends that this feed generates about 54 items a day. Which may seem like a lot, but it’s really easy to click the “mark all as read” button and go on with the day.<a href="http://lh4.ggpht.com/-XUsrxaG8wXs/ToHZKwn3O4I/AAAAAAAAARo/JYWHnb03aLc/s1600-h/image9.png"><img style="background-image: none; border-right-width: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/-SsuwC_xx4Bk/ToHZLMw-2oI/AAAAAAAAARs/YW-Bk2zGg0k/image_thumb5.png?imgmax=800" width="587" height="87" /></a></p>  <h4>Interesting projects I’ve discovered.</h4>  <p>I’ve been watching this RSS feed for almost 2 weeks now, and have discovered some new projects (at least new to me) and learned about updates to projects I already knew about.</p>  <p>Below is a small list of ones I thought were interesting – there’s way more being done out there.</p>  <h5>New to me</h5>  <ul>   <li><a href="http://nuget.org/List/Packages/OpenCover" target="_blank">OpenCover</a> </li>    <li><a href="http://nuget.org/List/Packages/nji" target="_blank">NodeJs (Package) Installer</a> </li>    <li><a href="http://nuget.org/List/Packages/SignalR" target="_blank">SignalR</a> </li>    <li><a href="http://nuget.org/List/Packages/FastActivator" target="_blank">FastActivator</a> (this one feels like it could be a single .cs file instead of a full assembly – but then I guess you couldn’t leverage it in say a VB or F# project) </li>    <li><a href="http://nuget.org/List/Packages/EasyHttp" target="_blank">EasyHttp</a> </li>    <li><a href="http://nuget.org/List/Packages/SheepAspect">SheepAspect</a> </li> </ul>  <h5>NOT new to me (but released while I was watching)</h5>  <ul>   <li><a href="http://nuget.org/List/Packages/SassAndCoffee" target="_blank">SassAndCoffee</a> </li>    <li><a href="http://nuget.org/List/Packages/FubuMVC">FubuMVC</a> </li>    <li><a href="http://nuget.org/List/Packages/Bottles">Bottles</a> </li>    <li><a href="http://nuget.org/List/Packages/StatLight" target="_blank">StatLight</a> (Ya I know it’s my project – but good verification that when I released the project – it showed up in my <u>RSS </u>reader.) <img style="border-bottom-style: none; border-left-style: none; border-top-style: none; border-right-style: none" class="wlEmoticon wlEmoticon-smile" alt="Smile" src="http://lh3.ggpht.com/-jgUk-cdtfpU/ToHZLfUUubI/AAAAAAAAARw/lPMBrU8QmB8/wlEmoticon-smile2.png?imgmax=800" /> </li> </ul>  <h4>Could NuGet be a new metric for what’s popular or up and coming?</h4>  <p>That heading is a little bolder than what I actually think, mostly because there are far too many variables to make that statement hold a strong footing. Regardless, I have noticed some interesting “trends” (if you can define a trend by my watching the feed for about a month) in what is being released on NuGet and wonder if watching this over time will be a nice window in to the types of projects people are really working on.</p>  <p>I’ve seen quite a few projects related to messaging or <a href="http://martinfowler.com/eaaDev/EventSourcing.html" target="_blank">Event Sourcing</a>. And a number of different JS and CSS minification/build tooling projects.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Thomas Ardal</div>
+<div class='content'>
+Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually be able to understand OData, even though it&#39;s an extension to Atom.<br /><br />By the way, there&#39;s already a project for watching NuGet packages through RSS here: <a href="http://nugetfeed.org" rel="nofollow">NuGetFeed.org</a>.<br /><br />With NuGetFeed.org you will be able to follow your favorite NuGet packages through RSS. There&#39;s a feature called MyFeed, where you will be able to add a list of packages you want to follow. If you use Google Chrome, there&#39;s an extension as well and finally a Visual Studio add-in is also available. Hope you will find NuGetFeed.org useful.</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2011-09-27T14:09:00.000Z" pubdate>Sep 27th 2011</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/odata/'>OData</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2011/08/powershell-text-to-speech-and-fun-with/" title="Previous Post: Powershell Text-To-Speech and fun with a 4yr old.">&laquo; Powershell Text-To-Speech and fun with a 4yr old.</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2011/10/chocolatey-free-and-open-source-windows/" title="Next Post: Chocolatey - The free and open source windows app store."> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

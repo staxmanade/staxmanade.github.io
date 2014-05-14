@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Diffing tool feature request - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Most of us have probably tried different versions of a file diffing tool. Some are picky about their choice. Personally I’m fond of two different tool...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2010/03/diffing-tool-feature-request/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Diffing tool feature request</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-03-22T04:08:00.000Z" pubdate>Mar 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Most of us have probably tried different versions of a file diffing tool. Some are picky about their choice. Personally I’m fond of two different tools (mostly because they’re easy to find/install and setup). Here’s a post where I talk about how I like to integrate these tools when working with <a href="http://msdn.microsoft.com/en-us/teamsystem/dd408382.aspx">TFS</a> and Visual Studio - <a href="/2009/08/development-environment-mergecompare">/2009/08/development-environment-mergecompare.html</a></p>  <p>A couple months ago, I _slowly_ started learning <a href="http://git-scm.com/">Git</a>. Since that initial plunge, I’m now in a place where much of it still scary unknown; however, I know enough get what I need done. And when I get to the point where I need to do something I’ve never done, well I go figure it out, and it becomes another part of the personal Git toolbox.</p>  <p>I’ve been working git solely through the command line (in PowerShell actually). I know it’s not the best place to take full advantage of <a href="http://git-scm.com/">Git</a>; however, it’s working for me. </p>  <p>The other day needed to review changes in a file back in the commit history. Up until this point I had only diff’d uncommitted files with the most recent version of that file, and I already wired a visual diffing tool where I could then use the “git difftool …” command to review differences. </p>  <p>However this was the first time I had to look at a file further back in time than the head. After a quick search I came across the “<a href="http://ftp.sunet.se/pub/Linux/kernel.org/software/scm/git/docs/gitk.html">gitk</a>” command. gitk is “The git repository browser”. I’ve known about this tool, however am trying to keep with the command line tools. (Except for diffing files)</p>  <p>Below is the UI when running the “gitk build-tasks.ps1” in the root of the <a href="http://statlight.net" target="_blank">StatLight</a> project.</p>  <p>Notice how there’s a list of changes to the file, and under that the diff of the previous version to the selected version.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btMyZortI/AAAAAAAAAN4/TTo1Bfy1OQc/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btONpjuqI/AAAAAAAAAN8/mrgvUVTrIj8/image_thumb2.png?imgmax=800" width="810" height="638" /></a> </p>  <p>One thing do like about the above, is the list of revisions and how they are right there in your face. Going back in time is really easy. My only problem is I’m not accustomed to the linux style diffing, and still prefer the side/by side file diffing.</p>  <p>On to the feature request…</p>  <h4>What problem is this new feature trying to solve?</h4>  <p>The problem of having a file diff between version E &amp; F and then needing to look at the previous version to E. (easily) <strong>AND</strong> show the different versioned files side by side <strong>AND</strong> make it easy and intuitive to go back in time.</p>  <h4>How might this feature request look?<img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://i.zdnet.com/blogs/iphone-touchscreen.png" width="130" height="129" /></h4>  <p>Maybe someone is doing this, maybe not. It would be interesting to leverage a (mouse drag – or text command [EX: Ctrl+Alt+Right Arrow]) to “pan” between versions through file diffing view. Kind of like you can drag the pictures on an iPhone to view the previous or next one. I could drag the mouse across the screen to pan to the previous/next view of the diff. </p>  <p>&#160;</p>  <p>Below is a quick mockup of the thought – definitely far from refined. </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S6btOnz3LRI/AAAAAAAAAOA/FDCh-WJo2_k/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S6btPwPn4pI/AAAAAAAAAOE/YrXZIPjUtUQ/image_thumb5.png?imgmax=800" width="1017" height="380" /></a></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <h4>One challenge to true implementation?</h4>  <p>The main problem to solve (if you write a generic text diffing tool) is needing to interface with different <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a>’s so you can retrieve the the previous/next versions of the file. Basically having to know what <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a> the file is under.</p>  <p>&#160;</p>  <p>Anyone mind taking this project on and implementing this in one of the decent open source file diffing tools out there? (ex: <a href="http://winmerge.org/">http://winmerge.org/</a>)&#160; I would love you for it. Well… I’d buy you a beer.</p>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2010-03-22T04:08:00.000Z" pubdate>Mar 21st 2010</time>
+
+
+
+                        
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/03/diffing-tool-feature-request/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/03/diffing-tool-feature-request/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2010/02/powershell-background-task-that-speaks/" title="Previous Post: PowerShell – background task that speaks to me">&laquo; PowerShell – background task that speaks to me</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2010/05/silverlight-profiling-powershell-helper/" title="Next Post: Silverlight Profiling PowerShell helper."> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

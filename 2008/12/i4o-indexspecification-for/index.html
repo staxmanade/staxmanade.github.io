@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt; - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="We&#x27;ve removed the IndexableAttribute from the i4o library and replaced it with the IndexSpecification&amp;lt;T&amp;gt;. Below I&#x27;ll explain how you can add/rem...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2008/12/i4o-indexspecification-for/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-26T05:42:00.000Z" pubdate>Dec 25th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><span style="font-size:85%;">We've removed the IndexableAttribute from the i4o library and replaced it with the IndexSpecification&lt;T&gt;. Below I'll explain how you can add/remove/change the index for an IndexableCollection&lt;T&gt;.</span></p>  <p><span style="font-size:85%;">Let's show several examples on how to create an IndexableCollection&lt;T&gt;.</span></p>  <p>Given any enumeration of objects you can translate into an IndexableCollection&lt;T&gt;. For the examples below we're going to use an enumeration of the System.IO.FileInfo class. We are going to index the list of FileInfos by file Extension and weather the file IsReadOnly or not.</p>  <h4>Setup the list:</h4>  <pre><span style="color: rgb(0, 128, 0);">// Get our thing to index</span><br /><span style="color: rgb(0, 0, 255);">string</span> dir = @"<span style="color: rgb(139, 0, 0);">C:\Windows\System32\</span>";<br />var fileInfosFromDir = (from f <span style="color: rgb(0, 0, 255);">in</span> System.IO.Directory.GetFiles(dir, "<span style="color: rgb(139, 0, 0);">*.*</span>", SearchOption.AllDirectories)<br />                       select <span style="color: rgb(0, 0, 255);">new</span> FileInfo(f)).ToList();</pre><br /><br /><h4>Can create the IndexSpecification...</h4>...for the FileInfo's "Extension" and "IsReadOnly" properties and turn the list of FileInfos into an IndexableCollection using the IndexSpecification.<br /><br /><pre><span style="color: rgb(0, 128, 0);">// Create the index specification</span><br />var spec = <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(i =&gt; i.Extension)<br />   .Add(i =&gt; i.IsReadOnly);<br /><br /><span style="color: rgb(0, 128, 0);">// Turn the list of files into an Indexed collection of files</span><br />var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection(spec);</pre><h4>Create IndexableCollection&lt;T&gt; without IndexSpecification&lt;T&gt;:</h4><p>You are not required to specify and IndexSpecification&lt;T&gt; when creating the IndexableCollection&lt;T&gt;. You can translate the list into an IndexableCollection&lt;T&gt; and add properties to index after the fact. EX:</p><pre>var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection();<br /><br /><span style="color: rgb(0, 128, 0);">// Specify the properties to index dynamically (more late bound)</span><br />indexedFileInfosFromDir<br />   .CreateIndexFor(i =&gt; i.Extension)<br />   .CreateIndexFor(i =&gt; i.IsReadOnly);</pre><h4>Swap one IndexSpecification&lt;T&gt; for another:</h4><p>If you want to completely swap out the index at run time, you can give the IndexableCollection a new IndexSpecification</p><pre>var list = <span style="color: rgb(0, 0, 255);">new</span> List&lt;FileInfo&gt;();<br />var indexedList = list.ToIndexableCollection();<br /><br />indexedList.UseIndexSpecification(<br />   <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(o =&gt; o.Directory)<br />   .Add(o =&gt; o.Name));</pre><p>I think that should cover most of the general cases. Hope this helps...</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Alex</div>
+<div class='content'>
+Nice Blog, i recently come to your blog through Google excellent knowledge keep on posting you guys.<br /><br />___________________<br /><a href="http://www.ukdissertations.net/sample_dissertations.htm" rel="nofollow">Dissertation Sample</a><br />___________________</div>
+</div>
+<div class='comment'>
+<div class='author'>marry</div>
+<div class='content'>
+Blogs are so informative where we get lots of information on any topic. Nice job keep it up!!<br />_____________________________<br /><br /><a href="http://www.ukdissertation.co.uk/dissertation_topics.htm" rel="nofollow">Dissertation Topics</a></div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+Hi Jason,<br /><br />Thank you for your response.<br />My Xml looks like<br /><br />University1<br />  Course1<br />    Student1<br />    Student2<br />University1<br />  Course2<br />    Student3<br />    Student4<br />University2<br />   Course1<br />     Student5<br />etc...<br /><br />XElement cimXml = XElement.Load(@"C:\Students.xml");<br /><br />So, here I am grouping on Universities.         <br />var universityGroupedElements = from ele in cimXml.Elements() group ele by ele.Name;<br /><br />Now I want to add indexes to University, Course, Student elements to make queries faster.<br /><br />Also, I want to group the courses in each university and also students in each course <br /><br />Please help, in writing some code.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Hello @Satyanarayana<br /><br />I would be happy to help you, but have a request and a couple questions...<br /><br />1. I've realized my blog comments are starting to become a bit more of the i4o knowledge base than it deserves. Would you please ask your question over on the i4o Discussion board?<br /><br />2. I'd like a little more detail. What does the xml structure look like? What does the linq query look like that returns your "grouped" data? What is it you are trying to index/search?<br /><br />Thanks,<br />Jason</div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+I have a question how to use IndexSpecification for a nested collections in a xml file. For example<br />University<br />   Course<br />      Student<br /><br />I have list of Students from a various Courses and various Universities. I used Linq for Grouping Universities and Courses of Students. Now, I have question how to implement Indexing on Students, Courses and Universities.<br />Please give the implementation details .<br /><br />Thanks <br />Satya</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+At first, I was thinking of modifying i4o but after I have been testing, I have found the power behind i4o with simple changes the way you write query.<BR/><BR/>For example:  <BR/><BR/>Instead of writing this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>Try this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot;);<BR/>var f2 = f.Where(fi.IsReadOnly == true);<BR/><BR/>(fi.Extension should be smaller group than fi.IsReadOnly)<BR/><BR/>From what I have tested,<BR/>It responses within a few milisecond.<BR/>I am happy with this.<BR/><BR/>Thank you for great work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan - I'm glad to see you're running your own benchmarks to test out the library.<BR/><BR/>Please keep in mind that this library is very simple, and is not a complete Linq implementation.<BR/><BR/>It provides some great benefits in the scenarios it was designed for. And I know Aaron has some more improvements on the way.<BR/><BR/>If you create any patches for the project, we are happy to take a look at any improvements you can come up with.<BR/><BR/>Thanks again</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+I have found another limitation of i4o and would like to share.<BR/><BR/>From the 'Demoi4o' project.<BR/><BR/>If I change this below query<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName == studentNameBox.Text<BR/>select student;<BR/><BR/>To<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName.Contains(studentNameBox.Text)<BR/>select student;<BR/><BR/><BR/>It takes longest time!!</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Thanks so much for unit test.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan To test your question I wrote a unit test and just checked it in. You can view the test here http://i4o.codeplex.com/SourceControl/changeset/view/31862#398075<BR/><BR/>If this is what you were asking, then no it will not update the index.<BR/><BR/>You need to call the  IndexableCollection&lt;T&gt;.Add/Remove and not it&#39;s base type Collection&lt;T&gt;.Add/Remove for the indexes to be updated.<BR/><BR/>This is however something we&#39;d like to support in the future, which is why I checked in the failing test. We probably need to just implement ICollection&lt;T&gt; etc... and to fully support this.</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>I have a question.<BR/>If we have some changes on our base collection like add or delete, do we have to re create index or do some special steps?<BR/><BR/>Thanks,<BR/>Paiwan</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Ok, thanks for the confirmation. I wanted to make sure I wasn't crazy. :-)<BR/><BR/>I was excited when I saw your post and really like the syntax for adding properties to the IndexSpecification. Now, I guess I'll just wait until I can actually use it like that. From Aaron's blog, it sounds like he plans to introduce updates to the Where expression in the next release.<BR/><BR/>Thanks for your work on this library. I'm hoping this will make it possible to replace a subsytem of our app which currently relies on looking up factors in large in-memory sets of data by using XML. It loads large XML documents into memory and builds XPath queries to get to individual factors that it needs. The XPath queries themselves are pretty past, but I'm trying to use Linq-to-XML to project the XML into collections of strongly type objects that I can query with Where lambda's instead. It works well, but when the collections are large enough the queries are too much slower than the XPath version. I'm hoping the IndexableCollection will make it possible.<BR/><BR/>Kevin</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+That's a good point and I think you are correct...<BR/><BR/>I was just illustrating the power of the IndexSpecification. Unfortunately the extension methods used to evaluate the expression need some work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on Codeplex. I noticed in the discussions that someone mentioned the fact that if you have multiple expressions in your Where expression, that it won&#39;t use the index.<BR/><BR/>So does that mean, your example showing multiple properties being added to the index doesn&#39;t really help if you wanted to search your collection on both of the properties in the index?<BR/><BR/>For example, would this code use the index?<BR/><BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>From my testing, it appears that no benefit is achieved from using an IndexableCollection vs. a regular List in this case. Seems like there&#39;s no point in using the IndexableCollection if you need more than one property in the index. Am I missing something or is that correct?<BR/><BR/>Thanks,<BR/>Kevin</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2008-12-26T05:42:00.000Z" pubdate>Dec 25th 2008</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/i4o/'>i4o</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/i4o-indexspecification-for/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/i4o-indexspecification-for/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2008/12/i4o-update/" title="Previous Post: i4o: Update (Index for Objects)">&laquo; i4o: Update (Index for Objects)</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2009/01/what-do-when-silverlight-is-missing/" title="Next Post: What do when Silverlight is missing some Base Class Library (BCL) functionality?"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers. - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs wa...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-19T04:33:00.000Z" pubdate>Dec 18th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs was <a href="http://windowslivewriter.spaces.live.com/" target="_blank">Windows Live Writer</a>. </p>  <p>I'm sold... This program handles just about everything I could need for blogging (I'm new to it, so haven't pushed it's limitations to far).</p>  <p>One problem I had with Live Writer was it saved all my drafts/posts on the computer I was logged into at the time. This meant the drafts I write at home can't be accessed at work and visa/versa...</p>  <p>To solve this I decided to wire them through the <a href="http://mesh.com" target="_blank">Microsoft Mesh</a>. If you haven't setup your mesh yet, I would highly recommend it. Just go to <a href="http://mesh.com" target="_blank">Mesh.com</a>, sign up/or in with a Windows Live account, install the client application, and your <strong>meshified</strong>...</p>  <blockquote>   <p>With Live Mesh, you can synchronize files with all of your devices, so you always have the latest versions handy. Access your files from any device or from the web, easily share them with others, and get notified whenever someone changes a file.</p> </blockquote>  <p>This means I can synchronize folders between my connected computers.</p>  <h4>Below I'll show the steps I used to setup my meshified weblog posts. </h4>  <ol>   <li>Find the location your Live Writer is storing your drafts/posts.      <br />      <br />For my Windows XP machine it was in...       <br /><em>C:\Documents and Settings\JasonJ\My Documents\My Weblog Posts\</em>       <br />      <br />For my work Vista pc the folder was in...       <br /><em>C:\Users\JasonJ\Documents\My Weblog Posts\ </em>      <br /></li>    <li>Next I created a folder in my mesh called &quot;BlogDrafts&quot;.      <br />      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskAwaA5eI/AAAAAAAAADg/8Q7CFRAD8Eo/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="251" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskBgLf4RI/AAAAAAAAADk/PZqLvbz2NgQ/image_thumb1.png?imgmax=800" width="371" border="0" /></a> To do this you can right click in the mesh folder area and select &quot;Create folder in Live Mesh&quot;.<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUskCKk4VWI/AAAAAAAAADo/irg_OvuZjnU/s1600-h/image7.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="176" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskCoUxmFI/AAAAAAAAADs/JZV3udqjb4A/image_thumb3.png?imgmax=800" width="347" border="0" /></a> </li>    <li>A window will popup asking for the name of the new folder and the location this folder will live on your hard drive.      <br />      <br /><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskC_C6DeI/AAAAAAAAADw/s6bfcg4WOls/s1600-h/image14.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="123" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUskDkjoclI/AAAAAAAAAD0/Ty6ZI-bJJAo/image_thumb8.png?imgmax=800" width="244" border="0" /></a>&#160; </li> </ol>  <p>I think that's everything... follow similar steps to get your other computers synced up to the mesh and you should be relieved that you can work on any computer and on any post.</p>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2008-12-19T04:33:00.000Z" pubdate>Dec 18th 2008</time>
+
+
+
+                        
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2008/12/i-can-stand-mass-mailings-especially/" title="Previous Post: I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)">&laquo; I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2008/12/i4o-update/" title="Next Post: i4o: Update (Index for Objects)"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

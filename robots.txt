@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://staxmanade.com/sitemap.xml 

@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Potentially SERIOUS bug. -- SQL Server 2008 Management Studio - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="&amp;#160;  UPDATE: Microsoft’s acknowledged the bug…   We had a scenario (several weeks back) where a co-worker was connecting/changing connection betwee...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2009/04/potentially-serious-bug-sql-server-2008/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Potentially SERIOUS bug. -- SQL Server 2008 Management Studio</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-04-22T19:44:00.000Z" pubdate>Apr 22nd 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <h5><strong>UPDATE</strong>: <a href="http://connect.microsoft.com/SQLServer/feedback/ViewFeedback.aspx?FeedbackID=434465">Microsoft’s acknowledged the bug</a>… </h5>  <p>We had a scenario (several weeks back) where a co-worker was connecting/changing connection between different sql servers and ended up in a state where the Microsoft SQL Server Management Studio said he was connected to one server however when executing queries it was connected to a different server.</p>  <p>This issue has been in the back of my mind ever since as a “what if this happens when connected to a production database and not my local dev box” issue. <strong>(WARNING: SERIOUS DATA CORRUPTION MAY OCCUR, when connected to the wrong server unknowingly)</strong>     <br />NOTE: Luckily, we recently gave read-only rights to our dev AD user accounts so this situation couldn’t happen. I know, I know, “why didn’t we have that from the beginning?”……It happens, anyway…</p>  <p>Well, today I had the issue when working between my Dev box and our Test server and it took another developer (Thanks <a href="http://blogs.vertigo.com/personal/KeithC/Blog/default.aspx">Keith Craig</a> from <a href="http://vertigo.com/">Vertigo Software</a>) to help me figure out the data I was looking at was not actually the data from the server I thought I was connected to.</p>  <h4>Screenshot of the problem:</h4>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9znnFVA2I/AAAAAAAAAGg/IKSZ0G0a2uc/s1600-h/image%5B80%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zn6m79WI/AAAAAAAAAGk/g3MFRsXosPM/image_thumb%5B44%5D.png?imgmax=800" width="583" height="176" /></a> </p>  <h4>How to get into that state…</h4>  <ol>   <li>Start with a query connected to a remote database.      <br /><strong>NOTE: The two servers in red are the same. (Yay, we’re in a good state)        <br /></strong><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zoFlU4xI/AAAAAAAAAGo/1h9D7imn7IE/s1600-h/image%5B67%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zoePT_NI/AAAAAAAAAGs/5MbzroqWfc4/image_thumb%5B37%5D.png?imgmax=800" width="587" height="181" /></a> </li>    <li>Click the “New Query” button to open a new query window.      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9zolT1-MI/AAAAAAAAAGw/c2nVVkPNhnM/s1600-h/image%5B11%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zokyQjEI/AAAAAAAAAG0/-_ac3kcfC-Y/image_thumb%5B5%5D.png?imgmax=800" width="267" height="104" /></a> </li>    <li>Right click in the new empty query window, while it’s loading, and you (might) get the option to Connect. (if you’re fast enough)      <br /><strong>NOTE: This happens if you right click before the window finishes initializing it’s connection to the original server (in this case the remote database server). Usually this dialog gives you the “Change Connection” option when connected, but if you’re fast enough you can get the “Connect” option and the “Change Connection” will be disabled.        <br /></strong>&#160;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zpFCI01I/AAAAAAAAAG4/N2RyXe126XI/s1600-h/image%5B72%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9zpWnCC9I/AAAAAAAAAG8/MkhCXu6Z-Z4/image_thumb%5B40%5D.png?imgmax=800" width="655" height="234" /></a> </li>    <li>Click “Connect” and choose to the new desired server. In this case I’m going to connect to (local)      <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zpmM2FXI/AAAAAAAAAHA/t47nPurq3t4/s1600-h/image%5B20%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zp48_DyI/AAAAAAAAAHE/_93Vimltrl0/image_thumb%5B10%5D.png?imgmax=800" width="411" height="156" /></a> </li>    <li>That’s it, I’m now connected to the original server <strong><u>FILES</u></strong>, even though it says I'm connected to the server entered in the dialog above <strong><u>(local)</u></strong>.       <br />&#160;&#160; <a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zqBTmYBI/AAAAAAAAAHI/_vxrTOlW_6s/s1600-h/image%5B84%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/Se9zqaGoMcI/AAAAAAAAAHM/vupnhlDVQhw/image_thumb%5B46%5D.png?imgmax=800" width="583" height="176" /></a> </li> </ol>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p>&#160;</p>  <h4>Current Work Around to Avoid this Problem:</h4>  <h1 align="center"><u><em>PATIENCE</em></u></h1>  <p>To avoid the issue, wait till the query window has time to finish it’s initialization and has connect to the previous server. Then you can Right-Click –&gt; Connection –&gt; Change Connection…</p>  <p>&#160;</p>  <p>Hope this helps someone else… because, like I stated earlier… <strong>(WARNING: SERIOUS DATA CORRUPTION MAY OCCUR, when connected to the wrong server unknowingly)</strong></p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+I don&#39;t have any sql server builds that I can test anymore. This was an old post and I&#39;ve since forgotten all about it... Looks like Microsoft closed it as &quot;won&#39;t fix&quot; http://connect.microsoft.com/SQLServer/feedback/details/434465/management-studio-can-display-connection-to-wrong-server</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Hi Jason,<br /><br />I tried to reproduce this bug in SSMS 2008 (10.0.5500.0), and the Connect option is disabled while the new query window is initializing. Looks like it&#39;s fixed to me.<br /><br />Please can you verify.<br />Thanks<br />Andy</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2009-04-22T19:44:00.000Z" pubdate>Apr 22nd 2009</time>
+
+
+
+                        
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/04/potentially-serious-bug-sql-server-2008/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/04/potentially-serious-bug-sql-server-2008/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2009/04/t4-replacement-for-add-service/" title="Previous Post: T4 replacement for “Add Service Reference”">&laquo; T4 replacement for “Add Service Reference”</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2009/04/to-be-checked-in-or-not/" title="Next Post: To be checked in or not!"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

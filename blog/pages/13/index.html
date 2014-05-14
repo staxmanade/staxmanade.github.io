@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-26T05:42:00.000Z" pubdate>Dec 25th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><span style="font-size:85%;">We've removed the IndexableAttribute from the i4o library and replaced it with the IndexSpecification&lt;T&gt;. Below I'll explain how you can add/remove/change the index for an IndexableCollection&lt;T&gt;.</span></p>  <p><span style="font-size:85%;">Let's show several examples on how to create an IndexableCollection&lt;T&gt;.</span></p>  <p>Given any enumeration of objects you can translate into an IndexableCollection&lt;T&gt;. For the examples below we're going to use an enumeration of the System.IO.FileInfo class. We are going to index the list of FileInfos by file Extension and weather the file IsReadOnly or not.</p>  <h4>Setup the list:</h4>  <pre><span style="color: rgb(0, 128, 0);">// Get our thing to index</span><br /><span style="color: rgb(0, 0, 255);">string</span> dir = @"<span style="color: rgb(139, 0, 0);">C:\Windows\System32\</span>";<br />var fileInfosFromDir = (from f <span style="color: rgb(0, 0, 255);">in</span> System.IO.Directory.GetFiles(dir, "<span style="color: rgb(139, 0, 0);">*.*</span>", SearchOption.AllDirectories)<br />                       select <span style="color: rgb(0, 0, 255);">new</span> FileInfo(f)).ToList();</pre><br /><br /><h4>Can create the IndexSpecification...</h4>...for the FileInfo's "Extension" and "IsReadOnly" properties and turn the list of FileInfos into an IndexableCollection using the IndexSpecification.<br /><br /><pre><span style="color: rgb(0, 128, 0);">// Create the index specification</span><br />var spec = <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(i =&gt; i.Extension)<br />   .Add(i =&gt; i.IsReadOnly);<br /><br /><span style="color: rgb(0, 128, 0);">// Turn the list of files into an Indexed collection of files</span><br />var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection(spec);</pre><h4>Create IndexableCollection&lt;T&gt; without IndexSpecification&lt;T&gt;:</h4><p>You are not required to specify and IndexSpecification&lt;T&gt; when creating the IndexableCollection&lt;T&gt;. You can translate the list into an IndexableCollection&lt;T&gt; and add properties to index after the fact. EX:</p><pre>var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection();<br /><br /><span style="color: rgb(0, 128, 0);">// Specify the properties to index dynamically (more late bound)</span><br />indexedFileInfosFromDir<br />   .CreateIndexFor(i =&gt; i.Extension)<br />   .CreateIndexFor(i =&gt; i.IsReadOnly);</pre><h4>Swap one IndexSpecification&lt;T&gt; for another:</h4><p>If you want to completely swap out the index at run time, you can give the IndexableCollection a new IndexSpecification</p><pre>var list = <span style="color: rgb(0, 0, 255);">new</span> List&lt;FileInfo&gt;();<br />var indexedList = list.ToIndexableCollection();<br /><br />indexedList.UseIndexSpecification(<br />   <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(o =&gt; o.Directory)<br />   .Add(o =&gt; o.Name));</pre><p>I think that should cover most of the general cases. Hope this helps...</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Alex</div>
+<div class='content'>
+Nice Blog, i recently come to your blog through Google excellent knowledge keep on posting you guys.<br /><br />___________________<br /><a href="http://www.ukdissertations.net/sample_dissertations.htm" rel="nofollow">Dissertation Sample</a><br />___________________</div>
+</div>
+<div class='comment'>
+<div class='author'>marry</div>
+<div class='content'>
+Blogs are so informative where we get lots of information on any topic. Nice job keep it up!!<br />_____________________________<br /><br /><a href="http://www.ukdissertation.co.uk/dissertation_topics.htm" rel="nofollow">Dissertation Topics</a></div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+Hi Jason,<br /><br />Thank you for your response.<br />My Xml looks like<br /><br />University1<br />  Course1<br />    Student1<br />    Student2<br />University1<br />  Course2<br />    Student3<br />    Student4<br />University2<br />   Course1<br />     Student5<br />etc...<br /><br />XElement cimXml = XElement.Load(@"C:\Students.xml");<br /><br />So, here I am grouping on Universities.         <br />var universityGroupedElements = from ele in cimXml.Elements() group ele by ele.Name;<br /><br />Now I want to add indexes to University, Course, Student elements to make queries faster.<br /><br />Also, I want to group the courses in each university and also students in each course <br /><br />Please help, in writing some code.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Hello @Satyanarayana<br /><br />I would be happy to help you, but have a request and a couple questions...<br /><br />1. I've realized my blog comments are starting to become a bit more of the i4o knowledge base than it deserves. Would you please ask your question over on the i4o Discussion board?<br /><br />2. I'd like a little more detail. What does the xml structure look like? What does the linq query look like that returns your "grouped" data? What is it you are trying to index/search?<br /><br />Thanks,<br />Jason</div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+I have a question how to use IndexSpecification for a nested collections in a xml file. For example<br />University<br />   Course<br />      Student<br /><br />I have list of Students from a various Courses and various Universities. I used Linq for Grouping Universities and Courses of Students. Now, I have question how to implement Indexing on Students, Courses and Universities.<br />Please give the implementation details .<br /><br />Thanks <br />Satya</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+At first, I was thinking of modifying i4o but after I have been testing, I have found the power behind i4o with simple changes the way you write query.<BR/><BR/>For example:  <BR/><BR/>Instead of writing this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>Try this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot;);<BR/>var f2 = f.Where(fi.IsReadOnly == true);<BR/><BR/>(fi.Extension should be smaller group than fi.IsReadOnly)<BR/><BR/>From what I have tested,<BR/>It responses within a few milisecond.<BR/>I am happy with this.<BR/><BR/>Thank you for great work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan - I'm glad to see you're running your own benchmarks to test out the library.<BR/><BR/>Please keep in mind that this library is very simple, and is not a complete Linq implementation.<BR/><BR/>It provides some great benefits in the scenarios it was designed for. And I know Aaron has some more improvements on the way.<BR/><BR/>If you create any patches for the project, we are happy to take a look at any improvements you can come up with.<BR/><BR/>Thanks again</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+I have found another limitation of i4o and would like to share.<BR/><BR/>From the 'Demoi4o' project.<BR/><BR/>If I change this below query<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName == studentNameBox.Text<BR/>select student;<BR/><BR/>To<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName.Contains(studentNameBox.Text)<BR/>select student;<BR/><BR/><BR/>It takes longest time!!</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Thanks so much for unit test.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan To test your question I wrote a unit test and just checked it in. You can view the test here http://i4o.codeplex.com/SourceControl/changeset/view/31862#398075<BR/><BR/>If this is what you were asking, then no it will not update the index.<BR/><BR/>You need to call the  IndexableCollection&lt;T&gt;.Add/Remove and not it&#39;s base type Collection&lt;T&gt;.Add/Remove for the indexes to be updated.<BR/><BR/>This is however something we&#39;d like to support in the future, which is why I checked in the failing test. We probably need to just implement ICollection&lt;T&gt; etc... and to fully support this.</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>I have a question.<BR/>If we have some changes on our base collection like add or delete, do we have to re create index or do some special steps?<BR/><BR/>Thanks,<BR/>Paiwan</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Ok, thanks for the confirmation. I wanted to make sure I wasn't crazy. :-)<BR/><BR/>I was excited when I saw your post and really like the syntax for adding properties to the IndexSpecification. Now, I guess I'll just wait until I can actually use it like that. From Aaron's blog, it sounds like he plans to introduce updates to the Where expression in the next release.<BR/><BR/>Thanks for your work on this library. I'm hoping this will make it possible to replace a subsytem of our app which currently relies on looking up factors in large in-memory sets of data by using XML. It loads large XML documents into memory and builds XPath queries to get to individual factors that it needs. The XPath queries themselves are pretty past, but I'm trying to use Linq-to-XML to project the XML into collections of strongly type objects that I can query with Where lambda's instead. It works well, but when the collections are large enough the queries are too much slower than the XPath version. I'm hoping the IndexableCollection will make it possible.<BR/><BR/>Kevin</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+That's a good point and I think you are correct...<BR/><BR/>I was just illustrating the power of the IndexSpecification. Unfortunately the extension methods used to evaluate the expression need some work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on Codeplex. I noticed in the discussions that someone mentioned the fact that if you have multiple expressions in your Where expression, that it won&#39;t use the index.<BR/><BR/>So does that mean, your example showing multiple properties being added to the index doesn&#39;t really help if you wanted to search your collection on both of the properties in the index?<BR/><BR/>For example, would this code use the index?<BR/><BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>From my testing, it appears that no benefit is achieved from using an IndexableCollection vs. a regular List in this case. Seems like there&#39;s no point in using the IndexableCollection if you need more than one property in the index. Am I missing something or is that correct?<BR/><BR/>Thanks,<BR/>Kevin</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">i4o: Update (Index for Objects)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-20T19:10:00.000Z" pubdate>Dec 20th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Recently I was added as a developer to the <a href="http://www.codeplex.com/i4o" target="_blank">i4o codeplex project</a> by <a href="http://blog.magenic.com/blogs/aarone/default.aspx" target="_blank">Aaron</a> and last night I made my first commit.</p>  <p>There were a few pretty big changes to the library. I'll highlight some of them below, and in a couple future posts will describe in a little more detail how you can use these features.</p>  <h4>Removed the IndexableAttribute:</h4>  <p>This was removed for two reasons.</p>  <ul>   <li>It did not allow you index objects you didn't own. </li> </ul>  <p>Say you want to index a collection of System.IO.FileInfo objects. Since that's owned by the .Net framework, you can't apply an attribute to the properties of the class you want to index.</p>  <p>The solution to that was to allow adding indexed properties dynamically, however you had to give it a string representing the property name, which leads into the second issue... </p>  <ul>   <li>Didn't provide any compile time checking or refactor support for properties using the dynamic add/remove methods. </li> </ul>  <p>If you refactored a property and forgot to rename the string to match the refactor you would end up with a runtime error.</p>  <p>To resolve the two issues above I've introduced the <strong>IndexSpecification&lt;T&gt;</strong> (I'll describe how to use it a later post)</p>  <h4>Performance tuning:</h4>  <p>Although we haven't enhanced the Linq support for IndexableCollection (should come soon), I was able to eek some performance by doing some internal caching of property types and a few other tweaks resulting in the Index creation becoming about 30% faster...</p>  <h4>Fluent interface for managing the Indexes</h4>  <p>The last big change which fits in with the IndexSpecification&lt;T&gt; is the Fluent interface for dynamically adding/removing properties to be indexed. One short example could be:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1DKLdou8I/AAAAAAAAAD4/JBUBIgkDNNo/s1600-h/image3.png"><img style="border-width: 0px;" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1DKcGWDjI/AAAAAAAAAD8/zU7TUvRY2T0/image_thumb1.png?imgmax=800" width="347" border="0" height="217" /></a></p></div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-19T04:33:00.000Z" pubdate>Dec 18th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs was <a href="http://windowslivewriter.spaces.live.com/" target="_blank">Windows Live Writer</a>. </p>  <p>I'm sold... This program handles just about everything I could need for blogging (I'm new to it, so haven't pushed it's limitations to far).</p>  <p>One problem I had with Live Writer was it saved all my drafts/posts on the computer I was logged into at the time. This meant the drafts I write at home can't be accessed at work and visa/versa...</p>  <p>To solve this I decided to wire them through the <a href="http://mesh.com" target="_blank">Microsoft Mesh</a>. If you haven't setup your mesh yet, I would highly recommend it. Just go to <a href="http://mesh.com" target="_blank">Mesh.com</a>, sign up/or in with a Windows Live account, install the client application, and your <strong>meshified</strong>...</p>  <blockquote>   <p>With Live Mesh, you can synchronize files with all of your devices, so you always have the latest versions handy. Access your files from any device or from the web, easily share them with others, and get notified whenever someone changes a file.</p> </blockquote>  <p>This means I can synchronize folders between my connected computers.</p>  <h4>Below I'll show the steps I used to setup my meshified weblog posts. </h4>  <ol>   <li>Find the location your Live Writer is storing your drafts/posts.      <br />      <br />For my Windows XP machine it was in...       <br /><em>C:\Documents and Settings\JasonJ\My Documents\My Weblog Posts\</em>       <br />      <br />For my work Vista pc the folder was in...       <br /><em>C:\Users\JasonJ\Documents\My Weblog Posts\ </em>      <br /></li>    <li>Next I created a folder in my mesh called &quot;BlogDrafts&quot;.      <br />      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskAwaA5eI/AAAAAAAAADg/8Q7CFRAD8Eo/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="251" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskBgLf4RI/AAAAAAAAADk/PZqLvbz2NgQ/image_thumb1.png?imgmax=800" width="371" border="0" /></a> To do this you can right click in the mesh folder area and select &quot;Create folder in Live Mesh&quot;.<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUskCKk4VWI/AAAAAAAAADo/irg_OvuZjnU/s1600-h/image7.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="176" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskCoUxmFI/AAAAAAAAADs/JZV3udqjb4A/image_thumb3.png?imgmax=800" width="347" border="0" /></a> </li>    <li>A window will popup asking for the name of the new folder and the location this folder will live on your hard drive.      <br />      <br /><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskC_C6DeI/AAAAAAAAADw/s6bfcg4WOls/s1600-h/image14.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="123" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUskDkjoclI/AAAAAAAAAD0/Ty6ZI-bJJAo/image_thumb8.png?imgmax=800" width="244" border="0" /></a>&#160; </li> </ol>  <p>I think that's everything... follow similar steps to get your other computers synced up to the mesh and you should be relieved that you can work on any computer and on any post.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-18T16:50:00.000Z" pubdate>Dec 18th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <p>WTF?</p>  <p>&#160;</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1GD0Gsu9I/AAAAAAAAAEA/kQnqb6e0zvQ/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="282" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1GE2bg3DI/AAAAAAAAAEE/laLPaWK_1go/image_thumb1.png?imgmax=800" width="425" border="0" /></a> </p>  <p>&#160;</p>  <p>UPDATE: Thanks to Justin for pointing out my tarddedness... I should have left the boxes checked. However when I tried that I got the same error :(</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1GF8R1bgI/AAAAAAAAAEI/XSsgBF7T_Tw/s1600-h/image%5B5%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="269" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SU1GG2nn3KI/AAAAAAAAAEM/qhVrd7dL4lQ/image_thumb%5B2%5D.png?imgmax=800" width="434" border="0" /></a></p>  <p>Apparently it's not a &quot;temporary problem&quot;... or they could define temporary since this has been there for several days now.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Justin: Good point... Unfortunately I just re-tried it with the check boxes checked and received the same error :(</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+Looks like you have your checkboxes backwards. If you can't stand mass mail then you should check "do not recieve..." boxes, right?</div>
+</div>
+<div class='comment'>
+<div class='author'>Will Hull</div>
+<div class='content'>
+Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up properly.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">T4 Text Templating in Silverlight (Thanks Oleg Sych!)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-13T19:33:00.000Z" pubdate>Dec 13th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>First if you're new text templating, please go read <a href="http://www.olegsych.com/"><strong>Oleg Sych's blog</strong></a>. This, as far as I've found, is the (Bible, Koran, TheWord, etc...) of visual studio's T4 Text Templating.</p>  <p>If you already know how to add a T4 template to a project, skip this how to and go to &quot;How to make a T4 template work with a Silverlight project:&quot;.</p>  <h4>How to add a T4 template to a Visual Studio .Net Project:</h4>  <p>Given the following project:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUQN_Pr532I/AAAAAAAAAC4/_x4OMFOOwK4/s1600-h/image%5B2%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="113" alt="Initial Silverlight Project" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUQN_fxvVsI/AAAAAAAAAC8/jzH_-wBKdgM/image_thumb.png?imgmax=800" width="198" border="0" /></a> </p>  <p>Bring up the add new item dialog.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQN_qg5PxI/AAAAAAAAADA/cABtBqHGrN4/s1600-h/image%5B6%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="171" alt="Add New Item" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQN_wRvlHI/AAAAAAAAADE/KXKPDylPW98/image_thumb%5B2%5D.png?imgmax=800" width="384" border="0" /></a> </p>  <p>Select a &quot;Text File&quot; and rename the extension to a .tt.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOAGcv8AI/AAAAAAAAADI/Fu1hXUKYd5k/s1600-h/image%5B19%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="264" alt="Add a new t4 template" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQOApnwZlI/AAAAAAAAADM/cbKFl7fmKBE/image_thumb%5B13%5D.png?imgmax=800" width="428" border="0" /></a> </p>  <p>You should end up with a .tt template file and under it where the generated out put of the template will land.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBOBPYtI/AAAAAAAAADQ/OqjSBzOcaM8/s1600-h/image%5B22%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="137" alt="T4Sample.tt" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBW7qKTI/AAAAAAAAADU/q3NVgQXtvFA/image_thumb%5B14%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>You may also notice the following errors in your errors pane.</p>  <ul>   <li>Compiling transformation: The type or namespace name 'CompilerError' does not exist in the namespace 'System.CodeDom.Compiler' (are you missing an assembly reference?) </li>    <li>Compiling transformation: The type 'System.CodeDom.Compiler.CompilerErrorCollection' is defined in an assembly that is not referenced. You must add a reference to assembly 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.      <br />Compiling transformation: 'System.CodeDom.Compiler.CompilerErrorCollection' does not contain a definition for 'Add' </li>    <li>A namespace does not directly contain members such as fields or methods </li> </ul>  <p> This is where Oleg Sych comes to the rescue...</p>  <h4>How to make a T4 template work with a Silverlight project:</h4>  <blockquote>   <p><strong>Side Note:</strong> So, I had a couple emails back and fourth with Oleg about trying to get T4 to work in Silverlight. Almost all of his emails had some sort of sentence that went like this. <em>&quot;Try adding {S<strong>omeSpecialT4RelatedWord</strong>} and then do {<strong>this special thing</strong>} and report your findings back to me&quot;. This is where the {S<strong>omeSpecialT4RelatedWord</strong>} would stump me. So I would search Google for &quot;T4 {S<strong>omeSpecialT4RelatedWord</strong>}&quot; </em>and <a href="http://www.olegsych.com/">Oleg Sych's blog</a> was the first hit for each search. And not only was it the first hit, but when I would look the post for that {S<strong>omeSpecialT4RelatedWord</strong>} the answer was there and exactly what I needed. Thanks Oleg.</p> </blockquote>  <p>&#160;</p>  <p>Fortunately, to get the T4 templates to work within a Silverlight project you only need to put an &lt;#@ assembly #&gt; directive telling the template where to get a reference to the System.dll.</p>  <p>Below is a sample template:</p>  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">&lt;#@ template language=<span style="color: #006080">&quot;C#&quot;</span> #&gt;<br />&lt;#@ assembly name=<span style="color: #006080">&quot;C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&quot;</span> #&gt;<br /><span style="color: #0000ff">namespace</span> SampleT4 <br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>And below is the output:</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #0000ff">namespace</span> SampleT4<br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>That's it!!!</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+@Bill I&#39;m afraid I don&#39;t have enough context to really help you. On top of that I haven&#39;t worked with silverlight in a long time :(.<br /><br />Hope you get it figured out.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bill Lanza</div>
+<div class='content'>
+I know this post is old, but....<br />I am using VS2010 and Silverlight and am trying to implement T4 templates with inheritence.  I create a baseclass.tt in a separate assembly and it compiles. However, when I try to inherit from it I get the error:<br /><br />An invalid base class was specified for the Transformation class. The base class must derive from Microsoft.VisualStudio.TextTemplating.TextTransformation. <br /><br />Is this not possible in SL?<br /><br />Thanks,<br />Bill</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Could you help me understand why you have to have a reference to the two different assemblies with the same type?</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Regarding Aquilax comment, using objects defined in both assemblies. Is there any solution for that problem ?<br /><br />Regards Swan B</div>
+</div>
+<div class='comment'>
+<div class='author'>Aquilax</div>
+<div class='content'>
+It works as long that you don&#39;t use objects defined in both assemblies, for example System.Text.RegularExpressions.Regex, otherwise it throws the exception:<br />Compiling transformation: The type &#39;System.Text.RegularExpressions.Regex&#39; exists in both &#39;c:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&#39; and &#39;c:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v3.0\system.dll&#39;</div>
+</div>
+<div class='comment'>
+<div class='author'>timvw</div>
+<div class='content'>
+Thanks for publishing this knowledge. Saved me a lot of time.</div>
+</div>
+<div class='comment'>
+<div class='author'>br1</div>
+<div class='content'>
+Thank you.</div>
+</div>
+<div class='comment'>
+<div class='author'>Алексей</div>
+<div class='content'>
+Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblogs.asp.net/alexeyzakharov/</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-08T06:37:00.000Z" pubdate>Dec 7th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Follow up to my post on <a href="/2008/12/i4o-with-silverlight-compiles-first-try" target="_blank">i4o &amp; Silverlight (compiles first try)</a>...</p>  <p>&#160;</p>  <p>I took a stab at porting the i4o unit tests to <a href="http://silverlight.com/" target="_blank">Silverlight</a> which was quite a bit more work than I initially expected.</p>  <p>After creating a <a href="http://code.msdn.microsoft.com/silverlightut" target="_blank">Silverlight Unit Test</a> project and linking the original test files into the Silverlight project, I compiled...</p>  <ul>   <li>First the VB using statement wasn't even needed, so I removed that. <span style="color: #0000ff">using</span> Microsoft.VisualBasic;       <br /></li>    <li>Second there is no System.Diagnostics.Stopwatch() class in Silverlight, so I basically implemented a quick one using DateTime to get the unit tests to compile in Silverlight. Here's the class, except the Frequency property has been commented out (didn't spend time to figure how to make that correct, or what is correct???) </li> </ul>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Stopwatch<br />{<br />	<span style="color: #0000ff">private</span> DateTime _StartUtcDateTime;<br />	<span style="color: #0000ff">private</span> DateTime? _EndUtcDateTime;<br />	<span style="color: #0000ff">private</span> <span style="color: #0000ff">bool</span> _IsRunning = <span style="color: #0000ff">false</span>;<br /><br />	<span style="color: #008000">//public static readonly long Frequency { get { throw new NotImplementedException(); } }</span><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">readonly</span> <span style="color: #0000ff">bool</span> IsHighResolution = <span style="color: #0000ff">false</span>;<br />	<span style="color: #0000ff">public</span> Stopwatch()<br />	{}<br /><br />	<span style="color: #0000ff">public</span> TimeSpan Elapsed<br />	{<br />		<span style="color: #0000ff">get</span><br />		{<br />			<span style="color: #0000ff">if</span> (_EndUtcDateTime.HasValue)<br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(_EndUtcDateTime.Value.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />			<span style="color: #0000ff">else</span><br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(DateTime.UtcNow.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />		}<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedMilliseconds { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Milliseconds; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedTicks { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Ticks; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">bool</span> IsRunning { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> _IsRunning; } }<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">long</span> GetTimestamp()<br />	{<br />		<span style="color: #0000ff">return</span> DateTime.Now.Ticks;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Reset()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Start()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_IsRunning = <span style="color: #0000ff">true</span>;<br />		<span style="color: #0000ff">this</span>._StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> Stopwatch StartNew()<br />	{<br />		var w = <span style="color: #0000ff">new</span> Stopwatch();<br />		w.Start();<br />		<span style="color: #0000ff">return</span> w;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Stop()<br />	{<br />		_EndUtcDateTime = DateTime.UtcNow;<br />		_IsRunning = <span style="color: #0000ff">false</span>;<br />	}<br />}</pre><br /><br /><p>The only other issue that came up was some of the Stopwatch dependent tests happened so fast that they would fail intermittently... the quick hack/solution for this was to up the iteration count of whatever they were testing.</p><br /><p>After all the above taking care of all the above issues, I was able to get the unit tests to pass. </p><br /><p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAmsr9cuI/AAAAAAAAACU/ImLvor4RNNQ/s1600-h/image%5B4%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="372" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAm05AF3I/AAAAAAAAACY/HKajhxLiWtk/image_thumb%5B2%5D.png?imgmax=800" width="367" border="0" /></a></p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Tiaan</div>
+<div class='content'>
+You might also want to look at my implementation of the <A HREF="http://blog.tiaan.com/link/2009/02/03/stopwatch-silverlight" REL="nofollow">Stopwatch for Silverlight</A>, which supports resuming.</div>
+</div>
+<div class='comment'>
+<div class='author'>Tiaan</div>
+<div class='content'>
+For the Frequency property's implementation, you probably just need to return the System.TimeSpan.TicksPerSecond value.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Is my HSA trying to tell me something?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-05T19:02:00.000Z" pubdate>Dec 5th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <p>This is my &quot;randomly&quot; generated &quot;Site Key&quot;. My login's special word...</p>  <p>Would anyone else feel a little uneasy about this in a health related site?</p>  <p>&#160;</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/STl6u1XNFFI/AAAAAAAAACM/syZlgV1dL68/s1600-h/clip_image002%5B3%5D.jpg"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="80" alt="clip_image002" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STl6vJTTr-I/AAAAAAAAACQ/M2cJwdsnlBE/clip_image002_thumb.jpg?imgmax=800" width="244" border="0" /></a></p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Carrie</div>
+<div class='content'>
+This comment has been removed by the author.</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">i4o with Silverlight (Compiles first try)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-12-03T06:48:00.000Z" pubdate>Dec 2nd 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Db4o with System.Transactions.TransactionScope</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-11-30T22:15:00.000Z" pubdate>Nov 30th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>After after reading Rob Conery's post <a href="http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/">http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/</a>. I thought I'd give it a whirl and didn't get very far before I ran into my first roadblock. DB4O version 7.4.68 doesn't support any .NET System.Transaction. (For what I could tell...)</p>  <p>Below I'll explain how I pieced this together and made it work (At least an alpha type version to work...)</p>  <p>Assume I've followed almost everything Rob has in his blog for setup (IRepository, DB4O container class, ObjectRepository&lt;T&gt;, etc...)</p>  <p>My first unit test was the following </p>  <p>[Test]   <br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> CanRollbackSavedObjectInRepository()    <br />{    <br />&#160; <span style="color: #0000ff">using</span> (TransactionScope scope = <span style="color: #0000ff">new</span> TransactionScope())    <br />&#160; {    <br />&#160;&#160;&#160; _repository.Save(_dummyObject);    <br />&#160;&#160;&#160; <span style="color: #008000">//NO: scope.Complete(); Implied rollback</span>    <br />&#160; }    <br />    <br />&#160; <span style="color: #0000ff">if</span> (_repository.GetAll().Count() &gt; 0)    <br />&#160;&#160;&#160; Assert.Fail(&quot;<span style="color: #8b0000">TransactionScope Failed - count[</span>&quot; + _repository.GetAll().Count().ToString() + &quot;<span style="color: #8b0000">]</span>&quot;);    <br />}    <br /></p>  <p>And the above test fails...</p>  <p>Next was some research to figure out why this was failing... I didn't find much out there, except for some pending TODO's on the DB4O project.</p>  <p><a href="http://tracker.db4o.com/browse/COR-1376">http://tracker.db4o.com/browse/COR-1376</a>    <br /><a href="http://tracker.db4o.com/browse/COR-1143">http://tracker.db4o.com/browse/COR-1143</a></p>  <p>&#160;</p>  <p>So then it was off to figure out how frameworks implemented there resource managers to hook into the System.Transaction goo...</p>  <p>(Long story short, and several trial and error failures) The best of the solutions I found was in this open source code base. (<a href="http://code.google.com/p/uniframework/">http://code.google.com/p/uniframework/</a>)</p>  <p>In that project there was a class that managed the enlistment of a transaction, and some examples of how to use it...</p>  <p><a href="http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs">http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs</a> is the enlistment class.</p>  <p>&#160;</p>  <p>I placed this Db4oEnlist class as a private nested class inside the ObjectRepository&lt;T&gt; since I can't see why it would be used anywhere else...</p>  <p>And below is how I use them in the ObjectRepository&lt;T&gt;.</p>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Delete(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Store(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><p>&#160;</p><br /><br /><p>We first create an instance of the Db4OEnlist class with the current container. This class implements the IEnlistmentNotification interface and knows how to commit/rollback/etc on the object database. We then use the private helper method Enlist() giving it the Db4OEnlist instance. This helper method enlists the sequence in any existing transactions returning if it enlisted in a transaction or not.</p><br /><br /><pre><span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />{<br />  System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />  <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />  {<br />    currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />  }<br />  <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />}</pre><br /><br /><p>If we aren't in a transaction we commit the action right away, however if we are in the transaction we let the .net System.Transaction framework take care of committing the transaction.</p><br /><br /><p>Once I found the example in the &quot;uniframework&quot; it came together rather quickly...</p><br /><br /><p>Below is the ObjectRepository&lt;T&gt; I'm going forward with on testing Rob's idea of developing an application using the object database first... (we'll see how it goes)</p><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> ObjectRepository&lt;T&gt; :<br />  IRepository&lt;T&gt; where T : <span style="color: #0000ff">class</span><br />{<br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Returns all T records in the repository</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; GetAll()<br />  {<br />    <span style="color: #0000ff">return</span> (from T items <span style="color: #0000ff">in</span> Container<br />        select items).AsQueryable();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Finds an item using a passed-in expression lambda</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; Find(System.Linq.Expressions.Expression&lt;Func&lt;T, <span style="color: #0000ff">bool</span>&gt;&gt; expression)<br />  {<br />    <span style="color: #0000ff">return</span> GetAll().Where(expression);<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Saves an item to the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Store(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Deletes an item from the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Delete(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />  {<br />    System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />    <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />    {<br />      currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />      <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />    }<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> IObjectContainer Container<br />  {<br />    <span style="color: #0000ff">get</span><br />    {<br />      <span style="color: #0000ff">return</span> ServiceLocator.Current.GetInstance&lt;IObjectContainer&gt;();<br />    }<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Provides support for System.Transaction integration</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">class</span> Db4oEnlist : IEnlistmentNotification<br />  {<br />    <span style="color: #0000ff">private</span> IObjectContainer container;<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">object</span> oldItem;<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Initializes a new instance of the &lt;see cref=&quot;db4oEnlist&quot;/&gt; class.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;database&quot;&gt;The database.&lt;/param&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;The item.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> Db4oEnlist(IObjectContainer container, <span style="color: #0000ff">object</span> item)<br />    {<br />      <span style="color: #0000ff">this</span>.container = container;<br />      oldItem = item;<br />    }<br /><br />    #region IEnlistmentNotification<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Commits the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Commit(Enlistment enlistment)<br />    {<br />      container.Commit();<br />      oldItem = <span style="color: #0000ff">null</span>;<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Ins the doubt.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> InDoubt(Enlistment enlistment)<br />    {<br />      <span style="color: #008000">//throw new Exception(&quot;The method or operation is not implemented.&quot;);</span><br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Prepares the specified preparing enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;preparingEnlistment&quot;&gt;The preparing enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Prepare(PreparingEnlistment preparingEnlistment)<br />    {<br />      preparingEnlistment.Prepared();<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Rollbacks the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Rollback(Enlistment enlistment)<br />    {<br />      container.Rollback();<br />      container.Ext().Refresh(oldItem, <span style="color: #0000ff">int</span>.MaxValue);<br />    }<br /><br />    #endregion<br />  }<br />}</pre>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Magento theme</div>
+<div class='content'>
+I found so many interesting stuff in your blog especially its discussion. So i must appreciate your efforts on posting these information.</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Hi!<BR/><BR/>You’ve been nominated as db4o dVP. Please see <A HREF="http://developer.db4o.com/blogs/community/archive/2009/03/04/meet-the-new-db4objects-valued-professionals-dvp-for-2009.aspx" REL="nofollow">this page</A><BR/>I don’t have your contact info!<BR/><BR/>Best!<BR/><BR/>German</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archive/2008/12/11/db4o-with-system-transactions-transactionscope.aspx<BR/><BR/>Best regards.<BR/><BR/>German Viscuso<BR/>db4objects community manager</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">WCF - Silverlight - Default constructor not called??</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-11-25T06:02:00.000Z" pubdate>Nov 24th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/14/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/12/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Git - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div class="blog-index">
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2014-03-02T05:41:00.000Z" pubdate>Mar 1st 2014</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Segregate your code commits into tiny topical changes.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2014-02-17T18:25:00.000Z" pubdate>Feb 17th 2014</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Now that I'm only reaching people who use source control (serious developers), I'd like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think&nbsp;<a data-mce-href="http://en.wikipedia.org/wiki/Single_responsibility_principle" href="http://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank">SRP</a>&nbsp;for code commits/check-ins.</div><h4 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">What is a topical commit?</h4><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">That almost looks like 't<strong>r</strong>opical' and wouldn't it be nice to be in a tropical place doing commits to your code, but I digress...</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">The topics I'm referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">For example:</div><ul style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;"><li>adding feature X</li><li>refactoring</li><li>bug fix</li><li>spelling fix</li><li>Updating comments/documentation</li><li><strong>*** code formatting ***</strong></li></ul><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">I highlighted that last one for a reason as it's the impetus for writing this post.</div><h3 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 19px;">Don't mix topics/themes within a single commit!</h3><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Instead break them into multiple commits. If you're using git, checkout '<a data-mce-href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" target="_blank">git add -p</a>'</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you've left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Let's just NOT mix topics in our commits, ok?</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">K, THX bye!</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Happy Coding!</div></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jay Bazuzi</div>
+<div class='content'>
+I also split each refactoring out in to a separate commit, and tag the description with &quot;REFACTOR: &quot;. When things go well, I take tiny, safe refactoring steps, commit each one separately, until the feature I&#39;m trying to write is easye to implement. My commit history then looks like this:<br /><br />    REFACTOR: Extract Method `X.Y()`<br />    REFACTOR: Rename `A` -&gt; `B`<br />    Implement feature &quot;Foo&quot;<br /><br />If you are looking for a specific deliberate behavior change, you can scan the history and look at only the non-REFACTOR commits. That commit is small and clear, because I have refactored ahead of time. <br /><br />If you ever see a behavior change under a REFACTOR tag, you know it was not deliberate - that I screwed up.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jay Bazuzi</div>
+<div class='content'>
+I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to articulate it as well as you have.<br /><br />Just 2 days ago I told a coworker to commit his change in two parts, and he looked at me blankly and asked &quot;Why?&quot;. I said &quot;Single-Responsibility Principle&quot; and got more blank. *sigh* </div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Authentication error connecting to Git on TFS</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-06-20T17:46:00.000Z" pubdate>Jun 20th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Git on Windows: Creating a network shared central repository.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2011-06-18T17:15:00.000Z" pubdate>Jun 18th 2011</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was doing some basic Git training for a customer this past week and they asked about how to setup their repositories to push/pull from a network share. I thought it would be simple and we spent a few minutes in class trying to accomplish it. We stopped trying in class and I took it as a homework assignment to figure it out before the next lesson. It was a little bit of a struggle to get this working for me, so I thought I’d throw this out there for any windows developers trying to do a similar thing.</p>  <p>&#160;</p>  <p>I tend to prefer the command line to any of the git UI tools (except when visualizing history, and diffing files). In this post I’m going to show how you can do it through a command line, but I’ll also show how you can do it with git gui which, in this case, is a few less steps.</p>  <p>&#160;</p>  <h3>How to push a local repository up to an (un-initialized) remote windows share.</h3>  <h5>&#160;</h5>  <h4>Command Line:</h4>  <p>I tend to run git within PowerShell, however the following set of commands <strong>cannot be run within the PowerShell</strong> prompt. If you figure out a way, I’d love to hear about it. And since I use the PowerShell prompt, I’m not sure how this would play out with the bash command.</p>  <p>Open a command prompt (cmd.exe) and follow the below steps to create a remote windows repository share.    <br /></p>  <p>CD into the context of your local repository. Say my repo was at “C:\Code\MyGitRepo1”.</p>  <blockquote>   <p>cd C:\Code\MyGitRepo1&#160; <br /></p> </blockquote>  <p>Next we’re going to change our current directory to the remote share location. </p>  <blockquote>   <p>Something I learned during this process is that cmd.exe doesn’t allow you to “cd” into a UNC network share path.</p> </blockquote>  <p>To get around not being allowed to “cd” into a UNC network share we’ll use the <a href="http://technet.microsoft.com/en-us/library/bb490978.aspx">pushd</a> command. The reason this works is because it is actually going to map a network drive to the network share location.</p>  <blockquote>   <p>pushd <a href="file://\\remoteServer\git\Share\Folder\Path">\\remoteServer\git\Share\Folder\Path</a></p> </blockquote>  <p>Now that we’re in the remote location we can create a bare git repository.</p>  <blockquote>   <p>mkdir MyGitRepo1      <br />cd MyGitRepo1       <br />git init --bare       <br /></p> </blockquote>  <p>Your remote empty repository has now been created. Let’s go back to our local repository</p>  <blockquote>   <p><font style="background-color: #ffffff">popd</font></p> </blockquote>  <p>popd will “CD” back to the previous location (“C:\Code\MyGitRepo1”) and also remove the network share the pushd command created above.</p>  <p>So we should be back in the context of our local git repo.</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code\MyGitRepo1\ &gt;</font></p> </blockquote>  <p>&#160;</p>  <p>Now all we need to do is add the newly created remote bare repository to our local repo and push our code up.</p>  <p><strong>Notice the direction of the slashes in the path below (this stumped me for a bit)</strong>&#160;</p>  <blockquote>   <p>git remote add origin //remoteServer/git/Share/Folder/Path/MyGitRepo1      <br />git push origin master       <br /></p> </blockquote>  <p>Kind of a pain at the command prompt really, but it’s not something that’s done all that often.</p>  <h4>Using Git gui instead:</h4>  <p>Open up the GUI</p>  <blockquote>   <p><font style="background-color: #ffffff">git gui</font></p> </blockquote>  <p>Click the [Remote-&gt;Add] menu option to bring up the “Add Remote” dialog.</p>  <p><a href="http://lh3.ggpht.com/-ftWDdPbwLuU/TfzdIjeomCI/AAAAAAAAAPs/V7fp-tYQGTE/s1600-h/image%25255B3%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-2J7R5Ywqg5Q/TfzdKYd7u1I/AAAAAAAAAPw/RVRd1qA4Mwg/image_thumb%25255B1%25255D.png?imgmax=800" width="306" height="179" /></a></p>  <p>Enter the name for your remote “origin” is pretty typical for the central repository, but you can call this whatever you want. Then type the remote location. <strong>Notice the direction of the slashes.</strong></p>  <p><a href="http://lh4.ggpht.com/-rK0DGmJVatM/TfzdK_fEhyI/AAAAAAAAAP0/040v3iV28YU/s1600-h/image%25255B7%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/-2lkEQOqsj3I/TfzdLjmbWvI/AAAAAAAAAP4/6LZzJP94Cmk/image_thumb%25255B3%25255D.png?imgmax=800" width="414" height="305" /></a></p>  <p>Now you should be good to go.</p>  <p>&#160;</p>  <p>Hope this helps someone else, and if anyone knows of a better/easier way I’d love to hear it.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Thanks for the nice comment. In regards to  your question, I&#39;m afraid I&#39;m not familiar enough to be of help.<br /><br />You might take your question over to StackOverflow.com as there are some very smart people over there that might be able to help.<br /><br />Good Luck</div>
+</div>
+<div class='comment'>
+<div class='author'>Djilali Tabbouche</div>
+<div class='content'>
+Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy applications to both linux and windows server.<br />No problem on linux using ssh and pushing to windows throuh network shares works fine but I have one issue with post-receive hooks: I use this hook to checkout the remote repository to the application directory and run configuration tasks and on windows, the git command use the local computer environment (git-dir and work-tree).<br />I&#39;ve tried every options without success.<br /><br />Any idea?</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <div class="pagination">
+                
+                <a href="/blog/archives">Blog Archives</a>
+                
+            </div>
+        </div>
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+ 
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

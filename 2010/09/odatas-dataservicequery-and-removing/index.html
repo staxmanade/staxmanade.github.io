@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="I was experimenting recently with the .Net implementation of OData and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net communit...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-09-21T13:52:00.000Z" pubdate>Sep 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was experimenting recently with the .Net implementation of <a href="http://www.odata.org/" target="_blank">OData</a> and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net community’s definition of magic strings is close but seems slightly different from <a href="http://en.wikipedia.org/wiki/Magic_string_(programming)" target="_blank">Wikipedia</a>. Therefore the magic strings I’m talking about here are what you’ll find on such posts as “<a href="http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/19/functional-net-lose-the-magic-strings.aspx" target="_blank">Functional .Net – Lose the Magic Strings</a>.”</p>  <p>I don’t want to get into the magic string debate here, just that I want to snapshot this little helper (for when I need to remember to write it again and don’t want to “figure it out”). This is also not intended to be a complete overview of OData, but I will provide some getter starter links and tips (if you haven’t touched it).</p>  <h4>Enough background show me the code: (scroll to the bottom if you don’t care about the post)</h4>  <p>Let’s pretend we want to request a “Title” from the NetFlix OData api.</p>  <p>You can do this by going to the web browser and typing the following URL</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog/Titles()?$top=1">http://odata.netflix.com/catalog/Titles()?$top=1</a></p> </blockquote>  <p>Sweet. XML, yippie. Um, no thanks. Let’s try that again. Go download <a href="http://www.linqpad.net/" target="_blank">LinqPad</a> (read up on using <a href="http://coderjournal.com/2010/06/using-linqpad-to-query-stack-overflow/" target="_blank">LinqPad for querying an OData</a> store)</p>  <p>Once you’ve connected LinqPad to the NetFlix OData service (<a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog">http://odata.netflix.com/catalog</a>). Now we’re ready to play around. Our URL “query” above translates in to a C# LINQ statement that looks like the below in LinqPad.</p>  <pre class="brush: csharp;">(from title in Titles<br />select title).Take(1).Dump()</pre><br /><br /><blockquote><br />  <p>The<strong> .Dump()</strong> is a LinqPad extension method that displays the object in the results window.</p><br /></blockquote><br /><br /><p>If you execute this in LinqPad you will see some data about the first Title form the Netflix OData service. In the results window scroll all the way to the right. Notice all the properties that are supposed to be a Collection&lt;T&gt; but have no data? To retrieve these through OData you have to extend your LINQ query with the Expand(“{propertyName}”) method. </p><br /><br /><p>Let’s say we want to include AudioFormats collection when we ask for the first Title.</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(&quot;AudioFormats&quot;)<br />select title).Take(1).Dump()</pre><br /><br /><p>Notice how we have to explicitly tell the OData service to include this property when we retrieve it form the service. Not only do we explicitly tell the property name, but it’s a magic string (gag, hack, baaa) none the less. If you click on “SQL” in LinqPad result window it will show the URL used for OData queries. Our URL shows the expanded property. </p><br /><br /><blockquote><a title="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats&#13;&#10;" href="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats">http://odata.netflix.com/catalog/Titles()?$top=1&amp;<strong>$expand=AudioFormats</strong> <br /><br />    <br /></a></blockquote><br /><br /><p>Now let’s pretend (just for the sake of pretending) that your front end application’s entire data access strategy was going to sit on top of OData. Not saying this is a good thing (or a bad thing). Just sayin…</p><br /><br /><p>If you have a fairly complex data model and each screen in your application requests slightly different data in a slightly different way, but in the end it all essentially comes down to a set of entities and their relationships. What would you do if you had to “.Expand” all those magic stringed property names. Now, I know we’re all great at search and replace (of the magic strings). However every little step along the way where I can avoid a refactor that will break every other screen in the app, well, I think I just might take that.</p><br /><br /><p>Now, if you change your LinqPad query from a “C# Expression” to a “C# Program”. Copy the helper class at the bottom of this post in to the bottom of the LinqPad code window. You can now write your linq statement as follows</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(x=&gt; x.AudioFormats)<br />select title).Take(1).Dump();</pre><br /><br /><p>Notice the switch from magic strings to an intellisense helping, refactoring safe lambda? This trick is not new. You’ll see it in many .Net open source projects such as mocking frameworks, asp.net MVC projects etc…</p><br /><br /><p>Just wanted to write this little goodie down for the next time I need it. Hope this helps someone else as well.</p><br /><br /><pre class="brush: csharp;">public static class ServiceQueryExtension<br />{<br />    public static DataServiceQuery&lt;T&gt; Expand&lt;T, TProperty&gt;(<br />        this DataServiceQuery&lt;T&gt; entities, <br />        Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpressions)<br />    {<br />        string propertyName = propertyExpressions.GetMemberName();<br />        return entities.Expand(propertyName);<br />    }<br /><br />    public static string GetMemberName&lt;T, TProperty&gt;(this Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpression)<br />    {<br />        return ((MemberExpression)(propertyExpression.Body)).Member.Name;<br />    }<br />}</pre>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2010-09-21T13:52:00.000Z" pubdate>Sep 21st 2010</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/csharp/'>C#</a>
+    
+    <a class='category' href='/blog/categories/odata/'>OData</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2010/05/statlight-v10-v11-released-silverlight/" title="Previous Post: StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)">&laquo; StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2010/10/odatas-dataservicequery-and-removing/" title="Next Post: OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Db4o with System.Transactions.TransactionScope - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="After after reading Rob Conery&#x27;s post http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/. I thought I&#x27;d give it a whirl and didn&#x27;t get ve...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">Db4o with System.Transactions.TransactionScope</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2008-11-30T22:15:00.000Z" pubdate>Nov 30th 2008</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>After after reading Rob Conery's post <a href="http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/">http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/</a>. I thought I'd give it a whirl and didn't get very far before I ran into my first roadblock. DB4O version 7.4.68 doesn't support any .NET System.Transaction. (For what I could tell...)</p>  <p>Below I'll explain how I pieced this together and made it work (At least an alpha type version to work...)</p>  <p>Assume I've followed almost everything Rob has in his blog for setup (IRepository, DB4O container class, ObjectRepository&lt;T&gt;, etc...)</p>  <p>My first unit test was the following </p>  <p>[Test]   <br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> CanRollbackSavedObjectInRepository()    <br />{    <br />&#160; <span style="color: #0000ff">using</span> (TransactionScope scope = <span style="color: #0000ff">new</span> TransactionScope())    <br />&#160; {    <br />&#160;&#160;&#160; _repository.Save(_dummyObject);    <br />&#160;&#160;&#160; <span style="color: #008000">//NO: scope.Complete(); Implied rollback</span>    <br />&#160; }    <br />    <br />&#160; <span style="color: #0000ff">if</span> (_repository.GetAll().Count() &gt; 0)    <br />&#160;&#160;&#160; Assert.Fail(&quot;<span style="color: #8b0000">TransactionScope Failed - count[</span>&quot; + _repository.GetAll().Count().ToString() + &quot;<span style="color: #8b0000">]</span>&quot;);    <br />}    <br /></p>  <p>And the above test fails...</p>  <p>Next was some research to figure out why this was failing... I didn't find much out there, except for some pending TODO's on the DB4O project.</p>  <p><a href="http://tracker.db4o.com/browse/COR-1376">http://tracker.db4o.com/browse/COR-1376</a>    <br /><a href="http://tracker.db4o.com/browse/COR-1143">http://tracker.db4o.com/browse/COR-1143</a></p>  <p>&#160;</p>  <p>So then it was off to figure out how frameworks implemented there resource managers to hook into the System.Transaction goo...</p>  <p>(Long story short, and several trial and error failures) The best of the solutions I found was in this open source code base. (<a href="http://code.google.com/p/uniframework/">http://code.google.com/p/uniframework/</a>)</p>  <p>In that project there was a class that managed the enlistment of a transaction, and some examples of how to use it...</p>  <p><a href="http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs">http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs</a> is the enlistment class.</p>  <p>&#160;</p>  <p>I placed this Db4oEnlist class as a private nested class inside the ObjectRepository&lt;T&gt; since I can't see why it would be used anywhere else...</p>  <p>And below is how I use them in the ObjectRepository&lt;T&gt;.</p>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Delete(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Store(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><p>&#160;</p><br /><br /><p>We first create an instance of the Db4OEnlist class with the current container. This class implements the IEnlistmentNotification interface and knows how to commit/rollback/etc on the object database. We then use the private helper method Enlist() giving it the Db4OEnlist instance. This helper method enlists the sequence in any existing transactions returning if it enlisted in a transaction or not.</p><br /><br /><pre><span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />{<br />  System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />  <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />  {<br />    currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />  }<br />  <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />}</pre><br /><br /><p>If we aren't in a transaction we commit the action right away, however if we are in the transaction we let the .net System.Transaction framework take care of committing the transaction.</p><br /><br /><p>Once I found the example in the &quot;uniframework&quot; it came together rather quickly...</p><br /><br /><p>Below is the ObjectRepository&lt;T&gt; I'm going forward with on testing Rob's idea of developing an application using the object database first... (we'll see how it goes)</p><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> ObjectRepository&lt;T&gt; :<br />  IRepository&lt;T&gt; where T : <span style="color: #0000ff">class</span><br />{<br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Returns all T records in the repository</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; GetAll()<br />  {<br />    <span style="color: #0000ff">return</span> (from T items <span style="color: #0000ff">in</span> Container<br />        select items).AsQueryable();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Finds an item using a passed-in expression lambda</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; Find(System.Linq.Expressions.Expression&lt;Func&lt;T, <span style="color: #0000ff">bool</span>&gt;&gt; expression)<br />  {<br />    <span style="color: #0000ff">return</span> GetAll().Where(expression);<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Saves an item to the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Store(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Deletes an item from the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Delete(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />  {<br />    System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />    <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />    {<br />      currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />      <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />    }<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> IObjectContainer Container<br />  {<br />    <span style="color: #0000ff">get</span><br />    {<br />      <span style="color: #0000ff">return</span> ServiceLocator.Current.GetInstance&lt;IObjectContainer&gt;();<br />    }<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Provides support for System.Transaction integration</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">class</span> Db4oEnlist : IEnlistmentNotification<br />  {<br />    <span style="color: #0000ff">private</span> IObjectContainer container;<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">object</span> oldItem;<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Initializes a new instance of the &lt;see cref=&quot;db4oEnlist&quot;/&gt; class.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;database&quot;&gt;The database.&lt;/param&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;The item.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> Db4oEnlist(IObjectContainer container, <span style="color: #0000ff">object</span> item)<br />    {<br />      <span style="color: #0000ff">this</span>.container = container;<br />      oldItem = item;<br />    }<br /><br />    #region IEnlistmentNotification<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Commits the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Commit(Enlistment enlistment)<br />    {<br />      container.Commit();<br />      oldItem = <span style="color: #0000ff">null</span>;<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Ins the doubt.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> InDoubt(Enlistment enlistment)<br />    {<br />      <span style="color: #008000">//throw new Exception(&quot;The method or operation is not implemented.&quot;);</span><br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Prepares the specified preparing enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;preparingEnlistment&quot;&gt;The preparing enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Prepare(PreparingEnlistment preparingEnlistment)<br />    {<br />      preparingEnlistment.Prepared();<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Rollbacks the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Rollback(Enlistment enlistment)<br />    {<br />      container.Rollback();<br />      container.Ext().Refresh(oldItem, <span style="color: #0000ff">int</span>.MaxValue);<br />    }<br /><br />    #endregion<br />  }<br />}</pre>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Magento theme</div>
+<div class='content'>
+I found so many interesting stuff in your blog especially its discussion. So i must appreciate your efforts on posting these information.</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Hi!<BR/><BR/>You’ve been nominated as db4o dVP. Please see <A HREF="http://developer.db4o.com/blogs/community/archive/2009/03/04/meet-the-new-db4objects-valued-professionals-dvp-for-2009.aspx" REL="nofollow">this page</A><BR/>I don’t have your contact info!<BR/><BR/>Best!<BR/><BR/>German</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archive/2008/12/11/db4o-with-system-transactions-transactionscope.aspx<BR/><BR/>Best regards.<BR/><BR/>German Viscuso<BR/>db4objects community manager</div>
+</div>
+</div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2008-11-30T22:15:00.000Z" pubdate>Nov 30th 2008</time>
+
+
+
+                        
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2008/11/wcf-silverlight-default-constructor-not/" title="Previous Post: WCF - Silverlight - Default constructor not called??">&laquo; WCF - Silverlight - Default constructor not called??</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2008/12/i4o-with-silverlight-compiles-first-try/" title="Next Post: i4o with Silverlight (Compiles first try)"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible… - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assemb...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                
+  <header>
+    
+      <h1 class="entry-title">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-10-01T01:46:00.000Z" pubdate>Sep 30th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assembly references at compile time depending on certain build conditions… Don’t want to get too much in to why I needed it, just that it is doable – (more painful than initially expected), but still possible.</p> <p>First let’s get a csc command we want to compile.</p> <p>Second let me state that this was more of an exercise in wanting to learn PowerShell and there probably other ways of accomplishing what I needed, just seemed like a good time to start down the painful learning curve. Also note, I’m not a CSC compiler pro – I haven’t analyzed each of the “options” and weather it’s right/wrong/best practice – it just works… (thanks to Visual Studio &amp; MSBuild for hiding how we actually should use the compiler)</p> <p>Ok take a simple csc compile command – (In Visual Studio – File –&gt; New Project -&gt; ClassLibrary1 as a good starting point). Compile the project &amp; check the build output window. You’ll get an output similar to the below.</p> <blockquote> <p>C:\Windows\Microsoft.NET\Framework\v3.5\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\PowershellCscCompileSample.dll /target:library Class1.cs Properties\AssemblyInfo.cs</p></blockquote> <p>Next figure how the heck to execute this in PowerShell.</p> <p>&amp; $csc $params --- NOPE <br>exec $csc $params – NOPE</p> <p>I must have tried tens if not hundreds of methods to get the simple thing above to compile… needless to say I pinged a co-worker for some help. <a href="http://obsidience.blogspot.com/">http://obsidience.blogspot.com/</a></p> <p>His pointer – when trying to get big string command to execute in powershell do the following.</p> <ol> <li>Open up “Windows PowerShell ISE”&nbsp; (on Windows 7)  <li>Paste the command prompt window (with an “&amp;” at the beginning)  <li>look for any coloration changes like… <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y5kM2wwI/AAAAAAAAALs/UDwCw_-kLYs/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sr-y5_QAW5I/AAAAAAAAALw/NMkrfh4EjAA/image_thumb9.png?imgmax=800" width="644" height="30"></a>  <li>Next place PowerShell escape character [`] in front of any character where the coloration changes (They’re very subtle so look long and hard) <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y6I68cMI/AAAAAAAAAL0/ZFyN79A_4-o/s1600-h/image21.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Sr-y6j24noI/AAAAAAAAAL4/NmqVGw9aCkU/image_thumb11.png?imgmax=800" width="644" height="39"></a> </li></ol> <p>We should now have a PowerShell string that compiles our project.</p> <p>After I got that far – I cleaned up the compiler syntax for a little re-use. (You can download the project blow to check it out)</p> <p><iframe style="padding-bottom: 0px; background-color: #fcfcfc; padding-left: 0px; width: 98px; padding-right: 0px; height: 115px; padding-top: 0px" title="Preview" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedicon.aspx/Public/PowershellCscCompileSample.zip" frameborder="0" marginwidth="0" scrolling="no"></iframe></p> <p>If you don’t want to see the entire csc compile in the project download above, below is the general usage…</p><pre class="brush: plain;"><br /><br />################## Build Configuration ##################<br />$project_name = 'PowershellCscCompileSample'<br />$build_configuration = 'Debug'<br />#########################################################<br /><br />$core_assemblies_path = 'C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5'<br />$framework_assemblies_path = 'C:\Windows\Microsoft.NET\Framework\v2.0.50727'<br /><br />function global:Build-Csc-Command {<br />	param([array]$options, [array]$sourceFiles, [array]$references, [array]$resources)<br />	<br />	$csc = 'C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe'<br /><br />	# can't say I'm doing delimeters correctly, but seems to work ???<br />	$delim = [string]""""<br />	<br />	$opts = $options<br /><br />	if($references.Count -gt 0)<br />	{<br />		$opts += '/reference:' + $delim + [string]::Join($delim + ' /reference:' + $delim, $references) + $delim<br />	}<br /><br />	if($resources.Count -gt 0)<br />	{<br />		$opts += '/resource:' + $delim + [string]::Join($delim + ' /resource:' + $delim, $resources) + $delim<br />	}<br />	<br />	if($sourceFiles.Count -gt 0)<br />	{<br />		$opts += [string]::Join(' ', $sourceFiles)<br />	}<br />	<br />	$cmd = [string]::Join(" ", $options)<br />	$cmd = $csc + " " + $opts<br />	$cmd;<br />}<br /><br />function global:Execute-Command-String {<br />	param([string]$cmd)<br />	<br />	# this drove me crazy... all I wanted to do was execute<br />	# something like this (excluding the [])<br />	#<br />	# [& $csc $opts] OR [& $cmd]<br />	#<br />	# however couldn't figure out the correct powershell syntax...<br />	# But I was able to execute it if I wrote the string out to a <br />	# file and executed it from there... would be nice to not <br />	# have to do that.<br /><br />	$tempFileGuid = ([System.Guid]::NewGuid())<br />	$scriptFile = ".\temp_build_csc_command-$tempFileGuid.ps1"<br />	Remove-If-Exist $scriptFile<br /><br />	Write-Host ''<br />	Write-Host '*********** Executing Command ***********'<br />	Write-Host $cmd<br />	Write-Host '*****************************************'<br />	Write-Host ''<br />	Write-Host ''<br /><br />	$cmd >> $scriptFile<br />	& $scriptFile<br />	Remove-If-Exist $scriptFile<br />}<br /><br />function global:Remove-If-Exist {<br />	param($file)<br />	if(Test-Path $file)<br />	{<br />		Remove-Item $file -Force -ErrorAction SilentlyContinue<br />	}<br />}<br /><br />$resources = @(<br />	#"<path to resource files>"<br />)<br /><br />$references = @(<br />	"$core_assemblies_path\System.Core.dll",<br />	"$framework_assemblies_path\System.dll"<br />)<br /><br />$sourceFiles = @(<br />	#"<path to some source file not under the main project's folder - EX: Linked files in other projects>"<br />)<br /><br />$sourceFiles += Get-ChildItem '.' -recurse `<br />	| where{$_.Extension -like "*.cs"} `<br />	| foreach {$_.FullName} `<br /><br />$debug = if($build_configuration.Equals("Release")){ '/debug-'} else{ "/debug+" }<br /><br />$options = @(<br />	'/noconfig',<br />	'/nowarn:1701`,1702', # Note: the escape [`] character before the comma<br />	'/nostdlib-',<br />	'/errorreport:prompt',<br />	'/warn:4',<br />	$debug,<br />	"/define:$build_configuration``;TRACE",  # Note: the escape [`] character before the comma<br />	'/optimize+',<br />	"/out:$project_name\bin\$build_configuration\ClassLibrary.dll",<br />	'/target:library'<br />)<br /><br />$cmd = Build-Csc-Command -options $options -sourceFiles $sourceFiles -references $references -resources $resources<br /><br />Execute-Command-String $cmd<br /></pre><pre class="brush: plain;">&nbsp;</pre><font face="Courier New"></font><pre class="brush: plain;"></pre>  </div>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                        
+  <time datetime="2009-10-01T01:46:00.000Z" pubdate>Sep 30th 2009</time>
+
+
+
+                        
+<span class="categories">
+    
+    <a class='category' href='/blog/categories/csharp/'>C#</a>
+    
+    <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
+    
+</span>
+
+
+                    </p>
+                    
+                    <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">Tweet</a>
+  
+  
+  
+</div>
+
+                    
+                    <p class="meta">
+                        
+                        <a class="basic-alignment left" href="/2009/09/how-do-i-get-uispyexe-on-my-windows-7/" title="Previous Post: How do I get UISpy.exe on my Windows 7 Developer Machine?">&laquo; How do I get UISpy.exe on my Windows 7 Developer Machine?</a>
+                        
+                        
+                        <a class="basic-alignment right" href="/2009/10/statlight-silverlight-test-automation/" title="Next Post: StatLight (Silverlight Test Automation Tool) V0.8 Released"> &raquo;</a>
+                        
+                    </p>
+                </footer>
+            </article>
+            
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+            
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

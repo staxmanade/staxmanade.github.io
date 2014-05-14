@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">C# 4.0 Optional Parameters – Exploration.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-01-28T22:09:00.000Z" pubdate>Jan 28th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>{… Removed big long story about how I ended up writing this post which provides no value to the blog…}</p>  <p>Summary of big long story to at least give a little context as to why (yet another post on optional parameters):</p>  <blockquote>   <p>I threw an idea out to the <a href="http://code.google.com/p/moq/">Moq</a> discussion group of how we could use the <a href="http://msdn.microsoft.com/en-us/library/dd264739(VS.100).aspx">named/optional</a> parameters in a future version of Moq. (<a href="http://groups.google.com/group/moqdisc/browse_thread/thread/de73db381cacee9b/a6fa5cff1e7b0cc8?lnk=gst&amp;q=Ideas+for+v4+sugar#a6fa5cff1e7b0cc8">you can read the thread here</a>) In my original feature request I displayed my lack of concrete knowledge in the named/optional parameters support that is eventually coming with .net 4.0.</p> </blockquote>  <p>Once I learned that you could place default values on interfaces it left me with questions… So, what better way to figure them out? Go test it…</p>  <p><strong>Disclaimer</strong>: (Shouldn’t every blog have some context enlightening disclaimer?)     <br />I haven’t looked up best practices or lessons learned from people that have had this language feature (VB), so I’m just doing this as an experiment for myself. Hope some of my findings help the other C#’ers wanting to learn a little about the feature.</p>  <h4>What are optional parameters? </h4>  <p><a href="http://www.dimecasts.net">DimeCasts.Net</a>, <a href="http://www.dimecasts.net/Casts/ByAuthor/Derik%20Whittaker">Derik Whittaker</a> has a nice intro video <a href="http://www.dimecasts.net/Casts/CastFeedDetails/153?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Dimecastsnet--InformAndEducateIn10MinutesOrLess+(DimeCasts.Net+--+Inform+and+Educate+in+~+10+minutes+or+less)&amp;utm_content=Google+Reader"># 153 - Exploring .Net 4 Features - Named and Optional Parameters</a></p>  <p>OR check out - <a href="http://tinyurl.com/yz3pc9o">http://tinyurl.com/yz3pc9o</a></p>  <p>&#160;</p>  <h4>Can an interface define a default value?</h4>  <p><strong>Yes!</strong>     <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILApwzkNI/AAAAAAAAANU/Ydi4SHTsePA/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILA63cf3I/AAAAAAAAANY/WnbpitXg4IM/image_thumb3.png?imgmax=800" width="286" height="124" /></a> </p>  <h5>&#160;</h5>  <h4>Can I specify a default in the concrete implementation, if the interface has a default also?</h4>  <p><strong>Yes!</strong></p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILBNcSRYI/AAAAAAAAANc/mZmlaInB4OQ/s1600-h/image13.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILBmlHVtI/AAAAAAAAANg/gagdT5CuMVs/image_thumb5.png?imgmax=800" width="370" height="276" /></a> </p>  <h4>What happens when the concrete implementation has a different default value than the interface’s default?</h4>  <p><strong>If the interface has a default value specified, that is different from the concrete implementation, then it depends on what reference you’re using when executing the method.</strong></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILB0Ic0PI/AAAAAAAAANk/TDRVo_bYV5w/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILCJiKGfI/AAAAAAAAANo/yQ15IDDZnc0/image_thumb7.png?imgmax=800" width="381" height="275" /></a> </p>  <p>In the case below we are executing the method directly off of the Foo instance and will therefore get the concrete implementation’s default value when executing.</p>  <blockquote>   <p><strong>(new Foo()).Bar()</strong> – would use the value of ‘1000’.<strong> </strong><strong></strong></p> </blockquote>  <p>And in the case below we cast the Foo instance to an IFoo and it will then use the interfaces default value when executing.</p>  <blockquote>   <p><strong>((IFoo) new Foo()).Bar() </strong>– would use the value of ‘1’. </p> </blockquote>  <p>Below are some examples of the different use cases.</p>  <pre class="brush: csharp;">[TestClass]<br />public class UnitTest1<br />{<br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value()<br />    {<br />        Foo f1 = new Foo();<br />        f1.Bar();<br />        f1.ParamValue.ShouldBeEqualTo(1000);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value()<br />    {<br />        IFoo f = new Foo();<br />        f.Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value_because_of_explicit_cast()<br />    {<br />        Foo f = new Foo();<br />        ((IFoo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value_because_of_explicit_cast()<br />    {<br />        IFoo f = new Foo();<br />        ((Foo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1000);<br />    }<br />}<br /><br />interface IFoo<br />{<br />    int ParamValue { get; }<br /><br />    void Bar(int paramValue = 1);<br />}<br /><br />class Foo : IFoo<br />{<br />    public int ParamValue { get; private set; }<br />    public void Bar(int paramValue = 1000)<br />    {<br />        ParamValue = paramValue;<br />    }<br />} </pre><br /><br /><p>&#160;</p><br /><br /><h4>The next experiment - Extract Interface.</h4><br /><br /><p>Next I tried removing the IFoo interface that I’d created manually, because I wanted to exercise the “<a href="http://msdn.microsoft.com/en-us/library/fb3dyx26.aspx">Extract Interface…</a>” functionality, just to see how it dealt with the these defaults.</p><br /><br /><p>Luckily, <strong>there were no surprises.</strong> The interface it created was exactly (less spacing) the same as I originally had. </p><br /><br /><p>Although it didn’t display the default constant value in the dialog during creation, there was a hint that the method signature had a default by placing [] around the int resulting in “Bar([int])”.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/S2ILCUb7m1I/AAAAAAAAANs/1r4ZBNlQUUU/s1600-h/image221.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILCwi2KSI/AAAAAAAAANw/pHnAuYpcab4/image22_thumb.png?imgmax=800" width="411" height="341" /></a></p><br /><br /><blockquote><br />  <p><strong>Side <strong>Tool </strong>Issue:</strong> Can’t say I like how it forced me to put the interface in a different file, I guess it’s enforcing “best practice” here, but I prefer to do this later in the dev cycle than immediately (kind of like how R# allows you to place in the file next to the original class). #ToolGettingInWay</p><br /></blockquote><br /><br /><blockquote><br />  <p><strong>Optional Parameter Issue:</strong> One issues I see with this solution was the dirty/icky copy/paste feeling I got when extracting the interface – the default was copied from the class to the interface. </p><br /></blockquote><br /><br /><h5>Possible solutions to the “dirty/icky copy/paste feeling” the extract interface gives.</h5><br /><br /><p>(in no particular order of preference)</p><br /><br /><ul><br />  <li>Place all defaults into a constant and reference the constant in both the interface and the concrete implementation(s). </li><br /><br />  <li>Don’t place the defaults in the concrete implementation (only in the interface). As you should probably not be depending on the concrete implementation to begin with, you wouldn’t need it there (and wouldn’t even call it). This would also help in the case that there are multiple concrete implementation and having to sift through the code looking for all instances to updated defaults for could be very error prone. </li><br /></ul><br /><br /><p>On the surface named parameters seem like a very simple feature to the C# language. But after delving into the feature a little, I can see there are many complicated scenarios you can get your self caught up into.</p><br /><br /><p>As with anything…<strong>Use with care</strong>!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Networking Brain Fart.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-01-22T01:59:00.000Z" pubdate>Jan 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This one was just too funny to not write down. The epitome of a <a href="http://en.wikipedia.org/wiki/Brain_fart">Brain Fart</a>.</p>  <p>There sure seem to be quote a few posts lately talking about the Software (Crafts-Man/Woman/person/whatever); I may have many many more years of Craft practicum to study up on before I can truly consider myself a Craftsman. However, it’s humbling to screw up and remember that we are human. Below is one such story. Luckily there was no software, business value, or puppies hurt in the process.</p>  <h4>Setup:</h4>  <p>I work from home part time. Where I usually just remote desktop into my 64bit, quad-core, 12 gig of ram, supercomputer desktop at work. (I’m sure I’ll read this post in the future and go what? supercomputer? you have no idea young man.) I choose the RDP network latency over not being able to compile (in under XXX_too_much_time_XXX) on my laptop at home. (It’s part time one day a week and not worth the investment to beef up the home setup. -- yet) <strong>Point is: I’m working from home and via remote desktop on my computer at the office</strong>.</p>  <p>So I’m working on this project and…let’s just say I somehow got into a position where I thought my best option was to take my solution offline from TFS. (long story I don’t want to overshadow the “Brain Fart” part of this post)</p>  <p>This is where I got into trouble…</p>  <h4>How do I take my solution offline from TFS?</h4>  <p>I searched for how to take my solution offline and found this great post “<a href="http://ozgrant.com/2008/06/01/force-visual-studio-to-think-tfs-is-offline/">Force Visual Studio to think TFS is offline</a>” which outlines several options…</p>  <blockquote>   <p>Option 1 – Use the ‘tfpt tweakui’ utility</p>    <p>Option 2 – Yank the network cable before starting Visual Studio</p>    <p>Option 3 – Set a registry key</p> </blockquote>  <p><strong>Option 1:</strong> I didn’t think I had TFS Power Tools installed (turns out I did, just didn’t spend the 2 seconds to figure it out - doh).</p>  <p><strong>Option 3</strong>: I couldn’t seem to get the registry key version to work (for some reason???) &amp; wasn’t interested in wasting the day to figure it out.</p>  <p><strong>--- So what was left?</strong></p>  <p><strong>Option 2</strong>: “Yank the network cable before starting Visual Studio”. I didn’t yank the cord because clearly I’m not at the office so how could I do that????, but tried the next best thing. <strong>I disabled my network connection </strong>(so I could open the solution and have it NOT find TFS)<strong>.</strong></p>  <p><img style="display: block; float: none; margin-left: auto; margin-right: auto" src="http://i223.photobucket.com/albums/dd272/Solblade44/You%20Fail/fail-i-told-you.jpg" /></p>  <p>If you missed the detail earlier in the post – I said that I was working through <a href="http://en.wikipedia.org/wiki/Remote_Desktop_Protocol">RDP</a>. </p>  <p>Huh - Not anymore… Sigh!</p>  <p>Some days it may just be safer to work from home (disconnected from the world).</p>  <p>&#160;</p>  <h5>P.S. thanks to a co-worker for getting me back online :)</h5>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I know there is (supposed to be this button) but for some reason whenever I&#39;m on a machine with Visual Studio &amp; TFS It&#39;s never there... :)</div>
+</div>
+<div class='comment'>
+<div class='author'>justinmchase</div>
+<div class='content'>
+What&#39;s even worse is that there&#39;s a little button on the top of the Solution Explorer when you have a project that&#39;s associated with TFS and you just click it ;)</div>
+</div>
+<div class='comment'>
+<div class='author'>Obsidience</div>
+<div class='content'>
+if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll yank the cable for real :-P</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Unity/Moq - AutoMocker or AutoMockingContainer</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-01-03T16:53:00.000Z" pubdate>Jan 3rd 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<h4>What is an Auto Mocking Container?</h4>  <p>This post started to get a little long, so I won’t re-explain the concept.</p>  <p><a href="http://lostechies.com/joshuaflanagan/">Joshua Flanagan</a> wrote a nice overview at his <a href="http://www.lostechies.com/">Los Techies</a> blog: <a href="http://www.lostechies.com/blogs/joshuaflanagan/archive/2009/02/03/auto-mocking-explained.aspx"><strong>Auto mocking Explained</strong></a>.</p>  <p>My post is mainly here to describe the Unity version of an automocking container I threw together.</p>  <h4>In Jan 2009 I blogged about my initial version of the Unity AutoMocker - Why am I blogging about it again?</h4>  <p>I originally wrote the AutoMocker for the Unity container a year ago (Jan 2009, in Silverlight), and finally got around to placing the code up in the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project in June of 2009.</p>  <p>I’m writing another post today in hopes to:</p>  <ol>   <li>Get some feedback on how this little snippet of code should continue. </li>    <li>Give a little more how-to/example code </li>    <li>Describe some updates I made since I originally created it.&#160; </li> </ol>  <h4>Where can I get it?</h4>  <p><strong>This is one part where I’d appreciate some feedback.</strong></p>  <p>I have two slightly different versions out there (currently).</p>  <p>I have one version at the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode</a> repository where I was working on it, and the other I threw up at <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a>.</p>  <p>The core of the UnityAutoMockContainer is the same in both places, it’s how the tests are separated out that differ.</p>  <p>In the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode repository</a> it’s an all in one self contained single file (that you can copy into your own test project(s)). You can then setup a single test in your own testing framework that runs all internal automocker tests (in case you need to modify it yourself, and don’t want to break any existing functionality). EX: test</p>  <pre class="brush: csharp;">[Test]<br />public void Should_run_all_UnityAutoMockContainer_internal_tests()<br />{<br />    Moq.AutoMocking.SelfTesting.UnityAutoMockContainerFixture<br />        .RunAllTests(Console.WriteLine);<br />}</pre><br /><br /><p>I kind of like this format as it makes it easy to port between test libraries. Can’t say I like having the tests in the same file as the core, but it certainly is not a large chunk of code (so far) so it’s relatively small to maintain and definitely easier to manage as a single .cs file than another assembly (which would have to be version dependent on both Unity and Moq).</p><br /><br /><p>The <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> is definitely where I think this helper should end up (and it is there). I just happened to break the tests out into the Silverlight test project and the core is alone in a file. </p><br /><br /><p>It’s current state isn’t as easy to copy to a test library (Silverlight/Desktop/Unity 1.2/Unity 2.0) as the one at <a href="http://elegantcode.com/">ElegantCode</a>. <strong>What does anyone think?</strong> Should I put them all together in one file?</p><br /><br /><p>However it ends up (1. all in one file or two (1 test) (1 core)) it will continue to be maintained on the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p><br /><br /><h4>What is the high level API of the container?</h4><br /><br /><p>It’s pretty simple, (currently) there are four methods on the container.</p><br /><br /><p><strong>Two for registering items with the container</strong>. Say you want to register an already created instance, or say you want to map an interface to a concrete class and _not_ have the container generate mocks automatically for special cases. </p><br /><br /><p>And <strong>two for pulling items out of the container</strong>. Whether you want a instance of T or a Mock&lt;T&gt;, it gives you ways to retrieve both.</p><br /><br /><blockquote><br />  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S0DLkBR_DzI/AAAAAAAAANM/VOt0g3C4xD0/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S0DLkezvL7I/AAAAAAAAANQ/3CZqGQAh-fA/image_thumb1.png?imgmax=800" width="396" height="106" /></a> </p><br /></blockquote><br /><br /><h4>How can I setup my own registrations with the container? </h4><br /><br /><p>Say I don’t want to have the container generate mocks for specific items and I want to supply specific configuration to the UnityContainer.</p><br /><br /><blockquote><br />  <p>public UnityAutoMockContainer RegisterInstance&lt;TService&gt;(TService instance)</p><br /><br />  <p>public UnityAutoMockContainer Register&lt;TService, TImplementation&gt;() <br />    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; where TImplementation : TService</p><br /></blockquote><br /><br /><p><strong>Note</strong>: both of these registration methods return the container itself so you can fluently stack registration. <strong>EX:</strong></p><br /><br /><pre class="brush: csharp;">AutoMockContainer<br />    .Register&lt;IServiceA, ServiceA&gt;()<br />    .Register&lt;IServiceB, ServiceB&gt;();</pre><br /><br /><p><strong>Let me know</strong>: I haven’t tested or played around with how this automocking container deals with any container specific xml configuration… So although I don’t think you should probably have that in a test assembly (stuff happens). Let me know if there are any issues.</p><br /><br /><h4>How do I get items out of the container?</h4><br /><br /><p>First is the Resolve&lt;T&gt;(). It will pull an item T out of the container. (Creating it if not already existing)</p><br /><br /><blockquote><br />  <p>public T Resolve&lt;T&gt;()</p><br /></blockquote><br /><br /><p>When T is an interface Resolve&lt;T&gt; (unless you setup registration specifically with the container) should return basically “(new Mock&lt;T&gt;()).Object”</p><br /><br /><p>When T is a concrete Class, the container should return an instance of T and any of it’s dependencies will be satisfied by mocks. (Note that T will not be any sort of mocked instance of T, unless you used the GetMock&lt;T&gt; as described below first)</p><br /><br /><blockquote><br />  <p>public Mock&lt;T&gt; GetMock&lt;T&gt;() where T : class</p><br /></blockquote><br /><br /><p>When T is an interface GetMock&lt;T&gt; should return basically “(new Mock&lt;T&gt;())” </p><br /><br /><p>When T is a concrete Class, the container should return a new Mock&lt;T&gt;() and any of it’s dependencies will be satisfied by mocks.</p><br /><br /><h4>How do I use the UnityAutoMockContainer?</h4><br /><br /><p>It’s pretty basic, you first create an instance of the UnityAutoMockContainer, and from there you can ask it for mocks of an (Interface, Class, or Abstract Class).</p><br /><br /><p>If you request an instance of a concrete class, or abstract class, the UnityAutoMockContainer will stuff mocks in for any constructor dependencies of your concrete class (if it can). You can then request from the container those same dependencies one at a time and either apply mocking setups or verifications.</p><br /><br /><blockquote><br />  <p><strong>NOTE:</strong> Anything the container creates will live as a singleton instance in the container. So any other requests from the container will always return the originally created instance. Therefore, each distinct scenario in a test suite should have their own instances of the container.</p><br /></blockquote><br /><br /><p>Below his an example of how you can leverage the container in some tests. Given this base fixture class…</p><br /><br /><pre class="brush: csharp;">public class FixtureBase<br />{<br />    private readonly UnityAutoMockContainer _autoMockContainer = new UnityAutoMockContainer();<br /><br />    protected UnityAutoMockContainer AutoMockContainer<br />    {<br />        get { return _autoMockContainer; }<br />    }<br /><br />    [TestFixtureSetUp]<br />    public void SetupContext_ALL()<br />    {<br />        Before_all_tests();<br />        Because();<br />    }<br /><br />    [TestFixtureTearDown]<br />    public void TearDownContext_ALL()<br />    {<br />        After_all_tests();<br />    }<br /><br />    protected virtual void Before_all_tests()<br />    {<br />    }<br /><br />    protected virtual void Because()<br />    {<br />    }<br /><br />    protected virtual void After_all_tests()<br />    {<br />    }<br />}</pre><br /><br /><p>If I were given the following system to test.</p><br /><br /><pre class="brush: csharp;">public interface IServiceA { void RunA(); }<br />public interface IServiceB { void RunB(); }<br /><br />public class TestComponent<br />{<br />    public TestComponent(IServiceA serviceA, IServiceB serviceB)<br />    {<br />        ServiceA = serviceA;<br />        ServiceB = serviceB;<br />    }<br /><br />    public IServiceA ServiceA { get; private set; }<br />    public IServiceB ServiceB { get; private set; }<br /><br />    public void RunAll()<br />    {<br />        if (!HowDidItGo())<br />            return;<br />        ServiceA.RunA();<br />        ServiceB.RunB();<br />    }<br /><br />    public virtual bool HowDidItGo()<br />    {<br />        // some really nasty untestable code<br />        return true;<br />    }<br />}</pre><br /><br /><p>The below example demonstrates simply verifying some behavior on the mocked dependencies of the system under test.</p><br /><br /><pre class="brush: csharp;">[TestFixture]<br />public class Example__how_to_pull_items_from_the_UnityAutoMockContainer_when_verifying_behavior_after_an_action_was_taken <br />    : FixtureBase<br />{<br />    private TestComponent _testComponent;<br /><br />    protected override void Before_all_tests()<br />    {<br />        base.Before_all_tests();<br />        _testComponent = AutoMockContainer.Resolve&lt;TestComponent&gt;();<br />    }<br /><br />    protected override void Because()<br />    {<br />        _testComponent.RunAll();<br />    }<br /><br />    [Test]<br />    public void Should_run_ServiceA_RunA()<br />    {<br />        AutoMockContainer<br />            .GetMock&lt;IServiceA&gt;()<br />            .Verify(v =&gt; v.RunA(), Times.Once());<br />    }<br /><br />    [Test]<br />    public void Should_run_ServiceB_RunB()<br />    {<br />        AutoMockContainer<br />            .GetMock&lt;IServiceB&gt;()<br />            .Verify(v =&gt; v.RunB(), Times.Once());<br />    }<br />}</pre><br /><br /><p>Next, you may have noticed that the system under test had a complicated internal method (that may not necessarily be testable). You can use the AutoMocker to create the system under test as a Mock itself, so we can override some of the behavior. Here’s how you could quickly do that. </p><br /><br /><blockquote><br />  <p><strong>Aside</strong>: I’m not saying this is a good practice or aids in good component design, just saying it’s possible</p><br /></blockquote><br /><br /><pre class="brush: csharp;">[TestFixture]<br />public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method_on_the_SystemUnderTest_to_test_a_certain_behavior<br />    : FixtureBase<br />{<br /><br />    private TestComponent _testComponent;<br /><br />    protected override void Before_all_tests()<br />    {<br />        base.Before_all_tests();<br />        var mockTestComponent = AutoMockContainer.GetMock&lt;TestComponent&gt;();<br /><br />        mockTestComponent<br />            .Setup(s =&gt; s.HowDidItGo())<br />            .Returns(false);<br /><br />        _testComponent = mockTestComponent.Object;<br />    }<br /><br />    protected override void Because()<br />    {<br />        _testComponent.RunAll();<br />    }<br /><br />    [Test]<br />    public void Should_run_ServiceA_RunA()<br />    {<br />        AutoMockContainer<br />            .GetMock&lt;IServiceA&gt;()<br />            .Verify(v =&gt; v.RunA(), Times.Never());<br />    }<br /><br />    [Test]<br />    public void Should_run_ServiceB_RunB()<br />    {<br />        AutoMockContainer<br />            .GetMock&lt;IServiceB&gt;()<br />            .Verify(v =&gt; v.RunB(), Times.Never());<br />    }<br />}</pre><br /><br /><p>&#160;</p><br /><br /><p>It’s amazing how much redundant test setup code this little helper has saved me in my tests. I hope others can find some use with this as well.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Powershell: Load assembly without locking file.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-12-23T05:40:00.000Z" pubdate>Dec 22nd 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This post had some updates based on comments so I’m just updating the one over at <a href="http://elegantcode.com/">ElegantCode</a>.</p>  <p><a href="http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/">http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/</a></p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">StatLight – Goes Open Source</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-12-11T03:27:00.000Z" pubdate>Dec 10th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Go to Definition Tip with the C# ‘var’ keyword</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-12-02T06:09:00.000Z" pubdate>Dec 1st 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This may be totally obvious to the masses out there, and it isn’t much of a tip, other than to say <strong>it works</strong>…</p>  <p></p>  <h5>Did You Know?</h5>  <p><strong>F12 (Go To Definition) – works on the C# </strong><a href="http://msdn.microsoft.com/en-us/library/bb383973.aspx"><strong><u>var</u></strong></a> keyword<strong></strong>?</p>  <p>(That’s all there is to this post – the rest is just rambling)</p>  <p>I hit it on accident the other day (yes I know, <strong>F12</strong> isn’t exactly in the usual path of accidental keystrokes, trust me it was on accident). It brought Visual Studio to a screeching halt. That is, while VS was trying to load the <a href="http://msdn.microsoft.com/en-us/library/exy1facf(VS.80).aspx">object browser</a>, and satellites were linking up in outer space trying get some message sent through the <a href="http://en.wikipedia.org/wiki/Pony_Express">Pony Express</a> about a <a href="http://www.urbandictionary.com/define.php?term=tweetup&amp;defid=3639937">tweetup</a> with the <a href="http://weblogs.asp.net/scottgu/archive/2009/10/29/add-reference-dialog-improvements-vs-2010-and-net-4-0-series.aspx">Add Reference Dialog</a>. (Point being – loading the object browser is REALLY SLOW)</p>  <p>It dawned on me that the <strong>F12</strong> (Go To Definition) keyboard shortcut works on the <a href="http://msdn.microsoft.com/en-us/library/bb383973.aspx">var</a> keyword.</p>  <p>Usually I just use the tool tip window when I don’t have time to decipher why the variable’s naming isn’t clear. (<a href="http://devlicio.us/blogs/hadi_hariri/archive/2009/11/20/var-improves-readability.aspx?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Devlicious+(Devlicio.us)&amp;utm_content=Google+Reader">good post on the subject</a>)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SxYEpdzTPPI/AAAAAAAAAM4/V5DBhnTm7O4/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SxYEpxUBU2I/AAAAAAAAAM8/QMYR-Veivq8/image_thumb1.png?imgmax=800" width="247" height="67" /></a>&#160;</p>  <p>FYI: for those R# fans, who noticed after installing it, you lost the code metadata window in C# when F12ing it (Go To Definition). They’ve fixed it in the upcoming version <a href="http://www.jetbrains.net/jira/browse/RSRP-35547">http://www.jetbrains.net/jira/browse/RSRP-35547</a>. So my satellites/pony express/tweetup/add ref dialog comment above won’t be an issue anymore. <strong>Yippee!</strong></p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">PDC 2009 – (Talking about Win7 User Experience)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-11-24T06:27:00.000Z" pubdate>Nov 23rd 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>As a #NotAtPDC attendee following along from the outside I just had to post this little bit of irony…</p>  <p>While watching one of the PDC 2009 keynotes live they were talking about how great Windows 7 user experience is.</p>  <p>“so we’re going to show you a demo of how “… bla bla great bla…”our user experience has improved”… And the video cuts to this - <strong>here’s my user experience</strong>.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Swt83NRzVBI/AAAAAAAAAMw/VIPamcFhC8w/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Swt832vvF3I/AAAAAAAAAM0/_eNo0gDawWs/image_thumb1.png?imgmax=800" width="669" height="412" /></a> </p>  <p>and we come back to the show (crowds laughing in the background)</p>  <p>I don’t know what he said after rejoining the stream as I started writing this post… </p>  <p>and right after we cut to this.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Swt83NRzVBI/AAAAAAAAAMw/VIPamcFhC8w/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Swt832vvF3I/AAAAAAAAAM0/_eNo0gDawWs/image_thumb1.png?imgmax=800" width="649" height="392" /></a> </p>  <p>And then we came back with commentary saying “it’s great to see the reaction”. Don’t know what is so secret they couldn’t broadcast online (but can show thousands in the live audience).</p>  <p>I just thought it was ironic, how much emphasis went into a great user experience blah blah, and the image above is all it was for us :)</p>  <p>Oh well (maybe it’s in the PDC keynote you can watch on line now), or maybe, I’m just jealous I didn’t one of the <a href="http://www.betanews.com/joewilcox/article/Microsoft-gives-free-laptops-to-PDC-2009-attendees/1258566424">netbooks</a>.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Enum conversion. Why Oh Why?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-11-15T07:02:00.000Z" pubdate>Nov 14th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sv-ngaEoLWI/AAAAAAAAAMg/EXgQWVuuS18/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ngh5lO_I/AAAAAAAAAMk/6Mlo3qg3Ysw/image_thumb1.png?imgmax=800" width="569" height="364" /></a>&#160;</p>  <p>What MSDN says: <a href="http://msdn.microsoft.com/en-us/library/sbbt4032.aspx">enum (C# Reference)</a></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ng8eAR3I/AAAAAAAAAMo/LlX88s7OQvc/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-nhJELZZI/AAAAAAAAAMs/nhAjJrMikiM/image_thumb11.png?imgmax=800" width="572" height="134" /></a></p>  <p>Why can’t this just work?</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Massive Search &amp; Replace Among Files Checked-in to TFS</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-11-07T21:03:00.000Z" pubdate>Nov 7th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This post is a note to myself, as the two outlined below contain code/commands I’ve done (wished I could have done automatically in the past) that I want to save for reference later.</p>  <p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace <strong>an everything’s a Singleton architecture is no easy task</strong>. I won’t go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I’ve slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.&#160; They’ve given me a new saying “Read my lips. NO NEW SINGLETONS!”.</p>  <ol>   <h5>PowerShell assisted regular expression search and replace.</h5>    <br />In my case, the specific regular expression needed to find</ol>  <pre class="brush: csharp;">SomeBusinessLogicClass.Instance.SomeFooMethod(bar);<br /><br /><br /> <br />//  and replace it with<br /> <br />Resolve&lt;ISomeBusinessLogicClass&gt;().SomeFooMethod(bar); <br /> <br /></pre><br /><br /><p>Below is the PowerShell script I used.</p><br /><br /><p># define the find and replacement regular expressions. <br />  <br />$regex_find = '([a-zA-Z]+)\.Instance\.' <br /><br />  <br />$regex_replace = 'Resolve&lt;I$1&gt;().' </p><br /><br /><p># get all the C# files we want to search/replace through <br />  <br />$allFiles = Get-ChildItem -Filter *.cs -Recurse </p><br /><br /><p>foreach($fileToReplace in $allFiles) <br />  <br />{ <br /><br />  <br />&#160;&#160;&#160; $fileString = $fileToReplace.FullName </p><br /><br /><p>&#160;&#160;&#160; if([String]::Join([Environment]::NewLine, (Get-Content -Path $fileString)) -match $regex_find) <br />  <br />&#160;&#160;&#160; { <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # make the file writable so we can update it <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; $fileToReplace.IsReadOnly = $false; <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Write-Host &quot;applying fix to - $fileString&quot; <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # here’s where we load up the file iterate through each line&#160;&#160;&#160; <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # replace any of the regex matches <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # and save the file back to the original location <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Set-Content $fileString -Value ((Get-Content -Path $fileString) | foreach { if( $_ -match $regex_find) { $_ -replace $regex_find, $regex_replace } else { $_ } } ) <br /><br />  <br />&#160;&#160;&#160; } <br /><br />  <br />}</p><br /><br /><p>&#160;</p><br /><br /><blockquote><br />  <p>Caveat:</p><br /><br />  <ul><br />    <li>Some of the files “end of file” changed (added an extra end line in some cases) </li><br />  </ul><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><h5>Team Foundation Server tip to detect the changed files.</h5><br /><br /><p>&#160;</p><br /><br /><p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>.</p><br /><br /><p>Once installed, fire up the PowerShell console given in the start menu</p><br /><br /><p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SvXghSiqBUI/AAAAAAAAAMY/TPeJSRSD8hQ/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" width="278" height="427" /></a> </p><br /><br /><p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p><br /><br /><blockquote><br />  <p><br />    <br />tfpt online /adds /diff /recursive . <br /><br />    </p></blockquote>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-10-26T05:02:00.000Z" pubdate>Oct 25th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>One of the tools I’ve used the last half of a year and really enjoyed is the C# specification extension methods when writing unit test assertions. If you’re looking for a little more background on the topic, I wrote about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> in a past blog.</p>  <p>Recently I wanted to execute a PowerShell script to do some automated <a href="http://en.wikipedia.org/wiki/Functional_testing">functional testing</a>. I wanted to execute an application and apply some assertions on the output of the software(basically running a console app, parse the xml output and assert on values in the output).</p>  <blockquote>   <p>FYI: I’m very new to PowerShell, so any suggestions on how I implemented the below are welcome…</p> </blockquote>  <p>I’ve seen a couple examples of writing test assertions in PowerShell out there. One example is <a href="http://www.psunit.org/">PSUnit</a>; however, this seemed a little heavy for my needs and not quite the syntactic sugar I was looking for.</p>  <p>Besides the syntax flavor I was desiring, another thing I wanted to do was leverage the power of NUnit.Framework’s assertion capabilities. I like the error messages generated when strings and other objects fail the assertion.</p>  <h5>Examples of end result ShouldLookLike()… </h5>  <p>$true.ShouldBeTrue()    <br />$false.ShouldBeFalse()     <br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)     <br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)     <br /></p>  <h5><strong>Step 1</strong>: Figure out how to write a C# style <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">extension method</a> in PowerShell.</h5>  <blockquote>   <p>I found a great blog post describing how to extend any PowerShell object to add extension methods. </p>    <p><a href="http://bartdesmet.net/blogs/bart/archive/2007/09/06/extension-methods-in-windows-powershell.aspx">Extension Methods in Windows PowerShell</a>       <br />      <br /></p> </blockquote>  <p>In short, to extend types in PowerShell leveraging the <a href="http://msdn.microsoft.com/en-us/library/ms714419(VS.85).aspx">Extended Type System</a>, you need to define them in an xml file and import the method definitions into the PowerShell runtime instance.</p>  <p>Below is PowerShell XML definition for my NUnit Specification Extensions.</p>  <pre class="brush: xml;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;<br />&lt;Types&gt;<br />    &lt;Type&gt;<br />        &lt;Name&gt;System.Object&lt;/Name&gt;<br />        &lt;Members&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeFalse&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsFalse($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeTrue&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsTrue($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldNotEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreNotEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />        &lt;/Members&gt;<br />    &lt;/Type&gt;<br />&lt;/Types&gt;</pre><br /><br /><h4>&#160;</h4><br /><br /><p>Take the above XML and save it to a file…</p><br /><br /><blockquote><br />  <p>NOTE: the file HAS to be saved with the extension <strong>.ps1xml</strong></p><br /><br />  <p>Ex: NunitSpecificationPowerShellExtensions<strong>.ps1xml</strong></p><br /></blockquote><br /><br /><h4>&#160;</h4><br /><br /><h5>Step 2: Load the extended type definition into the PowerShell runtime.</h5><br /><br /><p>Once you’ve saved the XML extended types to a file, you need to load it into the PowerShell runtime by executing the command below.</p><br /><br /><blockquote><br />  <p><br />    <br />Update-TypeData -PrependPath NunitSpecificationPowerShellExtensions.ps1xml <br /><br />    <br /><br /><br />    <br /></p><br /></blockquote><br /><br /><p><br />  <br />Before executing the above statement…Let’s quickly look at a System.String’s members and properties – just to show you what the extension methods look like when applied inside of the runtime.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SuUtUHyzTHI/AAAAAAAAAMI/RYyswVWg2JQ/s1600-h/image%5B3%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SuUtVnUMsEI/AAAAAAAAAMM/KiZ3QVj1yQA/image_thumb%5B1%5D.png?imgmax=800" width="586" height="479" /></a></p><br /><br /><p>After executing the Update-TypeData command you’ll notice there are a number of “ScriptMethod” MemberTypes added to the object.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SuUtXQNAz2I/AAAAAAAAAMQ/5tqoE9oUG6I/s1600-h/image%5B19%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SuUtY0t9T1I/AAAAAAAAAMU/6lwJgXtWaUU/image_thumb%5B9%5D.png?imgmax=800" width="600" height="580" /></a> </p><br /><br /><p></p><br /><br /><p>Now if you try to execute one of those newly added extension methods, you may get the following error…</p><br /><br /><p>PS C:\&gt; $testVar.<strong>ShouldEqual</strong>(&quot;hello world&quot;) <br /><br />  <br />Exception calling &quot;ShouldEqual&quot; with &quot;1&quot; argument(s): &quot;<strong>Unable to find type [NUnit.Framework.Assert]: make sure that the <br />    <br />assembly containing this type is loaded.</strong>&quot; <br /><br />  <br />At line:1 char:21 <br /><br />  <br />+ $testVar.ShouldEqual &lt;&lt;&lt;&lt; (&quot;hello world&quot;) <br /><br />  <br />&#160;&#160;&#160; + CategoryInfo&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; : NotSpecified: (:) [], MethodInvocationException <br /><br />  <br />&#160;&#160;&#160; + FullyQualifiedErrorId : ScriptMethodRuntimeException</p><br /><br /><p></p><br /><br /><p>&#160;</p><br /><br /><p>This is because we need to load the NUnit.Framework assembly into the runtime before we can leverage the extension methods.</p><br /><br /><blockquote><br />  <p>[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null</p><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><p>Now that the extension methods have been defined and loaded into the runtime, NUnit.Framework is loaded, we can now use the methods on any object that inherits from System.Object (which, as far as I know, is everything in PowerShell).</p><br /><br /><p>&#160;</p><br /><br /><p>And now, everything you need in one script (if you have the xml extended type file saved somewhere…)</p><br /><br /><pre># <br /># Update-TypeData -prependPath C:\Code\NunitSpecificationPowerShellExtensions.ps1xml<br />#<br /><br />[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null<br /><br />$true.ShouldBeTrue()<br /><br />$false.ShouldBeFalse()<br /><br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)<br /><br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)<br /></pre>  </div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/10/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/8/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

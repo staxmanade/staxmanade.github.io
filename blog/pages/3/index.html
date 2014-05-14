@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">How do I undo a bad rebase in Git?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-02-24T02:42:00.000Z" pubdate>Feb 23rd 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>If you use <a href="http://git-scm.com/">git</a> and leverage the <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> command, you've probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish I had a ‘do-over’.</p>  <p>If you’re still in the middle of a rebase it's easy to start over:</p>  <blockquote>   <p>git rebase --abort</p> </blockquote>  <p>But let's say you started with this:</p>  <p><a href="http://lh6.ggpht.com/-S4iRqI3gJ9A/USl-FkXa8GI/AAAAAAAAAcw/DIiCekbZNNc/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-VUhs8KUeoYw/USl-GO4JjUI/AAAAAAAAAc4/ZIW6B8i84Jk/image_thumb1.png?imgmax=800" width="227" height="149" /></a></p>  <p>Did a git rebase and are now looking at:</p>  <p><a href="http://lh6.ggpht.com/-wKnvAJZeBE8/USl-GZw_02I/AAAAAAAAAdA/Rjrc0ACrf3A/s1600-h/image7.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-Vm2Z6nDv_ow/USl-Gh_VygI/AAAAAAAAAdI/4JeII5vjceE/image_thumb3.png?imgmax=800" width="244" height="126" /></a></p>  <p>Except you screwed up during a merge conflict and now un-sure how you can get your ‘do-over’.</p>  <p>&#160;</p>  <p>I was pleasantly surprised at how easy it was. (If you know key)</p>  <p>Leveraging the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html">git reflog</a>, you can go back in time and check out your branch as though the rebase never happened.</p>  <p>In the following link, I put together a set of steps to create a git repo that puts you into this position (of a bad rebase) and then describes how to get out of it.</p>  <p><a href="https://github.com/staxmanade/GitRebaseReflogFixSample">https://github.com/staxmanade/GitRebaseReflogFixSample</a></p>  <p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>  <p>Happy Git'ing!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-02-13T06:48:00.000Z" pubdate>Feb 12th 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I created an <a href="http://github.com/staxmanade/PowershellPresentation" target="_blank">introductory presentation on PowerShell</a> a while back and posted it <a href="http://github.com/staxmanade/" target="_blank">on my GitHub</a>. I first gave the presentation at the <a href="http://softwaredevelopersgroup.com/">NNSDG</a> and decided to also submit it as a talk to the <a href="http://boisecodecamp.com/">Boise Code Camp</a> this year. (Looks like I'll be going – track me down <a href="https://twitter.com/staxmanade" target="_blank">@staxmanade</a> if you’d like to say hello)</p>  <p>I’ve become quite a fan of Markdown lately and thought, “what if this not only looked like PowerShell, but looked even better as Markdown…?”</p>  <p>&#160;</p>  <p>After experimenting a little, I found that it actually works quite well.</p>  <p>For example:</p>  <p><strong>PowerShell (Markdown)</strong></p>  <pre>## String Interpolation<br /><br />### Single quotes `don't` interpolate<br />    'Hello $groupName' <br />    <br />### Double quotes `DO` interpolate<br />    &quot;Hello $groupName&quot;<br />        <br />    <br />### Wrap `$(...)` around expression within an string<br />    &quot;groupName variable is of type: $($groupName.GetType().FullName)&quot;<br />    &quot;2 + 1564 = $(2 + 1564)&quot;<br />    &quot;Current DateTime is = $(get-date)&quot;<br />    &quot;Current DateTime is = $([System.DateTime]::Now)&quot;<br /><br />    <br />### Escape characters with the ` (back-tick)<br />    &quot;Escape a quotation `&quot;This is quoted`&quot;.&quot;</pre><br /><br /><p>&#160;</p><br /><br /><p><strong>Formatted Markdown</strong></p><br /><br /><p><a href="http://lh5.ggpht.com/-lUeiRSS4rBo/URs3LcasBbI/AAAAAAAAAcY/h2NTLneqWP8/s1600-h/image11.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-iNFDygzQL0o/URs3L15uv8I/AAAAAAAAAcg/jbjRHwUTi8E/image_thumb4.png?imgmax=800" width="634" height="628" /></a></p><br /><br /><p>&#160;</p><br /><br /><p>One issue I have is the way GitHub/markdown formats extra whitespace (it doesn’t). So I’ve worked around that so that I can get the vertical whitespace that I need in the Markdown version by placing a link to a spacer image: </p><br /><br /><pre>![vertical space](<a href="http://is.gd/VertSpace">http://is.gd/VertSpace</a>)</pre><br /><br /><p>This isn’t ideal because my PowerShell is littered with this snippet, but something that can easily be search/replaced before using the raw version as a PowerShell script.</p><br /><br /><p>I also think that you could potentially do this with many different programming languages. (At least ones that don’t depend on whitespace and have a form of block comments)</p><br /><br /><p>Nifty eh?</p><br /><br /><p>Happy PowerDowning or MarkShelling!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Testacular cannot find Chrome on windows.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2013-01-23T05:29:00.000Z" pubdate>Jan 22nd 2013</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-12-06T16:41:00.000Z" pubdate>Dec 6th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>After a fresh install of Visual Studio, I often re-configure some options and setup keyboard bindings. This tends to be a bit of a pain as each and every time I have to remember what setting is in what U.I. configuration pane and how do I find/configure that again? I also will often forget about certain settings until the point I need them and it really breaks my coding rhythm down to go hunt for and reconfigure these options.</p>  <p>I recently found a simple solution to get my VS just the way I want it.</p>  <blockquote>   <p>P.S. Some of you may want to tell me all about the VS import/export settings, and you may be right, but I just haven’t spent the time to use/understand/easily find a way to integrate it into my ‘flow’.</p> </blockquote>  <p>So I present to you “MY happy path” to Visual Studio Environment configuration.</p>  <h4>1. Install the NuGet Package Manager Extension</h4>  <p>You’re going to probably install this extension anyway, so go-ahead and <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install it now</a> if you don’t already have it… We need this so you can get access to the NuGet Package Manager Console</p>  <p><a href="http://lh3.ggpht.com/-leOq9kWDh78/UMDKoOAS6vI/AAAAAAAAAb8/xUeM3ZRRhfo/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-vDO9vE_i-y4/UMDKohZ5WdI/AAAAAAAAAcE/6kWeoto-_ao/image_thumb1.png?imgmax=800" width="745" height="209" /></a></p>  <h4>2. Execute Function Set-VisualStudioEnvironmentConfiguration</h4>  <p>Wait! What is “<a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Set-VisualStudioEnvironmentConfiguration.ps1">Set-VisualStudioEnvironmentConfiguration</a>”?</p>  <p>This is a little function that I have in <a href="https://github.com/staxmanade/DevMachineSetup">My PowerShell $Profile</a> which gets setup on all development environment.</p>  <h4>So what’s in this PowerShell script?</h4>  <p>As of writing this, I only have two specific setup commands, but thought I’d share as an example of what you can do:</p>  <ol>   <li>Set a keyboard binding to a specific command.      <pre># Map Ctrl+W to close a tab<br />$DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot;;</pre><br />  </li><br /><br />  <li>ShowLineNumbers for all language files. <br />    <pre># Turn on line numbers for ALL language types<br />($DTE.Properties(&quot;TextEditor&quot;, &quot;AllLanguages&quot;) | where {$_.Name -eq &quot;ShowLineNumbers&quot; } ).Value = $true</pre><br />  </li><br /><br />  <li>Turn on whitespace? <br />    <pre># This doesn't work and I wish it did... <br />$DTE.ExecuteCommand(&quot;Edit.ViewWhiteSpace&quot;)<br /># Fails with: &quot;Command &quot;Edit.ViewWhiteSpace&quot; is not available.&quot;<br /># <strong>Maybe one of you can help me out?</strong></pre><br /><br />    <h4><br />      <ol>How can I find and setup the settings I like?</ol><br />    </h4><br />I’m no VS expert and only know as much about the $DTE object as what I’ve written about here, but I’ll give you some tips and you can go from there… </li><br /></ol><br /><br /><ul><br />  <li>Google/Bing are your friends. Type “DTE Visual Studio {TheThingYouWantToAccomplish}” </li><br /><br />  <li>After your search, most examples you find will be VB macros and as it turns out VB (in this case) translates nicely to PowerShell (EX:&#160; <br /><font size="3" face="Cordia New">&#160; VB Macro:&#160; DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br />      <br />PowerShell: <strong>$</strong>DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br /><br />      <br /></font>See the difference? (yep just the ‘$’ at the beginning of the PowerShell one) Nifty eh? </li><br /><br />  <li>Don’t be afraid to use PowerShell to search/filter things in the $DTE. Try this: <br />    <br /><font size="3" face="Cordia New">PM&gt;&#160; $DTE.Commands | <strong>where { $_.Name –match ‘Close’</strong> } | select { $_.Name } <br /><br />      <br /></font></li><br /></ul><br /><br /><ul>Happy VS Environment setting-uppers!</ul>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">More than slightly modified “CD” command for PowerShell</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-11-01T16:55:00.000Z" pubdate>Nov 1st 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">Slightly modified “CD” Command for PowerShell</a>. <br />Since that point, I’ve made a number of updates and would like to share them.<br />The first change I made was to move the “CD” script in that post to a <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1" target="_blank">new location</a>. I’ve greatly extended how I setup my development environment and how my PowerShell environment is initialized. <br /><blockquote><span style="background-color: white;">If you’re interested in how I setup my PS profile, take a look at the readme. Combine the setup with some <a href="http://chocolatey.org/" target="_blank">Chocolatey</a> and some <a href="http://boxstarter.codeplex.com/" target="_blank">BoxStarter</a> and you’re on your way to an amazingly automated development environment setup.</span></blockquote>Now on to the features I’ve added to the CD command.<br /><ul><li>I often would do something like “CD $Profile” (which is a no-go because that is a file not a directory, but my intent was to get into the directory where the $Profile file lived).      <br />      <br />So I updated it so if you try to CD to a file, it will just take you to the directory where the file resides.       </li><li>If you try to CD into a folder that doesn’t exist, it now prompts you to create it. <em>You could bypass the prompt with a -force|-f flag.</em><a href="http://lh6.ggpht.com/-60i1Gy9oDaI/UJKpYXRavXI/AAAAAAAAAbY/2hB0iIpFEmc/s1600-h/image6.png"><img alt="image" border="0" height="124" src="http://lh4.ggpht.com/-OcSX7gH6dz0/UJKpY8jiewI/AAAAAAAAAbg/zakK10j3HvU/image_thumb2.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="524" /></a>       </li><li>Lastly I fixed an issue reported by a commenter in the previous post about trying to CD into a folder with the same name as a history index. If you had a folder named “4” and you typed “CD 4” it previously wouldn’t take you the 4 directory, but instead lookup item 4 in your CD history and take you there. Now if you specify a number and that number lives in the current directory it will take precedence over your history value. <em>(To be fair, I only added this feature, and even since I originally wrote about the CD command I have yet to run into a need for this case. Probably because I don’t name my directories with numbers)</em>. </li></ul>Something I had only recently noticed is this script appears to work with other PowerShell drive providers. I only did a cursory test but can CD into the HKLM:\Software\MyTestFolderThatShouldntExist and it will prompt to create the ‘folder’. If I say yes, I end up with a new registry folder. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh5.ggpht.com/-eqb3EKYnXNo/UJKpadhpcFI/AAAAAAAAAbo/jBmQj4iLjgA/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /> Not sure how useful that is, but with the abstraction layer PowerShell drives give us it’s interesting.<br /><br />If you’d like to grab just the CD script you can download it here.    <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a><br /><br />Happy system navigation with PowerShell.</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">PowerShell Presentation at the Northern Nevada Software Dev Group.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-10-26T04:43:00.000Z" pubdate>Oct 25th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopersgroup.com/">Northern Nevada Software Developers Group</a>.<br />If interested, the presentation material is up on my <a href="https://github.com/staxmanade/PowerShellPresentation">GitHub account</a>.<br />Thanks to all who attended!<br />Happy Scripting! </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">TFS bisect the manual way (When was that bug introduced?)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-10-19T15:12:00.000Z" pubdate>Oct 19th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+I’d like to share a powerful workflow I originally found using <a href="http://git-scm.com/" target="_blank">git</a> and its powerful git-bisect command and how I’ve leveraged the idea when using <a href="http://msdn.microsoft.com/en-us/vstudio/ff637362.aspx" target="_blank">TFS</a>.<br /><h4>What is a bisect on your source history?</h4><a href="http://www.kernel.org/pub/software/scm/git/docs/git-bisect.html" target="_blank">Git’s bisect</a> command is extremely powerful and I won’t be covering it here. However git describes its feature as a way to:<br /><blockquote>Find by binary search the change that introduced a bug</blockquote><h4>Why do I need to look through source code history to find why a bug was introduced?</h4>It’s true, that many bugs are so basic that once you hear about the bug you immediately understand where it is, why it’s broken and how to fix. In that scenario this approach is not something you need. <br />However, <strong>if you know a bug was introduced sometime in the past but are not sure when or how it was introduced</strong>, I think we could all agree that doing a binary search through the history of your code’s changes is a pretty good approach to finding the specific change-set that introduced a bug. Once you have a handle on the specific code change that was made, it becomes much easier to understand how it changed and track down the reason a bug was introduced and how to fix it.<br /><h4>High level steps/concept:</h4><ol><li>First you should have discovered a reproducible bug </li><li>Next we have to find a commit in the past where we know the bug does not exist. (Say you know that 3 weeks ago, this bug didn’t exist.) </li><li>Now, from that “good” commit we do a binary search through source history to find when the bug was first introduced. Noting at each commit its goodness/badness state and continuing with the search until we’ve found the commit when the bug was introduced. </li><li>Analyze the commit until you understand what and how the bug was introduced and fix it. </li></ol><h4>One manual approach to TFS bisect.</h4>There is not a built-in feature with TFS (that I’m aware of) and leaves us with some manual bookkeeping that we wouldn’t have to do if we were using git. <br /><blockquote>Side Note: If you’re familiar with git, I’d recommend just using <a href="https://github.com/git-tfs/git-tfs" target="_blank">git-TFS</a> or the new <a href="http://gittf.codeplex.com/" target="_blank">git-tf</a> tool and just clone your TFS repro and use git-bisect to accomplish these steps.</blockquote>Let’s assume you can find a commit in the past that you know doesn’t have the bug.<br />Load up PowerShell and <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">CD</a> into the root of your project directory. Execute a tf.exe command to pull a string output of your history into the clipboard. We’ll leverage this in our bookkeeping.<br /><blockquote><span style="background-color: white;">I’m using PowerShell and have tf.exe on my %PATH%.</span><br /><span style="background-color: white;">&gt;tf history ./* /recursive /noprompt | clip</span></blockquote>Notice the pipe to the ‘clip’ command at the end of the TF call. This places the output of one command into the clipboard. <br />Let’s say the above command places the following into our clipboard.<br />[gist id=0373efef1f0150ed7faf]<br />Take the output of the command (that is now in your clipboard) and paste it into Excel (or notepad) wherever you want to keep track of your work.<br />We know that at commit ID #13 the bug did not exist. Let’s mark it as ‘<span style="background-color: lime;">good</span>’<br /><a href="http://lh5.ggpht.com/-CvxFQzakVbw/UIFt0e8qZ2I/AAAAAAAAAZ4/RqGJBajGPe8/s1600-h/image27.png"><img alt="image" border="0" height="113" src="http://lh5.ggpht.com/-kXlKM8aP2mI/UIFt0yqg9JI/AAAAAAAAAaA/6dgGmI4QOpg/image_thumb13.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="750" /></a><br />Now we start our binary search through the different commits to find our bug.<br />Find a midway commit between this commit (#13) and the most recent commit (#79).<br />You don’t have to be all mathematical about the binary search, I tend to just eyeball the ‘middle’ and go from there. But you’re more than welcome to execute the binary search perfectly. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh3.ggpht.com/-3eas7euoVvs/UIFt2DctXqI/AAAAAAAAAaI/eKGufXLAKlU/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /><br />Now use your TFS tools to checkout this specific version. In this case we’ll checkout commit #46.<br />I tend to prefer the command line to check out the specific version as it’s easier to repeat these steps with commands and we already have the command open from earlier.<br /><blockquote>&gt;tf get ./* /recursive /force /overwrite /version:46</blockquote>Or you can use the GUI to get a specific version.<br /><a href="http://lh3.ggpht.com/-OMvvDEn3-X8/UIFt2XesHqI/AAAAAAAAAaQ/Tt_AxEmJGX0/s1600-h/image11.png"><img alt="image" border="0" height="143" src="http://lh3.ggpht.com/-qf-BMFlUVw4/UIFt3AoNTqI/AAAAAAAAAaY/NFM5bEn63ns/image_thumb5.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="253" /></a><br /><a href="http://lh5.ggpht.com/-3oweq7xMXqM/UIFt4kthkoI/AAAAAAAAAag/aNDmXsNf3gk/s1600-h/image19.png"><img alt="image" border="0" height="308" src="http://lh4.ggpht.com/-Grq1CtfWikA/UIFt47L3zpI/AAAAAAAAAao/ZXyRbh3-2Ao/image_thumb9.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="585" /></a><br />With version #46 checked out, we run our tests and find that the bug exists here. Mark it as ‘<span style="color: red;">bad</span>’ to signify the bug is here.<br /><a href="http://lh6.ggpht.com/-FzkYtFf-TGM/UIFt5ffnYdI/AAAAAAAAAaw/8Ao7cBlIPeA/s1600-h/image23.png"><img alt="image" border="0" height="74" src="http://lh5.ggpht.com/-YPe9c_3-C2c/UIFt57-Q1UI/AAAAAAAAAa4/_A64INotcRk/image_thumb11.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="777" /></a><br />Now we can continue our binary search between commit 13 and 46 until we narrow down the exact commit where the bug first shows up.<br /><a href="http://lh6.ggpht.com/-Z7QrMkL_0I4/UIFt6c3XKpI/AAAAAAAAAbA/9ibPBgIXkk8/s1600-h/image40.png"><img alt="image" border="0" height="680" src="http://lh5.ggpht.com/-wPRYPnuhc1k/UIFt69bg1aI/AAAAAAAAAbI/TcWeM26jji4/image_thumb20.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="691" /></a><br />As you can see by the numbers to the left in the screenshot above, it took us 5 checkouts to find the commit where the bug was introduced.<br />Now the rest is up to you. I tend to spend time looking at the diff and understanding why the specific commit introduces the bug. If you keep the size of your regular commits small then it tends to be pretty easy to understand why the bug was introduced and how to fix it.<br /><strong>Don’t forget to ‘get latest’ before you try to do much work so you’re not stuck with your source code way back in time.</strong><br /><h4>These steps should be automated.</h4>It’s true the bookkeeping should be done for us by a tool, and in fact I started writing a PowerShell implementation of this, but never finished and didn’t find it worth my time. The manual approach works well, and it’s not something I have to use often. However, I did find someone who’s written a tool that looks promising.<br /><blockquote><a href="http://gr3dman.name/blorg/posts/2010-12-03-tf-bisect.html">http://gr3dman.name/blorg/posts/2010-12-03-tf-bisect.html</a></blockquote><br />Happy bug hunting.</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">NuGet Project Uncovered: SpecificationExtensions.[MSTest | NUnit | Xunit]</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-02-23T05:05:00.000Z" pubdate>Feb 22nd 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p>The SpecificationExtensions.[MSTest | NUnit | Xunit] are a set of NuGet packages that add C# <a href="/2009/02/fluent-specification-extensions" target="_blank">fluent specification extensions</a> to your test project. I first blogged about this in early 2009 and have had a set of these that I take with me for every project I work on.</p>  <p>There are a number of other options out there for specification extensions, but since I first created my original set, I haven’t used anything else (although I should as I might be able to learn a little from each).</p>  <p><a href="http://lh5.ggpht.com/-uJQhZwjPHio/Tx-N8pcbXNI/AAAAAAAAAXk/-25MlBkeCDE/s1600-h/image_thumb10_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb10_thumb" border="0" alt="image_thumb10_thumb" src="http://lh6.ggpht.com/-2Bi6oO8kpwo/Tx-N9KJezHI/AAAAAAAAAXs/QGkMIlrCWSs/image_thumb10_thumb_thumb.png?imgmax=800" width="339" height="202" /></a></p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">NuGet Project Uncovered: EventAggregator.Net</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-02-22T05:04:00.000Z" pubdate>Feb 21st 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/EventAggregator.Net" target="_blank">EventAggregator.Net</a> is a single C# file that can provide a basis for a simple in memory Pub/Sub event aggregator.</p>  <p>I extracted this out of my <a href="http://StatLight.codeplex.com" target="_blank">StatLight</a> project as I found that I often wanted a similar one and kept finding myself copy/pasting this into projects. I figured a single location for this project would be better and I use StatLight as the first dog bowl when I need to dog food the project.</p>  <p>If you’re familiar with the…</p>  <blockquote>   <p>Install-Package Caliburn.Micro.EventAggregator      <br /></p> </blockquote>  <p>…then you know probably know what this project is like. </p>  <p>Its history starts a few years ago when I read <a href="http://jeremydmiller.com/" target="_blank">Jeremey Miller’s</a> Braindump on <a href="http://codebetter.com/jeremymiller/2009/07/22/braindump-on-the-event-aggregator-pattern/" target="_blank">Event Aggregator Pattern</a> and decided I wanted rip out StatLight’s usage of the Prism event aggregator and replace it with a similar one to the one found in StoryTeller. It’s gone through quite a few revisions inside of StatLight since then and eventually made its way into its own project.</p>  <p>Some thanks have to go out to the great feedback and pull requests from <a href="https://github.com/JakeGinnivan" target="_blank">Jake Ginnivan</a> who found this project on his own (before I publicized it).</p>  <p>If you’re interested in using it, I’d recommend checking out the source’s test project and the SampleUsage project. The SampleUsage project demonstrates how you can configure the tool to publish events in an async mode.</p>  <p>One concept introduced in this EventAggregator is taking the IEventAggregator interface and breaking it up into two interfaces (<strong>IEventPublisher</strong> and <strong>IEventSubscriptionManager</strong>). This proved extremely useful when trying to diagnose components that did both aggregator subscription management vs ones that only published events. It even helped to easily diagnose components that did not correctly unregister objects.</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">NuGet Project Uncovered: DumpToText</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-02-21T05:01:00.000Z" pubdate>Feb 20th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become its introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/DumpToText" target="_blank">DumpToText</a> is a single C# extension I wrote a little while back. The inspiration from this came from the need to view the values of an object graph quickly and easily during a TDD session.</p>  <p>Have you ever been doing TDD and something isn’t working quite as expected? Would it be nice to just dump out the values of an object quickly without having to spin up the debugger?</p>  <p>The inspiration for this project came from an amazing feature of <a href="http://www.linqpad.net/" target="_blank">LINQPad</a>. If you have ever used <a href="http://www.linqpad.net/" target="_blank">LINQPad</a> then you’re aware of the amazing ability for it to take any object and create a view of it’s data. Take the simple anonymous type below.</p>  <p><a href="http://lh5.ggpht.com/-FUvQoj6frYE/Tx-M2hAvSBI/AAAAAAAAAVw/Y4i1otS5L1k/s1600-h/image_thumb2_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb2_thumb" border="0" alt="image_thumb2_thumb" src="http://lh3.ggpht.com/-al7xfLogmlo/Tx-M28w8cWI/AAAAAAAAAV4/1okKyOMCZXo/image_thumb2_thumb_thumb.png?imgmax=800" width="471" height="315" /></a></p>  <p>Now wouldn’t it be great to have that “.Dump()” extension method at hand anywhere in your code and during a TDD session?</p>  <p>That’s why I create <a href="https://github.com/staxmanade/DumpToText" target="_blank">DumpToText</a>.</p>  <p>Now if I have a test as follows and want to see it’s data. I can use the ‘.DumpToText()” extension method to have it print out an ASCII based representation of the object graph.</p>  <p><a href="http://lh3.ggpht.com/-skkqYdCd2xM/Tx-M3FJvFuI/AAAAAAAAAWA/Pj8HLy2gP2E/s1600-h/image_thumb4_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb4_thumb" border="0" alt="image_thumb4_thumb" src="http://lh4.ggpht.com/-AAcGZRujy6o/Tx-M3YkzlsI/AAAAAAAAAWI/tB5hBy3iff8/image_thumb4_thumb_thumb.png?imgmax=800" width="323" height="178" /></a></p>  <p><a href="http://lh4.ggpht.com/-yhBKG4UbDVo/Tx-M3isuUYI/AAAAAAAAAWQ/e4StcIAJXwY/s1600-h/image_thumb6_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb" border="0" alt="image_thumb6_thumb" src="http://lh4.ggpht.com/-4NWr0JakVmU/Tx-M4OgEzYI/AAAAAAAAAWY/Y5spI1MEfTo/image_thumb6_thumb_thumb.png?imgmax=800" width="390" height="156" /></a></p>  <p>By default this just uses the System.Diagnostics.Trace(…) to write the output to, but you can override the “write” implementation by giving your own delegate as shown below.</p>  <p><a href="http://lh3.ggpht.com/-WqWFeyFE9-w/Tx-M4J_zk_I/AAAAAAAAAWg/PgFlXKctwzk/s1600-h/image_thumb8_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb" border="0" alt="image_thumb8_thumb" src="http://lh3.ggpht.com/-ZVMsOTKUgRo/Tx-M4ftO9JI/AAAAAAAAAWo/7MzVtczsP3o/image_thumb8_thumb_thumb.png?imgmax=800" width="871" height="52" /></a></p>  <p>The below shows an example of a nested object that also has an array of items.</p>  <p><a href="http://lh6.ggpht.com/-ggox20Cy7Uo/Tx-M478HrOI/AAAAAAAAAWw/evox5Gb8UoU/s1600-h/image_thumb14_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb14_thumb" border="0" alt="image_thumb14_thumb" src="http://lh5.ggpht.com/-YAC_6gYOxPk/Tx-M5PrZCnI/AAAAAAAAAW4/hYIHCALLCVg/image_thumb14_thumb_thumb.png?imgmax=800" width="264" height="171" /></a></p>  <p><a href="http://lh5.ggpht.com/-BG258OCC7hw/Tx-M5JXdreI/AAAAAAAAAXA/7gusCQdc-EA/s1600-h/image_thumb13_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb1" border="0" alt="image_thumb13_thumb1" src="http://lh6.ggpht.com/-ALeIoiAbOSA/Tx-M5oEQkJI/AAAAAAAAAXI/0ldXcIpDxmM/image_thumb13_thumb1_thumb.png?imgmax=800" width="573" height="349" /></a></p>  <h5>Anyone out there using <a href="http://approvaltests.sourceforge.net/" target="_blank">ApprovalTests</a>? (You can get it on NuGet)</h5>  <p>I’ve not taken the chance to use ApprovalTests yet in a project, but I have a strong feeling that my DumpToText helper could be very useful when leveraged in conjunction with ApprovalTests. If anyone out there is using ApprovalTests, I’d love to hear how it’s going, and if you think that DumpToText would be useful there.</p>  </div>
+</div>
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/pages/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+      <a class="next" href="/blog/pages/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

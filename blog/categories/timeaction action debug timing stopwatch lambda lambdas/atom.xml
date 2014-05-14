@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Category: TimeAction Action Debug Timing StopWatch Lambda Lambdas - Developing on Staxmanade]]></title>
+    <link href="http://staxmanade.com"/>
+    <updated>2014-05-14T14:32:45Z</updated>
+    <id>http://staxmanade.com</id>
+    <author>
+        <name>Jason Jarrett</name>
+        <uri>http://staxmanade.com/about</uri>
+    </author>
+    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="self" href="/blog/categories/timeaction action debug timing stopwatch lambda lambdas/atom.xml"/>
+    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Timing Debug Code Using Lambda's]]></title>
+        <id>http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/</id>
+        <link href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">
+        </link>
+        <updated>2008-04-11T15:29:00Z</updated>
+        <summary type="html"><![CDATA[In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster...]]></summary>
+        <content type="html"><![CDATA[
+<div class='post'>
+In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+whoops - Thanks for the suggested update...</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Lambda, not lamda. ;)</div>
+</div>
+</div>
+]]></content>
+    </entry>
+</feed>

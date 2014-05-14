@@ -1,0 +1,563 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: C# - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+  
+   <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+  
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div class="blog-index">
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Dynamically load embedded assemblies – because ILMerge appeared to be out.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2011-04-02T23:16:00.000Z" pubdate>Apr 2nd 2011</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>At work, I started building a .net assembly that would probably find its way into a number of the server processes and applications around the shop. This particular assembly was going to end up containing quite a number of external open source references that I didn’t want to expose to the consumer of my library.</p>  <p>I set out to solve several simple requirements.</p>  <ol>   <li>Easy to use. Should be nothing more than adding a reference to the assembly (and use it). </li>    <li>Consumer should not have to deal with the 5 open source libraries it was dependent on. Those are an implementation detail and it’s not necessary to expose those assemblies to the consumer, let alone have to manage the assembly files. </li> </ol>  <p>I originally got the idea from <a href="http://codebetter.com/blogs/dru.sellers/" target="_blank">Dru Sellers</a>’ post <a href="http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx">http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx</a></p>  <p>I gave ILMerge a try. As a post build event on the project – I ran ILMerge and generated a single assembly. <strong>Leveraging the internalize</strong> functionality of ILMerge so my assembly wouldn’t expose all of its open source projects through Visual Studio’s intellisense.</p>  <p>This almost gave me the output I wanted. Single assembly, compact, easy to use… Unfortunately, when I tried to use the assembly I started seeing .net serialization exceptions. Serialization from my ILMerged assembly could not be desterilized on the other end because that type was not in an ILMerged assembly, but in the original assembly. (Maybe there’s a way to work around this, but I didn’t have time to figure that out, would love to hear any comments)</p>  <h4>So ILMerge appeared to be out, what next?</h4>  <p>My coworker, <a href="http://www.limbodesigns.com" target="_blank">Shawn</a>, suggested I try storing the assemblies as resource files (embedded in my assembly). He uses the SmartAssembly product from Red Gate in his own projects, and mentioned that their product can merge all of your assemblies into a single executable – storing the assemblies in a .net resource file within your assembly/executable. This actually seemed easy to accomplish so I thought I’d give it a try.</p>  <h4>How I did it.</h4>  <p><strong>Step 1:</strong> Add the required assemblies as a resource to your project. I choose the Resources.resx file path and added each assembly file to the Resources.resx. I like this because of how simple it is to get the items out.</p>  <p><strong>Step 2:</strong> We need to hook up to the first point of execution (main(…), or in my case this was a library and I had a single static factory class, so in the static constructor of this factory I included the following lines of code.</p>  <pre class="brush: csharp;">static SomeFactory()<br />{<br /><br />    var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />        {&quot;log4net&quot;, Resources.log4net},<br />        {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />    };<br /><br />    AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />    {<br />        // Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />        // EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />        var assemblyName = args.Name.Split(',').First();<br /><br />        if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />        {<br />            return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />        }<br /><br />        return null;<br />    };<br />}</pre><br /><br /><p>I’ll talk a little about each step above.</p><br /><br /><pre class="brush: csharp;">var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />    {&quot;log4net&quot;, Resources.log4net},<br />    {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />};</pre><br /><br /><p>The first chunk is a static hash of the (<strong>key</strong>=assembly name, <strong>value</strong>=byte array of actual assembly). We will use this to load each assembly by name when the runtime requests it.</p><br /><br /><pre class="brush: csharp;">AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />{...</pre><br /><br /><p>Next we hook into the app domain’s <a href="http://msdn.microsoft.com/en-us/library/system.appdomain.assemblyresolve.aspx">AssemblyResolve</a> event which allows us to customize (given a certain assembly name) where we load the assembly from. Think external web service, some crazy location on disk, database, or in this case a resource file within the executing assembly.</p><br /><br /><pre class="brush: csharp;">// Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />// EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />var assemblyName = args.Name.Split(',').First();</pre><br /><br /><p>Next we figure out the name of the assembly requesting to be loaded. My original implementation used the …Name.Split('’,’).First(); to get the assembly name out of the full assembly name, but as I was writing up this blog post I thought – there must be a better way to do this. So although I am putting the effort to write this out – I’m not feeling like verifying that a possible better way will work (So give this a try and let me know – try using <strong>AssemblyName.GetAssemblyName(args.Name)</strong> instead).</p><br /><br /><pre class="brush: csharp;">if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />{<br />    return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />}</pre><br /><br /><p>Next we check that the assembly name exists if our hash declared initially and if so we load it up…</p><br /><br /><pre class="brush: csharp;">    return null;<br />};</pre><br /><br /><p>Otherwise, the assembly being requested to be loaded is not one we know about so we return null to allow the framework to figure it out the usual ways.</p><br /><br /><p><strong>Step 3:</strong> Finally, I created a post build event that remove the resourced assemblies from the bin\[Debug|Release] folders. This allowed me to have a test project that only had a dependency on the single assembly and verify using it actually works (because it has to load it’s dependencies to work correctly and they didn’t exist on disk).</p><br /><br /><h4>Please consider.</h4><br /><br /><ul><br />  <li>You may <strong>not have fun </strong>if you package some of the same assemblies that your other projects may/will reference (especially if they are different versions). </li><br /><br />  <li>Can’t say I have completely wrapped my head around the different problematic use cases related strategy could bring to life. (<strong>Use with care</strong>) </li><br /></ul>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-10-18T00:56:00.000Z" pubdate>Oct 17th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>In a <a href="/2010/09/odatas-dataservicequery-and-removing" target="_blank">previous post</a> I elaborated on the problem of magic strings in <a href="http://www.odata.org/" target="_blank">OData</a> service queries, and gave a quick (but lacking in depth) statically typed helper solution.</p>  <p>A commenter <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> left a note stating that my solution would not work with nested objects. I initially replied asking if he could give an example (as I hadn’t run into that scenario yet being a noob to OData). He didn’t get back to me, but it wasn’t long before I ran into the problem he was talking about.</p>  <p>If we go back to <a href="http://www.linqpad.net/">LinqPad</a> and look again at the Netflix OData api. Let’s say we want to pull down the <strong>People</strong>, their related <strong>TitlesDirected</strong> and the TitlesDirected <strong>ScreenFormats</strong>. (No real world scenario there – just made it up because they’re related properties). The OData query (with magic strings) would look like:</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(&quot;TitlesDirected/ScreenFormats&quot;)        <br />select x).Take(5)</font></p> </blockquote>  <p>If you tried to take the above and translate it to my “no magic string” fix from the previous post you would get something like.</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected /* Now what? dead end. /ScreenFormats*/ )        <br />select x).Take(5)         <br /></font></p> </blockquote>  <p>Now that the problem in my solution was apparent, and using his example as a quick guide (It wasn’t quite what I was looking for, but had the general theme). The solution became more than a few lines of code and I wanted to wrap some tests around the whole thing just to verify it was all working correctly…</p>  <h4>ODataMuscle was born:</h4>  <p><a href="http://github.com/Staxmanade/ODataMuscle">http://github.com/Staxmanade/ODataMuscle</a></p>  <p>Sorry for the name. Just think of “Strong Typing” your OData queries and giving them a little Muscle. I threw this little project up on github since this blog is not the best place to version code and if anyone felt inclined to extend it they could easily fork it and do so.</p>  <p>I hacked the initial version together, and once a co-worker of mine was done with it I think he cleaned it up nicely.</p>  <p>This new version now supports expanding not only <strong>child properties</strong>, but <strong>grandchild properties</strong> and <strong>grandchild properties of collections</strong>. (That doesn’t seem to translate well…)</p>  <p>EX: our little Netflix example from above would now look like </p>  <blockquote><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected.Expand(p2 =&gt; p2.ScreenFormats))      <br />select x).Take(5)</font></blockquote>  <p>Which would translate into the following query</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats" href="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats">http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats</a></p> </blockquote>  <p>Thanks to <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> for the initial feedback and I hope this helps someone else…</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-09-21T13:52:00.000Z" pubdate>Sep 21st 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was experimenting recently with the .Net implementation of <a href="http://www.odata.org/" target="_blank">OData</a> and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net community’s definition of magic strings is close but seems slightly different from <a href="http://en.wikipedia.org/wiki/Magic_string_(programming)" target="_blank">Wikipedia</a>. Therefore the magic strings I’m talking about here are what you’ll find on such posts as “<a href="http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/19/functional-net-lose-the-magic-strings.aspx" target="_blank">Functional .Net – Lose the Magic Strings</a>.”</p>  <p>I don’t want to get into the magic string debate here, just that I want to snapshot this little helper (for when I need to remember to write it again and don’t want to “figure it out”). This is also not intended to be a complete overview of OData, but I will provide some getter starter links and tips (if you haven’t touched it).</p>  <h4>Enough background show me the code: (scroll to the bottom if you don’t care about the post)</h4>  <p>Let’s pretend we want to request a “Title” from the NetFlix OData api.</p>  <p>You can do this by going to the web browser and typing the following URL</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog/Titles()?$top=1">http://odata.netflix.com/catalog/Titles()?$top=1</a></p> </blockquote>  <p>Sweet. XML, yippie. Um, no thanks. Let’s try that again. Go download <a href="http://www.linqpad.net/" target="_blank">LinqPad</a> (read up on using <a href="http://coderjournal.com/2010/06/using-linqpad-to-query-stack-overflow/" target="_blank">LinqPad for querying an OData</a> store)</p>  <p>Once you’ve connected LinqPad to the NetFlix OData service (<a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog">http://odata.netflix.com/catalog</a>). Now we’re ready to play around. Our URL “query” above translates in to a C# LINQ statement that looks like the below in LinqPad.</p>  <pre class="brush: csharp;">(from title in Titles<br />select title).Take(1).Dump()</pre><br /><br /><blockquote><br />  <p>The<strong> .Dump()</strong> is a LinqPad extension method that displays the object in the results window.</p><br /></blockquote><br /><br /><p>If you execute this in LinqPad you will see some data about the first Title form the Netflix OData service. In the results window scroll all the way to the right. Notice all the properties that are supposed to be a Collection&lt;T&gt; but have no data? To retrieve these through OData you have to extend your LINQ query with the Expand(“{propertyName}”) method. </p><br /><br /><p>Let’s say we want to include AudioFormats collection when we ask for the first Title.</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(&quot;AudioFormats&quot;)<br />select title).Take(1).Dump()</pre><br /><br /><p>Notice how we have to explicitly tell the OData service to include this property when we retrieve it form the service. Not only do we explicitly tell the property name, but it’s a magic string (gag, hack, baaa) none the less. If you click on “SQL” in LinqPad result window it will show the URL used for OData queries. Our URL shows the expanded property. </p><br /><br /><blockquote><a title="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats&#13;&#10;" href="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats">http://odata.netflix.com/catalog/Titles()?$top=1&amp;<strong>$expand=AudioFormats</strong> <br /><br />    <br /></a></blockquote><br /><br /><p>Now let’s pretend (just for the sake of pretending) that your front end application’s entire data access strategy was going to sit on top of OData. Not saying this is a good thing (or a bad thing). Just sayin…</p><br /><br /><p>If you have a fairly complex data model and each screen in your application requests slightly different data in a slightly different way, but in the end it all essentially comes down to a set of entities and their relationships. What would you do if you had to “.Expand” all those magic stringed property names. Now, I know we’re all great at search and replace (of the magic strings). However every little step along the way where I can avoid a refactor that will break every other screen in the app, well, I think I just might take that.</p><br /><br /><p>Now, if you change your LinqPad query from a “C# Expression” to a “C# Program”. Copy the helper class at the bottom of this post in to the bottom of the LinqPad code window. You can now write your linq statement as follows</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(x=&gt; x.AudioFormats)<br />select title).Take(1).Dump();</pre><br /><br /><p>Notice the switch from magic strings to an intellisense helping, refactoring safe lambda? This trick is not new. You’ll see it in many .Net open source projects such as mocking frameworks, asp.net MVC projects etc…</p><br /><br /><p>Just wanted to write this little goodie down for the next time I need it. Hope this helps someone else as well.</p><br /><br /><pre class="brush: csharp;">public static class ServiceQueryExtension<br />{<br />    public static DataServiceQuery&lt;T&gt; Expand&lt;T, TProperty&gt;(<br />        this DataServiceQuery&lt;T&gt; entities, <br />        Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpressions)<br />    {<br />        string propertyName = propertyExpressions.GetMemberName();<br />        return entities.Expand(propertyName);<br />    }<br /><br />    public static string GetMemberName&lt;T, TProperty&gt;(this Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpression)<br />    {<br />        return ((MemberExpression)(propertyExpression.Body)).Member.Name;<br />    }<br />}</pre>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">C# 4.0 Optional Parameters – Exploration.</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2010-01-28T22:09:00.000Z" pubdate>Jan 28th 2010</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>{… Removed big long story about how I ended up writing this post which provides no value to the blog…}</p>  <p>Summary of big long story to at least give a little context as to why (yet another post on optional parameters):</p>  <blockquote>   <p>I threw an idea out to the <a href="http://code.google.com/p/moq/">Moq</a> discussion group of how we could use the <a href="http://msdn.microsoft.com/en-us/library/dd264739(VS.100).aspx">named/optional</a> parameters in a future version of Moq. (<a href="http://groups.google.com/group/moqdisc/browse_thread/thread/de73db381cacee9b/a6fa5cff1e7b0cc8?lnk=gst&amp;q=Ideas+for+v4+sugar#a6fa5cff1e7b0cc8">you can read the thread here</a>) In my original feature request I displayed my lack of concrete knowledge in the named/optional parameters support that is eventually coming with .net 4.0.</p> </blockquote>  <p>Once I learned that you could place default values on interfaces it left me with questions… So, what better way to figure them out? Go test it…</p>  <p><strong>Disclaimer</strong>: (Shouldn’t every blog have some context enlightening disclaimer?)     <br />I haven’t looked up best practices or lessons learned from people that have had this language feature (VB), so I’m just doing this as an experiment for myself. Hope some of my findings help the other C#’ers wanting to learn a little about the feature.</p>  <h4>What are optional parameters? </h4>  <p><a href="http://www.dimecasts.net">DimeCasts.Net</a>, <a href="http://www.dimecasts.net/Casts/ByAuthor/Derik%20Whittaker">Derik Whittaker</a> has a nice intro video <a href="http://www.dimecasts.net/Casts/CastFeedDetails/153?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Dimecastsnet--InformAndEducateIn10MinutesOrLess+(DimeCasts.Net+--+Inform+and+Educate+in+~+10+minutes+or+less)&amp;utm_content=Google+Reader"># 153 - Exploring .Net 4 Features - Named and Optional Parameters</a></p>  <p>OR check out - <a href="http://tinyurl.com/yz3pc9o">http://tinyurl.com/yz3pc9o</a></p>  <p>&#160;</p>  <h4>Can an interface define a default value?</h4>  <p><strong>Yes!</strong>     <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILApwzkNI/AAAAAAAAANU/Ydi4SHTsePA/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILA63cf3I/AAAAAAAAANY/WnbpitXg4IM/image_thumb3.png?imgmax=800" width="286" height="124" /></a> </p>  <h5>&#160;</h5>  <h4>Can I specify a default in the concrete implementation, if the interface has a default also?</h4>  <p><strong>Yes!</strong></p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILBNcSRYI/AAAAAAAAANc/mZmlaInB4OQ/s1600-h/image13.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILBmlHVtI/AAAAAAAAANg/gagdT5CuMVs/image_thumb5.png?imgmax=800" width="370" height="276" /></a> </p>  <h4>What happens when the concrete implementation has a different default value than the interface’s default?</h4>  <p><strong>If the interface has a default value specified, that is different from the concrete implementation, then it depends on what reference you’re using when executing the method.</strong></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILB0Ic0PI/AAAAAAAAANk/TDRVo_bYV5w/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILCJiKGfI/AAAAAAAAANo/yQ15IDDZnc0/image_thumb7.png?imgmax=800" width="381" height="275" /></a> </p>  <p>In the case below we are executing the method directly off of the Foo instance and will therefore get the concrete implementation’s default value when executing.</p>  <blockquote>   <p><strong>(new Foo()).Bar()</strong> – would use the value of ‘1000’.<strong> </strong><strong></strong></p> </blockquote>  <p>And in the case below we cast the Foo instance to an IFoo and it will then use the interfaces default value when executing.</p>  <blockquote>   <p><strong>((IFoo) new Foo()).Bar() </strong>– would use the value of ‘1’. </p> </blockquote>  <p>Below are some examples of the different use cases.</p>  <pre class="brush: csharp;">[TestClass]<br />public class UnitTest1<br />{<br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value()<br />    {<br />        Foo f1 = new Foo();<br />        f1.Bar();<br />        f1.ParamValue.ShouldBeEqualTo(1000);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value()<br />    {<br />        IFoo f = new Foo();<br />        f.Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value_because_of_explicit_cast()<br />    {<br />        Foo f = new Foo();<br />        ((IFoo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value_because_of_explicit_cast()<br />    {<br />        IFoo f = new Foo();<br />        ((Foo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1000);<br />    }<br />}<br /><br />interface IFoo<br />{<br />    int ParamValue { get; }<br /><br />    void Bar(int paramValue = 1);<br />}<br /><br />class Foo : IFoo<br />{<br />    public int ParamValue { get; private set; }<br />    public void Bar(int paramValue = 1000)<br />    {<br />        ParamValue = paramValue;<br />    }<br />} </pre><br /><br /><p>&#160;</p><br /><br /><h4>The next experiment - Extract Interface.</h4><br /><br /><p>Next I tried removing the IFoo interface that I’d created manually, because I wanted to exercise the “<a href="http://msdn.microsoft.com/en-us/library/fb3dyx26.aspx">Extract Interface…</a>” functionality, just to see how it dealt with the these defaults.</p><br /><br /><p>Luckily, <strong>there were no surprises.</strong> The interface it created was exactly (less spacing) the same as I originally had. </p><br /><br /><p>Although it didn’t display the default constant value in the dialog during creation, there was a hint that the method signature had a default by placing [] around the int resulting in “Bar([int])”.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/S2ILCUb7m1I/AAAAAAAAANs/1r4ZBNlQUUU/s1600-h/image221.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILCwi2KSI/AAAAAAAAANw/pHnAuYpcab4/image22_thumb.png?imgmax=800" width="411" height="341" /></a></p><br /><br /><blockquote><br />  <p><strong>Side <strong>Tool </strong>Issue:</strong> Can’t say I like how it forced me to put the interface in a different file, I guess it’s enforcing “best practice” here, but I prefer to do this later in the dev cycle than immediately (kind of like how R# allows you to place in the file next to the original class). #ToolGettingInWay</p><br /></blockquote><br /><br /><blockquote><br />  <p><strong>Optional Parameter Issue:</strong> One issues I see with this solution was the dirty/icky copy/paste feeling I got when extracting the interface – the default was copied from the class to the interface. </p><br /></blockquote><br /><br /><h5>Possible solutions to the “dirty/icky copy/paste feeling” the extract interface gives.</h5><br /><br /><p>(in no particular order of preference)</p><br /><br /><ul><br />  <li>Place all defaults into a constant and reference the constant in both the interface and the concrete implementation(s). </li><br /><br />  <li>Don’t place the defaults in the concrete implementation (only in the interface). As you should probably not be depending on the concrete implementation to begin with, you wouldn’t need it there (and wouldn’t even call it). This would also help in the case that there are multiple concrete implementation and having to sift through the code looking for all instances to updated defaults for could be very error prone. </li><br /></ul><br /><br /><p>On the surface named parameters seem like a very simple feature to the C# language. But after delving into the feature a little, I can see there are many complicated scenarios you can get your self caught up into.</p><br /><br /><p>As with anything…<strong>Use with care</strong>!</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Go to Definition Tip with the C# ‘var’ keyword</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-12-02T06:09:00.000Z" pubdate>Dec 1st 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>This may be totally obvious to the masses out there, and it isn’t much of a tip, other than to say <strong>it works</strong>…</p>  <p></p>  <h5>Did You Know?</h5>  <p><strong>F12 (Go To Definition) – works on the C# </strong><a href="http://msdn.microsoft.com/en-us/library/bb383973.aspx"><strong><u>var</u></strong></a> keyword<strong></strong>?</p>  <p>(That’s all there is to this post – the rest is just rambling)</p>  <p>I hit it on accident the other day (yes I know, <strong>F12</strong> isn’t exactly in the usual path of accidental keystrokes, trust me it was on accident). It brought Visual Studio to a screeching halt. That is, while VS was trying to load the <a href="http://msdn.microsoft.com/en-us/library/exy1facf(VS.80).aspx">object browser</a>, and satellites were linking up in outer space trying get some message sent through the <a href="http://en.wikipedia.org/wiki/Pony_Express">Pony Express</a> about a <a href="http://www.urbandictionary.com/define.php?term=tweetup&amp;defid=3639937">tweetup</a> with the <a href="http://weblogs.asp.net/scottgu/archive/2009/10/29/add-reference-dialog-improvements-vs-2010-and-net-4-0-series.aspx">Add Reference Dialog</a>. (Point being – loading the object browser is REALLY SLOW)</p>  <p>It dawned on me that the <strong>F12</strong> (Go To Definition) keyboard shortcut works on the <a href="http://msdn.microsoft.com/en-us/library/bb383973.aspx">var</a> keyword.</p>  <p>Usually I just use the tool tip window when I don’t have time to decipher why the variable’s naming isn’t clear. (<a href="http://devlicio.us/blogs/hadi_hariri/archive/2009/11/20/var-improves-readability.aspx?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Devlicious+(Devlicio.us)&amp;utm_content=Google+Reader">good post on the subject</a>)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SxYEpdzTPPI/AAAAAAAAAM4/V5DBhnTm7O4/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SxYEpxUBU2I/AAAAAAAAAM8/QMYR-Veivq8/image_thumb1.png?imgmax=800" width="247" height="67" /></a>&#160;</p>  <p>FYI: for those R# fans, who noticed after installing it, you lost the code metadata window in C# when F12ing it (Go To Definition). They’ve fixed it in the upcoming version <a href="http://www.jetbrains.net/jira/browse/RSRP-35547">http://www.jetbrains.net/jira/browse/RSRP-35547</a>. So my satellites/pony express/tweetup/add ref dialog comment above won’t be an issue anymore. <strong>Yippee!</strong></p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Enum conversion. Why Oh Why?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-11-15T07:02:00.000Z" pubdate>Nov 14th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sv-ngaEoLWI/AAAAAAAAAMg/EXgQWVuuS18/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ngh5lO_I/AAAAAAAAAMk/6Mlo3qg3Ysw/image_thumb1.png?imgmax=800" width="569" height="364" /></a>&#160;</p>  <p>What MSDN says: <a href="http://msdn.microsoft.com/en-us/library/sbbt4032.aspx">enum (C# Reference)</a></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ng8eAR3I/AAAAAAAAAMo/LlX88s7OQvc/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-nhJELZZI/AAAAAAAAAMs/nhAjJrMikiM/image_thumb11.png?imgmax=800" width="572" height="134" /></a></p>  <p>Why can’t this just work?</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-10-01T01:46:00.000Z" pubdate>Sep 30th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assembly references at compile time depending on certain build conditions… Don’t want to get too much in to why I needed it, just that it is doable – (more painful than initially expected), but still possible.</p> <p>First let’s get a csc command we want to compile.</p> <p>Second let me state that this was more of an exercise in wanting to learn PowerShell and there probably other ways of accomplishing what I needed, just seemed like a good time to start down the painful learning curve. Also note, I’m not a CSC compiler pro – I haven’t analyzed each of the “options” and weather it’s right/wrong/best practice – it just works… (thanks to Visual Studio &amp; MSBuild for hiding how we actually should use the compiler)</p> <p>Ok take a simple csc compile command – (In Visual Studio – File –&gt; New Project -&gt; ClassLibrary1 as a good starting point). Compile the project &amp; check the build output window. You’ll get an output similar to the below.</p> <blockquote> <p>C:\Windows\Microsoft.NET\Framework\v3.5\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\PowershellCscCompileSample.dll /target:library Class1.cs Properties\AssemblyInfo.cs</p></blockquote> <p>Next figure how the heck to execute this in PowerShell.</p> <p>&amp; $csc $params --- NOPE <br>exec $csc $params – NOPE</p> <p>I must have tried tens if not hundreds of methods to get the simple thing above to compile… needless to say I pinged a co-worker for some help. <a href="http://obsidience.blogspot.com/">http://obsidience.blogspot.com/</a></p> <p>His pointer – when trying to get big string command to execute in powershell do the following.</p> <ol> <li>Open up “Windows PowerShell ISE”&nbsp; (on Windows 7)  <li>Paste the command prompt window (with an “&amp;” at the beginning)  <li>look for any coloration changes like… <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y5kM2wwI/AAAAAAAAALs/UDwCw_-kLYs/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sr-y5_QAW5I/AAAAAAAAALw/NMkrfh4EjAA/image_thumb9.png?imgmax=800" width="644" height="30"></a>  <li>Next place PowerShell escape character [`] in front of any character where the coloration changes (They’re very subtle so look long and hard) <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y6I68cMI/AAAAAAAAAL0/ZFyN79A_4-o/s1600-h/image21.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Sr-y6j24noI/AAAAAAAAAL4/NmqVGw9aCkU/image_thumb11.png?imgmax=800" width="644" height="39"></a> </li></ol> <p>We should now have a PowerShell string that compiles our project.</p> <p>After I got that far – I cleaned up the compiler syntax for a little re-use. (You can download the project blow to check it out)</p> <p><iframe style="padding-bottom: 0px; background-color: #fcfcfc; padding-left: 0px; width: 98px; padding-right: 0px; height: 115px; padding-top: 0px" title="Preview" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedicon.aspx/Public/PowershellCscCompileSample.zip" frameborder="0" marginwidth="0" scrolling="no"></iframe></p> <p>If you don’t want to see the entire csc compile in the project download above, below is the general usage…</p><pre class="brush: plain;"><br /><br />################## Build Configuration ##################<br />$project_name = 'PowershellCscCompileSample'<br />$build_configuration = 'Debug'<br />#########################################################<br /><br />$core_assemblies_path = 'C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5'<br />$framework_assemblies_path = 'C:\Windows\Microsoft.NET\Framework\v2.0.50727'<br /><br />function global:Build-Csc-Command {<br />	param([array]$options, [array]$sourceFiles, [array]$references, [array]$resources)<br />	<br />	$csc = 'C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe'<br /><br />	# can't say I'm doing delimeters correctly, but seems to work ???<br />	$delim = [string]""""<br />	<br />	$opts = $options<br /><br />	if($references.Count -gt 0)<br />	{<br />		$opts += '/reference:' + $delim + [string]::Join($delim + ' /reference:' + $delim, $references) + $delim<br />	}<br /><br />	if($resources.Count -gt 0)<br />	{<br />		$opts += '/resource:' + $delim + [string]::Join($delim + ' /resource:' + $delim, $resources) + $delim<br />	}<br />	<br />	if($sourceFiles.Count -gt 0)<br />	{<br />		$opts += [string]::Join(' ', $sourceFiles)<br />	}<br />	<br />	$cmd = [string]::Join(" ", $options)<br />	$cmd = $csc + " " + $opts<br />	$cmd;<br />}<br /><br />function global:Execute-Command-String {<br />	param([string]$cmd)<br />	<br />	# this drove me crazy... all I wanted to do was execute<br />	# something like this (excluding the [])<br />	#<br />	# [& $csc $opts] OR [& $cmd]<br />	#<br />	# however couldn't figure out the correct powershell syntax...<br />	# But I was able to execute it if I wrote the string out to a <br />	# file and executed it from there... would be nice to not <br />	# have to do that.<br /><br />	$tempFileGuid = ([System.Guid]::NewGuid())<br />	$scriptFile = ".\temp_build_csc_command-$tempFileGuid.ps1"<br />	Remove-If-Exist $scriptFile<br /><br />	Write-Host ''<br />	Write-Host '*********** Executing Command ***********'<br />	Write-Host $cmd<br />	Write-Host '*****************************************'<br />	Write-Host ''<br />	Write-Host ''<br /><br />	$cmd >> $scriptFile<br />	& $scriptFile<br />	Remove-If-Exist $scriptFile<br />}<br /><br />function global:Remove-If-Exist {<br />	param($file)<br />	if(Test-Path $file)<br />	{<br />		Remove-Item $file -Force -ErrorAction SilentlyContinue<br />	}<br />}<br /><br />$resources = @(<br />	#"<path to resource files>"<br />)<br /><br />$references = @(<br />	"$core_assemblies_path\System.Core.dll",<br />	"$framework_assemblies_path\System.dll"<br />)<br /><br />$sourceFiles = @(<br />	#"<path to some source file not under the main project's folder - EX: Linked files in other projects>"<br />)<br /><br />$sourceFiles += Get-ChildItem '.' -recurse `<br />	| where{$_.Extension -like "*.cs"} `<br />	| foreach {$_.FullName} `<br /><br />$debug = if($build_configuration.Equals("Release")){ '/debug-'} else{ "/debug+" }<br /><br />$options = @(<br />	'/noconfig',<br />	'/nowarn:1701`,1702', # Note: the escape [`] character before the comma<br />	'/nostdlib-',<br />	'/errorreport:prompt',<br />	'/warn:4',<br />	$debug,<br />	"/define:$build_configuration``;TRACE",  # Note: the escape [`] character before the comma<br />	'/optimize+',<br />	"/out:$project_name\bin\$build_configuration\ClassLibrary.dll",<br />	'/target:library'<br />)<br /><br />$cmd = Build-Csc-Command -options $options -sourceFiles $sourceFiles -references $references -resources $resources<br /><br />Execute-Command-String $cmd<br /></pre><pre class="brush: plain;">&nbsp;</pre><font face="Courier New"></font><pre class="brush: plain;"></pre>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">How do I get UISpy.exe on my Windows 7 Developer Machine?</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-09-16T04:47:00.000Z" pubdate>Sep 15th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I know there’s a tool somewhere in some SDK called UISpy.exe. It looks like this.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt1IXfT6I/AAAAAAAAAKo/JLGWllGQoP4/s1600-h/ms727247.UI_Spy_Main_WindowenusVS.90.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" border="0" alt="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt19BG-II/AAAAAAAAAKs/yqtWK4N0wW4/ms727247.UI_Spy_Main_WindowenusVS.90%5B1%5D.png?imgmax=800" width="582" height="379" /></a> </p>  <p>You can read all about it here - <a href="http://msdn.microsoft.com/en-us/library/ms727247.aspx">http://msdn.microsoft.com/en-us/library/ms727247.aspx</a></p>  <h3>But can you find it?</h3>  <p>The docs in that link above state…</p>  <blockquote>   <p><img alt="ms727247.alert_note(en-us,VS.90).gif" src="http://i.msdn.microsoft.com/ms727247.alert_note(en-us,VS.90).gif" /><strong>Note: </strong>UI Spy is installed with the Microsoft Windows SDK. It is located in the \bin folder of the SDK installation path (uispy.exe) or can be accessed from the Start menu (Start\All Programs\Microsoft Windows SDK\Tools\UISpy).</p> </blockquote>  <p>If I go take a look at the (Start\All Programs\Microsoft Windows SDK\Tools\UISpy) as shown in the image below. UISpy is nowhere to be found. </p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt2SEUeTI/AAAAAAAAAKw/xonEojREdHc/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt2mwJQvI/AAAAAAAAAK0/Vx7KaZRd5DQ/image_thumb3.png?imgmax=800" width="262" height="273" /></a> </p>  <p>In some forum post somewhere – I saw that I had to install the .Net Framework 3.0 SDK. Which is strange since I have the 3.5 framework already installed and the tool isn’t there. Oh well, I found it (I thought), downloaded it and tried to run the setup. Where in Windows 7 I was prompted with the following dialog.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt23upSBI/AAAAAAAAAK4/HUXuugP2xRg/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." border="0" alt="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt3aUZroI/AAAAAAAAAK8/fHdAqCJ6Iac/image_thumb1.png?imgmax=800" width="505" height="178" /></a> </p>  <p>Ok, fine I’ll do that…</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt3u65DjI/AAAAAAAAALA/QAvI1Zp_Hz0/s1600-h/image11.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4Drga_I/AAAAAAAAALE/dCtpGc-6GkY/image_thumb5.png?imgmax=800" width="417" height="531" /></a> </p>  <p>Searching the list of features to turn on and off, the only one that looks anything like what I’m looking for (outlined in red) has already been installed.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4qWSiSI/AAAAAAAAALI/Ya5JCyYXnUM/s1600-h/image15.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt51K4FZI/AAAAAAAAALM/J1rd0mLj0rM/image_thumb7.png?imgmax=800" width="310" height="656" /></a> </p>  <p>Off to do more research…</p>  <p></p>  <p></p>  <p></p>  <p>Then I run into this blog <a href="http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx">http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx</a></p>  <p>Eventually I download the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=4377F86D-C913-4B5C-B87E-EF72E5B4E065&amp;displaylang=en">Windows SDK for Vista Update</a>. Run the install wizard with all the defaults except this screen…</p>  <p>As the blog post states – make sure you take a pre-install snapshot of the following registry key</p>  <p><strong>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs      <br /></strong>Before Install:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt6ZlcgnI/AAAAAAAAALU/ZO60FHxNAoU/s1600-h/image41.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt65BUX4I/AAAAAAAAALY/_vCcUqbSlEs/image_thumb25.png?imgmax=800" width="583" height="171" /></a>&#160; </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt7eZeWoI/AAAAAAAAALc/n6FH5PRb2f0/s1600-h/image19.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt7yOdPSI/AAAAAAAAALg/ntpi_5ggbzg/image_thumb9.png?imgmax=800" width="585" height="554" /></a>&#160;</p>  <p>After Install:    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt8q6jHFI/AAAAAAAAALk/gop2PBD1vPY/s1600-h/image47.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt-uhEUmI/AAAAAAAAALo/mxzr0oast6I/image_thumb29.png?imgmax=800" width="581" height="176" /></a> </p>  <p></p>  <p></p>  <p></p>  <p>I reverted the changes back to v6.0A in the registry above…</p>  <h3>And TAH-DAH UISpy.exe has been found.</h3>  <p>C:\Program Files\Microsoft SDKs\Windows\v6.0\Bin\UISpy.exe</p>  <p>Pain in the A$$… But it seems to work.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I never experienced a dialog. However, this post is rather old and things have changed since. I have not tried to run these steps since then. Good Luck</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Thank you, however, when i done and open the UISpy, it pop up a dialog about stopping the tool. How can i handle it!</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+I have to agree with you, real pain in the a$$. Seriously, your post helped me a lot more specifically with the registry rollback.<br /><br />Thanks</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">C# (checked) keyword – Learn something new every day</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-06-26T14:45:00.000Z" pubdate>Jun 26th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’ve been programming against the .net framework since the late beta of version 1.0 came out. (I had a couple year hiatus when I took a job doing some Linux &amp; C++) however, suffice it to say, I’ve been using the language a long time. I still find it amazing that there are features in the language that have been a round a long time and still manage stumbling across things I’ve never seen before.</p>  <p>Today’s newly learned feature I saw in a blog by <a href="http://www.lostechies.com/blogs/jimmy_bogard/">bogardj</a> over at <a href="http://www.lostechies.com/">LostTechies</a> where he wrote up a little <a href="http://www.lostechies.com/blogs/jimmy_bogard/archive/2009/06/24/expressions-cheat-sheet.aspx">Expressions Cheat Sheet</a>.</p>  <p>In his blog, I notice the “checked” keyword had the blue syntax highlighting. (which usually means it’s a C# keyword)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfB5ivx2I/AAAAAAAAAJI/DZYX6HqutGM/s1600-h/image%5B4%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCEOcaGI/AAAAAAAAAJM/bjFimfVqmxE/image_thumb%5B2%5D.png?imgmax=800" width="602" height="365" /></a> </p>  <p>So, to verify, I copied the word into my C# editor and what do you know… It is a C# keyword. This is probably something most if not all C# programmers out there already know and I, for some reason have missed this.</p>  <p>Here’s a blurb about it on the <a href="http://stackoverflow.com/questions/9033/hidden-features-of-c/355991#355991">stack overflow “Hidden features of C#”</a>.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCQOXVZI/AAAAAAAAAJQ/36Bi7s0yXzs/s1600-h/image%5B10%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfCnzkBdI/AAAAAAAAAJU/RLV3BvPXhTE/image_thumb%5B6%5D.png?imgmax=800" width="605" height="220" /></a> </p>  <p>And of course you can get the official details @ <a href="http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx">http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx</a></p>  <p>I decided to explore this a little. As an academic exercise I wanted to see what the difference would be between using the checked keyword with a cast operation and compare that to the <a href="http://msdn.microsoft.com/en-us/library/system.convert.tobyte.aspx">System.Convert.ToByte</a> operation.    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfCw76XwI/AAAAAAAAAJY/rZ0k6Ds3CRI/s1600-h/image%5B14%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDFmC4II/AAAAAAAAAJc/CoUMfycJ3do/image_thumb%5B8%5D.png?imgmax=800" width="554" height="128" /></a>    <br />Will generate the following error. <strong>System.OverflowException : Arithmetic operation resulted in an overflow.</strong></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDRuVKAI/AAAAAAAAAJg/XsG2SQcPABU/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfDjOy0lI/AAAAAAAAAJk/itMzHCCsv5w/image_thumb%5B13%5D.png?imgmax=800" width="610" height="120" /></a>    <br />While using the System.Convert class will generate a different error. <strong>System.OverflowException : Value was either too large or too small for an unsigned byte.</strong>&#160;</p>  <p>And last experiment I threw both of the conversion attempts in a loop and fired up the <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">ANTS Profiler</a> which shows that using the built in <font color="#0000ff">checked</font> keyword with a cast operation is faster than using the BCL conversion.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfD-trbyI/AAAAAAAAAJo/iZm-skTI2ok/s1600-h/image%5B37%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfENFFsPI/AAAAAAAAAJs/FWkJX2oo1ws/image_thumb%5B19%5D.png?imgmax=800" width="609" height="324" /></a>&#160;</p>  <p>As to which one is better I would probably have to dig deeper into other side affects that one may have over the other… Up front I don’t see any issue with the cast and checked keyword combo.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>justinmchase</div>
+<div class='content'>
+Good to know. Actually I did know about it but I think I had it backwards, I thought that it was checked by default and therefore the keyword was only useful if used in an explicitly unchecked block. Your tests here seem to disprove that, so thanks for the info.</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">(-2) for [Fluent] Specification Extensions</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-02-07T23:23:00.000Z" pubdate>Feb 7th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p></p>  <p>If you read my previous posts about [Fluent] Specification Extensions then you know that I'm still in an experimental phase of this idea.</p> <ol>   <li><a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> </li>    <li><a href="/2009/02/fluent-specification-extensions-1-more">(+1) for [Fluent] Specification Extensions</a> </li> </ol> <p>There are two more things I've found that are going against the specification extensions idea. The first one below is related to all specification extensions, not just the fluent flavored specification extensions. </p> <h5><strong>-1.</strong> If you have a test that for some reason has an assertion in the middle of some code.</h5> <pre>[Fact]<br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> MockAsExistingInterfaceAfterObjectSucceedsIfNotNew()<br />{<br />	var mock = <span style="color: #0000ff">new</span> Mock&lt;IBag&gt;();<br /><br />	mock.As&lt;IFoo&gt;().SetupGet(x =&gt; x.Value).Returns(25);<br /><br />	((IFoo)mock.Object).Value.ShouldEqual(25);<br /><br />	var fm = mock.As&lt;IFoo&gt;();<br /><br />	fm.Setup(f =&gt; f.Execute());<br />}</pre><p>It's a little difficult to tell where the assertion is because you don't get the syntax highlighting help from the static class name &quot;Assert&quot;.</p><pre><font color="#25c08e">Assert</font>.Equal(25, (IFoo)mock.Object);</pre><p>However I don't think the reason above is anything to stop using the pattern for a couple of the following:</p><br /><ol><li>How often do you have assertions in the middle of your code?</li><li>If you are doing your tests right, it doesn't take long to scan the above code for the &quot;.Should...&quot; extension method.</li></ol><h5>-1. Daniel from the Moq project tweeted Scott Bellware about his spec unit projects <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs?r=41" target="_blank">SpecificationExtensions.cs</a></h5><blockquote><p>@bellware shouldn't specunit ShouldNotEqual/etc. return the actual object rather than the expected? To chain other calls <a href="http://is.gd/iJuB">http://is.gd/iJuB</a></p></blockquote><blockquote><p>@bellware and ShouldBeNull/NotBeNull could also return the object: obj.ShouldNotBeNull().ShouldEqual(...), right?</p></blockquote><p>with Scott's response being...</p><blockquote><p>@kzu no because that would contribute to crowding many observations into a single method</p></blockquote><p>To that I say, True, if you are doing pure Context/Specification based unit testing. However most of us aren't actually doing it (maybe we should?) so why not allow the test to say</p><pre>someString<br />  .ShouldNotBeNull<br />  .ShouldEqual(...)?</pre><p>So for now... I'm going to continue to go with the Fluent Specification Extensions.</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">(+1) for [Fluent] Specification Extensions</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-02-07T06:10:00.000Z" pubdate>Feb 6th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>If you read my previous post about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> then you know that I'm still in an experimental phase of this idea.</p>  <p>I'd like to share one more positive I found by using the specification extensions in my testing framework. This benefit is there weather you use standard specification extension methods or try the fluent specification extensions. The idea is very basic, but I didn't even realize it's benefit until I ran into it directly.</p>  <p>And the great benefit is... (drum roll...errr..actually it's not mind blowing). By using extensions methods to provide assertion extensions on the objects we're testing, we've<strong> <u>abstracted the actual testing framework's assertion process.</u></strong><u> </u>(told you it wasn't mind blowing, but read along and see an example of how this abstraction could be good)</p>  <p>Now I know most times you won't ever change testing frameworks, however I just ran into this when attempting to port the Castle.DynamicProxy2 (DP2) to Silverlight. Their test project leveraged the NUnit testing framework, which hasn't officially been ported. You can find a quick <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">port by Jeff Wilcox</a> that will run in the Microsoft Silverlight Unit Testing Framework. However when I was porting the DP2 that hadn't been done, and I didn't feel like porting NUnit at the time.</p>  <p>So, by providing this abstraction layer (through the extension methods). You could then go in and easily swap what testing framework your project is leveraging to do it's assertions.</p>  <h6>NOTE: the port from NUnit to MSFT wouldn't have been that easy as the [TestMethod] in MSFT is sealed so I couldn't create a [Test] attribute that inherited from [TestMethod] to get the SL testing framework to run the tests w/out changing the DynamicProxy test code...aside from that issue...</h6>  <p>Let's take a concrete example of this abstraction benefit.</p>  <p>Notice how the Assert.IsInstanceOfType() in both NUnit and Microsoft's testing framework have the parameters reversed.</p>  <p>NUnit:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SY0lvWzbk4I/AAAAAAAAAEw/mikfS2Ad9TQ/s1600-h/image11%5B3%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="146" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SY0lv1_mpxI/AAAAAAAAAE0/UMgoOPFIoiY/image11_thumb%5B2%5D.png?imgmax=800" width="584" border="0" /></a> </p>  <p>Microsoft:</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SY0lwEt7LjI/AAAAAAAAAE4/cj4aScmZML4/s1600-h/image17%5B1%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="104" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SY0lwbo9p9I/AAAAAAAAAE8/xklqX1ujQj4/image17_thumb.png?imgmax=800" width="584" border="0" /></a> </p>  <p>If you were trying to switch from NUnit to MSFT or visa versa, a simple search and replace on [Test] for [TestMethod] would suffice for the majority of the needed port. However the Assert.IsInstanceOfType() would fail at compile time because of the parameter order. (and who know what else exactly is different)</p>  <p>If you could provide that layer of abstraction for the assertions, then to switch between NUnit and MSFT or visa versa would remain very simple, as you would only have to provide the framework specific changes only once.</p>  </div>
+</div>
+
+            </article>
+            
+            <article>
+                
+  <header>
+    
+      <h1 class="entry-title">Fluent Specification Extensions</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2009-02-05T00:14:00.000Z" pubdate>Feb 4th 2009</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p><strong>FYI: If you're familiar with extension methods, and how to use them in testing sceneries...the interesting part of this post is at the bottom starting at: "Ok, on to the point..."</strong></p><p>The C# extension methods give some amazing power when it comes to extending functionality of objects (we don't own) and I've spotted a pattern on several blogs and example unit testing snippets, especially in the Context Specification style testing areas that I find interesting.   <br /><br />The concept is to basically use the C# extension methods within a unit testing environment to give the system under test (SUT) more readability/understandability within the test code itself.   <br /><br />Here's an example of how you might normally write a unit test given the following SUT. </p>  <pre><span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> SystemUnderTest<br />{<br />  <span style="color:#0000ff;">public</span> SystemUnderTest() { PropertyUnderTest = "<span style="color:#8b0000;">Hello World!</span>"; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SomeStringProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">bool</span> SomeBoolProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />}</pre><p>You might write some unit tests that might look like...</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br /><br />Assert.IsTrue(sut.SomeBoolProperty);<br />Assert.AreEqual(sut.SomeStringProperty, "<span style="color:#8b0000;">Hello World!</span>");</pre><p>Now, the assertions above are small enough it's pretty easy to tell what's going on, however when you think about what your looking at, it actually present the best readability.</p><p>Let's take the string's AreEqual assertion for example...  You first read the "AreEqual", so now you have to allocate some (undefined as of yet) space in your head to store some data points that need to be evaluated all at once. (maybe I'm getting lazy as I get old, but the less I have to think when reading tests the more time I can spend understanding the domain being tested...)</p><p>Again, the example is over simplified, but I think you get the point.</p><h4>What if you could make the test syntax read and flow in a very readable and understandable manner?</h4><p>That's what the specification extensions give you. Given the two tests above and an a couple helper extension methods living in the testing library I could write something like.</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br />sut.SomeBoolProperty.ShouldBeTrue();<br />sut.SomeBoolProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>It may just be me, but that just feels better, is more understandable, and the great thing is I didn't have to impact my domain objects to support this style of test...</p><p>Another great benefit is you don't have to type "Assert.xxxx(YYzzz)" each time you want to create an assertion. You can just type sut.SomeThing.{this where you get help from intellasense} giving you some great context based assertion options.</p><p>I googled for a library that had a pre-built set of extension assertions and ended up finding the <a href="http://code.google.com/p/specunit-net/source/browse/">http://code.google.com/p/specunit-net/source/browse/</a> by Scott Bellware. If you dig into the source of the project you can find a helper class called <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs" target="_blank">SpecificationExtensions.cs</a> which basically gives you all the "Should..{your assertion here}" extension methods.</p><h4>Ok, on to the point real point (sorry it's taken so long).</h4><p>After downloading and playing with the extension specifications from Spec Unit, I thought what if we made that more fluent?</p><p>So I gave it a quick spike and instead of writing some tests that look like...</p><pre>sut.SomeStringProperty.ShouldNotBeNull();<br />sut.SomeStringProperty.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>));<br />sut.SomeStringProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>"); </pre><p>You could have less wordy code and still retain all the meaning and readability with a set of fluent specification extensions.</p><pre>sut.SomeStringProperty<br />.ShouldNotBeNull()<br />.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>))<br />.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>I haven't figured out what sorts of bad things this style of assertion could bring... but we'll experiment for a while...</p><p>Here's an example console app with the extensions included.</p><p><strong>DISCLAIMER</strong>: I haven't tested all the extensions so if you notice any issues please feel free to let me know...<br /><br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/FluentSpecificationExtensions.zip" frameborder="0" scrolling="no"></iframe></p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jazz</div>
+<div class='content'>
+I just added this helpful extension method to my code. Thought of sharing it.<br /><br />public static IEnumerable ShouldContain(this IEnumerable collection, Func expectedCriteria)<br />        {<br />            collection.Any(expectedCriteria).ShouldBeTrue();<br />            return collection;<br />        }</div>
+</div>
+<div class='comment'>
+<div class='author'>tims</div>
+<div class='content'>
+You might find this useful:<br /><br />http://code.google.com/p/shouldit/<br /><br />ShouldIt is an open source library of fluent specification extensions that can be used with any unit testing framework.</div>
+</div>
+<div class='comment'>
+<div class='author'>DB</div>
+<div class='content'>
+Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
+</div>
+</div>
+</div>
+
+            </article>
+            
+            <div class="pagination">
+                
+                <a href="/blog/archives">Blog Archives</a>
+                
+            </div>
+        </div>
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+        </aside>
+ 
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'staxmanadeblog';
+      
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
