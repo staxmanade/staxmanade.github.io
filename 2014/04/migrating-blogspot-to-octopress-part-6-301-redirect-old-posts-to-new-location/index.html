@@ -83,7 +83,7 @@
     
       <p class="meta">
         
-  <time datetime="2014-04-13T03:19:53.000Z" pubdate>Apr 12th 2014</time>
+  <time datetime="2014-04-17T03:20:53.000Z" pubdate>Apr 16th 2014</time>
 
 
 
@@ -171,7 +171,7 @@
 <li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
 </ol>
 <p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that&#39;s installed, we need to update all of our blog posts to add in the &#39;alias&#39; that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you&#39;re reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you&#39;re not on Windows)* and I wrote the below script to help in the task. Even if you don&#39;t know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
-<p>{% gist 10562366 InsertBloggerAliasIntoJekyllPost.ps1 %} </p>
+<p><script src="https://gist.github.com/10562366.js?file=InsertBloggerAliasIntoJekyllPost.ps1"></script></p>
 <p>In summary, the above code is:</p>
 <ol>
 <li>Parsing the blogger xml</li>
@@ -193,7 +193,7 @@
 <li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
 <li>Modify the below template for your own site.</li>
 </ol>
-<p>{% gist 10562366 BloggerRedirect.html %} </p>
+<p><script src="https://gist.github.com/10562366.js?file=BloggerRedirect.html"></script></p>
 <p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don&#39;t see the middle/transition page.</p>
 <blockquote>
 <p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I&#39;m not that cool, so my blog could handle some downtime :P</p>
@@ -205,7 +205,7 @@
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
                         
-  <time datetime="2014-04-13T03:19:53.000Z" pubdate>Apr 12th 2014</time>
+  <time datetime="2014-04-17T03:20:53.000Z" pubdate>Apr 16th 2014</time>
 
 
 
