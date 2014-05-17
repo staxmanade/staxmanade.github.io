@@ -79,6 +79,31 @@
       
   <header>
     
+      <h1 class="entry-title">NuGet Project Uncovered: VerifyArgs</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-01-31T00:25:00.000Z" pubdate>Jan 30th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/VerifyArgs" target="_blank">VerifyArgs</a> is another approach to a <a href="http://stackoverflow.com/questions/299439/net-guard-class-library" target="_blank">guard</a> helper that takes an interesting approach.</p>  <blockquote>   <pre>Verify.NotNullOrEmpty(new { first, second });<br />Verify.Positive(new { secondCount });</pre><br /></blockquote><br /><br /><p><font face="Arial">Many of you might look at the above and think “<strong>But what about performance?” </strong>If that’s you, I’d have to say go test it out for yourself. But for nearly all cases out there I don’t think this level of performance is anything to be concerned with. The project’s <a href="http://verifyargs.codeplex.com/" target="_blank">home site</a> has a little blip that tries to address the performance concern.</font></p><br /><br /><p><a href="http://lh5.ggpht.com/-feaICDR7jaY/TxypIkCOIrI/AAAAAAAAAUA/qa0KObFt52w/s1600-h/image_thumb11_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb11_thumb" border="0" alt="image_thumb11_thumb" src="http://lh6.ggpht.com/-sm_T6Ku8UdY/TxypI9EeQZI/AAAAAAAAAUI/mda6ei2TvoI/image_thumb11_thumb_thumb.png?imgmax=800" width="362" height="171" /></a></p><br /><br /><p><a href="http://lh5.ggpht.com/-9LY6CQ91JZg/TxypI-olNWI/AAAAAAAAAUQ/yJpyZolWQ8M/s1600-h/image_thumb13_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb" border="0" alt="image_thumb13_thumb" src="http://lh5.ggpht.com/-KL-ysUi8dos/TxypJH6UkMI/AAAAAAAAAUY/W73QBDH8-aE/image_thumb13_thumb_thumb.png?imgmax=800" width="561" height="172" /></a></p><br /><br /><p>This project is great because of the fluent nature of each Verify.***</p>  </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title">NuGet Project Uncovered: Guard</h1>
     
     
@@ -308,31 +333,6 @@ Love it!</div>
 
     </article>
   
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title">StatLight v1.6 is Out</h1>
-    
-    
-      <p class="meta">
-        
-  <time datetime="2011-12-31T19:16:00.000Z" pubdate>Dec 31st 2011</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<h4><a href="http://statlight.codeplex.com/releases/view/73869" target="_blank">Get The Build</a></h4>  <h4>What is StatLight?</h4>  <p><img src="http://download.codeplex.com/Download?ProjectName=statlight&amp;DownloadId=95275&amp;Build=18337" width="216" height="81" /></p>  <p>In short, it allows you to run your Silverlight tests on a Continuous Integration server or alongside your daily development.</p>  <p>Fore more information go check out the project site <a href="http://statlight.codeplex.com">http://statlight.codeplex.com</a></p>  <h4>Some ramblings (about the project).</h4>  <p>It’s funny how the release cycle of this open source project has turned out. I don’t have any sort of calendar reminder that pops up saying “it’s been 4 or 5 months and time to get out a new release”. However, since I first open sourced the project I’ve put out a new release on a pretty consistent 4/5 month cycle and have done so since December 2009. It just so happens about every 4/5 months there is enough features and or fixes piled on top that It’s time to put out an “official” build. Not bad for a part time (free to the community) gig.</p>  <p>Thanks to the guys at <a href="http://codebetter.com/" target="_blank">CodeBetter</a> and <a href="http://www.jetbrains.com/" target="_blank">JetBrains</a> for giving us a <a href="http://teamcity.codebetter.com" target="_blank">TeamCity</a> build server, I put a build of StatLight up on their TeamCity server. This has been great for myself. When issues or feature request come in, all I have to do is dev them out, push the code out to GitHub and the <a href="http://teamcity.codebetter.com" target="_blank">TeamCity</a> build produces an artifact that people can pull down and use/test right away.</p>  <p><strong>What’s the difference between a TeamCity build and an “official” release of StatLight? </strong>To be honest, NOTHING. When I decide it’s time to release an “official” build, I head over to the TeamCity, download the latest build and throw it up on CodePlex and NuGet and call it the “official” release. I guess the biggest difference is this means I now have to go update the documentation out on the CodePlex site. I’m not particular happy with this process and hoping my new pet project using <a href="http://sphinx.pocoo.org/">http://sphinx.pocoo.org/</a> to generate a CHM documentation file will help with future versioning of the tool. I’m working on a new blog post for how I got this working…</p>  <h4>Some more ramblings (about this release)</h4>  <p>This build comes with some pretty major internal refactorings. Finally, after 3 years, I’ve put in an IOC container (really liking <a href="https://github.com/grumpydev/TinyIoC" target="_blank">TinyIOC</a> for this task). This cleaned up quite a bit of the codebase. Introduced a couple regressions, bug the community was great in helping me figure this out and I’ve beefed up my test coverage to avoid this in the future. There is more cleanup to do in the codebase, but much of the hard work was done and it’ll be small refactorings as I see them going forward.</p>  <h4>Some of this build’s highlights:</h4>  <p>I’d highly recommend reading the release notes on the download page to get a full list of features/fixes. <a href="http://statlight.codeplex.com/releases/view/73869">http://statlight.codeplex.com/releases/view/73869</a></p>  <ul>   <li>Support for <a href="http://www.silverlight.net/learn/overview/what's-new-in-silverlight-5" target="_blank">Silverlight 5</a>. </li>    <li>Overhauled the “Continuous” mode. (Provide better U.I. and support for multiple xaps/dlls)      <ul>       <li>Note: I was getting a bug report that it could occasionally run a xap multiple times. Hopefully it’s fixed now, but if you see it and can reproduce it. <a href="http://statlight.codeplex.com/discussions" target="_blank">Let&#160; me know</a>. </li>     </ul>   </li>    <li>MSTest TRX output format. (Note: This was requested heavily, but when it was added I didn’t receive much feedback on whether it was working or not… So if you have issues, first start a <a href="http://statlight.codeplex.com/discussions" target="_blank">Discussion</a> or file an&#160; <a href="http://statlight.codeplex.com/workitem/list/basic" target="_blank">Issue</a>) </li> </ul>  <p>Special thanks to <a href="https://github.com/brumfb" target="_blank">Bob Brumfield</a> for fixing a number of pathing issues after a directory re-structuring I made in the project. With his fixes we were able to get Silverlight 5 support into the project sooner than later.</p>  <h4>Sort-of known issue with this build.</h4>  <p>Due to the large scale refactoring that happened within StatLight I wouldn’t be surprised if a few regressions were introduced. Hopefully not as I’ve setup a large amount of automated tests around the project. But It’s hard to get everything.</p>  <p>I’ve had a few people report an issue with symptoms similar to the following.</p>  <ul>   <li><a href="http://statlight.codeplex.com/discussions/284494">http://statlight.codeplex.com/discussions/284494</a></li>    <li><a href="http://statlight.codeplex.com/workitem/14579">http://statlight.codeplex.com/workitem/14579</a></li> </ul>  <p>If you experience any sort of “<strong>Invalid or malformed application: check manifest</strong>” error. This is probably due to a StatLight web server side exception not being reported out correctly. Try downloading the latest from the TeamCity build (follow the link on the <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a> home page).</p>  <h4>What’s to come?</h4>  <p>If you feel brave, and <a href="https://github.com/staxmanade/StatLight" target="_blank">clone the current codebase</a> you could get some early access to a version I have working with the <strong>Windows Phone Emulator</strong>. This was actually an early branch of the project I created many moons ago, and one that a user forked and added a couple fixes to a while back. I’ve since merged this into the main-line of StatLight.</p>  <p>This early version doesn’t yet support the full gamut of what StatLight’s Silverlight version supports, but I’m hoping to get it in there. It should work with the recent builds of the Microsoft.Silverlight.Testing that work on the phone. If you’re interested in helping out here, the big reason I don’t support most everything on the phone is related to the big <a href="https://github.com/staxmanade/StatLight/blob/master/default.ps1" target="_blank">ol monster build script</a> in StatLight. I have to add some magic dust to this script and make dual compile other projects for both Silverlight and the phone. The codebase itself shouldn’t have to change much, but the build scripts and integration tests will require the majority of the effort.</p>  </div>
-</div>
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/7/">&larr; Older</a>
@@ -373,6 +373,10 @@ Love it!</div>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
       </li>
     
@@ -394,10 +398,6 @@ Love it!</div>
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a>
       </li>
     
   </ul>
