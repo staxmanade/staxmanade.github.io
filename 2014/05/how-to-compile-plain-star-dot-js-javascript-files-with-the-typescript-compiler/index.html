@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2014/04/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
+  <link rel="canonical" href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -83,7 +83,7 @@
     
       <p class="meta">
         
-  <time datetime="2014-04-16T04:27:29.000Z" pubdate data-updated="true">Apr 15th 2014</time>
+  <time datetime="2014-05-18T17:27:29.000Z" pubdate data-updated="true">May 18th 2014</time>
 
 
 
@@ -93,16 +93,16 @@
   </header>
 
 <div class="entry-content"><h1 id="challenge">Challenge</h1>
-<p>You&#39;ve been tasked with spiking an initial port of your existing JavaScript solutions to [TypeScript](<a href="http://typescriptlang.com">http://typescriptlang.com</a>.</p>
-<p>Your first hurdle can slow you down and be a bit challenging. The <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make a quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+<p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
 <p>And since:</p>
 <blockquote>
 <p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
-<p>it seems reasonable that you could potentially get the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
+<p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
 <h1 id="challenge-accepted-">Challenge Accepted.</h1>
 <p>The TypeScript compiler is open source, so let&#39;s take a dive into the compiler to see if this is something we can work around...</p>
-<h3 id="what-are-the-steps-we-need-to-accomplish-to-make-the-compiler-accept-plain-js-files">What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files</h3>
+<h3 id="what-are-the-steps-we-need-to-accomplish-to-make-the-compiler-accept-plain-js-files-">What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
 <ol>
 <li>Get It</li>
 <li>Copy it</li>
@@ -160,17 +160,18 @@
                   ----(*.json files excluded for brevity)
 </code></pre><p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
 <h2 id="hack-it">Hack it</h2>
-<p>Since we have a local version we can hack on now, let&#39;s find out how to hack it. Thanks to <a href="(http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
-<p>So go open up the <code>node_modules/typescript/bin/tsc.js</code> file and apply the below diff/changes.</p>
+<p>Since we have a local version we can hack on now, let&#39;s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+<p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
 <pre><code class="lang-diff">     function isTSFile(fname) {
 -        return isFileOfExtension(fname, &quot;.ts&quot;);
 +        return isFileOfExtension(fname, &quot;.ts&quot;) || isFileOfExtension(fname, &quot;.js&quot;);
      }
 </code></pre>
-<h2 id="use-it">Use it</h2>
 <p>We&#39;ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
-<p>To use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite it with it&#39;s compiled version.</p>
-<h4 id="-warning-i-ll-say-that-again-to-use-it-be-sure-to-use-the-out-file-or-outdir-directory-options-because-if-you-don-t-the-compiler-will-take-the-input-javascript-file-and-overwrite-the-original-with-it-s-compiled-version-">!!WARNING!! I&#39;ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite the original with it&#39;s compiled version.</h4>
+<h2 id="use-it">Use it</h2>
+<p>I won&#39;t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite it with it&#39;s compiled version.</p>
+<h1 id="-warning-i-ll-say-that-again-to-use-it-be-sure-to-use-the-out-file-or-outdir-directory-options-because-if-you-don-t-the-compiler-will-take-the-input-javascript-file-and-overwrite-the-original-with-it-s-compiled-version-">!!WARNING!! I&#39;ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite the original with it&#39;s compiled version.</h1>
 <p>With source control, this can potentially be a fun experiment to see what TypeScript&#39;s version looks compared to your own, but I&#39;ll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
 </div>
@@ -180,7 +181,7 @@
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
                         
-  <time datetime="2014-04-16T04:27:29.000Z" pubdate data-updated="true">Apr 15th 2014</time>
+  <time datetime="2014-05-18T17:27:29.000Z" pubdate data-updated="true">May 18th 2014</time>
 
 
 
@@ -190,7 +191,7 @@
                     
                     <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/04/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/04/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">Tweet</a>
   
   
   
@@ -243,6 +244,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
     
@@ -266,22 +271,15 @@
         <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
       </li>
     
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
-      </li>
-    
   </ul>
 </section>
 
 
 <section>
-  <h1>GitHub Repos</h1>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
-  
-  <a href="https://github.com/staxmanade">@staxmanade</a> on GitHub
-  
   <script type="text/javascript">
     $(document).ready(function(){
         if (!window.jXHR){
@@ -319,8 +317,8 @@
       var disqus_shortname = 'staxmanadeblog';
       
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://staxmanade.com/2014/04/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/';
-        var disqus_url = 'http://staxmanade.com/2014/04/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/';
+        var disqus_identifier = 'http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/';
+        var disqus_url = 'http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/';
         var disqus_script = 'embed.js';
       
     (function () {

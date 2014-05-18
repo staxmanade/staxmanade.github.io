@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link href="http://staxmanade.com"/>
-    <updated>2014-04-20T03:19:53Z</updated>
+    <updated>2014-05-18T17:27:29Z</updated>
     <id>http://staxmanade.com</id>
     <author>
         <name>Jason Jarrett</name>
@@ -12,6 +12,97 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to compile plain *.js (JavaScript) files with the TypeScript Compiler]]></title>
+        <id>http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
+        <link href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
+        </link>
+        <updated>2014-05-18T17:27:29Z</updated>
+        <summary type="html"><![CDATA[# Challenge]]></summary>
+        <content type="html"><![CDATA[<h1 id="challenge">Challenge</h1>
+<p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+<p>And since:</p>
+<blockquote>
+<p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
+</blockquote>
+<p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
+<h1 id="challenge-accepted-">Challenge Accepted.</h1>
+<p>The TypeScript compiler is open source, so let&#39;s take a dive into the compiler to see if this is something we can work around...</p>
+<h3 id="what-are-the-steps-we-need-to-accomplish-to-make-the-compiler-accept-plain-js-files-">What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
+<ol>
+<li>Get It</li>
+<li>Copy it</li>
+<li>Hack it</li>
+<li>Use it</li>
+</ol>
+<h2 id="get-it">Get it</h2>
+<p>Before we can get too far, let&#39;s first install the compiler onto our system.</p>
+<p>I&#39;ll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
+<pre><code>npm install -g typescript
+</code></pre><p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>&#39;ing your TypeScript code.</p>
+<h2 id="copy-it">Copy it</h2>
+<p>We probably don&#39;t want to modify the globally installed version of <code>tsc</code> so we&#39;ll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
+<p>If on Windows or Mac</p>
+<pre><code>where tsc
+</code></pre><blockquote>
+<p>NOTE: if you&#39;re using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won&#39;t help us out in this case.</p>
+</blockquote>
+<p>Once you&#39;ve found the path to your version of <code>tsc</code></p>
+<p>Mine was in</p>
+<ul>
+<li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
+<li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
+</ul>
+<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You&#39;ll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
+<p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
+<p>When you&#39;re done you should have a directory that looks something like this</p>
+<pre><code>
+﻿﻿--MyJSCompiler
+  |   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc
+  |   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd
+  |   
+  ----node_modules
+      ----.bin
+      |       tsc
+      |       tsc.cmd
+      |       
+      ----typescript
+          |   .npmignore
+          |   CopyrightNotice.txt
+          |   LICENSE.txt
+          |   package.json
+          |   README.txt
+          |   ThirdPartyNoticeText.txt
+          |   
+          ----bin
+              |   lib.d.ts
+              |   tsc
+              |   tsc.js
+              |   typescript.js
+              |   
+              ----resources
+                  |   diagnosticMessages.generated.json
+                  |   
+                  ----(*.json files excluded for brevity)
+</code></pre><p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
+<h2 id="hack-it">Hack it</h2>
+<p>Since we have a local version we can hack on now, let&#39;s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+<p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
+<pre><code class="lang-diff">     function isTSFile(fname) {
+-        return isFileOfExtension(fname, &quot;.ts&quot;);
++        return isFileOfExtension(fname, &quot;.ts&quot;) || isFileOfExtension(fname, &quot;.js&quot;);
+     }
+</code></pre>
+<p>We&#39;ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
+<h2 id="use-it">Use it</h2>
+<p>I won&#39;t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite it with it&#39;s compiled version.</p>
+<h1 id="-warning-i-ll-say-that-again-to-use-it-be-sure-to-use-the-out-file-or-outdir-directory-options-because-if-you-don-t-the-compiler-will-take-the-input-javascript-file-and-overwrite-the-original-with-it-s-compiled-version-">!!WARNING!! I&#39;ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite the original with it&#39;s compiled version.</h1>
+<p>With source control, this can potentially be a fun experiment to see what TypeScript&#39;s version looks compared to your own, but I&#39;ll leave that up to you to play with.</p>
+<p>Best of luck on your port to TypeScript.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></title>
         <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/</id>
@@ -810,18 +901,6 @@ I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to art
         <content type="html"><![CDATA[
 <div class='post'>
 <p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.]]></title>
-        <id>http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/</id>
-        <link href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">
-        </link>
-        <updated>2013-03-20T04:06:00Z</updated>
-        <summary type="html"><![CDATA[While working on a little WinRT app I recently spent WAY too much time trying to figure out why I was getting the following exception     System.Unaut...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
 ]]></content>
     </entry>
 </feed>
