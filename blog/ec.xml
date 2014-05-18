@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Developing on Staxmanade]]></title>
+    <link href="http://staxmanade.com"/>
+    <updated>2014-05-18T06:30:46Z</updated>
+    <id>http://staxmanade.com</id>
+    <author>
+        <name>Jason Jarrett</name>
+        <uri>http://staxmanade.com/about</uri>
+    </author>
+    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="self" href="/blog/ec.xml"/>
+    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <generator>Feed for Node.js</generator>
+</feed>

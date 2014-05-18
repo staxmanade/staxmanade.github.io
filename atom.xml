@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Developing on Staxmanade</title>
+    <title><![CDATA[Developing on Staxmanade]]></title>
     <link href="http://staxmanade.com"/>
-    <updated>2014-05-17T05:12:51Z</updated>
+    <updated>2014-05-18T06:30:46Z</updated>
     <id>http://staxmanade.com</id>
     <author>
         <name>Jason Jarrett</name>
