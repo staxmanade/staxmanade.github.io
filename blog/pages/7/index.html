@@ -79,6 +79,64 @@
       
   <header>
     
+      <h1 class="entry-title">NuGet Project Uncovered: An Introduction to the Series</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-01-23T00:11:00.000Z" pubdate data-updated="true">Jan 22nd 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>A while back I posted about <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">following the NuGet feed via an RSS reader</a>. For some strange reason I’ve been reviewing this feed since then on an almost daily basis in my RSS reader. Throughout that time I’ve kept a small list of what I think are interesting projects that have put out a release since that time. Today we’re going to start a journey through projects that I’ve found during my review of the feed. Some projects are interesting because I could find a use for them, some are interesting because they are unique, and others solve an interesting problem.</p>  <h4>Why were these packages chosen to post about over others?</h4>  <p>There wasn’t any scientific process in place to decide what projects made this list or not but as I think back over my time reviewing the feed, below are some items that came to mind.</p>  <h5>Some reasons I may have chosen a project:</h5>  <ul>   <li>I could <strong>potentially</strong> see myself investigating its usage someday. </li>    <li>It solved a problem in an interesting way. </li>    <li>Preferred small, focused, unique packages. </li>    <li>Preferred projects that were Open Source as in FREE.      <ul>       <li>Although I didn’t bother to look at any of the licenses so be sure to read into those before you use any yourself. </li>     </ul>   </li>    <li>Preferred projects that have a “<strong>Project Site</strong>” where I could browse the source code see examples or even documentation.     <br /><a href="http://lh5.ggpht.com/-xn_JwxZNUGU/TxylshXCQUI/AAAAAAAAATA/cECY7x7WnzI/s1600-h/image%25255B30%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/-sXoFslcjE_c/Txyls-rcxuI/AAAAAAAAATI/X6ZPfYNGt_k/image_thumb%25255B15%25255D.png?imgmax=800" width="138" height="98" /></a></li>    <li>For some reason if I saw it was hosted on GitHub I preferred those to sites that had their own dedicated location (Can’t explain why – just did…) </li> </ul>  <h5>Some reasons I may have NOT have chosen a project:</h5>  <ul>   <li>Tended to avoid projects that posted large numbers of packages even though many of them are still very good projects.    <br />EX:       <ul>       <li>NServiceBus </li>        <li>FubuMvc </li>     </ul>   </li>    <li>For some reason I tended to stay away from anything MVC related. There are probably very interesting projects for MVC on there, but I probably avoided them because I’m not doing anything MVC related at the moment. </li>    <li>Avoided packages that had “utilities” or “common” or “helpers” in the package name.      <ul>       <li>But it might still be worthwhile checking out some of those open source “utility” projects. Just to get an idea of what others consider “needed on every project” and different approaches to the problems. </li>     </ul> <!--EndFragment--></li> </ul>  <h4>Some items to consider with these little NuGet gems.</h4>  <ul>   <li>Make sure you read and understand any license the project has before including or using them in your own work. </li>    <li>These posts won’t be full project analysis, but a generally a first impression.</li>    <li>Be sure to research any project before using. I’m only mentioning them because they piqued my interest. Not because I have extensive knowledge of the projects or know their stability.</li> </ul></div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title">You are responsible for making that feature work. Write a test. Just do it…</h1>
+    
+    
+      <p class="meta">
+        
+  <time datetime="2012-01-07T05:59:00.000Z" pubdate data-updated="true">Jan 6th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+<p>Today the <a href="http://en.wikipedia.org/wiki/Project_manager">PM</a> of a project I am working on sent an email with a small list of issues that we needed to get resolved before shipping an early build to the customer for a weekly review. In his list of issues MY NAME was tagged next to a feature that I KNOW was working. I dev’d it, tested, saw it work.</p>  <p>Now the project I’m working on encourages unit tested code, which is a fantastic project to be on since I am a big proponent of Unit/Integration/Automated tests. Heck I wrote a tool to help run them easier (<a href="http://statlight.codeplex.com/">StatLight</a>).</p>  <h4>What I did.</h4>  <p>The problem was this. I dev’d a feature out in like 5 minutes, took about 2 seconds to decide if I should write a unit test to prove my feature worked and <b>this</b><b><i> </i></b><b>is where I failed</b>. Manually verified my change checked in the production code without its test and I was hurriedly moved on to the next task.</p>  <p>About 20 min later I get a quick <a href="http://en.wikipedia.org/wiki/Instant_messaging">I.M.</a> from a co-worker saying he had a small merge conflict in the file I just checked-in. Quickly told him how to get around his merge issue (not realizing after he checked in) that my “quick 5min dev task” was accidently removed in the merge.</p>  <h4>What I SHOULD have done!</h4>  <p>What I<b> should </b>have done was write the <strong>2 lines of test code first</strong>. <i>(you can argue test after/test first, I prefer test-first)</i>. Proven my code wasn’t working, by running the test, and then implement the 5 min feature making the test pass. Then when my co-worker ran into his merge issue.</p>  <p><img src="http://boldandfab.files.wordpress.com/2010/11/pow.jpg" width="179" height="126" /></p>  <p>Test would have failed telling him his merge didn’t go as planned.</p>  <h4>This would have also avoided</h4>  <ul>   <li>PM wouldn’t have had to discover the issue, Screenshot and write up an email. </li>    <li>I wouldn’t have had to peruse source control history to understand why my “working” feature wasn’t working. </li>    <li>I wouldn’t have had to willingly confess my sins in this post.</li> </ul>  <p>If your feature doesn’t have a coinciding automated test. How do you know it’s still working?</p>  <p>Happy Testing!</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>rcecil</div>
+<div class='content'>
+Love it!</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title">StatLight v1.6 is Out</h1>
     
     
@@ -309,56 +367,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
     </article>
   
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title">Using VSDBCMD to deploy an Entity Framework (EF) CodeFirst (or any other) database to AppHarbor</h1>
-    
-    
-      <p class="meta">
-        
-  <time datetime="2011-04-13T22:51:00.000Z" pubdate data-updated="true">Apr 13th 2011</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<p>If you’ve taken the jump to try out the new Entity Framework Code First and you’re allowing it to generate your database for you, you’ve most certainly run into the lack of migrations/updating existing schema support. Currently EF Code First will only create a database and won’t update a database with changes necessary to bring it in line with your model. I know they’re working on it, but since it’s not there, I thought I’d share a possible solution, albeit less polished than some of the well known database change management out there.</p>  <h4>Where is the tool?</h4>  <p>You can access it in the VS Command window. On my x64 machine the tool is in.</p>  <blockquote>   <p>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VSTSDB\Deploy\vsdbcmd.exe</p> </blockquote>  <h4>I want to deploy an existing schema to AppHarbor.</h4>  <p>Some high level steps that you can use for deployment of database changes.</p>  <ol>   <li>Generate an original reflection of your database. (*.dbschema file) </li>    <li>Tiny little hack to the .dbschema file. </li>    <li>Generate the change file to AppHarbor </li>    <li>Review Change Script Generated </li>    <li>Take the app offline. (optional) </li>    <li>Apply Change Script </li>    <li>Bring the app online (mandatory if you took step 5) </li> </ol>  <h5>Generate an original reflection of your database.</h5>  <p>This file is a complete reflection of your databases schema in a single xml file.</p>  <p>The following command can be used to generate this file.</p>  <blockquote>   <p>vsdbcmd.exe      <br />&#160;&#160;&#160;&#160; /Action:Import       <br />&#160;&#160;&#160;&#160; /ConnectionString:&quot;Data Source=.\sqlexpress;Initial Catalog=MyDatabase;Integrated Security=True;Pooling=False&quot;       <br />&#160;&#160;&#160;&#160; /ModelFile:MyDatabase.dbschema</p> </blockquote>  <p>There are a ton of knobs to turn with this command line tool. Feel free to check out the docs <a href="http://msdn.microsoft.com/en-us/library/dd193283.aspx">http://msdn.microsoft.com/en-us/library/dd193283.aspx</a></p>  <p>Now you should have a file “MyDatabase.dbschema” sitting on your hard drive.</p>  <h5>Tiny little hack to the .dbschema file.</h5>  <p>The section of xml we want to manually remove from the file is related to where your mdf and ldf database files should exist on disk. When we go to deploy up to AppHarbor, if this is not removed, then vsdbcmd will generate script to attempt to move the files into the “correct” location. This operation will throw exceptions if you attempt to execute against AppHarbor as you don’t have permission to do this. We’re removing it from the xml file, as I can’t seem to get the correct command line option to ignore this (if there is an option). So by removing it, it’s just not used and completely ignored.</p>  <p>I don’t know if this will be true for everyone, but I find that the last two sections of xml in the dbschema file are all I have to remove. I’ll show the two full sections below so you can use it as a reference of what to remove from the file.</p>  <pre class="brush: xml;">&lt;Element Type=&quot;ISql90File&quot; Name=&quot;[MyDatabase]&quot;&gt;<br />    &lt;Property Name=&quot;FileName&quot; Value=&quot;$(DefaultDataPath)$(DatabaseName).mdf&quot; /&gt;<br />    &lt;Property Name=&quot;Size&quot; Value=&quot;2304&quot; /&gt;<br />    &lt;Property Name=&quot;SizeUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowth&quot; Value=&quot;1024&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowthUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Relationship Name=&quot;Filegroup&quot;&gt;<br />        &lt;Entry&gt;<br />            &lt;References ExternalSource=&quot;BuiltIns&quot; Name=&quot;[PRIMARY]&quot; /&gt;<br />        &lt;/Entry&gt;<br />    &lt;/Relationship&gt;<br />&lt;/Element&gt;<br />&lt;Element Type=&quot;ISql90File&quot; Name=&quot;[MyDatabase_log]&quot;&gt;<br />    &lt;Property Name=&quot;FileName&quot; Value=&quot;$(DefaultLogPath)$(DatabaseName)_log.LDF&quot; /&gt;<br />    &lt;Property Name=&quot;Size&quot; Value=&quot;576&quot; /&gt;<br />    &lt;Property Name=&quot;SizeUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Property Name=&quot;MaxSize&quot; Value=&quot;2097152&quot; /&gt;<br />    &lt;Property Name=&quot;IsUnlimited&quot; Value=&quot;False&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowth&quot; Value=&quot;10&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowthUnit&quot; Value=&quot;1&quot; /&gt;<br />    &lt;Property Name=&quot;IsLogFile&quot; Value=&quot;True&quot; /&gt;<br />&lt;/Element&gt;</pre><br /><br /><h5>Generate the change file to AppHarbor.</h5><br /><br /><p>Now that we have a .dbschema file containing the complete model of what we want deployed, we can now use it to generate a schema change deployment script.</p><br /><br /><blockquote><br />  <p>vsdbcmd.exe <br />    <br />&#160;&#160;&#160;&#160; /Action:Deploy <br /><br />    <br />&#160;&#160;&#160;&#160; /DeployToDatabase:- <br /><br />    <br />&#160;&#160;&#160;&#160; /Script:Test.sql <br /><br />    <br />&#160;&#160;&#160;&#160; /ConnectionString:&quot;{YourAppHarborConnectionString}&quot; <br /><br />    <br />&#160;&#160;&#160;&#160; /ModelFile:HackIt.dbschema <br /><br />    <br />&#160;&#160;&#160;&#160; /Properties:TargetDatabase={YourAppHarborDatabaseName EX:db1235}</p><br /></blockquote><br /><br /><p>I’ll explain a couple of the above command options.</p><br /><br /><h6>/DeployToDatabase:-</h6><br /><br /><p>This one is _<strong><u>key</u></strong>_. This tells vsdbcmd to only generate a change script, and <strong>not to actually deploy the changes </strong>immediately. Until you feel comfortable with what sql the tool generates, which is usually pretty darn good, you should not apply it immediately. Allow the tool to generate the file for further inspection and you can execute it manually after. <br /><br />  <br /></p><br /><br /><h6>/Script:Test.sql</h6><br /><br /><p>This this is just the name of the file to dump the deployment changes. <br />  <br /></p><br /><br /><h6>/ModelFile:HackIt.dbschema</h6><br /><br /><p>The path to the .dbschema we generated and modified above.</p><br /><br /><p>&#160;</p><br /><br /><h5>Review Change Script Generated.</h5><br /><br /><p>After you’ve generated a change script file, take a look at the sql just to make sure you’re happy with what it generates.</p><br /><br /><h5>Take the app offline. (optional)</h5><br /><br /><p>This one depends on the schema changes. If the changes are serious enough, you can check in an App_Offline.htm file at the root of web project and do a “git push appharbor”. This way, while making schema changes you don’t have to worry about the errors popping up on users. Down side is your site becomes inoperable.</p><br /><br /><blockquote><br />  <p>If you’ve never heard of the App_Offline.htm – I’d recommend reading up on it. <a href="http://weblogs.asp.net/scottgu/archive/2006/04/09/442332.aspx">http://weblogs.asp.net/scottgu/archive/2006/04/09/442332.aspx</a></p><br /></blockquote><br /><br /><h5>Apply Change Script.</h5><br /><br /><p>You have several options to actually apply the scripted changes.</p><br /><br /><ol><br />  <li>Use vsdbcmd to deploy – Just turn the /DeployToDatabase:<strong>-</strong> to /DeployToDatabase:<strong>+</strong> and allow vsdbcmd to apply the script right there. </li><br /><br />  <li>Use SQL Management Studio. <br />    <br /><strong>Make Sure you turn on SQLCMD Mode</strong><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/TaYpOEygRKI/AAAAAAAAAPk/ZZZbpZN_P1s/s1600-h/image1.png"> <br />      <br /><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/TaYpOvTB3nI/AAAAAAAAAPo/18HoPQJiXVU/image_thumb.png?imgmax=800" width="311" height="333" /></a>&#160; </li><br /></ol><br /><br /><h5>Bring your site back online.</h5><br /><br /><p>Now you can go re-name the App_Offline.htm to something like App_Offline.htm.disabled and push those changes back up to AppHarbor.</p><br /><br /><h4>Other considerations.</h4><br /><br /><ul><br />  <li>Consider a simple migrations framework (EX: <a href="http://code.google.com/p/dbup/" target="_blank">DbUp</a>) to get some initial data or things initialized, but be-ware that you’ll have to think a little harder about the “rollback” steps with this approach. <br /><br />    <br /></li><br /><br />  <li>Next you could take a look at an inquiry I made on the public support discussion list at AppHarbor hoping to push AppHarbor to implement this App_Offline.htm support (right into their admin site)<a href="http://support.appharbor.com/discussions/problems/373-deployment-feature-idea"> <br />      <br />http://support.appharbor.com/discussions/problems/373-deployment-feature-idea</a> <br /><br />    <br /><strong>UPDATE:</strong> SPARE A VOTE OR TWO: <a title="http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic" href="http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic">http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic</a> </li><br /></ul><br /><br /><p>One great benefit of to this approach is the ability for vsdbcmd to manage changes to an existing schema. </p><br /><br /><p>Now if you want full support like refactorings such as table, column, etc renames. You will want to keep a full db project and use that to do a deployment.</p><br /><br /><p>Hope you find this useful. Happy Deployment!</p>  </div>
-</div>
-
-    </article>
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title">Dynamically load embedded assemblies – because ILMerge appeared to be out.</h1>
-    
-    
-      <p class="meta">
-        
-  <time datetime="2011-04-02T23:16:00.000Z" pubdate data-updated="true">Apr 2nd 2011</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<p>At work, I started building a .net assembly that would probably find its way into a number of the server processes and applications around the shop. This particular assembly was going to end up containing quite a number of external open source references that I didn’t want to expose to the consumer of my library.</p>  <p>I set out to solve several simple requirements.</p>  <ol>   <li>Easy to use. Should be nothing more than adding a reference to the assembly (and use it). </li>    <li>Consumer should not have to deal with the 5 open source libraries it was dependent on. Those are an implementation detail and it’s not necessary to expose those assemblies to the consumer, let alone have to manage the assembly files. </li> </ol>  <p>I originally got the idea from <a href="http://codebetter.com/blogs/dru.sellers/" target="_blank">Dru Sellers</a>’ post <a href="http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx">http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx</a></p>  <p>I gave ILMerge a try. As a post build event on the project – I ran ILMerge and generated a single assembly. <strong>Leveraging the internalize</strong> functionality of ILMerge so my assembly wouldn’t expose all of its open source projects through Visual Studio’s intellisense.</p>  <p>This almost gave me the output I wanted. Single assembly, compact, easy to use… Unfortunately, when I tried to use the assembly I started seeing .net serialization exceptions. Serialization from my ILMerged assembly could not be desterilized on the other end because that type was not in an ILMerged assembly, but in the original assembly. (Maybe there’s a way to work around this, but I didn’t have time to figure that out, would love to hear any comments)</p>  <h4>So ILMerge appeared to be out, what next?</h4>  <p>My coworker, <a href="http://www.limbodesigns.com" target="_blank">Shawn</a>, suggested I try storing the assemblies as resource files (embedded in my assembly). He uses the SmartAssembly product from Red Gate in his own projects, and mentioned that their product can merge all of your assemblies into a single executable – storing the assemblies in a .net resource file within your assembly/executable. This actually seemed easy to accomplish so I thought I’d give it a try.</p>  <h4>How I did it.</h4>  <p><strong>Step 1:</strong> Add the required assemblies as a resource to your project. I choose the Resources.resx file path and added each assembly file to the Resources.resx. I like this because of how simple it is to get the items out.</p>  <p><strong>Step 2:</strong> We need to hook up to the first point of execution (main(…), or in my case this was a library and I had a single static factory class, so in the static constructor of this factory I included the following lines of code.</p>  <pre class="brush: csharp;">static SomeFactory()<br />{<br /><br />    var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />        {&quot;log4net&quot;, Resources.log4net},<br />        {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />    };<br /><br />    AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />    {<br />        // Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />        // EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />        var assemblyName = args.Name.Split(',').First();<br /><br />        if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />        {<br />            return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />        }<br /><br />        return null;<br />    };<br />}</pre><br /><br /><p>I’ll talk a little about each step above.</p><br /><br /><pre class="brush: csharp;">var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />    {&quot;log4net&quot;, Resources.log4net},<br />    {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />};</pre><br /><br /><p>The first chunk is a static hash of the (<strong>key</strong>=assembly name, <strong>value</strong>=byte array of actual assembly). We will use this to load each assembly by name when the runtime requests it.</p><br /><br /><pre class="brush: csharp;">AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />{...</pre><br /><br /><p>Next we hook into the app domain’s <a href="http://msdn.microsoft.com/en-us/library/system.appdomain.assemblyresolve.aspx">AssemblyResolve</a> event which allows us to customize (given a certain assembly name) where we load the assembly from. Think external web service, some crazy location on disk, database, or in this case a resource file within the executing assembly.</p><br /><br /><pre class="brush: csharp;">// Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />// EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />var assemblyName = args.Name.Split(',').First();</pre><br /><br /><p>Next we figure out the name of the assembly requesting to be loaded. My original implementation used the …Name.Split('’,’).First(); to get the assembly name out of the full assembly name, but as I was writing up this blog post I thought – there must be a better way to do this. So although I am putting the effort to write this out – I’m not feeling like verifying that a possible better way will work (So give this a try and let me know – try using <strong>AssemblyName.GetAssemblyName(args.Name)</strong> instead).</p><br /><br /><pre class="brush: csharp;">if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />{<br />    return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />}</pre><br /><br /><p>Next we check that the assembly name exists if our hash declared initially and if so we load it up…</p><br /><br /><pre class="brush: csharp;">    return null;<br />};</pre><br /><br /><p>Otherwise, the assembly being requested to be loaded is not one we know about so we return null to allow the framework to figure it out the usual ways.</p><br /><br /><p><strong>Step 3:</strong> Finally, I created a post build event that remove the resourced assemblies from the bin\[Debug|Release] folders. This allowed me to have a test project that only had a dependency on the single assembly and verify using it actually works (because it has to load it’s dependencies to work correctly and they didn’t exist on disk).</p><br /><br /><h4>Please consider.</h4><br /><br /><ul><br />  <li>You may <strong>not have fun </strong>if you package some of the same assemblies that your other projects may/will reference (especially if they are different versions). </li><br /><br />  <li>Can’t say I have completely wrapped my head around the different problematic use cases related strategy could bring to life. (<strong>Use with care</strong>) </li><br /></ul>  </div>
-</div>
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/8/">&larr; Older</a>
@@ -399,6 +407,14 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
     
@@ -416,14 +432,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a>
       </li>
     
   </ul>

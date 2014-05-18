@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link href="http://staxmanade.com"/>
-    <updated>2014-05-18T06:30:46Z</updated>
+    <updated>2014-05-18T06:55:07Z</updated>
     <id>http://staxmanade.com</id>
     <author>
         <name>Jason Jarrett</name>
@@ -12,6 +12,135 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">
+        </link>
+        <updated>2014-04-20T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 9</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        
+        <li>
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
+        </li>
+        
+        <li>
+            Part 9 - (current) - What's left?
+        </li>
+        
+    </ul>
+</div></p>
+<p>Now that I&#39;ve migrated to Octopress, I&#39;m in the process of finding my new blogging flow.</p>
+<p>I&#39;m currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
+<ul>
+<li>Windows<ul>
+<li><a href="http://dillinger.io">dillinger.io</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
+<li><a href="http://code52.org/DownmarkerWPF/">MarkPad</a></li>
+<li><a href="http://notepad-plus-plus.org/">Notepad++</a></li>
+</ul>
+</li>
+<li>Mac<ul>
+<li><a href="http://dillinger.io">dillinger.io</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
+<li><a href="http://mouapp.com/">Mou</a></li>
+</ul>
+</li>
+<li>iPhone<ul>
+<li><a href="http://bywordapp.com/">Byword</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
+</ul>
+</li>
+</ul>
+<p>My worry is that some of these don&#39;t have the best spell-check support - so here&#39;s hoping I double-check my work along the way :P.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner]]></title>
+        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/</id>
+        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">
+        </link>
+        <updated>2014-04-19T03:19:53Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 8</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        
+        <li>
+            Part 8 - (current) - Redirect Atom/RSS in FeedBurner
+        </li>
+        
+        <li>
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
+        </li>
+        
+    </ul>
+</div></p>
+<p>This one is quick and easy.</p>
+<p>I noticed that my original RSS feed <code>staxmanade.blogspot.com/feeds/posts/default</code> was 302 redirecting to <code>http://feeds.feedburner.com/DevelopingOnStaxmande</code>.</p>
+<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth&#39;d with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
+<p>After doing this, I noticed 3 of my previously posted blogs show-up-again, but I can live with that.</p>
+<p>Now you&#39;ve hopefully migrated your blog&#39;s RSS subscribers automatically without loosing any.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain]]></title>
         <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/</id>
@@ -53,11 +182,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -109,11 +238,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -224,11 +353,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -294,11 +423,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -380,11 +509,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -468,11 +597,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -539,11 +668,11 @@
         </li>
         
         <li>
-            Part 8 - (coming soon) - Redirect Atom/RSS in FeedBurner
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
         
         <li>
-            Part 9 - (coming soon) - What's left?
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
         
     </ul>
@@ -693,30 +822,6 @@ I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to art
         <content type="html"><![CDATA[
 <div class='post'>
 <p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 8 Share Charm Data Inspector]]></title>
-        <id>http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/</id>
-        <link href="http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/">
-        </link>
-        <updated>2013-03-13T04:12:00Z</updated>
-        <summary type="html"><![CDATA[In a previous post I mentioned I would share the app I created during a Windows 8 hackathon event.  I spent some more time adding polish, testing, re-...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<p>In a previous <a href="http://elegantcode.com/2013/03/03/windows-8-hackathon-good-for-participants-bad-for-microsoft/" target="_blank">post</a> I mentioned I would share the app I created during a Windows 8 hackathon event.</p>  <p>I spent some more time adding polish, testing, re-thinking my initial designs and today, I’m excited to say that it is now in the <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">app store</a>!</p>  <h4>What does this app do?</h4>  <p>The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> is an application that allows you to inspect the details of data being shared from other applications through the Windows 8 Share Charm (Win+H).</p>  <p>For example, if you open the <a href="http://apps.microsoft.com/windows/en-us/app/video/64b22df1-5a9c-4c88-aa1f-42cefaf8b281" target="_blank">Video</a> app, select a movie and use the share charm (Win+H) to share the video, what data is actually shared? The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> will appear up as an application you can share the just about any data with and you can inspect at a lower level what values are shared.</p>  <p><strong>This application will give you insights into data that you never thought was being shared.</strong></p>  <h4>How do I get the app?</h4>  <p>Open your Windows 8 App Store and search for “<a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a>”. (or click the link “View in Windows Store” button.</p>  <h4>I’d like to suggest a feature:</h4>  <p>If you’ve downloaded the trial app and would like to see some improvements. Head <a href="https://github.com/staxmanade/ShareDataInspector/issues" target="_blank">over to this site, suggest a feature</a> and help this application grow from a hackathon created app into a full-fledged application.</p>  <p>Happy Sharing!</p>  </div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 8 Hackathon: Good for participants. Bad for Microsoft.]]></title>
-        <id>http://staxmanade.com/2013/03/windows-8-hackathon-good-for/</id>
-        <link href="http://staxmanade.com/2013/03/windows-8-hackathon-good-for/">
-        </link>
-        <updated>2013-03-08T06:55:00Z</updated>
-        <summary type="html"><![CDATA[Last weekend I participated in a Windows 8 hackathon. In 24 hours of coding I had an app created and submitted to the App Store for certification.24 h...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-Last weekend I participated in a <a href="http://renohackathon.com/" target="_blank">Windows 8 hackathon</a>. In 24 hours of coding I had an app created and submitted to the App Store for certification.<br /><h4>24 hours to create an app?</h4>I'll share details about the app I created in a future post. <strong>For now, I have since removed my app from the review process in the Developer Portal.</strong><br />Before I get into why I (temporarily) removed my app. I would like to first talk about a number of the real benefits I saw with the hackathon.<br /><ul><li>I work from home as a remote employee. <a href="http://www.bobcowherd.com/2013/03/managing-remote-teams.html?m=1">Don't worry I'm not at Yahoo</a>. The event was a fun change of pace; working in a room of developers hacking away on their own ideas. You could feel the energy and this energy is probably why it was possible to burn the midnight oil hacking on my own app. </li><li>This contest forced me to work all the way through submitting an app to the store which I believe to be more of a mental hurdle than an actual one. This process was definitely made easier with Microsoft on hand to answer questions and get over some of the non-obvious steps in the process. </li><li>Working in a room with the others proved to be useful when you got stuck on something. Shouting out <a href="http://twitter.com/#!/jessetanderson/status/308087741256704001">'I'm stuck on problem X</a>’ and have someone there to point you in the right direction and unblock you is great. </li><li>The short timeframe forces you to focus on your <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a>. Work on what is necessary and avoid getting side tracked. </li><li>Related to the focus above I really got into the zone hacking away at my app; this certainly reminded me of why I love this profession. </li><li>Meet developers in the area. </li><li>Learn interesting problem domains and how others tackle them in their apps. </li></ul><h4>Now, why am I really writing this post?</h4><strong>I believe Microsoft is shooting themselves in the foot with how they are running these hackathons.</strong><br />I can’t say I speak for how the hackathons are being run, but my experience showed me the following.<br />With Microsoft’s own employees running these events and <a href="http://idioms.thefreedictionary.com/give+a+lick+and+a+promise" target="_blank">not giving a lick</a> to the quality of the applications being submitted they are setting themselves up for failure.<br /><strike>I can see from a marketing perspective that having a large number of apps in the store will help them drive more people to their platform.</strike> That’s crap. There are far too many reasons Microsoft should be driving <strong>QUALITY</strong> into the store and not quantity.<br />Let’s list a few reasons this is going to backfire:<br /><ul><li>NOBODY wants to use crappy apps developed in 24 hours. NOBODY! </li><li>There are very few apps that can be written in 24 hours without maintaining some sort of a quality bar. </li><li>The certification process will get clogged causing the testers to care less about finding quality issues and pounding through “numbers”. </li><li>We'll have a huge collection of crappy apps where the sheer number of apps will make finding a good quality app nearly impossible. </li></ul><h4>How can they make this better?</h4>Something interesting about this is generally when you talk about Pros/Cons to something, you have to give-up something to fix a Con and that sometimes means taking away from the Pros.<br />However, I feel like we can keep ALL of the pros I listed above while also reducing the amount of Cons if only Microsoft incentivized their employees to drive quality into the store.<br /><ul><li><strong>Do</strong> – push people to get an app done and help them through the app store </li><li><strong>Do</strong> – provide guidance around how to build-in quality </li><li><strong>Do</strong> – provide some metrics that will help the app succeed in the end (design, best practices, possibly even saying, “That’s been done”) </li><li><strong>Do</strong> – recommend they cancel submitting their application if it hasn’t met the developers quality metric. (This isn’t going to save the app store, but would help to reduce the number of write-once-let-die-in-the-store apps) </li><li><strong>Don't – </strong>offer a prize for "the most apps submitted" within 24 hours. </li></ul>I’ve developed on the Microsoft platform for a long time and really hope there is a place for the Microsoft App Store in the future, but with their push for a large number of apps they’re not setting themselves up for an easy road back in the game.</div>
 ]]></content>
     </entry>
 </feed>
