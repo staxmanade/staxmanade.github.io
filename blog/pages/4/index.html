@@ -78,6 +78,29 @@
     <article>
       
   <header>
+      <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
+    
+      <p class="meta">
+        
+  <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
+
+
+
+        
+      </p>
+    
+  </header>
+
+<div class="entry-content">
+<div class='post'>
+Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopersgroup.com/">Northern Nevada Software Developers Group</a>.<br />If interested, the presentation material is up on my <a href="https://github.com/staxmanade/PowerShellPresentation">GitHub account</a>.<br />Thanks to all who attended!<br />Happy Scripting! </div>
+</div>
+
+    </article>
+  
+    <article>
+      
+  <header>
       <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/tfs-bisect-manual-way-when-was-that-bug/">TFS bisect the manual way (When was that bug introduced?)</a></h1>
     
       <p class="meta">
@@ -282,29 +305,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 
     </article>
   
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2012-02-15T04:46:00.000Z" pubdate data-updated="true">Feb 14th 2012</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FakeO" target="_blank">FakeO</a> is a fake object generation library. It doesn’t seem to play nicely with objects that require parameters in the constructor. However if you have lots of classes that have a default constructor and plain old get/set properties this project might be very useful.</p>  <p>You can even specify not just random text or numbers to generate, but some specific context driven data.</p>  <p>For example:</p>  <ul>   <li>Random company name </li>    <li>Lorem Ipsum to various lengths. </li>    <li>Phone numbers </li>    <li>Random strings based on a regex. </li>    <li>etc…      <br /></li> </ul>  <blockquote>   <pre>// example FakeO call<br />var comp = FakeO.Create.Fake&lt;Company&gt;(<br />                c =&gt; c.Name = FakeO.Company.Name(),<br />                c =&gt; c.Phone = FakeO.Phone.Number(),<br />                c =&gt; c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200</pre></blockquote>  </div>
-</div>
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/5/">&larr; Older</a>
@@ -345,6 +345,10 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
     
@@ -366,10 +370,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a>
       </li>
     
   </ul>

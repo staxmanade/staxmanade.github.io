@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link href="http://staxmanade.com"/>
-    <updated>2014-05-18T17:27:29Z</updated>
+    <updated>2014-05-24T20:27:55Z</updated>
     <id>http://staxmanade.com</id>
     <author>
         <name>Jason Jarrett</name>
@@ -13,12 +13,44 @@
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
+        <title type="html"><![CDATA[Introducing CommandAllThings]]></title>
+        <id>http://staxmanade.com/2014/05/introducing-commandallthings/</id>
+        <link href="http://staxmanade.com/2014/05/introducing-commandallthings/">
+        </link>
+        <updated>2014-05-24T20:27:55Z</updated>
+        <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
+        <content type="html"><![CDATA[<p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+<h1 id="some-background">Some background</h1>
+<p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
+<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I&#39;ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
+<p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
+<p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+<h1 id="what-is-it-">What is it?</h1>
+<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
+<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don&#39;t get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
+<p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
+<h1 id="does-it-only-work-on-windows-or-on-the-mac-">Does it only work on Windows or on the Mac?</h1>
+<p>At the moment it works on both. </p>
+<ul>
+<li>For Windows I have an implementation in Powershell. </li>
+<li>For the Mac you can alias to a Bash script.</li>
+</ul>
+<h1 id="download-at-github-">Download at GitHub!</h1>
+<p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
+<h1 id="what-s-next-">What&#39;s next?</h1>
+<p>I&#39;d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
+<p>I&#39;d also love to get some feedback on how to best or more easily get this into peoples&#39;s development environment. For now it&#39;s pretty manual and since it&#39;s all about your profile, a bit personal, so probably a good thing that it&#39;s not automatically installed.</p>
+<p>Happy Commanding!</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[How to compile plain *.js (JavaScript) files with the TypeScript Compiler]]></title>
         <id>http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
         <link href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
         </link>
         <updated>2014-05-18T17:27:29Z</updated>
-        <summary type="html"><![CDATA[# Challenge]]></summary>
+        <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>
         <content type="html"><![CDATA[<h1 id="challenge">Challenge</h1>
 <p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
 <p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
@@ -889,18 +921,6 @@ I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to art
         <content type="html"><![CDATA[
 <div class='post'>
 <p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Developer humor]]></title>
-        <id>http://staxmanade.com/2013/05/developer-humor/</id>
-        <link href="http://staxmanade.com/2013/05/developer-humor/">
-        </link>
-        <updated>2013-05-09T17:43:00Z</updated>
-        <summary type="html"><![CDATA[I literally cried this morning as I scanned these posts.     Note: Don't have a drink in hand or mouth when reading these.   Enjoy:     http://martinv...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
 ]]></content>
     </entry>
 </feed>
