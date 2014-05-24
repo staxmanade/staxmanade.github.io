@@ -93,12 +93,12 @@
 
 <div class="entry-content"><p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1 id="some-background">Some background</h1>
-<p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
+<p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
 <p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I&#39;ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
 <p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
 <p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1 id="what-is-it-">What is it?</h1>
-<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
 <p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
 <p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don&#39;t get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
 <p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
