@@ -832,23 +832,29 @@
         <link href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">
         </link>
         <updated>2014-02-17T18:25:00Z</updated>
-        <summary type="html"><![CDATA[If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)Now that I'm only reaching people who use source contr...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Now that I'm only reaching people who use source control (serious developers), I'd like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think&nbsp;<a data-mce-href="http://en.wikipedia.org/wiki/Single_responsibility_principle" href="http://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank">SRP</a>&nbsp;for code commits/check-ins.</div><h4 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">What is a topical commit?</h4><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">That almost looks like 't<strong>r</strong>opical' and wouldn't it be nice to be in a tropical place doing commits to your code, but I digress...</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">The topics I'm referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">For example:</div><ul style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;"><li>adding feature X</li><li>refactoring</li><li>bug fix</li><li>spelling fix</li><li>Updating comments/documentation</li><li><strong>*** code formatting ***</strong></li></ul><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">I highlighted that last one for a reason as it's the impetus for writing this post.</div><h3 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 19px;">Don't mix topics/themes within a single commit!</h3><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Instead break them into multiple commits. If you're using git, checkout '<a data-mce-href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" target="_blank">git add -p</a>'</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you've left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Let's just NOT mix topics in our commits, ok?</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">K, THX bye!</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Happy Coding!</div></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jay Bazuzi</div>
-<div class='content'>
-I also split each refactoring out in to a separate commit, and tag the description with &quot;REFACTOR: &quot;. When things go well, I take tiny, safe refactoring steps, commit each one separately, until the feature I&#39;m trying to write is easye to implement. My commit history then looks like this:<br /><br />    REFACTOR: Extract Method `X.Y()`<br />    REFACTOR: Rename `A` -&gt; `B`<br />    Implement feature &quot;Foo&quot;<br /><br />If you are looking for a specific deliberate behavior change, you can scan the history and look at only the non-REFACTOR commits. That commit is small and clear, because I have refactored ahead of time. <br /><br />If you ever see a behavior change under a REFACTOR tag, you know it was not deliberate - that I screwed up.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jay Bazuzi</div>
-<div class='content'>
-I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to articulate it as well as you have.<br /><br />Just 2 days ago I told a coworker to commit his change in two parts, and he looked at me blankly and asked &quot;Why?&quot;. I said &quot;Single-Responsibility Principle&quot; and got more blank. *sigh* </div>
-</div>
-</div>
+        <summary type="html"><![CDATA[If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)]]></summary>
+        <content type="html"><![CDATA[<p>If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</p>
+<p>Now that I&#39;m only reaching people who use source control (serious developers), I&#39;d like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
+<h4 id="what-is-a-topical-commit-">What is a topical commit?</h4>
+<p>That almost looks like &#39;tropical&#39; and wouldn&#39;t it be nice to be in a tropical place doing commits to your code, but I digress...</p>
+<p>The topics I&#39;m referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</p>
+<p>For example:</p>
+<ul>
+<li>adding feature X</li>
+<li>refactoring</li>
+<li>bug fix</li>
+<li>spelling fix</li>
+<li>Updating comments/documentation</li>
+<li><strong><em> code formatting </em></strong></li>
+</ul>
+<p>I highlighted that last one for a reason as it&#39;s the impetus for writing this post.</p>
+<h3 id="don-t-mix-topics-themes-within-a-single-commit-">Don&#39;t mix topics/themes within a single commit!</h3>
+<p>Instead break them into multiple commits. If you&#39;re using git, checkout &#39;<a href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/">git add -p</a>&#39;</p>
+<p>If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</p>
+<p>Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you&#39;ve left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</p>
+<p>Let&#39;s just NOT mix topics in our commits, ok?</p>
+<p>K, THX bye!</p>
+<p>Happy Coding!</p>
 ]]></content>
     </entry>
     <entry>
@@ -857,11 +863,57 @@ I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to art
         <link href="http://staxmanade.com/2013/12/format-your-net-exceptions-to-see/">
         </link>
         <updated>2013-12-19T03:50:00Z</updated>
-        <summary type="html"><![CDATA[TL;DR  Check out a dinky little Exception Message Beautifier site I threw together so you can quickly format .net exception messages and easily see th...]]></summary>
+        <summary type="html"><![CDATA[   TL;DR]]></summary>
         <content type="html"><![CDATA[
 <div class='post'>
-<h4>TL;DR</h4>  <p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>  <p>&#160;</p>  <h4>Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank"><font size="4">CLICK HERE</font></a></h4>  <p>&#160;</p>  <h4>Background</h4>  <p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>  <blockquote>   <pre>System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34</pre><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/" target="_blank">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p><br /><br /><p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" width="443" height="286" /></a></p><br /><br /><p>Just so I could see an exception that looked more like:</p><br /><br /><blockquote><br />  <p>System.Exception: Hello Exception! <br />    <br />&#160;&#160; at TestExceptionGenerator.Spike.GetException() in …&lt;cut off for brevity&gt; <br /><br />    <br />&#160;&#160; at TestExceptionGenerator.Spike.b__0() in …&lt;cut off for brevity&gt; <br /><br />    <br />&#160;&#160; at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in …&#160;&#160; </p><br /></blockquote><br /><br /><p>I finally buckled down and threw together a tool for this. </p><br /><br /><h3>You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> where you can see the sample below.</h3><br /><br /><p>&#160;</p><br /><br /><p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" width="689" height="354" /></a></p><br /><br /><p>&#160;</p><br /><br /><h4>I’d like to thank.</h4><br /><br /><p>Below are a list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p><br /><br /><ul><br />  <li><a href="http://codepen.io/" target="_blank">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages. </li><br /><br />  <li><a href="https://github.com" target="_blank">GitHub</a> for providing us with <a href="http://pages.github.com/" target="_blank">GitHub Pages</a>. Made this site a piece of cake to setup. </li><br /><br />  <li><a href="http://github.com/approvals/Approvals.NodeJS" target="_blank">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/" target="_blank">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food" target="_blank">dog-food</a> it</em>) <img class="wlEmoticon wlEmoticon-smile" style="border-top-style: none; border-bottom-style: none; border-right-style: none; border-left-style: none" alt="Smile" src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" /> </li><br /><br />  <li><a href="http://angularjs.org/" target="_blank">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.) </li><br /><br />  <li><a href="https://developers.google.com/speed/libraries/devguide" target="_blank">Google CDN</a> for hosting AngularJS </li><br /><br />  <li><a href="http://google.com/analytics/" target="_blank">Google Analytics</a> (so I can see if anyone cares) </li><br /></ul><br /><br /><ul>If you take a look, find a bug. Submit a GitHub issue and/or a pull request. Or if you find it useful, feel free to let me know.</ul><br /><br /><ul>Enjoy!</ul>  </div>
-]]></content>
+   <h4>TL;DR</h4>
+   <p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>
+   <h4>Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank"><font size="4">CLICK HERE</font></a></h4>
+   <h4>Background</h4>
+   <p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>
+  <pre>System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34</pre>
+   <p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/" target="_blank">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p>
+   
+   <p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" width="443" height="286" /></a></p>
+   
+   <p>Just so I could see an exception that looked more like:</p>
+   
+   <pre>
+System.Exception: Hello Exception! 
+   at TestExceptionGenerator.Spike.GetException() in …<cut off for brevity> 
+   at TestExceptionGenerator.Spike.b__0() in …<cut off for brevity> 
+   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in … 
+   </pre>
+   
+   <p>I finally buckled down and threw together a tool for this. </p>
+   
+   <h3>You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> where you can see the sample below.</h3>
+   
+   <p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" width="689" height="354" /></a></p>
+   <h4>I’d like to thank.</h4>
+
+   <p>Below are a list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p>
+
+   <ul>
+      <br />  
+      <li><a href="http://codepen.io/" target="_blank">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages. </li>
+        
+      <li><a href="https://github.com" target="_blank">GitHub</a> for providing us with <a href="http://pages.github.com/" target="_blank">GitHub Pages</a>. Made this site a piece of cake to setup. </li>
+        
+      <li><a href="http://github.com/approvals/Approvals.NodeJS" target="_blank">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/" target="_blank">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food" target="_blank">dog-food</a> it</em>) <img class="wlEmoticon wlEmoticon-smile" style="border-top-style: none; border-bottom-style: none; border-right-style: none; border-left-style: none" alt="Smile" src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" /> </li>
+        
+      <li><a href="http://angularjs.org/" target="_blank">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.) </li>
+        
+      <li><a href="https://developers.google.com/speed/libraries/devguide" target="_blank">Google CDN</a> for hosting AngularJS </li>
+        
+      <li><a href="http://google.com/analytics/" target="_blank">Google Analytics</a> (so I can see if anyone cares) </li>
+      <br />
+   </ul>
+   
+   <ul>If you take a look, find a bug. Submit a GitHub issue and/or a pull request. Or if you find it useful, feel free to let me know.</ul>
+   
+   <ul>Enjoy!</ul>
+</div>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Leave yourself a breadcrumb for tomorrow.]]></title>

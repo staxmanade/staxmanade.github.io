@@ -160,9 +160,50 @@
     
   </header>
 
-<div class="entry-content">
-<div class='post'>
-<p>This post is a note to myself, as the two outlined below contain code/commands I’ve done (wished I could have done automatically in the past) that I want to save for reference later.</p>  <p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace <strong>an everything’s a Singleton architecture is no easy task</strong>. I won’t go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I’ve slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.&#160; They’ve given me a new saying “Read my lips. NO NEW SINGLETONS!”.</p>  <ol>   <h5>PowerShell assisted regular expression search and replace.</h5>    <br />In my case, the specific regular expression needed to find</ol>  <pre class="brush: csharp;">SomeBusinessLogicClass.Instance.SomeFooMethod(bar);<br /><br /><br /> <br />//  and replace it with<br /> <br />Resolve&lt;ISomeBusinessLogicClass&gt;().SomeFooMethod(bar); <br /> <br /></pre><br /><br /><p>Below is the PowerShell script I used.</p><br /><br /><p># define the find and replacement regular expressions. <br />  <br />$regex_find = '([a-zA-Z]+)\.Instance\.' <br /><br />  <br />$regex_replace = 'Resolve&lt;I$1&gt;().' </p><br /><br /><p># get all the C# files we want to search/replace through <br />  <br />$allFiles = Get-ChildItem -Filter *.cs -Recurse </p><br /><br /><p>foreach($fileToReplace in $allFiles) <br />  <br />{ <br /><br />  <br />&#160;&#160;&#160; $fileString = $fileToReplace.FullName </p><br /><br /><p>&#160;&#160;&#160; if([String]::Join([Environment]::NewLine, (Get-Content -Path $fileString)) -match $regex_find) <br />  <br />&#160;&#160;&#160; { <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # make the file writable so we can update it <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; $fileToReplace.IsReadOnly = $false; <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Write-Host &quot;applying fix to - $fileString&quot; <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # here’s where we load up the file iterate through each line&#160;&#160;&#160; <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # replace any of the regex matches <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; # and save the file back to the original location <br /><br />  <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Set-Content $fileString -Value ((Get-Content -Path $fileString) | foreach { if( $_ -match $regex_find) { $_ -replace $regex_find, $regex_replace } else { $_ } } ) <br /><br />  <br />&#160;&#160;&#160; } <br /><br />  <br />}</p><br /><br /><p>&#160;</p><br /><br /><blockquote><br />  <p>Caveat:</p><br /><br />  <ul><br />    <li>Some of the files “end of file” changed (added an extra end line in some cases) </li><br />  </ul><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><h5>Team Foundation Server tip to detect the changed files.</h5><br /><br /><p>&#160;</p><br /><br /><p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>.</p><br /><br /><p>Once installed, fire up the PowerShell console given in the start menu</p><br /><br /><p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SvXghSiqBUI/AAAAAAAAAMY/TPeJSRSD8hQ/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" width="278" height="427" /></a> </p><br /><br /><p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p><br /><br /><blockquote><br />  <p><br />    <br />tfpt online /adds /diff /recursive . <br /><br />    </p></blockquote>  </div>
+<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I&#39;ve done (wished I could have done automatically in the past) that I want to save for reference later.</p>
+<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything&#39;s a Singleton architecture is no easy task. I won&#39;t go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I&#39;ve slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They&#39;ve given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
+<h5 id="powershell-assisted-regular-expression-search-and-replace-">PowerShell assisted regular expression search and replace.</h5>
+<p>In my case, the specific regular expression needed to find</p>
+<pre><code>    SomeBusinessLogicClass.Instance.SomeFooMethod(bar);
+</code></pre><p>and replace it with</p>
+<pre><code>    Resolve().SomeFooMethod(bar);
+</code></pre><p>Below is the PowerShell script I used.</p>
+<pre><code class="lang-PowerShell"># define the find and replacement regular expressions.
+$regex_find = &#39;([a-zA-Z]+)\\.Instance\\.&#39;
+$regex_replace = &#39;Resolve().&#39;
+
+# get all the C# files we want to search/replace through
+$allFiles = Get-ChildItem -Filter *.cs -Recurse
+
+foreach($fileToReplace in $allFiles)
+{
+    $fileString = $fileToReplace.FullName
+    if([String]::Join([Environment]::NewLine, (Get-Content -Path $fileString)) -match $regex_find)
+    {
+        # make the file writable so we can update it
+        $fileToReplace.IsReadOnly = $false;
+        Write-Host &quot;applying fix to - $fileString&quot;
+
+        # here&#39;s where we load up the file iterate through each line   
+        # replace any of the regex matches
+        # and save the file back to the original location
+        Set-Content $fileString -Value ((Get-Content -Path $fileString) | foreach { if( $_ -match $regex_find) { $_ -replace $regex_find, $regex_replace } else { $_ } } )
+    }
+}
+</code></pre>
+<blockquote>
+<p>Caveat:</p>
+<ul>
+<li>Some of the files &quot;end of file&quot; changed (added an extra end line in some cases)</li>
+</ul>
+</blockquote>
+<h5 id="team-foundation-server-tip-to-detect-the-changed-files-">Team Foundation Server tip to detect the changed files.</h5>
+<p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>. Once installed, fire up the PowerShell console given in the start menu</p>
+<p><img src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
+<p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p>
+<blockquote>
+<p>tfpt online /adds /diff /recursive .</p>
+</blockquote>
 </div>
 
     </article>

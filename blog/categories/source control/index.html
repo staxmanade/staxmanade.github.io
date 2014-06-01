@@ -91,22 +91,28 @@
     
   </header>
 
-<div class="entry-content">
-<div class='post'>
-<div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Now that I'm only reaching people who use source control (serious developers), I'd like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think&nbsp;<a data-mce-href="http://en.wikipedia.org/wiki/Single_responsibility_principle" href="http://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank">SRP</a>&nbsp;for code commits/check-ins.</div><h4 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">What is a topical commit?</h4><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">That almost looks like 't<strong>r</strong>opical' and wouldn't it be nice to be in a tropical place doing commits to your code, but I digress...</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">The topics I'm referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">For example:</div><ul style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;"><li>adding feature X</li><li>refactoring</li><li>bug fix</li><li>spelling fix</li><li>Updating comments/documentation</li><li><strong>*** code formatting ***</strong></li></ul><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">I highlighted that last one for a reason as it's the impetus for writing this post.</div><h3 style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 19px;">Don't mix topics/themes within a single commit!</h3><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Instead break them into multiple commits. If you're using git, checkout '<a data-mce-href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/" target="_blank">git add -p</a>'</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you've left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Let's just NOT mix topics in our commits, ok?</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">K, THX bye!</div><div style="color: #333333; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 13px; line-height: 19px;">Happy Coding!</div></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jay Bazuzi</div>
-<div class='content'>
-I also split each refactoring out in to a separate commit, and tag the description with &quot;REFACTOR: &quot;. When things go well, I take tiny, safe refactoring steps, commit each one separately, until the feature I&#39;m trying to write is easye to implement. My commit history then looks like this:<br /><br />    REFACTOR: Extract Method `X.Y()`<br />    REFACTOR: Rename `A` -&gt; `B`<br />    Implement feature &quot;Foo&quot;<br /><br />If you are looking for a specific deliberate behavior change, you can scan the history and look at only the non-REFACTOR commits. That commit is small and clear, because I have refactored ahead of time. <br /><br />If you ever see a behavior change under a REFACTOR tag, you know it was not deliberate - that I screwed up.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jay Bazuzi</div>
-<div class='content'>
-I&#39;ve tried to work this way for a long time, but wasn&#39;t ever able to articulate it as well as you have.<br /><br />Just 2 days ago I told a coworker to commit his change in two parts, and he looked at me blankly and asked &quot;Why?&quot;. I said &quot;Single-Responsibility Principle&quot; and got more blank. *sigh* </div>
-</div>
-</div>
+<div class="entry-content"><p>If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</p>
+<p>Now that I&#39;m only reaching people who use source control (serious developers), I&#39;d like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
+<h4 id="what-is-a-topical-commit-">What is a topical commit?</h4>
+<p>That almost looks like &#39;tropical&#39; and wouldn&#39;t it be nice to be in a tropical place doing commits to your code, but I digress...</p>
+<p>The topics I&#39;m referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</p>
+<p>For example:</p>
+<ul>
+<li>adding feature X</li>
+<li>refactoring</li>
+<li>bug fix</li>
+<li>spelling fix</li>
+<li>Updating comments/documentation</li>
+<li><strong><em> code formatting </em></strong></li>
+</ul>
+<p>I highlighted that last one for a reason as it&#39;s the impetus for writing this post.</p>
+<h3 id="don-t-mix-topics-themes-within-a-single-commit-">Don&#39;t mix topics/themes within a single commit!</h3>
+<p>Instead break them into multiple commits. If you&#39;re using git, checkout &#39;<a href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/">git add -p</a>&#39;</p>
+<p>If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</p>
+<p>Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you&#39;ve left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</p>
+<p>Let&#39;s just NOT mix topics in our commits, ok?</p>
+<p>K, THX bye!</p>
+<p>Happy Coding!</p>
 </div>
 
             </article>
