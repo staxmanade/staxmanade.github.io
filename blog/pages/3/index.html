@@ -78,156 +78,186 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/05/developer-humor/">Developer humor</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2013-06-20T17:46:00.000Z" pubdate data-updated="true">Jun 20th 2013</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/05/developer-humor/">Developer humor</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2013-05-09T17:43:00.000Z" pubdate data-updated="true">May 9th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-03-20T04:06:00.000Z" pubdate data-updated="true">Mar 19th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/">Windows 8 Share Charm Data Inspector</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/">Windows 8 Share Charm Data Inspector</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-03-13T04:12:00.000Z" pubdate data-updated="true">Mar 12th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>In a previous <a href="http://elegantcode.com/2013/03/03/windows-8-hackathon-good-for-participants-bad-for-microsoft/" target="_blank">post</a> I mentioned I would share the app I created during a Windows 8 hackathon event.</p>  <p>I spent some more time adding polish, testing, re-thinking my initial designs and today, I’m excited to say that it is now in the <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">app store</a>!</p>  <h4>What does this app do?</h4>  <p>The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> is an application that allows you to inspect the details of data being shared from other applications through the Windows 8 Share Charm (Win+H).</p>  <p>For example, if you open the <a href="http://apps.microsoft.com/windows/en-us/app/video/64b22df1-5a9c-4c88-aa1f-42cefaf8b281" target="_blank">Video</a> app, select a movie and use the share charm (Win+H) to share the video, what data is actually shared? The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> will appear up as an application you can share the just about any data with and you can inspect at a lower level what values are shared.</p>  <p><strong>This application will give you insights into data that you never thought was being shared.</strong></p>  <h4>How do I get the app?</h4>  <p>Open your Windows 8 App Store and search for “<a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a>”. (or click the link “View in Windows Store” button.</p>  <h4>I’d like to suggest a feature:</h4>  <p>If you’ve downloaded the trial app and would like to see some improvements. Head <a href="https://github.com/staxmanade/ShareDataInspector/issues" target="_blank">over to this site, suggest a feature</a> and help this application grow from a hackathon created app into a full-fledged application.</p>  <p>Happy Sharing!</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/windows-8-hackathon-good-for/">Windows 8 Hackathon: Good for participants. Bad for Microsoft.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/windows-8-hackathon-good-for/">Windows 8 Hackathon: Good for participants. Bad for Microsoft.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-03-08T06:55:00.000Z" pubdate data-updated="true">Mar 7th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 Last weekend I participated in a <a href="http://renohackathon.com/" target="_blank">Windows 8 hackathon</a>. In 24 hours of coding I had an app created and submitted to the App Store for certification.<br /><h4>24 hours to create an app?</h4>I'll share details about the app I created in a future post. <strong>For now, I have since removed my app from the review process in the Developer Portal.</strong><br />Before I get into why I (temporarily) removed my app. I would like to first talk about a number of the real benefits I saw with the hackathon.<br /><ul><li>I work from home as a remote employee. <a href="http://www.bobcowherd.com/2013/03/managing-remote-teams.html?m=1">Don't worry I'm not at Yahoo</a>. The event was a fun change of pace; working in a room of developers hacking away on their own ideas. You could feel the energy and this energy is probably why it was possible to burn the midnight oil hacking on my own app. </li><li>This contest forced me to work all the way through submitting an app to the store which I believe to be more of a mental hurdle than an actual one. This process was definitely made easier with Microsoft on hand to answer questions and get over some of the non-obvious steps in the process. </li><li>Working in a room with the others proved to be useful when you got stuck on something. Shouting out <a href="http://twitter.com/#!/jessetanderson/status/308087741256704001">'I'm stuck on problem X</a>’ and have someone there to point you in the right direction and unblock you is great. </li><li>The short timeframe forces you to focus on your <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a>. Work on what is necessary and avoid getting side tracked. </li><li>Related to the focus above I really got into the zone hacking away at my app; this certainly reminded me of why I love this profession. </li><li>Meet developers in the area. </li><li>Learn interesting problem domains and how others tackle them in their apps. </li></ul><h4>Now, why am I really writing this post?</h4><strong>I believe Microsoft is shooting themselves in the foot with how they are running these hackathons.</strong><br />I can’t say I speak for how the hackathons are being run, but my experience showed me the following.<br />With Microsoft’s own employees running these events and <a href="http://idioms.thefreedictionary.com/give+a+lick+and+a+promise" target="_blank">not giving a lick</a> to the quality of the applications being submitted they are setting themselves up for failure.<br /><strike>I can see from a marketing perspective that having a large number of apps in the store will help them drive more people to their platform.</strike> That’s crap. There are far too many reasons Microsoft should be driving <strong>QUALITY</strong> into the store and not quantity.<br />Let’s list a few reasons this is going to backfire:<br /><ul><li>NOBODY wants to use crappy apps developed in 24 hours. NOBODY! </li><li>There are very few apps that can be written in 24 hours without maintaining some sort of a quality bar. </li><li>The certification process will get clogged causing the testers to care less about finding quality issues and pounding through “numbers”. </li><li>We'll have a huge collection of crappy apps where the sheer number of apps will make finding a good quality app nearly impossible. </li></ul><h4>How can they make this better?</h4>Something interesting about this is generally when you talk about Pros/Cons to something, you have to give-up something to fix a Con and that sometimes means taking away from the Pros.<br />However, I feel like we can keep ALL of the pros I listed above while also reducing the amount of Cons if only Microsoft incentivized their employees to drive quality into the store.<br /><ul><li><strong>Do</strong> – push people to get an app done and help them through the app store </li><li><strong>Do</strong> – provide guidance around how to build-in quality </li><li><strong>Do</strong> – provide some metrics that will help the app succeed in the end (design, best practices, possibly even saying, “That’s been done”) </li><li><strong>Do</strong> – recommend they cancel submitting their application if it hasn’t met the developers quality metric. (This isn’t going to save the app store, but would help to reduce the number of write-once-let-die-in-the-store apps) </li><li><strong>Don't – </strong>offer a prize for "the most apps submitted" within 24 hours. </li></ul>I’ve developed on the Microsoft platform for a long time and really hope there is a place for the Microsoft App Store in the future, but with their push for a large number of apps they’re not setting themselves up for an easy road back in the game.</div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">DefinitelyTyped TypeScript definitions now on NuGet</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">DefinitelyTyped TypeScript definitions now on NuGet</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/">How do I undo a bad rebase in Git?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/">How do I undo a bad rebase in Git?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-02-24T02:42:00.000Z" pubdate data-updated="true">Feb 23rd 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>If you use <a href="http://git-scm.com/">git</a> and leverage the <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> command, you've probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish I had a ‘do-over’.</p>  <p>If you’re still in the middle of a rebase it's easy to start over:</p>  <blockquote>   <p>git rebase --abort</p> </blockquote>  <p>But let's say you started with this:</p>  <p><a href="http://lh6.ggpht.com/-S4iRqI3gJ9A/USl-FkXa8GI/AAAAAAAAAcw/DIiCekbZNNc/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-VUhs8KUeoYw/USl-GO4JjUI/AAAAAAAAAc4/ZIW6B8i84Jk/image_thumb1.png?imgmax=800" width="227" height="149" /></a></p>  <p>Did a git rebase and are now looking at:</p>  <p><a href="http://lh6.ggpht.com/-wKnvAJZeBE8/USl-GZw_02I/AAAAAAAAAdA/Rjrc0ACrf3A/s1600-h/image7.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-Vm2Z6nDv_ow/USl-Gh_VygI/AAAAAAAAAdI/4JeII5vjceE/image_thumb3.png?imgmax=800" width="244" height="126" /></a></p>  <p>Except you screwed up during a merge conflict and now un-sure how you can get your ‘do-over’.</p>  <p>&#160;</p>  <p>I was pleasantly surprised at how easy it was. (If you know key)</p>  <p>Leveraging the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html">git reflog</a>, you can go back in time and check out your branch as though the rebase never happened.</p>  <p>In the following link, I put together a set of steps to create a git repo that puts you into this position (of a bad rebase) and then describes how to get out of it.</p>  <p><a href="https://github.com/staxmanade/GitRebaseReflogFixSample">https://github.com/staxmanade/GitRebaseReflogFixSample</a></p>  <p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>  <p>Happy Git'ing!</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -259,74 +289,54 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
    <p>Happy PowerDowning or MarkShelling!</p>
 </div></div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-01-23T05:29:00.000Z" pubdate data-updated="true">Jan 22nd 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>After a fresh install of Visual Studio, I often re-configure some options and setup keyboard bindings. This tends to be a bit of a pain as each and every time I have to remember what setting is in what U.I. configuration pane and how do I find/configure that again? I also will often forget about certain settings until the point I need them and it really breaks my coding rhythm down to go hunt for and reconfigure these options.</p>  <p>I recently found a simple solution to get my VS just the way I want it.</p>  <blockquote>   <p>P.S. Some of you may want to tell me all about the VS import/export settings, and you may be right, but I just haven’t spent the time to use/understand/easily find a way to integrate it into my ‘flow’.</p> </blockquote>  <p>So I present to you “MY happy path” to Visual Studio Environment configuration.</p>  <h4>1. Install the NuGet Package Manager Extension</h4>  <p>You’re going to probably install this extension anyway, so go-ahead and <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install it now</a> if you don’t already have it… We need this so you can get access to the NuGet Package Manager Console</p>  <p><a href="http://lh3.ggpht.com/-leOq9kWDh78/UMDKoOAS6vI/AAAAAAAAAb8/xUeM3ZRRhfo/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-vDO9vE_i-y4/UMDKohZ5WdI/AAAAAAAAAcE/6kWeoto-_ao/image_thumb1.png?imgmax=800" width="745" height="209" /></a></p>  <h4>2. Execute Function Set-VisualStudioEnvironmentConfiguration</h4>  <p>Wait! What is “<a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Set-VisualStudioEnvironmentConfiguration.ps1">Set-VisualStudioEnvironmentConfiguration</a>”?</p>  <p>This is a little function that I have in <a href="https://github.com/staxmanade/DevMachineSetup">My PowerShell $Profile</a> which gets setup on all development environment.</p>  <h4>So what’s in this PowerShell script?</h4>  <p>As of writing this, I only have two specific setup commands, but thought I’d share as an example of what you can do:</p>  <ol>   <li>Set a keyboard binding to a specific command.      <pre># Map Ctrl+W to close a tab<br />$DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot;;</pre><br />  </li><br /><br />  <li>ShowLineNumbers for all language files. <br />    <pre># Turn on line numbers for ALL language types<br />($DTE.Properties(&quot;TextEditor&quot;, &quot;AllLanguages&quot;) | where {$_.Name -eq &quot;ShowLineNumbers&quot; } ).Value = $true</pre><br />  </li><br /><br />  <li>Turn on whitespace? <br />    <pre># This doesn't work and I wish it did... <br />$DTE.ExecuteCommand(&quot;Edit.ViewWhiteSpace&quot;)<br /># Fails with: &quot;Command &quot;Edit.ViewWhiteSpace&quot; is not available.&quot;<br /># <strong>Maybe one of you can help me out?</strong></pre><br /><br />    <h4><br />      <ol>How can I find and setup the settings I like?</ol><br />    </h4><br />I’m no VS expert and only know as much about the $DTE object as what I’ve written about here, but I’ll give you some tips and you can go from there… </li><br /></ol><br /><br /><ul><br />  <li>Google/Bing are your friends. Type “DTE Visual Studio {TheThingYouWantToAccomplish}” </li><br /><br />  <li>After your search, most examples you find will be VB macros and as it turns out VB (in this case) translates nicely to PowerShell (EX:&#160; <br /><font size="3" face="Cordia New">&#160; VB Macro:&#160; DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br />      <br />PowerShell: <strong>$</strong>DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br /><br />      <br /></font>See the difference? (yep just the ‘$’ at the beginning of the PowerShell one) Nifty eh? </li><br /><br />  <li>Don’t be afraid to use PowerShell to search/filter things in the $DTE. Try this: <br />    <br /><font size="3" face="Cordia New">PM&gt;&#160; $DTE.Commands | <strong>where { $_.Name –match ‘Close’</strong> } | select { $_.Name } <br /><br />      <br /></font></li><br /></ul><br /><br /><ul>Happy VS Environment setting-uppers!</ul>  </div>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2012-11-01T16:55:00.000Z" pubdate data-updated="true">Nov 1st 2012</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">Slightly modified “CD” Command for PowerShell</a>. <br />Since that point, I’ve made a number of updates and would like to share them.<br />The first change I made was to move the “CD” script in that post to a <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1" target="_blank">new location</a>. I’ve greatly extended how I setup my development environment and how my PowerShell environment is initialized. <br /><blockquote><span style="background-color: white;">If you’re interested in how I setup my PS profile, take a look at the readme. Combine the setup with some <a href="http://chocolatey.org/" target="_blank">Chocolatey</a> and some <a href="http://boxstarter.codeplex.com/" target="_blank">BoxStarter</a> and you’re on your way to an amazingly automated development environment setup.</span></blockquote>Now on to the features I’ve added to the CD command.<br /><ul><li>I often would do something like “CD $Profile” (which is a no-go because that is a file not a directory, but my intent was to get into the directory where the $Profile file lived).      <br />      <br />So I updated it so if you try to CD to a file, it will just take you to the directory where the file resides.       </li><li>If you try to CD into a folder that doesn’t exist, it now prompts you to create it. <em>You could bypass the prompt with a -force|-f flag.</em><a href="http://lh6.ggpht.com/-60i1Gy9oDaI/UJKpYXRavXI/AAAAAAAAAbY/2hB0iIpFEmc/s1600-h/image6.png"><img alt="image" border="0" height="124" src="http://lh4.ggpht.com/-OcSX7gH6dz0/UJKpY8jiewI/AAAAAAAAAbg/zakK10j3HvU/image_thumb2.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="524" /></a>       </li><li>Lastly I fixed an issue reported by a commenter in the previous post about trying to CD into a folder with the same name as a history index. If you had a folder named “4” and you typed “CD 4” it previously wouldn’t take you the 4 directory, but instead lookup item 4 in your CD history and take you there. Now if you specify a number and that number lives in the current directory it will take precedence over your history value. <em>(To be fair, I only added this feature, and even since I originally wrote about the CD command I have yet to run into a need for this case. Probably because I don’t name my directories with numbers)</em>. </li></ul>Something I had only recently noticed is this script appears to work with other PowerShell drive providers. I only did a cursory test but can CD into the HKLM:\Software\MyTestFolderThatShouldntExist and it will prompt to create the ‘folder’. If I say yes, I end up with a new registry folder. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh5.ggpht.com/-eqb3EKYnXNo/UJKpadhpcFI/AAAAAAAAAbo/jBmQj4iLjgA/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /> Not sure how useful that is, but with the abstraction layer PowerShell drives give us it’s interesting.<br /><br />If you’d like to grab just the CD script you can download it here.    <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a><br /><br />Happy system navigation with PowerShell.</div>
-</div>
 
     </article>
   
@@ -370,6 +380,10 @@ A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -391,10 +405,6 @@ A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

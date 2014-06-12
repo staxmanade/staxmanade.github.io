@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">NuGet Project Uncovered: EventAggregator.Net</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">NuGet Project Uncovered: EventAggregator.Net</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-22T05:04:00.000Z" pubdate data-updated="true">Feb 21st 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/EventAggregator.Net" target="_blank">EventAggregator.Net</a> is a single C# file that can provide a basis for a simple in memory Pub/Sub event aggregator.</p>  <p>I extracted this out of my <a href="http://StatLight.codeplex.com" target="_blank">StatLight</a> project as I found that I often wanted a similar one and kept finding myself copy/pasting this into projects. I figured a single location for this project would be better and I use StatLight as the first dog bowl when I need to dog food the project.</p>  <p>If you’re familiar with the…</p>  <blockquote>   <p>Install-Package Caliburn.Micro.EventAggregator      <br /></p> </blockquote>  <p>…then you know probably know what this project is like. </p>  <p>Its history starts a few years ago when I read <a href="http://jeremydmiller.com/" target="_blank">Jeremey Miller’s</a> Braindump on <a href="http://codebetter.com/jeremymiller/2009/07/22/braindump-on-the-event-aggregator-pattern/" target="_blank">Event Aggregator Pattern</a> and decided I wanted rip out StatLight’s usage of the Prism event aggregator and replace it with a similar one to the one found in StoryTeller. It’s gone through quite a few revisions inside of StatLight since then and eventually made its way into its own project.</p>  <p>Some thanks have to go out to the great feedback and pull requests from <a href="https://github.com/JakeGinnivan" target="_blank">Jake Ginnivan</a> who found this project on his own (before I publicized it).</p>  <p>If you’re interested in using it, I’d recommend checking out the source’s test project and the SampleUsage project. The SampleUsage project demonstrates how you can configure the tool to publish events in an async mode.</p>  <p>One concept introduced in this EventAggregator is taking the IEventAggregator interface and breaking it up into two interfaces (<strong>IEventPublisher</strong> and <strong>IEventSubscriptionManager</strong>). This proved extremely useful when trying to diagnose components that did both aggregator subscription management vs ones that only published events. It even helped to easily diagnose components that did not correctly unregister objects.</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

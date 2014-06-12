@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/duplicate-dom-elements-with-same-id/">Duplicate DOM elements with the same ID</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/duplicate-dom-elements-with-same-id/">Duplicate DOM elements with the same ID</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-12-09T13:41:00.000Z" pubdate data-updated="true">Dec 9th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>This is a short post. Saving this snippet it for myself for later.</p>  <p>If you ever have a html DOM element with a duplicate ID value, how do you detect the issue? It’s sometimes hard to find/debug until you really understand what has happened.</p>  <p>Taking inspiration from the solution in the following stackoverflow question. <a href="http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom">http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom</a></p>  <p>I wrote little helper that will alert you early in the development phase if you do something that causes a DOM element with duplicate ID’s.</p>  <p>Place the following script at the bottom of your global master page footer during development, and you will be notified of any issues early in the process.</p>  <pre class="">// Requires: jQuery<br />(function(document, $){<br />    // little debug helper script to notify us when the <br />    // dom is updated with a contains duplicate ID'd elements<br />    $(document).bind('DOMNodeInserted', function (event) {<br /><br />        var duplicateDomElements = [];<br /><br />        $('[id]').map(function () {<br />            var ids = $('[id=' + this.id + ']');<br />            if (ids.length &gt; 1 &amp;&amp; ids[0] == this) {<br />                duplicateDomElements.push(this.id);<br />            }<br />        });<br /><br />        if (duplicateDomElements.length &gt; 0) {<br />            alert('Recent action duplicated a dom element ID with name(s) [' + duplicateDomElements + ']');<br />        }<br /><br />    });<br />})(document, jQuery);<br /><br /><br /><font face="Arial">How do others typically deal with the issue?</font></pre></div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -165,6 +166,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -186,10 +191,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-09-21T13:52:00.000Z" pubdate data-updated="true">Sep 21st 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I was experimenting recently with the .Net implementation of <a href="http://www.odata.org/" target="_blank">OData</a> and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net community’s definition of magic strings is close but seems slightly different from <a href="http://en.wikipedia.org/wiki/Magic_string_(programming)" target="_blank">Wikipedia</a>. Therefore the magic strings I’m talking about here are what you’ll find on such posts as “<a href="http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/19/functional-net-lose-the-magic-strings.aspx" target="_blank">Functional .Net – Lose the Magic Strings</a>.”</p>  <p>I don’t want to get into the magic string debate here, just that I want to snapshot this little helper (for when I need to remember to write it again and don’t want to “figure it out”). This is also not intended to be a complete overview of OData, but I will provide some getter starter links and tips (if you haven’t touched it).</p>  <h4>Enough background show me the code: (scroll to the bottom if you don’t care about the post)</h4>  <p>Let’s pretend we want to request a “Title” from the NetFlix OData api.</p>  <p>You can do this by going to the web browser and typing the following URL</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog/Titles()?$top=1">http://odata.netflix.com/catalog/Titles()?$top=1</a></p> </blockquote>  <p>Sweet. XML, yippie. Um, no thanks. Let’s try that again. Go download <a href="http://www.linqpad.net/" target="_blank">LinqPad</a> (read up on using <a href="http://coderjournal.com/2010/06/using-linqpad-to-query-stack-overflow/" target="_blank">LinqPad for querying an OData</a> store)</p>  <p>Once you’ve connected LinqPad to the NetFlix OData service (<a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog">http://odata.netflix.com/catalog</a>). Now we’re ready to play around. Our URL “query” above translates in to a C# LINQ statement that looks like the below in LinqPad.</p>  <pre class="brush: csharp;">(from title in Titles<br />select title).Take(1).Dump()</pre><br /><br /><blockquote><br />  <p>The<strong> .Dump()</strong> is a LinqPad extension method that displays the object in the results window.</p><br /></blockquote><br /><br /><p>If you execute this in LinqPad you will see some data about the first Title form the Netflix OData service. In the results window scroll all the way to the right. Notice all the properties that are supposed to be a Collection&lt;T&gt; but have no data? To retrieve these through OData you have to extend your LINQ query with the Expand(“{propertyName}”) method. </p><br /><br /><p>Let’s say we want to include AudioFormats collection when we ask for the first Title.</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(&quot;AudioFormats&quot;)<br />select title).Take(1).Dump()</pre><br /><br /><p>Notice how we have to explicitly tell the OData service to include this property when we retrieve it form the service. Not only do we explicitly tell the property name, but it’s a magic string (gag, hack, baaa) none the less. If you click on “SQL” in LinqPad result window it will show the URL used for OData queries. Our URL shows the expanded property. </p><br /><br /><blockquote><a title="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats&#13;&#10;" href="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats">http://odata.netflix.com/catalog/Titles()?$top=1&amp;<strong>$expand=AudioFormats</strong> <br /><br />    <br /></a></blockquote><br /><br /><p>Now let’s pretend (just for the sake of pretending) that your front end application’s entire data access strategy was going to sit on top of OData. Not saying this is a good thing (or a bad thing). Just sayin…</p><br /><br /><p>If you have a fairly complex data model and each screen in your application requests slightly different data in a slightly different way, but in the end it all essentially comes down to a set of entities and their relationships. What would you do if you had to “.Expand” all those magic stringed property names. Now, I know we’re all great at search and replace (of the magic strings). However every little step along the way where I can avoid a refactor that will break every other screen in the app, well, I think I just might take that.</p><br /><br /><p>Now, if you change your LinqPad query from a “C# Expression” to a “C# Program”. Copy the helper class at the bottom of this post in to the bottom of the LinqPad code window. You can now write your linq statement as follows</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(x=&gt; x.AudioFormats)<br />select title).Take(1).Dump();</pre><br /><br /><p>Notice the switch from magic strings to an intellisense helping, refactoring safe lambda? This trick is not new. You’ll see it in many .Net open source projects such as mocking frameworks, asp.net MVC projects etc…</p><br /><br /><p>Just wanted to write this little goodie down for the next time I need it. Hope this helps someone else as well.</p><br /><br /><pre class="brush: csharp;">public static class ServiceQueryExtension<br />{<br />    public static DataServiceQuery&lt;T&gt; Expand&lt;T, TProperty&gt;(<br />        this DataServiceQuery&lt;T&gt; entities, <br />        Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpressions)<br />    {<br />        string propertyName = propertyExpressions.GetMemberName();<br />        return entities.Expand(propertyName);<br />    }<br /><br />    public static string GetMemberName&lt;T, TProperty&gt;(this Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpression)<br />    {<br />        return ((MemberExpression)(propertyExpression.Body)).Member.Name;<br />    }<br />}</pre>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -173,6 +174,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -194,10 +199,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

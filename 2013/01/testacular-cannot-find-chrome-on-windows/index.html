@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-01-23T05:29:00.000Z" pubdate data-updated="true">Jan 22nd 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -165,6 +166,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -186,10 +191,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

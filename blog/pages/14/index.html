@@ -78,18 +78,85 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/">T4 Text Templating in Silverlight (Thanks Oleg Sych!)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2008-12-13T19:33:00.000Z" pubdate data-updated="true">Dec 13th 2008</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p>First if you're new text templating, please go read <a href="http://www.olegsych.com/"><strong>Oleg Sych's blog</strong></a>. This, as far as I've found, is the (Bible, Koran, TheWord, etc...) of visual studio's T4 Text Templating.</p>  <p>If you already know how to add a T4 template to a project, skip this how to and go to &quot;How to make a T4 template work with a Silverlight project:&quot;.</p>  <h4>How to add a T4 template to a Visual Studio .Net Project:</h4>  <p>Given the following project:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUQN_Pr532I/AAAAAAAAAC4/_x4OMFOOwK4/s1600-h/image%5B2%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="113" alt="Initial Silverlight Project" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUQN_fxvVsI/AAAAAAAAAC8/jzH_-wBKdgM/image_thumb.png?imgmax=800" width="198" border="0" /></a> </p>  <p>Bring up the add new item dialog.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQN_qg5PxI/AAAAAAAAADA/cABtBqHGrN4/s1600-h/image%5B6%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="171" alt="Add New Item" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQN_wRvlHI/AAAAAAAAADE/KXKPDylPW98/image_thumb%5B2%5D.png?imgmax=800" width="384" border="0" /></a> </p>  <p>Select a &quot;Text File&quot; and rename the extension to a .tt.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOAGcv8AI/AAAAAAAAADI/Fu1hXUKYd5k/s1600-h/image%5B19%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="264" alt="Add a new t4 template" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQOApnwZlI/AAAAAAAAADM/cbKFl7fmKBE/image_thumb%5B13%5D.png?imgmax=800" width="428" border="0" /></a> </p>  <p>You should end up with a .tt template file and under it where the generated out put of the template will land.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBOBPYtI/AAAAAAAAADQ/OqjSBzOcaM8/s1600-h/image%5B22%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="137" alt="T4Sample.tt" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBW7qKTI/AAAAAAAAADU/q3NVgQXtvFA/image_thumb%5B14%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>You may also notice the following errors in your errors pane.</p>  <ul>   <li>Compiling transformation: The type or namespace name 'CompilerError' does not exist in the namespace 'System.CodeDom.Compiler' (are you missing an assembly reference?) </li>    <li>Compiling transformation: The type 'System.CodeDom.Compiler.CompilerErrorCollection' is defined in an assembly that is not referenced. You must add a reference to assembly 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.      <br />Compiling transformation: 'System.CodeDom.Compiler.CompilerErrorCollection' does not contain a definition for 'Add' </li>    <li>A namespace does not directly contain members such as fields or methods </li> </ul>  <p> This is where Oleg Sych comes to the rescue...</p>  <h4>How to make a T4 template work with a Silverlight project:</h4>  <blockquote>   <p><strong>Side Note:</strong> So, I had a couple emails back and fourth with Oleg about trying to get T4 to work in Silverlight. Almost all of his emails had some sort of sentence that went like this. <em>&quot;Try adding {S<strong>omeSpecialT4RelatedWord</strong>} and then do {<strong>this special thing</strong>} and report your findings back to me&quot;. This is where the {S<strong>omeSpecialT4RelatedWord</strong>} would stump me. So I would search Google for &quot;T4 {S<strong>omeSpecialT4RelatedWord</strong>}&quot; </em>and <a href="http://www.olegsych.com/">Oleg Sych's blog</a> was the first hit for each search. And not only was it the first hit, but when I would look the post for that {S<strong>omeSpecialT4RelatedWord</strong>} the answer was there and exactly what I needed. Thanks Oleg.</p> </blockquote>  <p>&#160;</p>  <p>Fortunately, to get the T4 templates to work within a Silverlight project you only need to put an &lt;#@ assembly #&gt; directive telling the template where to get a reference to the System.dll.</p>  <p>Below is a sample template:</p>  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">&lt;#@ template language=<span style="color: #006080">&quot;C#&quot;</span> #&gt;<br />&lt;#@ assembly name=<span style="color: #006080">&quot;C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&quot;</span> #&gt;<br /><span style="color: #0000ff">namespace</span> SampleT4 <br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>And below is the output:</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #0000ff">namespace</span> SampleT4<br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>That's it!!!</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+@Bill I&#39;m afraid I don&#39;t have enough context to really help you. On top of that I haven&#39;t worked with silverlight in a long time :(.<br /><br />Hope you get it figured out.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bill Lanza</div>
+<div class='content'>
+I know this post is old, but....<br />I am using VS2010 and Silverlight and am trying to implement T4 templates with inheritence.  I create a baseclass.tt in a separate assembly and it compiles. However, when I try to inherit from it I get the error:<br /><br />An invalid base class was specified for the Transformation class. The base class must derive from Microsoft.VisualStudio.TextTemplating.TextTransformation. <br /><br />Is this not possible in SL?<br /><br />Thanks,<br />Bill</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Could you help me understand why you have to have a reference to the two different assemblies with the same type?</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Regarding Aquilax comment, using objects defined in both assemblies. Is there any solution for that problem ?<br /><br />Regards Swan B</div>
+</div>
+<div class='comment'>
+<div class='author'>Aquilax</div>
+<div class='content'>
+It works as long that you don&#39;t use objects defined in both assemblies, for example System.Text.RegularExpressions.Regex, otherwise it throws the exception:<br />Compiling transformation: The type &#39;System.Text.RegularExpressions.Regex&#39; exists in both &#39;c:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&#39; and &#39;c:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v3.0\system.dll&#39;</div>
+</div>
+<div class='comment'>
+<div class='author'>timvw</div>
+<div class='content'>
+Thanks for publishing this knowledge. Saved me a lot of time.</div>
+</div>
+<div class='comment'>
+<div class='author'>br1</div>
+<div class='content'>
+Thank you.</div>
+</div>
+<div class='comment'>
+<div class='author'>Алексей</div>
+<div class='content'>
+Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblogs.asp.net/alexeyzakharov/</div>
+</div>
+</div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -109,23 +176,24 @@ For the Frequency property's implementation, you probably just need to return th
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/is-my-hsa-trying-to-tell-me-something/">Is my HSA trying to tell me something?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/is-my-hsa-trying-to-tell-me-something/">Is my HSA trying to tell me something?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-05T19:02:00.000Z" pubdate data-updated="true">Dec 5th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -140,46 +208,48 @@ This comment has been removed by the author.</div>
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/">i4o with Silverlight (Compiles first try)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/">i4o with Silverlight (Compiles first try)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-03T06:48:00.000Z" pubdate data-updated="true">Dec 2nd 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/">Db4o with System.Transactions.TransactionScope</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/">Db4o with System.Transactions.TransactionScope</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-11-30T22:15:00.000Z" pubdate data-updated="true">Nov 30th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -204,46 +274,48 @@ Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archiv
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/wcf-silverlight-default-constructor-not/">WCF - Silverlight - Default constructor not called??</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/wcf-silverlight-default-constructor-not/">WCF - Silverlight - Default constructor not called??</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-11-25T06:02:00.000Z" pubdate data-updated="true">Nov 24th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/">unbound TFS project - how do I get the offline changes checked in?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/">unbound TFS project - how do I get the offline changes checked in?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-10-01T14:10:00.000Z" pubdate data-updated="true">Oct 1st 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -263,23 +335,24 @@ There is a button on the top of the solution explorer for going offline/online. 
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/how-can-c-variable-have-sign-in-front/">How can C# variable have an @ sign in front of it?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/how-can-c-variable-have-sign-in-front/">How can C# variable have an @ sign in front of it?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-09-14T04:26:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn&#39;t find anything on the net describing this and why it compiled.</p>
 <p>basically what I&#39;m talking about is if you have some code</p>
@@ -330,23 +403,24 @@ That is exactly what it is for, so you can use reserved words for variable names
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/wcf-service-proxy-inside-silverlight/">WCF Service Proxy inside Silverlight with a generic type</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/wcf-service-proxy-inside-silverlight/">WCF Service Proxy inside Silverlight with a generic type</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-09-14T01:32:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -386,23 +460,24 @@ Greg, <BR/><BR/>I will try to put together an example and post it here soon.</di
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">UnitDriven&#x27;s UI Gets a Minor Makeover</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">UnitDriven&#x27;s UI Gets a Minor Makeover</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -422,28 +497,6 @@ Thanks for the patch, I applied it today.</div>
 </div>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
-</div>
 
     </article>
   
@@ -487,6 +540,10 @@ If you have a class that needs to expose some value (either by a Property, or a 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -508,10 +565,6 @@ If you have a class that needs to expose some value (either by a Property, or a 
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

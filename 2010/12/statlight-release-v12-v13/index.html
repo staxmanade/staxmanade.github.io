@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/statlight-release-v12-v13/">StatLight release (V1.2 &amp; V1.3)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/statlight-release-v12-v13/">StatLight release (V1.2 &amp; V1.3)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-12-15T05:33:00.000Z" pubdate data-updated="true">Dec 14th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>This post is coming a little late (just realized I still had it in my local drafts and had not published it)…</p>  <p>Although I put out these blog posts (sometimes), the best way to learn about new releases is to subscribe to any of the myriad of Codeplex rss feeds for the project.</p>  <h4><a href="http://statlight.codeplex.com/releases/view/48242" target="_blank">StatLight V1.2</a> </h4>  <p>Released way back on Sep 25, 2010. Mostly a bug fix release, but came with a couple small features that could help out your Silverlight testing.</p>  <p>Features added:</p>  <ul>   <li>Support to test multiple Xaps at once:      <br />EX: StatLight.exe -x=&quot;C:\Project1\Test<i>1.xap&quot; -x=&quot;C:\Project2\Test</i>2.xap&quot; </li>    <li>QueryString command line parameter. This will pass a querystring along to the browser instance running the StatLight Silverlight host. Allowing you to grab the querystring and pull some information (config or other) into your test.      <ul>       <li><strong>EX:</strong> You may want to run some Silverlight Integration tests that talk back to some self hosted web server. Since detecting this automatically is not realistic, because the server and port your tests will detect is the StatLight server, you can’t just call back to “home base” (because that is StatLight’s web server) you need to somehow know where to configure your endpoints. With the QueryString parameter in StatLight, your build scripts can now pass in a known port of your self hosted web server, where your tests can then use to configure any test service calls. </li>     </ul>   </li> </ul>  <h4><a href="http://statlight.codeplex.com/releases/view/53742" target="_blank">StatLight V1.3</a> </h4>  <p>Released Nov 20, 2010. <strong>NOTE: This is the first build running on the .net 4.0 framework. If you need 3.5 support stick with the V1.2 build.</strong> Much like I did back on the V1.2 release, this release is marked as a “beta” build which I will change the status on the release page to stable if I don’t hear any issue come out of it in the next couple weeks.</p>  <p>This release comes with a feature I’ve been wishing for, for a while now. StatLight uses a web server internally to serve the content and receive messages from the Silverlight(StatLight) test runner. This web server was originally implemented with the WCF WebServiceHost. Unfortunately this required special administrative privileges to get up and running and although most developers have enough rights to not make this a problem, there are some who are not allowed to adjust these port privileges. Looking through Jeff Wilcox’s Microsoft Silverlight Testing framework server side code, I noticed he implemented a very simple web server with the HttpListener. After a quick spike I realized I could port his web server over into StatLight and gain some benefits other than just not requiring administrative privileges on a certain port. </p>  <p>Features added:</p>  <ul>   <li>New WebServer implementation      <ul>       <li>No requirement for elevated privileges </li>        <li>Faster startup time </li>        <li>With easier &amp; full control of the request/response cycle StatLight now prints out warnings if your tests are making service requests that they shouldn’t be. </li>     </ul>   </li>    <li>Introductory support to run external web browsers (instead of the self hosted control)      <ul>       <li>Firefox </li>        <li>Chrome </li>     </ul>   </li>    <li>Added support for NUnit’s TestCaseAttribute      <ul>       <li>Note this is not full support, but should work for many general cases. </li>     </ul>   </li> </ul>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -165,6 +166,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -186,10 +191,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

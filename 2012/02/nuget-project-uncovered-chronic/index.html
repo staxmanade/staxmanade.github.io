@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/">NuGet Project Uncovered: Chronic</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/">NuGet Project Uncovered: Chronic</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-02T00:23:00.000Z" pubdate data-updated="true">Feb 1st 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/List/Packages/Chronic" target="_blank">Chronic</a> is a port of <a href="https://github.com/mojombo/chronic" target="_blank">Ruby’s Chronic</a> providing some natural language parsing for dates.</p>  <p>This is a pretty cool little utility as it lets you take some input like "tomorrow” or “two weeks ago” and turn that into a DateTime object.</p>  <p>Take a look at some tests I pulled from <a href="https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs">https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs</a>.</p>  <blockquote>   <p>[Fact]    <br />public void seven_days_from_now_at_midnight()     <br />{     <br />Parse(" seven days from now at midnight")     <br />.AssertEquals(Time.New(2006, 8, 24));     <br />}</p>    <p>[Fact]    <br />public void _2_weeks_ago()     <br />{     <br />Parse("2 weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br />}</p>    <p>[Fact]    <br />public void two_weeks_ago()     <br />{     <br />Parse("two weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br /></p> </blockquote>  <p>I tried playing with it a bit. There seem to be some cases sensitivity issues with the codebase now as “tomorrow” works but “Tomorrow” doesn’t. But I think that’s a great reason to be on GitHub. Fork, fix, and send a pull request. All better…</p></div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

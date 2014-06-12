@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-06T04:31:00.000Z" pubdate data-updated="true">Feb 5th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

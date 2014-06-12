@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/03/nate-delegatefactory-to-bypass/">Nate&#x27;s DelegateFactory to bypass reflection for reading properties. (speed up i4o)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/03/nate-delegatefactory-to-bypass/">Nate&#x27;s DelegateFactory to bypass reflection for reading properties. (speed up i4o)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-03-09T07:15:00.000Z" pubdate data-updated="true">Mar 9th 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>So today I was perusing my blog list and ran across a blog by Rick Strahl (<a href="http://www.west-wind.com/Weblog/posts/653034.aspx">Dynamic Delegates with Expression Trees</a>) which is referencing this post by Nate Kohari (<a href="http://kohari.org/2009/03/06/fast-late-bound-invocation-with-expression-trees/">Fast Late-Bound Invocation with Expression Trees</a>). </p>  <p>I first just thought it was a very interesting post and thought, “<em>wow, next time I have to do something requiring a ton of reflection method calls I’ll have to remember this”</em>. I took off with the family for the day and sometime during the day the idea popped into my head about trying it to read property’s values (since they are actually just a method call under the hood). And I do have the perfect place to try and spike this idea… </p>  <p>One of the things I’ve done to the i4o library is try to reduce the calls to reflection whenever possible. And the only one left that I couldn’t get past was having to use the PropertyInfo’s GetValue reflection call to get at a value for creating the property index. This generally isn’t a big deal because we only have to do it once, however it makes the initialization of the IndexableCollection&lt;T&gt; fairly expensive.</p>  <p>So I decided to spike the idea of using the DelegateFactory from Nate’s blog to read an object’s property values. And below I’m including the project that I spiked to test this idea out.</p>  <p>It compares how fast we can read values out of an object’s property by first using reflection and second using the dynamic delegate.</p>  <p>If you read Ricks post above, he mentions how the dynamic delegate idea is a little reflection expensive up front. However it only happens once and I ran a couple of tests…(p.s. i noticed a small flaw in my timing, however I don’t want to re-zip &amp; re-upload the spike… so if you see the timing flaw, cool…)</p>  <p>I noticed that after about the first 5000 reads the expense of the heavy up front reflection from DelegateFactory started to become negligent. And the more reads the more powerful the new reading strategy became. Take 1/5 million reads for example… normal reflection reading took .78 seconds, while the delegate reading took only .03 seconds which is a substantial increase.</p>  <p><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/PropertyReadSpike.zip" frameborder="0" scrolling="no"></iframe></p>  <p>After that I spiked it in the i4o project and proved that this could significantly increase the index build time of the an IndexableCollection&lt;T&gt;. I shelved the spike and am having Aaron take a look at the idea. We’ll see, I haven’t come up with any reasons why this could cause any issues, so it may be included…</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I was playing around with some Silverlight profiling the other night to see if I could find any obvious issues with my open source project <a href="http://statlight.net" target="_blank">StatLight</a> and wound up writing a little script in PowerShell I hoped someone might find helpful.</p>  <h4>But I didn’t know you could profile a Silverlight app.</h4>  <p>I didn’t until I started doing some digging online. Now, the Silverlight profiling story (at least from what I’ve seen/tried) is not near the easy of say <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">Redgate ANTS Performance Profiler</a>. However, it’s do-able. (And with this helper script – hopefully a little simpler?)</p>  <h4>How can I profile a Silverlight Application?</h4>  <p>I would recommend you read the following blog, which explains one way of doing it very well.</p>  <p><a title="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx" href="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx">http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx</a></p>  <h4>So… what’s this script for?</h4>  <p>If you read the blog above, or have done this before, then you probably noticed that there was quite a series of commands you had to execute before you could wind up with a performance report. </p>  <p>I threw together a quick little PowerShell script in an attempt to automate smooth out the process.</p>  <h4>Hot do I use it?</h4>  <ol>   <li>Download the script &amp; save it somewhere. <a href="http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1"><strong>http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1</strong></a> </li>    <li>Open the PowerShell console. cd to the directory your xap/assemblies are stored.      <br />(EX: {myProject}\Bin\Debug\ ) </li>    <li>Execute:      <br />{pathToScript}\SilverlightProfiler.ps1 -urlPath &quot;{myProject}\Bin\Debug\TestPage.html&quot; </li>    <li>When your done profiling press enter to signal that your done.      <p></p> Once complete, it will print the location your profiling report was saved. You can then open it with Visual Studio. </li> </ol>  <h5>Couple of disclaimers.</h5>  <ul>   <li>Some paths are hard-coded to my x86 machine. </li>    <li>I had troubles running the built in visual studio .bat files (from powershell) that are supposed to set the environment variables. So I extracted out what vars I could find to make it work. </li>    <li>I’m not a profiling expert – just hacked this together to get it to work for me. </li> </ul>  <p>I hope this is useful, and if you know of a better way, I’m always interested in hearing your feedback.</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

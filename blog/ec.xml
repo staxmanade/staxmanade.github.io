@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link href="http://staxmanade.com"/>
-    <updated>2014-05-24T20:27:55Z</updated>
+    <updated>2014-06-03T16:38:06Z</updated>
     <id>/blog/ec.xml</id>
     <author>
         <name>Jason Jarrett</name>
@@ -12,6 +12,38 @@
     <link rel="self" href="/blog/ec.xml"/>
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Updating git branches.]]></title>
+        <id>http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</id>
+        <link href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">
+        </link>
+        <updated>2014-06-03T16:38:06Z</updated>
+        <summary type="html"><![CDATA[# How to update a git branch OTHER than the one you're currently on.]]></summary>
+        <content type="html"><![CDATA[<h1 id="how-to-update-a-git-branch-other-than-the-one-you-re-currently-on-">How to update a git branch OTHER than the one you&#39;re currently on.</h1>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don&#39;t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I was starting to dislike the switch branch dance to trigger a new build.</p>
+<h3 id="what-i-used-to-do-">What I used to do:</h3>
+<pre><code># When I was on the master branch
+git checkout release
+git merge master
+git push
+</code></pre><blockquote>
+<p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
+</blockquote>
+<h3 id="after-digging-a-bit-i-found-the-answer-">After digging a bit, I found the answer.</h3>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>So to trigger a new build from master I can just:</p>
+<pre><code>git branch -f release master
+git push origin release
+</code></pre><p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
+<p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
+<pre><code>git push origin local_branch:remote_branch
+</code></pre><p>So my workflow would look more like</p>
+<pre><code>git push origin master:release
+</code></pre><p>Happy Automation!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Introducing CommandAllThings]]></title>
         <id>http://staxmanade.com/2014/05/introducing-commandallthings/</id>

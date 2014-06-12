@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing more than to make life setting up your dev machine a piece of cake.</p>  <h4>What is Chocolatey?</h4>  <p>Straight from the <a href="http://chocolatey.org">Chocolatey.org</a> site:</p>  <blockquote>   <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with windows in mind.</p> </blockquote>  <p>If you’ve not ever used a linux machine or understand what the power of an “apt-get” like tool is, well It’s basically the simplest possible way to install an application to your machine. </p>  <p>What could be simpler than finding the app’s website, download the app, and next, next, next through the the installer? How about just typing “chocolaty install notepadplusplus” at a powershell command prompt? That simple little command will download and install Notepad++ right on your machine with virtually no need to interact with the installer. AWESOME!!!</p>  <blockquote>   <p><strong>Disclaimer!</strong></p>    <p>I know there are other installer applications out there that aggregate and install different&#160; programs; however, to be honest, I don’t use any of them. I am also going to assume that most of them aren’t catered to the windows developer (maybe I’m wrong). Either way I like this project and I’m just trying to share it with the community. <strong>So There…</strong></p> </blockquote>  <p>Ok, my above salesmanship is a little loud mouthy, but maybe your interest is peaked enough to give it a try.</p>  <h4>How do I install Chocolatey?</h4>  <p>It’s about as simple to install Chocolatey as it is to use Chocolatey to install other applications. One single powershell command. Just paste the below command in your powershell prompt and let er rip.</p>  <blockquote>   <p>First, make sure you have your powershell environment set to “Unrestricted”.<a href="http://lh6.ggpht.com/-4sSRlJeweTI/TozckReE5MI/AAAAAAAAASA/JG0ULKiPil0/s1600-h/image8.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/-Vviqle2o908/TozclWiZ6TI/AAAAAAAAASE/1-_0QwA6KAs/image_thumb4.png?imgmax=800" width="644" height="235" /></a></p> </blockquote>  <p>Run the Chocolatey install.</p>  <pre>  iex ((new-object net.webclient).DownloadString(&quot;http://bit.ly/psChocInstall&quot;))</pre><br />  <h4>Packages!</h4>  <p>Now that you have chocolatey installed, head over to the <a href="http://Chocolatey.org">Chocolatey.org</a> website and browse the packages you can now install.</p>  <p>EX:</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code&gt;<strong>chocolatey install notepadplusplus</strong></font></p> </blockquote>  <h4>How can I know when new packages are added to the Chocolatey.org feed?</h4>  <p>You can get more background on this approach by following my previous post <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></p>  <p>The direct RSS link I have is as follows:</p>  <blockquote>   <p><a href="http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <p>Plug that into your RSS reader and you should be notified when new packages are added to the Chocolatey.org feed.</p>  <p>Happy Setting up your Dev Machine!</p></div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

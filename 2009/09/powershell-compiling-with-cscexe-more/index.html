@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assembly references at compile time depending on certain build conditions… Don’t want to get too much in to why I needed it, just that it is doable – (more painful than initially expected), but still possible.</p> <p>First let’s get a csc command we want to compile.</p> <p>Second let me state that this was more of an exercise in wanting to learn PowerShell and there probably other ways of accomplishing what I needed, just seemed like a good time to start down the painful learning curve. Also note, I’m not a CSC compiler pro – I haven’t analyzed each of the “options” and weather it’s right/wrong/best practice – it just works… (thanks to Visual Studio &amp; MSBuild for hiding how we actually should use the compiler)</p> <p>Ok take a simple csc compile command – (In Visual Studio – File –&gt; New Project -&gt; ClassLibrary1 as a good starting point). Compile the project &amp; check the build output window. You’ll get an output similar to the below.</p> <blockquote> <p>C:\Windows\Microsoft.NET\Framework\v3.5\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\PowershellCscCompileSample.dll /target:library Class1.cs Properties\AssemblyInfo.cs</p></blockquote> <p>Next figure how the heck to execute this in PowerShell.</p> <p>&amp; $csc $params --- NOPE <br>exec $csc $params – NOPE</p> <p>I must have tried tens if not hundreds of methods to get the simple thing above to compile… needless to say I pinged a co-worker for some help. <a href="http://obsidience.blogspot.com/">http://obsidience.blogspot.com/</a></p> <p>His pointer – when trying to get big string command to execute in powershell do the following.</p> <ol> <li>Open up “Windows PowerShell ISE”&nbsp; (on Windows 7)  <li>Paste the command prompt window (with an “&amp;” at the beginning)  <li>look for any coloration changes like… <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y5kM2wwI/AAAAAAAAALs/UDwCw_-kLYs/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sr-y5_QAW5I/AAAAAAAAALw/NMkrfh4EjAA/image_thumb9.png?imgmax=800" width="644" height="30"></a>  <li>Next place PowerShell escape character [`] in front of any character where the coloration changes (They’re very subtle so look long and hard) <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y6I68cMI/AAAAAAAAAL0/ZFyN79A_4-o/s1600-h/image21.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Sr-y6j24noI/AAAAAAAAAL4/NmqVGw9aCkU/image_thumb11.png?imgmax=800" width="644" height="39"></a> </li></ol> <p>We should now have a PowerShell string that compiles our project.</p> <p>After I got that far – I cleaned up the compiler syntax for a little re-use. (You can download the project blow to check it out)</p> <p><iframe style="padding-bottom: 0px; background-color: #fcfcfc; padding-left: 0px; width: 98px; padding-right: 0px; height: 115px; padding-top: 0px" title="Preview" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedicon.aspx/Public/PowershellCscCompileSample.zip" frameborder="0" marginwidth="0" scrolling="no"></iframe></p> <p>If you don’t want to see the entire csc compile in the project download above, below is the general usage…</p><pre class="brush: plain;"><br /><br />################## Build Configuration ##################<br />$project_name = 'PowershellCscCompileSample'<br />$build_configuration = 'Debug'<br />#########################################################<br /><br />$core_assemblies_path = 'C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5'<br />$framework_assemblies_path = 'C:\Windows\Microsoft.NET\Framework\v2.0.50727'<br /><br />function global:Build-Csc-Command {<br />	param([array]$options, [array]$sourceFiles, [array]$references, [array]$resources)<br />	<br />	$csc = 'C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe'<br /><br />	# can't say I'm doing delimeters correctly, but seems to work ???<br />	$delim = [string]""""<br />	<br />	$opts = $options<br /><br />	if($references.Count -gt 0)<br />	{<br />		$opts += '/reference:' + $delim + [string]::Join($delim + ' /reference:' + $delim, $references) + $delim<br />	}<br /><br />	if($resources.Count -gt 0)<br />	{<br />		$opts += '/resource:' + $delim + [string]::Join($delim + ' /resource:' + $delim, $resources) + $delim<br />	}<br />	<br />	if($sourceFiles.Count -gt 0)<br />	{<br />		$opts += [string]::Join(' ', $sourceFiles)<br />	}<br />	<br />	$cmd = [string]::Join(" ", $options)<br />	$cmd = $csc + " " + $opts<br />	$cmd;<br />}<br /><br />function global:Execute-Command-String {<br />	param([string]$cmd)<br />	<br />	# this drove me crazy... all I wanted to do was execute<br />	# something like this (excluding the [])<br />	#<br />	# [& $csc $opts] OR [& $cmd]<br />	#<br />	# however couldn't figure out the correct powershell syntax...<br />	# But I was able to execute it if I wrote the string out to a <br />	# file and executed it from there... would be nice to not <br />	# have to do that.<br /><br />	$tempFileGuid = ([System.Guid]::NewGuid())<br />	$scriptFile = ".\temp_build_csc_command-$tempFileGuid.ps1"<br />	Remove-If-Exist $scriptFile<br /><br />	Write-Host ''<br />	Write-Host '*********** Executing Command ***********'<br />	Write-Host $cmd<br />	Write-Host '*****************************************'<br />	Write-Host ''<br />	Write-Host ''<br /><br />	$cmd >> $scriptFile<br />	& $scriptFile<br />	Remove-If-Exist $scriptFile<br />}<br /><br />function global:Remove-If-Exist {<br />	param($file)<br />	if(Test-Path $file)<br />	{<br />		Remove-Item $file -Force -ErrorAction SilentlyContinue<br />	}<br />}<br /><br />$resources = @(<br />	#"<path to resource files>"<br />)<br /><br />$references = @(<br />	"$core_assemblies_path\System.Core.dll",<br />	"$framework_assemblies_path\System.dll"<br />)<br /><br />$sourceFiles = @(<br />	#"<path to some source file not under the main project's folder - EX: Linked files in other projects>"<br />)<br /><br />$sourceFiles += Get-ChildItem '.' -recurse `<br />	| where{$_.Extension -like "*.cs"} `<br />	| foreach {$_.FullName} `<br /><br />$debug = if($build_configuration.Equals("Release")){ '/debug-'} else{ "/debug+" }<br /><br />$options = @(<br />	'/noconfig',<br />	'/nowarn:1701`,1702', # Note: the escape [`] character before the comma<br />	'/nostdlib-',<br />	'/errorreport:prompt',<br />	'/warn:4',<br />	$debug,<br />	"/define:$build_configuration``;TRACE",  # Note: the escape [`] character before the comma<br />	'/optimize+',<br />	"/out:$project_name\bin\$build_configuration\ClassLibrary.dll",<br />	'/target:library'<br />)<br /><br />$cmd = Build-Csc-Command -options $options -sourceFiles $sourceFiles -references $references -resources $resources<br /><br />Execute-Command-String $cmd<br /></pre><pre class="brush: plain;">&nbsp;</pre><font face="Courier New"></font><pre class="brush: plain;"></pre>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -173,6 +174,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -194,10 +199,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

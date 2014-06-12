@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

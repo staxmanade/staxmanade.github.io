@@ -78,18 +78,62 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2014-06-03T16:38:06.494Z" pubdate data-updated="true">Jun 3rd 2014</time>
+
+
+
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
+    </p>
+    
+</header>
+
+<div class="entry-content"><h1 id="how-to-update-a-git-branch-other-than-the-one-you-re-currently-on-">How to update a git branch OTHER than the one you&#39;re currently on.</h1>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don&#39;t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I was starting to dislike the switch branch dance to trigger a new build.</p>
+<h3 id="what-i-used-to-do-">What I used to do:</h3>
+<pre><code># When I was on the master branch
+git checkout release
+git merge master
+git push
+</code></pre><blockquote>
+<p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
+</blockquote>
+<h3 id="after-digging-a-bit-i-found-the-answer-">After digging a bit, I found the answer.</h3>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>So to trigger a new build from master I can just:</p>
+<pre><code>git branch -f release master
+git push origin release
+</code></pre><p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
+<p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
+<pre><code>git push origin local_branch:remote_branch
+</code></pre><p>So my workflow would look more like</p>
+<pre><code>git push origin master:release
+</code></pre><p>Happy Automation!</p>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1 id="some-background">Some background</h1>
@@ -116,23 +160,24 @@
 <p>Happy Commanding!</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-05-18T17:27:29.000Z" pubdate data-updated="true">May 18th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/#disqus_thread" data-disqus-identifier="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><h1 id="challenge">Challenge</h1>
 <p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
@@ -218,23 +263,24 @@
 <p>Best of luck on your port to TypeScript.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-20T03:19:53.000Z" pubdate data-updated="true">Apr 19th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -301,23 +347,24 @@
 <p>My worry is that some of these don&#39;t have the best spell-check support - so here&#39;s hoping I double-check my work along the way :P.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-19T03:19:53.000Z" pubdate data-updated="true">Apr 18th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -369,23 +416,24 @@
 <p>Now you&#39;ve hopefully migrated your blog&#39;s RSS subscribers automatically without loosing any.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-18T03:19:53.000Z" pubdate data-updated="true">Apr 17th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -436,23 +484,24 @@
 <p>You can use <a href="http://codercorral.com/blog/2013/07/24/how-to-setup-a-custom-domain-with-octopress-slash-github-pages/">this post</a> for a quick and simple walk through.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-17T03:20:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -562,23 +611,24 @@
 </blockquote>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-17T03:19:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -643,23 +693,24 @@
 <p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn&#39;t able to fix up all of my external links, but that&#39;s the way of the web unfortunately. I haven&#39;t done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-16T03:19:53.000Z" pubdate data-updated="true">Apr 15th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -740,23 +791,24 @@
 </blockquote>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2014-04-15T03:19:53.000Z" pubdate data-updated="true">Apr 14th 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>﻿
 <div class="seriesNote">
@@ -839,82 +891,6 @@
 </code></pre>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Migrating from BlogSpot to Octopress - Part 2 - Setup Octopress</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2014-04-14T03:19:53.000Z" pubdate data-updated="true">Apr 13th 2014</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 2</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        
-        <li>
-            Part 2 - (current) - Setup Octopress
-        </li>
-        
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-        
-    </ul>
-</div></p>
-<p>Luckily for all of us, this post will be short as the <a href="http://octopress.org/docs/setup/">Octopress Setup</a> guide is a great place to start. Only additions I have to add are that I&#39;ve set this up on both a Mac and a Windows 8 machine.</p>
-<p>I had to execute the <code>rake setup_github_pages[repo]</code> on both machines. I should probably <a href="http://www.hanselman.com/blog/PleaseLearnToThinkAboutAbstractions.aspx">look under the abstraction</a> and understand a little deeper - but I&#39;ll have to save that for later. For now I have work to do...</p>
-<h3 id="on-my-mac-">On my Mac:</h3>
-<ul>
-<li>Things worked out quite smoothly on the Mac.</li>
-<li>This is where I ran my initial import of the blog (see later posts in the series).</li>
-</ul>
-<h3 id="on-my-windows-8-machine-">On my Windows 8 machine:</h3>
-<ul>
-<li>This environment seemed harder to get going</li>
-<li>The hardest part on Windows 8 was getting the right combination of ruby, ruby dev kit, and various other dependencies installed. The dependencies for Octopress installation are compatible with later versions of Ruby but the gems needed for blog import are only supported in Ruby 1.9.3 at the time of this writing. Since I don&#39;t use Ruby on Windows for anything else, I eventually ended up uninstalling all versions I&#39;d previously had (including cleaning up any environment path variables). Re-installing just what I needed and eventually got it working. Another route is to use <a href="https://github.com/scottmuc/yari">Scott Muc&#39;s yari</a> which allows you to toggle the version of Ruby that you&#39;re using.</li>
-<li><a href="http://blog.zerosharp.com/setting-up-octopress-on-windows/">Thanks to this post</a> to get started on the windows. Some steps I excluded since I&#39;d alredy setup the blog initially on my Mac.</li>
-</ul>
-<p>Now I can use the power of git to manage my website and blog and I can leverage whatever development tools I would like depending on the platform. If you are new to Octopress it is helpful to study the documentation and structure of the files within your cloned repository. The first thing to note is that you have two branches in the repository: the source branch contains the Ruby scripts and utilities you will use to generate your blog content. The master branch is where your published content will live. The second thing to note is that while you can do the git integrations yourself for deploying the blog, it is best to stick to the RAKE task for deploying your content. This will automate copying your content to the _deploy subdirectory and pushing the update to the master branch. </p>
-</div>
 
     </article>
   
@@ -956,6 +932,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -977,10 +957,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

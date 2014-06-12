@@ -78,41 +78,66 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/">StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
-  <time datetime="2010-05-31T03:00:00.000Z" pubdate data-updated="true">May 30th 2010</time>
+  <time datetime="2010-09-21T13:52:00.000Z" pubdate data-updated="true">Sep 21st 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
-<p><img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=StatLight&amp;DownloadId=95275&amp;Build=16586" /></p>  <p>About a week ago (May 21st 2010) I uploaded the v1.0 release of <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a>. You can review the list of changes on the <a href="http://statlight.codeplex.com/releases/view/40090" target="_blank">StatLight v1.0 release page</a>. </p>  <p>I knew once I marked it v1.0, I would probably have updates to it &amp; sure enough… Microsoft’s <a href="http://www.jeff.wilcox.name" target="_blank">Jeff Wilcox</a> released a new version of the <a href="http://www.jeff.wilcox.name/2010/05/sl3-utf-bits/" target="_blank">Microsoft.Silverlight.Testing</a>.</p>  <p>I also incorporated some work done by <a href="http://www.justnbusiness.com/" target="_blank">Justin</a> who recently released a version of the <a href="http://unitdriven.codeplex.com/" target="_blank">UnitDriven</a> framework.</p>  <p>So there’s now a <a href="http://statlight.codeplex.com/releases/view/46227" target="_blank">v1.1</a> build out.</p>  <p>Happy Silverlight Testing!</p>  </div>
+<p>I was experimenting recently with the .Net implementation of <a href="http://www.odata.org/" target="_blank">OData</a> and ran across one of my pet peeves. “Magic Strings”. Apparently, the .Net community’s definition of magic strings is close but seems slightly different from <a href="http://en.wikipedia.org/wiki/Magic_string_(programming)" target="_blank">Wikipedia</a>. Therefore the magic strings I’m talking about here are what you’ll find on such posts as “<a href="http://codebetter.com/blogs/matthew.podwysocki/archive/2009/03/19/functional-net-lose-the-magic-strings.aspx" target="_blank">Functional .Net – Lose the Magic Strings</a>.”</p>  <p>I don’t want to get into the magic string debate here, just that I want to snapshot this little helper (for when I need to remember to write it again and don’t want to “figure it out”). This is also not intended to be a complete overview of OData, but I will provide some getter starter links and tips (if you haven’t touched it).</p>  <h4>Enough background show me the code: (scroll to the bottom if you don’t care about the post)</h4>  <p>Let’s pretend we want to request a “Title” from the NetFlix OData api.</p>  <p>You can do this by going to the web browser and typing the following URL</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog/Titles()?$top=1">http://odata.netflix.com/catalog/Titles()?$top=1</a></p> </blockquote>  <p>Sweet. XML, yippie. Um, no thanks. Let’s try that again. Go download <a href="http://www.linqpad.net/" target="_blank">LinqPad</a> (read up on using <a href="http://coderjournal.com/2010/06/using-linqpad-to-query-stack-overflow/" target="_blank">LinqPad for querying an OData</a> store)</p>  <p>Once you’ve connected LinqPad to the NetFlix OData service (<a title="http://odata.netflix.com/catalog/Titles()?$top=1" href="http://odata.netflix.com/catalog">http://odata.netflix.com/catalog</a>). Now we’re ready to play around. Our URL “query” above translates in to a C# LINQ statement that looks like the below in LinqPad.</p>  <pre class="brush: csharp;">(from title in Titles<br />select title).Take(1).Dump()</pre><br /><br /><blockquote><br />  <p>The<strong> .Dump()</strong> is a LinqPad extension method that displays the object in the results window.</p><br /></blockquote><br /><br /><p>If you execute this in LinqPad you will see some data about the first Title form the Netflix OData service. In the results window scroll all the way to the right. Notice all the properties that are supposed to be a Collection&lt;T&gt; but have no data? To retrieve these through OData you have to extend your LINQ query with the Expand(“{propertyName}”) method. </p><br /><br /><p>Let’s say we want to include AudioFormats collection when we ask for the first Title.</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(&quot;AudioFormats&quot;)<br />select title).Take(1).Dump()</pre><br /><br /><p>Notice how we have to explicitly tell the OData service to include this property when we retrieve it form the service. Not only do we explicitly tell the property name, but it’s a magic string (gag, hack, baaa) none the less. If you click on “SQL” in LinqPad result window it will show the URL used for OData queries. Our URL shows the expanded property. </p><br /><br /><blockquote><a title="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats&#13;&#10;" href="http://odata.netflix.com/catalog/Titles()?$top=1&amp;$expand=AudioFormats">http://odata.netflix.com/catalog/Titles()?$top=1&amp;<strong>$expand=AudioFormats</strong> <br /><br />    <br /></a></blockquote><br /><br /><p>Now let’s pretend (just for the sake of pretending) that your front end application’s entire data access strategy was going to sit on top of OData. Not saying this is a good thing (or a bad thing). Just sayin…</p><br /><br /><p>If you have a fairly complex data model and each screen in your application requests slightly different data in a slightly different way, but in the end it all essentially comes down to a set of entities and their relationships. What would you do if you had to “.Expand” all those magic stringed property names. Now, I know we’re all great at search and replace (of the magic strings). However every little step along the way where I can avoid a refactor that will break every other screen in the app, well, I think I just might take that.</p><br /><br /><p>Now, if you change your LinqPad query from a “C# Expression” to a “C# Program”. Copy the helper class at the bottom of this post in to the bottom of the LinqPad code window. You can now write your linq statement as follows</p><br /><br /><pre class="brush: csharp;">(from title in Titles.Expand(x=&gt; x.AudioFormats)<br />select title).Take(1).Dump();</pre><br /><br /><p>Notice the switch from magic strings to an intellisense helping, refactoring safe lambda? This trick is not new. You’ll see it in many .Net open source projects such as mocking frameworks, asp.net MVC projects etc…</p><br /><br /><p>Just wanted to write this little goodie down for the next time I need it. Hope this helps someone else as well.</p><br /><br /><pre class="brush: csharp;">public static class ServiceQueryExtension<br />{<br />    public static DataServiceQuery&lt;T&gt; Expand&lt;T, TProperty&gt;(<br />        this DataServiceQuery&lt;T&gt; entities, <br />        Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpressions)<br />    {<br />        string propertyName = propertyExpressions.GetMemberName();<br />        return entities.Expand(propertyName);<br />    }<br /><br />    public static string GetMemberName&lt;T, TProperty&gt;(this Expression&lt;Func&lt;T, TProperty&gt;&gt; propertyExpression)<br />    {<br />        return ((MemberExpression)(propertyExpression.Body)).Member.Name;<br />    }<br />}</pre>  </div>
 </div>
+
 
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-databind-to-anonymous-type/">Silverlight – DataBind to an Anonymous type (Who knew?)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/">StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2010-05-31T03:00:00.000Z" pubdate data-updated="true">May 30th 2010</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p><img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=StatLight&amp;DownloadId=95275&amp;Build=16586" /></p>  <p>About a week ago (May 21st 2010) I uploaded the v1.0 release of <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a>. You can review the list of changes on the <a href="http://statlight.codeplex.com/releases/view/40090" target="_blank">StatLight v1.0 release page</a>. </p>  <p>I knew once I marked it v1.0, I would probably have updates to it &amp; sure enough… Microsoft’s <a href="http://www.jeff.wilcox.name" target="_blank">Jeff Wilcox</a> released a new version of the <a href="http://www.jeff.wilcox.name/2010/05/sl3-utf-bits/" target="_blank">Microsoft.Silverlight.Testing</a>.</p>  <p>I also incorporated some work done by <a href="http://www.justnbusiness.com/" target="_blank">Justin</a> who recently released a version of the <a href="http://unitdriven.codeplex.com/" target="_blank">UnitDriven</a> framework.</p>  <p>So there’s now a <a href="http://statlight.codeplex.com/releases/view/46227" target="_blank">v1.1</a> build out.</p>  <p>Happy Silverlight Testing!</p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-databind-to-anonymous-type/">Silverlight – DataBind to an Anonymous type (Who knew?)</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2010-05-23T02:36:00.000Z" pubdate data-updated="true">May 22nd 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -137,115 +162,120 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I was playing around with some Silverlight profiling the other night to see if I could find any obvious issues with my open source project <a href="http://statlight.net" target="_blank">StatLight</a> and wound up writing a little script in PowerShell I hoped someone might find helpful.</p>  <h4>But I didn’t know you could profile a Silverlight app.</h4>  <p>I didn’t until I started doing some digging online. Now, the Silverlight profiling story (at least from what I’ve seen/tried) is not near the easy of say <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">Redgate ANTS Performance Profiler</a>. However, it’s do-able. (And with this helper script – hopefully a little simpler?)</p>  <h4>How can I profile a Silverlight Application?</h4>  <p>I would recommend you read the following blog, which explains one way of doing it very well.</p>  <p><a title="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx" href="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx">http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx</a></p>  <h4>So… what’s this script for?</h4>  <p>If you read the blog above, or have done this before, then you probably noticed that there was quite a series of commands you had to execute before you could wind up with a performance report. </p>  <p>I threw together a quick little PowerShell script in an attempt to automate smooth out the process.</p>  <h4>Hot do I use it?</h4>  <ol>   <li>Download the script &amp; save it somewhere. <a href="http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1"><strong>http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1</strong></a> </li>    <li>Open the PowerShell console. cd to the directory your xap/assemblies are stored.      <br />(EX: {myProject}\Bin\Debug\ ) </li>    <li>Execute:      <br />{pathToScript}\SilverlightProfiler.ps1 -urlPath &quot;{myProject}\Bin\Debug\TestPage.html&quot; </li>    <li>When your done profiling press enter to signal that your done.      <p></p> Once complete, it will print the location your profiling report was saved. You can then open it with Visual Studio. </li> </ol>  <h5>Couple of disclaimers.</h5>  <ul>   <li>Some paths are hard-coded to my x86 machine. </li>    <li>I had troubles running the built in visual studio .bat files (from powershell) that are supposed to set the environment variables. So I extracted out what vars I could find to make it work. </li>    <li>I’m not a profiling expert – just hacked this together to get it to work for me. </li> </ul>  <p>I hope this is useful, and if you know of a better way, I’m always interested in hearing your feedback.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/03/diffing-tool-feature-request/">Diffing tool feature request</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/03/diffing-tool-feature-request/">Diffing tool feature request</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-03-22T04:08:00.000Z" pubdate data-updated="true">Mar 21st 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>Most of us have probably tried different versions of a file diffing tool. Some are picky about their choice. Personally I’m fond of two different tools (mostly because they’re easy to find/install and setup). Here’s a post where I talk about how I like to integrate these tools when working with <a href="http://msdn.microsoft.com/en-us/teamsystem/dd408382.aspx">TFS</a> and Visual Studio - <a href="/2009/08/development-environment-mergecompare">/2009/08/development-environment-mergecompare.html</a></p>  <p>A couple months ago, I _slowly_ started learning <a href="http://git-scm.com/">Git</a>. Since that initial plunge, I’m now in a place where much of it still scary unknown; however, I know enough get what I need done. And when I get to the point where I need to do something I’ve never done, well I go figure it out, and it becomes another part of the personal Git toolbox.</p>  <p>I’ve been working git solely through the command line (in PowerShell actually). I know it’s not the best place to take full advantage of <a href="http://git-scm.com/">Git</a>; however, it’s working for me. </p>  <p>The other day needed to review changes in a file back in the commit history. Up until this point I had only diff’d uncommitted files with the most recent version of that file, and I already wired a visual diffing tool where I could then use the “git difftool …” command to review differences. </p>  <p>However this was the first time I had to look at a file further back in time than the head. After a quick search I came across the “<a href="http://ftp.sunet.se/pub/Linux/kernel.org/software/scm/git/docs/gitk.html">gitk</a>” command. gitk is “The git repository browser”. I’ve known about this tool, however am trying to keep with the command line tools. (Except for diffing files)</p>  <p>Below is the UI when running the “gitk build-tasks.ps1” in the root of the <a href="http://statlight.net" target="_blank">StatLight</a> project.</p>  <p>Notice how there’s a list of changes to the file, and under that the diff of the previous version to the selected version.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btMyZortI/AAAAAAAAAN4/TTo1Bfy1OQc/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btONpjuqI/AAAAAAAAAN8/mrgvUVTrIj8/image_thumb2.png?imgmax=800" width="810" height="638" /></a> </p>  <p>One thing do like about the above, is the list of revisions and how they are right there in your face. Going back in time is really easy. My only problem is I’m not accustomed to the linux style diffing, and still prefer the side/by side file diffing.</p>  <p>On to the feature request…</p>  <h4>What problem is this new feature trying to solve?</h4>  <p>The problem of having a file diff between version E &amp; F and then needing to look at the previous version to E. (easily) <strong>AND</strong> show the different versioned files side by side <strong>AND</strong> make it easy and intuitive to go back in time.</p>  <h4>How might this feature request look?<img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://i.zdnet.com/blogs/iphone-touchscreen.png" width="130" height="129" /></h4>  <p>Maybe someone is doing this, maybe not. It would be interesting to leverage a (mouse drag – or text command [EX: Ctrl+Alt+Right Arrow]) to “pan” between versions through file diffing view. Kind of like you can drag the pictures on an iPhone to view the previous or next one. I could drag the mouse across the screen to pan to the previous/next view of the diff. </p>  <p>&#160;</p>  <p>Below is a quick mockup of the thought – definitely far from refined. </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S6btOnz3LRI/AAAAAAAAAOA/FDCh-WJo2_k/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S6btPwPn4pI/AAAAAAAAAOE/YrXZIPjUtUQ/image_thumb5.png?imgmax=800" width="1017" height="380" /></a></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <h4>One challenge to true implementation?</h4>  <p>The main problem to solve (if you write a generic text diffing tool) is needing to interface with different <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a>’s so you can retrieve the the previous/next versions of the file. Basically having to know what <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a> the file is under.</p>  <p>&#160;</p>  <p>Anyone mind taking this project on and implementing this in one of the decent open source file diffing tools out there? (ex: <a href="http://winmerge.org/">http://winmerge.org/</a>)&#160; I would love you for it. Well… I’d buy you a beer.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>Today I was testing a long running task where my basic scenario was to execute at the PowerShell prompt.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test1.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test2.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test3.txt</p> </blockquote>  <p>Change some code and do it all over again.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test4.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test5.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test6.txt</p> </blockquote>  <p>Although seemingly simple and really not that tough. It became really inefficient because I didn’t like sitting there waiting for it to finish. I was off reading blogs, responding to email, investigating other coding issues and generally forgetting about the long running tasks in the background. On top of that, when I came back to it I couldn’t remember what the last run was (was that test 2 or 3 or 5?) without querying disk to see what it was.</p>  <p>Sine I had all this time to kill in between test runs, I wrote a quick PowerShell script that would fully automate test 1,2,3 and stop. This was great and the first time I ran it was much more efficient as I didn’t have to keep checking back to see when to start it up again.</p>  <p>However, I not only had time to kill, but now I had 3 times that time to kill. I decided to elaborate on the script. I searched the tubes for a way to play a sound when a task was done, so I could be notified as to it’s progress, and completion.</p>  <p>I stumbled upon this blog, which was great for showing me how to play sounds within PowerShell.</p>  <p><a href="http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html">http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html</a></p>  <p>I implemented the sounds and was off and running on another batch of testing, all tuned in to the sounds of progress.</p>  <p>Her we go again, more time to think about how to improve the process (that I’m not even trying to improve).</p>  <p>What if the script talked back to me? Some more googlefoo and I found this great example blog.</p>  <p><a href="http://huddledmasses.org/powershell-speaks/">http://huddledmasses.org/powershell-speaks/</a></p>  <p>Basically using the built in <a href="http://en.wikipedia.org/wiki/Microsoft_Speech_API">Microsoft speech api’s</a> you can get PowerShell to talk to you. This was just too much fun for the day. </p>  <p>At the end of the day the script below is basically what I was using. Don’t have too much fun, as you might not get any real work done…</p>  <p>The content of this blog isn’t necessarily top notch, but I just had to blog about it, as I was very impressed as to how easy it was to work with the speech api’s. Never knew it could be so easy to make a script verbally interactive.</p>  <pre>$Voice = new-object -com SAPI.SpVoice<br /><br />function speak([string] $msg)<br />{<br />    $Voice.Speak( $msg, 1 )<br />}<br /><br />function execScriptWithNotify([string] $completionMessage, [scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br />    speak $completionMessage<br />}<br /><br />function execLongRunningTask([scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br /><br />    Write-Host &quot;Long running task complete!&quot;<br />    speak &quot;All tasks are done!&quot;<br />}<br /><br /><br /># Start the long running task<br />execLongRunningTask {<br /><br />    #***************************************************************<br />    #***************** How many times to run task? ***************** <br />    #***************************************************************<br />    $iterationCount = 3<br />    <br />    for ($i=1; $i -le $iterationCount; $i++)<br />    {<br />        execScriptWithNotify &quot;Task $i Complete&quot; {<br />        <br />            #***************************************************************<br />            #***************** Long Running Task Goes Here ***************** <br />            #***************************************************************<br />            Write-Host &quot;begin long running task # $i&quot;<br />            [System.Threading.Thread]::Sleep(3000);<br />            Write-Host &quot;end   long running task # $i&quot;<br />            #***************************************************************<br />            #***************************************************************<br />            #***************************************************************<br />        }<br />    }<br /><br />}</pre>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/">C# 4.0 Optional Parameters – Exploration.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/">C# 4.0 Optional Parameters – Exploration.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-01-28T22:09:00.000Z" pubdate data-updated="true">Jan 28th 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>{… Removed big long story about how I ended up writing this post which provides no value to the blog…}</p>  <p>Summary of big long story to at least give a little context as to why (yet another post on optional parameters):</p>  <blockquote>   <p>I threw an idea out to the <a href="http://code.google.com/p/moq/">Moq</a> discussion group of how we could use the <a href="http://msdn.microsoft.com/en-us/library/dd264739(VS.100).aspx">named/optional</a> parameters in a future version of Moq. (<a href="http://groups.google.com/group/moqdisc/browse_thread/thread/de73db381cacee9b/a6fa5cff1e7b0cc8?lnk=gst&amp;q=Ideas+for+v4+sugar#a6fa5cff1e7b0cc8">you can read the thread here</a>) In my original feature request I displayed my lack of concrete knowledge in the named/optional parameters support that is eventually coming with .net 4.0.</p> </blockquote>  <p>Once I learned that you could place default values on interfaces it left me with questions… So, what better way to figure them out? Go test it…</p>  <p><strong>Disclaimer</strong>: (Shouldn’t every blog have some context enlightening disclaimer?)     <br />I haven’t looked up best practices or lessons learned from people that have had this language feature (VB), so I’m just doing this as an experiment for myself. Hope some of my findings help the other C#’ers wanting to learn a little about the feature.</p>  <h4>What are optional parameters? </h4>  <p><a href="http://www.dimecasts.net">DimeCasts.Net</a>, <a href="http://www.dimecasts.net/Casts/ByAuthor/Derik%20Whittaker">Derik Whittaker</a> has a nice intro video <a href="http://www.dimecasts.net/Casts/CastFeedDetails/153?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+Dimecastsnet--InformAndEducateIn10MinutesOrLess+(DimeCasts.Net+--+Inform+and+Educate+in+~+10+minutes+or+less)&amp;utm_content=Google+Reader"># 153 - Exploring .Net 4 Features - Named and Optional Parameters</a></p>  <p>OR check out - <a href="http://tinyurl.com/yz3pc9o">http://tinyurl.com/yz3pc9o</a></p>  <p>&#160;</p>  <h4>Can an interface define a default value?</h4>  <p><strong>Yes!</strong>     <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILApwzkNI/AAAAAAAAANU/Ydi4SHTsePA/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILA63cf3I/AAAAAAAAANY/WnbpitXg4IM/image_thumb3.png?imgmax=800" width="286" height="124" /></a> </p>  <h5>&#160;</h5>  <h4>Can I specify a default in the concrete implementation, if the interface has a default also?</h4>  <p><strong>Yes!</strong></p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILBNcSRYI/AAAAAAAAANc/mZmlaInB4OQ/s1600-h/image13.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILBmlHVtI/AAAAAAAAANg/gagdT5CuMVs/image_thumb5.png?imgmax=800" width="370" height="276" /></a> </p>  <h4>What happens when the concrete implementation has a different default value than the interface’s default?</h4>  <p><strong>If the interface has a default value specified, that is different from the concrete implementation, then it depends on what reference you’re using when executing the method.</strong></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S2ILB0Ic0PI/AAAAAAAAANk/TDRVo_bYV5w/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S2ILCJiKGfI/AAAAAAAAANo/yQ15IDDZnc0/image_thumb7.png?imgmax=800" width="381" height="275" /></a> </p>  <p>In the case below we are executing the method directly off of the Foo instance and will therefore get the concrete implementation’s default value when executing.</p>  <blockquote>   <p><strong>(new Foo()).Bar()</strong> – would use the value of ‘1000’.<strong> </strong><strong></strong></p> </blockquote>  <p>And in the case below we cast the Foo instance to an IFoo and it will then use the interfaces default value when executing.</p>  <blockquote>   <p><strong>((IFoo) new Foo()).Bar() </strong>– would use the value of ‘1’. </p> </blockquote>  <p>Below are some examples of the different use cases.</p>  <pre class="brush: csharp;">[TestClass]<br />public class UnitTest1<br />{<br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value()<br />    {<br />        Foo f1 = new Foo();<br />        f1.Bar();<br />        f1.ParamValue.ShouldBeEqualTo(1000);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value()<br />    {<br />        IFoo f = new Foo();<br />        f.Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_interface_default_value_because_of_explicit_cast()<br />    {<br />        Foo f = new Foo();<br />        ((IFoo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1);<br />    }<br /><br />    [TestMethod]<br />    public void Should_get_the_concrete_class_default_value_because_of_explicit_cast()<br />    {<br />        IFoo f = new Foo();<br />        ((Foo)f).Bar();<br />        f.ParamValue.ShouldBeEqualTo(1000);<br />    }<br />}<br /><br />interface IFoo<br />{<br />    int ParamValue { get; }<br /><br />    void Bar(int paramValue = 1);<br />}<br /><br />class Foo : IFoo<br />{<br />    public int ParamValue { get; private set; }<br />    public void Bar(int paramValue = 1000)<br />    {<br />        ParamValue = paramValue;<br />    }<br />} </pre><br /><br /><p>&#160;</p><br /><br /><h4>The next experiment - Extract Interface.</h4><br /><br /><p>Next I tried removing the IFoo interface that I’d created manually, because I wanted to exercise the “<a href="http://msdn.microsoft.com/en-us/library/fb3dyx26.aspx">Extract Interface…</a>” functionality, just to see how it dealt with the these defaults.</p><br /><br /><p>Luckily, <strong>there were no surprises.</strong> The interface it created was exactly (less spacing) the same as I originally had. </p><br /><br /><p>Although it didn’t display the default constant value in the dialog during creation, there was a hint that the method signature had a default by placing [] around the int resulting in “Bar([int])”.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/S2ILCUb7m1I/AAAAAAAAANs/1r4ZBNlQUUU/s1600-h/image221.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/S2ILCwi2KSI/AAAAAAAAANw/pHnAuYpcab4/image22_thumb.png?imgmax=800" width="411" height="341" /></a></p><br /><br /><blockquote><br />  <p><strong>Side <strong>Tool </strong>Issue:</strong> Can’t say I like how it forced me to put the interface in a different file, I guess it’s enforcing “best practice” here, but I prefer to do this later in the dev cycle than immediately (kind of like how R# allows you to place in the file next to the original class). #ToolGettingInWay</p><br /></blockquote><br /><br /><blockquote><br />  <p><strong>Optional Parameter Issue:</strong> One issues I see with this solution was the dirty/icky copy/paste feeling I got when extracting the interface – the default was copied from the class to the interface. </p><br /></blockquote><br /><br /><h5>Possible solutions to the “dirty/icky copy/paste feeling” the extract interface gives.</h5><br /><br /><p>(in no particular order of preference)</p><br /><br /><ul><br />  <li>Place all defaults into a constant and reference the constant in both the interface and the concrete implementation(s). </li><br /><br />  <li>Don’t place the defaults in the concrete implementation (only in the interface). As you should probably not be depending on the concrete implementation to begin with, you wouldn’t need it there (and wouldn’t even call it). This would also help in the case that there are multiple concrete implementation and having to sift through the code looking for all instances to updated defaults for could be very error prone. </li><br /></ul><br /><br /><p>On the surface named parameters seem like a very simple feature to the C# language. But after delving into the feature a little, I can see there are many complicated scenarios you can get your self caught up into.</p><br /><br /><p>As with anything…<strong>Use with care</strong>!</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/networking-brain-fart/">Networking Brain Fart.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/networking-brain-fart/">Networking Brain Fart.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-01-22T01:59:00.000Z" pubdate data-updated="true">Jan 21st 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -270,23 +300,24 @@ if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll y
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/unitymoq-automocker-or/">Unity/Moq - AutoMocker or AutoMockingContainer</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/unitymoq-automocker-or/">Unity/Moq - AutoMocker or AutoMockingContainer</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2010-01-03T16:53:00.000Z" pubdate data-updated="true">Jan 3rd 2010</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><h4 id="what-is-an-auto-mocking-container-">What is an Auto Mocking Container?</h4>
 <p>This post started to get a little long, so I won&#39;t re-explain the concept.</p>
@@ -499,51 +530,30 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
 <p>It&#39;s amazing how much redundant test setup code this little helper has saved me in my tests. I hope others can find some use with this as well.</p>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/powershell-load-assembly-without/">Powershell: Load assembly without locking file.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/powershell-load-assembly-without/">Powershell: Load assembly without locking file.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-12-23T05:40:00.000Z" pubdate data-updated="true">Dec 22nd 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>This post had some updates based on comments so I’m just updating the one over at <a href="http://elegantcode.com/">ElegantCode</a>.</p>  <p><a href="http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/">http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/</a></p>  </div>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/statlight-goes-open-source/">StatLight – Goes Open Source</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2009-12-11T03:27:00.000Z" pubdate data-updated="true">Dec 10th 2009</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
-</div>
 
     </article>
   
@@ -587,6 +597,10 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -608,10 +622,6 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

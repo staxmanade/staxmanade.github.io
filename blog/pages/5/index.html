@@ -78,230 +78,240 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">NuGet Project Uncovered: FastMember</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2012-02-16T04:48:00.000Z" pubdate data-updated="true">Feb 15th 2012</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FastMember" target="_blank">FastMember</a> would be something you pull in if you’re trying to do reflection to read properties of your objects, but starting to notice some performance issues. This project will emit some IL at runtime that can read your properties much faster than good old reflection (like below)</p>  <blockquote>   <p><font style="background-color: #ffffff">var value = typeof(MyObject).GetProperty(“MyProp”).GetValue(myObjInstance, new object[0]);</font></p> </blockquote>  <p>Replace the above with.</p>  <blockquote>   <pre>var accessor = TypeAccessor.Create(typeof(MyObject)); <br />var value = accessor[obj, “MyProp”];<br /></pre><br /></blockquote><br /><br /><p>This project lets you either read or assign values to properties. (See my test below)</p><br /><br /><p><a href="http://lh5.ggpht.com/-c07wZnNp_JQ/Tx-LBUyYFVI/AAAAAAAAAVg/hiErRW7eAqw/s1600-h/image_thumb1_thumb%25255B2%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image_thumb1_thumb" border="0" alt="image_thumb1_thumb" src="http://lh5.ggpht.com/-O9Oa3Z61lfc/Tx-LBzkyDtI/AAAAAAAAAVo/NtmF_YwKEfk/image_thumb1_thumb_thumb.png?imgmax=800" width="466" height="343" /></a></p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2012-02-15T04:46:00.000Z" pubdate data-updated="true">Feb 14th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FakeO" target="_blank">FakeO</a> is a fake object generation library. It doesn’t seem to play nicely with objects that require parameters in the constructor. However if you have lots of classes that have a default constructor and plain old get/set properties this project might be very useful.</p>  <p>You can even specify not just random text or numbers to generate, but some specific context driven data.</p>  <p>For example:</p>  <ul>   <li>Random company name </li>    <li>Lorem Ipsum to various lengths. </li>    <li>Phone numbers </li>    <li>Random strings based on a regex. </li>    <li>etc…      <br /></li> </ul>  <blockquote>   <pre>// example FakeO call<br />var comp = FakeO.Create.Fake&lt;Company&gt;(<br />                c =&gt; c.Name = FakeO.Company.Name(),<br />                c =&gt; c.Phone = FakeO.Phone.Number(),<br />                c =&gt; c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200</pre></blockquote>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/">NuGet Project Uncovered: NaturalSpec</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/">NuGet Project Uncovered: NaturalSpec</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-14T04:45:00.000Z" pubdate data-updated="true">Feb 13th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NaturalSpec" target="_blank">NaturalSpec</a> is a BDD framework written in F#. This one is interesting due to F#’s concise nature and can give you very readable tests/specs.</p>  <p>The below sample was pulled from the <a href="https://github.com/forki/NaturalSpec" target="_blank">github readme</a>.</p>  <blockquote>   <pre>[&lt;Scenario&gt;]<br />let ``When removing an element from a list it should not contain the element``() =<br />  Given [1;2;3;4;5]                 // &quot;Arrange&quot; test context<br />    |&gt; When removing 3              // &quot;Act&quot;<br />    |&gt; It shouldn't contain 3       // &quot;Assert&quot;<br />    |&gt; It should contain 4          // another assertion<br />    |&gt; It should have (length 4)    // Assertion for length<br />    |&gt; It shouldn't have duplicates // Tests if the context contains duplicates<br />    |&gt; Verify                       // Verify scenario</pre><br /></blockquote><br /><br /><p>It says you don’t have to learn F# to use it. Which I’d argue you may not have to learn F# as deep as you might to be able to code a production product in it, but you will definitely benefit from learning some as you go. You will also spend a bit of time learning the DSL that this project has created.</p><br /><br /><p>Regardless, this project has enough interest factor for me to play around with someday.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">NuGet Project Uncovered: SpecsFor</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">NuGet Project Uncovered: SpecsFor</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-13T04:41:00.000Z" pubdate data-updated="true">Feb 12th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/SpecsFor" target="_blank">SpecsFor</a> is a BDD framework. This project is nice in that it has packaged many of my favorite testing tools all into one package. Instead of pulling down <a href="http://nunit.org/" target="_blank">NUnit</a>, <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>, <a href="http://should.codeplex.com/" target="_blank">Should</a>, <a href="http://structuremap.net/structuremap/AutoMocker.htm" target="_blank">Automocking</a>, and <a href="https://github.com/derekgreer/expectedObjects" target="_blank">ExpectedObjects</a> creating your own base fixture class. This project wraps all that up for you with a solid base spec class.</p>  <p>The creator of this project spent some time and created a <a href="http://specsfor.com/" target="_blank">nice project site</a> with examples and documentation. </p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/">NuGet Project Uncovered: Disruptor-net</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/">NuGet Project Uncovered: Disruptor-net</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-12T04:40:00.000Z" pubdate data-updated="true">Feb 11th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Disruptor" target="_blank">Disruptor-net</a> is a port of the LMAX Disruptor which is a concurrent programming framework. The answer in this <a href="http://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work" target="_blank">StackOverflow question</a> gave a pretty good explanation of the project/pattern used.</p>  <p>Project Source: <a href="https://github.com/odeheurles/Disruptor-net">https://github.com/odeheurles/Disruptor-net</a></p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-11T04:39:00.000Z" pubdate data-updated="true">Feb 10th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/">NuGet Project Uncovered: StudioShell</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/">NuGet Project Uncovered: StudioShell</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-10T04:38:00.000Z" pubdate data-updated="true">Feb 9th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/StudioShell" target="_blank">StudioShell</a> is a project that sort of blew my mind. The crazy PowerShell integration they’ve packaged into this visual studio extension is plain amazing.</p>  <p>I’d highly recommend watching the demo videos near the bottom of the project’s home codeplex site.</p>  <blockquote>   <p><a href="http://studioshell.codeplex.com/">http://studioshell.codeplex.com/</a></p></blockquote></div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/">NuGet Project Uncovered: AboditNLP</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/">NuGet Project Uncovered: AboditNLP</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-09T04:29:00.000Z" pubdate data-updated="true">Feb 8th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/AboditNLP" target="_blank">AboditNLP</a> is a <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank">Natural Language Processor</a> library. This kind of stuff in interesting, but not something I have chosen to spend my time on.</p>  <p>It has a demo <a href="http://nlp.abodit.com/home/demo">http://nlp.abodit.com/home/demo</a> which gives you sample things to type to the library. I noticed it was a bit case sensitive, but still, project is one to look into if you were to say build a home automation system.</p></div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">NuGet Project Uncovered: Northwind.Db</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">NuGet Project Uncovered: Northwind.Db</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-08T04:34:00.000Z" pubdate data-updated="true">Feb 7th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">NuGet Project Uncovered: Deleporter</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">NuGet Project Uncovered: Deleporter</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-07T04:32:00.000Z" pubdate data-updated="true">Feb 6th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2012-02-06T04:31:00.000Z" pubdate data-updated="true">Feb 5th 2012</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
-</div>
 
     </article>
   
@@ -345,6 +355,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -366,10 +380,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

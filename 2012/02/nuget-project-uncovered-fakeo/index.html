@@ -77,23 +77,24 @@
             <article class="hentry" role="article">
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2012-02-15T04:46:00.000Z" pubdate data-updated="true">Feb 14th 2012</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FakeO" target="_blank">FakeO</a> is a fake object generation library. It doesn’t seem to play nicely with objects that require parameters in the constructor. However if you have lots of classes that have a default constructor and plain old get/set properties this project might be very useful.</p>  <p>You can even specify not just random text or numbers to generate, but some specific context driven data.</p>  <p>For example:</p>  <ul>   <li>Random company name </li>    <li>Lorem Ipsum to various lengths. </li>    <li>Phone numbers </li>    <li>Random strings based on a regex. </li>    <li>etc…      <br /></li> </ul>  <blockquote>   <pre>// example FakeO call<br />var comp = FakeO.Create.Fake&lt;Company&gt;(<br />                c =&gt; c.Name = FakeO.Company.Name(),<br />                c =&gt; c.Phone = FakeO.Phone.Number(),<br />                c =&gt; c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200</pre></blockquote>  </div>
 </div>
+
 
                 <footer>
                     <p class="meta">
@@ -171,6 +172,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -192,10 +197,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

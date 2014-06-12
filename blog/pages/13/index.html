@@ -78,18 +78,42 @@
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions/">Fluent Specification Extensions</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions-1-more/">(+1) for [Fluent] Specification Extensions</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p>If you read my previous post about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> then you know that I'm still in an experimental phase of this idea.</p>  <p>I'd like to share one more positive I found by using the specification extensions in my testing framework. This benefit is there weather you use standard specification extension methods or try the fluent specification extensions. The idea is very basic, but I didn't even realize it's benefit until I ran into it directly.</p>  <p>And the great benefit is... (drum roll...errr..actually it's not mind blowing). By using extensions methods to provide assertion extensions on the objects we're testing, we've<strong> <u>abstracted the actual testing framework's assertion process.</u></strong><u> </u>(told you it wasn't mind blowing, but read along and see an example of how this abstraction could be good)</p>  <p>Now I know most times you won't ever change testing frameworks, however I just ran into this when attempting to port the Castle.DynamicProxy2 (DP2) to Silverlight. Their test project leveraged the NUnit testing framework, which hasn't officially been ported. You can find a quick <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">port by Jeff Wilcox</a> that will run in the Microsoft Silverlight Unit Testing Framework. However when I was porting the DP2 that hadn't been done, and I didn't feel like porting NUnit at the time.</p>  <p>So, by providing this abstraction layer (through the extension methods). You could then go in and easily swap what testing framework your project is leveraging to do it's assertions.</p>  <h6>NOTE: the port from NUnit to MSFT wouldn't have been that easy as the [TestMethod] in MSFT is sealed so I couldn't create a [Test] attribute that inherited from [TestMethod] to get the SL testing framework to run the tests w/out changing the DynamicProxy test code...aside from that issue...</h6>  <p>Let's take a concrete example of this abstraction benefit.</p>  <p>Notice how the Assert.IsInstanceOfType() in both NUnit and Microsoft's testing framework have the parameters reversed.</p>  <p>NUnit:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SY0lvWzbk4I/AAAAAAAAAEw/mikfS2Ad9TQ/s1600-h/image11%5B3%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="146" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SY0lv1_mpxI/AAAAAAAAAE0/UMgoOPFIoiY/image11_thumb%5B2%5D.png?imgmax=800" width="584" border="0" /></a> </p>  <p>Microsoft:</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SY0lwEt7LjI/AAAAAAAAAE4/cj4aScmZML4/s1600-h/image17%5B1%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="104" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SY0lwbo9p9I/AAAAAAAAAE8/xklqX1ujQj4/image17_thumb.png?imgmax=800" width="584" border="0" /></a> </p>  <p>If you were trying to switch from NUnit to MSFT or visa versa, a simple search and replace on [Test] for [TestMethod] would suffice for the majority of the needed port. However the Assert.IsInstanceOfType() would fail at compile time because of the parameter order. (and who know what else exactly is different)</p>  <p>If you could provide that layer of abstraction for the assertions, then to switch between NUnit and MSFT or visa versa would remain very simple, as you would only have to provide the framework specific changes only once.</p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions/">Fluent Specification Extensions</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -114,23 +138,24 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/silverlight-automocker-with-unity/">Silverlight AutoMocker with Unity container and Moq</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/silverlight-automocker-with-unity/">Silverlight AutoMocker with Unity container and Moq</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-01-24T07:14:00.000Z" pubdate data-updated="true">Jan 23rd 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -170,23 +195,24 @@ I would really like an Automocker for the *WPF* side of things.</div>
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/silverlight-moq-automocker-teaser/">Silverlight Moq AutoMocker Teaser...</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/silverlight-moq-automocker-teaser/">Silverlight Moq AutoMocker Teaser...</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-01-05T02:12:00.000Z" pubdate data-updated="true">Jan 4th 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -206,23 +232,24 @@ In a nutshell, what's the trick to mocking with the given security constraints (
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/castledynamicproxy2-now-ported-to/">Castle.DynamicProxy2 now ported to Silverlight!!!</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/castledynamicproxy2-now-ported-to/">Castle.DynamicProxy2 now ported to Silverlight!!!</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-01-05T02:02:00.000Z" pubdate data-updated="true">Jan 4th 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -242,46 +269,48 @@ This is very good news. Thanks for the work.</div>
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/">What do when Silverlight is missing some Base Class Library (BCL) functionality?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/">What do when Silverlight is missing some Base Class Library (BCL) functionality?</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-indexspecification-for/">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-indexspecification-for/">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -361,69 +390,72 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-update/">i4o: Update (Index for Objects)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-update/">i4o: Update (Index for Objects)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-20T19:10:00.000Z" pubdate data-updated="true">Dec 20th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>Recently I was added as a developer to the <a href="http://www.codeplex.com/i4o" target="_blank">i4o codeplex project</a> by <a href="http://blog.magenic.com/blogs/aarone/default.aspx" target="_blank">Aaron</a> and last night I made my first commit.</p>  <p>There were a few pretty big changes to the library. I'll highlight some of them below, and in a couple future posts will describe in a little more detail how you can use these features.</p>  <h4>Removed the IndexableAttribute:</h4>  <p>This was removed for two reasons.</p>  <ul>   <li>It did not allow you index objects you didn't own. </li> </ul>  <p>Say you want to index a collection of System.IO.FileInfo objects. Since that's owned by the .Net framework, you can't apply an attribute to the properties of the class you want to index.</p>  <p>The solution to that was to allow adding indexed properties dynamically, however you had to give it a string representing the property name, which leads into the second issue... </p>  <ul>   <li>Didn't provide any compile time checking or refactor support for properties using the dynamic add/remove methods. </li> </ul>  <p>If you refactored a property and forgot to rename the string to match the refactor you would end up with a runtime error.</p>  <p>To resolve the two issues above I've introduced the <strong>IndexSpecification&lt;T&gt;</strong> (I'll describe how to use it a later post)</p>  <h4>Performance tuning:</h4>  <p>Although we haven't enhanced the Linq support for IndexableCollection (should come soon), I was able to eek some performance by doing some internal caching of property types and a few other tweaks resulting in the Index creation becoming about 30% faster...</p>  <h4>Fluent interface for managing the Indexes</h4>  <p>The last big change which fits in with the IndexSpecification&lt;T&gt; is the Fluent interface for dynamically adding/removing properties to be indexed. One short example could be:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1DKLdou8I/AAAAAAAAAD4/JBUBIgkDNNo/s1600-h/image3.png"><img style="border-width: 0px;" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1DKcGWDjI/AAAAAAAAAD8/zU7TUvRY2T0/image_thumb1.png?imgmax=800" width="347" border="0" height="217" /></a></p></div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-19T04:33:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs was <a href="http://windowslivewriter.spaces.live.com/" target="_blank">Windows Live Writer</a>. </p>  <p>I'm sold... This program handles just about everything I could need for blogging (I'm new to it, so haven't pushed it's limitations to far).</p>  <p>One problem I had with Live Writer was it saved all my drafts/posts on the computer I was logged into at the time. This meant the drafts I write at home can't be accessed at work and visa/versa...</p>  <p>To solve this I decided to wire them through the <a href="http://mesh.com" target="_blank">Microsoft Mesh</a>. If you haven't setup your mesh yet, I would highly recommend it. Just go to <a href="http://mesh.com" target="_blank">Mesh.com</a>, sign up/or in with a Windows Live account, install the client application, and your <strong>meshified</strong>...</p>  <blockquote>   <p>With Live Mesh, you can synchronize files with all of your devices, so you always have the latest versions handy. Access your files from any device or from the web, easily share them with others, and get notified whenever someone changes a file.</p> </blockquote>  <p>This means I can synchronize folders between my connected computers.</p>  <h4>Below I'll show the steps I used to setup my meshified weblog posts. </h4>  <ol>   <li>Find the location your Live Writer is storing your drafts/posts.      <br />      <br />For my Windows XP machine it was in...       <br /><em>C:\Documents and Settings\JasonJ\My Documents\My Weblog Posts\</em>       <br />      <br />For my work Vista pc the folder was in...       <br /><em>C:\Users\JasonJ\Documents\My Weblog Posts\ </em>      <br /></li>    <li>Next I created a folder in my mesh called &quot;BlogDrafts&quot;.      <br />      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskAwaA5eI/AAAAAAAAADg/8Q7CFRAD8Eo/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="251" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskBgLf4RI/AAAAAAAAADk/PZqLvbz2NgQ/image_thumb1.png?imgmax=800" width="371" border="0" /></a> To do this you can right click in the mesh folder area and select &quot;Create folder in Live Mesh&quot;.<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUskCKk4VWI/AAAAAAAAADo/irg_OvuZjnU/s1600-h/image7.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="176" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskCoUxmFI/AAAAAAAAADs/JZV3udqjb4A/image_thumb3.png?imgmax=800" width="347" border="0" /></a> </li>    <li>A window will popup asking for the name of the new folder and the location this folder will live on your hard drive.      <br />      <br /><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskC_C6DeI/AAAAAAAAADw/s6bfcg4WOls/s1600-h/image14.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="123" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUskDkjoclI/AAAAAAAAAD0/Ty6ZI-bJJAo/image_thumb8.png?imgmax=800" width="244" border="0" /></a>&#160; </li> </ol>  <p>I think that's everything... follow similar steps to get your other computers synced up to the mesh and you should be relieved that you can work on any computer and on any post.</p>  </div>
 </div>
 
+
     </article>
   
     <article>
       
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i-can-stand-mass-mailings-especially/">I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i-can-stand-mass-mailings-especially/">I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2008-12-18T16:50:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -448,71 +480,6 @@ Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up pr
 </div>
 </div>
 
-    </article>
-  
-    <article>
-      
-  <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/">T4 Text Templating in Silverlight (Thanks Oleg Sych!)</a></h1>
-    
-      <p class="meta">
-        
-  <time datetime="2008-12-13T19:33:00.000Z" pubdate data-updated="true">Dec 13th 2008</time>
-
-
-
-        
-      </p>
-    
-  </header>
-
-<div class="entry-content">
-<div class='post'>
-<p>First if you're new text templating, please go read <a href="http://www.olegsych.com/"><strong>Oleg Sych's blog</strong></a>. This, as far as I've found, is the (Bible, Koran, TheWord, etc...) of visual studio's T4 Text Templating.</p>  <p>If you already know how to add a T4 template to a project, skip this how to and go to &quot;How to make a T4 template work with a Silverlight project:&quot;.</p>  <h4>How to add a T4 template to a Visual Studio .Net Project:</h4>  <p>Given the following project:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUQN_Pr532I/AAAAAAAAAC4/_x4OMFOOwK4/s1600-h/image%5B2%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="113" alt="Initial Silverlight Project" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUQN_fxvVsI/AAAAAAAAAC8/jzH_-wBKdgM/image_thumb.png?imgmax=800" width="198" border="0" /></a> </p>  <p>Bring up the add new item dialog.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQN_qg5PxI/AAAAAAAAADA/cABtBqHGrN4/s1600-h/image%5B6%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="171" alt="Add New Item" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQN_wRvlHI/AAAAAAAAADE/KXKPDylPW98/image_thumb%5B2%5D.png?imgmax=800" width="384" border="0" /></a> </p>  <p>Select a &quot;Text File&quot; and rename the extension to a .tt.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOAGcv8AI/AAAAAAAAADI/Fu1hXUKYd5k/s1600-h/image%5B19%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="264" alt="Add a new t4 template" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQOApnwZlI/AAAAAAAAADM/cbKFl7fmKBE/image_thumb%5B13%5D.png?imgmax=800" width="428" border="0" /></a> </p>  <p>You should end up with a .tt template file and under it where the generated out put of the template will land.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBOBPYtI/AAAAAAAAADQ/OqjSBzOcaM8/s1600-h/image%5B22%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="137" alt="T4Sample.tt" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBW7qKTI/AAAAAAAAADU/q3NVgQXtvFA/image_thumb%5B14%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>You may also notice the following errors in your errors pane.</p>  <ul>   <li>Compiling transformation: The type or namespace name 'CompilerError' does not exist in the namespace 'System.CodeDom.Compiler' (are you missing an assembly reference?) </li>    <li>Compiling transformation: The type 'System.CodeDom.Compiler.CompilerErrorCollection' is defined in an assembly that is not referenced. You must add a reference to assembly 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.      <br />Compiling transformation: 'System.CodeDom.Compiler.CompilerErrorCollection' does not contain a definition for 'Add' </li>    <li>A namespace does not directly contain members such as fields or methods </li> </ul>  <p> This is where Oleg Sych comes to the rescue...</p>  <h4>How to make a T4 template work with a Silverlight project:</h4>  <blockquote>   <p><strong>Side Note:</strong> So, I had a couple emails back and fourth with Oleg about trying to get T4 to work in Silverlight. Almost all of his emails had some sort of sentence that went like this. <em>&quot;Try adding {S<strong>omeSpecialT4RelatedWord</strong>} and then do {<strong>this special thing</strong>} and report your findings back to me&quot;. This is where the {S<strong>omeSpecialT4RelatedWord</strong>} would stump me. So I would search Google for &quot;T4 {S<strong>omeSpecialT4RelatedWord</strong>}&quot; </em>and <a href="http://www.olegsych.com/">Oleg Sych's blog</a> was the first hit for each search. And not only was it the first hit, but when I would look the post for that {S<strong>omeSpecialT4RelatedWord</strong>} the answer was there and exactly what I needed. Thanks Oleg.</p> </blockquote>  <p>&#160;</p>  <p>Fortunately, to get the T4 templates to work within a Silverlight project you only need to put an &lt;#@ assembly #&gt; directive telling the template where to get a reference to the System.dll.</p>  <p>Below is a sample template:</p>  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">&lt;#@ template language=<span style="color: #006080">&quot;C#&quot;</span> #&gt;<br />&lt;#@ assembly name=<span style="color: #006080">&quot;C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&quot;</span> #&gt;<br /><span style="color: #0000ff">namespace</span> SampleT4 <br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>And below is the output:</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #0000ff">namespace</span> SampleT4<br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>That's it!!!</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason Jarrett</div>
-<div class='content'>
-@Bill I&#39;m afraid I don&#39;t have enough context to really help you. On top of that I haven&#39;t worked with silverlight in a long time :(.<br /><br />Hope you get it figured out.</div>
-</div>
-<div class='comment'>
-<div class='author'>Bill Lanza</div>
-<div class='content'>
-I know this post is old, but....<br />I am using VS2010 and Silverlight and am trying to implement T4 templates with inheritence.  I create a baseclass.tt in a separate assembly and it compiles. However, when I try to inherit from it I get the error:<br /><br />An invalid base class was specified for the Transformation class. The base class must derive from Microsoft.VisualStudio.TextTemplating.TextTransformation. <br /><br />Is this not possible in SL?<br /><br />Thanks,<br />Bill</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Could you help me understand why you have to have a reference to the two different assemblies with the same type?</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Regarding Aquilax comment, using objects defined in both assemblies. Is there any solution for that problem ?<br /><br />Regards Swan B</div>
-</div>
-<div class='comment'>
-<div class='author'>Aquilax</div>
-<div class='content'>
-It works as long that you don&#39;t use objects defined in both assemblies, for example System.Text.RegularExpressions.Regex, otherwise it throws the exception:<br />Compiling transformation: The type &#39;System.Text.RegularExpressions.Regex&#39; exists in both &#39;c:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&#39; and &#39;c:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v3.0\system.dll&#39;</div>
-</div>
-<div class='comment'>
-<div class='author'>timvw</div>
-<div class='content'>
-Thanks for publishing this knowledge. Saved me a lot of time.</div>
-</div>
-<div class='comment'>
-<div class='author'>br1</div>
-<div class='content'>
-Thank you.</div>
-</div>
-<div class='comment'>
-<div class='author'>Алексей</div>
-<div class='content'>
-Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblogs.asp.net/alexeyzakharov/</div>
-</div>
-</div>
-</div>
 
     </article>
   
@@ -556,6 +523,10 @@ Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblo
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -577,10 +548,6 @@ Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblo
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>

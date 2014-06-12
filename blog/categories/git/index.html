@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Git - Developing on Staxmanade</title>
+  <title>Category: git - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
   
@@ -78,41 +78,86 @@
             <article>
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
-  <time datetime="2014-03-02T05:41:00.000Z" pubdate data-updated="true">Mar 1st 2014</time>
+  <time datetime="2014-06-03T16:38:06.494Z" pubdate data-updated="true">Jun 3rd 2014</time>
 
 
 
-        
-      </p>
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
+    </p>
     
-  </header>
+</header>
 
-<div class="entry-content">
-<div class='post'>
-<p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
+<div class="entry-content"><h1 id="how-to-update-a-git-branch-other-than-the-one-you-re-currently-on-">How to update a git branch OTHER than the one you&#39;re currently on.</h1>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don&#39;t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I was starting to dislike the switch branch dance to trigger a new build.</p>
+<h3 id="what-i-used-to-do-">What I used to do:</h3>
+<pre><code># When I was on the master branch
+git checkout release
+git merge master
+git push
+</code></pre><blockquote>
+<p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
+</blockquote>
+<h3 id="after-digging-a-bit-i-found-the-answer-">After digging a bit, I found the answer.</h3>
+<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
+</code></pre><p>So to trigger a new build from master I can just:</p>
+<pre><code>git branch -f release master
+git push origin release
+</code></pre><p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
+<p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
+<pre><code>git push origin local_branch:remote_branch
+</code></pre><p>So my workflow would look more like</p>
+<pre><code>git push origin master:release
+</code></pre><p>Happy Automation!</p>
 </div>
+
 
             </article>
             
             <article>
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
     
-      <p class="meta">
+    <p class="meta">
+        
+  <time datetime="2014-03-02T05:41:00.000Z" pubdate data-updated="true">Mar 1st 2014</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
+</div>
+
+
+            </article>
+            
+            <article>
+                
+  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes.</a></h1>
+    
+    <p class="meta">
         
   <time datetime="2014-02-17T18:25:00.000Z" pubdate data-updated="true">Feb 17th 2014</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content"><p>If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</p>
 <p>Now that I&#39;m only reaching people who use source control (serious developers), I&#39;d like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
@@ -138,46 +183,48 @@
 <p>Happy Coding!</p>
 </div>
 
+
             </article>
             
             <article>
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2013-06-20T17:46:00.000Z" pubdate data-updated="true">Jun 20th 2013</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
 <p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
 </div>
 
+
             </article>
             
             <article>
                 
   <header>
-      <h1 class="entry-title"><a href="http://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
     
-      <p class="meta">
+    <p class="meta">
         
   <time datetime="2011-06-18T17:15:00.000Z" pubdate data-updated="true">Jun 18th 2011</time>
 
 
 
         
-      </p>
+    </p>
     
-  </header>
+</header>
 
 <div class="entry-content">
 <div class='post'>
@@ -196,6 +243,7 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 </div>
 </div>
 </div>
+
 
             </article>
             
@@ -234,6 +282,10 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
     
@@ -255,10 +307,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a>
       </li>
     
   </ul>
