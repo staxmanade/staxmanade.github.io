@@ -1,4 +1,9 @@
 var github = (function(){
+
+  var ignore = [
+    "staxmanade.github.io"
+  ];
+
   function escapeHtml(str) {
     return $('<div/>').text(str).html();
   }
@@ -21,6 +26,7 @@ var github = (function(){
           if (!data || !data.data) { return; }
           for (var i = 0; i < data.data.length; i++) {
             if (options.skip_forks && data.data[i].fork) { continue; }
+            if (ignore.indexOf(data.data[i].name) >= 0) { continue; }
             repos.push(data.data[i]);
           }
           if (options.count) { repos.splice(options.count); }
