@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css" media="screen" />
+
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css" />
+
+    <script data-require="angular.js@1.2.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js" data-semver="1.2.17"></script>
+    <script src="https://cdn.rawgit.com/rails-assets/angular-semver-sort/master/angular-semver-sort.js"></script>
+    <script src="javascripts/app.js"></script>
+    <title>Boxen Search</title>
+</head>
+
+
+  <body ng-controller="MainCtrl">
+
+    <h2>Search for a <a href="https://boxen.github.com/">Boxen Module</a></h2>
+
+    <input ng-show="loaded" type="text" ng-model='searchText' placeholder="Boxen Module Search" />
+
+    <p ng-show="loaded">Count: {{(repos | filter:searchText).length}}</p>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-4">
+
+          <div ng-hide="loaded">Loading Boxen repo metadata...</div>
+          <div ng-show="loaded">
+            <ul>
+              <li ng-repeat="item in repos | filter:searchText">
+                <a href="#" ng-click="detailClicked(item)">{{item.shortName}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-8">
+
+          <div ng-hide='detail'>
+            &lt;-- Select a module to get more info
+          </div>
+
+          <div ng-show='detail'>
+            <div ng-hide="detail.tagsLoaded">Loading {{detail.shortName}}...</div>
+            <div ng-show="detail.tagsLoaded">
+
+              <h3><a href="{{detail.html_url}}" target="_blank" >{{detail.full_name}}</a></h3>
+
+              Select Version: <select required="required" ng-model="selectedTag" ng-options="tag.name for tag in detail.tags">
+              </select>
+              <br/>
+              <br/>
+
+              <h4>Puppetfile</h4>
+              <pre>github "{{detail.shortName}}", "{{selectedTag.name}}"</pre>
+              <br/>
+              <h4>Manifest</h4>
+              <pre>include {{detail.shortName}}</pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+  </html>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1017448-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
