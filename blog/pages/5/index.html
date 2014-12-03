@@ -78,6 +78,30 @@
     <article>
       
   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/">NuGet Project Uncovered: JsValidator</a></h1>
+    
+    <p class="meta">
+        
+  <time datetime="2012-02-17T04:55:00.000Z" pubdate data-updated="true">Feb 16th 2012</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/JsValidator" target="_blank">JsValidator</a>, on first glance, is a down right awesome gem of a NuGet. I’ve heard of <a href="http://code.google.com/closure/compiler/" target="_blank">Google’s Closure Compiler</a> before, but have never used it. This NuGet makes it a snap to use inside Visual Studio.</p>  <p>When you first install the package:</p>  <blockquote>   <p><font style="background-color: #ffffff">Install-Package JsValidator;</font></p> </blockquote>  <p>This NuGet tool automatically updates your project so it will execute the tool on compilation. Awesome if you are not an MSBuild expert as it just configures itself for you straight from the package install.</p>  <p>Once installed, run a build on your solution. On first build you get an error. You’re probably thinking '”How can this tool be erroring, we just added it to the project”. This error is a good thing. It’s telling you that you now have a manual step to configure it correctly.</p>  <p>Go check out the <a href="http://jsvalidator.codeplex.com/" target="_blank">codeplex site</a> as it will explain more on how to use it.</p>  <p>I just might consider this on my next new javascript project in Visual Studio.net.</p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">NuGet Project Uncovered: FastMember</a></h1>
     
     <p class="meta">
@@ -291,30 +315,6 @@
 
     </article>
   
-    <article>
-      
-  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">NuGet Project Uncovered: Deleporter</a></h1>
-    
-    <p class="meta">
-        
-  <time datetime="2012-02-07T04:32:00.000Z" pubdate data-updated="true">Feb 6th 2012</time>
-
-
-
-        
-    </p>
-    
-</header>
-
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
-</div>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/6/">&larr; Older</a>
@@ -355,6 +355,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
     
@@ -376,10 +380,6 @@
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
       </li>
     
   </ul>

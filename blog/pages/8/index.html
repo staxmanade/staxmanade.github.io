@@ -78,6 +78,30 @@
     <article>
       
   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
+    
+    <p class="meta">
+        
+  <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
+
+
+
+        
+    </p>
+    
+</header>
+
+<div class="entry-content">
+<div class='post'>
+<p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
     
     <p class="meta">
@@ -317,30 +341,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
     </article>
   
-    <article>
-      
-  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II</a></h1>
-    
-    <p class="meta">
-        
-  <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
-
-
-
-        
-    </p>
-    
-</header>
-
-<div class="entry-content">
-<div class='post'>
-<p>In a <a href="/2010/09/odatas-dataservicequery-and-removing" target="_blank">previous post</a> I elaborated on the problem of magic strings in <a href="http://www.odata.org/" target="_blank">OData</a> service queries, and gave a quick (but lacking in depth) statically typed helper solution.</p>  <p>A commenter <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> left a note stating that my solution would not work with nested objects. I initially replied asking if he could give an example (as I hadn’t run into that scenario yet being a noob to OData). He didn’t get back to me, but it wasn’t long before I ran into the problem he was talking about.</p>  <p>If we go back to <a href="http://www.linqpad.net/">LinqPad</a> and look again at the Netflix OData api. Let’s say we want to pull down the <strong>People</strong>, their related <strong>TitlesDirected</strong> and the TitlesDirected <strong>ScreenFormats</strong>. (No real world scenario there – just made it up because they’re related properties). The OData query (with magic strings) would look like:</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(&quot;TitlesDirected/ScreenFormats&quot;)        <br />select x).Take(5)</font></p> </blockquote>  <p>If you tried to take the above and translate it to my “no magic string” fix from the previous post you would get something like.</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected /* Now what? dead end. /ScreenFormats*/ )        <br />select x).Take(5)         <br /></font></p> </blockquote>  <p>Now that the problem in my solution was apparent, and using his example as a quick guide (It wasn’t quite what I was looking for, but had the general theme). The solution became more than a few lines of code and I wanted to wrap some tests around the whole thing just to verify it was all working correctly…</p>  <h4>ODataMuscle was born:</h4>  <p><a href="http://github.com/Staxmanade/ODataMuscle">http://github.com/Staxmanade/ODataMuscle</a></p>  <p>Sorry for the name. Just think of “Strong Typing” your OData queries and giving them a little Muscle. I threw this little project up on github since this blog is not the best place to version code and if anyone felt inclined to extend it they could easily fork it and do so.</p>  <p>I hacked the initial version together, and once a co-worker of mine was done with it I think he cleaned it up nicely.</p>  <p>This new version now supports expanding not only <strong>child properties</strong>, but <strong>grandchild properties</strong> and <strong>grandchild properties of collections</strong>. (That doesn’t seem to translate well…)</p>  <p>EX: our little Netflix example from above would now look like </p>  <blockquote><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected.Expand(p2 =&gt; p2.ScreenFormats))      <br />select x).Take(5)</font></blockquote>  <p>Which would translate into the following query</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats" href="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats">http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats</a></p> </blockquote>  <p>Thanks to <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> for the initial feedback and I hope this helps someone else…</p>  </div>
-</div>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/9/">&larr; Older</a>
@@ -381,6 +381,10 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
     
@@ -402,10 +406,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
       </li>
     
   </ul>

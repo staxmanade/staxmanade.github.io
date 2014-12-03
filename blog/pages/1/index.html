@@ -78,6 +78,34 @@
     <article>
       
   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></h1>
+    
+    <p class="meta">
+        
+  <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
+
+
+
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
+    </p>
+    
+</header>
+
+<div class="entry-content"><h1 id="tl-dr">TL;DR</h1>
+<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
+<h1 id="more-context">More Context</h1>
+<p>We all know that communication is important, and often where things go awry.</p>
+<p>I sometimes wonder if I&#39;m alone in this thinking, but don&#39;t think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it&#39;s awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
+<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you&#39;ve received the email (and may take some time to respond).</p>
+<p>I don&#39;t necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
+</div>
+
+
+    </article>
+  
+    <article>
+      
+  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
     
     <p class="meta">
@@ -794,106 +822,6 @@ git push origin release
 
     </article>
   
-    <article>
-      
-  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a></h1>
-    
-    <p class="meta">
-        
-  <time datetime="2014-04-15T03:19:53.000Z" pubdate data-updated="true">Apr 14th 2014</time>
-
-
-
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">(Comments)</a>
-    </p>
-    
-</header>
-
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 3</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        
-        <li>
-            Part 3 - (current) - Export BlogSpot Content
-        </li>
-        
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-        
-    </ul>
-</div></p>
-<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
-<h1 id="steps-to-export-content-">Steps to export content.</h1>
-<ol>
-<li>Log in to your [BlogSpot.com(<a href="http://BlogSpot.com">http://BlogSpot.com</a>) admin portal</li>
-<li>Go to the <code>Settings</code> tab</li>
-<li>Select the <code>Other</code> option under Settings</li>
-<li>Under Blog tools select <code>Export blog</code></li>
-<li>Save the file somewhere safe so we can refer to it later</li>
-</ol>
-<p><img src="/images/posts/blogger_settings.png" alt="Blogger Settings"></p>
-<h2 id="what-s-in-this-export-file-">What&#39;s in this export file?</h2>
-<p>This file contains the raw content and metadata around each of your blog posts. You won&#39;t get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that&#39;s lower on the priority).</p>
-<p>Here is a snippet of a single entry from the exported file. In later posts we&#39;ll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
-<h2 id="sample-entry-from-blogspot-export-file">Sample Entry from Blogspot Export File</h2>
-<pre><code class="lang-xml">  &lt;entry&gt;
-    &lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
-    &lt;published&gt;2013-12-18T19:50:00.001-08:00&lt;/published&gt;
-    &lt;updated&gt;2013-12-18T19:50:18.725-08:00&lt;/updated&gt;
-    &lt;category scheme=&#39;http://schemas.google.com/g/2005#kind&#39; term=&#39;http://schemas.google.com/blogger/2008/kind#post&#39;/&gt;
-    &lt;title type=&#39;text&#39;&gt;Format your .Net exceptions to see the StackTrace.&lt;/title&gt;
-    &lt;content type=&#39;html&#39;&gt;&amp;lt;h4&amp;gt;TL;DR&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;Check out a dinky little &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;Exception Message Beautifier&amp;lt;/a&amp;gt; site I threw together so you can quickly format .net exception messages and easily see the StackTrace.&amp;lt;/p&amp;gt;  &amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;  &amp;lt;h4&amp;gt;Go to the site: &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;&amp;lt;font size=&quot;4&quot;&amp;gt;CLICK HERE&amp;lt;/font&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;  &amp;lt;h4&amp;gt;Background&amp;lt;/h4&amp;gt;  &amp;lt;p&amp;gt;Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.&amp;lt;/p&amp;gt;  &amp;lt;blockquote&amp;gt;   &amp;lt;pre&amp;gt;System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34&amp;lt;/pre&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/blockquote&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like &amp;lt;a href=&quot;http://notepad-plus-plus.org/&quot; target=&quot;_blank&quot;&amp;gt;NotePad++&amp;lt;/a&amp;gt; and enter a search/replace as I show below over and over with each exception message you review.&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;lt;a href=&quot;http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png&quot;&amp;gt;&amp;lt;img title=&quot;image&quot; style=&quot;border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800&quot; width=&quot;443&quot; height=&quot;286&quot; /&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Just so I could see an exception that looked more like:&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;blockquote&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;p&amp;gt;System.Exception: Hello Exception! &amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Spike.GetException() in …&amp;amp;lt;cut off for brevity&amp;amp;gt; &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Spike.b__0() in …&amp;amp;lt;cut off for brevity&amp;amp;gt; &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;    &amp;lt;br /&amp;gt;&amp;amp;#160;&amp;amp;#160; at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in …&amp;amp;#160;&amp;amp;#160; &amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/blockquote&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;I finally buckled down and threw together a tool for this. &amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;h3&amp;gt;You can check go check out &amp;lt;a href=&quot;http://staxmanade.github.io/ExceptionMessageBeautifier&quot; target=&quot;_blank&quot;&amp;gt;Exception Message Beautifier&amp;lt;/a&amp;gt; where you can see the sample below.&amp;lt;/h3&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;lt;a href=&quot;http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png&quot;&amp;gt;&amp;lt;img title=&quot;image&quot; style=&quot;border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800&quot; width=&quot;689&quot; height=&quot;354&quot; /&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;&amp;amp;#160;&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;h4&amp;gt;I’d like to thank.&amp;lt;/h4&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;p&amp;gt;Below are a list of tools/resources I leveraged to put the site together relatively quickly over the weekend.&amp;lt;/p&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://codepen.io/&quot; target=&quot;_blank&quot;&amp;gt;CodePen.io&amp;lt;/a&amp;gt; where I first prototyped/built my site before porting it into the GitHub pages. &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot;&amp;gt;GitHub&amp;lt;/a&amp;gt; for providing us with &amp;lt;a href=&quot;http://pages.github.com/&quot; target=&quot;_blank&quot;&amp;gt;GitHub Pages&amp;lt;/a&amp;gt;. Made this site a piece of cake to setup. &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://github.com/approvals/Approvals.NodeJS&quot; target=&quot;_blank&quot;&amp;gt;Approvals.NodeJS&amp;lt;/a&amp;gt; – easily test/verify output. (&amp;lt;em&amp;gt;Disclaimer – I created this nodejs port of &amp;lt;a href=&quot;http://approvaltests.sourceforge.net/&quot; target=&quot;_blank&quot;&amp;gt;Approvals&amp;lt;/a&amp;gt; for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to &amp;lt;a href=&quot;http://en.wikipedia.org/wiki/Eating_your_own_dog_food&quot; target=&quot;_blank&quot;&amp;gt;dog-food&amp;lt;/a&amp;gt; it&amp;lt;/em&amp;gt;) &amp;lt;img class=&quot;wlEmoticon wlEmoticon-smile&quot; style=&quot;border-top-style: none; border-bottom-style: none; border-right-style: none; border-left-style: none&quot; alt=&quot;Smile&quot; src=&quot;http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800&quot; /&amp;gt; &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://angularjs.org/&quot; target=&quot;_blank&quot;&amp;gt;AngularJS&amp;lt;/a&amp;gt; (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.) &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;https://developers.google.com/speed/libraries/devguide&quot; target=&quot;_blank&quot;&amp;gt;Google CDN&amp;lt;/a&amp;gt; for hosting AngularJS &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;  &amp;lt;li&amp;gt;&amp;lt;a href=&quot;http://google.com/analytics/&quot; target=&quot;_blank&quot;&amp;gt;Google Analytics&amp;lt;/a&amp;gt; (so I can see if anyone cares) &amp;lt;/li&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/ul&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;If you take a look, find a bug. Submit a GitHub issue and/or a pull request. Or if you find it useful, feel free to let me know.&amp;lt;/ul&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;ul&amp;gt;Enjoy!&amp;lt;/ul&amp;gt;  &lt;/content&gt;
-    &lt;link rel=&#39;replies&#39; type=&#39;application/atom+xml&#39; href=&#39;http://staxmanade.blogspot.com/feeds/7515836382847059837/comments/default&#39; title=&#39;Post Comments&#39;/&gt;
-    &lt;link rel=&#39;replies&#39; type=&#39;text/html&#39; href=&#39;https://www.blogger.com/comment.g?blogID=4726251688144615011&amp;amp;postID=7515836382847059837&#39; title=&#39;0 Comments&#39;/&gt;
-    &lt;link rel=&#39;edit&#39; type=&#39;application/atom+xml&#39; href=&#39;https://www.blogger.com/feeds/4726251688144615011/posts/default/7515836382847059837&#39;/&gt;
-    &lt;link rel=&#39;self&#39; type=&#39;application/atom+xml&#39; href=&#39;https://www.blogger.com/feeds/4726251688144615011/posts/default/7515836382847059837&#39;/&gt;
-    &lt;link rel=&#39;alternate&#39; type=&#39;text/html&#39; href=&#39;http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html&#39; title=&#39;Format your .Net exceptions to see the StackTrace.&#39;/&gt;
-    &lt;author&gt;
-      &lt;name&gt;Jason Jarrett&lt;/name&gt;
-      &lt;uri&gt;https://plus.google.com/112910204617314300568&lt;/uri&gt;
-      &lt;email&gt;noreply@blogger.com&lt;/email&gt;
-      &lt;gd:image rel=&#39;http://schemas.google.com/g/2005#thumbnail&#39; width=&#39;32&#39; height=&#39;32&#39; src=&#39;//lh6.googleusercontent.com/-Lz16PAsLf5Q/AAAAAAAAAAI/AAAAAAAAAg8/FYSu9U-1tCw/s512-c/photo.jpg&#39;/&gt;
-    &lt;/author&gt;
-    &lt;media:thumbnail xmlns:media=&#39;http://search.yahoo.com/mrss/&#39; url=&#39;http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/s72-c/image_thumb9.png?imgmax=800&#39; height=&#39;72&#39; width=&#39;72&#39;/&gt;
-    &lt;thr:total&gt;0&lt;/thr:total&gt;
-  &lt;/entry&gt;
-</code></pre>
-</div>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
@@ -932,6 +860,10 @@ git push origin release
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
     
@@ -953,10 +885,6 @@ git push origin release
     
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a>
       </li>
     
   </ul>

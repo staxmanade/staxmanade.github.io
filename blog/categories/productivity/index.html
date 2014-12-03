@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>NuGet Project Uncovered: EventAggregator.Net - Developing on Staxmanade</title>
+  <title>Category: productivity - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
   
-   <meta name="description" content="   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.      NOTE: this project...">
+   <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">
+  <link rel="canonical" href="http://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -44,7 +44,7 @@
 
 </head>
 
-<body  class=" ">
+<body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
   
@@ -73,76 +73,42 @@
 <div id="main">
     <div id="content">
 
-        <div>
-            <article class="hentry" role="article">
+        <div class="blog-index">
+            
+            <article>
                 
   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">NuGet Project Uncovered: EventAggregator.Net</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></h1>
     
     <p class="meta">
         
-  <time datetime="2012-02-22T05:04:00.000Z" pubdate data-updated="true">Feb 21st 2012</time>
+  <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
 
 
 
-        
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
     </p>
     
 </header>
 
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/EventAggregator.Net" target="_blank">EventAggregator.Net</a> is a single C# file that can provide a basis for a simple in memory Pub/Sub event aggregator.</p>  <p>I extracted this out of my <a href="http://StatLight.codeplex.com" target="_blank">StatLight</a> project as I found that I often wanted a similar one and kept finding myself copy/pasting this into projects. I figured a single location for this project would be better and I use StatLight as the first dog bowl when I need to dog food the project.</p>  <p>If you’re familiar with the…</p>  <blockquote>   <p>Install-Package Caliburn.Micro.EventAggregator      <br /></p> </blockquote>  <p>…then you know probably know what this project is like. </p>  <p>Its history starts a few years ago when I read <a href="http://jeremydmiller.com/" target="_blank">Jeremey Miller’s</a> Braindump on <a href="http://codebetter.com/jeremymiller/2009/07/22/braindump-on-the-event-aggregator-pattern/" target="_blank">Event Aggregator Pattern</a> and decided I wanted rip out StatLight’s usage of the Prism event aggregator and replace it with a similar one to the one found in StoryTeller. It’s gone through quite a few revisions inside of StatLight since then and eventually made its way into its own project.</p>  <p>Some thanks have to go out to the great feedback and pull requests from <a href="https://github.com/JakeGinnivan" target="_blank">Jake Ginnivan</a> who found this project on his own (before I publicized it).</p>  <p>If you’re interested in using it, I’d recommend checking out the source’s test project and the SampleUsage project. The SampleUsage project demonstrates how you can configure the tool to publish events in an async mode.</p>  <p>One concept introduced in this EventAggregator is taking the IEventAggregator interface and breaking it up into two interfaces (<strong>IEventPublisher</strong> and <strong>IEventSubscriptionManager</strong>). This proved extremely useful when trying to diagnose components that did both aggregator subscription management vs ones that only published events. It even helped to easily diagnose components that did not correctly unregister objects.</p>  </div>
+<div class="entry-content"><h1 id="tl-dr">TL;DR</h1>
+<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
+<h1 id="more-context">More Context</h1>
+<p>We all know that communication is important, and often where things go awry.</p>
+<p>I sometimes wonder if I&#39;m alone in this thinking, but don&#39;t think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it&#39;s awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
+<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you&#39;ve received the email (and may take some time to respond).</p>
+<p>I don&#39;t necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
 </div>
 
 
-                <footer>
-                    <p class="meta">
-                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
-
-                        
-  <time datetime="2012-02-22T05:04:00.000Z" pubdate data-updated="true">Feb 21st 2012</time>
-
-
-
-                        
-<span class="categories">
-    
-    <a class='category' href='/blog/categories/nuget/'>NuGet</a>
-    
-</span>
-
-
-                    </p>
-                    
-                    <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2012/02/nuget-project-uncovered_21/" data-via="staxmanade" data-counturl="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">Tweet</a>
-  
-  
-  
-</div>
-
-                    
-                    <p class="meta">
-                        
-                        <a class="basic-alignment left" href="/2012/02/nuget-project-uncovered-dumptotext/" title="Previous Post: NuGet Project Uncovered: DumpToText">&laquo; NuGet Project Uncovered: DumpToText</a>
-                        
-                        
-                        <a class="basic-alignment right" href="/2012/02/nuget-project-uncovered_22/" title="Next Post: NuGet Project Uncovered: SpecificationExtensions.[MSTest | NUnit | Xunit]"> &raquo;</a>
-                        
-                    </p>
-                </footer>
             </article>
             
-            <section>
-                <h1>Comments</h1>
-                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-            </section>
-            
+            <div class="pagination">
+                
+                <a href="/blog/archives">Blog Archives</a>
+                
+            </div>
         </div>
-
         <aside class="sidebar">
             <section>
 	<!-- Begin MailChimp Signup Form -->
@@ -232,6 +198,7 @@
 
 
         </aside>
+ 
 
     </div>
 </div>
