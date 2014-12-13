@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/">C# (checked) keyword – Learn something new every day</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
-
+          <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’ve been programming against the .net framework since the late beta of version 1.0 came out. (I had a couple year hiatus when I took a job doing some Linux &amp; C++) however, suffice it to say, I’ve been using the language a long time. I still find it amazing that there are features in the language that have been a round a long time and still manage stumbling across things I’ve never seen before.</p>  <p>Today’s newly learned feature I saw in a blog by <a href="http://www.lostechies.com/blogs/jimmy_bogard/">bogardj</a> over at <a href="http://www.lostechies.com/">LostTechies</a> where he wrote up a little <a href="http://www.lostechies.com/blogs/jimmy_bogard/archive/2009/06/24/expressions-cheat-sheet.aspx">Expressions Cheat Sheet</a>.</p>  <p>In his blog, I notice the “checked” keyword had the blue syntax highlighting. (which usually means it’s a C# keyword)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfB5ivx2I/AAAAAAAAAJI/DZYX6HqutGM/s1600-h/image%5B4%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCEOcaGI/AAAAAAAAAJM/bjFimfVqmxE/image_thumb%5B2%5D.png?imgmax=800" width="602" height="365" /></a> </p>  <p>So, to verify, I copied the word into my C# editor and what do you know… It is a C# keyword. This is probably something most if not all C# programmers out there already know and I, for some reason have missed this.</p>  <p>Here’s a blurb about it on the <a href="http://stackoverflow.com/questions/9033/hidden-features-of-c/355991#355991">stack overflow “Hidden features of C#”</a>.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCQOXVZI/AAAAAAAAAJQ/36Bi7s0yXzs/s1600-h/image%5B10%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfCnzkBdI/AAAAAAAAAJU/RLV3BvPXhTE/image_thumb%5B6%5D.png?imgmax=800" width="605" height="220" /></a> </p>  <p>And of course you can get the official details @ <a href="http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx">http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx</a></p>  <p>I decided to explore this a little. As an academic exercise I wanted to see what the difference would be between using the checked keyword with a cast operation and compare that to the <a href="http://msdn.microsoft.com/en-us/library/system.convert.tobyte.aspx">System.Convert.ToByte</a> operation.    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfCw76XwI/AAAAAAAAAJY/rZ0k6Ds3CRI/s1600-h/image%5B14%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDFmC4II/AAAAAAAAAJc/CoUMfycJ3do/image_thumb%5B8%5D.png?imgmax=800" width="554" height="128" /></a>    <br />Will generate the following error. <strong>System.OverflowException : Arithmetic operation resulted in an overflow.</strong></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDRuVKAI/AAAAAAAAAJg/XsG2SQcPABU/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfDjOy0lI/AAAAAAAAAJk/itMzHCCsv5w/image_thumb%5B13%5D.png?imgmax=800" width="610" height="120" /></a>    <br />While using the System.Convert class will generate a different error. <strong>System.OverflowException : Value was either too large or too small for an unsigned byte.</strong>&#160;</p>  <p>And last experiment I threw both of the conversion attempts in a loop and fired up the <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">ANTS Profiler</a> which shows that using the built in <font color="#0000ff">checked</font> keyword with a cast operation is faster than using the BCL conversion.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfD-trbyI/AAAAAAAAAJo/iZm-skTI2ok/s1600-h/image%5B37%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfENFFsPI/AAAAAAAAAJs/FWkJX2oo1ws/image_thumb%5B19%5D.png?imgmax=800" width="609" height="324" /></a>&#160;</p>  <p>As to which one is better I would probably have to dig deeper into other side affects that one may have over the other… Up front I don’t see any issue with the cast and checked keyword combo.</p>  </div>
@@ -108,47 +97,29 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
+                          <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/csharp/'>C#</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/06/silverlight-unity-moq-backed-automocker/" title="Previous Post: Silverlight Unity &amp; Moq backed AutoMocker">&laquo; Silverlight Unity &amp; Moq backed AutoMocker</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/07/live-messenger-disconnected-prompt-come/" title="Next Post: Live Messenger Disconnected Prompt (Fail)"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -174,42 +145,32 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -238,7 +199,6 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 </section>
 
 
-
         </aside>
 
     </div>
@@ -253,17 +213,12 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -276,8 +231,6 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

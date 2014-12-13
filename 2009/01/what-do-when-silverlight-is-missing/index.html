@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/">What do when Silverlight is missing some Base Class Library (BCL) functionality?</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
-
+          <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
@@ -100,47 +89,29 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
+                          <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/silverlight/'>Silverlight</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2008/12/i4o-indexspecification-for/" title="Previous Post: i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;">&laquo; i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/01/castledynamicproxy2-now-ported-to/" title="Next Post: Castle.DynamicProxy2 now ported to Silverlight!!!"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -166,42 +137,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -230,7 +191,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -245,17 +205,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -268,8 +223,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

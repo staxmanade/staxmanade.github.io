@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/05/console-icon-swapping-just-for-fun/">Console Icon Swapping – Just for fun…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-05-10T06:48:00.000Z" pubdate data-updated="true">May 9th 2009</time>
-
+          <time datetime="2009-05-10T06:48:00.000Z" pubdate data-updated="true">May 9th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I took the new logo for <a title="Silverlight Testing Automation Tool" href="http://statlight.net/" target="_blank">StatLight</a> and created a/an .ico (by going to <a href="http://www.convertico.com/" target="_blank">convertico.com</a>) for use as a <a href="http://en.wikipedia.org/wiki/Favicon" target="_blank">FavIcon</a> and so I could fancy up a couple of the windows just for fun. What I ended up figuring out, was how to change the icon for a running console window.</p>  <p>It’s actually pretty easy… Here is the class I wrote and use.</p>  <pre><span style="color: #0000ff">internal</span> <span style="color: #0000ff">class</span> ConsoleIconSwapper : IDisposable<br />{<br />    IntPtr consoleWindowHwnd;<br /><br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">const</span> <span style="color: #0000ff">int</span> WM_SETICON = 0x80;	<span style="color: #008000">// Api constant</span><br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">const</span> <span style="color: #0000ff">int</span> ICON_SMALL = 0;	<span style="color: #008000">// Api constant</span><br /><br />    [DllImport(&quot;<span style="color: #8b0000">user32.dll</span>&quot;)]<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">extern</span> <span style="color: #0000ff">int</span> SendMessage(IntPtr hwnd, <span style="color: #0000ff">int</span> message, <span style="color: #0000ff">int</span> wParam, IntPtr lParam);<br /><br />    [DllImport(&quot;<span style="color: #8b0000">kernel32</span>&quot;)]<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">extern</span> IntPtr GetConsoleWindow();<br /><br />    <span style="color: #0000ff">public</span> ConsoleIconSwapper()<br />    {<br />        consoleWindowHwnd = GetConsoleWindow();<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> ShowConsoleIcon(Icon icon)<br />    {<br />        SendMessage(consoleWindowHwnd, WM_SETICON, ICON_SMALL, icon.Handle);<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> ChangeIconback()<br />    {<br />        SendMessage(consoleWindowHwnd, WM_SETICON, ICON_SMALL, (IntPtr)0);<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Dispose()<br />    {<br />        ChangeIconback();<br />    }<br />}</pre><br /><br /><p>And here is how I use it.</p><br /><br /><pre><span style="color: #0000ff">using</span> (var consoleIconSwapper = <span style="color: #0000ff">new</span> ConsoleIconSwapper())<br />{<br />    consoleIconSwapper.ShowConsoleIcon(CoreResources.FavIcon);<br />    <span style="color: #008000">/*<br />     *  Code Here<br />     */</span><br />}</pre><br /><br /><p>This is what it looks like when in use…</p><br /><br /><p>Before:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SgZ4p24wrvI/AAAAAAAAAIA/jrcqzHB68ek/s1600-h/image%5B21%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; margin-left: 0px; border-top: 0px; margin-right: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SgZ4qKHQ1wI/AAAAAAAAAIE/37QrEplXSvs/image_thumb%5B9%5D.png?imgmax=800" width="175" height="32" /></a><br /><br />  <br />During:<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SgZ4qaSofLI/AAAAAAAAAII/gD57RvvY0QM/s1600-h/image%5B22%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SgZ4qswfXEI/AAAAAAAAAIQ/WQoqtYfLgLo/image_thumb%5B10%5D.png?imgmax=800" width="162" height="48" /></a> <br /><br />  <br />After:<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SgZ4q51vbkI/AAAAAAAAAIY/tM64Vif9A04/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; margin-left: 0px; border-top: 0px; margin-right: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SgZ4rAQeMhI/AAAAAAAAAIg/UrpNW9pDftU/image_thumb%5B13%5D.png?imgmax=800" width="175" height="32" /></a></p><br /><br /><p>Amused by simple things :)</p>  </div>
@@ -108,41 +97,26 @@ Thanks man!<br /><br />It works fine.</div>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-05-10T06:48:00.000Z" pubdate data-updated="true">May 9th 2009</time>
-
+                          <time datetime="2009-05-10T06:48:00.000Z" pubdate data-updated="true">May 9th 2009</time>
 
 
                         
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/05/console-icon-swapping-just-for-fun/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/05/console-icon-swapping-just-for-fun/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/04/to-be-checked-in-or-not/" title="Previous Post: To be checked in or not!">&laquo; To be checked in or not!</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/05/statlight-v05-released/" title="Next Post: StatLight – V0.5 released!"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -168,42 +142,32 @@ Thanks man!<br /><br />It works fine.</div>
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -232,7 +196,6 @@ Thanks man!<br /><br />It works fine.</div>
 </section>
 
 
-
         </aside>
 
     </div>
@@ -247,17 +210,12 @@ Thanks man!<br /><br />It works fine.</div>
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -270,8 +228,6 @@ Thanks man!<br /><br />It works fine.</div>
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

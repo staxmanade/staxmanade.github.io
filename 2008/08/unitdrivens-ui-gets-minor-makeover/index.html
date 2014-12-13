@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">UnitDriven&#x27;s UI Gets a Minor Makeover</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
-
+          <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 I had some time to play around with and learn WPF within Silverlight. It's a modest start, but I just had to blog about it...<br /><br />We've started a project at my current job using Silverlight. Researching different framework options I ran across the <a href="http://codeplex.com/UnitDriven">UnitDriven</a> project on codeplex. After downloading and checking out the silverlight testing UI...<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s1600-h/Csla.net.Original.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s320/Csla.net.Original.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559412476544802" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />I decided this was a place I could take a stab at learning some silverlight UI. ok... So it's getting late and it's certainly not perfect, but here's where I am now.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s1600-h/Csla.net.NewSkin.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s320/Csla.net.NewSkin.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559787065086786" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />The only really tricky piece was... The original UI used nested ListBox controls which threw me down a path of thinking the program was broken... basically with a ListBox inside of a ListBox you have to select the first item, then the sub item, and in this application, only then, can you select the "Run" button to execute the unit test... I spent time looking through code trying to figure out if there was a bug in the testing contexts.<br /><br />The solution to this was to convert the ListBox to an ItemsControl. Which allowed me to select multiple buttons without having to first select the ListBox sub item...<br /><br />I then had to wrap everything inside of a ScrollViewer because the ItemsControl doesn't create one automatically like the ListBox does.<br />[EDIT]<br />Unfortunately wrapping everything in the ScrollViewer removed a feature the older version had, namely, at the top of the control is a display of the # succeeded/# Total. Wrapping everything in the ScrollViewer removed the ability to scroll through tests while that value was being updated during tests...<br /><br />So I updated the main grid in the XAML, and shifted a few things around to allow this old feature to be seen in the new UI.<br />[/EDIT]<br /><br />after that was done, it was basically playing around with different styling elements to end up with the UI above.<br /><br />It was a good simple exploratoin into some of the Silverlight's WPF capabilities.</div>
@@ -113,47 +102,29 @@ Thanks for the patch, I applied it today.</div>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
+                          <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/silverlight/'>Silverlight</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2008/05/how-best-to-expose-value-that-could/" title="Previous Post: How best to expose a value that could throw an error?">&laquo; How best to expose a value that could throw an error?</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2008/09/wcf-service-proxy-inside-silverlight/" title="Next Post: WCF Service Proxy inside Silverlight with a generic type"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -179,42 +150,32 @@ Thanks for the patch, I applied it today.</div>
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -243,7 +204,6 @@ Thanks for the patch, I applied it today.</div>
 </section>
 
 
-
         </aside>
 
     </div>
@@ -258,17 +218,12 @@ Thanks for the patch, I applied it today.</div>
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -281,8 +236,6 @@ Thanks for the patch, I applied it today.</div>
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

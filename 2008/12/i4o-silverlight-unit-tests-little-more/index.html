@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
-
+          <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Follow up to my post on <a href="/2008/12/i4o-with-silverlight-compiles-first-try" target="_blank">i4o &amp; Silverlight (compiles first try)</a>...</p>  <p>&#160;</p>  <p>I took a stab at porting the i4o unit tests to <a href="http://silverlight.com/" target="_blank">Silverlight</a> which was quite a bit more work than I initially expected.</p>  <p>After creating a <a href="http://code.msdn.microsoft.com/silverlightut" target="_blank">Silverlight Unit Test</a> project and linking the original test files into the Silverlight project, I compiled...</p>  <ul>   <li>First the VB using statement wasn't even needed, so I removed that. <span style="color: #0000ff">using</span> Microsoft.VisualBasic;       <br /></li>    <li>Second there is no System.Diagnostics.Stopwatch() class in Silverlight, so I basically implemented a quick one using DateTime to get the unit tests to compile in Silverlight. Here's the class, except the Frequency property has been commented out (didn't spend time to figure how to make that correct, or what is correct???) </li> </ul>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Stopwatch<br />{<br />	<span style="color: #0000ff">private</span> DateTime _StartUtcDateTime;<br />	<span style="color: #0000ff">private</span> DateTime? _EndUtcDateTime;<br />	<span style="color: #0000ff">private</span> <span style="color: #0000ff">bool</span> _IsRunning = <span style="color: #0000ff">false</span>;<br /><br />	<span style="color: #008000">//public static readonly long Frequency { get { throw new NotImplementedException(); } }</span><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">readonly</span> <span style="color: #0000ff">bool</span> IsHighResolution = <span style="color: #0000ff">false</span>;<br />	<span style="color: #0000ff">public</span> Stopwatch()<br />	{}<br /><br />	<span style="color: #0000ff">public</span> TimeSpan Elapsed<br />	{<br />		<span style="color: #0000ff">get</span><br />		{<br />			<span style="color: #0000ff">if</span> (_EndUtcDateTime.HasValue)<br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(_EndUtcDateTime.Value.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />			<span style="color: #0000ff">else</span><br />			{<br />				<span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> TimeSpan(DateTime.UtcNow.Ticks - _StartUtcDateTime.Ticks);<br />			}<br />		}<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedMilliseconds { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Milliseconds; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">long</span> ElapsedTicks { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> Elapsed.Ticks; } }<br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">bool</span> IsRunning { <span style="color: #0000ff">get</span> { <span style="color: #0000ff">return</span> _IsRunning; } }<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">long</span> GetTimestamp()<br />	{<br />		<span style="color: #0000ff">return</span> DateTime.Now.Ticks;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Reset()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Start()<br />	{<br />		_EndUtcDateTime = <span style="color: #0000ff">null</span>;<br />		_IsRunning = <span style="color: #0000ff">true</span>;<br />		<span style="color: #0000ff">this</span>._StartUtcDateTime = DateTime.UtcNow;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> Stopwatch StartNew()<br />	{<br />		var w = <span style="color: #0000ff">new</span> Stopwatch();<br />		w.Start();<br />		<span style="color: #0000ff">return</span> w;<br />	}<br /><br />	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Stop()<br />	{<br />		_EndUtcDateTime = DateTime.UtcNow;<br />		_IsRunning = <span style="color: #0000ff">false</span>;<br />	}<br />}</pre><br /><br /><p>The only other issue that came up was some of the Stopwatch dependent tests happened so fast that they would fail intermittently... the quick hack/solution for this was to up the iteration count of whatever they were testing.</p><br /><p>After all the above taking care of all the above issues, I was able to get the unit tests to pass. </p><br /><p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAmsr9cuI/AAAAAAAAACU/ImLvor4RNNQ/s1600-h/image%5B4%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="372" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STzAm05AF3I/AAAAAAAAACY/HKajhxLiWtk/image_thumb%5B2%5D.png?imgmax=800" width="367" border="0" /></a></p>  </div>
@@ -113,49 +102,30 @@ For the Frequency property's implementation, you probably just need to return th
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
+                          <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/silverlight/'>Silverlight</a>
-    
     <a class='category' href='/blog/categories/i4o/'>i4o</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2008/12/is-my-hsa-trying-to-tell-me-something/" title="Previous Post: Is my HSA trying to tell me something?">&laquo; Is my HSA trying to tell me something?</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2008/12/t4-text-templating-in-silverlight/" title="Next Post: T4 Text Templating in Silverlight (Thanks Oleg Sych!)"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -181,42 +151,32 @@ For the Frequency property's implementation, you probably just need to return th
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -245,7 +205,6 @@ For the Frequency property's implementation, you probably just need to return th
 </section>
 
 
-
         </aside>
 
     </div>
@@ -260,17 +219,12 @@ For the Frequency property's implementation, you probably just need to return th
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -283,8 +237,6 @@ For the Frequency property's implementation, you probably just need to return th
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

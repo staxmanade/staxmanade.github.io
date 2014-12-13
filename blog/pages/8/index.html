@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -74,23 +69,16 @@
     <div id="content">
         
 <div class="blog-index">
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
-
+          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
@@ -98,23 +86,16 @@
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
-
+          <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <h3>Background</h3>In my previous job, I spent all my development time in a Linux environment. Was rather impressed at how much could get done at the command line, and how efficient some of those tasks became. My next job was based on Windows and mostly the Microsoft stack of development tools. This&nbsp; meant I pretty much left the command line behind. That was, until, I started using git. And since I wanted to learn PowerShell, I used PowerShell to execute my git commands.<br />One thing that has bugged me for a while is simply moving between directories. Even with tab completion, all that typing is a still quite annoying. Especially if you jump between a set of similar directories. One feature from the Linux CD command that I missed was “CD -". This command in Linux can be used to jump to the previous directory (and then back again). One limitation of this command is it only could jump back to the previous directory, and it did not retain a memory of recent directories. <em>There may be something better in Linux that I don’t know of, but I’m basing this on a limited experience a number of years ago.</em><br />So I threw a question out on twitter.    <br /><a href="http://lh3.ggpht.com/-Ucrl4yvnrIk/TiJJ_Nnk3eI/AAAAAAAAAQI/k5Mm8x_Twhs/s1600-h/image_thumb63.png"><img alt="image_thumb6" border="0" height="97" src="http://lh5.ggpht.com/-iijA6mLrgEU/TiJJ_Xbp0hI/AAAAAAAAAQM/lHv0bksIGys/image_thumb6_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb6" width="318" /></a>     <br />After several tweets back and forth, @cwprogram threw an interesting spike at me.<br /><a href="http://lh5.ggpht.com/-ilEGIJk7VRI/TiJJ_kt8a-I/AAAAAAAAAQQ/XJ0iAJq5384/s1600-h/image_thumb942.png"><img alt="image_thumb9[4]" border="0" height="97" src="http://lh4.ggpht.com/-T4MVc7vKolw/TiJKACBtvyI/AAAAAAAAAQU/Pn71WMECKcQ/image_thumb94_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb9[4]" width="312" /></a>&nbsp; <a href="http://pastebin.com/xwtkn0am">http://pastebin.com/xwtkn0am</a>     <br />Although this wasn’t exactly what I was looking for, it contained enough of what I needed to spark my curiosity to write a version of my own.<br />And so a little script was born that I’m now using to replace the “CD” command in my PowerShell runtime.<br /><h3>What does this do?</h3>After you get it installed (see install steps below), when you type “CD” with no parameters at the command prompt. It will list up to 10 of the most recent distinct paths you’ve been to recently. This list also gives an index lookup number that you can use as a shortcut to jump to that path.<br />Example:<br /><blockquote><span style="font-family: Courier New;">C:\code&gt; cd        <br />&nbsp;&nbsp;&nbsp;&nbsp; 1) C:\Users\jasonj         <br />&nbsp;&nbsp;&nbsp;&nbsp; 2) D:\temp         <br />C:\code&gt; cd 2         <br />D:\temp&gt;</span></blockquote>You can continue to use the “CD” command to do your usual changing directories. Now you can quickly get a history of where you’ve been, and quickly jump to any of those previous histories without typing the entire paths again.<br />It defaults to only showing you the last 10 distinct items, but if you find yourself needing to go back farther than that, you can use the following command to list more than 10 items.<br /><blockquote>D:\temp&gt; cd -ShowCount 100</blockquote><h3>How to Install</h3><ol><li>Download the file and save it to a location you can reference later.      <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a> </li><li>Open your $PROFILE (<a href="http://www.howtogeek.com/50236/customizing-your-powershell-profile/">What is that?</a>) </li><li>Type the following two commands into your profile to replace the existing “CD” command with the new one.      <br />      <br /><span style="font-family: Courier New;">Remove-Item alias:cd        <br />Set-Alias cd {Your_Saved_Directory}\Change-Directory.ps1</span>       </li><li>Exit your PowerShell console and start a new one up. </li></ol><br />Happy Commanding!</div>
@@ -135,23 +116,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/statlight-14-and-almost-15/">StatLight 1.4 and almost 1.5</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-07-14T21:35:00.000Z" pubdate data-updated="true">Jul 14th 2011</time>
-
+          <time datetime="2011-07-14T21:35:00.000Z" pubdate data-updated="true">Jul 14th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>It’s been a while since I blogged about any updates to the StatLight project and even though people are saying “SilverLight’s dead” I’d have to say there’s been more community contribution in the last few months to the project than there’s ever been.</p>  <h4>What is StatLight?</h4>  <p>For those of you who don’t know, it’s a simple little command line tool you can use to execute tests for SilverLight test projects. You can get some more information on the project at the <a href="http://statlight.codeplex.com/">project’s home page</a> and <a href="http://statlight.codeplex.com/documentation">documentation page</a>.</p>  <p>&#160;</p>  <h4>Release of <a href="http://statlight.codeplex.com/releases/view/62509">StatLight 1.4</a></h4>  <p>It’s been several months since I posted the 1.4 release of StatLight. It was full of all kinds of goodies. Go checkout the release page to see what updates were included.</p>  <p>There was a regression introduced with this release that caused U.I. tests in TeamCity to not report correctly. It’s since been fixed and you can use the <a href="http://teamcity.codebetter.com/viewType.html?tab=buildTypeStatusDiv&amp;buildTypeId=bt370">CodeBetter TeamCity</a> server to pull down the latest build of StatLight if you need this fix. If you hit the login page, just click on the login as a guest link to access the TeamCity builds.</p>  <p>&#160;</p>  <h4>Release of <a href="http://statlight.codeplex.com/releases/view/68996">StatLight 1.5</a> (soon, maybe, sometime)</h4>  <p><a href="http://lh4.ggpht.com/-auqyO7rhKbk/Th9hIpJe4cI/AAAAAAAAAP8/DQCqSPMEboc/s1600-h/image%25255B10%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: right; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" align="right" src="http://lh5.ggpht.com/-XlOPMINnLiY/Th9hJAXFFaI/AAAAAAAAAQA/TiEM4PvpvZ0/image_thumb%25255B2%25255D.png?imgmax=800" width="244" height="120" /></a>If you are interested in what is to come with the next release, you can head over to the “planned” tab and check out some of the new features.</p>  <p>But I’ll write about some of them here anyway <img style="border-bottom-style: none; border-left-style: none; border-top-style: none; border-right-style: none" class="wlEmoticon wlEmoticon-smilewithtongueout" alt="Smile with tongue out" src="http://lh3.ggpht.com/-McDDdxnanho/Th9hJeECyEI/AAAAAAAAAQE/EKmKN-TTSK0/wlEmoticon-smilewithtongueout%25255B2%25255D.png?imgmax=800" /></p>  <p>&#160;</p>  <h4>Community Contribution.</h4>  <h5>xUnitContrib Test Runner</h5>  <p>I’d like to say thanks to <a href="https://github.com/remogloor">Remo Gloor</a> for his contribution of the official xUnitContrib Silverlight test runner. Remo created a StatLight runner host that leverages the xUnitcontrib Silverlight test runner to execute xUnit tests. This provides some great xUnit support and is considerably faster than the xUnitLight adapter originally implemented.</p>  <p>&#160;</p>  <h5>Growl Plugin</h5>  <p>Geir-Tore Lindsve leveraged the new <a href="http://statlight.codeplex.com/wikipage?title=Extensibility%20Documentation&amp;referringTitle=Documentation">extensibility</a> model recently added to StatLight to create a plugin that would notify Growl of failing tests. You can check out the project at <a title="https://github.com/lindsve/Statlight.Growl" href="https://github.com/lindsve/Statlight.Growl">https://github.com/lindsve/Statlight.Growl</a></p>  <p>&#160;</p>  <h5>ReSharper 6</h5>  <p>ReSharper support has been around for a while now with the <a href="http://agunit.codeplex.com/">AgUnit</a> project. I was recently contacted by Steven Kock who wanted to see if it were possible to dump his custom Silverlight Test runner and leverage StatLight. I’ve been working with him on this, and am really excited about the value add we get from having Steven push StatLight around. Looking forward to his suggestions, and who knows – we may get some much better performance out of StatLight. Even though it’s still under dev, I’m just stoked can’t say how awesome it was to open up a Silverlight test project and execute a single test by using my R# shortcut.</p>  </div>
@@ -159,23 +133,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-06-18T17:15:00.000Z" pubdate data-updated="true">Jun 18th 2011</time>
-
+          <time datetime="2011-06-18T17:15:00.000Z" pubdate data-updated="true">Jun 18th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I was doing some basic Git training for a customer this past week and they asked about how to setup their repositories to push/pull from a network share. I thought it would be simple and we spent a few minutes in class trying to accomplish it. We stopped trying in class and I took it as a homework assignment to figure it out before the next lesson. It was a little bit of a struggle to get this working for me, so I thought I’d throw this out there for any windows developers trying to do a similar thing.</p>  <p>&#160;</p>  <p>I tend to prefer the command line to any of the git UI tools (except when visualizing history, and diffing files). In this post I’m going to show how you can do it through a command line, but I’ll also show how you can do it with git gui which, in this case, is a few less steps.</p>  <p>&#160;</p>  <h3>How to push a local repository up to an (un-initialized) remote windows share.</h3>  <h5>&#160;</h5>  <h4>Command Line:</h4>  <p>I tend to run git within PowerShell, however the following set of commands <strong>cannot be run within the PowerShell</strong> prompt. If you figure out a way, I’d love to hear about it. And since I use the PowerShell prompt, I’m not sure how this would play out with the bash command.</p>  <p>Open a command prompt (cmd.exe) and follow the below steps to create a remote windows repository share.    <br /></p>  <p>CD into the context of your local repository. Say my repo was at “C:\Code\MyGitRepo1”.</p>  <blockquote>   <p>cd C:\Code\MyGitRepo1&#160; <br /></p> </blockquote>  <p>Next we’re going to change our current directory to the remote share location. </p>  <blockquote>   <p>Something I learned during this process is that cmd.exe doesn’t allow you to “cd” into a UNC network share path.</p> </blockquote>  <p>To get around not being allowed to “cd” into a UNC network share we’ll use the <a href="http://technet.microsoft.com/en-us/library/bb490978.aspx">pushd</a> command. The reason this works is because it is actually going to map a network drive to the network share location.</p>  <blockquote>   <p>pushd <a href="file://\\remoteServer\git\Share\Folder\Path">\\remoteServer\git\Share\Folder\Path</a></p> </blockquote>  <p>Now that we’re in the remote location we can create a bare git repository.</p>  <blockquote>   <p>mkdir MyGitRepo1      <br />cd MyGitRepo1       <br />git init --bare       <br /></p> </blockquote>  <p>Your remote empty repository has now been created. Let’s go back to our local repository</p>  <blockquote>   <p><font style="background-color: #ffffff">popd</font></p> </blockquote>  <p>popd will “CD” back to the previous location (“C:\Code\MyGitRepo1”) and also remove the network share the pushd command created above.</p>  <p>So we should be back in the context of our local git repo.</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code\MyGitRepo1\ &gt;</font></p> </blockquote>  <p>&#160;</p>  <p>Now all we need to do is add the newly created remote bare repository to our local repo and push our code up.</p>  <p><strong>Notice the direction of the slashes in the path below (this stumped me for a bit)</strong>&#160;</p>  <blockquote>   <p>git remote add origin //remoteServer/git/Share/Folder/Path/MyGitRepo1      <br />git push origin master       <br /></p> </blockquote>  <p>Kind of a pain at the command prompt really, but it’s not something that’s done all that often.</p>  <h4>Using Git gui instead:</h4>  <p>Open up the GUI</p>  <blockquote>   <p><font style="background-color: #ffffff">git gui</font></p> </blockquote>  <p>Click the [Remote-&gt;Add] menu option to bring up the “Add Remote” dialog.</p>  <p><a href="http://lh3.ggpht.com/-ftWDdPbwLuU/TfzdIjeomCI/AAAAAAAAAPs/V7fp-tYQGTE/s1600-h/image%25255B3%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-2J7R5Ywqg5Q/TfzdKYd7u1I/AAAAAAAAAPw/RVRd1qA4Mwg/image_thumb%25255B1%25255D.png?imgmax=800" width="306" height="179" /></a></p>  <p>Enter the name for your remote “origin” is pretty typical for the central repository, but you can call this whatever you want. Then type the remote location. <strong>Notice the direction of the slashes.</strong></p>  <p><a href="http://lh4.ggpht.com/-rK0DGmJVatM/TfzdK_fEhyI/AAAAAAAAAP0/040v3iV28YU/s1600-h/image%25255B7%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/-2lkEQOqsj3I/TfzdLjmbWvI/AAAAAAAAAP4/6LZzJP94Cmk/image_thumb%25255B3%25255D.png?imgmax=800" width="414" height="305" /></a></p>  <p>Now you should be good to go.</p>  <p>&#160;</p>  <p>Hope this helps someone else, and if anyone knows of a better/easier way I’d love to hear it.</p>  </div>
@@ -196,23 +163,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/04/using-vsdbcmd-to-deploy-entity/">Using VSDBCMD to deploy an Entity Framework (EF) CodeFirst (or any other) database to AppHarbor</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-04-13T22:51:00.000Z" pubdate data-updated="true">Apr 13th 2011</time>
-
+          <time datetime="2011-04-13T22:51:00.000Z" pubdate data-updated="true">Apr 13th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you’ve taken the jump to try out the new Entity Framework Code First and you’re allowing it to generate your database for you, you’ve most certainly run into the lack of migrations/updating existing schema support. Currently EF Code First will only create a database and won’t update a database with changes necessary to bring it in line with your model. I know they’re working on it, but since it’s not there, I thought I’d share a possible solution, albeit less polished than some of the well known database change management out there.</p>  <h4>Where is the tool?</h4>  <p>You can access it in the VS Command window. On my x64 machine the tool is in.</p>  <blockquote>   <p>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VSTSDB\Deploy\vsdbcmd.exe</p> </blockquote>  <h4>I want to deploy an existing schema to AppHarbor.</h4>  <p>Some high level steps that you can use for deployment of database changes.</p>  <ol>   <li>Generate an original reflection of your database. (*.dbschema file) </li>    <li>Tiny little hack to the .dbschema file. </li>    <li>Generate the change file to AppHarbor </li>    <li>Review Change Script Generated </li>    <li>Take the app offline. (optional) </li>    <li>Apply Change Script </li>    <li>Bring the app online (mandatory if you took step 5) </li> </ol>  <h5>Generate an original reflection of your database.</h5>  <p>This file is a complete reflection of your databases schema in a single xml file.</p>  <p>The following command can be used to generate this file.</p>  <blockquote>   <p>vsdbcmd.exe      <br />&#160;&#160;&#160;&#160; /Action:Import       <br />&#160;&#160;&#160;&#160; /ConnectionString:&quot;Data Source=.\sqlexpress;Initial Catalog=MyDatabase;Integrated Security=True;Pooling=False&quot;       <br />&#160;&#160;&#160;&#160; /ModelFile:MyDatabase.dbschema</p> </blockquote>  <p>There are a ton of knobs to turn with this command line tool. Feel free to check out the docs <a href="http://msdn.microsoft.com/en-us/library/dd193283.aspx">http://msdn.microsoft.com/en-us/library/dd193283.aspx</a></p>  <p>Now you should have a file “MyDatabase.dbschema” sitting on your hard drive.</p>  <h5>Tiny little hack to the .dbschema file.</h5>  <p>The section of xml we want to manually remove from the file is related to where your mdf and ldf database files should exist on disk. When we go to deploy up to AppHarbor, if this is not removed, then vsdbcmd will generate script to attempt to move the files into the “correct” location. This operation will throw exceptions if you attempt to execute against AppHarbor as you don’t have permission to do this. We’re removing it from the xml file, as I can’t seem to get the correct command line option to ignore this (if there is an option). So by removing it, it’s just not used and completely ignored.</p>  <p>I don’t know if this will be true for everyone, but I find that the last two sections of xml in the dbschema file are all I have to remove. I’ll show the two full sections below so you can use it as a reference of what to remove from the file.</p>  <pre class="brush: xml;">&lt;Element Type=&quot;ISql90File&quot; Name=&quot;[MyDatabase]&quot;&gt;<br />    &lt;Property Name=&quot;FileName&quot; Value=&quot;$(DefaultDataPath)$(DatabaseName).mdf&quot; /&gt;<br />    &lt;Property Name=&quot;Size&quot; Value=&quot;2304&quot; /&gt;<br />    &lt;Property Name=&quot;SizeUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowth&quot; Value=&quot;1024&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowthUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Relationship Name=&quot;Filegroup&quot;&gt;<br />        &lt;Entry&gt;<br />            &lt;References ExternalSource=&quot;BuiltIns&quot; Name=&quot;[PRIMARY]&quot; /&gt;<br />        &lt;/Entry&gt;<br />    &lt;/Relationship&gt;<br />&lt;/Element&gt;<br />&lt;Element Type=&quot;ISql90File&quot; Name=&quot;[MyDatabase_log]&quot;&gt;<br />    &lt;Property Name=&quot;FileName&quot; Value=&quot;$(DefaultLogPath)$(DatabaseName)_log.LDF&quot; /&gt;<br />    &lt;Property Name=&quot;Size&quot; Value=&quot;576&quot; /&gt;<br />    &lt;Property Name=&quot;SizeUnit&quot; Value=&quot;3&quot; /&gt;<br />    &lt;Property Name=&quot;MaxSize&quot; Value=&quot;2097152&quot; /&gt;<br />    &lt;Property Name=&quot;IsUnlimited&quot; Value=&quot;False&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowth&quot; Value=&quot;10&quot; /&gt;<br />    &lt;Property Name=&quot;FileGrowthUnit&quot; Value=&quot;1&quot; /&gt;<br />    &lt;Property Name=&quot;IsLogFile&quot; Value=&quot;True&quot; /&gt;<br />&lt;/Element&gt;</pre><br /><br /><h5>Generate the change file to AppHarbor.</h5><br /><br /><p>Now that we have a .dbschema file containing the complete model of what we want deployed, we can now use it to generate a schema change deployment script.</p><br /><br /><blockquote><br />  <p>vsdbcmd.exe <br />    <br />&#160;&#160;&#160;&#160; /Action:Deploy <br /><br />    <br />&#160;&#160;&#160;&#160; /DeployToDatabase:- <br /><br />    <br />&#160;&#160;&#160;&#160; /Script:Test.sql <br /><br />    <br />&#160;&#160;&#160;&#160; /ConnectionString:&quot;{YourAppHarborConnectionString}&quot; <br /><br />    <br />&#160;&#160;&#160;&#160; /ModelFile:HackIt.dbschema <br /><br />    <br />&#160;&#160;&#160;&#160; /Properties:TargetDatabase={YourAppHarborDatabaseName EX:db1235}</p><br /></blockquote><br /><br /><p>I’ll explain a couple of the above command options.</p><br /><br /><h6>/DeployToDatabase:-</h6><br /><br /><p>This one is _<strong><u>key</u></strong>_. This tells vsdbcmd to only generate a change script, and <strong>not to actually deploy the changes </strong>immediately. Until you feel comfortable with what sql the tool generates, which is usually pretty darn good, you should not apply it immediately. Allow the tool to generate the file for further inspection and you can execute it manually after. <br /><br />  <br /></p><br /><br /><h6>/Script:Test.sql</h6><br /><br /><p>This this is just the name of the file to dump the deployment changes. <br />  <br /></p><br /><br /><h6>/ModelFile:HackIt.dbschema</h6><br /><br /><p>The path to the .dbschema we generated and modified above.</p><br /><br /><p>&#160;</p><br /><br /><h5>Review Change Script Generated.</h5><br /><br /><p>After you’ve generated a change script file, take a look at the sql just to make sure you’re happy with what it generates.</p><br /><br /><h5>Take the app offline. (optional)</h5><br /><br /><p>This one depends on the schema changes. If the changes are serious enough, you can check in an App_Offline.htm file at the root of web project and do a “git push appharbor”. This way, while making schema changes you don’t have to worry about the errors popping up on users. Down side is your site becomes inoperable.</p><br /><br /><blockquote><br />  <p>If you’ve never heard of the App_Offline.htm – I’d recommend reading up on it. <a href="http://weblogs.asp.net/scottgu/archive/2006/04/09/442332.aspx">http://weblogs.asp.net/scottgu/archive/2006/04/09/442332.aspx</a></p><br /></blockquote><br /><br /><h5>Apply Change Script.</h5><br /><br /><p>You have several options to actually apply the scripted changes.</p><br /><br /><ol><br />  <li>Use vsdbcmd to deploy – Just turn the /DeployToDatabase:<strong>-</strong> to /DeployToDatabase:<strong>+</strong> and allow vsdbcmd to apply the script right there. </li><br /><br />  <li>Use SQL Management Studio. <br />    <br /><strong>Make Sure you turn on SQLCMD Mode</strong><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/TaYpOEygRKI/AAAAAAAAAPk/ZZZbpZN_P1s/s1600-h/image1.png"> <br />      <br /><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/TaYpOvTB3nI/AAAAAAAAAPo/18HoPQJiXVU/image_thumb.png?imgmax=800" width="311" height="333" /></a>&#160; </li><br /></ol><br /><br /><h5>Bring your site back online.</h5><br /><br /><p>Now you can go re-name the App_Offline.htm to something like App_Offline.htm.disabled and push those changes back up to AppHarbor.</p><br /><br /><h4>Other considerations.</h4><br /><br /><ul><br />  <li>Consider a simple migrations framework (EX: <a href="http://code.google.com/p/dbup/" target="_blank">DbUp</a>) to get some initial data or things initialized, but be-ware that you’ll have to think a little harder about the “rollback” steps with this approach. <br /><br />    <br /></li><br /><br />  <li>Next you could take a look at an inquiry I made on the public support discussion list at AppHarbor hoping to push AppHarbor to implement this App_Offline.htm support (right into their admin site)<a href="http://support.appharbor.com/discussions/problems/373-deployment-feature-idea"> <br />      <br />http://support.appharbor.com/discussions/problems/373-deployment-feature-idea</a> <br /><br />    <br /><strong>UPDATE:</strong> SPARE A VOTE OR TWO: <a title="http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic" href="http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic">http://feedback.appharbor.com/forums/95687-general/suggestions/1686365-add-feature-to-push-an-app-offline-htm-at-the-clic</a> </li><br /></ul><br /><br /><p>One great benefit of to this approach is the ability for vsdbcmd to manage changes to an existing schema. </p><br /><br /><p>Now if you want full support like refactorings such as table, column, etc renames. You will want to keep a full db project and use that to do a deployment.</p><br /><br /><p>Hope you find this useful. Happy Deployment!</p>  </div>
@@ -220,23 +180,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/04/dynamically-load-embedded-assemblies/">Dynamically load embedded assemblies – because ILMerge appeared to be out.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-04-02T23:16:00.000Z" pubdate data-updated="true">Apr 2nd 2011</time>
-
+          <time datetime="2011-04-02T23:16:00.000Z" pubdate data-updated="true">Apr 2nd 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>At work, I started building a .net assembly that would probably find its way into a number of the server processes and applications around the shop. This particular assembly was going to end up containing quite a number of external open source references that I didn’t want to expose to the consumer of my library.</p>  <p>I set out to solve several simple requirements.</p>  <ol>   <li>Easy to use. Should be nothing more than adding a reference to the assembly (and use it). </li>    <li>Consumer should not have to deal with the 5 open source libraries it was dependent on. Those are an implementation detail and it’s not necessary to expose those assemblies to the consumer, let alone have to manage the assembly files. </li> </ol>  <p>I originally got the idea from <a href="http://codebetter.com/blogs/dru.sellers/" target="_blank">Dru Sellers</a>’ post <a href="http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx">http://codebetter.com/blogs/dru.sellers/archive/2010/07/29/ilmerge-to-the-rescue.aspx</a></p>  <p>I gave ILMerge a try. As a post build event on the project – I ran ILMerge and generated a single assembly. <strong>Leveraging the internalize</strong> functionality of ILMerge so my assembly wouldn’t expose all of its open source projects through Visual Studio’s intellisense.</p>  <p>This almost gave me the output I wanted. Single assembly, compact, easy to use… Unfortunately, when I tried to use the assembly I started seeing .net serialization exceptions. Serialization from my ILMerged assembly could not be desterilized on the other end because that type was not in an ILMerged assembly, but in the original assembly. (Maybe there’s a way to work around this, but I didn’t have time to figure that out, would love to hear any comments)</p>  <h4>So ILMerge appeared to be out, what next?</h4>  <p>My coworker, <a href="http://www.limbodesigns.com" target="_blank">Shawn</a>, suggested I try storing the assemblies as resource files (embedded in my assembly). He uses the SmartAssembly product from Red Gate in his own projects, and mentioned that their product can merge all of your assemblies into a single executable – storing the assemblies in a .net resource file within your assembly/executable. This actually seemed easy to accomplish so I thought I’d give it a try.</p>  <h4>How I did it.</h4>  <p><strong>Step 1:</strong> Add the required assemblies as a resource to your project. I choose the Resources.resx file path and added each assembly file to the Resources.resx. I like this because of how simple it is to get the items out.</p>  <p><strong>Step 2:</strong> We need to hook up to the first point of execution (main(…), or in my case this was a library and I had a single static factory class, so in the static constructor of this factory I included the following lines of code.</p>  <pre class="brush: csharp;">static SomeFactory()<br />{<br /><br />    var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />        {&quot;log4net&quot;, Resources.log4net},<br />        {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />    };<br /><br />    AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />    {<br />        // Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />        // EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />        var assemblyName = args.Name.Split(',').First();<br /><br />        if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />        {<br />            return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />        }<br /><br />        return null;<br />    };<br />}</pre><br /><br /><p>I’ll talk a little about each step above.</p><br /><br /><pre class="brush: csharp;">var resourcedAssembliesHash = new Dictionary&lt;string, byte[]&gt; {<br />    {&quot;log4net&quot;, Resources.log4net},<br />    {&quot;Microsoft.Practices.ServiceLocation&quot;, Resources.Microsoft_Practices_ServiceLocation},<br />};</pre><br /><br /><p>The first chunk is a static hash of the (<strong>key</strong>=assembly name, <strong>value</strong>=byte array of actual assembly). We will use this to load each assembly by name when the runtime requests it.</p><br /><br /><pre class="brush: csharp;">AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =&gt;<br />{...</pre><br /><br /><p>Next we hook into the app domain’s <a href="http://msdn.microsoft.com/en-us/library/system.appdomain.assemblyresolve.aspx">AssemblyResolve</a> event which allows us to customize (given a certain assembly name) where we load the assembly from. Think external web service, some crazy location on disk, database, or in this case a resource file within the executing assembly.</p><br /><br /><pre class="brush: csharp;">// Get only the name from the fully qualified assembly name (prob a better way to do this EX: AssemblyName.GetAssemblyName(args.Name))<br />// EX: &quot;log4net, Version=??????, Culture=??????, PublicKeyToken=??????, ProcessorArchitecture=??????&quot; - should return &quot;log4net&quot;<br />var assemblyName = args.Name.Split(',').First();</pre><br /><br /><p>Next we figure out the name of the assembly requesting to be loaded. My original implementation used the …Name.Split('’,’).First(); to get the assembly name out of the full assembly name, but as I was writing up this blog post I thought – there must be a better way to do this. So although I am putting the effort to write this out – I’m not feeling like verifying that a possible better way will work (So give this a try and let me know – try using <strong>AssemblyName.GetAssemblyName(args.Name)</strong> instead).</p><br /><br /><pre class="brush: csharp;">if (resourcedAssembliesHash.ContainsKey(assemblyName))<br />{<br />    return Assembly.Load(resourcedAssembliesHash[assemblyName]);<br />}</pre><br /><br /><p>Next we check that the assembly name exists if our hash declared initially and if so we load it up…</p><br /><br /><pre class="brush: csharp;">    return null;<br />};</pre><br /><br /><p>Otherwise, the assembly being requested to be loaded is not one we know about so we return null to allow the framework to figure it out the usual ways.</p><br /><br /><p><strong>Step 3:</strong> Finally, I created a post build event that remove the resourced assemblies from the bin\[Debug|Release] folders. This allowed me to have a test project that only had a dependency on the single assembly and verify using it actually works (because it has to load it’s dependencies to work correctly and they didn’t exist on disk).</p><br /><br /><h4>Please consider.</h4><br /><br /><ul><br />  <li>You may <strong>not have fun </strong>if you package some of the same assemblies that your other projects may/will reference (especially if they are different versions). </li><br /><br />  <li>Can’t say I have completely wrapped my head around the different problematic use cases related strategy could bring to life. (<strong>Use with care</strong>) </li><br /></ul>  </div>
@@ -244,23 +197,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/01/bookmark-to-inject-firebug-light-into/">Bookmark to inject FireBug Light into Internet Explorer.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-01-09T20:58:00.000Z" pubdate data-updated="true">Jan 9th 2011</time>
-
+          <time datetime="2011-01-09T20:58:00.000Z" pubdate data-updated="true">Jan 9th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’ve enjoyed Firebug in Firefox, and even find value in Firebug light when used in Internet Explorer. However if you don’t have control or don’t want to place the Firebug installation js file in your web site to include firebug. I figured out a way to load it on demand with a bookmark in Internet Explorer.</p>  <p>I created a new text file in my windows7 machine <strong>FireBug.url</strong> and placed it in     <br />C:\Users\{username}\Favorites\{WhateverFolderYouWant}</p>  <p>Then paste the following into the file and save.</p>  <p><strong>NOTE</strong>: I’m using jQuery in the javascript link – so if you need it more generic you’ll have to replace the jQuery…</p>  <p>[DOC_FirebugUI]    <br />ORIGURL=about:blank     <br />[{000214A0-0000-0000-C000-000000000046}]     <br />Prop3=19,2     <br />[InternetShortcut]     <br />URL=javascript:$('body').append('&lt;script type=&quot;text/javascript&quot; src=&quot;https://getfirebug.com/firebug-lite.js&quot;&gt;&lt;/script&gt;'); void(0);     <br />IDList=     <br />IconFile=http://getfirebug.com/img/favicon.ico     <br />IconIndex=1</p>  <p>You should now be able to load up firebug in IE with a single click.</p>  <p>Note: I have the IconFIle: property in there, but can’t seem to get it to work..</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/TSohgksCZpI/AAAAAAAAAOo/T0LZGVgk_xc/s1600-h/image%5B11%5D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/TSohhOPn15I/AAAAAAAAAOs/YLNqmqXxLIc/image_thumb%5B5%5D.png?imgmax=800" width="405" height="312" /></a></p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/TSohhuirnfI/AAAAAAAAAOw/Chy9LmO43pE/s1600-h/image%5B10%5D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/TSohin9dcCI/AAAAAAAAAO0/pBzl0CL5Cf4/image_thumb%5B4%5D.png?imgmax=800" width="455" height="534" /></a></p>  </div>
@@ -268,23 +214,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/statlight-release-v12-v13/">StatLight release (V1.2 &amp; V1.3)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-12-15T05:33:00.000Z" pubdate data-updated="true">Dec 14th 2010</time>
-
+          <time datetime="2010-12-15T05:33:00.000Z" pubdate data-updated="true">Dec 14th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>This post is coming a little late (just realized I still had it in my local drafts and had not published it)…</p>  <p>Although I put out these blog posts (sometimes), the best way to learn about new releases is to subscribe to any of the myriad of Codeplex rss feeds for the project.</p>  <h4><a href="http://statlight.codeplex.com/releases/view/48242" target="_blank">StatLight V1.2</a> </h4>  <p>Released way back on Sep 25, 2010. Mostly a bug fix release, but came with a couple small features that could help out your Silverlight testing.</p>  <p>Features added:</p>  <ul>   <li>Support to test multiple Xaps at once:      <br />EX: StatLight.exe -x=&quot;C:\Project1\Test<i>1.xap&quot; -x=&quot;C:\Project2\Test</i>2.xap&quot; </li>    <li>QueryString command line parameter. This will pass a querystring along to the browser instance running the StatLight Silverlight host. Allowing you to grab the querystring and pull some information (config or other) into your test.      <ul>       <li><strong>EX:</strong> You may want to run some Silverlight Integration tests that talk back to some self hosted web server. Since detecting this automatically is not realistic, because the server and port your tests will detect is the StatLight server, you can’t just call back to “home base” (because that is StatLight’s web server) you need to somehow know where to configure your endpoints. With the QueryString parameter in StatLight, your build scripts can now pass in a known port of your self hosted web server, where your tests can then use to configure any test service calls. </li>     </ul>   </li> </ul>  <h4><a href="http://statlight.codeplex.com/releases/view/53742" target="_blank">StatLight V1.3</a> </h4>  <p>Released Nov 20, 2010. <strong>NOTE: This is the first build running on the .net 4.0 framework. If you need 3.5 support stick with the V1.2 build.</strong> Much like I did back on the V1.2 release, this release is marked as a “beta” build which I will change the status on the release page to stable if I don’t hear any issue come out of it in the next couple weeks.</p>  <p>This release comes with a feature I’ve been wishing for, for a while now. StatLight uses a web server internally to serve the content and receive messages from the Silverlight(StatLight) test runner. This web server was originally implemented with the WCF WebServiceHost. Unfortunately this required special administrative privileges to get up and running and although most developers have enough rights to not make this a problem, there are some who are not allowed to adjust these port privileges. Looking through Jeff Wilcox’s Microsoft Silverlight Testing framework server side code, I noticed he implemented a very simple web server with the HttpListener. After a quick spike I realized I could port his web server over into StatLight and gain some benefits other than just not requiring administrative privileges on a certain port. </p>  <p>Features added:</p>  <ul>   <li>New WebServer implementation      <ul>       <li>No requirement for elevated privileges </li>        <li>Faster startup time </li>        <li>With easier &amp; full control of the request/response cycle StatLight now prints out warnings if your tests are making service requests that they shouldn’t be. </li>     </ul>   </li>    <li>Introductory support to run external web browsers (instead of the self hosted control)      <ul>       <li>Firefox </li>        <li>Chrome </li>     </ul>   </li>    <li>Added support for NUnit’s TestCaseAttribute      <ul>       <li>Note this is not full support, but should work for many general cases. </li>     </ul>   </li> </ul>  </div>
@@ -292,23 +231,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/duplicate-dom-elements-with-same-id/">Duplicate DOM elements with the same ID</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-12-09T13:41:00.000Z" pubdate data-updated="true">Dec 9th 2010</time>
-
+          <time datetime="2010-12-09T13:41:00.000Z" pubdate data-updated="true">Dec 9th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>This is a short post. Saving this snippet it for myself for later.</p>  <p>If you ever have a html DOM element with a duplicate ID value, how do you detect the issue? It’s sometimes hard to find/debug until you really understand what has happened.</p>  <p>Taking inspiration from the solution in the following stackoverflow question. <a href="http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom">http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom</a></p>  <p>I wrote little helper that will alert you early in the development phase if you do something that causes a DOM element with duplicate ID’s.</p>  <p>Place the following script at the bottom of your global master page footer during development, and you will be notified of any issues early in the process.</p>  <pre class="">// Requires: jQuery<br />(function(document, $){<br />    // little debug helper script to notify us when the <br />    // dom is updated with a contains duplicate ID'd elements<br />    $(document).bind('DOMNodeInserted', function (event) {<br /><br />        var duplicateDomElements = [];<br /><br />        $('[id]').map(function () {<br />            var ids = $('[id=' + this.id + ']');<br />            if (ids.length &gt; 1 &amp;&amp; ids[0] == this) {<br />                duplicateDomElements.push(this.id);<br />            }<br />        });<br /><br />        if (duplicateDomElements.length &gt; 0) {<br />            alert('Recent action duplicated a dom element ID with name(s) [' + duplicateDomElements + ']');<br />        }<br /><br />    });<br />})(document, jQuery);<br /><br /><br /><font face="Arial">How do others typically deal with the issue?</font></pre></div>
@@ -316,23 +248,16 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
-
+          <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
@@ -340,15 +265,10 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 
 
     </article>
-  
   <div class="pagination">
-    
       <a class="prev" href="/blog/pages/9/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
-    
       <a class="next" href="/blog/pages/7/">Newer &rarr;</a>
-    
   </div>
 </div>
 
@@ -375,42 +295,32 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -439,7 +349,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 </section>
 
 
-
 </aside>
 
     </div>
@@ -454,17 +363,12 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -477,8 +381,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

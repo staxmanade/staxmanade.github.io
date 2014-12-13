@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
+          <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links<br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol></p><p>During one of my blog reading catch-up afternoons, I ran across Derick Bailey <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-part-1-why.aspx">Branch-Per-Feature Source Control. Part 1 Why</a>. It is a great read into the subject, covering many of problems other source control methods introduce and how the Branch-Per-Feature concept alleviates some of these issues. It is also great to see a how it can be used in relation to a Kanban style of development. I look forward to his further posts about some of the details of this process with subversion. </p>  <p>While waiting for those posts, I thought I’d write up some of the things my team and I have learned while implementing a semi-Kanban process using <a href="http://msdn.microsoft.com/en-us/teamsystem/default.aspx">Team Foundation Server (TFS)</a>.</p>  <p>We practiced a <a href="http://en.wikipedia.org/wiki/Scrum_(development)">scrum</a> like agile process for about 3 years with a fair amount of success. However, about 4 months ago we hit the end of a very long “Sprint” (6 weeks). There were at least 3 major “features” built during this sprint and we also determined that since were going to be developing several large features, we would also take the time to upgrade our database server, since we would inherently, through the development time, be able to do a little database regression testing.</p>  <p>During the retrospective for this sprint there developed a couple themes revolving around </p>  <ol>   <li>Size and number of features developed made testing in the allotted sprint time difficult to complete each feature thoroughly. </li>    <li>The features developed at the beginning of the sprint were developed and tested very thoroughly, </li>    <li>The features developed near the end of the sprint felt rushed and resulted in some choices making some choices that may not have left the code </li>    <li>Upgrading a to a new database version AND deploying all these new features threw too many things in the mix for one deployment. </li>    <li>The items developed first sat behind the development firewall for in one case over 3 weeks, when that feature could have given the business value 3 weeks prior. </li> </ol>  <p>Our transition to Kanban was somewhat sudden. I had been reading kanban as a tool for delivering software for a couple months. I thought that many of the issues we were having with scrum could be resolved with a simple Kanban process. So I brought up the idea of doing “feature driven development” during the retrospective. What came as a shock to me was the welcoming the team gave this new idea. I had been thinking about how to bring the idea up for some time, and couldn’t imagine how the team would want to make the drastic change that this new style of development would require. After talking about it for a short time during this retrospective, just about everyone on the team seemed to jump all over the idea.</p>  <p>The team decided right then that we would give it a try for a while, work out the kinks, learn from it, and see how it would go.</p>  <p>When we first created our kanban, there was a much simpler pipeline of stages than the list I will outline as our current process. Most blogs/articles basically described starting with something simple like (Backlog, Dev, Test, Deploy). So we started with those very simple steps and it has been refined for our process.</p>  <p>We continued to value the retrospective and through this constant reflection were able to very quickly fine tune our process to something that, looking back, is really suiting us well.</p>  <p>We have been using the new approach for 4 months now and haven’t looked back. Some of the original things that the team was worried about when moving to the Branch-Per-Feature have all but washed away. In particular, <strong>one of the largest concerns everyone on the team had was the overhead branching and merging would bring into the process</strong>. <strong>And while it is a little bit more overhead than just opening the solution and pounding away, it brings many more benefits to the team than we loose in branching/merging time.</strong></p>  <p>In the next part I’ll describe the kanban stages our team has ironed out and how we mix that with the Branching-Per-Feature development.</p></div>
@@ -113,47 +102,29 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
+                          <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/tfs/'>TFS</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/07/live-messenger-disconnected-prompt-come/" title="Previous Post: Live Messenger Disconnected Prompt (Fail)">&laquo; Live Messenger Disconnected Prompt (Fail)</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/08/branch-per-feature-with-team-foundation_9077/" title="Next Post: Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -179,42 +150,32 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -243,7 +204,6 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 </section>
 
 
-
         </aside>
 
     </div>
@@ -258,17 +218,12 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -281,8 +236,6 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

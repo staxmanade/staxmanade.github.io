@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-guard/">NuGet Project Uncovered: Guard</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2012-01-30T00:24:00.000Z" pubdate data-updated="true">Jan 29th 2012</time>
-
+          <time datetime="2012-01-30T00:24:00.000Z" pubdate data-updated="true">Jan 29th 2012</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Guard" target="_blank">Guard</a> is one of the MANY projects coming out of the <a href="http://netfx.codeplex.com/" target="_blank">netfx</a> project. (HOLY NUGET there’s a ton of these).</p>  <p>If you’re not familiar with the netfx project, you should become acquainted with it. <a href="http://www.codeplex.com/site/users/view/dcazzulino" target="_blank">Daniel Cazzulino</a> (of Moq fame) and others have created an awesome set of add-on functionality to the .Net framework through these NuGet packages</p>  <p>Back to the Guard package:</p>  <p>Many .Net developers tend to write their guard clauses as such…</p>  <p><a href="http://lh5.ggpht.com/-qA9RHcYtAyM/Txyo5MX45PI/AAAAAAAAATQ/1SfPdl3BkJs/s1600-h/image_thumb3_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb3_thumb" border="0" alt="image_thumb3_thumb" src="http://lh3.ggpht.com/-RolXWkNT5ro/Txyo5U39g1I/AAAAAAAAATY/IEHhudoSa3k/image_thumb3_thumb_thumb.png?imgmax=800" width="512" height="84" /></a></p>  <p>One problem with this is that if you were to rename the “value” parameter you have to make sure you rename the magic string “value” in the guard check.</p>  <p>The Guard package offers a solution that is a little more resilient to these types of rename issues as its usage will automatically either get renamed, or if you don’t you will get a compiler error.</p>  <p>The below test shows an example of its usage.</p>  <p><a href="http://lh3.ggpht.com/-SNu5I4Ih9fE/Txyo5iOYRsI/AAAAAAAAATg/rohFiG8v7Lg/s1600-h/image_thumb1111_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb1111_thumb" border="0" alt="image_thumb1111_thumb" src="http://lh6.ggpht.com/-ascC5JnloWI/Txyo56VecpI/AAAAAAAAATo/HKF_VVxxTfg/image_thumb1111_thumb_thumb.png?imgmax=800" width="349" height="183" /></a></p>  <p>If you run that test, you’ll see a nice exception message.   <br /><a href="http://lh5.ggpht.com/-NAe1GYaOIz8/Txyo5wTtOMI/AAAAAAAAATw/5RCAj-wzApY/s1600-h/image_thumb6_thumb%25255B1%25255D%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb[1]" border="0" alt="image_thumb6_thumb[1]" src="http://lh3.ggpht.com/-NEhFzuEqhOk/Txyo6KIyuGI/AAAAAAAAAT4/MGyQdddF0f8/image_thumb6_thumb%25255B1%25255D_thumb.png?imgmax=800" width="695" height="149" /></a></p></div>
@@ -100,47 +89,29 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2012-01-30T00:24:00.000Z" pubdate data-updated="true">Jan 29th 2012</time>
+                          <time datetime="2012-01-30T00:24:00.000Z" pubdate data-updated="true">Jan 29th 2012</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/nuget/'>NuGet</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2012/01/nuget-project-uncovered-guard/" data-via="staxmanade" data-counturl="http://staxmanade.com/2012/01/nuget-project-uncovered-guard/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2012/01/nuget-project-uncovered-nspec/" title="Previous Post: NuGet Project Uncovered: NSpec">&laquo; NuGet Project Uncovered: NSpec</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2012/01/nuget-project-uncovered-verifyargs/" title="Next Post: NuGet Project Uncovered: VerifyArgs"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -166,42 +137,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -230,7 +191,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -245,17 +205,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -268,8 +223,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

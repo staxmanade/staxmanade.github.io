@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -74,23 +69,16 @@
     <div id="content">
         
 <div class="blog-index">
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">UnitDriven&#x27;s UI Gets a Minor Makeover</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
-
+          <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 I had some time to play around with and learn WPF within Silverlight. It's a modest start, but I just had to blog about it...<br /><br />We've started a project at my current job using Silverlight. Researching different framework options I ran across the <a href="http://codeplex.com/UnitDriven">UnitDriven</a> project on codeplex. After downloading and checking out the silverlight testing UI...<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s1600-h/Csla.net.Original.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s320/Csla.net.Original.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559412476544802" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />I decided this was a place I could take a stab at learning some silverlight UI. ok... So it's getting late and it's certainly not perfect, but here's where I am now.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s1600-h/Csla.net.NewSkin.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s320/Csla.net.NewSkin.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559787065086786" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />The only really tricky piece was... The original UI used nested ListBox controls which threw me down a path of thinking the program was broken... basically with a ListBox inside of a ListBox you have to select the first item, then the sub item, and in this application, only then, can you select the "Run" button to execute the unit test... I spent time looking through code trying to figure out if there was a bug in the testing contexts.<br /><br />The solution to this was to convert the ListBox to an ItemsControl. Which allowed me to select multiple buttons without having to first select the ListBox sub item...<br /><br />I then had to wrap everything inside of a ScrollViewer because the ItemsControl doesn't create one automatically like the ListBox does.<br />[EDIT]<br />Unfortunately wrapping everything in the ScrollViewer removed a feature the older version had, namely, at the top of the control is a display of the # succeeded/# Total. Wrapping everything in the ScrollViewer removed the ability to scroll through tests while that value was being updated during tests...<br /><br />So I updated the main grid in the XAML, and shifted a few things around to allow this old feature to be seen in the new UI.<br />[/EDIT]<br /><br />after that was done, it was basically playing around with different styling elements to end up with the UI above.<br /><br />It was a good simple exploratoin into some of the Silverlight's WPF capabilities.</div>
@@ -111,23 +99,16 @@ Thanks for the patch, I applied it today.</div>
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
-
+          <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
@@ -135,23 +116,16 @@ If you have a class that needs to expose some value (either by a Property, or a 
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/binarysearchordefault/">BinarySearchOrDefault()</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-04-14T03:52:00.000Z" pubdate data-updated="true">Apr 13th 2008</time>
-
+          <time datetime="2008-04-14T03:52:00.000Z" pubdate data-updated="true">Apr 13th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
@@ -159,23 +133,16 @@ When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare 
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">Timing Debug Code Using Lambda&#x27;s</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
-
+          <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
@@ -196,13 +163,9 @@ Lambda, not lamda. ;)</div>
 
 
     </article>
-  
   <div class="pagination">
-    
     <a href="/blog/archives">Blog Archives</a>
-    
       <a class="next" href="/blog/pages/14/">Newer &rarr;</a>
-    
   </div>
 </div>
 
@@ -229,42 +192,32 @@ Lambda, not lamda. ;)</div>
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -293,7 +246,6 @@ Lambda, not lamda. ;)</div>
 </section>
 
 
-
 </aside>
 
     </div>
@@ -308,17 +260,12 @@ Lambda, not lamda. ;)</div>
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -331,8 +278,6 @@ Lambda, not lamda. ;)</div>
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

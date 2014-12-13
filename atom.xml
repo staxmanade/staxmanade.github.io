@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <link href="http://staxmanade.com"/>
+    <link>http://staxmanade.com</link>
     <updated>2014-11-30T16:43:50Z</updated>
-    <id>http://feeds.feedburner.com/DevelopingOnStaxmande</id>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -194,43 +193,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 9</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - (current) - What's left?
         </li>
-        
     </ul>
 </div></p>
 <p>Now that I&#39;ve migrated to Octopress, I&#39;m in the process of finding my new blogging flow.</p>
@@ -266,43 +255,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 8</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - (current) - Redirect Atom/RSS in FeedBurner
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>This one is quick and easy.</p>
@@ -323,43 +302,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 7</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - (current) - Setup a Custom Domain
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>To host your blog for free by GitHub, you are not required to buy a custom domain so this is an optional step, but one I took.</p>
@@ -379,43 +348,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 6</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - (current) - 301 Redirect Old Posts to New Location
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I&#39;ll talk about how I setup automatic redirection from the old blog to the new blog.</p>
@@ -494,43 +453,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - (current) - Fix Links
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>Once you&#39;ve ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
@@ -564,43 +513,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 4</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - (current) - Import Content into Octopress
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
@@ -650,43 +589,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 3</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - (current) - Export BlogSpot Content
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
@@ -738,43 +667,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 2</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
         </li>
-        
         <li>
             Part 2 - (current) - Setup Octopress
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 <p>Luckily for all of us, this post will be short as the <a href="http://octopress.org/docs/setup/">Octopress Setup</a> guide is a great place to start. Only additions I have to add are that I&#39;ve set this up on both a Mac and a Windows 8 machine.</p>
@@ -809,43 +728,33 @@ git push origin release
 <div class="seriesNote">
     <p>This article is <strong>Part 1</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
     <ul>
-        
         <li>
             Part 1 - (current) - Introduction
         </li>
-        
         <li>
             Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
         </li>
-        
         <li>
             Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
         </li>
-        
         <li>
             Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
         </li>
-        
         <li>
             Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
         </li>
-        
         <li>
             Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
         </li>
-        
         <li>
             Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
         </li>
-        
         <li>
             Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
         </li>
-        
         <li>
             Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
         </li>
-        
     </ul>
 </div></p>
 ]]></content>

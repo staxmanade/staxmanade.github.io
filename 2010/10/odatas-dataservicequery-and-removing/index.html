@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
-
+          <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>In a <a href="/2010/09/odatas-dataservicequery-and-removing" target="_blank">previous post</a> I elaborated on the problem of magic strings in <a href="http://www.odata.org/" target="_blank">OData</a> service queries, and gave a quick (but lacking in depth) statically typed helper solution.</p>  <p>A commenter <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> left a note stating that my solution would not work with nested objects. I initially replied asking if he could give an example (as I hadn’t run into that scenario yet being a noob to OData). He didn’t get back to me, but it wasn’t long before I ran into the problem he was talking about.</p>  <p>If we go back to <a href="http://www.linqpad.net/">LinqPad</a> and look again at the Netflix OData api. Let’s say we want to pull down the <strong>People</strong>, their related <strong>TitlesDirected</strong> and the TitlesDirected <strong>ScreenFormats</strong>. (No real world scenario there – just made it up because they’re related properties). The OData query (with magic strings) would look like:</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(&quot;TitlesDirected/ScreenFormats&quot;)        <br />select x).Take(5)</font></p> </blockquote>  <p>If you tried to take the above and translate it to my “no magic string” fix from the previous post you would get something like.</p>  <blockquote>   <p><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected /* Now what? dead end. /ScreenFormats*/ )        <br />select x).Take(5)         <br /></font></p> </blockquote>  <p>Now that the problem in my solution was apparent, and using his example as a quick guide (It wasn’t quite what I was looking for, but had the general theme). The solution became more than a few lines of code and I wanted to wrap some tests around the whole thing just to verify it was all working correctly…</p>  <h4>ODataMuscle was born:</h4>  <p><a href="http://github.com/Staxmanade/ODataMuscle">http://github.com/Staxmanade/ODataMuscle</a></p>  <p>Sorry for the name. Just think of “Strong Typing” your OData queries and giving them a little Muscle. I threw this little project up on github since this blog is not the best place to version code and if anyone felt inclined to extend it they could easily fork it and do so.</p>  <p>I hacked the initial version together, and once a co-worker of mine was done with it I think he cleaned it up nicely.</p>  <p>This new version now supports expanding not only <strong>child properties</strong>, but <strong>grandchild properties</strong> and <strong>grandchild properties of collections</strong>. (That doesn’t seem to translate well…)</p>  <p>EX: our little Netflix example from above would now look like </p>  <blockquote><font face="Courier New">(from x in People.Expand(p =&gt; p.TitlesDirected.Expand(p2 =&gt; p2.ScreenFormats))      <br />select x).Take(5)</font></blockquote>  <p>Which would translate into the following query</p>  <blockquote>   <p><a title="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats" href="http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats">http://odata.netflix.com/catalog/People()?$top=5&amp;$expand=TitlesDirected/ScreenFormats</a></p> </blockquote>  <p>Thanks to <a href="http://elegantcode.com/2010/09/21/odatas-dataservicequery-and-removing-the-expandmagicstrings/#comment-58997">mynkow</a> for the initial feedback and I hope this helps someone else…</p>  </div>
@@ -100,49 +89,30 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
+                          <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/csharp/'>C#</a>
-    
     <a class='category' href='/blog/categories/odata/'>OData</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2010/09/odatas-dataservicequery-and-removing/" title="Previous Post: OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)">&laquo; OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2010/11/powershell-url-checker-check-if-list-of/" title="Next Post: PowerShell url checker (Check if a list of url’s is valid)"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -168,42 +138,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -232,7 +192,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -247,17 +206,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -270,8 +224,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

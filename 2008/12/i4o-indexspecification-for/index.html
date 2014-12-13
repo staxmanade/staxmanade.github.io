@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-indexspecification-for/">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
-
+          <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p><span style="font-size:85%;">We've removed the IndexableAttribute from the i4o library and replaced it with the IndexSpecification&lt;T&gt;. Below I'll explain how you can add/remove/change the index for an IndexableCollection&lt;T&gt;.</span></p>  <p><span style="font-size:85%;">Let's show several examples on how to create an IndexableCollection&lt;T&gt;.</span></p>  <p>Given any enumeration of objects you can translate into an IndexableCollection&lt;T&gt;. For the examples below we're going to use an enumeration of the System.IO.FileInfo class. We are going to index the list of FileInfos by file Extension and weather the file IsReadOnly or not.</p>  <h4>Setup the list:</h4>  <pre><span style="color: rgb(0, 128, 0);">// Get our thing to index</span><br /><span style="color: rgb(0, 0, 255);">string</span> dir = @"<span style="color: rgb(139, 0, 0);">C:\Windows\System32\</span>";<br />var fileInfosFromDir = (from f <span style="color: rgb(0, 0, 255);">in</span> System.IO.Directory.GetFiles(dir, "<span style="color: rgb(139, 0, 0);">*.*</span>", SearchOption.AllDirectories)<br />                       select <span style="color: rgb(0, 0, 255);">new</span> FileInfo(f)).ToList();</pre><br /><br /><h4>Can create the IndexSpecification...</h4>...for the FileInfo's "Extension" and "IsReadOnly" properties and turn the list of FileInfos into an IndexableCollection using the IndexSpecification.<br /><br /><pre><span style="color: rgb(0, 128, 0);">// Create the index specification</span><br />var spec = <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(i =&gt; i.Extension)<br />   .Add(i =&gt; i.IsReadOnly);<br /><br /><span style="color: rgb(0, 128, 0);">// Turn the list of files into an Indexed collection of files</span><br />var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection(spec);</pre><h4>Create IndexableCollection&lt;T&gt; without IndexSpecification&lt;T&gt;:</h4><p>You are not required to specify and IndexSpecification&lt;T&gt; when creating the IndexableCollection&lt;T&gt;. You can translate the list into an IndexableCollection&lt;T&gt; and add properties to index after the fact. EX:</p><pre>var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection();<br /><br /><span style="color: rgb(0, 128, 0);">// Specify the properties to index dynamically (more late bound)</span><br />indexedFileInfosFromDir<br />   .CreateIndexFor(i =&gt; i.Extension)<br />   .CreateIndexFor(i =&gt; i.IsReadOnly);</pre><h4>Swap one IndexSpecification&lt;T&gt; for another:</h4><p>If you want to completely swap out the index at run time, you can give the IndexableCollection a new IndexSpecification</p><pre>var list = <span style="color: rgb(0, 0, 255);">new</span> List&lt;FileInfo&gt;();<br />var indexedList = list.ToIndexableCollection();<br /><br />indexedList.UseIndexSpecification(<br />   <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(o =&gt; o.Directory)<br />   .Add(o =&gt; o.Name));</pre><p>I think that should cover most of the general cases. Hope this helps...</p></div>
@@ -173,47 +162,29 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
+                          <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/i4o/'>i4o</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/12/i4o-indexspecification-for/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/12/i4o-indexspecification-for/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2008/12/i4o-update/" title="Previous Post: i4o: Update (Index for Objects)">&laquo; i4o: Update (Index for Objects)</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/01/what-do-when-silverlight-is-missing/" title="Next Post: What do when Silverlight is missing some Base Class Library (BCL) functionality?"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -239,42 +210,32 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -303,7 +264,6 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 </section>
 
 
-
         </aside>
 
     </div>
@@ -318,17 +278,12 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -341,8 +296,6 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

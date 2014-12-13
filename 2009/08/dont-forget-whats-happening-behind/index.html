@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Don’t forget what’s happening behind the syntactic sugar. (C# events)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
-
+          <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>In a comment posted by Lashas to the i4o project over at Codeplex (<a href="http://i4o.codeplex.com/WorkItem/View.aspx?WorkItemId=13114">comment here</a>), he suggested a great performance improvement where instead of assigning an event’s handler directly to a handler method callback, we assign it to a field containing the handler. Initially I was skeptical of his change until I profiled it for myself. And after thinking about it for a second it made total sense.</p>  <p>The original implementation of adding an event handler to the property we used the C# syntax as follows.</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>where “IndexableCollection_PropertyChanged” is a method defined as </p>  <blockquote>   <p>private void IndexableCollection_PropertyChanged(object sender, PropertyChangedEventArgs e)      <br />{…} </p> </blockquote>  <p>Lashas’s suggested performance improvement was to initialize a private field, assign it to the IndexableCollection_PropertyChanged and add/remove the property changed handler from the field instead of the example outlined above.</p>  <p><strong>Field definitaion:</strong></p>  <blockquote>   <p>private PropertyChangedEventHandler _propertyChangedHandler;</p> </blockquote>  <p><strong>Initialization (in the constructor of the class)</strong></p>  <blockquote>   <p>_propertyChangedHandler = IndexableCollection_PropertyChanged;</p> </blockquote>  <p>Usage then becomes</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += _propertyChangedHandler;</p> </blockquote>  <p>Lashas reported approximately 30-40% performance improvement when adding/removing items from the collection by the suggested change.</p>  <p><strong>Why is that?</strong></p>  <p>Well, if you think about it, what is this line?</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>but just a little <em>Syntactic Sugar</em> on top of actually doing…</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += new PropertyChangedEventHandler (IndexableCollection_PropertyChanged);</p> </blockquote>  <p>and by the suggested change of assigning a field to the property change we avoid all the “new PropertyChangedEventHandler(…)” calls. This object creation can happen once in the constructor of the collection and not on every add/remove of an item.</p>  <p>Just a good reminder that you need to constantly be aware of what is happening under the covers. The saying <em>most complexity can be solved by another layer of </em><a href="http://en.wikipedia.org/wiki/Abstraction_(computer_science)"><em>abstraction</em></a> can cause issues when you don’t truly understand (or at least remember) what that layer is actually doing.</p>  </div>
@@ -100,41 +89,26 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
-
+                          <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
 
 
                         
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/08/development-environment-mergecompare/" title="Previous Post: Development Environment Merge/Compare Tools Setup in Visual Studio/TFS">&laquo; Development Environment Merge/Compare Tools Setup in Visual Studio/TFS</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/09/how-do-i-get-uispyexe-on-my-windows-7/" title="Next Post: How do I get UISpy.exe on my Windows 7 Developer Machine?"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -160,42 +134,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -224,7 +188,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -239,17 +202,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -262,8 +220,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

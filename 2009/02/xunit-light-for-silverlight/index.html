@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/xunit-light-for-silverlight/">xUnit (Light) for Silverlight</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
-
+          <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you've been doing any Silverlight development, I'm sure you're aware of the <a href="http://code.msdn.microsoft.com/silverlightut">Microsoft Silverlight Unit Test Framework</a>.</p>  <p>One extremely interesting aspect about this framework is how flexible it is for custom extension. If you didn't already know, Jeff Wilcox put together a quick port of NUnit and created a project that would interface the nunit.framework.dll he ported with the Microsoft Silverlight Unit Test Framework. (<a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/" target="_blank">post here</a>)</p>  <p><strong>Below I'll explain a little about my port of the xUnit testing framework that is now hosted in the browser leveraging the </strong><a href="http://code.msdn.microsoft.com/silverlightut"><strong>Microsoft Silverlight Unit Test Framework</strong></a><strong>. </strong></p>  <p>As far as WHAT is implemented with the xUnit for Silverlight and what you may have to figure out on your own (as I'm not all that familiar with xUnit) if you use it for your own project...</p>  <ol>   <li>FactAttribute ( obviously ) </li>    <li>FactAttribute.Skip ( [Ignore] in most frameworks ) </li>    <li>FactAttribute.Name (is mapped to the &quot;Description&quot; in the ms test harness) </li> </ol>  <p>That's pretty much it... It doesn't do anything as far as test Setup/Teardown as Moq (the project I needed xUnit in Silverlight for) didn't need it, and because I'm not familiar enough with xUnit to really make this thing fully compatible.</p>  <p>So, here is XunitLight for Silverlight...    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/XunitLight.Silverlight.zip" frameborder="0" scrolling="no"></iframe></p>  <p><strong>UPDATE: (2/9/2009)</strong> If you'd like to provide any updates to this project. You can get the source from below and I'm happy to take a look at patches...    <br /><a href="http://svn.xp-dev.com/svn/staxmanade_projects/XunitLight.Silverlight/">http://svn.xp-dev.com/svn/staxmanade_projects/XunitLight.Silverlight/</a></p>  </div>
@@ -113,41 +102,26 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
-
+                          <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
 
 
                         
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/02/xunit-light-for-silverlight/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/02/xunit-light-for-silverlight/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/02/2-for-fluent-specification-extensions/" title="Previous Post: (-2) for [Fluent] Specification Extensions">&laquo; (-2) for [Fluent] Specification Extensions</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/02/moq-30-released-with-full-silverlight/" title="Next Post: Moq 3.0 released (With Full Silverlight Support)"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -173,42 +147,32 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -237,7 +201,6 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 </section>
 
 
-
         </aside>
 
     </div>
@@ -252,17 +215,12 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -275,8 +233,6 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

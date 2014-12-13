@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-09-27T14:09:00.000Z" pubdate data-updated="true">Sep 27th 2011</time>
-
+          <time datetime="2011-09-27T14:09:00.000Z" pubdate data-updated="true">Sep 27th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Ever since <a href="http://nuget.org/" target="_blank">NuGet</a> came online I’ve been wanting a way to find out about new packages, and updates to packages.</p>  <p>Since <a href="http://www.odata.org/" target="_blank">OData</a> extends the <a href="http://www.ietf.org/rfc/rfc4287.txt" target="_blank">ATOM</a> feed and you can hook an OData feed up to any RSS reader I set out to find a way to get at those recent updates to the NuGet feed and find out when new packages were published.</p>  <p>If you’re not completely familiar with OData, later in this post I explain how I arrived at the URL below. However, if you don’t care how I arrived at the solution, below is the final RSS link I’m currently using in my RSS reader (Google Reader) to monitor updates to the NuGet feed.</p>  <blockquote>   <p><a href="http://packages.nuget.org/v1/FeedService.svc/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://packages.nuget.org/v1/FeedService.svc/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <h4>How did I discover or build that URL?</h4>  <p>I could have memorized the <a href="http://www.odata.org/developers/protocols/uri-conventions">OData URI spec</a> and constructed the above link by hand but I’m far more familiar with C# and LINQ and instead used <a href="http://www.linqpad.net/">LINQPad</a>.</p>  <p>Open up LINQPad and add a WCF Data Services (OData) connection to the following URL</p>  <blockquote>   <p><a href="http://packages.nuget.org/v1/FeedService.svc">http://packages.nuget.org/v1/FeedService.svc</a></p> </blockquote>  <p>Now You can query the OData feed with some LINQ.</p>  <blockquote>   <p>from p in Packages      <br />where p.Id != &quot;SymbolSource.TestPackage&quot;       <br />orderby p.Published descending       <br />select p</p> </blockquote>  <p>When you execute this LINQ query in LINQPad, you can click on the “SQL” in the results pane to view the URL that was generated to execute the operation.</p>  <p>Now my original linq expression didn’t have the <u>where p.Id != &quot;SymbolSource.TestPackage&quot;</u> as I didn’t know this package would become a regular pain to view in the RSS Reader.</p>  <p>One great thing about OData is the ability to re-craft the URL for this feed to ignore items that either show up so much that I want to exclude them (like the “SymbolSource.TestPackage”) or a certain class of items that I just don’t want to be alerted on (maybe filtering by the NuGet Tag property).</p>  <h4>Some observations of the feed.</h4>  <p>I’ve been monitoring this feed for almost a month now and have learned about some very interesting projects, check the next section of this post with a list of some of the more interesting ones (to me) that I’ve found. </p>  <p>So far the feed has become just a regular part of my daily blog reading. It’s the quickest one to do as I’m typically skimming the titles of the RSS items and only slowing down to dig into projects I’ve never heard and sound interesting.</p>  <p>Google Reader trends that this feed generates about 54 items a day. Which may seem like a lot, but it’s really easy to click the “mark all as read” button and go on with the day.<a href="http://lh4.ggpht.com/-XUsrxaG8wXs/ToHZKwn3O4I/AAAAAAAAARo/JYWHnb03aLc/s1600-h/image9.png"><img style="background-image: none; border-right-width: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/-SsuwC_xx4Bk/ToHZLMw-2oI/AAAAAAAAARs/YW-Bk2zGg0k/image_thumb5.png?imgmax=800" width="587" height="87" /></a></p>  <h4>Interesting projects I’ve discovered.</h4>  <p>I’ve been watching this RSS feed for almost 2 weeks now, and have discovered some new projects (at least new to me) and learned about updates to projects I already knew about.</p>  <p>Below is a small list of ones I thought were interesting – there’s way more being done out there.</p>  <h5>New to me</h5>  <ul>   <li><a href="http://nuget.org/List/Packages/OpenCover" target="_blank">OpenCover</a> </li>    <li><a href="http://nuget.org/List/Packages/nji" target="_blank">NodeJs (Package) Installer</a> </li>    <li><a href="http://nuget.org/List/Packages/SignalR" target="_blank">SignalR</a> </li>    <li><a href="http://nuget.org/List/Packages/FastActivator" target="_blank">FastActivator</a> (this one feels like it could be a single .cs file instead of a full assembly – but then I guess you couldn’t leverage it in say a VB or F# project) </li>    <li><a href="http://nuget.org/List/Packages/EasyHttp" target="_blank">EasyHttp</a> </li>    <li><a href="http://nuget.org/List/Packages/SheepAspect">SheepAspect</a> </li> </ul>  <h5>NOT new to me (but released while I was watching)</h5>  <ul>   <li><a href="http://nuget.org/List/Packages/SassAndCoffee" target="_blank">SassAndCoffee</a> </li>    <li><a href="http://nuget.org/List/Packages/FubuMVC">FubuMVC</a> </li>    <li><a href="http://nuget.org/List/Packages/Bottles">Bottles</a> </li>    <li><a href="http://nuget.org/List/Packages/StatLight" target="_blank">StatLight</a> (Ya I know it’s my project – but good verification that when I released the project – it showed up in my <u>RSS </u>reader.) <img style="border-bottom-style: none; border-left-style: none; border-top-style: none; border-right-style: none" class="wlEmoticon wlEmoticon-smile" alt="Smile" src="http://lh3.ggpht.com/-jgUk-cdtfpU/ToHZLfUUubI/AAAAAAAAARw/lPMBrU8QmB8/wlEmoticon-smile2.png?imgmax=800" /> </li> </ul>  <h4>Could NuGet be a new metric for what’s popular or up and coming?</h4>  <p>That heading is a little bolder than what I actually think, mostly because there are far too many variables to make that statement hold a strong footing. Regardless, I have noticed some interesting “trends” (if you can define a trend by my watching the feed for about a month) in what is being released on NuGet and wonder if watching this over time will be a nice window in to the types of projects people are really working on.</p>  <p>I’ve seen quite a few projects related to messaging or <a href="http://martinfowler.com/eaaDev/EventSourcing.html" target="_blank">Event Sourcing</a>. And a number of different JS and CSS minification/build tooling projects.</p>  </div>
@@ -108,47 +97,29 @@ Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2011-09-27T14:09:00.000Z" pubdate data-updated="true">Sep 27th 2011</time>
+                          <time datetime="2011-09-27T14:09:00.000Z" pubdate data-updated="true">Sep 27th 2011</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/odata/'>OData</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2011/08/powershell-text-to-speech-and-fun-with/" title="Previous Post: Powershell Text-To-Speech and fun with a 4yr old.">&laquo; Powershell Text-To-Speech and fun with a 4yr old.</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2011/10/chocolatey-free-and-open-source-windows/" title="Next Post: Chocolatey - The free and open source windows app store."> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -174,42 +145,32 @@ Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -238,7 +199,6 @@ Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually
 </section>
 
 
-
         </aside>
 
     </div>
@@ -253,17 +213,12 @@ Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -276,8 +231,6 @@ Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions-1-more/">(+1) for [Fluent] Specification Extensions</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
-
+          <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you read my previous post about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> then you know that I'm still in an experimental phase of this idea.</p>  <p>I'd like to share one more positive I found by using the specification extensions in my testing framework. This benefit is there weather you use standard specification extension methods or try the fluent specification extensions. The idea is very basic, but I didn't even realize it's benefit until I ran into it directly.</p>  <p>And the great benefit is... (drum roll...errr..actually it's not mind blowing). By using extensions methods to provide assertion extensions on the objects we're testing, we've<strong> <u>abstracted the actual testing framework's assertion process.</u></strong><u> </u>(told you it wasn't mind blowing, but read along and see an example of how this abstraction could be good)</p>  <p>Now I know most times you won't ever change testing frameworks, however I just ran into this when attempting to port the Castle.DynamicProxy2 (DP2) to Silverlight. Their test project leveraged the NUnit testing framework, which hasn't officially been ported. You can find a quick <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">port by Jeff Wilcox</a> that will run in the Microsoft Silverlight Unit Testing Framework. However when I was porting the DP2 that hadn't been done, and I didn't feel like porting NUnit at the time.</p>  <p>So, by providing this abstraction layer (through the extension methods). You could then go in and easily swap what testing framework your project is leveraging to do it's assertions.</p>  <h6>NOTE: the port from NUnit to MSFT wouldn't have been that easy as the [TestMethod] in MSFT is sealed so I couldn't create a [Test] attribute that inherited from [TestMethod] to get the SL testing framework to run the tests w/out changing the DynamicProxy test code...aside from that issue...</h6>  <p>Let's take a concrete example of this abstraction benefit.</p>  <p>Notice how the Assert.IsInstanceOfType() in both NUnit and Microsoft's testing framework have the parameters reversed.</p>  <p>NUnit:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SY0lvWzbk4I/AAAAAAAAAEw/mikfS2Ad9TQ/s1600-h/image11%5B3%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="146" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SY0lv1_mpxI/AAAAAAAAAE0/UMgoOPFIoiY/image11_thumb%5B2%5D.png?imgmax=800" width="584" border="0" /></a> </p>  <p>Microsoft:</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SY0lwEt7LjI/AAAAAAAAAE4/cj4aScmZML4/s1600-h/image17%5B1%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="104" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SY0lwbo9p9I/AAAAAAAAAE8/xklqX1ujQj4/image17_thumb.png?imgmax=800" width="584" border="0" /></a> </p>  <p>If you were trying to switch from NUnit to MSFT or visa versa, a simple search and replace on [Test] for [TestMethod] would suffice for the majority of the needed port. However the Assert.IsInstanceOfType() would fail at compile time because of the parameter order. (and who know what else exactly is different)</p>  <p>If you could provide that layer of abstraction for the assertions, then to switch between NUnit and MSFT or visa versa would remain very simple, as you would only have to provide the framework specific changes only once.</p>  </div>
@@ -100,49 +89,30 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
+                          <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/testing/'>Testing</a>
-    
     <a class='category' href='/blog/categories/csharp/'>C#</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/02/fluent-specification-extensions-1-more/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/02/fluent-specification-extensions-1-more/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/02/fluent-specification-extensions/" title="Previous Post: Fluent Specification Extensions">&laquo; Fluent Specification Extensions</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/02/2-for-fluent-specification-extensions/" title="Next Post: (-2) for [Fluent] Specification Extensions"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -168,42 +138,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -232,7 +192,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -247,17 +206,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -270,8 +224,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

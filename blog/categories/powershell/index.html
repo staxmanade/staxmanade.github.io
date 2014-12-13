@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -74,23 +69,16 @@
     <div id="content">
 
         <div class="blog-index">
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
-
+          <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
 
 
         <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
     </p>
-    
 </header>
-
 <div class="entry-content"><p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1 id="some-background">Some background</h1>
 <p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
@@ -118,23 +106,16 @@
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
-
+          <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>After a fresh install of Visual Studio, I often re-configure some options and setup keyboard bindings. This tends to be a bit of a pain as each and every time I have to remember what setting is in what U.I. configuration pane and how do I find/configure that again? I also will often forget about certain settings until the point I need them and it really breaks my coding rhythm down to go hunt for and reconfigure these options.</p>  <p>I recently found a simple solution to get my VS just the way I want it.</p>  <blockquote>   <p>P.S. Some of you may want to tell me all about the VS import/export settings, and you may be right, but I just haven’t spent the time to use/understand/easily find a way to integrate it into my ‘flow’.</p> </blockquote>  <p>So I present to you “MY happy path” to Visual Studio Environment configuration.</p>  <h4>1. Install the NuGet Package Manager Extension</h4>  <p>You’re going to probably install this extension anyway, so go-ahead and <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install it now</a> if you don’t already have it… We need this so you can get access to the NuGet Package Manager Console</p>  <p><a href="http://lh3.ggpht.com/-leOq9kWDh78/UMDKoOAS6vI/AAAAAAAAAb8/xUeM3ZRRhfo/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-vDO9vE_i-y4/UMDKohZ5WdI/AAAAAAAAAcE/6kWeoto-_ao/image_thumb1.png?imgmax=800" width="745" height="209" /></a></p>  <h4>2. Execute Function Set-VisualStudioEnvironmentConfiguration</h4>  <p>Wait! What is “<a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Set-VisualStudioEnvironmentConfiguration.ps1">Set-VisualStudioEnvironmentConfiguration</a>”?</p>  <p>This is a little function that I have in <a href="https://github.com/staxmanade/DevMachineSetup">My PowerShell $Profile</a> which gets setup on all development environment.</p>  <h4>So what’s in this PowerShell script?</h4>  <p>As of writing this, I only have two specific setup commands, but thought I’d share as an example of what you can do:</p>  <ol>   <li>Set a keyboard binding to a specific command.      <pre># Map Ctrl+W to close a tab<br />$DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot;;</pre><br />  </li><br /><br />  <li>ShowLineNumbers for all language files. <br />    <pre># Turn on line numbers for ALL language types<br />($DTE.Properties(&quot;TextEditor&quot;, &quot;AllLanguages&quot;) | where {$_.Name -eq &quot;ShowLineNumbers&quot; } ).Value = $true</pre><br />  </li><br /><br />  <li>Turn on whitespace? <br />    <pre># This doesn't work and I wish it did... <br />$DTE.ExecuteCommand(&quot;Edit.ViewWhiteSpace&quot;)<br /># Fails with: &quot;Command &quot;Edit.ViewWhiteSpace&quot; is not available.&quot;<br /># <strong>Maybe one of you can help me out?</strong></pre><br /><br />    <h4><br />      <ol>How can I find and setup the settings I like?</ol><br />    </h4><br />I’m no VS expert and only know as much about the $DTE object as what I’ve written about here, but I’ll give you some tips and you can go from there… </li><br /></ol><br /><br /><ul><br />  <li>Google/Bing are your friends. Type “DTE Visual Studio {TheThingYouWantToAccomplish}” </li><br /><br />  <li>After your search, most examples you find will be VB macros and as it turns out VB (in this case) translates nicely to PowerShell (EX:&#160; <br /><font size="3" face="Cordia New">&#160; VB Macro:&#160; DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br />      <br />PowerShell: <strong>$</strong>DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br /><br />      <br /></font>See the difference? (yep just the ‘$’ at the beginning of the PowerShell one) Nifty eh? </li><br /><br />  <li>Don’t be afraid to use PowerShell to search/filter things in the $DTE. Try this: <br />    <br /><font size="3" face="Cordia New">PM&gt;&#160; $DTE.Commands | <strong>where { $_.Name –match ‘Close’</strong> } | select { $_.Name } <br /><br />      <br /></font></li><br /></ul><br /><br /><ul>Happy VS Environment setting-uppers!</ul>  </div>
@@ -142,23 +123,16 @@
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2012-11-01T16:55:00.000Z" pubdate data-updated="true">Nov 1st 2012</time>
-
+          <time datetime="2012-11-01T16:55:00.000Z" pubdate data-updated="true">Nov 1st 2012</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">Slightly modified “CD” Command for PowerShell</a>. <br />Since that point, I’ve made a number of updates and would like to share them.<br />The first change I made was to move the “CD” script in that post to a <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1" target="_blank">new location</a>. I’ve greatly extended how I setup my development environment and how my PowerShell environment is initialized. <br /><blockquote><span style="background-color: white;">If you’re interested in how I setup my PS profile, take a look at the readme. Combine the setup with some <a href="http://chocolatey.org/" target="_blank">Chocolatey</a> and some <a href="http://boxstarter.codeplex.com/" target="_blank">BoxStarter</a> and you’re on your way to an amazingly automated development environment setup.</span></blockquote>Now on to the features I’ve added to the CD command.<br /><ul><li>I often would do something like “CD $Profile” (which is a no-go because that is a file not a directory, but my intent was to get into the directory where the $Profile file lived).      <br />      <br />So I updated it so if you try to CD to a file, it will just take you to the directory where the file resides.       </li><li>If you try to CD into a folder that doesn’t exist, it now prompts you to create it. <em>You could bypass the prompt with a -force|-f flag.</em><a href="http://lh6.ggpht.com/-60i1Gy9oDaI/UJKpYXRavXI/AAAAAAAAAbY/2hB0iIpFEmc/s1600-h/image6.png"><img alt="image" border="0" height="124" src="http://lh4.ggpht.com/-OcSX7gH6dz0/UJKpY8jiewI/AAAAAAAAAbg/zakK10j3HvU/image_thumb2.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="524" /></a>       </li><li>Lastly I fixed an issue reported by a commenter in the previous post about trying to CD into a folder with the same name as a history index. If you had a folder named “4” and you typed “CD 4” it previously wouldn’t take you the 4 directory, but instead lookup item 4 in your CD history and take you there. Now if you specify a number and that number lives in the current directory it will take precedence over your history value. <em>(To be fair, I only added this feature, and even since I originally wrote about the CD command I have yet to run into a need for this case. Probably because I don’t name my directories with numbers)</em>. </li></ul>Something I had only recently noticed is this script appears to work with other PowerShell drive providers. I only did a cursory test but can CD into the HKLM:\Software\MyTestFolderThatShouldntExist and it will prompt to create the ‘folder’. If I say yes, I end up with a new registry folder. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh5.ggpht.com/-eqb3EKYnXNo/UJKpadhpcFI/AAAAAAAAAbo/jBmQj4iLjgA/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /> Not sure how useful that is, but with the abstraction layer PowerShell drives give us it’s interesting.<br /><br />If you’d like to grab just the CD script you can download it here.    <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a><br /><br />Happy system navigation with PowerShell.</div>
@@ -166,23 +140,16 @@ A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
-
+          <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopersgroup.com/">Northern Nevada Software Developers Group</a>.<br />If interested, the presentation material is up on my <a href="https://github.com/staxmanade/PowerShellPresentation">GitHub account</a>.<br />Thanks to all who attended!<br />Happy Scripting! </div>
@@ -190,23 +157,16 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
-
+          <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing more than to make life setting up your dev machine a piece of cake.</p>  <h4>What is Chocolatey?</h4>  <p>Straight from the <a href="http://chocolatey.org">Chocolatey.org</a> site:</p>  <blockquote>   <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with windows in mind.</p> </blockquote>  <p>If you’ve not ever used a linux machine or understand what the power of an “apt-get” like tool is, well It’s basically the simplest possible way to install an application to your machine. </p>  <p>What could be simpler than finding the app’s website, download the app, and next, next, next through the the installer? How about just typing “chocolaty install notepadplusplus” at a powershell command prompt? That simple little command will download and install Notepad++ right on your machine with virtually no need to interact with the installer. AWESOME!!!</p>  <blockquote>   <p><strong>Disclaimer!</strong></p>    <p>I know there are other installer applications out there that aggregate and install different&#160; programs; however, to be honest, I don’t use any of them. I am also going to assume that most of them aren’t catered to the windows developer (maybe I’m wrong). Either way I like this project and I’m just trying to share it with the community. <strong>So There…</strong></p> </blockquote>  <p>Ok, my above salesmanship is a little loud mouthy, but maybe your interest is peaked enough to give it a try.</p>  <h4>How do I install Chocolatey?</h4>  <p>It’s about as simple to install Chocolatey as it is to use Chocolatey to install other applications. One single powershell command. Just paste the below command in your powershell prompt and let er rip.</p>  <blockquote>   <p>First, make sure you have your powershell environment set to “Unrestricted”.<a href="http://lh6.ggpht.com/-4sSRlJeweTI/TozckReE5MI/AAAAAAAAASA/JG0ULKiPil0/s1600-h/image8.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/-Vviqle2o908/TozclWiZ6TI/AAAAAAAAASE/1-_0QwA6KAs/image_thumb4.png?imgmax=800" width="644" height="235" /></a></p> </blockquote>  <p>Run the Chocolatey install.</p>  <pre>  iex ((new-object net.webclient).DownloadString(&quot;http://bit.ly/psChocInstall&quot;))</pre><br />  <h4>Packages!</h4>  <p>Now that you have chocolatey installed, head over to the <a href="http://Chocolatey.org">Chocolatey.org</a> website and browse the packages you can now install.</p>  <p>EX:</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code&gt;<strong>chocolatey install notepadplusplus</strong></font></p> </blockquote>  <h4>How can I know when new packages are added to the Chocolatey.org feed?</h4>  <p>You can get more background on this approach by following my previous post <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></p>  <p>The direct RSS link I have is as follows:</p>  <blockquote>   <p><a href="http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <p>Plug that into your RSS reader and you should be notified when new packages are added to the Chocolatey.org feed.</p>  <p>Happy Setting up your Dev Machine!</p></div>
@@ -214,23 +174,16 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
-
+          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
@@ -238,23 +191,16 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
-
+          <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <h3>Background</h3>In my previous job, I spent all my development time in a Linux environment. Was rather impressed at how much could get done at the command line, and how efficient some of those tasks became. My next job was based on Windows and mostly the Microsoft stack of development tools. This&nbsp; meant I pretty much left the command line behind. That was, until, I started using git. And since I wanted to learn PowerShell, I used PowerShell to execute my git commands.<br />One thing that has bugged me for a while is simply moving between directories. Even with tab completion, all that typing is a still quite annoying. Especially if you jump between a set of similar directories. One feature from the Linux CD command that I missed was “CD -". This command in Linux can be used to jump to the previous directory (and then back again). One limitation of this command is it only could jump back to the previous directory, and it did not retain a memory of recent directories. <em>There may be something better in Linux that I don’t know of, but I’m basing this on a limited experience a number of years ago.</em><br />So I threw a question out on twitter.    <br /><a href="http://lh3.ggpht.com/-Ucrl4yvnrIk/TiJJ_Nnk3eI/AAAAAAAAAQI/k5Mm8x_Twhs/s1600-h/image_thumb63.png"><img alt="image_thumb6" border="0" height="97" src="http://lh5.ggpht.com/-iijA6mLrgEU/TiJJ_Xbp0hI/AAAAAAAAAQM/lHv0bksIGys/image_thumb6_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb6" width="318" /></a>     <br />After several tweets back and forth, @cwprogram threw an interesting spike at me.<br /><a href="http://lh5.ggpht.com/-ilEGIJk7VRI/TiJJ_kt8a-I/AAAAAAAAAQQ/XJ0iAJq5384/s1600-h/image_thumb942.png"><img alt="image_thumb9[4]" border="0" height="97" src="http://lh4.ggpht.com/-T4MVc7vKolw/TiJKACBtvyI/AAAAAAAAAQU/Pn71WMECKcQ/image_thumb94_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb9[4]" width="312" /></a>&nbsp; <a href="http://pastebin.com/xwtkn0am">http://pastebin.com/xwtkn0am</a>     <br />Although this wasn’t exactly what I was looking for, it contained enough of what I needed to spark my curiosity to write a version of my own.<br />And so a little script was born that I’m now using to replace the “CD” command in my PowerShell runtime.<br /><h3>What does this do?</h3>After you get it installed (see install steps below), when you type “CD” with no parameters at the command prompt. It will list up to 10 of the most recent distinct paths you’ve been to recently. This list also gives an index lookup number that you can use as a shortcut to jump to that path.<br />Example:<br /><blockquote><span style="font-family: Courier New;">C:\code&gt; cd        <br />&nbsp;&nbsp;&nbsp;&nbsp; 1) C:\Users\jasonj         <br />&nbsp;&nbsp;&nbsp;&nbsp; 2) D:\temp         <br />C:\code&gt; cd 2         <br />D:\temp&gt;</span></blockquote>You can continue to use the “CD” command to do your usual changing directories. Now you can quickly get a history of where you’ve been, and quickly jump to any of those previous histories without typing the entire paths again.<br />It defaults to only showing you the last 10 distinct items, but if you find yourself needing to go back farther than that, you can use the following command to list more than 10 items.<br /><blockquote>D:\temp&gt; cd -ShowCount 100</blockquote><h3>How to Install</h3><ol><li>Download the file and save it to a location you can reference later.      <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a> </li><li>Open your $PROFILE (<a href="http://www.howtogeek.com/50236/customizing-your-powershell-profile/">What is that?</a>) </li><li>Type the following two commands into your profile to replace the existing “CD” command with the new one.      <br />      <br /><span style="font-family: Courier New;">Remove-Item alias:cd        <br />Set-Alias cd {Your_Saved_Directory}\Change-Directory.ps1</span>       </li><li>Exit your PowerShell console and start a new one up. </li></ol><br />Happy Commanding!</div>
@@ -275,23 +221,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
-
+          <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
@@ -299,23 +238,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
-
+          <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I was playing around with some Silverlight profiling the other night to see if I could find any obvious issues with my open source project <a href="http://statlight.net" target="_blank">StatLight</a> and wound up writing a little script in PowerShell I hoped someone might find helpful.</p>  <h4>But I didn’t know you could profile a Silverlight app.</h4>  <p>I didn’t until I started doing some digging online. Now, the Silverlight profiling story (at least from what I’ve seen/tried) is not near the easy of say <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">Redgate ANTS Performance Profiler</a>. However, it’s do-able. (And with this helper script – hopefully a little simpler?)</p>  <h4>How can I profile a Silverlight Application?</h4>  <p>I would recommend you read the following blog, which explains one way of doing it very well.</p>  <p><a title="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx" href="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx">http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx</a></p>  <h4>So… what’s this script for?</h4>  <p>If you read the blog above, or have done this before, then you probably noticed that there was quite a series of commands you had to execute before you could wind up with a performance report. </p>  <p>I threw together a quick little PowerShell script in an attempt to automate smooth out the process.</p>  <h4>Hot do I use it?</h4>  <ol>   <li>Download the script &amp; save it somewhere. <a href="http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1"><strong>http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1</strong></a> </li>    <li>Open the PowerShell console. cd to the directory your xap/assemblies are stored.      <br />(EX: {myProject}\Bin\Debug\ ) </li>    <li>Execute:      <br />{pathToScript}\SilverlightProfiler.ps1 -urlPath &quot;{myProject}\Bin\Debug\TestPage.html&quot; </li>    <li>When your done profiling press enter to signal that your done.      <p></p> Once complete, it will print the location your profiling report was saved. You can then open it with Visual Studio. </li> </ol>  <h5>Couple of disclaimers.</h5>  <ul>   <li>Some paths are hard-coded to my x86 machine. </li>    <li>I had troubles running the built in visual studio .bat files (from powershell) that are supposed to set the environment variables. So I extracted out what vars I could find to make it work. </li>    <li>I’m not a profiling expert – just hacked this together to get it to work for me. </li> </ul>  <p>I hope this is useful, and if you know of a better way, I’m always interested in hearing your feedback.</p>  </div>
@@ -323,23 +255,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
-
+          <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Today I was testing a long running task where my basic scenario was to execute at the PowerShell prompt.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test1.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test2.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test3.txt</p> </blockquote>  <p>Change some code and do it all over again.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test4.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test5.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test6.txt</p> </blockquote>  <p>Although seemingly simple and really not that tough. It became really inefficient because I didn’t like sitting there waiting for it to finish. I was off reading blogs, responding to email, investigating other coding issues and generally forgetting about the long running tasks in the background. On top of that, when I came back to it I couldn’t remember what the last run was (was that test 2 or 3 or 5?) without querying disk to see what it was.</p>  <p>Sine I had all this time to kill in between test runs, I wrote a quick PowerShell script that would fully automate test 1,2,3 and stop. This was great and the first time I ran it was much more efficient as I didn’t have to keep checking back to see when to start it up again.</p>  <p>However, I not only had time to kill, but now I had 3 times that time to kill. I decided to elaborate on the script. I searched the tubes for a way to play a sound when a task was done, so I could be notified as to it’s progress, and completion.</p>  <p>I stumbled upon this blog, which was great for showing me how to play sounds within PowerShell.</p>  <p><a href="http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html">http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html</a></p>  <p>I implemented the sounds and was off and running on another batch of testing, all tuned in to the sounds of progress.</p>  <p>Her we go again, more time to think about how to improve the process (that I’m not even trying to improve).</p>  <p>What if the script talked back to me? Some more googlefoo and I found this great example blog.</p>  <p><a href="http://huddledmasses.org/powershell-speaks/">http://huddledmasses.org/powershell-speaks/</a></p>  <p>Basically using the built in <a href="http://en.wikipedia.org/wiki/Microsoft_Speech_API">Microsoft speech api’s</a> you can get PowerShell to talk to you. This was just too much fun for the day. </p>  <p>At the end of the day the script below is basically what I was using. Don’t have too much fun, as you might not get any real work done…</p>  <p>The content of this blog isn’t necessarily top notch, but I just had to blog about it, as I was very impressed as to how easy it was to work with the speech api’s. Never knew it could be so easy to make a script verbally interactive.</p>  <pre>$Voice = new-object -com SAPI.SpVoice<br /><br />function speak([string] $msg)<br />{<br />    $Voice.Speak( $msg, 1 )<br />}<br /><br />function execScriptWithNotify([string] $completionMessage, [scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br />    speak $completionMessage<br />}<br /><br />function execLongRunningTask([scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br /><br />    Write-Host &quot;Long running task complete!&quot;<br />    speak &quot;All tasks are done!&quot;<br />}<br /><br /><br /># Start the long running task<br />execLongRunningTask {<br /><br />    #***************************************************************<br />    #***************** How many times to run task? ***************** <br />    #***************************************************************<br />    $iterationCount = 3<br />    <br />    for ($i=1; $i -le $iterationCount; $i++)<br />    {<br />        execScriptWithNotify &quot;Task $i Complete&quot; {<br />        <br />            #***************************************************************<br />            #***************** Long Running Task Goes Here ***************** <br />            #***************************************************************<br />            Write-Host &quot;begin long running task # $i&quot;<br />            [System.Threading.Thread]::Sleep(3000);<br />            Write-Host &quot;end   long running task # $i&quot;<br />            #***************************************************************<br />            #***************************************************************<br />            #***************************************************************<br />        }<br />    }<br /><br />}</pre>  </div>
@@ -347,23 +272,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/powershell-load-assembly-without/">Powershell: Load assembly without locking file.</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-12-23T05:40:00.000Z" pubdate data-updated="true">Dec 22nd 2009</time>
-
+          <time datetime="2009-12-23T05:40:00.000Z" pubdate data-updated="true">Dec 22nd 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>This post had some updates based on comments so I’m just updating the one over at <a href="http://elegantcode.com/">ElegantCode</a>.</p>  <p><a href="http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/">http://elegantcode.com/2009/12/22/powershell-load-assembly-without-locking-file/</a></p>  </div>
@@ -371,23 +289,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/10/integration-test-brought-to-you-by/">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-10-26T05:02:00.000Z" pubdate data-updated="true">Oct 25th 2009</time>
-
+          <time datetime="2009-10-26T05:02:00.000Z" pubdate data-updated="true">Oct 25th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>One of the tools I’ve used the last half of a year and really enjoyed is the C# specification extension methods when writing unit test assertions. If you’re looking for a little more background on the topic, I wrote about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> in a past blog.</p>  <p>Recently I wanted to execute a PowerShell script to do some automated <a href="http://en.wikipedia.org/wiki/Functional_testing">functional testing</a>. I wanted to execute an application and apply some assertions on the output of the software(basically running a console app, parse the xml output and assert on values in the output).</p>  <blockquote>   <p>FYI: I’m very new to PowerShell, so any suggestions on how I implemented the below are welcome…</p> </blockquote>  <p>I’ve seen a couple examples of writing test assertions in PowerShell out there. One example is <a href="http://www.psunit.org/">PSUnit</a>; however, this seemed a little heavy for my needs and not quite the syntactic sugar I was looking for.</p>  <p>Besides the syntax flavor I was desiring, another thing I wanted to do was leverage the power of NUnit.Framework’s assertion capabilities. I like the error messages generated when strings and other objects fail the assertion.</p>  <h5>Examples of end result ShouldLookLike()… </h5>  <p>$true.ShouldBeTrue()    <br />$false.ShouldBeFalse()     <br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)     <br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)     <br /></p>  <h5><strong>Step 1</strong>: Figure out how to write a C# style <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">extension method</a> in PowerShell.</h5>  <blockquote>   <p>I found a great blog post describing how to extend any PowerShell object to add extension methods. </p>    <p><a href="http://bartdesmet.net/blogs/bart/archive/2007/09/06/extension-methods-in-windows-powershell.aspx">Extension Methods in Windows PowerShell</a>       <br />      <br /></p> </blockquote>  <p>In short, to extend types in PowerShell leveraging the <a href="http://msdn.microsoft.com/en-us/library/ms714419(VS.85).aspx">Extended Type System</a>, you need to define them in an xml file and import the method definitions into the PowerShell runtime instance.</p>  <p>Below is PowerShell XML definition for my NUnit Specification Extensions.</p>  <pre class="brush: xml;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;<br />&lt;Types&gt;<br />    &lt;Type&gt;<br />        &lt;Name&gt;System.Object&lt;/Name&gt;<br />        &lt;Members&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeFalse&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsFalse($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeTrue&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsTrue($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldNotEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreNotEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />        &lt;/Members&gt;<br />    &lt;/Type&gt;<br />&lt;/Types&gt;</pre><br /><br /><h4>&#160;</h4><br /><br /><p>Take the above XML and save it to a file…</p><br /><br /><blockquote><br />  <p>NOTE: the file HAS to be saved with the extension <strong>.ps1xml</strong></p><br /><br />  <p>Ex: NunitSpecificationPowerShellExtensions<strong>.ps1xml</strong></p><br /></blockquote><br /><br /><h4>&#160;</h4><br /><br /><h5>Step 2: Load the extended type definition into the PowerShell runtime.</h5><br /><br /><p>Once you’ve saved the XML extended types to a file, you need to load it into the PowerShell runtime by executing the command below.</p><br /><br /><blockquote><br />  <p><br />    <br />Update-TypeData -PrependPath NunitSpecificationPowerShellExtensions.ps1xml <br /><br />    <br /><br /><br />    <br /></p><br /></blockquote><br /><br /><p><br />  <br />Before executing the above statement…Let’s quickly look at a System.String’s members and properties – just to show you what the extension methods look like when applied inside of the runtime.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SuUtUHyzTHI/AAAAAAAAAMI/RYyswVWg2JQ/s1600-h/image%5B3%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SuUtVnUMsEI/AAAAAAAAAMM/KiZ3QVj1yQA/image_thumb%5B1%5D.png?imgmax=800" width="586" height="479" /></a></p><br /><br /><p>After executing the Update-TypeData command you’ll notice there are a number of “ScriptMethod” MemberTypes added to the object.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SuUtXQNAz2I/AAAAAAAAAMQ/5tqoE9oUG6I/s1600-h/image%5B19%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SuUtY0t9T1I/AAAAAAAAAMU/6lwJgXtWaUU/image_thumb%5B9%5D.png?imgmax=800" width="600" height="580" /></a> </p><br /><br /><p></p><br /><br /><p>Now if you try to execute one of those newly added extension methods, you may get the following error…</p><br /><br /><p>PS C:\&gt; $testVar.<strong>ShouldEqual</strong>(&quot;hello world&quot;) <br /><br />  <br />Exception calling &quot;ShouldEqual&quot; with &quot;1&quot; argument(s): &quot;<strong>Unable to find type [NUnit.Framework.Assert]: make sure that the <br />    <br />assembly containing this type is loaded.</strong>&quot; <br /><br />  <br />At line:1 char:21 <br /><br />  <br />+ $testVar.ShouldEqual &lt;&lt;&lt;&lt; (&quot;hello world&quot;) <br /><br />  <br />&#160;&#160;&#160; + CategoryInfo&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; : NotSpecified: (:) [], MethodInvocationException <br /><br />  <br />&#160;&#160;&#160; + FullyQualifiedErrorId : ScriptMethodRuntimeException</p><br /><br /><p></p><br /><br /><p>&#160;</p><br /><br /><p>This is because we need to load the NUnit.Framework assembly into the runtime before we can leverage the extension methods.</p><br /><br /><blockquote><br />  <p>[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null</p><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><p>Now that the extension methods have been defined and loaded into the runtime, NUnit.Framework is loaded, we can now use the methods on any object that inherits from System.Object (which, as far as I know, is everything in PowerShell).</p><br /><br /><p>&#160;</p><br /><br /><p>And now, everything you need in one script (if you have the xml extended type file saved somewhere…)</p><br /><br /><pre># <br /># Update-TypeData -prependPath C:\Code\NunitSpecificationPowerShellExtensions.ps1xml<br />#<br /><br />[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null<br /><br />$true.ShouldBeTrue()<br /><br />$false.ShouldBeFalse()<br /><br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)<br /><br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)<br /></pre>  </div>
@@ -395,23 +306,16 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
-
+          <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assembly references at compile time depending on certain build conditions… Don’t want to get too much in to why I needed it, just that it is doable – (more painful than initially expected), but still possible.</p> <p>First let’s get a csc command we want to compile.</p> <p>Second let me state that this was more of an exercise in wanting to learn PowerShell and there probably other ways of accomplishing what I needed, just seemed like a good time to start down the painful learning curve. Also note, I’m not a CSC compiler pro – I haven’t analyzed each of the “options” and weather it’s right/wrong/best practice – it just works… (thanks to Visual Studio &amp; MSBuild for hiding how we actually should use the compiler)</p> <p>Ok take a simple csc compile command – (In Visual Studio – File –&gt; New Project -&gt; ClassLibrary1 as a good starting point). Compile the project &amp; check the build output window. You’ll get an output similar to the below.</p> <blockquote> <p>C:\Windows\Microsoft.NET\Framework\v3.5\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\PowershellCscCompileSample.dll /target:library Class1.cs Properties\AssemblyInfo.cs</p></blockquote> <p>Next figure how the heck to execute this in PowerShell.</p> <p>&amp; $csc $params --- NOPE <br>exec $csc $params – NOPE</p> <p>I must have tried tens if not hundreds of methods to get the simple thing above to compile… needless to say I pinged a co-worker for some help. <a href="http://obsidience.blogspot.com/">http://obsidience.blogspot.com/</a></p> <p>His pointer – when trying to get big string command to execute in powershell do the following.</p> <ol> <li>Open up “Windows PowerShell ISE”&nbsp; (on Windows 7)  <li>Paste the command prompt window (with an “&amp;” at the beginning)  <li>look for any coloration changes like… <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y5kM2wwI/AAAAAAAAALs/UDwCw_-kLYs/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sr-y5_QAW5I/AAAAAAAAALw/NMkrfh4EjAA/image_thumb9.png?imgmax=800" width="644" height="30"></a>  <li>Next place PowerShell escape character [`] in front of any character where the coloration changes (They’re very subtle so look long and hard) <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y6I68cMI/AAAAAAAAAL0/ZFyN79A_4-o/s1600-h/image21.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Sr-y6j24noI/AAAAAAAAAL4/NmqVGw9aCkU/image_thumb11.png?imgmax=800" width="644" height="39"></a> </li></ol> <p>We should now have a PowerShell string that compiles our project.</p> <p>After I got that far – I cleaned up the compiler syntax for a little re-use. (You can download the project blow to check it out)</p> <p><iframe style="padding-bottom: 0px; background-color: #fcfcfc; padding-left: 0px; width: 98px; padding-right: 0px; height: 115px; padding-top: 0px" title="Preview" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedicon.aspx/Public/PowershellCscCompileSample.zip" frameborder="0" marginwidth="0" scrolling="no"></iframe></p> <p>If you don’t want to see the entire csc compile in the project download above, below is the general usage…</p><pre class="brush: plain;"><br /><br />################## Build Configuration ##################<br />$project_name = 'PowershellCscCompileSample'<br />$build_configuration = 'Debug'<br />#########################################################<br /><br />$core_assemblies_path = 'C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5'<br />$framework_assemblies_path = 'C:\Windows\Microsoft.NET\Framework\v2.0.50727'<br /><br />function global:Build-Csc-Command {<br />	param([array]$options, [array]$sourceFiles, [array]$references, [array]$resources)<br />	<br />	$csc = 'C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe'<br /><br />	# can't say I'm doing delimeters correctly, but seems to work ???<br />	$delim = [string]""""<br />	<br />	$opts = $options<br /><br />	if($references.Count -gt 0)<br />	{<br />		$opts += '/reference:' + $delim + [string]::Join($delim + ' /reference:' + $delim, $references) + $delim<br />	}<br /><br />	if($resources.Count -gt 0)<br />	{<br />		$opts += '/resource:' + $delim + [string]::Join($delim + ' /resource:' + $delim, $resources) + $delim<br />	}<br />	<br />	if($sourceFiles.Count -gt 0)<br />	{<br />		$opts += [string]::Join(' ', $sourceFiles)<br />	}<br />	<br />	$cmd = [string]::Join(" ", $options)<br />	$cmd = $csc + " " + $opts<br />	$cmd;<br />}<br /><br />function global:Execute-Command-String {<br />	param([string]$cmd)<br />	<br />	# this drove me crazy... all I wanted to do was execute<br />	# something like this (excluding the [])<br />	#<br />	# [& $csc $opts] OR [& $cmd]<br />	#<br />	# however couldn't figure out the correct powershell syntax...<br />	# But I was able to execute it if I wrote the string out to a <br />	# file and executed it from there... would be nice to not <br />	# have to do that.<br /><br />	$tempFileGuid = ([System.Guid]::NewGuid())<br />	$scriptFile = ".\temp_build_csc_command-$tempFileGuid.ps1"<br />	Remove-If-Exist $scriptFile<br /><br />	Write-Host ''<br />	Write-Host '*********** Executing Command ***********'<br />	Write-Host $cmd<br />	Write-Host '*****************************************'<br />	Write-Host ''<br />	Write-Host ''<br /><br />	$cmd >> $scriptFile<br />	& $scriptFile<br />	Remove-If-Exist $scriptFile<br />}<br /><br />function global:Remove-If-Exist {<br />	param($file)<br />	if(Test-Path $file)<br />	{<br />		Remove-Item $file -Force -ErrorAction SilentlyContinue<br />	}<br />}<br /><br />$resources = @(<br />	#"<path to resource files>"<br />)<br /><br />$references = @(<br />	"$core_assemblies_path\System.Core.dll",<br />	"$framework_assemblies_path\System.dll"<br />)<br /><br />$sourceFiles = @(<br />	#"<path to some source file not under the main project's folder - EX: Linked files in other projects>"<br />)<br /><br />$sourceFiles += Get-ChildItem '.' -recurse `<br />	| where{$_.Extension -like "*.cs"} `<br />	| foreach {$_.FullName} `<br /><br />$debug = if($build_configuration.Equals("Release")){ '/debug-'} else{ "/debug+" }<br /><br />$options = @(<br />	'/noconfig',<br />	'/nowarn:1701`,1702', # Note: the escape [`] character before the comma<br />	'/nostdlib-',<br />	'/errorreport:prompt',<br />	'/warn:4',<br />	$debug,<br />	"/define:$build_configuration``;TRACE",  # Note: the escape [`] character before the comma<br />	'/optimize+',<br />	"/out:$project_name\bin\$build_configuration\ClassLibrary.dll",<br />	'/target:library'<br />)<br /><br />$cmd = Build-Csc-Command -options $options -sourceFiles $sourceFiles -references $references -resources $resources<br /><br />Execute-Command-String $cmd<br /></pre><pre class="brush: plain;">&nbsp;</pre><font face="Courier New"></font><pre class="brush: plain;"></pre>  </div>
@@ -419,11 +323,8 @@ If you want some more *nix features, including cd - you may want to look at pscx
 
 
             </article>
-            
             <div class="pagination">
-                
                 <a href="/blog/archives">Blog Archives</a>
-                
             </div>
         </div>
         <aside class="sidebar">
@@ -449,42 +350,32 @@ If you want some more *nix features, including cd - you may want to look at pscx
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -513,7 +404,6 @@ If you want some more *nix features, including cd - you may want to look at pscx
 </section>
 
 
-
         </aside>
  
 
@@ -529,17 +419,12 @@ If you want some more *nix features, including cd - you may want to look at pscx
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -552,8 +437,6 @@ If you want some more *nix features, including cd - you may want to look at pscx
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

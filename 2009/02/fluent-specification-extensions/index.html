@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions/">Fluent Specification Extensions</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
-
+          <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p><strong>FYI: If you're familiar with extension methods, and how to use them in testing sceneries...the interesting part of this post is at the bottom starting at: "Ok, on to the point..."</strong></p><p>The C# extension methods give some amazing power when it comes to extending functionality of objects (we don't own) and I've spotted a pattern on several blogs and example unit testing snippets, especially in the Context Specification style testing areas that I find interesting.   <br /><br />The concept is to basically use the C# extension methods within a unit testing environment to give the system under test (SUT) more readability/understandability within the test code itself.   <br /><br />Here's an example of how you might normally write a unit test given the following SUT. </p>  <pre><span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> SystemUnderTest<br />{<br />  <span style="color:#0000ff;">public</span> SystemUnderTest() { PropertyUnderTest = "<span style="color:#8b0000;">Hello World!</span>"; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SomeStringProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">bool</span> SomeBoolProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />}</pre><p>You might write some unit tests that might look like...</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br /><br />Assert.IsTrue(sut.SomeBoolProperty);<br />Assert.AreEqual(sut.SomeStringProperty, "<span style="color:#8b0000;">Hello World!</span>");</pre><p>Now, the assertions above are small enough it's pretty easy to tell what's going on, however when you think about what your looking at, it actually present the best readability.</p><p>Let's take the string's AreEqual assertion for example...  You first read the "AreEqual", so now you have to allocate some (undefined as of yet) space in your head to store some data points that need to be evaluated all at once. (maybe I'm getting lazy as I get old, but the less I have to think when reading tests the more time I can spend understanding the domain being tested...)</p><p>Again, the example is over simplified, but I think you get the point.</p><h4>What if you could make the test syntax read and flow in a very readable and understandable manner?</h4><p>That's what the specification extensions give you. Given the two tests above and an a couple helper extension methods living in the testing library I could write something like.</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br />sut.SomeBoolProperty.ShouldBeTrue();<br />sut.SomeBoolProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>It may just be me, but that just feels better, is more understandable, and the great thing is I didn't have to impact my domain objects to support this style of test...</p><p>Another great benefit is you don't have to type "Assert.xxxx(YYzzz)" each time you want to create an assertion. You can just type sut.SomeThing.{this where you get help from intellasense} giving you some great context based assertion options.</p><p>I googled for a library that had a pre-built set of extension assertions and ended up finding the <a href="http://code.google.com/p/specunit-net/source/browse/">http://code.google.com/p/specunit-net/source/browse/</a> by Scott Bellware. If you dig into the source of the project you can find a helper class called <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs" target="_blank">SpecificationExtensions.cs</a> which basically gives you all the "Should..{your assertion here}" extension methods.</p><h4>Ok, on to the point real point (sorry it's taken so long).</h4><p>After downloading and playing with the extension specifications from Spec Unit, I thought what if we made that more fluent?</p><p>So I gave it a quick spike and instead of writing some tests that look like...</p><pre>sut.SomeStringProperty.ShouldNotBeNull();<br />sut.SomeStringProperty.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>));<br />sut.SomeStringProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>"); </pre><p>You could have less wordy code and still retain all the meaning and readability with a set of fluent specification extensions.</p><pre>sut.SomeStringProperty<br />.ShouldNotBeNull()<br />.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>))<br />.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>I haven't figured out what sorts of bad things this style of assertion could bring... but we'll experiment for a while...</p><p>Here's an example console app with the extensions included.</p><p><strong>DISCLAIMER</strong>: I haven't tested all the extensions so if you notice any issues please feel free to let me know...<br /><br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/FluentSpecificationExtensions.zip" frameborder="0" scrolling="no"></iframe></p></div>
@@ -118,49 +107,30 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
+                          <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/testing/'>Testing</a>
-    
     <a class='category' href='/blog/categories/csharp/'>C#</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2009/02/fluent-specification-extensions/" data-via="staxmanade" data-counturl="http://staxmanade.com/2009/02/fluent-specification-extensions/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2009/01/silverlight-automocker-with-unity/" title="Previous Post: Silverlight AutoMocker with Unity container and Moq">&laquo; Silverlight AutoMocker with Unity container and Moq</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2009/02/fluent-specification-extensions-1-more/" title="Next Post: (+1) for [Fluent] Specification Extensions"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -186,42 +156,32 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -250,7 +210,6 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
 </section>
 
 
-
         </aside>
 
     </div>
@@ -265,17 +224,12 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -288,8 +242,6 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

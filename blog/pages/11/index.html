@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -74,23 +69,16 @@
     <div id="content">
         
 <div class="blog-index">
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
-
+          <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I was attempting to use PowerShell to compile a group of *.cs source files – needing the flexibility of programmatically swapping out dependent assembly references at compile time depending on certain build conditions… Don’t want to get too much in to why I needed it, just that it is doable – (more painful than initially expected), but still possible.</p> <p>First let’s get a csc command we want to compile.</p> <p>Second let me state that this was more of an exercise in wanting to learn PowerShell and there probably other ways of accomplishing what I needed, just seemed like a good time to start down the painful learning curve. Also note, I’m not a CSC compiler pro – I haven’t analyzed each of the “options” and weather it’s right/wrong/best practice – it just works… (thanks to Visual Studio &amp; MSBuild for hiding how we actually should use the compiler)</p> <p>Ok take a simple csc compile command – (In Visual Studio – File –&gt; New Project -&gt; ClassLibrary1 as a good starting point). Compile the project &amp; check the build output window. You’ll get an output similar to the below.</p> <blockquote> <p>C:\Windows\Microsoft.NET\Framework\v3.5\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll" /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /reference:"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\PowershellCscCompileSample.dll /target:library Class1.cs Properties\AssemblyInfo.cs</p></blockquote> <p>Next figure how the heck to execute this in PowerShell.</p> <p>&amp; $csc $params --- NOPE <br>exec $csc $params – NOPE</p> <p>I must have tried tens if not hundreds of methods to get the simple thing above to compile… needless to say I pinged a co-worker for some help. <a href="http://obsidience.blogspot.com/">http://obsidience.blogspot.com/</a></p> <p>His pointer – when trying to get big string command to execute in powershell do the following.</p> <ol> <li>Open up “Windows PowerShell ISE”&nbsp; (on Windows 7)  <li>Paste the command prompt window (with an “&amp;” at the beginning)  <li>look for any coloration changes like… <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y5kM2wwI/AAAAAAAAALs/UDwCw_-kLYs/s1600-h/image17.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sr-y5_QAW5I/AAAAAAAAALw/NMkrfh4EjAA/image_thumb9.png?imgmax=800" width="644" height="30"></a>  <li>Next place PowerShell escape character [`] in front of any character where the coloration changes (They’re very subtle so look long and hard) <br>&nbsp;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sr-y6I68cMI/AAAAAAAAAL0/ZFyN79A_4-o/s1600-h/image21.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Sr-y6j24noI/AAAAAAAAAL4/NmqVGw9aCkU/image_thumb11.png?imgmax=800" width="644" height="39"></a> </li></ol> <p>We should now have a PowerShell string that compiles our project.</p> <p>After I got that far – I cleaned up the compiler syntax for a little re-use. (You can download the project blow to check it out)</p> <p><iframe style="padding-bottom: 0px; background-color: #fcfcfc; padding-left: 0px; width: 98px; padding-right: 0px; height: 115px; padding-top: 0px" title="Preview" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedicon.aspx/Public/PowershellCscCompileSample.zip" frameborder="0" marginwidth="0" scrolling="no"></iframe></p> <p>If you don’t want to see the entire csc compile in the project download above, below is the general usage…</p><pre class="brush: plain;"><br /><br />################## Build Configuration ##################<br />$project_name = 'PowershellCscCompileSample'<br />$build_configuration = 'Debug'<br />#########################################################<br /><br />$core_assemblies_path = 'C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5'<br />$framework_assemblies_path = 'C:\Windows\Microsoft.NET\Framework\v2.0.50727'<br /><br />function global:Build-Csc-Command {<br />	param([array]$options, [array]$sourceFiles, [array]$references, [array]$resources)<br />	<br />	$csc = 'C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe'<br /><br />	# can't say I'm doing delimeters correctly, but seems to work ???<br />	$delim = [string]""""<br />	<br />	$opts = $options<br /><br />	if($references.Count -gt 0)<br />	{<br />		$opts += '/reference:' + $delim + [string]::Join($delim + ' /reference:' + $delim, $references) + $delim<br />	}<br /><br />	if($resources.Count -gt 0)<br />	{<br />		$opts += '/resource:' + $delim + [string]::Join($delim + ' /resource:' + $delim, $resources) + $delim<br />	}<br />	<br />	if($sourceFiles.Count -gt 0)<br />	{<br />		$opts += [string]::Join(' ', $sourceFiles)<br />	}<br />	<br />	$cmd = [string]::Join(" ", $options)<br />	$cmd = $csc + " " + $opts<br />	$cmd;<br />}<br /><br />function global:Execute-Command-String {<br />	param([string]$cmd)<br />	<br />	# this drove me crazy... all I wanted to do was execute<br />	# something like this (excluding the [])<br />	#<br />	# [& $csc $opts] OR [& $cmd]<br />	#<br />	# however couldn't figure out the correct powershell syntax...<br />	# But I was able to execute it if I wrote the string out to a <br />	# file and executed it from there... would be nice to not <br />	# have to do that.<br /><br />	$tempFileGuid = ([System.Guid]::NewGuid())<br />	$scriptFile = ".\temp_build_csc_command-$tempFileGuid.ps1"<br />	Remove-If-Exist $scriptFile<br /><br />	Write-Host ''<br />	Write-Host '*********** Executing Command ***********'<br />	Write-Host $cmd<br />	Write-Host '*****************************************'<br />	Write-Host ''<br />	Write-Host ''<br /><br />	$cmd >> $scriptFile<br />	& $scriptFile<br />	Remove-If-Exist $scriptFile<br />}<br /><br />function global:Remove-If-Exist {<br />	param($file)<br />	if(Test-Path $file)<br />	{<br />		Remove-Item $file -Force -ErrorAction SilentlyContinue<br />	}<br />}<br /><br />$resources = @(<br />	#"<path to resource files>"<br />)<br /><br />$references = @(<br />	"$core_assemblies_path\System.Core.dll",<br />	"$framework_assemblies_path\System.dll"<br />)<br /><br />$sourceFiles = @(<br />	#"<path to some source file not under the main project's folder - EX: Linked files in other projects>"<br />)<br /><br />$sourceFiles += Get-ChildItem '.' -recurse `<br />	| where{$_.Extension -like "*.cs"} `<br />	| foreach {$_.FullName} `<br /><br />$debug = if($build_configuration.Equals("Release")){ '/debug-'} else{ "/debug+" }<br /><br />$options = @(<br />	'/noconfig',<br />	'/nowarn:1701`,1702', # Note: the escape [`] character before the comma<br />	'/nostdlib-',<br />	'/errorreport:prompt',<br />	'/warn:4',<br />	$debug,<br />	"/define:$build_configuration``;TRACE",  # Note: the escape [`] character before the comma<br />	'/optimize+',<br />	"/out:$project_name\bin\$build_configuration\ClassLibrary.dll",<br />	'/target:library'<br />)<br /><br />$cmd = Build-Csc-Command -options $options -sourceFiles $sourceFiles -references $references -resources $resources<br /><br />Execute-Command-String $cmd<br /></pre><pre class="brush: plain;">&nbsp;</pre><font face="Courier New"></font><pre class="brush: plain;"></pre>  </div>
@@ -98,23 +86,16 @@
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/how-do-i-get-uispyexe-on-my-windows-7/">How do I get UISpy.exe on my Windows 7 Developer Machine?</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-09-16T04:47:00.000Z" pubdate data-updated="true">Sep 15th 2009</time>
-
+          <time datetime="2009-09-16T04:47:00.000Z" pubdate data-updated="true">Sep 15th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I know there’s a tool somewhere in some SDK called UISpy.exe. It looks like this.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt1IXfT6I/AAAAAAAAAKo/JLGWllGQoP4/s1600-h/ms727247.UI_Spy_Main_WindowenusVS.90.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" border="0" alt="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt19BG-II/AAAAAAAAAKs/yqtWK4N0wW4/ms727247.UI_Spy_Main_WindowenusVS.90%5B1%5D.png?imgmax=800" width="582" height="379" /></a> </p>  <p>You can read all about it here - <a href="http://msdn.microsoft.com/en-us/library/ms727247.aspx">http://msdn.microsoft.com/en-us/library/ms727247.aspx</a></p>  <h3>But can you find it?</h3>  <p>The docs in that link above state…</p>  <blockquote>   <p><img alt="ms727247.alert_note(en-us,VS.90).gif" src="http://i.msdn.microsoft.com/ms727247.alert_note(en-us,VS.90).gif" /><strong>Note: </strong>UI Spy is installed with the Microsoft Windows SDK. It is located in the \bin folder of the SDK installation path (uispy.exe) or can be accessed from the Start menu (Start\All Programs\Microsoft Windows SDK\Tools\UISpy).</p> </blockquote>  <p>If I go take a look at the (Start\All Programs\Microsoft Windows SDK\Tools\UISpy) as shown in the image below. UISpy is nowhere to be found. </p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt2SEUeTI/AAAAAAAAAKw/xonEojREdHc/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt2mwJQvI/AAAAAAAAAK0/Vx7KaZRd5DQ/image_thumb3.png?imgmax=800" width="262" height="273" /></a> </p>  <p>In some forum post somewhere – I saw that I had to install the .Net Framework 3.0 SDK. Which is strange since I have the 3.5 framework already installed and the tool isn’t there. Oh well, I found it (I thought), downloaded it and tried to run the setup. Where in Windows 7 I was prompted with the following dialog.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt23upSBI/AAAAAAAAAK4/HUXuugP2xRg/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." border="0" alt="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt3aUZroI/AAAAAAAAAK8/fHdAqCJ6Iac/image_thumb1.png?imgmax=800" width="505" height="178" /></a> </p>  <p>Ok, fine I’ll do that…</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt3u65DjI/AAAAAAAAALA/QAvI1Zp_Hz0/s1600-h/image11.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4Drga_I/AAAAAAAAALE/dCtpGc-6GkY/image_thumb5.png?imgmax=800" width="417" height="531" /></a> </p>  <p>Searching the list of features to turn on and off, the only one that looks anything like what I’m looking for (outlined in red) has already been installed.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4qWSiSI/AAAAAAAAALI/Ya5JCyYXnUM/s1600-h/image15.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt51K4FZI/AAAAAAAAALM/J1rd0mLj0rM/image_thumb7.png?imgmax=800" width="310" height="656" /></a> </p>  <p>Off to do more research…</p>  <p></p>  <p></p>  <p></p>  <p>Then I run into this blog <a href="http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx">http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx</a></p>  <p>Eventually I download the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=4377F86D-C913-4B5C-B87E-EF72E5B4E065&amp;displaylang=en">Windows SDK for Vista Update</a>. Run the install wizard with all the defaults except this screen…</p>  <p>As the blog post states – make sure you take a pre-install snapshot of the following registry key</p>  <p><strong>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs      <br /></strong>Before Install:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt6ZlcgnI/AAAAAAAAALU/ZO60FHxNAoU/s1600-h/image41.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt65BUX4I/AAAAAAAAALY/_vCcUqbSlEs/image_thumb25.png?imgmax=800" width="583" height="171" /></a>&#160; </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt7eZeWoI/AAAAAAAAALc/n6FH5PRb2f0/s1600-h/image19.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt7yOdPSI/AAAAAAAAALg/ntpi_5ggbzg/image_thumb9.png?imgmax=800" width="585" height="554" /></a>&#160;</p>  <p>After Install:    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt8q6jHFI/AAAAAAAAALk/gop2PBD1vPY/s1600-h/image47.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt-uhEUmI/AAAAAAAAALo/mxzr0oast6I/image_thumb29.png?imgmax=800" width="581" height="176" /></a> </p>  <p></p>  <p></p>  <p></p>  <p>I reverted the changes back to v6.0A in the registry above…</p>  <h3>And TAH-DAH UISpy.exe has been found.</h3>  <p>C:\Program Files\Microsoft SDKs\Windows\v6.0\Bin\UISpy.exe</p>  <p>Pain in the A$$… But it seems to work.</p>  </div>
@@ -140,23 +121,16 @@ I have to agree with you, real pain in the a$$. Seriously, your post helped me a
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Don’t forget what’s happening behind the syntactic sugar. (C# events)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
-
+          <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>In a comment posted by Lashas to the i4o project over at Codeplex (<a href="http://i4o.codeplex.com/WorkItem/View.aspx?WorkItemId=13114">comment here</a>), he suggested a great performance improvement where instead of assigning an event’s handler directly to a handler method callback, we assign it to a field containing the handler. Initially I was skeptical of his change until I profiled it for myself. And after thinking about it for a second it made total sense.</p>  <p>The original implementation of adding an event handler to the property we used the C# syntax as follows.</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>where “IndexableCollection_PropertyChanged” is a method defined as </p>  <blockquote>   <p>private void IndexableCollection_PropertyChanged(object sender, PropertyChangedEventArgs e)      <br />{…} </p> </blockquote>  <p>Lashas’s suggested performance improvement was to initialize a private field, assign it to the IndexableCollection_PropertyChanged and add/remove the property changed handler from the field instead of the example outlined above.</p>  <p><strong>Field definitaion:</strong></p>  <blockquote>   <p>private PropertyChangedEventHandler _propertyChangedHandler;</p> </blockquote>  <p><strong>Initialization (in the constructor of the class)</strong></p>  <blockquote>   <p>_propertyChangedHandler = IndexableCollection_PropertyChanged;</p> </blockquote>  <p>Usage then becomes</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += _propertyChangedHandler;</p> </blockquote>  <p>Lashas reported approximately 30-40% performance improvement when adding/removing items from the collection by the suggested change.</p>  <p><strong>Why is that?</strong></p>  <p>Well, if you think about it, what is this line?</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>but just a little <em>Syntactic Sugar</em> on top of actually doing…</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += new PropertyChangedEventHandler (IndexableCollection_PropertyChanged);</p> </blockquote>  <p>and by the suggested change of assigning a field to the property change we avoid all the “new PropertyChangedEventHandler(…)” calls. This object creation can happen once in the constructor of the collection and not on every add/remove of an item.</p>  <p>Just a good reminder that you need to constantly be aware of what is happening under the covers. The saying <em>most complexity can be solved by another layer of </em><a href="http://en.wikipedia.org/wiki/Abstraction_(computer_science)"><em>abstraction</em></a> can cause issues when you don’t truly understand (or at least remember) what that layer is actually doing.</p>  </div>
@@ -164,23 +138,16 @@ I have to agree with you, real pain in the a$$. Seriously, your post helped me a
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/development-environment-mergecompare/">Development Environment Merge/Compare Tools Setup in Visual Studio/TFS</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-13T15:49:00.000Z" pubdate data-updated="true">Aug 13th 2009</time>
-
+          <time datetime="2009-08-13T15:49:00.000Z" pubdate data-updated="true">Aug 13th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’m writing this post more as a reminder to myself when I need to setup my development environment again. In the past I have usually leveraged Google to search <a href="http://blogs.vertigo.com/personal/KeithC/Blog/">Keith Craig’s blogs</a> and pieced the information together each time. </p>  <p>In this post I will outline the details I need in the two blogs Keith wrote and how I use that information when setting up my development environment for custom diff/merge tooling with Visual Studio and Team Foundation Server. I’m giving both the<strong> text version for copy/paste</strong> and the screenshots of each so it’s clear how each is used.</p>  <h5>First you will need to install the tools listed before going into configuring the setup of the options.</h5>  <ol>   <li><a href="http://www.sourcegear.com/diffmerge/">DiffMerge</a></li>    <li><a href="http://winmerge.org/">WinMerge</a></li> </ol>  <h5>Next you need to open the TFS “Configure Tool” dialog from within Visual Studio.</h5>  <p>Go to <strong>Tools</strong> –&gt; <strong>Options</strong> –&gt; <strong>Source Control</strong> –&gt; <strong>Visual Studio Team Foundation Server</strong> –&gt; <strong>Configure User Tools</strong>.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SoQ2C9eiutI/AAAAAAAAAKQ/Hd4ciffJApM/s1600-h/image%5B7%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2DRbbXGI/AAAAAAAAAKU/hkt_Zgtmva4/image_thumb%5B4%5D.png?imgmax=800" width="569" height="372" /></a> </p>  <p>Now you’re ready to configure each tool as outlined below.</p>  <h4>Merge tool - <a href="http://www.sourcegear.com/diffmerge/">DiffMerge</a></h4>  <p>How to integrate with VS <a href="http://blogs.vertigo.com/personal/keithc/Blog/archive/2008/04/09/using-sourcegears-diffmerge-as-the-merge-tool-in-microsoft-team-system.aspx">http://blogs.vertigo.com/personal/keithc/Blog/archive/2008/04/09/using-sourcegears-diffmerge-as-the-merge-tool-in-microsoft-team-system.aspx</a></p>  <h5>My setup options for VS:</h5>  <p><strong>Extension:</strong> .*     <br /><strong>Operation:</strong> Merge     <br /><strong>Command:</strong>     <br />&#160;&#160;&#160;&#160;&#160; x64 default install path - <strong>C:\Program Files (x86)\DiffMerge\DiffMerge.exe     <br /></strong>&#160;&#160;&#160;&#160;&#160; x86 default install path - <strong>C:\Program Files\DiffMerge\DiffMerge.exe     <br /></strong><strong>Arguments:</strong> /title1=%6 /title2=%8 /title3=%7 /result=%4 %1 %3 %2     <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SoQ2EAKuGEI/AAAAAAAAAKY/n3lDnIMhyQE/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2EkV6mSI/AAAAAAAAAKc/MFNs3KfksJA/image_thumb1.png?imgmax=800" width="421" height="222" /></a>     <br /></p>  <h4>Compare tool - <a href="http://winmerge.org/">WinMerge</a></h4>  <p>How to integrate with VS <a href="http://blogs.vertigo.com/personal/keithc/Blog/archive/2007/10/31/using-winmerge-with-microsoft-team-system.aspx">http://blogs.vertigo.com/personal/keithc/Blog/archive/2007/10/31/using-winmerge-with-microsoft-team-system.aspx</a></p>  <h5>My setup options for VS:</h5>  <p><strong>Extension:</strong> .*     <br /><strong>Operation:</strong> Compare     <br /></p> <strong>Command:</strong>   <br />&#160;&#160;&#160;&#160;&#160; x64 default install path - <strong>C:\Program Files (x86)\WinMerge\WinMergeU.exe   <br /></strong>&#160;&#160;&#160;&#160;&#160; x86 default install path - <strong><strong>C:\Program Files\WinMerge\WinMergeU.exe</strong></strong>  <br /><strong>Arguments:</strong> /ub /dl %6 /dr %7 %1 %2 -e  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2EzG9UGI/AAAAAAAAAKg/Q2i8ZDO3UXU/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SoQ2FOIWfgI/AAAAAAAAAKk/xgbURIV7yBE/image_thumb3.png?imgmax=800" width="420" height="229" /></a></p>  </div>
@@ -196,23 +163,16 @@ FWIW, you can see the arguments for other tools here: http://blogs.msdn.com/jman
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-12T20:54:00.000Z" pubdate data-updated="true">Aug 12th 2009</time>
-
+          <time datetime="2009-08-12T20:54:00.000Z" pubdate data-updated="true">Aug 12th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p></p>  <h4>Lessons learned by doing Branch-Per-Feature with Team Foundation Server.</h4> <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol> <p>In this post I’ll outline several of the issues/hiccups/<em>features</em> we found while attempting to apply Branch-Per-Feature with TFS.</p>  <h4>260 Characters limit.</h4>  <p>One of the first obstacles we ran into when attempting the Branch-Per-Feature with our TFS was the 260 Characters limit (you can read more here <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx">http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx</a>).</p>  <p>The largest offenders of this were artifacts added to a project as a result of doing an “Add Service Reference”. This <em>feature</em> created file names with the entire namespace in the file path. The way we got around this was the <a href="/2009/04/t4-replacement-for-add-service">T4 replacement for &quot;Add Service Reference&quot;</a> which helped keep some of the longer file paths shorter in our Silverlight projects. However it still rears it’s ugly head when we create a new branch and give a descriptive name that’s too long.</p>  <p>Which bring me to the next hiccup we run into. </p>  <h4>Don’t RENAME a newly created branch. Delete it and re-create it with new name. </h4>  <p>After a branch was created, if we decide the name for the branch wasn not good enough (either causes file path length issues, or it’s description isn’t clear enough), <strong>DON’T RENAME THE NEW BRANCH</strong>. Instead, choose to <strong>delete and re-create it</strong>. Clearly this has to be <strong>caught before commits are made to the new branch</strong>. </p>  <h5>Why is this an issue? </h5>  <p>In TFS, when you follow the simple steps to merge a feature from a branch into the trunk, you get to a point where all the changes made in the branch are checked out and staged to be merged into the trunk in your development environment. However when (or if) you’ve applied a rename to the branch at some stage in the lifetime of the branch, you don’t get a nice pretty list of files that changed and ready to be checked in, instead you get <strong>every file in the branch </strong>as though it were changed at some point in time. Sadly, this is usually not the case, and why I said earlier to catch the problem as soon as possible. </p>  <p>One of the great benefits of the branch/merge strategy is the final merge into the trunk is typically all changes required for a particular feature. When you have to go back to grapple some <strong>source control history debugging</strong>, it’s much easier to detect large changes from branch merges than sifting through tens of check-ins per file.</p>  <p>After the feature is complete and you start the steps required to merge the feature into the trunk, typically you only see the files that have changed get checked out and ready to be merged into the trunk. However, when a rename occurs on the branch it somehow tags every item as though it were changed. <strong>So the Merge back into the trunk ends up looking like the entire project changed.</strong> This makes the source diffing extremely difficult as I described in the <strong>Tester Pass 1</strong> step in our kanban steps.</p>  <h4>Can’t easily merge between different branches or grand-child branches (or at all, didn’t push hard enough to make it)</h4>  <p>Another issue we’ve come across (which hasn’t road blocked us too bad) was the in-ability to merge between two different branches that stemmed from the same trunk or merging a grandchild branch into the grandparent (bypassing the child/parent).</p>  <p>A specific scenario we ran into was when Feature A was under development on a branch, and a developer was ready to start working on Feature B. Feature B had a dependency on some of the changes that had taken place in Feature A, however we wanted to deploy Feature A before Feature B was complete. As an experiment we thought we would just create Feature B’s branch straight from Feature A’s branch, however what this would have left us with when Feature A was merged into the Trunk was Feature B two levels away from the Trunk. </p>  <p>Although TFS allows this scenario, any changes to the trunk had to be pushed into Feature A’s branch before it could be pushed into Feature B’s branch, and come final merge time for Feature B, we couldn’t merge straight into the trunk. We would have had to first merge into Feature A’s branch and then do the final merge into the trunk. In the end we just held back the deployment of Feature A and both Feature A &amp; B were developed in Feature A’s branch.</p>  <blockquote>   <p>I read somewhere that this “could” be possible through some command line tools, however it wasn’t important enough to go through the pain and this would be much better if we could just use the existing TFS interface to accomplish this simple scenario.</p> </blockquote>  <p>&#160;</p>  <p>I’m sure there are other tips/tricks I could outline here, but either they’re not coming to mind or they’re too basic to really care about. If I think of any, I’ll update this post further.</p></div>
@@ -248,23 +208,16 @@ Either approach is fine.  You could probably do a baseless merge (with the cmd l
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
+          <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol><p>In the <a href="/2009/08/branch-per-feature-with-team-foundation_06">previous post (“How we got here”)</a> I provided a small intro into why and how my team arrived at a Branch-Per-Feature/Kanban development lifecycle.</p><p>In this post I’ll describe each stage of our current development lifecycle.</p><ol><li><strong>Triage</strong> – Initial drop point for <em><u>most</u></em> features. <ul><li>I say <em><u>most</u></em> because some head straight into other steps further along in the pipeline. </li><li><strong>Items are categorized by area or department </strong>(These map to an actual TFS Area)<br />   EX: Infrastructure, Operations, Billing, Client Services, etc… </li><li>Items are <strong>prioritized</strong>.<br />   Each department head &amp; higher gets the opportunity to prioritize within each Area. </li><li>The WIP in Triage is basically N/A. </li></ul></li><li><strong>Backlog</strong> – Items in the Backlog have been deemed important enough to begin their life in the pipeline and start being pulled through each stage. <ul><li>These items need extra <strong>research, design, and requirements gathering</strong>. </li><li>This is where items that were priority #1 in their respective Area go head to head with the #1’s in other Areas and can be further prioritized. </li><li>We try to keep the WIP in the Backlog to about 10 or less. </li></ul></li><li><strong>Queue</strong> – Items in the Queue are items that have no further design/requirements gathering needed and when a developer is ready can pull an item straight into development. <ul><li>We keep the WIP in the Queue to about 7 or less. </li></ul></li><li><strong>Development</strong> <ul><li>When the developer pulls an item from the Queue into development we <strong>create a branch in a <em>Branches</em></strong> folder and give it a name related to the feature being developed. All development for the feature is done in this branch. </li><li>In our current workflow,<strong> after the development of the feature is complete, the developer does a first pass of testing</strong>. (We have a fairly small shop, where all of the developers are testers and all of the testers are developers.) </li><li>When the developer is done testing the feature is (pushed) into Tester Pass 1. (this is part of why I stated above we have a semi-kanban &amp; not a true pull based kanban) </li><li><strong>IMPORTANT NOTE: <u>frequently forward merge from the trunk into the branch</u></strong> this helps to avoid issues later, and is a requirement before the next stage (testing). </li></ul></li><li><strong>Tester Pass 1</strong> <ul><li>A different person from the implementing developer needs to be brought up to speed as to what the feature is and the needed changes to accomplish the feature. </li><li>The tester here pounds away at the changes and gives feedback to the original developer of any issues/changes that may need to be made.<br /></li></ul><blockquote><p><strong>TFS Hint</strong>: When I become Tester 1 for a feature, one trick I use is to “pretend merge” the branch back into the trunk. I say pretend merge because I take all the normal steps to merge into the trunk up until the check-in part. I do this so I can see all the changed files easily and can diff each file with the trunk to find the exact source code changes. After a visual code review is complete I undo any changes and begin testing the branch.</p></blockquote></li><li><strong>User Acceptance</strong> – Before we merge the feature into the trunk, we do a review with the customer.  <ul><li>This allows us to get solid feedback before it gets merged into the trunk, one more testing pass, and deployed to production. This way we <strong>DON’T </strong>get feedback like <strong>“this is not what I need because it needs to do/be like…“ (after it’s been deployed)</strong> and instead get more of a <strong>“could you tweak it to be like…” which allows us to deliver what the customer actually needs</strong> and not what we interpreted the design to be. </li><li>Also since it’s not merged into the trunk, any changes requests as a result of the User Acceptance review allow us to take our time to get the change done right and not feel like we have to hurry the feature to catch the week’s deployment. We are able to correctly make the changes, and we can usually communicate to the user at the meeting what changes to the system mean, (if we change Feature A and add/remove/change how it operates it may not end up shipping in the next scheduled deployment (or next etc…)) </li></ul></li><li><strong>Merge Into Trunk</strong> - original developer is now responsible for merging the feature branch back into the trunk. <ul><li>If the changes made in the branch are more system-wide or architectural in nature, we will pair on complicated merges. </li><li>There is usually some coordination that may need to happen before a merge can be done. We don’t want to merge a new feature into the trunk when we’re creating a deployment snapshot and anything else that may determine we hold off on merging the feature. </li></ul></li><li><strong>Tester Pass 2</strong> <ul><li>After merging the new feature into the trunk is complete we have one more tester take a shot testing the newly merged features. We added this step to the kanban to help reduce potential regression bugs and help keep the quality band high before the feature was marked as done and queued for deployment. </li></ul></li><li><strong>Deployment</strong> – After all testing and user acceptance is complete the feature is moved to <strong>Deployment</strong>. <ul><li>This step is only to keep track of what is queued up for the next deployment cycle.<br /></li></ul><blockquote>When we started this new process, we attempted to <strong>deploy each feature as soon as it became available</strong>.<strong> </strong>This caused some issues, in part related to source control management and timing of pending Merges; however, <strong>the biggest issue revolved around deployment and interruption to the users</strong>. When we deployed once every 4-6 weeks with our old process, this wasn’t much of a problem for the users. However, deploying whenever a feature was ready caused some issues with our users. We settled on a<strong> weekly deployment (same day and time every week)</strong>, if there is something to be deployed it’s now on a regular schedule.<br /></blockquote><blockquote><strong>One other benefit of deploying on a regular weekly schedule is the cadence the team has adjusted to. </strong>There’s less confusion around “are we deploying today, tomorrow” etc… With deployments scheduled for a regular cadence, it’s much easier for us to create a process that is consistent, efficient and <strong>less error prone</strong>. </blockquote></li><li><strong>Completed</strong> - After the deployment is complete the task is moved to <strong>Completed</strong> and considered DONE! </li></ol><h5>Below is a screen shot of how it looks in our TFS work item view.</h5><blockquote><p>Yes, we hacked and crammed our kanban into the MSF-Agile template, and although it’s rough, it’s working better than our previous non-kanban ways.</p></blockquote><p>To move a feature though the kanban we select it in the “iteration path” drop down.<br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SnrlDlU10VI/AAAAAAAAAKI/U_1Y8ZaFvHw/s1600-h/image4.png"><img style="BORDER-RIGHT-WIDTH: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SnrlDyxXpTI/AAAAAAAAAKM/9kFKc4JMbeU/image_thumb2.png?imgmax=800" width="417" height="395" /></a></p></div>
@@ -305,23 +258,16 @@ I like this approach.  I&#39;m curious if you&#39;ve developed any reports aroun
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
+          <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links<br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol></p><p>During one of my blog reading catch-up afternoons, I ran across Derick Bailey <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-part-1-why.aspx">Branch-Per-Feature Source Control. Part 1 Why</a>. It is a great read into the subject, covering many of problems other source control methods introduce and how the Branch-Per-Feature concept alleviates some of these issues. It is also great to see a how it can be used in relation to a Kanban style of development. I look forward to his further posts about some of the details of this process with subversion. </p>  <p>While waiting for those posts, I thought I’d write up some of the things my team and I have learned while implementing a semi-Kanban process using <a href="http://msdn.microsoft.com/en-us/teamsystem/default.aspx">Team Foundation Server (TFS)</a>.</p>  <p>We practiced a <a href="http://en.wikipedia.org/wiki/Scrum_(development)">scrum</a> like agile process for about 3 years with a fair amount of success. However, about 4 months ago we hit the end of a very long “Sprint” (6 weeks). There were at least 3 major “features” built during this sprint and we also determined that since were going to be developing several large features, we would also take the time to upgrade our database server, since we would inherently, through the development time, be able to do a little database regression testing.</p>  <p>During the retrospective for this sprint there developed a couple themes revolving around </p>  <ol>   <li>Size and number of features developed made testing in the allotted sprint time difficult to complete each feature thoroughly. </li>    <li>The features developed at the beginning of the sprint were developed and tested very thoroughly, </li>    <li>The features developed near the end of the sprint felt rushed and resulted in some choices making some choices that may not have left the code </li>    <li>Upgrading a to a new database version AND deploying all these new features threw too many things in the mix for one deployment. </li>    <li>The items developed first sat behind the development firewall for in one case over 3 weeks, when that feature could have given the business value 3 weeks prior. </li> </ol>  <p>Our transition to Kanban was somewhat sudden. I had been reading kanban as a tool for delivering software for a couple months. I thought that many of the issues we were having with scrum could be resolved with a simple Kanban process. So I brought up the idea of doing “feature driven development” during the retrospective. What came as a shock to me was the welcoming the team gave this new idea. I had been thinking about how to bring the idea up for some time, and couldn’t imagine how the team would want to make the drastic change that this new style of development would require. After talking about it for a short time during this retrospective, just about everyone on the team seemed to jump all over the idea.</p>  <p>The team decided right then that we would give it a try for a while, work out the kinks, learn from it, and see how it would go.</p>  <p>When we first created our kanban, there was a much simpler pipeline of stages than the list I will outline as our current process. Most blogs/articles basically described starting with something simple like (Backlog, Dev, Test, Deploy). So we started with those very simple steps and it has been refined for our process.</p>  <p>We continued to value the retrospective and through this constant reflection were able to very quickly fine tune our process to something that, looking back, is really suiting us well.</p>  <p>We have been using the new approach for 4 months now and haven’t looked back. Some of the original things that the team was worried about when moving to the Branch-Per-Feature have all but washed away. In particular, <strong>one of the largest concerns everyone on the team had was the overhead branching and merging would bring into the process</strong>. <strong>And while it is a little bit more overhead than just opening the solution and pounding away, it brings many more benefits to the team than we loose in branching/merging time.</strong></p>  <p>In the next part I’ll describe the kanban stages our team has ironed out and how we mix that with the Branching-Per-Feature development.</p></div>
@@ -342,23 +288,16 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/07/live-messenger-disconnected-prompt-come/">Live Messenger Disconnected Prompt (Fail)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-07-12T04:47:00.000Z" pubdate data-updated="true">Jul 11th 2009</time>
-
+          <time datetime="2009-07-12T04:47:00.000Z" pubdate data-updated="true">Jul 11th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>My Windows Live Messenger has been having troubles connecting to (whatever it connects to out there) every so often. It usually disconnects at night or over the weekend, and this is the third time in the last couple weeks I’ve come into the office and seen this… (see image below)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sllq6ftIK2I/AAAAAAAAAJ4/jHtvHvd-sW4/s1600-h/image%5B1%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sllq7F3DyPI/AAAAAAAAAJ8/bt5j5qPqC2A/image_thumb.png?imgmax=800" width="614" height="173" /></a> </p>  <p>I had to click “Cancel” 32 times to get rid of this all of these windows. FAIL:(</p>  </div>
@@ -374,23 +313,16 @@ I had this problem earlier in the week also. :(</div>
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/">C# (checked) keyword – Learn something new every day</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
-
+          <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’ve been programming against the .net framework since the late beta of version 1.0 came out. (I had a couple year hiatus when I took a job doing some Linux &amp; C++) however, suffice it to say, I’ve been using the language a long time. I still find it amazing that there are features in the language that have been a round a long time and still manage stumbling across things I’ve never seen before.</p>  <p>Today’s newly learned feature I saw in a blog by <a href="http://www.lostechies.com/blogs/jimmy_bogard/">bogardj</a> over at <a href="http://www.lostechies.com/">LostTechies</a> where he wrote up a little <a href="http://www.lostechies.com/blogs/jimmy_bogard/archive/2009/06/24/expressions-cheat-sheet.aspx">Expressions Cheat Sheet</a>.</p>  <p>In his blog, I notice the “checked” keyword had the blue syntax highlighting. (which usually means it’s a C# keyword)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfB5ivx2I/AAAAAAAAAJI/DZYX6HqutGM/s1600-h/image%5B4%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCEOcaGI/AAAAAAAAAJM/bjFimfVqmxE/image_thumb%5B2%5D.png?imgmax=800" width="602" height="365" /></a> </p>  <p>So, to verify, I copied the word into my C# editor and what do you know… It is a C# keyword. This is probably something most if not all C# programmers out there already know and I, for some reason have missed this.</p>  <p>Here’s a blurb about it on the <a href="http://stackoverflow.com/questions/9033/hidden-features-of-c/355991#355991">stack overflow “Hidden features of C#”</a>.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCQOXVZI/AAAAAAAAAJQ/36Bi7s0yXzs/s1600-h/image%5B10%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfCnzkBdI/AAAAAAAAAJU/RLV3BvPXhTE/image_thumb%5B6%5D.png?imgmax=800" width="605" height="220" /></a> </p>  <p>And of course you can get the official details @ <a href="http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx">http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx</a></p>  <p>I decided to explore this a little. As an academic exercise I wanted to see what the difference would be between using the checked keyword with a cast operation and compare that to the <a href="http://msdn.microsoft.com/en-us/library/system.convert.tobyte.aspx">System.Convert.ToByte</a> operation.    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfCw76XwI/AAAAAAAAAJY/rZ0k6Ds3CRI/s1600-h/image%5B14%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDFmC4II/AAAAAAAAAJc/CoUMfycJ3do/image_thumb%5B8%5D.png?imgmax=800" width="554" height="128" /></a>    <br />Will generate the following error. <strong>System.OverflowException : Arithmetic operation resulted in an overflow.</strong></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDRuVKAI/AAAAAAAAAJg/XsG2SQcPABU/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfDjOy0lI/AAAAAAAAAJk/itMzHCCsv5w/image_thumb%5B13%5D.png?imgmax=800" width="610" height="120" /></a>    <br />While using the System.Convert class will generate a different error. <strong>System.OverflowException : Value was either too large or too small for an unsigned byte.</strong>&#160;</p>  <p>And last experiment I threw both of the conversion attempts in a loop and fired up the <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">ANTS Profiler</a> which shows that using the built in <font color="#0000ff">checked</font> keyword with a cast operation is faster than using the BCL conversion.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfD-trbyI/AAAAAAAAAJo/iZm-skTI2ok/s1600-h/image%5B37%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfENFFsPI/AAAAAAAAAJs/FWkJX2oo1ws/image_thumb%5B19%5D.png?imgmax=800" width="609" height="324" /></a>&#160;</p>  <p>As to which one is better I would probably have to dig deeper into other side affects that one may have over the other… Up front I don’t see any issue with the cast and checked keyword combo.</p>  </div>
@@ -406,23 +338,16 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 
 
     </article>
-  
     <article>
-      
-  <header>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/silverlight-unity-moq-backed-automocker/">Silverlight Unity &amp; Moq backed AutoMocker</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-06-19T15:06:00.000Z" pubdate data-updated="true">Jun 19th 2009</time>
-
+          <time datetime="2009-06-19T15:06:00.000Z" pubdate data-updated="true">Jun 19th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’ve pushed the <a href="http://code.google.com/p/moq-contrib/source/detail?r=22">Silverlight Unity/Moq AutoMocker</a> into the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>  <p>Well the other day I need the automocker and ended up running into a bug that was in my old-old-old pre-release version of <a href="http://code.google.com/p/moq-contrib/">moq for Silverlight</a>, so I took the time to get the released version and re-compile the automocker.</p>  <p>I published it to the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project. Haven’t taken the time to create a binary release, but should be able to get latest build, execute the build.Silverlight.cmd and in the drops\Current-Silverlight should be Moq.Contrib.UnityAutoMocker.Silverlight.dll</p>  <p>Enjoy!</p>  </div>
@@ -430,15 +355,10 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 
 
     </article>
-  
   <div class="pagination">
-    
       <a class="prev" href="/blog/pages/12/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
-    
       <a class="next" href="/blog/pages/10/">Newer &rarr;</a>
-    
   </div>
 </div>
 
@@ -465,42 +385,32 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -529,7 +439,6 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 </section>
 
 
-
 </aside>
 
     </div>
@@ -544,17 +453,12 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -567,8 +471,6 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

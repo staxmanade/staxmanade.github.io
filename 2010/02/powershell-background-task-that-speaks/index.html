@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
-
+          <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Today I was testing a long running task where my basic scenario was to execute at the PowerShell prompt.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test1.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test2.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test3.txt</p> </blockquote>  <p>Change some code and do it all over again.</p>  <blockquote>   <p>C:\dev&gt; LongRunningTask.exe &gt; Test4.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test5.txt</p>    <p>C:\dev&gt; LongRunningTask.exe &gt; Test6.txt</p> </blockquote>  <p>Although seemingly simple and really not that tough. It became really inefficient because I didn’t like sitting there waiting for it to finish. I was off reading blogs, responding to email, investigating other coding issues and generally forgetting about the long running tasks in the background. On top of that, when I came back to it I couldn’t remember what the last run was (was that test 2 or 3 or 5?) without querying disk to see what it was.</p>  <p>Sine I had all this time to kill in between test runs, I wrote a quick PowerShell script that would fully automate test 1,2,3 and stop. This was great and the first time I ran it was much more efficient as I didn’t have to keep checking back to see when to start it up again.</p>  <p>However, I not only had time to kill, but now I had 3 times that time to kill. I decided to elaborate on the script. I searched the tubes for a way to play a sound when a task was done, so I could be notified as to it’s progress, and completion.</p>  <p>I stumbled upon this blog, which was great for showing me how to play sounds within PowerShell.</p>  <p><a href="http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html">http://scriptolog.blogspot.com/2007/09/playing-sounds-in-powershell.html</a></p>  <p>I implemented the sounds and was off and running on another batch of testing, all tuned in to the sounds of progress.</p>  <p>Her we go again, more time to think about how to improve the process (that I’m not even trying to improve).</p>  <p>What if the script talked back to me? Some more googlefoo and I found this great example blog.</p>  <p><a href="http://huddledmasses.org/powershell-speaks/">http://huddledmasses.org/powershell-speaks/</a></p>  <p>Basically using the built in <a href="http://en.wikipedia.org/wiki/Microsoft_Speech_API">Microsoft speech api’s</a> you can get PowerShell to talk to you. This was just too much fun for the day. </p>  <p>At the end of the day the script below is basically what I was using. Don’t have too much fun, as you might not get any real work done…</p>  <p>The content of this blog isn’t necessarily top notch, but I just had to blog about it, as I was very impressed as to how easy it was to work with the speech api’s. Never knew it could be so easy to make a script verbally interactive.</p>  <pre>$Voice = new-object -com SAPI.SpVoice<br /><br />function speak([string] $msg)<br />{<br />    $Voice.Speak( $msg, 1 )<br />}<br /><br />function execScriptWithNotify([string] $completionMessage, [scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br />    speak $completionMessage<br />}<br /><br />function execLongRunningTask([scriptblock] $scriptToExecute)<br />{<br />    . $scriptToExecute<br /><br />    Write-Host &quot;Long running task complete!&quot;<br />    speak &quot;All tasks are done!&quot;<br />}<br /><br /><br /># Start the long running task<br />execLongRunningTask {<br /><br />    #***************************************************************<br />    #***************** How many times to run task? ***************** <br />    #***************************************************************<br />    $iterationCount = 3<br />    <br />    for ($i=1; $i -le $iterationCount; $i++)<br />    {<br />        execScriptWithNotify &quot;Task $i Complete&quot; {<br />        <br />            #***************************************************************<br />            #***************** Long Running Task Goes Here ***************** <br />            #***************************************************************<br />            Write-Host &quot;begin long running task # $i&quot;<br />            [System.Threading.Thread]::Sleep(3000);<br />            Write-Host &quot;end   long running task # $i&quot;<br />            #***************************************************************<br />            #***************************************************************<br />            #***************************************************************<br />        }<br />    }<br /><br />}</pre>  </div>
@@ -100,47 +89,29 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
+                          <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2010/01/c-40-optional-parameters-exploration/" title="Previous Post: C# 4.0 Optional Parameters – Exploration.">&laquo; C# 4.0 Optional Parameters – Exploration.</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2010/03/diffing-tool-feature-request/" title="Next Post: Diffing tool feature request"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -166,42 +137,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -230,7 +191,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -245,17 +205,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -268,8 +223,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

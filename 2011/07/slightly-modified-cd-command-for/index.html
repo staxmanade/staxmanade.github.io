@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
-
+          <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <h3>Background</h3>In my previous job, I spent all my development time in a Linux environment. Was rather impressed at how much could get done at the command line, and how efficient some of those tasks became. My next job was based on Windows and mostly the Microsoft stack of development tools. This&nbsp; meant I pretty much left the command line behind. That was, until, I started using git. And since I wanted to learn PowerShell, I used PowerShell to execute my git commands.<br />One thing that has bugged me for a while is simply moving between directories. Even with tab completion, all that typing is a still quite annoying. Especially if you jump between a set of similar directories. One feature from the Linux CD command that I missed was “CD -". This command in Linux can be used to jump to the previous directory (and then back again). One limitation of this command is it only could jump back to the previous directory, and it did not retain a memory of recent directories. <em>There may be something better in Linux that I don’t know of, but I’m basing this on a limited experience a number of years ago.</em><br />So I threw a question out on twitter.    <br /><a href="http://lh3.ggpht.com/-Ucrl4yvnrIk/TiJJ_Nnk3eI/AAAAAAAAAQI/k5Mm8x_Twhs/s1600-h/image_thumb63.png"><img alt="image_thumb6" border="0" height="97" src="http://lh5.ggpht.com/-iijA6mLrgEU/TiJJ_Xbp0hI/AAAAAAAAAQM/lHv0bksIGys/image_thumb6_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb6" width="318" /></a>     <br />After several tweets back and forth, @cwprogram threw an interesting spike at me.<br /><a href="http://lh5.ggpht.com/-ilEGIJk7VRI/TiJJ_kt8a-I/AAAAAAAAAQQ/XJ0iAJq5384/s1600-h/image_thumb942.png"><img alt="image_thumb9[4]" border="0" height="97" src="http://lh4.ggpht.com/-T4MVc7vKolw/TiJKACBtvyI/AAAAAAAAAQU/Pn71WMECKcQ/image_thumb94_thumb.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image_thumb9[4]" width="312" /></a>&nbsp; <a href="http://pastebin.com/xwtkn0am">http://pastebin.com/xwtkn0am</a>     <br />Although this wasn’t exactly what I was looking for, it contained enough of what I needed to spark my curiosity to write a version of my own.<br />And so a little script was born that I’m now using to replace the “CD” command in my PowerShell runtime.<br /><h3>What does this do?</h3>After you get it installed (see install steps below), when you type “CD” with no parameters at the command prompt. It will list up to 10 of the most recent distinct paths you’ve been to recently. This list also gives an index lookup number that you can use as a shortcut to jump to that path.<br />Example:<br /><blockquote><span style="font-family: Courier New;">C:\code&gt; cd        <br />&nbsp;&nbsp;&nbsp;&nbsp; 1) C:\Users\jasonj         <br />&nbsp;&nbsp;&nbsp;&nbsp; 2) D:\temp         <br />C:\code&gt; cd 2         <br />D:\temp&gt;</span></blockquote>You can continue to use the “CD” command to do your usual changing directories. Now you can quickly get a history of where you’ve been, and quickly jump to any of those previous histories without typing the entire paths again.<br />It defaults to only showing you the last 10 distinct items, but if you find yourself needing to go back farther than that, you can use the following command to list more than 10 items.<br /><blockquote>D:\temp&gt; cd -ShowCount 100</blockquote><h3>How to Install</h3><ol><li>Download the file and save it to a location you can reference later.      <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a> </li><li>Open your $PROFILE (<a href="http://www.howtogeek.com/50236/customizing-your-powershell-profile/">What is that?</a>) </li><li>Type the following two commands into your profile to replace the existing “CD” command with the new one.      <br />      <br /><span style="font-family: Courier New;">Remove-Item alias:cd        <br />Set-Alias cd {Your_Saved_Directory}\Change-Directory.ps1</span>       </li><li>Exit your PowerShell console and start a new one up. </li></ol><br />Happy Commanding!</div>
@@ -113,47 +102,29 @@ If you want some more *nix features, including cd - you may want to look at pscx
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
+                          <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2011/07/statlight-14-and-almost-15/" title="Previous Post: StatLight 1.4 and almost 1.5">&laquo; StatLight 1.4 and almost 1.5</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2011/08/powershell-text-to-speech-and-fun-with/" title="Next Post: Powershell Text-To-Speech and fun with a 4yr old."> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -179,42 +150,32 @@ If you want some more *nix features, including cd - you may want to look at pscx
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -243,7 +204,6 @@ If you want some more *nix features, including cd - you may want to look at pscx
 </section>
 
 
-
         </aside>
 
     </div>
@@ -258,17 +218,12 @@ If you want some more *nix features, including cd - you may want to look at pscx
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -281,8 +236,6 @@ If you want some more *nix features, including cd - you may want to look at pscx
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

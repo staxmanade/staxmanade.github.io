@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/">Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
-
+          <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>If you’re unfamiliar with <a href="http://typescriptlang.org" target="_blank">TypeScript</a>, I’d highly recommend checking it out. <strong>It’s my new preferred way to write JavaScript based applications.</strong></p>  <p>If you write an application in TypeScript and need to interact with an external set of either JavaScript or <a href="http://en.wikipedia.org/wiki/C%2B%2B/CX" target="_blank">C++/CX</a> dependencies then you will quickly find that you are going to be mucking with some TypeScript Definition files and the more you take a dependency on the WinRT runtime the more type definitions you probably need to manually create.</p>  <p>It’s true that the TypeScript team has created a set of TypeScript Definition files for WinRT and WinJS, but I <a href="https://typescript.codeplex.com/discussions/462409" target="_blank">couldn’t get any comment</a> as to how they were generated. And the more I looked into what was provided, the more I realized that there were inconsistencies and inaccuracies that were not good. Which led me to believe that they weren’t working on a super-secret tool to automatically generate these for us.</p>  <h3>What is <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> ?</h3>  <p><a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> is a quick little attempt at automatically taking the type system provided to us by a C++/CX winmd or .Net assembly file and projecting that into a set of TypeScript Definition files. This tool can basically take anything that is <a href="http://www.ecma-international.org/publications/standards/Ecma-335.htm">Ecma 355</a> Common Language Infrastructure (CLI) and spit out a .d.ts file for you automatically.</p>  <h3>Why would I need this?</h3>  <p>In the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD#can-you-tell-me-why-i-would-use-this" target="_blank">project readme</a> I describe two use-cases that I know of (so far).</p>  <ol>   <li>If you build a 'Modern' (come on, we still call it Metro) Windows 8 app with <code>WinJS</code> and want to leverage <code>TypeScript</code>, wouldn't it be nice to get a set of TypeScript Definition files that reflect the native API's you're calling in the platform without manually creating the definition files?       <br></li>    <li>Say your building an MVC/WebAPI server application. It would be useful if your C.I./Build system could generate a set of TypeScript interfaces that were based on the server objects used to render your JSON API. This can be useful for client side JavaScript/TypeScript libraries that need to consume these objects and also provide a simple way to document the format of the input and output API response objects. </li> </ol>  <h3>How do I get the project and start using it?</h3>  <blockquote>   <p>Before you install the tool and dive in head first, I would like warn you that I have only been working on this for about 2 weeks (in my off-hours) and there is going to be lots of room for improvement. But it’s currently generating a solid set of .d.ts files for .winmd files.</p> </blockquote>  <p>Head over to the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">project home page</a> and check out the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">Readme</a> for some quick-start information.</p>  <p>I’d would love to hear feedback. If anyone is interested in helping out, you can submit new issues or review the open issues list and start submitting pull requests.</p>  <p>Happy TypeScripting!</p>  </div>
@@ -100,55 +89,33 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
+                          <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
 
 
-
-                        
-<span class="categories">
-    
+                        <span class="categories">
     <a class='category' href='/blog/categories/winrt/'>WinRT</a>
-    
     <a class='category' href='/blog/categories/cplusplus_cx/'>C++/CX</a>
-    
     <a class='category' href='/blog/categories/totypescriptd/'>ToTypeScriptD</a>
-    
     <a class='category' href='/blog/categories/typescript/'>TypeScript</a>
-    
     <a class='category' href='/blog/categories/winjs/'>WinJS</a>
-    
 </span>
 
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2013/08/typescript-presentation-at-northern/" title="Previous Post: TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)">&laquo; TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2013/11/convert-existing-winjs-app-to-use/" title="Next Post: Convert an existing WinJS app to use TypeScript"> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -174,42 +141,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -238,7 +195,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -253,17 +209,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -276,8 +227,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -74,23 +69,16 @@
     <div id="content">
 
         <div class="blog-index">
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/tfs-bisect-manual-way-when-was-that-bug/">TFS bisect the manual way (When was that bug introduced?)</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2012-10-19T15:12:00.000Z" pubdate data-updated="true">Oct 19th 2012</time>
-
+          <time datetime="2012-10-19T15:12:00.000Z" pubdate data-updated="true">Oct 19th 2012</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 I’d like to share a powerful workflow I originally found using <a href="http://git-scm.com/" target="_blank">git</a> and its powerful git-bisect command and how I’ve leveraged the idea when using <a href="http://msdn.microsoft.com/en-us/vstudio/ff637362.aspx" target="_blank">TFS</a>.<br /><h4>What is a bisect on your source history?</h4><a href="http://www.kernel.org/pub/software/scm/git/docs/git-bisect.html" target="_blank">Git’s bisect</a> command is extremely powerful and I won’t be covering it here. However git describes its feature as a way to:<br /><blockquote>Find by binary search the change that introduced a bug</blockquote><h4>Why do I need to look through source code history to find why a bug was introduced?</h4>It’s true, that many bugs are so basic that once you hear about the bug you immediately understand where it is, why it’s broken and how to fix. In that scenario this approach is not something you need. <br />However, <strong>if you know a bug was introduced sometime in the past but are not sure when or how it was introduced</strong>, I think we could all agree that doing a binary search through the history of your code’s changes is a pretty good approach to finding the specific change-set that introduced a bug. Once you have a handle on the specific code change that was made, it becomes much easier to understand how it changed and track down the reason a bug was introduced and how to fix it.<br /><h4>High level steps/concept:</h4><ol><li>First you should have discovered a reproducible bug </li><li>Next we have to find a commit in the past where we know the bug does not exist. (Say you know that 3 weeks ago, this bug didn’t exist.) </li><li>Now, from that “good” commit we do a binary search through source history to find when the bug was first introduced. Noting at each commit its goodness/badness state and continuing with the search until we’ve found the commit when the bug was introduced. </li><li>Analyze the commit until you understand what and how the bug was introduced and fix it. </li></ol><h4>One manual approach to TFS bisect.</h4>There is not a built-in feature with TFS (that I’m aware of) and leaves us with some manual bookkeeping that we wouldn’t have to do if we were using git. <br /><blockquote>Side Note: If you’re familiar with git, I’d recommend just using <a href="https://github.com/git-tfs/git-tfs" target="_blank">git-TFS</a> or the new <a href="http://gittf.codeplex.com/" target="_blank">git-tf</a> tool and just clone your TFS repro and use git-bisect to accomplish these steps.</blockquote>Let’s assume you can find a commit in the past that you know doesn’t have the bug.<br />Load up PowerShell and <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">CD</a> into the root of your project directory. Execute a tf.exe command to pull a string output of your history into the clipboard. We’ll leverage this in our bookkeeping.<br /><blockquote><span style="background-color: white;">I’m using PowerShell and have tf.exe on my %PATH%.</span><br /><span style="background-color: white;">&gt;tf history ./* /recursive /noprompt | clip</span></blockquote>Notice the pipe to the ‘clip’ command at the end of the TF call. This places the output of one command into the clipboard. <br />Let’s say the above command places the following into our clipboard.<br />[gist id=0373efef1f0150ed7faf]<br />Take the output of the command (that is now in your clipboard) and paste it into Excel (or notepad) wherever you want to keep track of your work.<br />We know that at commit ID #13 the bug did not exist. Let’s mark it as ‘<span style="background-color: lime;">good</span>’<br /><a href="http://lh5.ggpht.com/-CvxFQzakVbw/UIFt0e8qZ2I/AAAAAAAAAZ4/RqGJBajGPe8/s1600-h/image27.png"><img alt="image" border="0" height="113" src="http://lh5.ggpht.com/-kXlKM8aP2mI/UIFt0yqg9JI/AAAAAAAAAaA/6dgGmI4QOpg/image_thumb13.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="750" /></a><br />Now we start our binary search through the different commits to find our bug.<br />Find a midway commit between this commit (#13) and the most recent commit (#79).<br />You don’t have to be all mathematical about the binary search, I tend to just eyeball the ‘middle’ and go from there. But you’re more than welcome to execute the binary search perfectly. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh3.ggpht.com/-3eas7euoVvs/UIFt2DctXqI/AAAAAAAAAaI/eKGufXLAKlU/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /><br />Now use your TFS tools to checkout this specific version. In this case we’ll checkout commit #46.<br />I tend to prefer the command line to check out the specific version as it’s easier to repeat these steps with commands and we already have the command open from earlier.<br /><blockquote>&gt;tf get ./* /recursive /force /overwrite /version:46</blockquote>Or you can use the GUI to get a specific version.<br /><a href="http://lh3.ggpht.com/-OMvvDEn3-X8/UIFt2XesHqI/AAAAAAAAAaQ/Tt_AxEmJGX0/s1600-h/image11.png"><img alt="image" border="0" height="143" src="http://lh3.ggpht.com/-qf-BMFlUVw4/UIFt3AoNTqI/AAAAAAAAAaY/NFM5bEn63ns/image_thumb5.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="253" /></a><br /><a href="http://lh5.ggpht.com/-3oweq7xMXqM/UIFt4kthkoI/AAAAAAAAAag/aNDmXsNf3gk/s1600-h/image19.png"><img alt="image" border="0" height="308" src="http://lh4.ggpht.com/-Grq1CtfWikA/UIFt47L3zpI/AAAAAAAAAao/ZXyRbh3-2Ao/image_thumb9.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="585" /></a><br />With version #46 checked out, we run our tests and find that the bug exists here. Mark it as ‘<span style="color: red;">bad</span>’ to signify the bug is here.<br /><a href="http://lh6.ggpht.com/-FzkYtFf-TGM/UIFt5ffnYdI/AAAAAAAAAaw/8Ao7cBlIPeA/s1600-h/image23.png"><img alt="image" border="0" height="74" src="http://lh5.ggpht.com/-YPe9c_3-C2c/UIFt57-Q1UI/AAAAAAAAAa4/_A64INotcRk/image_thumb11.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="777" /></a><br />Now we can continue our binary search between commit 13 and 46 until we narrow down the exact commit where the bug first shows up.<br /><a href="http://lh6.ggpht.com/-Z7QrMkL_0I4/UIFt6c3XKpI/AAAAAAAAAbA/9ibPBgIXkk8/s1600-h/image40.png"><img alt="image" border="0" height="680" src="http://lh5.ggpht.com/-wPRYPnuhc1k/UIFt69bg1aI/AAAAAAAAAbI/TcWeM26jji4/image_thumb20.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="691" /></a><br />As you can see by the numbers to the left in the screenshot above, it took us 5 checkouts to find the commit where the bug was introduced.<br />Now the rest is up to you. I tend to spend time looking at the diff and understanding why the specific commit introduces the bug. If you keep the size of your regular commits small then it tends to be pretty easy to understand why the bug was introduced and how to fix it.<br /><strong>Don’t forget to ‘get latest’ before you try to do much work so you’re not stuck with your source code way back in time.</strong><br /><h4>These steps should be automated.</h4>It’s true the bookkeeping should be done for us by a tool, and in fact I started writing a PowerShell implementation of this, but never finished and didn’t find it worth my time. The manual approach works well, and it’s not something I have to use often. However, I did find someone who’s written a tool that looks promising.<br /><blockquote><a href="http://gr3dman.name/blorg/posts/2010-12-03-tf-bisect.html">http://gr3dman.name/blorg/posts/2010-12-03-tf-bisect.html</a></blockquote><br />Happy bug hunting.</div>
@@ -98,23 +86,16 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/development-environment-mergecompare/">Development Environment Merge/Compare Tools Setup in Visual Studio/TFS</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-13T15:49:00.000Z" pubdate data-updated="true">Aug 13th 2009</time>
-
+          <time datetime="2009-08-13T15:49:00.000Z" pubdate data-updated="true">Aug 13th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I’m writing this post more as a reminder to myself when I need to setup my development environment again. In the past I have usually leveraged Google to search <a href="http://blogs.vertigo.com/personal/KeithC/Blog/">Keith Craig’s blogs</a> and pieced the information together each time. </p>  <p>In this post I will outline the details I need in the two blogs Keith wrote and how I use that information when setting up my development environment for custom diff/merge tooling with Visual Studio and Team Foundation Server. I’m giving both the<strong> text version for copy/paste</strong> and the screenshots of each so it’s clear how each is used.</p>  <h5>First you will need to install the tools listed before going into configuring the setup of the options.</h5>  <ol>   <li><a href="http://www.sourcegear.com/diffmerge/">DiffMerge</a></li>    <li><a href="http://winmerge.org/">WinMerge</a></li> </ol>  <h5>Next you need to open the TFS “Configure Tool” dialog from within Visual Studio.</h5>  <p>Go to <strong>Tools</strong> –&gt; <strong>Options</strong> –&gt; <strong>Source Control</strong> –&gt; <strong>Visual Studio Team Foundation Server</strong> –&gt; <strong>Configure User Tools</strong>.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SoQ2C9eiutI/AAAAAAAAAKQ/Hd4ciffJApM/s1600-h/image%5B7%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2DRbbXGI/AAAAAAAAAKU/hkt_Zgtmva4/image_thumb%5B4%5D.png?imgmax=800" width="569" height="372" /></a> </p>  <p>Now you’re ready to configure each tool as outlined below.</p>  <h4>Merge tool - <a href="http://www.sourcegear.com/diffmerge/">DiffMerge</a></h4>  <p>How to integrate with VS <a href="http://blogs.vertigo.com/personal/keithc/Blog/archive/2008/04/09/using-sourcegears-diffmerge-as-the-merge-tool-in-microsoft-team-system.aspx">http://blogs.vertigo.com/personal/keithc/Blog/archive/2008/04/09/using-sourcegears-diffmerge-as-the-merge-tool-in-microsoft-team-system.aspx</a></p>  <h5>My setup options for VS:</h5>  <p><strong>Extension:</strong> .*     <br /><strong>Operation:</strong> Merge     <br /><strong>Command:</strong>     <br />&#160;&#160;&#160;&#160;&#160; x64 default install path - <strong>C:\Program Files (x86)\DiffMerge\DiffMerge.exe     <br /></strong>&#160;&#160;&#160;&#160;&#160; x86 default install path - <strong>C:\Program Files\DiffMerge\DiffMerge.exe     <br /></strong><strong>Arguments:</strong> /title1=%6 /title2=%8 /title3=%7 /result=%4 %1 %3 %2     <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SoQ2EAKuGEI/AAAAAAAAAKY/n3lDnIMhyQE/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2EkV6mSI/AAAAAAAAAKc/MFNs3KfksJA/image_thumb1.png?imgmax=800" width="421" height="222" /></a>     <br /></p>  <h4>Compare tool - <a href="http://winmerge.org/">WinMerge</a></h4>  <p>How to integrate with VS <a href="http://blogs.vertigo.com/personal/keithc/Blog/archive/2007/10/31/using-winmerge-with-microsoft-team-system.aspx">http://blogs.vertigo.com/personal/keithc/Blog/archive/2007/10/31/using-winmerge-with-microsoft-team-system.aspx</a></p>  <h5>My setup options for VS:</h5>  <p><strong>Extension:</strong> .*     <br /><strong>Operation:</strong> Compare     <br /></p> <strong>Command:</strong>   <br />&#160;&#160;&#160;&#160;&#160; x64 default install path - <strong>C:\Program Files (x86)\WinMerge\WinMergeU.exe   <br /></strong>&#160;&#160;&#160;&#160;&#160; x86 default install path - <strong><strong>C:\Program Files\WinMerge\WinMergeU.exe</strong></strong>  <br /><strong>Arguments:</strong> /ub /dl %6 /dr %7 %1 %2 -e  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SoQ2EzG9UGI/AAAAAAAAAKg/Q2i8ZDO3UXU/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SoQ2FOIWfgI/AAAAAAAAAKk/xgbURIV7yBE/image_thumb3.png?imgmax=800" width="420" height="229" /></a></p>  </div>
@@ -130,23 +111,16 @@ FWIW, you can see the arguments for other tools here: http://blogs.msdn.com/jman
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-12T20:54:00.000Z" pubdate data-updated="true">Aug 12th 2009</time>
-
+          <time datetime="2009-08-12T20:54:00.000Z" pubdate data-updated="true">Aug 12th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p></p>  <h4>Lessons learned by doing Branch-Per-Feature with Team Foundation Server.</h4> <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol> <p>In this post I’ll outline several of the issues/hiccups/<em>features</em> we found while attempting to apply Branch-Per-Feature with TFS.</p>  <h4>260 Characters limit.</h4>  <p>One of the first obstacles we ran into when attempting the Branch-Per-Feature with our TFS was the 260 Characters limit (you can read more here <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx">http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx</a>).</p>  <p>The largest offenders of this were artifacts added to a project as a result of doing an “Add Service Reference”. This <em>feature</em> created file names with the entire namespace in the file path. The way we got around this was the <a href="/2009/04/t4-replacement-for-add-service">T4 replacement for &quot;Add Service Reference&quot;</a> which helped keep some of the longer file paths shorter in our Silverlight projects. However it still rears it’s ugly head when we create a new branch and give a descriptive name that’s too long.</p>  <p>Which bring me to the next hiccup we run into. </p>  <h4>Don’t RENAME a newly created branch. Delete it and re-create it with new name. </h4>  <p>After a branch was created, if we decide the name for the branch wasn not good enough (either causes file path length issues, or it’s description isn’t clear enough), <strong>DON’T RENAME THE NEW BRANCH</strong>. Instead, choose to <strong>delete and re-create it</strong>. Clearly this has to be <strong>caught before commits are made to the new branch</strong>. </p>  <h5>Why is this an issue? </h5>  <p>In TFS, when you follow the simple steps to merge a feature from a branch into the trunk, you get to a point where all the changes made in the branch are checked out and staged to be merged into the trunk in your development environment. However when (or if) you’ve applied a rename to the branch at some stage in the lifetime of the branch, you don’t get a nice pretty list of files that changed and ready to be checked in, instead you get <strong>every file in the branch </strong>as though it were changed at some point in time. Sadly, this is usually not the case, and why I said earlier to catch the problem as soon as possible. </p>  <p>One of the great benefits of the branch/merge strategy is the final merge into the trunk is typically all changes required for a particular feature. When you have to go back to grapple some <strong>source control history debugging</strong>, it’s much easier to detect large changes from branch merges than sifting through tens of check-ins per file.</p>  <p>After the feature is complete and you start the steps required to merge the feature into the trunk, typically you only see the files that have changed get checked out and ready to be merged into the trunk. However, when a rename occurs on the branch it somehow tags every item as though it were changed. <strong>So the Merge back into the trunk ends up looking like the entire project changed.</strong> This makes the source diffing extremely difficult as I described in the <strong>Tester Pass 1</strong> step in our kanban steps.</p>  <h4>Can’t easily merge between different branches or grand-child branches (or at all, didn’t push hard enough to make it)</h4>  <p>Another issue we’ve come across (which hasn’t road blocked us too bad) was the in-ability to merge between two different branches that stemmed from the same trunk or merging a grandchild branch into the grandparent (bypassing the child/parent).</p>  <p>A specific scenario we ran into was when Feature A was under development on a branch, and a developer was ready to start working on Feature B. Feature B had a dependency on some of the changes that had taken place in Feature A, however we wanted to deploy Feature A before Feature B was complete. As an experiment we thought we would just create Feature B’s branch straight from Feature A’s branch, however what this would have left us with when Feature A was merged into the Trunk was Feature B two levels away from the Trunk. </p>  <p>Although TFS allows this scenario, any changes to the trunk had to be pushed into Feature A’s branch before it could be pushed into Feature B’s branch, and come final merge time for Feature B, we couldn’t merge straight into the trunk. We would have had to first merge into Feature A’s branch and then do the final merge into the trunk. In the end we just held back the deployment of Feature A and both Feature A &amp; B were developed in Feature A’s branch.</p>  <blockquote>   <p>I read somewhere that this “could” be possible through some command line tools, however it wasn’t important enough to go through the pain and this would be much better if we could just use the existing TFS interface to accomplish this simple scenario.</p> </blockquote>  <p>&#160;</p>  <p>I’m sure there are other tips/tricks I could outline here, but either they’re not coming to mind or they’re too basic to really care about. If I think of any, I’ll update this post further.</p></div>
@@ -182,23 +156,16 @@ Either approach is fine.  You could probably do a baseless merge (with the cmd l
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
+          <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol><p>In the <a href="/2009/08/branch-per-feature-with-team-foundation_06">previous post (“How we got here”)</a> I provided a small intro into why and how my team arrived at a Branch-Per-Feature/Kanban development lifecycle.</p><p>In this post I’ll describe each stage of our current development lifecycle.</p><ol><li><strong>Triage</strong> – Initial drop point for <em><u>most</u></em> features. <ul><li>I say <em><u>most</u></em> because some head straight into other steps further along in the pipeline. </li><li><strong>Items are categorized by area or department </strong>(These map to an actual TFS Area)<br />   EX: Infrastructure, Operations, Billing, Client Services, etc… </li><li>Items are <strong>prioritized</strong>.<br />   Each department head &amp; higher gets the opportunity to prioritize within each Area. </li><li>The WIP in Triage is basically N/A. </li></ul></li><li><strong>Backlog</strong> – Items in the Backlog have been deemed important enough to begin their life in the pipeline and start being pulled through each stage. <ul><li>These items need extra <strong>research, design, and requirements gathering</strong>. </li><li>This is where items that were priority #1 in their respective Area go head to head with the #1’s in other Areas and can be further prioritized. </li><li>We try to keep the WIP in the Backlog to about 10 or less. </li></ul></li><li><strong>Queue</strong> – Items in the Queue are items that have no further design/requirements gathering needed and when a developer is ready can pull an item straight into development. <ul><li>We keep the WIP in the Queue to about 7 or less. </li></ul></li><li><strong>Development</strong> <ul><li>When the developer pulls an item from the Queue into development we <strong>create a branch in a <em>Branches</em></strong> folder and give it a name related to the feature being developed. All development for the feature is done in this branch. </li><li>In our current workflow,<strong> after the development of the feature is complete, the developer does a first pass of testing</strong>. (We have a fairly small shop, where all of the developers are testers and all of the testers are developers.) </li><li>When the developer is done testing the feature is (pushed) into Tester Pass 1. (this is part of why I stated above we have a semi-kanban &amp; not a true pull based kanban) </li><li><strong>IMPORTANT NOTE: <u>frequently forward merge from the trunk into the branch</u></strong> this helps to avoid issues later, and is a requirement before the next stage (testing). </li></ul></li><li><strong>Tester Pass 1</strong> <ul><li>A different person from the implementing developer needs to be brought up to speed as to what the feature is and the needed changes to accomplish the feature. </li><li>The tester here pounds away at the changes and gives feedback to the original developer of any issues/changes that may need to be made.<br /></li></ul><blockquote><p><strong>TFS Hint</strong>: When I become Tester 1 for a feature, one trick I use is to “pretend merge” the branch back into the trunk. I say pretend merge because I take all the normal steps to merge into the trunk up until the check-in part. I do this so I can see all the changed files easily and can diff each file with the trunk to find the exact source code changes. After a visual code review is complete I undo any changes and begin testing the branch.</p></blockquote></li><li><strong>User Acceptance</strong> – Before we merge the feature into the trunk, we do a review with the customer.  <ul><li>This allows us to get solid feedback before it gets merged into the trunk, one more testing pass, and deployed to production. This way we <strong>DON’T </strong>get feedback like <strong>“this is not what I need because it needs to do/be like…“ (after it’s been deployed)</strong> and instead get more of a <strong>“could you tweak it to be like…” which allows us to deliver what the customer actually needs</strong> and not what we interpreted the design to be. </li><li>Also since it’s not merged into the trunk, any changes requests as a result of the User Acceptance review allow us to take our time to get the change done right and not feel like we have to hurry the feature to catch the week’s deployment. We are able to correctly make the changes, and we can usually communicate to the user at the meeting what changes to the system mean, (if we change Feature A and add/remove/change how it operates it may not end up shipping in the next scheduled deployment (or next etc…)) </li></ul></li><li><strong>Merge Into Trunk</strong> - original developer is now responsible for merging the feature branch back into the trunk. <ul><li>If the changes made in the branch are more system-wide or architectural in nature, we will pair on complicated merges. </li><li>There is usually some coordination that may need to happen before a merge can be done. We don’t want to merge a new feature into the trunk when we’re creating a deployment snapshot and anything else that may determine we hold off on merging the feature. </li></ul></li><li><strong>Tester Pass 2</strong> <ul><li>After merging the new feature into the trunk is complete we have one more tester take a shot testing the newly merged features. We added this step to the kanban to help reduce potential regression bugs and help keep the quality band high before the feature was marked as done and queued for deployment. </li></ul></li><li><strong>Deployment</strong> – After all testing and user acceptance is complete the feature is moved to <strong>Deployment</strong>. <ul><li>This step is only to keep track of what is queued up for the next deployment cycle.<br /></li></ul><blockquote>When we started this new process, we attempted to <strong>deploy each feature as soon as it became available</strong>.<strong> </strong>This caused some issues, in part related to source control management and timing of pending Merges; however, <strong>the biggest issue revolved around deployment and interruption to the users</strong>. When we deployed once every 4-6 weeks with our old process, this wasn’t much of a problem for the users. However, deploying whenever a feature was ready caused some issues with our users. We settled on a<strong> weekly deployment (same day and time every week)</strong>, if there is something to be deployed it’s now on a regular schedule.<br /></blockquote><blockquote><strong>One other benefit of deploying on a regular weekly schedule is the cadence the team has adjusted to. </strong>There’s less confusion around “are we deploying today, tomorrow” etc… With deployments scheduled for a regular cadence, it’s much easier for us to create a process that is consistent, efficient and <strong>less error prone</strong>. </blockquote></li><li><strong>Completed</strong> - After the deployment is complete the task is moved to <strong>Completed</strong> and considered DONE! </li></ol><h5>Below is a screen shot of how it looks in our TFS work item view.</h5><blockquote><p>Yes, we hacked and crammed our kanban into the MSF-Agile template, and although it’s rough, it’s working better than our previous non-kanban ways.</p></blockquote><p>To move a feature though the kanban we select it in the “iteration path” drop down.<br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SnrlDlU10VI/AAAAAAAAAKI/U_1Y8ZaFvHw/s1600-h/image4.png"><img style="BORDER-RIGHT-WIDTH: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SnrlDyxXpTI/AAAAAAAAAKM/9kFKc4JMbeU/image_thumb2.png?imgmax=800" width="417" height="395" /></a></p></div>
@@ -239,23 +206,16 @@ I like this approach.  I&#39;m curious if you&#39;ve developed any reports aroun
 
 
             </article>
-            
             <article>
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
+          <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links<br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol></p><p>During one of my blog reading catch-up afternoons, I ran across Derick Bailey <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-part-1-why.aspx">Branch-Per-Feature Source Control. Part 1 Why</a>. It is a great read into the subject, covering many of problems other source control methods introduce and how the Branch-Per-Feature concept alleviates some of these issues. It is also great to see a how it can be used in relation to a Kanban style of development. I look forward to his further posts about some of the details of this process with subversion. </p>  <p>While waiting for those posts, I thought I’d write up some of the things my team and I have learned while implementing a semi-Kanban process using <a href="http://msdn.microsoft.com/en-us/teamsystem/default.aspx">Team Foundation Server (TFS)</a>.</p>  <p>We practiced a <a href="http://en.wikipedia.org/wiki/Scrum_(development)">scrum</a> like agile process for about 3 years with a fair amount of success. However, about 4 months ago we hit the end of a very long “Sprint” (6 weeks). There were at least 3 major “features” built during this sprint and we also determined that since were going to be developing several large features, we would also take the time to upgrade our database server, since we would inherently, through the development time, be able to do a little database regression testing.</p>  <p>During the retrospective for this sprint there developed a couple themes revolving around </p>  <ol>   <li>Size and number of features developed made testing in the allotted sprint time difficult to complete each feature thoroughly. </li>    <li>The features developed at the beginning of the sprint were developed and tested very thoroughly, </li>    <li>The features developed near the end of the sprint felt rushed and resulted in some choices making some choices that may not have left the code </li>    <li>Upgrading a to a new database version AND deploying all these new features threw too many things in the mix for one deployment. </li>    <li>The items developed first sat behind the development firewall for in one case over 3 weeks, when that feature could have given the business value 3 weeks prior. </li> </ol>  <p>Our transition to Kanban was somewhat sudden. I had been reading kanban as a tool for delivering software for a couple months. I thought that many of the issues we were having with scrum could be resolved with a simple Kanban process. So I brought up the idea of doing “feature driven development” during the retrospective. What came as a shock to me was the welcoming the team gave this new idea. I had been thinking about how to bring the idea up for some time, and couldn’t imagine how the team would want to make the drastic change that this new style of development would require. After talking about it for a short time during this retrospective, just about everyone on the team seemed to jump all over the idea.</p>  <p>The team decided right then that we would give it a try for a while, work out the kinks, learn from it, and see how it would go.</p>  <p>When we first created our kanban, there was a much simpler pipeline of stages than the list I will outline as our current process. Most blogs/articles basically described starting with something simple like (Backlog, Dev, Test, Deploy). So we started with those very simple steps and it has been refined for our process.</p>  <p>We continued to value the retrospective and through this constant reflection were able to very quickly fine tune our process to something that, looking back, is really suiting us well.</p>  <p>We have been using the new approach for 4 months now and haven’t looked back. Some of the original things that the team was worried about when moving to the Branch-Per-Feature have all but washed away. In particular, <strong>one of the largest concerns everyone on the team had was the overhead branching and merging would bring into the process</strong>. <strong>And while it is a little bit more overhead than just opening the solution and pounding away, it brings many more benefits to the team than we loose in branching/merging time.</strong></p>  <p>In the next part I’ll describe the kanban stages our team has ironed out and how we mix that with the Branching-Per-Feature development.</p></div>
@@ -276,11 +236,8 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 
 
             </article>
-            
             <div class="pagination">
-                
                 <a href="/blog/archives">Blog Archives</a>
-                
             </div>
         </div>
         <aside class="sidebar">
@@ -306,42 +263,32 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -370,7 +317,6 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 </section>
 
 
-
         </aside>
  
 
@@ -386,17 +332,12 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -409,8 +350,6 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 

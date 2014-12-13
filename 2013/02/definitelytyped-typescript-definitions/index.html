@@ -29,8 +29,7 @@
   <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-  
-  <script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1017448-6']);
     _gaq.push(['_trackPageview']);
@@ -47,22 +46,18 @@
 <body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-  
 </hgroup>
 
 </header>
 <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
 </ul>
-  
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:staxmanade.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
-  
 <ul class="main-navigation">
   <li><a href="/about">About</a></li>
   <li><a href="/">Blog</a></li>
@@ -75,21 +70,15 @@
 
         <div>
             <article class="hentry" role="article">
-                
-  <header>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">DefinitelyTyped TypeScript definitions now on NuGet</a></h1>
-    
     <p class="meta">
-        
-  <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
-
+          <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
 
 
         
     </p>
-    
 </header>
-
 <div class="entry-content">
 <div class='post'>
 <p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
@@ -100,41 +89,26 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                        
-  <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
-
+                          <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
 
 
                         
-
                     </p>
-                    
                     <div class="sharing">
-  
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">Tweet</a>
-  
-  
-  
 </div>
 
-                    
                     <p class="meta">
-                        
                         <a class="basic-alignment left" href="/2013/02/how-do-i-undo-bad-rebase-in-git/" title="Previous Post: How do I undo a bad rebase in Git?">&laquo; How do I undo a bad rebase in Git?</a>
-                        
-                        
                         <a class="basic-alignment right" href="/2013/03/windows-8-hackathon-good-for/" title="Next Post: Windows 8 Hackathon: Good for participants. Bad for Microsoft."> &raquo;</a>
-                        
                     </p>
                 </footer>
             </article>
-            
             <section>
                 <h1>Comments</h1>
                 <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
             </section>
-            
         </div>
 
         <aside class="sidebar">
@@ -160,42 +134,32 @@
 	</div>
 	<!--End mc_embed_signup-->
 </section>
-
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
-    
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
-    
       <li class="post">
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
-    
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
-    
   </ul>
 </section>
-
 
 <section>
   <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
@@ -224,7 +188,6 @@
 </section>
 
 
-
         </aside>
 
     </div>
@@ -239,17 +202,12 @@
       var disqus_shortname = 'developingonstaxmanade';
       
         var disqus_script = 'count.js';
-      
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
-
-
-
 
 
 
@@ -262,8 +220,6 @@
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
 
 
 
