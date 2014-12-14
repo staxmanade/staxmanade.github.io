@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/silverlight-unity-moq-backed-automocker/">Silverlight Unity &amp; Moq backed AutoMocker</a></h1>
+    <p class="meta">
+          <time datetime="2009-06-19T15:06:00.000Z" pubdate data-updated="true">Jun 19th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I’ve pushed the <a href="http://code.google.com/p/moq-contrib/source/detail?r=22">Silverlight Unity/Moq AutoMocker</a> into the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>  <p>Well the other day I need the automocker and ended up running into a bug that was in my old-old-old pre-release version of <a href="http://code.google.com/p/moq-contrib/">moq for Silverlight</a>, so I took the time to get the released version and re-compile the automocker.</p>  <p>I published it to the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project. Haven’t taken the time to create a binary release, but should be able to get latest build, execute the build.Silverlight.cmd and in the drops\Current-Silverlight should be Moq.Contrib.UnityAutoMocker.Silverlight.dll</p>  <p>Enjoy!</p>  </div>
+</div>
+
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/05/statlight-v05-released/">StatLight – V0.5 released!</a></h1>
     <p class="meta">
           <time datetime="2009-05-12T05:28:00.000Z" pubdate data-updated="true">May 11th 2009</time>
@@ -318,36 +335,6 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/xunit-light-for-silverlight/">xUnit (Light) for Silverlight</a></h1>
-    <p class="meta">
-          <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>If you've been doing any Silverlight development, I'm sure you're aware of the <a href="http://code.msdn.microsoft.com/silverlightut">Microsoft Silverlight Unit Test Framework</a>.</p>  <p>One extremely interesting aspect about this framework is how flexible it is for custom extension. If you didn't already know, Jeff Wilcox put together a quick port of NUnit and created a project that would interface the nunit.framework.dll he ported with the Microsoft Silverlight Unit Test Framework. (<a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/" target="_blank">post here</a>)</p>  <p><strong>Below I'll explain a little about my port of the xUnit testing framework that is now hosted in the browser leveraging the </strong><a href="http://code.msdn.microsoft.com/silverlightut"><strong>Microsoft Silverlight Unit Test Framework</strong></a><strong>. </strong></p>  <p>As far as WHAT is implemented with the xUnit for Silverlight and what you may have to figure out on your own (as I'm not all that familiar with xUnit) if you use it for your own project...</p>  <ol>   <li>FactAttribute ( obviously ) </li>    <li>FactAttribute.Skip ( [Ignore] in most frameworks ) </li>    <li>FactAttribute.Name (is mapped to the &quot;Description&quot; in the ms test harness) </li> </ol>  <p>That's pretty much it... It doesn't do anything as far as test Setup/Teardown as Moq (the project I needed xUnit in Silverlight for) didn't need it, and because I'm not familiar enough with xUnit to really make this thing fully compatible.</p>  <p>So, here is XunitLight for Silverlight...    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/XunitLight.Silverlight.zip" frameborder="0" scrolling="no"></iframe></p>  <p><strong>UPDATE: (2/9/2009)</strong> If you'd like to provide any updates to this project. You can get the source from below and I'm happy to take a look at patches...    <br /><a href="http://svn.xp-dev.com/svn/staxmanade_projects/XunitLight.Silverlight/">http://svn.xp-dev.com/svn/staxmanade_projects/XunitLight.Silverlight/</a></p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Hey Jonathan,<br /><br />Personally I'd like to see it built straight into xUnit, since it's dependent on the xUnit source files. There's a work-item to support silverlight on the xunit site, and a link to my blog, so hopefully someone over on xUnit team will get a kick and look a porting it for everyone...<br /><br />Also, I don't use xUnit personally, and only wrote this quickly to get the tests to work while trying to port the Moq project.<br /><br />However if you or someone else gets it up and running w/ either xunit or xunit-contrib, I'll surely remove my svn version.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jonathan Harley</div>
-<div class='content'>
-Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just missed you doing that already?</div>
-</div>
-</div>
-</div>
-
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -382,6 +369,9 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
+      </li>
+      <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
       <li class="post">
@@ -398,9 +388,6 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
       </li>
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
-      </li>
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
   </ul>
 </section>

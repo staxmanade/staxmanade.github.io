@@ -46,6 +46,14 @@ app.controller('MainCtrl', function($scope, $http) {
         .success(function(data, status, headers) {
           var meta = data.meta;
 
+          // poor-man's detection of server error
+          if(data.data.message) {
+            $scope.showError = true;
+            $scope.error = $scope.error || {};
+            $scope.error.message = data.data.message;
+            return;
+          }
+
           data.data.forEach(function(item){
             allData.push(item);
           });

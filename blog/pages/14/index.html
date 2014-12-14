@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</a></h1>
+    <p class="meta">
+          <time datetime="2008-12-19T04:33:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs was <a href="http://windowslivewriter.spaces.live.com/" target="_blank">Windows Live Writer</a>. </p>  <p>I'm sold... This program handles just about everything I could need for blogging (I'm new to it, so haven't pushed it's limitations to far).</p>  <p>One problem I had with Live Writer was it saved all my drafts/posts on the computer I was logged into at the time. This meant the drafts I write at home can't be accessed at work and visa/versa...</p>  <p>To solve this I decided to wire them through the <a href="http://mesh.com" target="_blank">Microsoft Mesh</a>. If you haven't setup your mesh yet, I would highly recommend it. Just go to <a href="http://mesh.com" target="_blank">Mesh.com</a>, sign up/or in with a Windows Live account, install the client application, and your <strong>meshified</strong>...</p>  <blockquote>   <p>With Live Mesh, you can synchronize files with all of your devices, so you always have the latest versions handy. Access your files from any device or from the web, easily share them with others, and get notified whenever someone changes a file.</p> </blockquote>  <p>This means I can synchronize folders between my connected computers.</p>  <h4>Below I'll show the steps I used to setup my meshified weblog posts. </h4>  <ol>   <li>Find the location your Live Writer is storing your drafts/posts.      <br />      <br />For my Windows XP machine it was in...       <br /><em>C:\Documents and Settings\JasonJ\My Documents\My Weblog Posts\</em>       <br />      <br />For my work Vista pc the folder was in...       <br /><em>C:\Users\JasonJ\Documents\My Weblog Posts\ </em>      <br /></li>    <li>Next I created a folder in my mesh called &quot;BlogDrafts&quot;.      <br />      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskAwaA5eI/AAAAAAAAADg/8Q7CFRAD8Eo/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="251" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskBgLf4RI/AAAAAAAAADk/PZqLvbz2NgQ/image_thumb1.png?imgmax=800" width="371" border="0" /></a> To do this you can right click in the mesh folder area and select &quot;Create folder in Live Mesh&quot;.<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUskCKk4VWI/AAAAAAAAADo/irg_OvuZjnU/s1600-h/image7.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="176" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskCoUxmFI/AAAAAAAAADs/JZV3udqjb4A/image_thumb3.png?imgmax=800" width="347" border="0" /></a> </li>    <li>A window will popup asking for the name of the new folder and the location this folder will live on your hard drive.      <br />      <br /><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskC_C6DeI/AAAAAAAAADw/s6bfcg4WOls/s1600-h/image14.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="123" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUskDkjoclI/AAAAAAAAAD0/Ty6ZI-bJJAo/image_thumb8.png?imgmax=800" width="244" border="0" /></a>&#160; </li> </ol>  <p>I think that's everything... follow similar steps to get your other computers synced up to the mesh and you should be relieved that you can work on any computer and on any post.</p>  </div>
+</div>
+
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i-can-stand-mass-mailings-especially/">I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</a></h1>
     <p class="meta">
           <time datetime="2008-12-18T16:50:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
@@ -379,56 +396,6 @@ That is exactly what it is for, so you can use reserved words for variable names
 
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/wcf-service-proxy-inside-silverlight/">WCF Service Proxy inside Silverlight with a generic type</a></h1>
-    <p class="meta">
-          <time datetime="2008-09-14T01:32:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...<br /><br />On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.<br /><br />public interface IValidatedResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br />Now if you had a method that exposed this generic result object through your web service...<br /><br /><br />public ValidatedResult&lt;long&gt; StringLength(string param1)<br />{<br />    return new ValidatedResult&lt;long&gt;(param1.Length);<br />}<br /><br /><br />Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...<br /><br /><br />public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged<br />{<br /><br />    private long ResultField;<br /><br />    private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public long Result<br />    {<br />        get<br />        {<br />            return this.ResultField;<br />        }<br />        set<br />        {<br />            if ((this.ResultField.Equals(value) != true))<br />            {<br />                this.ResultField = value;<br />                this.RaisePropertyChanged("Result");<br />            }<br />        }<br />    }<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues<br />    {<br />        get<br />        {<br />            return this.ValidationIssuesField;<br />        }<br />        set<br />        {<br />            if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))<br />            {<br />                this.ValidationIssuesField = value;<br />                this.RaisePropertyChanged("ValidationIssues");<br />            }<br />        }<br />    }<br /><br />    // stripped out the INotifyPropertyChanged goo<br />}<br /><br /><br />Notice the non generic type ValidatedResultOflong  that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...<br /><br />Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.<br /><br />Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a "Result" and a "ValidationIssues" property and another partial class in a different location that declares it implements an interface which defines that "Result" and "ValidationIssues" property... and would that compile?<br /><br />So I wrote my first test...<br /><br />Here is our auto generated partial class simulated...<br /><br />public partial class Foo<br />{<br />    public bool Result { get; set; }<br />}<br /><br /><br />I then wrote a generic result of T to define the object has a Result property.<br /><br />public interface IResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />}<br /><br /><br />And now the specific implementation with a long Result type.<br /><br />public partial class Foo : IResult&lt;long&gt; {}<br /><br /><br />After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...<br /><br />I defined the validated result contract as follows...<br />public interface IResultProperty&lt;T&gt;<br />{<br />    T Result { get; }<br />}<br /><br />public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;<br />{<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br /><br />This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.<br /><br />Here's an example of the partial class for the ValidatedResultOflong <br /><br />public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }<br /><br />With that in place, this meant I could create some generic handling methods for all of my objects that now implement IValidatedResult&lt;T&gt;...<br /><br /><br />public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)<br />    where T : IValidatedResult&lt;T&gt;<br />{<br />    if (validatedResult != null &amp;&amp;<br />        validatedResult.ValidationIssues != null &amp;&amp;<br />        validatedResult.ValidationIssues.Count > 0)<br />        return true;<br />    else<br />        return false;<br />}<br /><br /><br />Don't know if i've very heard anyone talk about one partial class containg some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...<br /><script type="text/javascript"><br />var pageTracker = _gat._getTracker("UA-1017448-3");<br />pageTracker._trackPageview();<br /></script></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Interesting observation. Thanks for sharing.<BR/><BR/>I haven't pushed it very far (bool, string, MyCustomObject, etc)</div>
-</div>
-<div class='comment'>
-<div class='author'>Boris Modylevsky</div>
-<div class='content'>
-Thanks for the post. It's really exciting to receive a proxy of Generic class. It really works smoothly with "simple" classes. But more complex ones result with random names in Silverlight proxy. For example, my <I>SimpleTree&lt;Item&gt;</I> became <I>SimpleTreeNodeOfItemErNMAaNV</I></div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Ok, I quickly threw an example together. I didn't comment much, but the code's there and "works on my box..." <BR/><BR/>Let me know if you have any troubles either understanding it, or getting it working. <BR/><BR/>I've never used this file host service, but giving it a try... I've placed the project here <A HREF="http://www.filesavr.com/validatedresultsample" REL="nofollow"> http://www.filesavr.com/validatedresultsample</A><BR/><BR/>Also the only concepts to really look at here are the ValidatedResult&lt;T&gt; and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.<BR/><BR/>Good luck!</div>
-</div>
-<div class='comment'>
-<div class='author'>greg</div>
-<div class='content'>
-... very much appreciated!!</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Greg, <BR/><BR/>I will try to put together an example and post it here soon.</div>
-</div>
-<div class='comment'>
-<div class='author'>greg</div>
-<div class='content'>
-... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.<BR/>Thanks in advance.</div>
-</div>
-</div>
-</div>
-
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/15/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -463,6 +430,9 @@ Greg, <BR/><BR/>I will try to put together an example and post it here soon.</di
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
+      </li>
+      <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
       <li class="post">
@@ -479,9 +449,6 @@ Greg, <BR/><BR/>I will try to put together an example and post it here soon.</di
       </li>
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
-      </li>
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain</a>
       </li>
   </ul>
 </section>
