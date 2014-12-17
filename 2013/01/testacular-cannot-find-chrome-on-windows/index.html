@@ -7,7 +7,7 @@
   <title>Testacular cannot find Chrome on windows. - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="I recently started playing with AngularJS. After downloading the seed project and trying to run the tests with Testacular, I bumped into small issue t...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

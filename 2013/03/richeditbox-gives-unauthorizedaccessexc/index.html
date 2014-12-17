@@ -7,7 +7,7 @@
   <title>RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called. - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="While working on a little WinRT app I recently spent WAY too much time trying to figure out why I was getting the following exception     System.Unaut...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

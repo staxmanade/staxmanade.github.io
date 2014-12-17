@@ -7,7 +7,7 @@
   <title>WCF - Silverlight - Default constructor not called?? - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does n...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
 </div>
-
 
                 <footer>
                     <p class="meta">

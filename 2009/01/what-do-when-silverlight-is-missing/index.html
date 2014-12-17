@@ -7,7 +7,7 @@
   <title>What do when Silverlight is missing some Base Class Library (BCL) functionality? - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="If you&#x27;re doing any Silverlight development you&#x27;ve probably run into the problem &amp;quot;some method/property/functionality I&#x27;m used to using doesn&#x27;t ex...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

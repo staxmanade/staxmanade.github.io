@@ -7,7 +7,7 @@
   <title>Authentication error connecting to Git on TFS - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward  Problem  I struggled getting the git command line t...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

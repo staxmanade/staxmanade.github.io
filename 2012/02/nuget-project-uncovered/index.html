@@ -7,7 +7,7 @@
   <title>NuGet Project Uncovered: TranslatorService.Speech - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   TranslatorService.Spe...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/TranslatorService.Speech" target="_blank">TranslatorService.Speech</a> is a small little wrapper around the Bing text to speech API. You will need to get a Bing api key to leverage this.</p>  <p>Below is a sample usage of the library.</p>  <blockquote>   <pre>SpeechSynthesizer speech = new SpeechSynthesizer(APP_ID);   </pre><br /><br />  <pre>// To obtain a Bing Application ID, go to http://msdn.microsoft.com/en-us/library/ff512420.aspx  <br /> <br />string text = &quot;Have a nice day!&quot;; <br />string language = &quot;en&quot;; <br /> <br />using (Stream stream = speech.GetSpeakStream(text, language)) <br />{     <br />    using (SoundPlayer player = new SoundPlayer(stream)) <br />        player.PlaySync(); <br />}</pre><br /></blockquote><br /><br /><p>I threw that into a quick test and was quite impress with how fast it worked.</p><br /><br /><p>Unfortunately I tried to translate a larger “paragraph” or so of text and saw.</p><br /><br /><blockquote><br />  <p>System.Net.WebException : The remote server returned an error: (400) Bad Request. </p><br /><br />  <p>at System.Net.HttpWebRequest.GetResponse() <br />    <br />at TranslatorService.Speech.SpeechSynthesizer.GetSpeakStream(String text, String language) <br /><br />    <br />at NuGetTestProject.Sample.SampleTest() in <a href="projectfile:8A4BCF1F-3D9C-404F-AEC9-AB7DC9F7BFE9%2Ff%3AClass1.cs%3F14%3F1">Class1.cs: line 14</a></p><br /></blockquote><br /><br /><p>I didn’t take the time to diagnose why, whether it’s a Bing problem or this library.</p><br /><br /><p>Some other observations:</p><br /><br /><ul><br />  <li>+ It supports some Async methods as well </li><br /><br />  <li>- The Async methods don’t support the standard APM so I couldn’t easily wrap a task around. (I know there are some ways to make it work, but it’s not out of the box easy…) </li><br /></ul>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

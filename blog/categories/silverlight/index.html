@@ -7,7 +7,7 @@
   <title>Category: Silverlight - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="">
   
 
@@ -102,7 +102,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -118,7 +117,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 <div class='post'>
 <p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
 </div>
-
 
             </article>
             <article>
@@ -136,7 +134,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 <p><a href="http://www.statlight.net"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SsyYPDL-d7I/AAAAAAAAAME/hSwnRB1lDcw/image%5B6%5D.png?imgmax=800" width="244" height="79" /></a> </p>  <h4>A new version of the StatLight tool has been released.</h4>  <h4>Download: <a href="http://www.statlight.net">http://www.statlight.net</a></h4>  <h3>Major Feature Updates:</h3>  <ul>   <li>Support for 64bit </li>    <li>Back support for previous Microsoft.Testing.Silverlight assemblies      <ul>       <li>By giving the tool a specific -v=[December2008 | March2009 | July2009], StatLight can now run the asynchronous tests supported by the Microsoft Testing library. </li>     </ul>   </li>    <li>Xml report output.      <ul>       <li>By giving the tool the -r=&lt;FilePath.xml&gt;. StatLight will write out an xml report of the test run. </li>     </ul>   </li>    <li>Update to the Silverlight 3.0 Runtime – Should be compatible with Silverlight 2.0 assemblies. </li> </ul>  <h4>Minor Updates: </h4>  <ul>   <li>Support for auto-closing modal Silverlight MessageBox dialogs. </li>    <li>Update feedback to the end user for when access to run statlight web service is not allowed (Added better feedback on how to get it up and running). </li>    <li>Added a timeout monitor to detect when the StatLight browser has not communicated with the StatLight server within a reasonable amount of time. StatLight will stop running if communication (a test message) has not arrived within 5 minutes. (Will look into making this configurable) </li> </ul>  <h5>Also to note:</h5>  <ul>   <li>I’ve setup a user voice account where you can suggest or vote on future features.      <br /><a title="http://statlight.uservoice.com" href="http://statlight.uservoice.com">http://statlight.uservoice.com</a> </li> </ul>  </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -153,7 +150,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 <p>I’ve pushed the <a href="http://code.google.com/p/moq-contrib/source/detail?r=22">Silverlight Unity/Moq AutoMocker</a> into the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>  <p>Well the other day I need the automocker and ended up running into a bug that was in my old-old-old pre-release version of <a href="http://code.google.com/p/moq-contrib/">moq for Silverlight</a>, so I took the time to get the released version and re-compile the automocker.</p>  <p>I published it to the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project. Haven’t taken the time to create a binary release, but should be able to get latest build, execute the build.Silverlight.cmd and in the drops\Current-Silverlight should be Moq.Contrib.UnityAutoMocker.Silverlight.dll</p>  <p>Enjoy!</p>  </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -169,7 +165,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 <div class='post'>
 <p>A new version of <a href="http://statlight.net/" target="_blank">StatLight</a> has been released!</p>  <h4>Major Features Added:</h4>  <ul>   <li>NUnit support      <ul>       <li>Will work with any version of NUnit compiled to run under <a href="http://silverlight.com/" target="_blank">silverlight</a>.           <ul>           <li>EX: <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/" target="_blank">Jeff Wilcox’s</a> port </li>         </ul>       </li>     </ul>   </li>    <li>Further MSTest support </li>    <ul>     <li>In the previous version (0.4) you could only use <a href="http://statlight.net/" target="_blank">StatLight</a> with the <a href="http://silverlight.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=20430" target="_blank">March 2009</a> build of Microsoft.Silverlight.Testing.dll. <strong>It will now work with any version.</strong>         <br />(<strong>Update</strong>: the Silverlight Asynchronous testing style is not currently supported)</li>   </ul> </ul>  <h4>Minor Tweaks:</h4>  <ul>   <li>The debug.assertion creates a failure test event      <ul>       <li>It used to write a message to the console. It will now create a failure event, similar to a test that fails. </li>     </ul>   </li>    <li>Support for [Ignore]’d tests for each supported framework (MSTest, NUnit, Xunit) </li> </ul>  <h5>Soon to come:</h5>  <ul>   <li>Xml report file export </li>    <li>Basic <a href="http://confluence.public.thoughtworks.org/display/CCNET/Welcome+to+CruiseControl.NET" target="_blank">Cruise Control .net</a> support </li> </ul>  </div>
 </div>
-
 
             </article>
             <article>
@@ -244,7 +239,6 @@ This is very useful. I was trying to figure out whether or not use Add Service R
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -260,7 +254,6 @@ This is very useful. I was trying to figure out whether or not use Add Service R
 <div class='post'>
 <p>&#160;</p>  <p>What is it?</p>  <p>StatLight is your first class TDD/BDD/(Insert your testing style here) tool for Silverlight. Its main focus is developer productivity.</p>  <p>(The website is young, however the tool is ready to go… <a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a>)</p>  <p>In the realm of Silverlight, the tooling support has not had the chance to catch up to what you might have come to expect from normal .net development. When developing Silverlight applications using a test driven style, with the current tooling, it can become a little more tedious than one might like. </p>  <p>A number of testing methodologies have sprung up to enable some sort of testing for Silverlight developers; however, few actually run the tests in the browser.</p>  <p>Below is a short list of features StatLight currently has.</p>  <h4>Features:</h4>  <ol>   <li>In browser runner to test how your code will “actually” run in the wild. </li>    <li>TeamCity Continuous Integration support </li>    <li>Smooth Console Runner      <ol>       <li>One time runner (screenshot below)<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sdtexix3VSI/AAAAAAAAAFw/tj48fdwRad8/s1600-h/image8.png">           <br /><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; margin-left: 0px; border-left-width: 0px; margin-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SdteyAUbPZI/AAAAAAAAAF0/23thaH-98lI/image_thumb6.png?imgmax=800" width="521" height="292" /></a> </li>        <li>Continuous Integration runner          <ol>           <li>This runner will startup and watches for any re-builds of your text xap file. Every time you re-build it will pick up the new test xap and immediately start running the tests. </li>            <li>This feature gives the most as far as developer productivity. </li>            <li>I will put out a video to show how best to use it soon… </li>         </ol>       </li>     </ol>   </li>    <li>Tag/Filtering support (to narrow down the tests run at a given time) </li>    <li>XUnit support leveraging <a href="/2009/02/xunit-light-for-silverlight">XUnit (Light)</a> </li>    <li>MSTest support. (March 09 build) </li> </ol>  <h4>On the way:</h4>  <ol>   <li>Better Documentation and how to/help videos </li>    <li>NUnit support leveraging <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">Jeff Wilcox’s NUnit</a> port </li>    <li>CruiseControl.net support </li>    <li>MSBuild </li> </ol>  <p><a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a></p>  </div>
 </div>
-
 
             </article>
             <article>
@@ -295,7 +288,6 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 </div>
 </div>
 </div>
-
 
             </article>
             <article>
@@ -346,7 +338,6 @@ I would really like an Automocker for the *WPF* side of things.</div>
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -375,7 +366,6 @@ In a nutshell, what's the trick to mocking with the given security constraints (
 </div>
 </div>
 </div>
-
 
             </article>
             <article>
@@ -406,7 +396,6 @@ This is very good news. Thanks for the work.</div>
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -422,7 +411,6 @@ This is very good news. Thanks for the work.</div>
 <div class='post'>
 <p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
 </div>
-
 
             </article>
             <article>
@@ -453,7 +441,6 @@ For the Frequency property's implementation, you probably just need to return th
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -470,7 +457,6 @@ For the Frequency property's implementation, you probably just need to return th
 <p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -486,7 +472,6 @@ For the Frequency property's implementation, you probably just need to return th
 <div class='post'>
 <p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
 </div>
-
 
             </article>
             <article>
@@ -537,7 +522,6 @@ Greg, <BR/><BR/>I will try to put together an example and post it here soon.</di
 </div>
 </div>
 
-
             </article>
             <article>
                   <header>
@@ -566,7 +550,6 @@ Thanks for the patch, I applied it today.</div>
 </div>
 </div>
 </div>
-
 
             </article>
             <div class="pagination">

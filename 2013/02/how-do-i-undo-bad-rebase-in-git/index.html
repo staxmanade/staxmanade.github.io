@@ -7,7 +7,7 @@
   <title>How do I undo a bad rebase in Git? - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="If you use git and leverage the rebase command, you&#x27;ve probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish ...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>If you use <a href="http://git-scm.com/">git</a> and leverage the <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> command, you've probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish I had a ‘do-over’.</p>  <p>If you’re still in the middle of a rebase it's easy to start over:</p>  <blockquote>   <p>git rebase --abort</p> </blockquote>  <p>But let's say you started with this:</p>  <p><a href="http://lh6.ggpht.com/-S4iRqI3gJ9A/USl-FkXa8GI/AAAAAAAAAcw/DIiCekbZNNc/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-VUhs8KUeoYw/USl-GO4JjUI/AAAAAAAAAc4/ZIW6B8i84Jk/image_thumb1.png?imgmax=800" width="227" height="149" /></a></p>  <p>Did a git rebase and are now looking at:</p>  <p><a href="http://lh6.ggpht.com/-wKnvAJZeBE8/USl-GZw_02I/AAAAAAAAAdA/Rjrc0ACrf3A/s1600-h/image7.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-Vm2Z6nDv_ow/USl-Gh_VygI/AAAAAAAAAdI/4JeII5vjceE/image_thumb3.png?imgmax=800" width="244" height="126" /></a></p>  <p>Except you screwed up during a merge conflict and now un-sure how you can get your ‘do-over’.</p>  <p>&#160;</p>  <p>I was pleasantly surprised at how easy it was. (If you know key)</p>  <p>Leveraging the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html">git reflog</a>, you can go back in time and check out your branch as though the rebase never happened.</p>  <p>In the following link, I put together a set of steps to create a git repo that puts you into this position (of a bad rebase) and then describes how to get out of it.</p>  <p><a href="https://github.com/staxmanade/GitRebaseReflogFixSample">https://github.com/staxmanade/GitRebaseReflogFixSample</a></p>  <p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>  <p>Happy Git'ing!</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

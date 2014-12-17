@@ -7,7 +7,7 @@
   <title>Developing on Staxmanade - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
   
 
@@ -148,7 +148,6 @@
 </blockquote>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -231,7 +230,6 @@
 </code></pre>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -292,7 +290,6 @@
 <p>Now I can use the power of git to manage my website and blog and I can leverage whatever development tools I would like depending on the platform. If you are new to Octopress it is helpful to study the documentation and structure of the files within your cloned repository. The first thing to note is that you have two branches in the repository: the source branch contains the Ruby scripts and utilities you will use to generate your blog content. The master branch is where your published content will live. The second thing to note is that while you can do the git integrations yourself for deploying the blog, it is best to stick to the RAKE task for deploying your content. This will automate copying your content to the _deploy subdirectory and pushing the update to the master branch. </p>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -344,7 +341,6 @@
 </div></p>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -361,7 +357,6 @@
 <p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p> <p>I&#8217;m new enough to iOS development that solutions don&#8217;t yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p> <p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p> <p>If you need something like this, I&#8217;ve pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it&#8217;ll give you enough hints to get started on your own implementation.</p> <p>I&#8217;m open to feedback. Post any suggestions/alternative ideas to the github repo.</p> <h1>Where do I get it?</h1> <h2><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2> <p>Hope you find this useful.</p></div>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -377,7 +372,6 @@
 <div class='post'>
 <p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
 </div>
-
 
     </article>
     <article>
@@ -413,7 +407,6 @@
 <p>K, THX bye!</p>
 <p>Happy Coding!</p>
 </div>
-
 
     </article>
     <article>
@@ -477,7 +470,6 @@ System.Exception: Hello Exception!
    <ul>Enjoy!</ul>
 </div></div>
 
-
     </article>
     <article>
         <header>
@@ -494,7 +486,6 @@ System.Exception: Hello Exception!
 <p>Have you ever arrived at work and sat down, not exactly sure what you were working on the day before? You spend some time going through emails. Start looking at your codebase, maybe the last couple commits you made trying to get back into the mental groove you were in the day before.</p>  <p>There is a <a href="http://lmgtfy.com/?q=get+back+into+programming+after+interruption" target="_blank">lot of information</a> about how long it takes to get back into the programming zone. <strong>If you leave yourself a breadcrumb or two, it is much easier to get started when you come back to your task.</strong></p>  <h3>Some of my favorite breadcrumbs.</h3>  <h4>Leave a failing unit test.</h4>  <p>If you practice any sort of test driven development, leaving a failing test to pick up the next day can be one of the most useful methods to get going again when you come back to the problem. If you’ve spent the time to think through the problem enough to write a failing unit test, this can help to ease you into the task at hand and get rolling the next day. </p>  <h4>Explicitly leave a note or compiler error in the code.</h4>  <p>Now, it’s probably common to check your working code in at the end of the day, but sometimes you just can’t work it to completion. That’s ok, and if you use a tool that supports something like this, leave yourself a breadcrumb of one or more compiler errors.</p>  <p>If I’m writing some C# I sometimes use the <a href="http://msdn.microsoft.com/en-us/library/vstudio/x5hedts0.aspx" target="_blank">#error precompiler</a> directive with a helpful message.</p>  <p><a href="http://lh4.ggpht.com/-3BSP6C9ismg/UqFnBqT43GI/AAAAAAAAAiI/BvwY-gpVO-o/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh6.ggpht.com/-XgX7jyzCT_c/UqFnCTtDw7I/AAAAAAAAAiQ/o5EgtBxl_vA/image_thumb1.png?imgmax=800" width="531" height="177" /></a></p>  <p>This allows me to come in the next day. Hit build on the project and immediately see where I was in the codebase last and need to pick up again.</p>  <h4>Other, less specific, but useful options:</h4>  <ul>   <li>Send yourself an email describing what you’re working on and what still needs to be done. </li>    <li>Write in your favorite notes app. I like to use OneNote to keep track of my ‘scrum notes’ which help me describe what I did today and what I plan on doing tomorrow. </li>    <li>Sticky note? (can’t say I’ve used a pen/paper in a while – but if it works for you go for it)</li> </ul>  <p>It doesn’t have to be anything special, just a little note to yourself that can help you get a jump start on your next task at hand.</p>  <p>What other methods do you use to get back into the problem at hand?</p>  </div>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -510,7 +501,6 @@ System.Exception: Hello Exception!
 <div class='post'>
 <p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8" target="_blank">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD" target="_blank">ToTypeScriptD</a> github organization that walks through converting a new Windows 8 WinJS application to TypeScript.</p>  <p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>  <p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>  <p>Happy Scripting!</p>  </div>
 </div>
-
 
     </article>
   <div class="pagination">

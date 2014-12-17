@@ -7,7 +7,7 @@
   <title>NuGet Project Uncovered: FastMember - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   FastMember would be s...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FastMember" target="_blank">FastMember</a> would be something you pull in if you’re trying to do reflection to read properties of your objects, but starting to notice some performance issues. This project will emit some IL at runtime that can read your properties much faster than good old reflection (like below)</p>  <blockquote>   <p><font style="background-color: #ffffff">var value = typeof(MyObject).GetProperty(“MyProp”).GetValue(myObjInstance, new object[0]);</font></p> </blockquote>  <p>Replace the above with.</p>  <blockquote>   <pre>var accessor = TypeAccessor.Create(typeof(MyObject)); <br />var value = accessor[obj, “MyProp”];<br /></pre><br /></blockquote><br /><br /><p>This project lets you either read or assign values to properties. (See my test below)</p><br /><br /><p><a href="http://lh5.ggpht.com/-c07wZnNp_JQ/Tx-LBUyYFVI/AAAAAAAAAVg/hiErRW7eAqw/s1600-h/image_thumb1_thumb%25255B2%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image_thumb1_thumb" border="0" alt="image_thumb1_thumb" src="http://lh5.ggpht.com/-O9Oa3Z61lfc/Tx-LBzkyDtI/AAAAAAAAAVo/NtmF_YwKEfk/image_thumb1_thumb_thumb.png?imgmax=800" width="466" height="343" /></a></p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

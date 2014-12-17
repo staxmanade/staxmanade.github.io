@@ -7,7 +7,7 @@
   <title>NuGet Project Uncovered: NaturalSpec - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   NaturalSpec is a BDD ...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NaturalSpec" target="_blank">NaturalSpec</a> is a BDD framework written in F#. This one is interesting due to F#’s concise nature and can give you very readable tests/specs.</p>  <p>The below sample was pulled from the <a href="https://github.com/forki/NaturalSpec" target="_blank">github readme</a>.</p>  <blockquote>   <pre>[&lt;Scenario&gt;]<br />let ``When removing an element from a list it should not contain the element``() =<br />  Given [1;2;3;4;5]                 // &quot;Arrange&quot; test context<br />    |&gt; When removing 3              // &quot;Act&quot;<br />    |&gt; It shouldn't contain 3       // &quot;Assert&quot;<br />    |&gt; It should contain 4          // another assertion<br />    |&gt; It should have (length 4)    // Assertion for length<br />    |&gt; It shouldn't have duplicates // Tests if the context contains duplicates<br />    |&gt; Verify                       // Verify scenario</pre><br /></blockquote><br /><br /><p>It says you don’t have to learn F# to use it. Which I’d argue you may not have to learn F# as deep as you might to be able to code a production product in it, but you will definitely benefit from learning some as you go. You will also spend a bit of time learning the DSL that this project has created.</p><br /><br /><p>Regardless, this project has enough interest factor for me to play around with someday.</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

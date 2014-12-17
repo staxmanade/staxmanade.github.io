@@ -7,7 +7,7 @@
   <title>DefinitelyTyped TypeScript definitions now on NuGet - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="I recently started playing with TypeScript on an asp.net MVC web application.  We&#x27;re leveraging some third party js libraries and found the type defin...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

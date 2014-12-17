@@ -7,7 +7,7 @@
   <title>PowerShell url checker (Check if a list of url’s is valid) - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this ...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">

@@ -7,7 +7,7 @@
   <title>Developing on Staxmanade - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
   
 
@@ -117,7 +117,6 @@ Greg, <BR/><BR/>I will try to put together an example and post it here soon.</di
 </div>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -147,7 +146,6 @@ Thanks for the patch, I applied it today.</div>
 </div>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -164,7 +162,6 @@ Thanks for the patch, I applied it today.</div>
 If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
 </div>
 
-
     </article>
     <article>
         <header>
@@ -180,7 +177,6 @@ If you have a class that needs to expose some value (either by a Property, or a 
 <div class='post'>
 When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
 </div>
-
 
     </article>
     <article>
@@ -210,7 +206,6 @@ Lambda, not lamda. ;)</div>
 </div>
 </div>
 </div>
-
 
     </article>
   <div class="pagination">

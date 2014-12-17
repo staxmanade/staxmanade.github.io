@@ -7,7 +7,7 @@
   <title>Don’t forget what’s happening behind the syntactic sugar. (C# events) - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
-  
+
    <meta name="description" content="In a comment posted by Lashas to the i4o project over at Codeplex (comment here), he suggested a great performance improvement where instead of assign...">
   
 
@@ -83,7 +83,6 @@
 <div class='post'>
 <p>In a comment posted by Lashas to the i4o project over at Codeplex (<a href="http://i4o.codeplex.com/WorkItem/View.aspx?WorkItemId=13114">comment here</a>), he suggested a great performance improvement where instead of assigning an event’s handler directly to a handler method callback, we assign it to a field containing the handler. Initially I was skeptical of his change until I profiled it for myself. And after thinking about it for a second it made total sense.</p>  <p>The original implementation of adding an event handler to the property we used the C# syntax as follows.</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>where “IndexableCollection_PropertyChanged” is a method defined as </p>  <blockquote>   <p>private void IndexableCollection_PropertyChanged(object sender, PropertyChangedEventArgs e)      <br />{…} </p> </blockquote>  <p>Lashas’s suggested performance improvement was to initialize a private field, assign it to the IndexableCollection_PropertyChanged and add/remove the property changed handler from the field instead of the example outlined above.</p>  <p><strong>Field definitaion:</strong></p>  <blockquote>   <p>private PropertyChangedEventHandler _propertyChangedHandler;</p> </blockquote>  <p><strong>Initialization (in the constructor of the class)</strong></p>  <blockquote>   <p>_propertyChangedHandler = IndexableCollection_PropertyChanged;</p> </blockquote>  <p>Usage then becomes</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += _propertyChangedHandler;</p> </blockquote>  <p>Lashas reported approximately 30-40% performance improvement when adding/removing items from the collection by the suggested change.</p>  <p><strong>Why is that?</strong></p>  <p>Well, if you think about it, what is this line?</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>but just a little <em>Syntactic Sugar</em> on top of actually doing…</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += new PropertyChangedEventHandler (IndexableCollection_PropertyChanged);</p> </blockquote>  <p>and by the suggested change of assigning a field to the property change we avoid all the “new PropertyChangedEventHandler(…)” calls. This object creation can happen once in the constructor of the collection and not on every add/remove of an item.</p>  <p>Just a good reminder that you need to constantly be aware of what is happening under the covers. The saying <em>most complexity can be solved by another layer of </em><a href="http://en.wikipedia.org/wiki/Abstraction_(computer_science)"><em>abstraction</em></a> can cause issues when you don’t truly understand (or at least remember) what that layer is actually doing.</p>  </div>
 </div>
-
 
                 <footer>
                     <p class="meta">
