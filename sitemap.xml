@@ -1,59 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
   <url>
-    <loc>http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/12/format-your-net-exceptions-to-see/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/11/convert-existing-winjs-app-to-use/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/08/typescript-presentation-at-northern/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/06/authentication-error-connecting-to-git/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/05/developer-humor/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/</loc>
+    <loc>http://staxmanade.com/2011/10/excited-to-announce-my-new-career/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -65,11 +13,23 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/</loc>
+    <loc>http://staxmanade.com/2012/01/you-are-responsible-for-making-that/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
     <loc>http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-introduction-to/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -81,19 +41,7 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2008/11/wcf-silverlight-default-constructor-not/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-xizzle/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -105,15 +53,11 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
     <loc>http://staxmanade.com/2008/12/i-can-stand-mass-mailings-especially/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/</loc>
+    <loc>http://staxmanade.com/2008/11/wcf-silverlight-default-constructor-not/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -125,11 +69,15 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/</loc>
+    <loc>http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/01/castledynamicproxy2-now-ported-to/</loc>
+    <loc>http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-guard/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -138,6 +86,26 @@
   </url>
   <url>
     <loc>http://staxmanade.com/2009/01/silverlight-automocker-with-unity/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/01/castledynamicproxy2-now-ported-to/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/02/moq-30-released-with-full-silverlight/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -153,11 +121,15 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/02/xunit-light-for-silverlight/</loc>
+    <loc>http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/02/moq-30-released-with-full-silverlight/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/04/to-be-checked-in-or-not/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -181,7 +153,15 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/04/to-be-checked-in-or-not/</loc>
+    <loc>http://staxmanade.com/2009/02/xunit-light-for-silverlight/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -209,11 +189,11 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/</loc>
+    <loc>http://staxmanade.com/2009/10/integration-test-brought-to-you-by/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -233,19 +213,23 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/10/statlight-silverlight-test-automation/</loc>
+    <loc>http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/10/new-windows-7-taskbar-theme/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/10/invited-to-join-bloggers-over-at/</loc>
+    <loc>http://staxmanade.com/2010/01/unitymoq-automocker-or/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2009/10/integration-test-brought-to-you-by/</loc>
+    <loc>http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2010/01/networking-brain-fart/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -269,19 +253,27 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
+    <loc>http://staxmanade.com/2009/10/statlight-silverlight-test-automation/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/10/new-windows-7-taskbar-theme/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2009/10/invited-to-join-bloggers-over-at/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
     <loc>http://staxmanade.com/2009/12/powershell-load-assembly-without/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2010/01/unitymoq-automocker-or/</loc>
+    <loc>http://staxmanade.com/2012/10/tfs-bisect-manual-way-when-was-that-bug/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2010/01/networking-brain-fart/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2010/01/c-40-optional-parameters-exploration/</loc>
+    <loc>http://staxmanade.com/2011/01/bookmark-to-inject-firebug-light-into/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -305,11 +297,15 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2013/03/windows-8-hackathon-good-for/</loc>
+    <loc>http://staxmanade.com/2010/09/odatas-dataservicequery-and-removing/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
     <loc>http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2010/12/statlight-release-v12-v13/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -321,11 +317,15 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2010/12/statlight-release-v12-v13/</loc>
+    <loc>http://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2011/01/bookmark-to-inject-firebug-light-into/</loc>
+    <loc>http://staxmanade.com/2011/12/statlight-v16-is-out/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -345,6 +345,10 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
+    <loc>http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
     <loc>http://staxmanade.com/2011/07/slightly-modified-cd-command-for/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
@@ -353,59 +357,7 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2011/10/excited-to-announce-my-new-career/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2011/12/statlight-v16-is-out/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/you-are-responsible-for-making-that/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-introduction-to/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-pinecone/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-xizzle/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-nfeature/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-anna/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-stimpack/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-nspec/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-guard/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-verifyargs/</loc>
+    <loc>http://staxmanade.com/2013/05/developer-humor/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -413,39 +365,35 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-anna/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-burro/</loc>
+    <loc>http://staxmanade.com/2013/06/authentication-error-connecting-to-git/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-intx/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-verifyargs/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-pinecone/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-nfeature/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-nspec/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/</loc>
+    <loc>http://staxmanade.com/2012/01/nuget-project-uncovered-stimpack/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/</loc>
+    <loc>http://staxmanade.com/2013/11/convert-existing-winjs-app-to-use/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -453,11 +401,23 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-burro/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-aboditnlp/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-intx/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -469,23 +429,11 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered_18/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
     <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-dumptotext/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -493,47 +441,27 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered_22/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/10/tfs-bisect-manual-way-when-was-that-bug/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/10/powershell-presentation-at-northern/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered_18/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/</loc>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -541,11 +469,111 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/</loc>
+    <loc>http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/02/nuget-project-uncovered_22/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/10/powershell-presentation-at-northern/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/08/typescript-presentation-at-northern/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/03/windows-8-hackathon-good-for/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
     <loc>http://staxmanade.com/2014/05/introducing-commandallthings/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2013/12/format-your-net-exceptions-to-see/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/about/podcasts</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/blog/archives</loc>
+    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
@@ -557,26 +585,6 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
     <loc>http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
@@ -585,15 +593,7 @@
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/about/podcasts</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
     <loc>http://staxmanade.com/apps/emscalc</loc>
-    <lastmod>2014-12-14T00:45:43.863Z</lastmod>
-  </url>
-  <url>
-    <loc>http://staxmanade.com/blog/archives</loc>
     <lastmod>2014-12-14T00:45:43.863Z</lastmod>
   </url>
   <url>

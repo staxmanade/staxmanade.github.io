@@ -352,9 +352,14 @@
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p> <p>I&#8217;m new enough to iOS development that solutions don&#8217;t yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p> <p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p> <p>If you need something like this, I&#8217;ve pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it&#8217;ll give you enough hints to get started on your own implementation.</p> <p>I&#8217;m open to feedback. Post any suggestions/alternative ideas to the github repo.</p> <h1>Where do I get it?</h1> <h2><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2> <p>Hope you find this useful.</p></div>
+<div class="entry-content"><p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p>
+<p>I&#39;m new enough to iOS development that solutions don&#39;t yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p>
+<p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p>
+<p>If you need something like this, I&#39;ve pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it&#39;ll give you enough hints to get started on your own implementation.</p>
+<p>I&#39;m open to feedback. Post any suggestions/alternative ideas to the github repo.</p>
+<h1 id="where-do-i-get-it-">Where do I get it?</h1>
+<h2 id="-here-https-github-com-staxmanade-paginatedcollectionview-"><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2>
+<p>Hope you find this useful.</p>
 </div>
 
     </article>
@@ -419,56 +424,33 @@
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-   <h4>TL;DR</h4>
-   <p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>
-   <h4>Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank"><font size="4">CLICK HERE</font></a></h4>
-   <h4>Background</h4>
-   <p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>
-  <pre>System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34</pre>
-   <p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/" target="_blank">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p>
-   
-   <p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" width="443" height="286" /></a></p>
-   
-   <p>Just so I could see an exception that looked more like:</p>
-   
-   <pre>
-System.Exception: Hello Exception! 
-   at TestExceptionGenerator.Spike.GetException() in …<cut off for brevity> 
-   at TestExceptionGenerator.Spike.b__0() in …<cut off for brevity> 
-   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in … 
-   </pre>
-   
-   <p>I finally buckled down and threw together a tool for this. </p>
-   
-   <h3>You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/" target="_blank">Exception Message Beautifier</a> where you can see the sample below.</h3>
-   
-   <p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: none; padding-top: 0px; padding-left: 0px; margin-left: auto; display: block; padding-right: 0px; border-top-width: 0px; margin-right: auto" border="0" alt="image" src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" width="689" height="354" /></a></p>
-   <h4>I’d like to thank.</h4>
-
-   <p>Below are a list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p>
-
-   <ul>
-      <br />  
-      <li><a href="http://codepen.io/" target="_blank">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages. </li>
-        
-      <li><a href="https://github.com" target="_blank">GitHub</a> for providing us with <a href="http://pages.github.com/" target="_blank">GitHub Pages</a>. Made this site a piece of cake to setup. </li>
-        
-      <li><a href="http://github.com/approvals/Approvals.NodeJS" target="_blank">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/" target="_blank">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food" target="_blank">dog-food</a> it</em>) <img class="wlEmoticon wlEmoticon-smile" style="border-top-style: none; border-bottom-style: none; border-right-style: none; border-left-style: none" alt="Smile" src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" /> </li>
-        
-      <li><a href="http://angularjs.org/" target="_blank">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.) </li>
-        
-      <li><a href="https://developers.google.com/speed/libraries/devguide" target="_blank">Google CDN</a> for hosting AngularJS </li>
-        
-      <li><a href="http://google.com/analytics/" target="_blank">Google Analytics</a> (so I can see if anyone cares) </li>
-      <br />
-   </ul>
-   
-   <ul>If you take a look, find a bug. Submit a GitHub issue and/or a pull request. Or if you find it useful, feel free to let me know.</ul>
-   
-   <ul>Enjoy!</ul>
-</div></div>
+<div class="entry-content"><h4 id="tl-dr">TL;DR</h4>
+<p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>
+<h4 id="go-to-the-site-click-here-http-staxmanade-com-exceptionmessagebeautifier-">Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/">CLICK HERE</a></h4>
+<h4 id="background">Background</h4>
+<p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>
+<pre><code>System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34
+</code></pre><p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p>
+<p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Just so I could see an exception that looked more like:</p>
+<pre><code>  System.Exception: Hello Exception!
+  at TestExceptionGenerator.Spike.GetException() in …
+  at TestExceptionGenerator.Spike.b__0() in …
+  at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in …
+</code></pre><p>I finally buckled down and threw together a tool for this.</p>
+<h3 id="you-can-check-go-check-out-exception-message-beautifier-http-staxmanade-com-exceptionmessagebeautifier-where-you-can-see-the-sample-below-">You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> where you can see the sample below.</h3>
+<p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" alt="image" title="image"></a></p>
+<h4 id="i-d-like-to-thank-">I’d like to thank...</h4>
+<p>...the following list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p>
+<ul>
+<li><a href="http://codepen.io/">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages.</li>
+<li><a href="https://github.com">GitHub</a> for providing us with <a href="http://pages.github.com/">GitHub Pages</a>. Made this site a piece of cake to setup.</li>
+<li><a href="http://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">dog-food</a> it</em>) <img src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" alt="Smile"></li>
+<li><a href="http://angularjs.org/">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.)</li>
+<li><a href="https://developers.google.com/speed/libraries/devguide">Google CDN</a> for hosting AngularJS</li>
+<li><a href="http://google.com/analytics/">Google Analytics</a> (so I can see if anyone cares)</li>
+</ul>
+</div>
 
     </article>
     <article>
@@ -497,9 +479,10 @@ System.Exception: Hello Exception!
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8" target="_blank">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD" target="_blank">ToTypeScriptD</a> github organization that walks through converting a new Windows 8 WinJS application to TypeScript.</p>  <p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>  <p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>  <p>Happy Scripting!</p>  </div>
+<div class="entry-content"><p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD">ToTypeScriptD</a> github organization that walks through converting a new <a href="http://www.amazon.com/gp/product/B00EDSI7QO/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00EDSI7QO&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=A6Q7RZBFEARWWT2L">Windows 8</a> WinJS application to TypeScript.</p></p>
+<p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>
+<p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>
+<p>Happy Scripting!</p>
 </div>
 
     </article>
