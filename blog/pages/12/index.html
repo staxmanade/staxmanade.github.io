@@ -71,6 +71,30 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/">C# (checked) keyword – Learn something new every day</a></h1>
+    <p class="meta">
+          <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I’ve been programming against the .net framework since the late beta of version 1.0 came out. (I had a couple year hiatus when I took a job doing some Linux &amp; C++) however, suffice it to say, I’ve been using the language a long time. I still find it amazing that there are features in the language that have been a round a long time and still manage stumbling across things I’ve never seen before.</p>  <p>Today’s newly learned feature I saw in a blog by <a href="http://www.lostechies.com/blogs/jimmy_bogard/">bogardj</a> over at <a href="http://www.lostechies.com/">LostTechies</a> where he wrote up a little <a href="http://www.lostechies.com/blogs/jimmy_bogard/archive/2009/06/24/expressions-cheat-sheet.aspx">Expressions Cheat Sheet</a>.</p>  <p>In his blog, I notice the “checked” keyword had the blue syntax highlighting. (which usually means it’s a C# keyword)</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfB5ivx2I/AAAAAAAAAJI/DZYX6HqutGM/s1600-h/image%5B4%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCEOcaGI/AAAAAAAAAJM/bjFimfVqmxE/image_thumb%5B2%5D.png?imgmax=800" width="602" height="365" /></a> </p>  <p>So, to verify, I copied the word into my C# editor and what do you know… It is a C# keyword. This is probably something most if not all C# programmers out there already know and I, for some reason have missed this.</p>  <p>Here’s a blurb about it on the <a href="http://stackoverflow.com/questions/9033/hidden-features-of-c/355991#355991">stack overflow “Hidden features of C#”</a>.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfCQOXVZI/AAAAAAAAAJQ/36Bi7s0yXzs/s1600-h/image%5B10%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfCnzkBdI/AAAAAAAAAJU/RLV3BvPXhTE/image_thumb%5B6%5D.png?imgmax=800" width="605" height="220" /></a> </p>  <p>And of course you can get the official details @ <a href="http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx">http://msdn.microsoft.com/en-us/library/74b4xzyw(VS.71).aspx</a></p>  <p>I decided to explore this a little. As an academic exercise I wanted to see what the difference would be between using the checked keyword with a cast operation and compare that to the <a href="http://msdn.microsoft.com/en-us/library/system.convert.tobyte.aspx">System.Convert.ToByte</a> operation.    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfCw76XwI/AAAAAAAAAJY/rZ0k6Ds3CRI/s1600-h/image%5B14%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDFmC4II/AAAAAAAAAJc/CoUMfycJ3do/image_thumb%5B8%5D.png?imgmax=800" width="554" height="128" /></a>    <br />Will generate the following error. <strong>System.OverflowException : Arithmetic operation resulted in an overflow.</strong></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfDRuVKAI/AAAAAAAAAJg/XsG2SQcPABU/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SkTfDjOy0lI/AAAAAAAAAJk/itMzHCCsv5w/image_thumb%5B13%5D.png?imgmax=800" width="610" height="120" /></a>    <br />While using the System.Convert class will generate a different error. <strong>System.OverflowException : Value was either too large or too small for an unsigned byte.</strong>&#160;</p>  <p>And last experiment I threw both of the conversion attempts in a loop and fired up the <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">ANTS Profiler</a> which shows that using the built in <font color="#0000ff">checked</font> keyword with a cast operation is faster than using the BCL conversion.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SkTfD-trbyI/AAAAAAAAAJo/iZm-skTI2ok/s1600-h/image%5B37%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SkTfENFFsPI/AAAAAAAAAJs/FWkJX2oo1ws/image_thumb%5B19%5D.png?imgmax=800" width="609" height="324" /></a>&#160;</p>  <p>As to which one is better I would probably have to dig deeper into other side affects that one may have over the other… Up front I don’t see any issue with the cast and checked keyword combo.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>justinmchase</div>
+<div class='content'>
+Good to know. Actually I did know about it but I think I had it backwards, I thought that it was checked by default and therefore the keyword was only useful if used in an explicitly unchecked block. Your tests here seem to disprove that, so thanks for the info.</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/silverlight-unity-moq-backed-automocker/">Silverlight Unity &amp; Moq backed AutoMocker</a></h1>
     <p class="meta">
           <time datetime="2009-06-19T15:06:00.000Z" pubdate data-updated="true">Jun 19th 2009</time>
@@ -309,22 +333,6 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/moq-30-released-with-full-silverlight/">Moq 3.0 released (With Full Silverlight Support)</a></h1>
-    <p class="meta">
-          <time datetime="2009-02-23T04:09:00.000Z" pubdate data-updated="true">Feb 22nd 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Moq 3.0 has been officially released and it comes with full Silverlight Support. You can download them here <a title=" http://moq.me/get " href="http://moq.me/get">http://moq.me/get     <br /></a></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SaIhYUZuZRI/AAAAAAAAAFI/igVHxx3p7tA/s1600-h/image%5B4%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="289" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhY8DKDWI/AAAAAAAAAFM/g77fjbsr6eU/image_thumb%5B2%5D.png?imgmax=800" width="645" border="0" /></a> </p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZLMqsrI/AAAAAAAAAFQ/igqqel0m1-U/s1600-h/image%5B8%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="98" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhZQpg9II/AAAAAAAAAFU/-yQ8zMt3lG8/image_thumb%5B4%5D.png?imgmax=800" width="310" border="0" /></a>&#160;<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZrL4CwI/AAAAAAAAAFY/T0BbBfoniCs/s1600-h/image%5B12%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="100" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhaJaClsI/AAAAAAAAAFc/pEz3fWLIvvM/image_thumb%5B6%5D.png?imgmax=800" width="310" border="0" /></a> </p>  <p>Now that it is official and when I get some spare time I will try and place my UnityAutoMocker up in the moq-contrib project shortly.</p>  </div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -359,6 +367,9 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
+      </li>
+      <li class="post">
         <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
       </li>
       <li class="post">
@@ -375,9 +386,6 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
       </li>
       <li class="post">
         <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">Migrating from BlogSpot to Octopress - Part 9 - What&#x27;s left?</a>
-      </li>
-      <li class="post">
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a>
       </li>
   </ul>
 </section>

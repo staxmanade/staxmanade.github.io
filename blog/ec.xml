@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2014-12-14T00:45:43Z</updated>
+    <updated>2014-12-24T22:22:17Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,47 @@
     <link rel="self" href="/blog/ec.xml"/>
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Introducing SkypeIt - Command Line Skype Phone Calls]]></title>
+        <id>http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
+        <link href="http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">
+        </link>
+        <updated>2014-12-24T22:22:17Z</updated>
+        <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit) ]]></summary>
+        <content type="html"><![CDATA[<h1 id="-skypeit-https-github-com-staxmanade-skypeit-"><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
+<p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
+<h2 id="what-is-it-">What is it?</h2>
+<p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
+<h1 id="what-pain-does-this-solve-">What pain does this solve?</h1>
+<p>I&#39;ve recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge. </p>
+<p>This typically involves:</p>
+<ol>
+<li>Opening the Outlook appointment</li>
+<li>Copying just the conference phone number (without extension)</li>
+<li>Pasting it in Skype to dial</li>
+<li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
+<li>Pasting in Skype&#39;s number pad area</li>
+<li>Type or use the mouse to press the final <code>#</code> key.</li>
+</ol>
+<h1 id="how-does-skypeit-https-github-com-staxmanade-skypeit-improve-this-">How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
+<p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
+<ol>
+<li>Open the Outlook appointment</li>
+<li>Copy the conference phone number &amp; extension (if there is one) in one shot.</li>
+<li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
+</ol>
+<p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
+<h1 id="-skypeit-https-github-com-staxmanade-skypeit-even-better-with-teams-"><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
+<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you&#39;re probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-###  ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>Or even better, if you&#39;re on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you&#39;re in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
+<blockquote>
+<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
+</blockquote>
+<h1 id="still-early-">Still early...</h1>
+<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you&#39;d like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
+<p>I&#39;m not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Thoughts on Working Remotely from Home]]></title>
         <id>http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/</id>
