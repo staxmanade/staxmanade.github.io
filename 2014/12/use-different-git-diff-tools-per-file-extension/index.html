@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>How best to expose a value that could throw an error? - Developing on Staxmanade</title>
+  <title>Use different Git Diff Tools Per File Extension - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could...">
+   <meta name="description" content="How to setup git to allow different merge/diff tools based on file extension.">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">
+  <link rel="canonical" href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,35 +71,64 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
     <p class="meta">
-          <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
+          <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
 
 
-        
+        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
-</div>
+<div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
+<p>I&#39;m going to put this here so I can find it later...</p>
+<h1 id="create-a-merge-wrapper-script">Create a merge-wrapper script</h1>
+<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain. </p>
+<blockquote>
+<p>I haven&#39;t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+</blockquote>
+<h3 id="customize-the-merge-wrapper-js-">Customize the <code>merge-wrapper.js</code></h3>
+<ol>
+<li><p>Extend with other diff tool support:</p>
+<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>. </p>
+</li>
+<li><p>Modify which diff tool is used per extension:</p>
+<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup. </p>
+</li>
+<li><p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
+<p>I&#39;d be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+</li>
+</ol>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
+<p>Below was an attempt at using a bash script to manage what I do above, it&#39;ll work for some, but I didn&#39;t want to maintain this - prefer the JS version instead.</p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.sh"></script></p>
+<h1 id="setup-gitconfig-">Setup <code>~/.gitconfig</code></h1>
+<p>Now that we&#39;ve created our merge wrapper script we need to tell git how to use it.</p>
+<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
+<pre><code>[merge]
+    tool = merge_wrapper
+[mergetool &quot;merge_wrapper&quot;]
+    cmd = $HOME/dotfiles/tools/merge-wrapper.js \&quot;$BASE\&quot; \&quot;$LOCAL\&quot; \&quot;$REMOTE\&quot; \&quot;$MERGED\&quot;
+</code></pre></div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
+                          <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
 
 
-                        
+                        <span class="categories">
+    <a class='category' href='/blog/categories/git/'>git</a>
+    <a class='category' href='/blog/categories/diff/'>diff</a>
+</span>
+
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/" data-via="staxmanade" data-counturl="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2008/04/binarysearchordefault/" title="Previous Post: BinarySearchOrDefault()">&laquo; BinarySearchOrDefault()</a>
-                        <a class="basic-alignment right" href="/2008/08/unitdrivens-ui-gets-minor-makeover/" title="Next Post: UnitDriven&#x27;s UI Gets a Minor Makeover">UnitDriven&#x27;s UI Gets a Minor Makeover &raquo;</a>
+                        <a class="basic-alignment left" href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/" title="Previous Post: Introducing SkypeIt - Command Line Skype Phone Calls">&laquo; Introducing SkypeIt - Command Line Skype Phone Calls</a>
                     </p>
                 </footer>
             </article>
@@ -200,8 +229,11 @@ If you have a class that needs to expose some value (either by a Property, or a 
 <script type="text/javascript">
       var disqus_shortname = 'developingonstaxmanade';
       
-        var disqus_script = 'count.js';
-    (function () {
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2014-12-24T22:22:17Z</updated>
+    <updated>2014-12-29T16:12:11Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,44 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Use different Git Diff Tools Per File Extension]]></title>
+        <id>http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>
+        <link href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
+        </link>
+        <updated>2014-12-29T16:12:11Z</updated>
+        <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
+        <content type="html"><![CDATA[<p>How to setup git to allow different merge/diff tools based on file extension.</p>
+<p>I&#39;m going to put this here so I can find it later...</p>
+<h1 id="create-a-merge-wrapper-script">Create a merge-wrapper script</h1>
+<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain. </p>
+<blockquote>
+<p>I haven&#39;t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+</blockquote>
+<h3 id="customize-the-merge-wrapper-js-">Customize the <code>merge-wrapper.js</code></h3>
+<ol>
+<li><p>Extend with other diff tool support:</p>
+<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>. </p>
+</li>
+<li><p>Modify which diff tool is used per extension:</p>
+<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup. </p>
+</li>
+<li><p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
+<p>I&#39;d be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+</li>
+</ol>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
+<p>Below was an attempt at using a bash script to manage what I do above, it&#39;ll work for some, but I didn&#39;t want to maintain this - prefer the JS version instead.</p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires the .gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.sh \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# # How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;#&#10;&#10;BASE=$1&#10;LOCAL=$2&#10;REMOTE=$3&#10;MERGED=$4&#10;&#10;if [[ $BASE == *.png ]]; then&#10;  echo &#34;Image diff..&#34;;&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;else&#10;  #Finally, the default case:&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#34;&#10;  #CMD=&#34;opendiff \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; -ancestor \&#34;$REMOTE\&#34; -mergeFile \&#34;$MERGED\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;fi&#10;</code></pre></noscript></div></p>
+<h1 id="setup-gitconfig-">Setup <code>~/.gitconfig</code></h1>
+<p>Now that we&#39;ve created our merge wrapper script we need to tell git how to use it.</p>
+<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
+<pre><code>[merge]
+    tool = merge_wrapper
+[mergetool &quot;merge_wrapper&quot;]
+    cmd = $HOME/dotfiles/tools/merge-wrapper.js \&quot;$BASE\&quot; \&quot;$LOCAL\&quot; \&quot;$REMOTE\&quot; \&quot;$MERGED\&quot;
+</code></pre>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Introducing SkypeIt - Command Line Skype Phone Calls]]></title>
         <id>http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
@@ -974,18 +1012,6 @@ git push origin release
 <li><a href="https://developers.google.com/speed/libraries/devguide">Google CDN</a> for hosting AngularJS</li>
 <li><a href="http://google.com/analytics/">Google Analytics</a> (so I can see if anyone cares)</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leave yourself a breadcrumb for tomorrow.]]></title>
-        <id>http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/</id>
-        <link href="http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/">
-        </link>
-        <updated>2013-12-06T05:56:00Z</updated>
-        <summary type="html"><![CDATA[Have you ever arrived at work and sat down, not exactly sure what you were working on the day before? You spend some time going through emails. Start ...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<p>Have you ever arrived at work and sat down, not exactly sure what you were working on the day before? You spend some time going through emails. Start looking at your codebase, maybe the last couple commits you made trying to get back into the mental groove you were in the day before.</p>  <p>There is a <a href="http://lmgtfy.com/?q=get+back+into+programming+after+interruption" target="_blank">lot of information</a> about how long it takes to get back into the programming zone. <strong>If you leave yourself a breadcrumb or two, it is much easier to get started when you come back to your task.</strong></p>  <h3>Some of my favorite breadcrumbs.</h3>  <h4>Leave a failing unit test.</h4>  <p>If you practice any sort of test driven development, leaving a failing test to pick up the next day can be one of the most useful methods to get going again when you come back to the problem. If you’ve spent the time to think through the problem enough to write a failing unit test, this can help to ease you into the task at hand and get rolling the next day. </p>  <h4>Explicitly leave a note or compiler error in the code.</h4>  <p>Now, it’s probably common to check your working code in at the end of the day, but sometimes you just can’t work it to completion. That’s ok, and if you use a tool that supports something like this, leave yourself a breadcrumb of one or more compiler errors.</p>  <p>If I’m writing some C# I sometimes use the <a href="http://msdn.microsoft.com/en-us/library/vstudio/x5hedts0.aspx" target="_blank">#error precompiler</a> directive with a helpful message.</p>  <p><a href="http://lh4.ggpht.com/-3BSP6C9ismg/UqFnBqT43GI/AAAAAAAAAiI/BvwY-gpVO-o/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh6.ggpht.com/-XgX7jyzCT_c/UqFnCTtDw7I/AAAAAAAAAiQ/o5EgtBxl_vA/image_thumb1.png?imgmax=800" width="531" height="177" /></a></p>  <p>This allows me to come in the next day. Hit build on the project and immediately see where I was in the codebase last and need to pick up again.</p>  <h4>Other, less specific, but useful options:</h4>  <ul>   <li>Send yourself an email describing what you’re working on and what still needs to be done. </li>    <li>Write in your favorite notes app. I like to use OneNote to keep track of my ‘scrum notes’ which help me describe what I did today and what I plan on doing tomorrow. </li>    <li>Sticky note? (can’t say I’ve used a pen/paper in a while – but if it works for you go for it)</li> </ul>  <p>It doesn’t have to be anything special, just a little note to yourself that can help you get a jump start on your next task at hand.</p>  <p>What other methods do you use to get back into the problem at hand?</p>  </div>
 ]]></content>
     </entry>
 </feed>
