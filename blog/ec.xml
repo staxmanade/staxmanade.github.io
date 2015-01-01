@@ -9,7 +9,7 @@
     </author>
     <link rel="alternate" href="http://staxmanade.com"/>
     <link rel="self" href="/blog/ec.xml"/>
-    <rights>Copyright (C) 2008-2014 Jason Jarrett</rights>
+    <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
         <title type="html"><![CDATA[Use different Git Diff Tools Per File Extension]]></title>
