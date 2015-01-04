@@ -71,6 +71,45 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/12/format-your-net-exceptions-to-see/">Format your .Net exceptions to see the StackTrace.</a></h1>
+    <p class="meta">
+          <time datetime="2013-12-19T03:50:00.000Z" pubdate data-updated="true">Dec 18th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><h4 id="tl-dr">TL;DR</h4>
+<p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>
+<h4 id="go-to-the-site-click-here-http-staxmanade-com-exceptionmessagebeautifier-">Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/">CLICK HERE</a></h4>
+<h4 id="background">Background</h4>
+<p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>
+<pre><code>System.Exception: Hello Exception!   at TestExceptionGenerator.Spike.GetException() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 22   at TestExceptionGenerator.Spike.b__0() in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 13   at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike.cs:line 34
+</code></pre><p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p>
+<p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Just so I could see an exception that looked more like:</p>
+<pre><code>  System.Exception: Hello Exception!
+  at TestExceptionGenerator.Spike.GetException() in …
+  at TestExceptionGenerator.Spike.b__0() in …
+  at TestExceptionGenerator.Extensions.GetExceptionString(Action action) in …
+</code></pre><p>I finally buckled down and threw together a tool for this.</p>
+<h3 id="you-can-check-go-check-out-exception-message-beautifier-http-staxmanade-com-exceptionmessagebeautifier-where-you-can-see-the-sample-below-">You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> where you can see the sample below.</h3>
+<p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" alt="image" title="image"></a></p>
+<h4 id="i-d-like-to-thank-">I’d like to thank...</h4>
+<p>...the following list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p>
+<ul>
+<li><a href="http://codepen.io/">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages.</li>
+<li><a href="https://github.com">GitHub</a> for providing us with <a href="http://pages.github.com/">GitHub Pages</a>. Made this site a piece of cake to setup.</li>
+<li><a href="http://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">dog-food</a> it</em>) <img src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" alt="Smile"></li>
+<li><a href="http://angularjs.org/">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.)</li>
+<li><a href="https://developers.google.com/speed/libraries/devguide">Google CDN</a> for hosting AngularJS</li>
+<li><a href="http://google.com/analytics/">Google Analytics</a> (so I can see if anyone cares)</li>
+</ul>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/">Leave yourself a breadcrumb for tomorrow.</a></h1>
     <p class="meta">
           <time datetime="2013-12-06T05:56:00.000Z" pubdate data-updated="true">Dec 5th 2013</time>
@@ -214,22 +253,6 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">DefinitelyTyped TypeScript definitions now on NuGet</a></h1>
-    <p class="meta">
-          <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -264,6 +287,9 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+      </li>
+      <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
       <li class="post">
@@ -280,9 +306,6 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
       </li>
       <li class="post">
         <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a>
       </li>
   </ul>
 </section>

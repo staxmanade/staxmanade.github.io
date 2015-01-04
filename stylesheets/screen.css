@@ -1828,3 +1828,20 @@ body > footer p:last-child {
 .gist table {
   width: 100%;
 }
+
+img.emoji {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.warning-highlight {
+  background-color: #FFFF80;
+}
