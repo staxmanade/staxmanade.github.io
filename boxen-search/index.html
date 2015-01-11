@@ -87,7 +87,7 @@
     <h2>Search for a <a href="https://boxen.github.com/">Boxen</a> Module</h2>
     <input ng-show="loaded" type="text" ng-model='searchText' placeholder="Boxen Module Search" />
 
-    
+
 
     <p ng-show="loaded">Count: {{(repos | filter:searchText).length}}</p>
 
@@ -116,18 +116,24 @@
           <div ng-hide="detail.tagsLoaded">Loading {{detail.shortName}}...</div>
           <div ng-show="detail.tagsLoaded">
 
-            <h3><a href="{{detail.html_url}}" target="_blank" >{{detail.full_name}}</a></h3>
+            <h3>1. Puppetfile</h3>
+            <p>
+              Copy/paste the below into your Boxen `Puppetfile`
+              <br>
+              Select Version: <select required="required" ng-model="selectedTag" ng-options="tag.name for tag in detail.tags"></select>
+              <pre>github "{{detail.shortName}}", "{{selectedTag.name}}"</pre>
+            </p>
 
-            Select Version: <select required="required" ng-model="selectedTag" ng-options="tag.name for tag in detail.tags">
-            </select>
-            <br/>
-            <br/>
+            <h3>2. Manifest</h3>
+            <p>
+              Copy/paste teh below into your Boxen manifest file.
+              <pre>include {{detail.shortName}}</pre>
+            </p>
 
-            <h4>Puppetfile</h4>
-            <pre>github "{{detail.shortName}}", "{{selectedTag.name}}"</pre>
-            <br/>
-            <h4>Manifest</h4>
-            <pre>include {{detail.shortName}}</pre>
+            <h3>2. Check out the project <a href="{{detail.html_url}}" target="_blank" >Readme</a></h3>
+            <p>
+              Be sure to check out <a href="{{detail.html_url}}" target="_blank" >{{detail.full_name}} Readme</a> for any special instructions.
+            </p>
           </div>
         </div>
 
