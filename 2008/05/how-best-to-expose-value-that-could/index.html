@@ -79,9 +79,30 @@
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
+<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
+<p>I originally had a Property that exposed some value where, if in a certain state, would throw an exception.</p>
+<p>Microsoft FxCop recommends.</p>
+<blockquote>
+<p>Do not explicitly raise exceptions from unexpected
+locations. There are some methods, such as Equals and
+GetHashCode, which users do not expect to raise exceptions.
+Therefore calls to these methods are not commonly
+wrapped in try catch blocks.</p>
+</blockquote>
+<p>So if FxCop recommends not raising an exception from a Property&#39;s getter, we&#39;ll just throw it in a function. Come to find out now FxCop says...</p>
+<blockquote>
+<p>Properties should be used instead of Get/Set methods
+in most situations. Methods are preferable to properties
+in the following situations: the operation is a conversion,
+is expensive or has an observable side-effect; the
+order of execution is important; calling the member
+twice in succession creates different results; a member
+is static but returns a mutable value; or the member
+returns an array.</p>
+</blockquote>
+<p>So, which is the best method?</p>
+<p>I went back to the Property method because it really is mimicking the usage of a property...</p>
+<p>Any suggestions out there?</p>
 </div>
 
                 <footer>
@@ -137,7 +158,10 @@ If you have a class that needs to expose some value (either by a Property, or a 
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
@@ -153,9 +177,6 @@ If you have a class that needs to expose some value (either by a Property, or a 
       </li>
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
   </ul>
 </section>

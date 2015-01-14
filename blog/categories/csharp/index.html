@@ -217,6 +217,22 @@ I have to agree with you, real pain in the a$$. Seriously, your post helped me a
             </article>
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Don’t forget what’s happening behind the syntactic sugar. (C# events)</a></h1>
+    <p class="meta">
+          <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>In a comment posted by Lashas to the i4o project over at Codeplex (<a href="http://i4o.codeplex.com/WorkItem/View.aspx?WorkItemId=13114">comment here</a>), he suggested a great performance improvement where instead of assigning an event’s handler directly to a handler method callback, we assign it to a field containing the handler. Initially I was skeptical of his change until I profiled it for myself. And after thinking about it for a second it made total sense.</p>  <p>The original implementation of adding an event handler to the property we used the C# syntax as follows.</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>where “IndexableCollection_PropertyChanged” is a method defined as </p>  <blockquote>   <p>private void IndexableCollection_PropertyChanged(object sender, PropertyChangedEventArgs e)      <br />{…} </p> </blockquote>  <p>Lashas’s suggested performance improvement was to initialize a private field, assign it to the IndexableCollection_PropertyChanged and add/remove the property changed handler from the field instead of the example outlined above.</p>  <p><strong>Field definitaion:</strong></p>  <blockquote>   <p>private PropertyChangedEventHandler _propertyChangedHandler;</p> </blockquote>  <p><strong>Initialization (in the constructor of the class)</strong></p>  <blockquote>   <p>_propertyChangedHandler = IndexableCollection_PropertyChanged;</p> </blockquote>  <p>Usage then becomes</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += _propertyChangedHandler;</p> </blockquote>  <p>Lashas reported approximately 30-40% performance improvement when adding/removing items from the collection by the suggested change.</p>  <p><strong>Why is that?</strong></p>  <p>Well, if you think about it, what is this line?</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>but just a little <em>Syntactic Sugar</em> on top of actually doing…</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += new PropertyChangedEventHandler (IndexableCollection_PropertyChanged);</p> </blockquote>  <p>and by the suggested change of assigning a field to the property change we avoid all the “new PropertyChangedEventHandler(…)” calls. This object creation can happen once in the constructor of the collection and not on every add/remove of an item.</p>  <p>Just a good reminder that you need to constantly be aware of what is happening under the covers. The saying <em>most complexity can be solved by another layer of </em><a href="http://en.wikipedia.org/wiki/Abstraction_(computer_science)"><em>abstraction</em></a> can cause issues when you don’t truly understand (or at least remember) what that layer is actually doing.</p>  </div>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/06/c-checked-keyword-learn-something-new/">C# (checked) keyword – Learn something new every day</a></h1>
     <p class="meta">
           <time datetime="2009-06-26T14:45:00.000Z" pubdate data-updated="true">Jun 26th 2009</time>
@@ -305,6 +321,188 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
 </div>
 
             </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/wcf-service-proxy-inside-silverlight/">WCF Service Proxy inside Silverlight with a generic type</a></h1>
+    <p class="meta">
+          <time datetime="2008-09-14T01:32:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>We&#39;ve implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...</p>
+<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here&#39;s the basic interface.</p>
+<pre><code class="lang-C#">public interface IValidatedResult&lt;T&gt;
+{
+  T Result { get; set; }
+  List&lt;string&gt; ValidationIssues { get; set; }
+}
+</code></pre>
+<p>Now if you had a method that exposed this generic result object through your web service...</p>
+<pre><code class="lang-C#">public ValidatedResult&lt;long&gt; StringLength(string param1)
+{
+  return new ValidatedResult&lt;long&gt;(param1.Length);
+}
+</code></pre>
+<p>Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...</p>
+<pre><code class="lang-C#">public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged
+{
+
+  private long ResultField;
+
+  private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;
+
+  [System.Runtime.Serialization.DataMemberAttribute()]
+  public long Result
+  {
+    get
+    {
+      return this.ResultField;
+    }
+    set
+    {
+      if ((this.ResultField.Equals(value) != true))
+      {
+        this.ResultField = value;
+        this.RaisePropertyChanged(&quot;Result&quot;);
+      }
+    }
+  }
+
+  [System.Runtime.Serialization.DataMemberAttribute()]
+  public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues
+  {
+    get
+    {
+      return this.ValidationIssuesField;
+    }
+    set
+    {
+      if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))
+      {
+        this.ValidationIssuesField = value;
+        this.RaisePropertyChanged(&quot;ValidationIssues&quot;);
+      }
+    }
+  }
+
+  // stripped out the INotifyPropertyChanged goo
+}
+</code></pre>
+<p>Notice the non generic type <code>ValidatedResultOflong</code> that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...</p>
+<p>Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.</p>
+<p>Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a &quot;Result&quot; and a &quot;ValidationIssues&quot; property and another partial class in a different location that declares it implements an interface which defines that &quot;Result&quot; and &quot;ValidationIssues&quot; property... and would that compile?</p>
+<p>So I wrote my first test...</p>
+<p>Here is our auto generated partial class simulated...</p>
+<pre><code class="lang-C#">public partial class Foo
+{
+  public bool Result { get; set; }
+}
+</code></pre>
+<p>I then wrote a generic result of T to define the object has a Result property.</p>
+<pre><code class="lang-C#">public interface IResult&lt;T&gt;
+{
+  T Result { get; set; }
+}
+</code></pre>
+<p>And now the specific implementation with a long Result type.</p>
+<pre><code class="lang-C#">public partial class Foo : IResult&lt;long&gt; {}
+</code></pre>
+<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I&#39;ll show how on the silverlight side below...</p>
+<p>I defined the validated result contract as follows...</p>
+<pre><code class="lang-C#">public interface IResultProperty&lt;T&gt;
+{
+  T Result { get; }
+}
+
+public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;
+{
+  List&lt;string&gt; ValidationIssues { get; set; }
+}
+</code></pre>
+<p>This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.</p>
+<p>Here&#39;s an example of the partial class for the <code>ValidatedResultOflong</code></p>
+<pre><code class="lang-C#">public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }
+</code></pre>
+<p>With that in place, this meant I could create some generic handling methods for all of my objects that now implement <code>IValidatedResult&lt;T&gt;</code>...</p>
+<pre><code class="lang-C#">public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)
+where T : IValidatedResult&lt;T&gt;
+{
+  if (validatedResult != null &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues != null &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues.Count &gt; 0)
+  return true;
+  else
+  return false;
+}
+</code></pre>
+<p>Don&#39;t know if i&#39;ve very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...</p>
+<h2 id="comments">Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+  Interesting observation. Thanks for sharing.
+
+  I haven&#39;t pushed it very far (bool, string, MyCustomObject, etc)</div>
+</div>
+<div class='comment'>
+  <div class='author'>Boris Modylevsky</div>
+  <div class='content'>
+    Thanks for the post. It&#39;s really exciting to receive a proxy of Generic class. It really works smoothly with &quot;simple&quot; classes. But more complex ones result with random names in Silverlight proxy. For example, my <code>_SimpleTree&lt;Item&gt;_</code> became <em>SimpleTreeNodeOfItemErNMAaNV</em></div>
+  </div>
+<div class='comment'>
+  <div class='author'>Jason.Jarrett</div>
+  <div class='content'>
+    Ok, I quickly threw an example together. I didn&#39;t comment much, but the code&#39;s there and &quot;works on my box...&quot;
+
+    Let me know if you have any troubles either understanding it, or getting it working.
+
+    I&#39;ve never used this file host service, but giving it a try... I&#39;ve placed the project here <a href="http://www.filesavr.com/validatedresultsample"> http://www.filesavr.com/validatedresultsample</a>
+
+    Also the only concepts to really look at here are the `ValidatedResult<T>`` and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.
+
+    Good luck!</div>
+  </div>
+<div class='comment'>
+  <div class='author'>greg</div>
+  <div class='content'>
+    ... very much appreciated!!</div>
+  </div>
+<div class='comment'>
+  <div class='author'>Jason.Jarrett</div>
+  <div class='content'>
+    Greg,
+
+    I will try to put together an example and post it here soon.</div>
+  </div>
+<div class='comment'>
+  <div class='author'>greg</div>
+  <div class='content'>
+    ... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.
+    Thanks in advance.</div>
+  </div>
+</div>
+</div>
+
+            </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/binarysearchordefault/">BinarySearchOrDefault()</a></h1>
+    <p class="meta">
+          <time datetime="2008-04-14T03:52:00.000Z" pubdate data-updated="true">Apr 13th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
+</div>
+
+            </article>
             <div class="pagination">
                 <a href="/blog/archives">Blog Archives</a>
             </div>
@@ -336,7 +534,10 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
@@ -352,9 +553,6 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
       </li>
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
   </ul>
 </section>

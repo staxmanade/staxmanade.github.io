@@ -71,12 +71,105 @@
 <div class="blog-index">
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a></h1>
     <p class="meta">
-          <time datetime="2015-03-29T16:12:11.868Z" pubdate data-updated="true">Mar 29th 2015</time>
+          <time datetime="2015-01-14T05:49:01.820Z" pubdate data-updated="true">Jan 13th 2015</time>
 
 
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, we have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you&#39;re reviewing, your brain is now having to decide if anomalies in the formatting of your project&#39;s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio&#39;s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I&#39;d highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that&#39;s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your.</p>
+<h1 id="how-to-install-clang-format-">How to install <code>clang-format</code></h1>
+<p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
+<ol>
+<li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
+<li>In chrome dev tools (On my mac, <code>&amp;#8984;+&amp;#8997;+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.<ul>
+<li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
+</ul>
+</li>
+<li>Copy that URL and place it into the following set of commands.</li>
+</ol>
+<p>From a command prompt, navigate to a folder where you&#39;d like to save or store the <code>clang</code> tools.</p>
+<ol>
+<li>Remove the older version if there was one, and ceate a folder to work in
+<code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
+<li>Take the previously discovered link from above and use the following to download it into our working folder.
+<code>curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;</code></li>
+<li>Extract the tar file
+<code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
+<li>Remove any previously sym-linked linked version we have
+<code>rm -f ~/bin/clang-format</code></li>
+<li>Link the downloaded clang-format command into our <code>~/bin</code> folder
+<code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
+<li>Test the command works
+<code>clang-format --help</code></li>
+</ol>
+<p>Here are all of the steps above as a script:</p>
+<pre><code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format
+curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;
+tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format
+rm -f ~/bin/clang-format
+ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format
+clang-format --help
+</code></pre><h1 id="how-to-setup-your-project-style-guide">How to setup your project style guide</h1>
+<p>Now that we have the command line <code>clang-format</code> tool installed, we can walk through how to use it to format our Objective-C code files. Let&#39;s walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before we use the command line tool to rip through our project, let&#39;s first set the standards we&#39;d like clang-format to adhere to when formatting our code.</p>
+<p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project&#39;s Objective-C files.</p>
+<p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
+<p>Here is one I have before.</p>
+<pre><code>BasedOnStyle: Chromium
+
+AlignTrailingComments: true
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Attach
+ColumnLimit: 0
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: true
+Language: Cpp
+MaxEmptyLinesToKeep: 4
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: false
+PointerBindsToType: false
+SpacesBeforeTrailingComments: 1
+TabWidth: 4
+UseTab: Never
+</code></pre><p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
+<pre><code>BasedOnStyle: None
+</code></pre><h1 id="format-all-our-files-at-once">Format all our files at once</h1>
+<p>Now that we have a <code>.clang-format</code> file which helps to define our project&#39;s styling conventions, we can begin our initial formatting sweep.</p>
+<p>First let&#39;s create a command that gives us all the files we want to process.</p>
+<p>Here&#39;s my initial example (executed in a zsh shell):</p>
+<p><code>ls MyProject/*.[hm]</code></p>
+<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once your are happy with it, you can then pipe it&#39;s output to <code>clang-format</code>.</p>
+<p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
+<p>We can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
+<h3 id="-clang-format-options"><code>clang-format</code> options</h3>
+<p>In the above example we use the following <code>clang-format</code> options:</p>
+<ul>
+<li><code>-i</code> tells it to do an in-place edit of the file</li>
+<li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
+</ul>
+<h1 id="did-you-have-your-project-under-source-control-before-doing-this-">Did you have your project under source control before doing this?</h1>
+<p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
+<p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
+</div>
+
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-04T00:34:11.868Z" pubdate data-updated="true">Jan 3rd 2015</time>
+
+
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
     </p>
 </header>
 <div class="entry-content"><h1 id="tl-dr">TL;DR</h1>
@@ -555,60 +648,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner</a></h1>
-    <p class="meta">
-          <time datetime="2014-04-19T03:19:53.000Z" pubdate data-updated="true">Apr 18th 2014</time>
-
-
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 8</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - (current) - Redirect Atom/RSS in FeedBurner
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>This one is quick and easy.</p>
-<p>I noticed that my original RSS feed <code>staxmanade.blogspot.com/feeds/posts/default</code> was 302 redirecting to <code>http://feeds.feedburner.com/DevelopingOnStaxmande</code>.</p>
-<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth&#39;d with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
-<p>After doing this, I noticed 3 of my previously posted blogs show-up-again, but I can live with that.</p>
-<p>Now you&#39;ve hopefully migrated your blog&#39;s RSS subscribers automatically without loosing any.</p>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -642,7 +681,10 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
@@ -658,9 +700,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
       </li>
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
   </ul>
 </section>

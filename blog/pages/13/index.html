@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/introducing-statlight-silverlight_07/">Introducing StatLight (Silverlight Testing Automation Tool)</a></h1>
+    <p class="meta">
+          <time datetime="2009-04-07T14:10:00.000Z" pubdate data-updated="true">Apr 7th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <p>What is it?</p>  <p>StatLight is your first class TDD/BDD/(Insert your testing style here) tool for Silverlight. Its main focus is developer productivity.</p>  <p>(The website is young, however the tool is ready to go… <a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a>)</p>  <p>In the realm of Silverlight, the tooling support has not had the chance to catch up to what you might have come to expect from normal .net development. When developing Silverlight applications using a test driven style, with the current tooling, it can become a little more tedious than one might like. </p>  <p>A number of testing methodologies have sprung up to enable some sort of testing for Silverlight developers; however, few actually run the tests in the browser.</p>  <p>Below is a short list of features StatLight currently has.</p>  <h4>Features:</h4>  <ol>   <li>In browser runner to test how your code will “actually” run in the wild. </li>    <li>TeamCity Continuous Integration support </li>    <li>Smooth Console Runner      <ol>       <li>One time runner (screenshot below)<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sdtexix3VSI/AAAAAAAAAFw/tj48fdwRad8/s1600-h/image8.png">           <br /><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; margin-left: 0px; border-left-width: 0px; margin-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SdteyAUbPZI/AAAAAAAAAF0/23thaH-98lI/image_thumb6.png?imgmax=800" width="521" height="292" /></a> </li>        <li>Continuous Integration runner          <ol>           <li>This runner will startup and watches for any re-builds of your text xap file. Every time you re-build it will pick up the new test xap and immediately start running the tests. </li>            <li>This feature gives the most as far as developer productivity. </li>            <li>I will put out a video to show how best to use it soon… </li>         </ol>       </li>     </ol>   </li>    <li>Tag/Filtering support (to narrow down the tests run at a given time) </li>    <li>XUnit support leveraging <a href="/2009/02/xunit-light-for-silverlight">XUnit (Light)</a> </li>    <li>MSTest support. (March 09 build) </li> </ol>  <h4>On the way:</h4>  <ol>   <li>Better Documentation and how to/help videos </li>    <li>NUnit support leveraging <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">Jeff Wilcox’s NUnit</a> port </li>    <li>CruiseControl.net support </li>    <li>MSBuild </li> </ol>  <p><a title="StatLight&#39;s home website." href="http://www.StatLight.net">Download StatLight here</a></p>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/03/silverlight-datagrid-not-sorting-when/">Silverlight DataGrid NOT sorting when binding to IEnumerable&lt;T&gt;</a></h1>
     <p class="meta">
           <time datetime="2009-03-26T04:36:00.000Z" pubdate data-updated="true">Mar 25th 2009</time>
@@ -308,35 +324,6 @@ In a nutshell, what's the trick to mocking with the given security constraints (
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/castledynamicproxy2-now-ported-to/">Castle.DynamicProxy2 now ported to Silverlight!!!</a></h1>
-    <p class="meta">
-          <time datetime="2009-01-05T02:02:00.000Z" pubdate data-updated="true">Jan 4th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I know what you're thinking (or at least what I was thinking before I knew better). What is the Castle.DynamicProxy and who cares it was ported to Silverlight?</p>  <p>To be honest I didn't know it existed until I tried to find a mocking framework for doing Silverlight unit testing. Then I found <a href="http://code.google.com/p/moq/issues/detail?id=73" target="_blank">this thread</a> over on the <a href="http://code.google.com/p/moq/" target="_blank">Moq</a> mocking framework's home site which talked about needing to get the Castle.DynamicProxy ported before Moq could be ported to Silverlight.</p>  <p>Turns out, the DynamicProxy is one of the core dependencies of the two major open source mocking frameworks out there. <em>(Moq, and Rhino Mocks)...</em><em>(I'm sure there's others out there, but for now I only care about Moq because it's what we use at work)</em></p>  <p>After sitting around for about three months since I first read the thread and not hearing any word about the DynamicProxy being ported, I thought I'd take a stab.</p>  <p>Joined the castle devl email group, threw a ping about the port and I was off...after a couple weeks several late nights, and a few patch submittal turn-backs by hammett I finally got the patch in a place he liked and he applied it on Jan 3 2009.</p>  <p>What a great feeling of relief, this was a big step forward to getting full mocking support in Silverlight.</p>  <p>There is still one pending thing with the DynamicProxy &amp; all Castle.Silverlight projects to date...we need to integrate the build and testing into their NAnt builds. Once that's done and a binary release is out, Moq port to Silverlight...here I come. </p>  <p>p.s. I already have a patch for Moq, but <a href="http://code.google.com/u/kzu.net/" target="_blank">Daniel</a> said he won't apply it till he can get the &quot;official&quot; binaries, which is fine. I would probably do the same if I were overseeing a decent sized open source project like Moq.</p>  <p>Soon enough...we'll have Silverlight mocking...</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>timvw</div>
-<div class='content'>
-Great job ;)</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-This is very good news. Thanks for the work.</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/14/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -371,7 +358,10 @@ This is very good news. Thanks for the work.</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
@@ -387,9 +377,6 @@ This is very good news. Thanks for the work.</div>
       </li>
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
   </ul>
 </section>

@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to install clang-format and formatting Objective-C files - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular b...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-14T05:49:01.820Z" pubdate data-updated="true">Jan 13th 2015</time>
+
+
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, we have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you&#39;re reviewing, your brain is now having to decide if anomalies in the formatting of your project&#39;s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio&#39;s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I&#39;d highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that&#39;s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your.</p>
+<h1 id="how-to-install-clang-format-">How to install <code>clang-format</code></h1>
+<p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
+<ol>
+<li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
+<li>In chrome dev tools (On my mac, <code>&amp;#8984;+&amp;#8997;+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.<ul>
+<li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
+</ul>
+</li>
+<li>Copy that URL and place it into the following set of commands.</li>
+</ol>
+<p>From a command prompt, navigate to a folder where you&#39;d like to save or store the <code>clang</code> tools.</p>
+<ol>
+<li>Remove the older version if there was one, and ceate a folder to work in
+<code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
+<li>Take the previously discovered link from above and use the following to download it into our working folder.
+<code>curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;</code></li>
+<li>Extract the tar file
+<code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
+<li>Remove any previously sym-linked linked version we have
+<code>rm -f ~/bin/clang-format</code></li>
+<li>Link the downloaded clang-format command into our <code>~/bin</code> folder
+<code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
+<li>Test the command works
+<code>clang-format --help</code></li>
+</ol>
+<p>Here are all of the steps above as a script:</p>
+<pre><code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format
+curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;
+tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format
+rm -f ~/bin/clang-format
+ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format
+clang-format --help
+</code></pre><h1 id="how-to-setup-your-project-style-guide">How to setup your project style guide</h1>
+<p>Now that we have the command line <code>clang-format</code> tool installed, we can walk through how to use it to format our Objective-C code files. Let&#39;s walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before we use the command line tool to rip through our project, let&#39;s first set the standards we&#39;d like clang-format to adhere to when formatting our code.</p>
+<p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project&#39;s Objective-C files.</p>
+<p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
+<p>Here is one I have before.</p>
+<pre><code>BasedOnStyle: Chromium
+
+AlignTrailingComments: true
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Attach
+ColumnLimit: 0
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: true
+Language: Cpp
+MaxEmptyLinesToKeep: 4
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: false
+PointerBindsToType: false
+SpacesBeforeTrailingComments: 1
+TabWidth: 4
+UseTab: Never
+</code></pre><p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
+<pre><code>BasedOnStyle: None
+</code></pre><h1 id="format-all-our-files-at-once">Format all our files at once</h1>
+<p>Now that we have a <code>.clang-format</code> file which helps to define our project&#39;s styling conventions, we can begin our initial formatting sweep.</p>
+<p>First let&#39;s create a command that gives us all the files we want to process.</p>
+<p>Here&#39;s my initial example (executed in a zsh shell):</p>
+<p><code>ls MyProject/*.[hm]</code></p>
+<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once your are happy with it, you can then pipe it&#39;s output to <code>clang-format</code>.</p>
+<p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
+<p>We can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
+<h3 id="-clang-format-options"><code>clang-format</code> options</h3>
+<p>In the above example we use the following <code>clang-format</code> options:</p>
+<ul>
+<li><code>-i</code> tells it to do an in-place edit of the file</li>
+<li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
+</ul>
+<h1 id="did-you-have-your-project-under-source-control-before-doing-this-">Did you have your project under source control before doing this?</h1>
+<p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
+<p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-01-14T05:49:01.820Z" pubdate data-updated="true">Jan 13th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/objective-c/'>Objective-C</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/" title="Previous Post: Custom Static Blog Generator - No Longer Using Octopress">&laquo; Custom Static Blog Generator - No Longer Using Octopress</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+      <li class="post">
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
+      </li>
+      <li class="post">
+        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
+      </li>
+      <li class="post">
+        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
+      </li>
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'developingonstaxmanade';
+      
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

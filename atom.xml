@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-03-29T16:12:11Z</updated>
+    <updated>2015-01-14T05:49:01Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -12,11 +12,100 @@
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
-        <title type="html"><![CDATA[Custom Static Blog Generator - No Longer Using Octopress]]></title>
-        <id>http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/</id>
-        <link href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">
+        <title type="html"><![CDATA[How to install clang-format and formatting Objective-C files]]></title>
+        <id>http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/</id>
+        <link href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">
         </link>
-        <updated>2015-03-29T16:12:11Z</updated>
+        <updated>2015-01-14T05:49:01Z</updated>
+        <summary type="html"><![CDATA[Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular b...]]></summary>
+        <content type="html"><![CDATA[<p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, we have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you&#39;re reviewing, your brain is now having to decide if anomalies in the formatting of your project&#39;s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio&#39;s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I&#39;d highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that&#39;s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your.</p>
+<h1 id="how-to-install-clang-format-">How to install <code>clang-format</code></h1>
+<p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
+<ol>
+<li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
+<li>In chrome dev tools (On my mac, <code>&amp;#8984;+&amp;#8997;+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.<ul>
+<li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
+</ul>
+</li>
+<li>Copy that URL and place it into the following set of commands.</li>
+</ol>
+<p>From a command prompt, navigate to a folder where you&#39;d like to save or store the <code>clang</code> tools.</p>
+<ol>
+<li>Remove the older version if there was one, and ceate a folder to work in
+<code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
+<li>Take the previously discovered link from above and use the following to download it into our working folder.
+<code>curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;</code></li>
+<li>Extract the tar file
+<code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
+<li>Remove any previously sym-linked linked version we have
+<code>rm -f ~/bin/clang-format</code></li>
+<li>Link the downloaded clang-format command into our <code>~/bin</code> folder
+<code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
+<li>Test the command works
+<code>clang-format --help</code></li>
+</ol>
+<p>Here are all of the steps above as a script:</p>
+<pre><code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format
+curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;
+tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format
+rm -f ~/bin/clang-format
+ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format
+clang-format --help
+</code></pre><h1 id="how-to-setup-your-project-style-guide">How to setup your project style guide</h1>
+<p>Now that we have the command line <code>clang-format</code> tool installed, we can walk through how to use it to format our Objective-C code files. Let&#39;s walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before we use the command line tool to rip through our project, let&#39;s first set the standards we&#39;d like clang-format to adhere to when formatting our code.</p>
+<p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project&#39;s Objective-C files.</p>
+<p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
+<p>Here is one I have before.</p>
+<pre><code>BasedOnStyle: Chromium
+
+AlignTrailingComments: true
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Attach
+ColumnLimit: 0
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: true
+Language: Cpp
+MaxEmptyLinesToKeep: 4
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: false
+PointerBindsToType: false
+SpacesBeforeTrailingComments: 1
+TabWidth: 4
+UseTab: Never
+</code></pre><p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
+<pre><code>BasedOnStyle: None
+</code></pre><h1 id="format-all-our-files-at-once">Format all our files at once</h1>
+<p>Now that we have a <code>.clang-format</code> file which helps to define our project&#39;s styling conventions, we can begin our initial formatting sweep.</p>
+<p>First let&#39;s create a command that gives us all the files we want to process.</p>
+<p>Here&#39;s my initial example (executed in a zsh shell):</p>
+<p><code>ls MyProject/*.[hm]</code></p>
+<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once your are happy with it, you can then pipe it&#39;s output to <code>clang-format</code>.</p>
+<p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
+<p>We can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
+<h3 id="-clang-format-options"><code>clang-format</code> options</h3>
+<p>In the above example we use the following <code>clang-format</code> options:</p>
+<ul>
+<li><code>-i</code> tells it to do an in-place edit of the file</li>
+<li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
+</ul>
+<h1 id="did-you-have-your-project-under-source-control-before-doing-this-">Did you have your project under source control before doing this?</h1>
+<p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
+<p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Custom Static Blog Generator - No Longer Using Octopress]]></title>
+        <id>http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/</id>
+        <link href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">
+        </link>
+        <updated>2015-01-04T00:34:11Z</updated>
         <summary type="html"><![CDATA[# TL;DR]]></summary>
         <content type="html"><![CDATA[<h1 id="tl-dr">TL;DR</h1>
 <blockquote>
@@ -1027,37 +1116,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
         <content type="html"><![CDATA[
 <div class='post'>
 <p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Segregate your code commits into tiny topical changes.]]></title>
-        <id>http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/</id>
-        <link href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">
-        </link>
-        <updated>2014-02-17T18:25:00Z</updated>
-        <summary type="html"><![CDATA[If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)]]></summary>
-        <content type="html"><![CDATA[<p>If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</p>
-<p>Now that I&#39;m only reaching people who use source control (serious developers), I&#39;d like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
-<h4 id="what-is-a-topical-commit-">What is a topical commit?</h4>
-<p>That almost looks like &#39;tropical&#39; and wouldn&#39;t it be nice to be in a tropical place doing commits to your code, but I digress...</p>
-<p>The topics I&#39;m referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</p>
-<p>For example:</p>
-<ul>
-<li>adding feature X</li>
-<li>refactoring</li>
-<li>bug fix</li>
-<li>spelling fix</li>
-<li>Updating comments/documentation</li>
-<li><strong><em> code formatting </em></strong></li>
-</ul>
-<p>I highlighted that last one for a reason as it&#39;s the impetus for writing this post.</p>
-<h3 id="don-t-mix-topics-themes-within-a-single-commit-">Don&#39;t mix topics/themes within a single commit!</h3>
-<p>Instead break them into multiple commits. If you&#39;re using git, checkout &#39;<a href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/">git add -p</a>&#39;</p>
-<p>If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</p>
-<p>Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you&#39;ve left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</p>
-<p>Let&#39;s just NOT mix topics in our commits, ok?</p>
-<p>K, THX bye!</p>
-<p>Happy Coding!</p>
 ]]></content>
     </entry>
 </feed>

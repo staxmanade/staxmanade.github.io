@@ -71,6 +71,40 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/db4o-with-systemtransactionstransaction/">Db4o with System.Transactions.TransactionScope</a></h1>
+    <p class="meta">
+          <time datetime="2008-11-30T22:15:00.000Z" pubdate data-updated="true">Nov 30th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>After after reading Rob Conery's post <a href="http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/">http://blog.wekeroad.com/blog/crazy-talk-reducing-orm-friction/</a>. I thought I'd give it a whirl and didn't get very far before I ran into my first roadblock. DB4O version 7.4.68 doesn't support any .NET System.Transaction. (For what I could tell...)</p>  <p>Below I'll explain how I pieced this together and made it work (At least an alpha type version to work...)</p>  <p>Assume I've followed almost everything Rob has in his blog for setup (IRepository, DB4O container class, ObjectRepository&lt;T&gt;, etc...)</p>  <p>My first unit test was the following </p>  <p>[Test]   <br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> CanRollbackSavedObjectInRepository()    <br />{    <br />&#160; <span style="color: #0000ff">using</span> (TransactionScope scope = <span style="color: #0000ff">new</span> TransactionScope())    <br />&#160; {    <br />&#160;&#160;&#160; _repository.Save(_dummyObject);    <br />&#160;&#160;&#160; <span style="color: #008000">//NO: scope.Complete(); Implied rollback</span>    <br />&#160; }    <br />    <br />&#160; <span style="color: #0000ff">if</span> (_repository.GetAll().Count() &gt; 0)    <br />&#160;&#160;&#160; Assert.Fail(&quot;<span style="color: #8b0000">TransactionScope Failed - count[</span>&quot; + _repository.GetAll().Count().ToString() + &quot;<span style="color: #8b0000">]</span>&quot;);    <br />}    <br /></p>  <p>And the above test fails...</p>  <p>Next was some research to figure out why this was failing... I didn't find much out there, except for some pending TODO's on the DB4O project.</p>  <p><a href="http://tracker.db4o.com/browse/COR-1376">http://tracker.db4o.com/browse/COR-1376</a>    <br /><a href="http://tracker.db4o.com/browse/COR-1143">http://tracker.db4o.com/browse/COR-1143</a></p>  <p>&#160;</p>  <p>So then it was off to figure out how frameworks implemented there resource managers to hook into the System.Transaction goo...</p>  <p>(Long story short, and several trial and error failures) The best of the solutions I found was in this open source code base. (<a href="http://code.google.com/p/uniframework/">http://code.google.com/p/uniframework/</a>)</p>  <p>In that project there was a class that managed the enlistment of a transaction, and some examples of how to use it...</p>  <p><a href="http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs">http://code.google.com/p/uniframework/source/browse/trunk/sources/Uniframework/Db4o/Db4oEnlist.cs</a> is the enlistment class.</p>  <p>&#160;</p>  <p>I placed this Db4oEnlist class as a private nested class inside the ObjectRepository&lt;T&gt; since I can't see why it would be used anywhere else...</p>  <p>And below is how I use them in the ObjectRepository&lt;T&gt;.</p>  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Delete(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />{<br />  Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />  <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />  Container.Store(item);<br />  <span style="color: #0000ff">if</span> (!inTransaction)<br />    Container.Commit();<br />}</pre><br /><br /><p>&#160;</p><br /><br /><p>We first create an instance of the Db4OEnlist class with the current container. This class implements the IEnlistmentNotification interface and knows how to commit/rollback/etc on the object database. We then use the private helper method Enlist() giving it the Db4OEnlist instance. This helper method enlists the sequence in any existing transactions returning if it enlisted in a transaction or not.</p><br /><br /><pre><span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />{<br />  System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />  <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />  {<br />    currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />  }<br />  <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />}</pre><br /><br /><p>If we aren't in a transaction we commit the action right away, however if we are in the transaction we let the .net System.Transaction framework take care of committing the transaction.</p><br /><br /><p>Once I found the example in the &quot;uniframework&quot; it came together rather quickly...</p><br /><br /><p>Below is the ObjectRepository&lt;T&gt; I'm going forward with on testing Rob's idea of developing an application using the object database first... (we'll see how it goes)</p><br /><br /><pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> ObjectRepository&lt;T&gt; :<br />  IRepository&lt;T&gt; where T : <span style="color: #0000ff">class</span><br />{<br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Returns all T records in the repository</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; GetAll()<br />  {<br />    <span style="color: #0000ff">return</span> (from T items <span style="color: #0000ff">in</span> Container<br />        select items).AsQueryable();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Finds an item using a passed-in expression lambda</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">public</span> IQueryable&lt;T&gt; Find(System.Linq.Expressions.Expression&lt;Func&lt;T, <span style="color: #0000ff">bool</span>&gt;&gt; expression)<br />  {<br />    <span style="color: #0000ff">return</span> GetAll().Where(expression);<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Saves an item to the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Save(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Store(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Deletes an item from the database</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;&lt;/param&gt;</span><br />  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Delete(T item)<br />  {<br />    Db4oEnlist enlist = <span style="color: #0000ff">new</span> Db4oEnlist(Container, item);<br />    <span style="color: #0000ff">bool</span> inTransaction = Enlist(enlist);<br />    Container.Delete(item);<br />    <span style="color: #0000ff">if</span> (!inTransaction)<br />      Container.Commit();<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">bool</span> Enlist(Db4oEnlist enlist)<br />  {<br />    System.Transactions.Transaction currentTx = System.Transactions.Transaction.Current;<br />    <span style="color: #0000ff">if</span> (currentTx != <span style="color: #0000ff">null</span>)<br />    {<br />      currentTx.EnlistVolatile(enlist, EnlistmentOptions.None);<br />      <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;<br />    }<br />    <span style="color: #0000ff">return</span> <span style="color: #0000ff">false</span>;<br />  }<br /><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> IObjectContainer Container<br />  {<br />    <span style="color: #0000ff">get</span><br />    {<br />      <span style="color: #0000ff">return</span> ServiceLocator.Current.GetInstance&lt;IObjectContainer&gt;();<br />    }<br />  }<br /><br />  <span style="color: #808080">/// &lt;summary&gt;</span><br />  <span style="color: #808080">/// Provides support for System.Transaction integration</span><br />  <span style="color: #808080">/// &lt;/summary&gt;</span><br />  <span style="color: #0000ff">private</span> <span style="color: #0000ff">class</span> Db4oEnlist : IEnlistmentNotification<br />  {<br />    <span style="color: #0000ff">private</span> IObjectContainer container;<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">object</span> oldItem;<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Initializes a new instance of the &lt;see cref=&quot;db4oEnlist&quot;/&gt; class.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;database&quot;&gt;The database.&lt;/param&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;item&quot;&gt;The item.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> Db4oEnlist(IObjectContainer container, <span style="color: #0000ff">object</span> item)<br />    {<br />      <span style="color: #0000ff">this</span>.container = container;<br />      oldItem = item;<br />    }<br /><br />    #region IEnlistmentNotification<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Commits the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Commit(Enlistment enlistment)<br />    {<br />      container.Commit();<br />      oldItem = <span style="color: #0000ff">null</span>;<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Ins the doubt.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> InDoubt(Enlistment enlistment)<br />    {<br />      <span style="color: #008000">//throw new Exception(&quot;The method or operation is not implemented.&quot;);</span><br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Prepares the specified preparing enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;preparingEnlistment&quot;&gt;The preparing enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Prepare(PreparingEnlistment preparingEnlistment)<br />    {<br />      preparingEnlistment.Prepared();<br />    }<br /><br />    <span style="color: #808080">/// &lt;summary&gt;</span><br />    <span style="color: #808080">/// Rollbacks the specified enlistment.</span><br />    <span style="color: #808080">/// &lt;/summary&gt;</span><br />    <span style="color: #808080">/// &lt;param name=&quot;enlistment&quot;&gt;The enlistment.&lt;/param&gt;</span><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Rollback(Enlistment enlistment)<br />    {<br />      container.Rollback();<br />      container.Ext().Refresh(oldItem, <span style="color: #0000ff">int</span>.MaxValue);<br />    }<br /><br />    #endregion<br />  }<br />}</pre>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Magento theme</div>
+<div class='content'>
+I found so many interesting stuff in your blog especially its discussion. So i must appreciate your efforts on posting these information.</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Hi!<BR/><BR/>You’ve been nominated as db4o dVP. Please see <A HREF="http://developer.db4o.com/blogs/community/archive/2009/03/04/meet-the-new-db4objects-valued-professionals-dvp-for-2009.aspx" REL="nofollow">this page</A><BR/>I don’t have your contact info!<BR/><BR/>Best!<BR/><BR/>German</div>
+</div>
+<div class='comment'>
+<div class='author'>German Viscuso</div>
+<div class='content'>
+Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archive/2008/12/11/db4o-with-system-transactions-transactionscope.aspx<BR/><BR/>Best regards.<BR/><BR/>German Viscuso<BR/>db4objects community manager</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/11/wcf-silverlight-default-constructor-not/">WCF - Silverlight - Default constructor not called??</a></h1>
     <p class="meta">
           <time datetime="2008-11-25T06:02:00.000Z" pubdate data-updated="true">Nov 24th 2008</time>
@@ -184,41 +218,158 @@ That is exactly what it is for, so you can use reserved words for variable names
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...<br /><br />On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.<br /><br />public interface IValidatedResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br />Now if you had a method that exposed this generic result object through your web service...<br /><br /><br />public ValidatedResult&lt;long&gt; StringLength(string param1)<br />{<br />    return new ValidatedResult&lt;long&gt;(param1.Length);<br />}<br /><br /><br />Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...<br /><br /><br />public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged<br />{<br /><br />    private long ResultField;<br /><br />    private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public long Result<br />    {<br />        get<br />        {<br />            return this.ResultField;<br />        }<br />        set<br />        {<br />            if ((this.ResultField.Equals(value) != true))<br />            {<br />                this.ResultField = value;<br />                this.RaisePropertyChanged("Result");<br />            }<br />        }<br />    }<br /><br />    [System.Runtime.Serialization.DataMemberAttribute()]<br />    public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues<br />    {<br />        get<br />        {<br />            return this.ValidationIssuesField;<br />        }<br />        set<br />        {<br />            if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))<br />            {<br />                this.ValidationIssuesField = value;<br />                this.RaisePropertyChanged("ValidationIssues");<br />            }<br />        }<br />    }<br /><br />    // stripped out the INotifyPropertyChanged goo<br />}<br /><br /><br />Notice the non generic type ValidatedResultOflong  that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...<br /><br />Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.<br /><br />Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a "Result" and a "ValidationIssues" property and another partial class in a different location that declares it implements an interface which defines that "Result" and "ValidationIssues" property... and would that compile?<br /><br />So I wrote my first test...<br /><br />Here is our auto generated partial class simulated...<br /><br />public partial class Foo<br />{<br />    public bool Result { get; set; }<br />}<br /><br /><br />I then wrote a generic result of T to define the object has a Result property.<br /><br />public interface IResult&lt;T&gt;<br />{<br />    T Result { get; set; }<br />}<br /><br /><br />And now the specific implementation with a long Result type.<br /><br />public partial class Foo : IResult&lt;long&gt; {}<br /><br /><br />After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...<br /><br />I defined the validated result contract as follows...<br />public interface IResultProperty&lt;T&gt;<br />{<br />    T Result { get; }<br />}<br /><br />public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;<br />{<br />    List&lt;string&gt; ValidationIssues { get; set; }<br />}<br /><br /><br />This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.<br /><br />Here's an example of the partial class for the ValidatedResultOflong <br /><br />public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }<br /><br />With that in place, this meant I could create some generic handling methods for all of my objects that now implement IValidatedResult&lt;T&gt;...<br /><br /><br />public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)<br />    where T : IValidatedResult&lt;T&gt;<br />{<br />    if (validatedResult != null &amp;&amp;<br />        validatedResult.ValidationIssues != null &amp;&amp;<br />        validatedResult.ValidationIssues.Count > 0)<br />        return true;<br />    else<br />        return false;<br />}<br /><br /><br />Don't know if i've very heard anyone talk about one partial class containg some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...<br /><script type="text/javascript"><br />var pageTracker = _gat._getTracker("UA-1017448-3");<br />pageTracker._trackPageview();<br /></script></div>
-<h2>Comments</h2>
+<div class="entry-content"><p>We&#39;ve implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...</p>
+<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here&#39;s the basic interface.</p>
+<pre><code class="lang-C#">public interface IValidatedResult&lt;T&gt;
+{
+  T Result { get; set; }
+  List&lt;string&gt; ValidationIssues { get; set; }
+}
+</code></pre>
+<p>Now if you had a method that exposed this generic result object through your web service...</p>
+<pre><code class="lang-C#">public ValidatedResult&lt;long&gt; StringLength(string param1)
+{
+  return new ValidatedResult&lt;long&gt;(param1.Length);
+}
+</code></pre>
+<p>Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...</p>
+<pre><code class="lang-C#">public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged
+{
+
+  private long ResultField;
+
+  private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;
+
+  [System.Runtime.Serialization.DataMemberAttribute()]
+  public long Result
+  {
+    get
+    {
+      return this.ResultField;
+    }
+    set
+    {
+      if ((this.ResultField.Equals(value) != true))
+      {
+        this.ResultField = value;
+        this.RaisePropertyChanged(&quot;Result&quot;);
+      }
+    }
+  }
+
+  [System.Runtime.Serialization.DataMemberAttribute()]
+  public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues
+  {
+    get
+    {
+      return this.ValidationIssuesField;
+    }
+    set
+    {
+      if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))
+      {
+        this.ValidationIssuesField = value;
+        this.RaisePropertyChanged(&quot;ValidationIssues&quot;);
+      }
+    }
+  }
+
+  // stripped out the INotifyPropertyChanged goo
+}
+</code></pre>
+<p>Notice the non generic type <code>ValidatedResultOflong</code> that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...</p>
+<p>Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.</p>
+<p>Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a &quot;Result&quot; and a &quot;ValidationIssues&quot; property and another partial class in a different location that declares it implements an interface which defines that &quot;Result&quot; and &quot;ValidationIssues&quot; property... and would that compile?</p>
+<p>So I wrote my first test...</p>
+<p>Here is our auto generated partial class simulated...</p>
+<pre><code class="lang-C#">public partial class Foo
+{
+  public bool Result { get; set; }
+}
+</code></pre>
+<p>I then wrote a generic result of T to define the object has a Result property.</p>
+<pre><code class="lang-C#">public interface IResult&lt;T&gt;
+{
+  T Result { get; set; }
+}
+</code></pre>
+<p>And now the specific implementation with a long Result type.</p>
+<pre><code class="lang-C#">public partial class Foo : IResult&lt;long&gt; {}
+</code></pre>
+<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I&#39;ll show how on the silverlight side below...</p>
+<p>I defined the validated result contract as follows...</p>
+<pre><code class="lang-C#">public interface IResultProperty&lt;T&gt;
+{
+  T Result { get; }
+}
+
+public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;
+{
+  List&lt;string&gt; ValidationIssues { get; set; }
+}
+</code></pre>
+<p>This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.</p>
+<p>Here&#39;s an example of the partial class for the <code>ValidatedResultOflong</code></p>
+<pre><code class="lang-C#">public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }
+</code></pre>
+<p>With that in place, this meant I could create some generic handling methods for all of my objects that now implement <code>IValidatedResult&lt;T&gt;</code>...</p>
+<pre><code class="lang-C#">public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)
+where T : IValidatedResult&lt;T&gt;
+{
+  if (validatedResult != null &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues != null &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues.Count &gt; 0)
+  return true;
+  else
+  return false;
+}
+</code></pre>
+<p>Don&#39;t know if i&#39;ve very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...</p>
+<h2 id="comments">Comments</h2>
 <div class='comments'>
 <div class='comment'>
 <div class='author'>Jason.Jarrett</div>
 <div class='content'>
-Interesting observation. Thanks for sharing.<BR/><BR/>I haven't pushed it very far (bool, string, MyCustomObject, etc)</div>
+  Interesting observation. Thanks for sharing.
+
+  I haven&#39;t pushed it very far (bool, string, MyCustomObject, etc)</div>
 </div>
 <div class='comment'>
-<div class='author'>Boris Modylevsky</div>
-<div class='content'>
-Thanks for the post. It's really exciting to receive a proxy of Generic class. It really works smoothly with "simple" classes. But more complex ones result with random names in Silverlight proxy. For example, my <I>SimpleTree&lt;Item&gt;</I> became <I>SimpleTreeNodeOfItemErNMAaNV</I></div>
-</div>
+  <div class='author'>Boris Modylevsky</div>
+  <div class='content'>
+    Thanks for the post. It&#39;s really exciting to receive a proxy of Generic class. It really works smoothly with &quot;simple&quot; classes. But more complex ones result with random names in Silverlight proxy. For example, my <code>_SimpleTree&lt;Item&gt;_</code> became <em>SimpleTreeNodeOfItemErNMAaNV</em></div>
+  </div>
 <div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Ok, I quickly threw an example together. I didn't comment much, but the code's there and "works on my box..." <BR/><BR/>Let me know if you have any troubles either understanding it, or getting it working. <BR/><BR/>I've never used this file host service, but giving it a try... I've placed the project here <A HREF="http://www.filesavr.com/validatedresultsample" REL="nofollow"> http://www.filesavr.com/validatedresultsample</A><BR/><BR/>Also the only concepts to really look at here are the ValidatedResult&lt;T&gt; and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.<BR/><BR/>Good luck!</div>
-</div>
+  <div class='author'>Jason.Jarrett</div>
+  <div class='content'>
+    Ok, I quickly threw an example together. I didn&#39;t comment much, but the code&#39;s there and &quot;works on my box...&quot;
+
+    Let me know if you have any troubles either understanding it, or getting it working.
+
+    I&#39;ve never used this file host service, but giving it a try... I&#39;ve placed the project here <a href="http://www.filesavr.com/validatedresultsample"> http://www.filesavr.com/validatedresultsample</a>
+
+    Also the only concepts to really look at here are the `ValidatedResult<T>`` and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.
+
+    Good luck!</div>
+  </div>
 <div class='comment'>
-<div class='author'>greg</div>
-<div class='content'>
-... very much appreciated!!</div>
-</div>
+  <div class='author'>greg</div>
+  <div class='content'>
+    ... very much appreciated!!</div>
+  </div>
 <div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Greg, <BR/><BR/>I will try to put together an example and post it here soon.</div>
-</div>
+  <div class='author'>Jason.Jarrett</div>
+  <div class='content'>
+    Greg,
+
+    I will try to put together an example and post it here soon.</div>
+  </div>
 <div class='comment'>
-<div class='author'>greg</div>
-<div class='content'>
-... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.<BR/>Thanks in advance.</div>
-</div>
+  <div class='author'>greg</div>
+  <div class='content'>
+    ... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.
+    Thanks in advance.</div>
+  </div>
 </div>
 </div>
 
@@ -262,9 +413,30 @@ Thanks for the patch, I applied it today.</div>
         
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-If you have a class that needs to expose some value (either by a Property, or a "getter" function) and there is a chance that getting this value could cause an exception. How do you best expose that value?<br /><br />I originally had a Property that exposed some value where, if in a certain state, would throw an exception.<br /><br />Microsoft FxCop recommends.<br />"Do not explicitly raise exceptions from unexpected<br />                   locations. There are some methods, such as Equals and<br />                   GetHashCode, which users do not expect to raise exceptions.<br />                    Therefore calls to these methods are not commonly<br />                   wrapped in try catch blocks."<br /><br />So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...<br /><br />"Properties should be used instead of Get/Set methods<br />                   in most situations. Methods are preferable to properties<br />                   in the following situations: the operation is a conversion,<br />                   is expensive or has an observable side-effect; the<br />                   order of execution is important; calling the member<br />                   twice in succession creates different results; a member<br />                   is static but returns a mutable value; or the member<br />                   returns an array."<br /><br />...<br /><br />So, which is the best method?<br /><br />I went back to the Property method because it really is mimicking the usage of a property...<br /><br />Any suggestions out there?</div>
+<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
+<p>I originally had a Property that exposed some value where, if in a certain state, would throw an exception.</p>
+<p>Microsoft FxCop recommends.</p>
+<blockquote>
+<p>Do not explicitly raise exceptions from unexpected
+locations. There are some methods, such as Equals and
+GetHashCode, which users do not expect to raise exceptions.
+Therefore calls to these methods are not commonly
+wrapped in try catch blocks.</p>
+</blockquote>
+<p>So if FxCop recommends not raising an exception from a Property&#39;s getter, we&#39;ll just throw it in a function. Come to find out now FxCop says...</p>
+<blockquote>
+<p>Properties should be used instead of Get/Set methods
+in most situations. Methods are preferable to properties
+in the following situations: the operation is a conversion,
+is expensive or has an observable side-effect; the
+order of execution is important; calling the member
+twice in succession creates different results; a member
+is static but returns a mutable value; or the member
+returns an array.</p>
+</blockquote>
+<p>So, which is the best method?</p>
+<p>I went back to the Property method because it really is mimicking the usage of a property...</p>
+<p>Any suggestions out there?</p>
 </div>
 
     </article>
@@ -346,7 +518,10 @@ Lambda, not lamda. ;)</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
-        <a href="/2015/03/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
@@ -362,9 +537,6 @@ Lambda, not lamda. ;)</div>
       </li>
       <li class="post">
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
-      </li>
-      <li class="post">
-        <a href="/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a>
       </li>
   </ul>
 </section>
