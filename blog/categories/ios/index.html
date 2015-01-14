@@ -79,17 +79,17 @@
         <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, we have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
+<div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
 <p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you&#39;re reviewing, your brain is now having to decide if anomalies in the formatting of your project&#39;s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
 <p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio&#39;s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
 <p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I&#39;d highly recommend you check them out.</p>
 <p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that&#39;s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
-<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your.</p>
+<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your code.</p>
 <h1 id="how-to-install-clang-format-">How to install <code>clang-format</code></h1>
 <p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
 <ol>
 <li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
-<li>In chrome dev tools (On my mac, <code>&amp;#8984;+&amp;#8997;+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.<ul>
+<li>In chrome dev tools (On my mac, <code>⌘+⌥+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.<ul>
 <li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
 </ul>
 </li>
@@ -97,13 +97,13 @@
 </ol>
 <p>From a command prompt, navigate to a folder where you&#39;d like to save or store the <code>clang</code> tools.</p>
 <ol>
-<li>Remove the older version if there was one, and ceate a folder to work in
+<li>Remove the older version if there was one, and create a folder to work in
 <code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
 <li>Take the previously discovered link from above and use the following to download it into our working folder.
 <code>curl &#39;http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz&#39; -o &#39;./clang-format/clang-format.tar.xz&#39;</code></li>
 <li>Extract the tar file
 <code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
-<li>Remove any previously sym-linked linked version we have
+<li>Remove any previously sym-linked linked version you have
 <code>rm -f ~/bin/clang-format</code></li>
 <li>Link the downloaded clang-format command into our <code>~/bin</code> folder
 <code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
@@ -118,12 +118,12 @@ rm -f ~/bin/clang-format
 ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format
 clang-format --help
 </code></pre><h1 id="how-to-setup-your-project-style-guide">How to setup your project style guide</h1>
-<p>Now that we have the command line <code>clang-format</code> tool installed, we can walk through how to use it to format our Objective-C code files. Let&#39;s walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before we use the command line tool to rip through our project, let&#39;s first set the standards we&#39;d like clang-format to adhere to when formatting our code.</p>
+<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let&#39;s walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before you use the command line tool to rip through our project, let&#39;s first set the standards you&#39;d like clang-format to adhere to when formatting our code.</p>
 <p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
 <p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project&#39;s Objective-C files.</p>
 <p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
-<p>Here is one I have before.</p>
+<p>Here is one I have used before.</p>
 <pre><code>BasedOnStyle: Chromium
 
 AlignTrailingComments: true
@@ -143,15 +143,15 @@ UseTab: Never
 </code></pre><p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
 <pre><code>BasedOnStyle: None
 </code></pre><h1 id="format-all-our-files-at-once">Format all our files at once</h1>
-<p>Now that we have a <code>.clang-format</code> file which helps to define our project&#39;s styling conventions, we can begin our initial formatting sweep.</p>
-<p>First let&#39;s create a command that gives us all the files we want to process.</p>
+<p>Now that you have a <code>.clang-format</code> file which helps to define our project&#39;s styling conventions, you can begin our initial formatting sweep.</p>
+<p>First let&#39;s create a command that gives us all the files you want to process.</p>
 <p>Here&#39;s my initial example (executed in a zsh shell):</p>
 <p><code>ls MyProject/*.[hm]</code></p>
-<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once your are happy with it, you can then pipe it&#39;s output to <code>clang-format</code>.</p>
+<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
 <p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
-<p>We can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
+<p>You can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
 <h3 id="-clang-format-options"><code>clang-format</code> options</h3>
-<p>In the above example we use the following <code>clang-format</code> options:</p>
+<p>In the above example you use the following <code>clang-format</code> options:</p>
 <ul>
 <li><code>-i</code> tells it to do an in-place edit of the file</li>
 <li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
