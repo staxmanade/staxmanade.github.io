@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-01-14T05:49:01Z</updated>
+    <updated>2015-01-15T00:17:25Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,20 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Resgrid is a BizSpark Featured Startup]]></title>
+        <id>http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
+        <link href="http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">
+        </link>
+        <updated>2015-01-15T00:17:25Z</updated>
+        <summary type="html"><![CDATA[Today Microsoft published an article on their [BizSpark Featured Startups](http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/tr...]]></summary>
+        <content type="html"><![CDATA[<p>Today Microsoft published an article on their <a href="http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/trustworthy-cloud-logistics-for-first-responders.aspx">BizSpark Featured Startups</a> blog about <a href="http://resgrid.com">Resgrid</a>!</p>
+<h3 id="what-is-resgrid-">What is Resgrid?</h3>
+<p>Resgrid is a software as a service product hosted on Microsoft Azure that provides logistics, management and communication tools to first responder organizations such as volunteer fire, career fire, EMS, search and rescue, public safety, disaster relief organizations, etc.</p>
+<p>My partner <a href="http://www.designlimbo.com/">Shawn Jackson</a> and I created <a href="http://resgrid.com">Resgrid</a> a few years ago and the buzz is exciting to see.</p>
+<p>If you have any interest in following some technical aspects of this little startup. <a href="http://www.designlimbo.com/">Shawn</a> often posts interesting articles both technical and startup/business related on <a href="http://www.designlimbo.com/">his site</a>.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How to install clang-format and formatting Objective-C files]]></title>
         <id>http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/</id>
@@ -1104,18 +1118,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
 <h1 id="where-do-i-get-it-">Where do I get it?</h1>
 <h2 id="-here-https-github-com-staxmanade-paginatedcollectionview-"><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2>
 <p>Hope you find this useful.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet]]></title>
-        <id>http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/</id>
-        <link href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">
-        </link>
-        <updated>2014-03-02T05:41:00Z</updated>
-        <summary type="html"><![CDATA[A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when ru...]]></summary>
-        <content type="html"><![CDATA[
-<div class='post'>
-<p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
 ]]></content>
     </entry>
 </feed>

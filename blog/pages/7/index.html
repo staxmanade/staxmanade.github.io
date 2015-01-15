@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/">NuGet Project Uncovered: Chronic</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-02T00:23:00.000Z" pubdate data-updated="true">Feb 1st 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/List/Packages/Chronic" target="_blank">Chronic</a> is a port of <a href="https://github.com/mojombo/chronic" target="_blank">Ruby’s Chronic</a> providing some natural language parsing for dates.</p>  <p>This is a pretty cool little utility as it lets you take some input like "tomorrow” or “two weeks ago” and turn that into a DateTime object.</p>  <p>Take a look at some tests I pulled from <a href="https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs">https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs</a>.</p>  <blockquote>   <p>[Fact]    <br />public void seven_days_from_now_at_midnight()     <br />{     <br />Parse(" seven days from now at midnight")     <br />.AssertEquals(Time.New(2006, 8, 24));     <br />}</p>    <p>[Fact]    <br />public void _2_weeks_ago()     <br />{     <br />Parse("2 weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br />}</p>    <p>[Fact]    <br />public void two_weeks_ago()     <br />{     <br />Parse("two weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br /></p> </blockquote>  <p>I tried playing with it a bit. There seem to be some cases sensitivity issues with the codebase now as “tomorrow” works but “Tomorrow” doesn’t. But I think that’s a great reason to be on GitHub. Fork, fix, and send a pull request. All better…</p></div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-enum-metadata/">NuGet Project Uncovered: Enum Metadata Library</a></h1>
     <p class="meta">
           <time datetime="2012-02-01T00:26:00.000Z" pubdate data-updated="true">Jan 31st 2012</time>
@@ -213,22 +229,6 @@
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-introduction-to/">NuGet Project Uncovered: An Introduction to the Series</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-23T00:11:00.000Z" pubdate data-updated="true">Jan 22nd 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>A while back I posted about <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">following the NuGet feed via an RSS reader</a>. For some strange reason I’ve been reviewing this feed since then on an almost daily basis in my RSS reader. Throughout that time I’ve kept a small list of what I think are interesting projects that have put out a release since that time. Today we’re going to start a journey through projects that I’ve found during my review of the feed. Some projects are interesting because I could find a use for them, some are interesting because they are unique, and others solve an interesting problem.</p>  <h4>Why were these packages chosen to post about over others?</h4>  <p>There wasn’t any scientific process in place to decide what projects made this list or not but as I think back over my time reviewing the feed, below are some items that came to mind.</p>  <h5>Some reasons I may have chosen a project:</h5>  <ul>   <li>I could <strong>potentially</strong> see myself investigating its usage someday. </li>    <li>It solved a problem in an interesting way. </li>    <li>Preferred small, focused, unique packages. </li>    <li>Preferred projects that were Open Source as in FREE.      <ul>       <li>Although I didn’t bother to look at any of the licenses so be sure to read into those before you use any yourself. </li>     </ul>   </li>    <li>Preferred projects that have a “<strong>Project Site</strong>” where I could browse the source code see examples or even documentation.     <br /><a href="http://lh5.ggpht.com/-xn_JwxZNUGU/TxylshXCQUI/AAAAAAAAATA/cECY7x7WnzI/s1600-h/image%25255B30%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/-sXoFslcjE_c/Txyls-rcxuI/AAAAAAAAATI/X6ZPfYNGt_k/image_thumb%25255B15%25255D.png?imgmax=800" width="138" height="98" /></a></li>    <li>For some reason if I saw it was hosted on GitHub I preferred those to sites that had their own dedicated location (Can’t explain why – just did…) </li> </ul>  <h5>Some reasons I may have NOT have chosen a project:</h5>  <ul>   <li>Tended to avoid projects that posted large numbers of packages even though many of them are still very good projects.    <br />EX:       <ul>       <li>NServiceBus </li>        <li>FubuMvc </li>     </ul>   </li>    <li>For some reason I tended to stay away from anything MVC related. There are probably very interesting projects for MVC on there, but I probably avoided them because I’m not doing anything MVC related at the moment. </li>    <li>Avoided packages that had “utilities” or “common” or “helpers” in the package name.      <ul>       <li>But it might still be worthwhile checking out some of those open source “utility” projects. Just to get an idea of what others consider “needed on every project” and different approaches to the problems. </li>     </ul> <!--EndFragment--></li> </ul>  <h4>Some items to consider with these little NuGet gems.</h4>  <ul>   <li>Make sure you read and understand any license the project has before including or using them in your own work. </li>    <li>These posts won’t be full project analysis, but a generally a first impression.</li>    <li>Be sure to research any project before using. I’m only mentioning them because they piqued my interest. Not because I have extensive knowledge of the projects or know their stability.</li> </ul></div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/8/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -263,6 +263,9 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
       </li>
       <li class="post">
@@ -279,9 +282,6 @@
       </li>
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
-      </li>
-      <li class="post">
-        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
   </ul>
 </section>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2014-12-29T16:12:11Z</updated>
+    <updated>2015-01-15T00:17:25Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,20 @@
     <link rel="self" href="/blog/ec.xml"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Resgrid is a BizSpark Featured Startup]]></title>
+        <id>http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
+        <link href="http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">
+        </link>
+        <updated>2015-01-15T00:17:25Z</updated>
+        <summary type="html"><![CDATA[Today Microsoft published an article on their [BizSpark Featured Startups](http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/tr...]]></summary>
+        <content type="html"><![CDATA[<p>Today Microsoft published an article on their <a href="http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/trustworthy-cloud-logistics-for-first-responders.aspx">BizSpark Featured Startups</a> blog about <a href="http://resgrid.com">Resgrid</a>!</p>
+<h3 id="what-is-resgrid-">What is Resgrid?</h3>
+<p>Resgrid is a software as a service product hosted on Microsoft Azure that provides logistics, management and communication tools to first responder organizations such as volunteer fire, career fire, EMS, search and rescue, public safety, disaster relief organizations, etc.</p>
+<p>My partner <a href="http://www.designlimbo.com/">Shawn Jackson</a> and I created <a href="http://resgrid.com">Resgrid</a> a few years ago and the buzz is exciting to see.</p>
+<p>If you have any interest in following some technical aspects of this little startup. <a href="http://www.designlimbo.com/">Shawn</a> often posts interesting articles both technical and startup/business related on <a href="http://www.designlimbo.com/">his site</a>.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Use different Git Diff Tools Per File Extension]]></title>
         <id>http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>

@@ -71,6 +71,50 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_12/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 3 – Lessons Learned</a></h1>
+    <p class="meta">
+          <time datetime="2009-08-12T20:54:00.000Z" pubdate data-updated="true">Aug 12th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p></p>  <h4>Lessons learned by doing Branch-Per-Feature with Team Foundation Server.</h4> <p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol> <p>In this post I’ll outline several of the issues/hiccups/<em>features</em> we found while attempting to apply Branch-Per-Feature with TFS.</p>  <h4>260 Characters limit.</h4>  <p>One of the first obstacles we ran into when attempting the Branch-Per-Feature with our TFS was the 260 Characters limit (you can read more here <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx">http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx</a>).</p>  <p>The largest offenders of this were artifacts added to a project as a result of doing an “Add Service Reference”. This <em>feature</em> created file names with the entire namespace in the file path. The way we got around this was the <a href="/2009/04/t4-replacement-for-add-service">T4 replacement for &quot;Add Service Reference&quot;</a> which helped keep some of the longer file paths shorter in our Silverlight projects. However it still rears it’s ugly head when we create a new branch and give a descriptive name that’s too long.</p>  <p>Which bring me to the next hiccup we run into. </p>  <h4>Don’t RENAME a newly created branch. Delete it and re-create it with new name. </h4>  <p>After a branch was created, if we decide the name for the branch wasn not good enough (either causes file path length issues, or it’s description isn’t clear enough), <strong>DON’T RENAME THE NEW BRANCH</strong>. Instead, choose to <strong>delete and re-create it</strong>. Clearly this has to be <strong>caught before commits are made to the new branch</strong>. </p>  <h5>Why is this an issue? </h5>  <p>In TFS, when you follow the simple steps to merge a feature from a branch into the trunk, you get to a point where all the changes made in the branch are checked out and staged to be merged into the trunk in your development environment. However when (or if) you’ve applied a rename to the branch at some stage in the lifetime of the branch, you don’t get a nice pretty list of files that changed and ready to be checked in, instead you get <strong>every file in the branch </strong>as though it were changed at some point in time. Sadly, this is usually not the case, and why I said earlier to catch the problem as soon as possible. </p>  <p>One of the great benefits of the branch/merge strategy is the final merge into the trunk is typically all changes required for a particular feature. When you have to go back to grapple some <strong>source control history debugging</strong>, it’s much easier to detect large changes from branch merges than sifting through tens of check-ins per file.</p>  <p>After the feature is complete and you start the steps required to merge the feature into the trunk, typically you only see the files that have changed get checked out and ready to be merged into the trunk. However, when a rename occurs on the branch it somehow tags every item as though it were changed. <strong>So the Merge back into the trunk ends up looking like the entire project changed.</strong> This makes the source diffing extremely difficult as I described in the <strong>Tester Pass 1</strong> step in our kanban steps.</p>  <h4>Can’t easily merge between different branches or grand-child branches (or at all, didn’t push hard enough to make it)</h4>  <p>Another issue we’ve come across (which hasn’t road blocked us too bad) was the in-ability to merge between two different branches that stemmed from the same trunk or merging a grandchild branch into the grandparent (bypassing the child/parent).</p>  <p>A specific scenario we ran into was when Feature A was under development on a branch, and a developer was ready to start working on Feature B. Feature B had a dependency on some of the changes that had taken place in Feature A, however we wanted to deploy Feature A before Feature B was complete. As an experiment we thought we would just create Feature B’s branch straight from Feature A’s branch, however what this would have left us with when Feature A was merged into the Trunk was Feature B two levels away from the Trunk. </p>  <p>Although TFS allows this scenario, any changes to the trunk had to be pushed into Feature A’s branch before it could be pushed into Feature B’s branch, and come final merge time for Feature B, we couldn’t merge straight into the trunk. We would have had to first merge into Feature A’s branch and then do the final merge into the trunk. In the end we just held back the deployment of Feature A and both Feature A &amp; B were developed in Feature A’s branch.</p>  <blockquote>   <p>I read somewhere that this “could” be possible through some command line tools, however it wasn’t important enough to go through the pain and this would be much better if we could just use the existing TFS interface to accomplish this simple scenario.</p> </blockquote>  <p>&#160;</p>  <p>I’m sure there are other tips/tricks I could outline here, but either they’re not coming to mind or they’re too basic to really care about. If I think of any, I’ll update this post further.</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Bealer</div>
+<div class='content'>
+Cool, thanks for the update.<br /><br />Yeah, I thought it would come down to planning and communication. I only mentioned as I&#39;ve read Martin Fowler&#39;s recent blog about it. He didn&#39;t seem to favour it, and mentioned CI is the preferred point of communication. <br /><br />Basically branching per feature makes increased work in terms of planning and communication.<br /><br />I&#39;m still in favour of it though, especially for the work we do (Broken down, smallish stories, with WIP limits).</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+There are a number of things to consider. <br /><br />Branch-Per-Feature is not for every project.<br /><br />The fear of a merge. This was big for everyone on the team in the beginning; however, with practice and repetiong, this has become just a part of the process. I think the biggest thing here was to just start doing it, learn as you go, and frequent merging will give you enough practice that a merge becomes simple.<br /><br />Regularly forward merge (pull changes from the trunk into your branch). (I almost do it after every check-in to the trunk)<br /><br />As far as code merges stomping on each other’s code, it does come down to careful planning and communication. And enough separation of concerns that one feature should NEVER be stomping on another feature’s code.<br /><br />Think of having a project as described in Ayande’s blog here http://ayende.com/Blog/archive/2009/07/22/the-tale-of-the-lazy-architect.aspx<br /><br />Focus on branching features that are separate enough in context that they don’t collide in difficult areas of the code. <br /><br />Focus on keeping the features in each branch small. We deploy weekly, and it&#39;s unfortunate and rare for a branch to live more than 2 weeks. (It happens, but we try not to)<br /><br />Even following the two ideas above, you will still run into merging conflicts. We run into them more frequently than I’d like, but it’s really up to the developer to be careful. I&#39;ve come to not trust the &quot;auto-merge&quot; within TFS. Well, I trust it to do the bulk of the work, but I still scrutinize and diff every file before checking those merged changes in.<br /><br />TODO: One item still on my plate is to setup our C.I. server to do things like build/run unit tests on each branch automatically. (Without having to setup/configure a build per branch manually) This is unfortunately one large flaw with the existing C.I. tooling. Most of my team is pretty good about running unit and integration (database) tests on their dev box so we hopefully don’t see too many failing tests after a merge into the trunk.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bealer</div>
+<div class='content'>
+How did you deal with the issue of merging?<br /><br />Branching per feature is a move away from Continuous Integration, and conflicts can occur when trying to merge your work back into the trunk because someone else has made changes to the same code.<br /><br />Was this not an issue for you? Or did it come down to careful planning and communication?</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Jason<br /><br />Thanks for the feed back. I did consider the scenario you proposed where after A is merged into the trunk B becomes A. However, we would run into the Rename issue I described above in this blog post.<br /><br />I do agree that most of these issues can best be mitigated through careful team planning, and is what we will probably continue to do.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason</div>
+<div class='content'>
+Either approach is fine.  You could probably do a baseless merge (with the cmd line) up from B straight to the trunk if necessary, but IMHO it muddies the cleanliness of the branch hierarchy and causes confusion.<br /><br />We&#39;ve used both strategies on our team, and these days we tend to favor the &quot;A&amp;B in the same branch&quot; approach.  I think it really comes down to planning out your dependencies in advance and trying to align your team&#39;s work to do the most parallel development possible.  <br /><br />Another subtle variation is that if A is ready to go up to trunk before B, then after you mrege A back up, go ahead and merge B in its current state to A, then delete branch B.  This way, you can take integrations from trunk down to B as new features come in (while you&#39;re still developing B), and you won&#39;t have to do the double-merge from B-&gt;A-&gt;trunk when you&#39;re done with B.</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</a></h1>
     <p class="meta">
           <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
@@ -296,79 +340,6 @@ Hi Jason,<br /><br />I tried to reproduce this bug in SSMS 2008 (10.0.5500.0), a
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/t4-replacement-for-add-service/">T4 replacement for “Add Service Reference”</a></h1>
-    <p class="meta">
-          <time datetime="2009-04-10T23:22:00.000Z" pubdate data-updated="true">Apr 10th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>My company has been developing out parts of our website using <a href="http://silverlight.com/" target="_blank">Silverlight</a> to enable some rich client LOB scenarios. Since the companies inception, we developed in a Scrum/Agile manner 3-6 week iterations. However, recently we started experimenting with a more “feature driven” attempt at “lean” approach. </p>  <p>With this new development approach, we made the decision that the trunk of the project’s source will be ready to deploy to production at all times. And as such would develop features out on branches. This is where the problem lies… We started running into a <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx" target="_blank">“Maximum file path length…”</a> issue when branching the source. It’s a relatively old project (5 years or so now) with layers of projects/namespaces. </p>  <p>We traced the issue down to files generated by the Visual Studio’s Add Service Reference dialog.    <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sd_UnpimHkI/AAAAAAAAAF4/2Pzl6l7mgD4/s1600-h/image%5B2%5D.png"><img title="image" style="border-top-width: 0px; display: inline; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="202" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sd_Un_Ie61I/AAAAAAAAAF8/jRJOfQb0rNI/image_thumb.png?imgmax=800" width="244" border="0" /></a> <a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Sd_UoJFQQoI/AAAAAAAAAGA/WvFyDYrCkKk/s1600-h/image%5B5%5D.png"><img title="image" style="border-top-width: 0px; display: inline; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="188" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sd_UoYBaSGI/AAAAAAAAAGE/p6ei3NVsi20/image_thumb%5B1%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>In our case the generated files had the full namespace + service name which were, in some cases, greater than 90 characters long just for the file. Coupled with the fact they were already nested in a directory structure (that helped keep things organized). We ended bumping into the <a href="http://troyfarrell.com/blog/post/Maximum-file-path-length---Windows-and-TFS.aspx" target="_blank">“Maximum file path length…”</a> when trying to branch the project.</p>  <p>After researching a hunch I’d had</p>  <blockquote>   <p>Most of those files generated by the tool are garbage and never used, so why does VS generate them, and have to check them into TFS?</p>    <p>Here’s a good post describing the meta data files.     <br /><a href="http://www.scottseely.com/blog/09-01-26/Misunderstood_Add_Service_Reference.aspx">http://www.scottseely.com/blog/09-01-26/Misunderstood_Add_Service_Reference.aspx</a></p> </blockquote>  <p>I found out that the only thing we cared about was the “References.cs” file in that whole batch of files.</p>  <p>Now, we would like to, and have thought about writing our own code in place of using the VS generated, (I know I’ve heard from the WCF pros at <a href="http://www.idesign.net/" target="_blank">IDesign</a> that you should never use the “Add Service Reference” generated stuff…) however it does what we need with the exception of the super long file names generated and…every time we update the service reference it keeps trying to add the ServiceReferences.ClientConfig back into the project. Since we are not using a config file to store the WCF connection information. We are following a similar path you can read about here (<a href="http://geekswithblogs.net/mwatson/archive/2009/02/24/129655.aspx">http://geekswithblogs.net/mwatson/archive/2009/02/24/129655.aspx</a>) This way we don’t have to have separate configs for Dev/Test/Production. </p>  <p>The built in VS Service Reference tooling has become more of a hindrance to development than providing any benefit.</p>  <h4>What is the solution we came up with to these two issues?</h4>  <blockquote>   <p>What were the problems again?</p>    <p>1. Files generated by “Add Service Reference” tools are too long for TFS (Not the fault of the tool, more the fault of the (TFS/.net api/win api) for not supporting longer file names…</p>    <p>2. Every time we update/add new service reference it tries to re-add the ServiceReferences.ClientConfig file (DON”T WANT THAT)</p> </blockquote>  <p>After about 1/2 a day looking for alternatives to using the built in tool, and since the wcf svcutil doesn’t generate code Silverlight can use. I stumbled upon this blog <b><a href="http://www.atrevido.net/blog/2008/12/02/Command+Line+WCF+Proxy+Generation+For+Silverlight+2+RTM.aspx">Command line WCF Proxy Generation for Silverlight 2 RTM</a></b> where he figured out how to use the same dll VS uses to generate the source and wrapped it into a little console app… After chatting w/ him on his blog’s Live Messenger plugin, (very cool by the way) he emailed me the exe he’s using in his production app (that had a couple bug fixes since his original blog post. He told me just to use <a href="http://www.red-gate.com/products/reflector/" target="_blank">Reflector</a> to get at the source because it was very basic.</p>  <p>And so I did, and ended up with a pretty good solution to the problems above. (Sucks that I spent a day of dev time on this crap, but oh well…)</p>  <p>I wrote a T4 template that will generate all the reference.cs code needed in our Silverlight project. Instead of describing the template itself (since this post has gotten long alredy) I’ll include a project with a sample of how it works.</p>  <p>Some of the features you get using this template are:</p>  <ol>   <li>It solves the two issues stated above      <ol>       <li>Only one file generated.&#160; (None of the VS generated garbage metadata files)</li>        <li>No re-add of the ServiceReferences.ClientConfig file to the project.</li>     </ol>   </li>    <li>With the use of the T4 template (this is in our app, not in the sample below) you can put other logic needed when generating a service reference.      <ol>       <li>We are using it to update the Web.Config’s WCF aspnet compatibility flag so we can get at the wsdl and setting it back when done updating the service reference…          <br />&lt;serviceHostingEnvironment aspNetCompatibilityEnabled=&quot;true&quot;&gt; </li>     </ol>   </li>    <li>You can set some properties that will tell the tool to generate the types as “internal” (if you want)      <blockquote>       <p>Note: you have to add the correct InternalsVisibleTo for this to work</p>        <p>[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Runtime.Serialization&quot;)]          <br /></p>     </blockquote>   </li> </ol>  <p>Here’s the sample project with examples of both a normal reference, and the same reference using the T4 template.</p>
-<p>
-  <h3><a href="https://onedrive.live.com/redir?resid=C0F357E4555270E7%21152">DOWNLOAD SAMPLE PROJECT</a></h3>
-</p>
-<p>Hope this helps someone else…</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Mega</div>
-<div class='content'>
-How to reuse types in referenced assemblies ?</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Nice! Thanks for the feedback!</div>
-</div>
-<div class='comment'>
-<div class='author'>Chris</div>
-<div class='content'>
-This was great.  We used the concept to modify the code dom and add DebuggerNonUser code attributes to every class.  This allowed us to ignore the web service proxies when performing code coverage.<br /><br />Thanks for the post.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-I just tried it and it appears to be working (possibly you ran into a temporary skydrive issue?)<br /><br />Try it again if you can.</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-than you for the article. <br />But the skydrive link doesn&#39;t work.<br />I allways end up with<br />&quot;There&#39;s a temporary problem<br /><br />There&#39;s a temporary problem with the service. Please try again. If you continue to get this message, try again later.<br />&quot;</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Jason,<br /><br />Awesome post, thanks. I just figured out that i couldn&#39;t use overloading on my wcf service methods. But if you create the reference.cs your self it is possible. But writing the whole service ref. is to time-costly. This is the perfect solution for that. Thanks for posting!<br /><br />Vincent Ottens</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-James,<br /><br />I&#39;m not sure what you&#39;re asking. If you read up on T4 templates, you should be able to find out that you can put any logic you want in there...</div>
-</div>
-<div class='comment'>
-<div class='author'>James</div>
-<div class='content'>
-Great post, thanks. I&#39;m interested in putting in custom logic, as you mentioned, but not sure where to start via the source provided...can you point me in the right direction? Thanks.</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Can you please provide a VS 2010 Beta 2 sample of this, I tried but I can&#39;t get it to work, looks really promising thouhg.</div>
-</div>
-<div class='comment'>
-<div class='author'>Voleti</div>
-<div class='content'>
-This is very useful. I was trying to figure out whether or not use Add Service Reference. Got some questions answered here. Thanks.</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -403,6 +374,9 @@ This is very useful. I was trying to figure out whether or not use Add Service R
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
       </li>
       <li class="post">
@@ -419,9 +393,6 @@ This is very useful. I was trying to figure out whether or not use Add Service R
       </li>
       <li class="post">
         <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
-      </li>
-      <li class="post">
-        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a>
       </li>
   </ul>
 </section>
