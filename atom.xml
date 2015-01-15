@@ -37,8 +37,9 @@
 <p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio&#39;s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
 <p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I&#39;d highly recommend you check them out.</p>
 <p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that&#39;s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
-<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy. Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code>, but I&#39;ll show you not only how to get it installed, but a command to easily format your code.</p>
-<h1 id="how-to-install-clang-format-">How to install <code>clang-format</code></h1>
+<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
+<p><del>Unfortunately it&#39;s not as easy to install as <code>brew install clang-format</code></del> (It&#39;s now as easy to install as <code>brew install clang-format</code>), but I&#39;ll show you not only how to get it installed manually, but a command to easily format your code.</p>
+<h1 id="how-to-install-clang-format-manually">How to install <code>clang-format</code> manually</h1>
 <p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
 <ol>
 <li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
