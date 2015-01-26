@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-01-15T00:17:25Z</updated>
+    <updated>2015-01-26T23:02:16Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,58 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to Migrate a Jenkins Job to New Jenkins Server]]></title>
+        <id>http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/</id>
+        <link href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">
+        </link>
+        <updated>2015-01-26T23:02:16Z</updated>
+        <summary type="html"><![CDATA[We recently setup a new [Jenkins](http://jenkins-ci.org/) build server for some iOS applications and I wanted to find a quick way to copy a couple Job...]]></summary>
+        <content type="html"><![CDATA[<p>We recently setup a new <a href="http://jenkins-ci.org/">Jenkins</a> build server for some iOS applications and I wanted to find a quick way to copy a couple Jobs from the old server to the new one.</p>
+<p>Below are a few small options I found while working on the task.</p>
+<h2 id="option-1-copy-jobs-directory">Option 1: Copy <code>jobs</code> directory</h2>
+<p>One option (and seems to be the recommended one) is to just copy the <code>jobs</code> directory from the old server to the new one.</p>
+<p>From the documentation <a href="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins#AdministeringJenkins-Moving%2Fcopying%2Frenamingjobs">Moving/copying/renaming jobs</a>:</p>
+<blockquote>
+<p>You can:</p>
+<ol>
+<li>Move a job from one installation of Jenkins to another by simply copying the corresponding job directory.</li>
+<li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
+<li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
+</ol>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
+</blockquote>
+<p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
+<h2 id="option-2-try-one-of-the-plugins-out-there">Option 2: Try one of the plugins out there</h2>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
+<ul>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
+</ul>
+<h2 id="option-3-use-jenkins-cli-https-wiki-jenkins-ci-org-display-jenkins-jenkins-cli-">Option 3: Use <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI">Jenkins CLI</a></h2>
+<p>This is what I used, which worked nicely for only the few jobs we had. If you have a large number of Jenkins jobs, you may consider the first aproach above.</p>
+<ol>
+<li><p>First download the Jenkins CLI jar.</p>
+<ul>
+<li>You can do this from your jenkin&#39;s CLI page within your installed Jenkins instance.</li>
+</ul>
+<p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
+</li>
+<li><p>Next we can use the following command (pointing to the old server) to list the jobs.</p>
+<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
+</li>
+<li><p>Using one job from the list above, let&#39;s copy the xml of a job to the clipboard. (I&#39;m using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</p>
+<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job&#39;s xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+</li>
+<li><p>If the above command placed a job&#39;s XML into the clipboard, you can use the below command to add it to the new server.</p>
+<p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli&#39;s <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+</li>
+</ol>
+<p>Hope this helps...</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Resgrid is a BizSpark Featured Startup]]></title>
         <id>http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
@@ -1102,23 +1154,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
         </li>
     </ul>
 </div></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Infinite Scrolling UICollectionView with Asyncronously Loading]]></title>
-        <id>http://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/</id>
-        <link href="http://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/">
-        </link>
-        <updated>2014-03-15T19:17:00Z</updated>
-        <summary type="html"><![CDATA[The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the dat...]]></summary>
-        <content type="html"><![CDATA[<p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p>
-<p>I&#39;m new enough to iOS development that solutions don&#39;t yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p>
-<p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p>
-<p>If you need something like this, I&#39;ve pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it&#39;ll give you enough hints to get started on your own implementation.</p>
-<p>I&#39;m open to feedback. Post any suggestions/alternative ideas to the github repo.</p>
-<h1 id="where-do-i-get-it-">Where do I get it?</h1>
-<h2 id="-here-https-github-com-staxmanade-paginatedcollectionview-"><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2>
-<p>Hope you find this useful.</p>
 ]]></content>
     </entry>
 </feed>

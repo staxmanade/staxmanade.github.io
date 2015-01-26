@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing on Staxmanade - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="Jason Jarrett&#x27;s Blog and Website.">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+        
+<div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">Timing Debug Code Using Lambda&#x27;s</a></h1>
+    <p class="meta">
+          <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+whoops - Thanks for the suggested update...</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Lambda, not lamda. ;)</div>
+</div>
+</div>
+</div>
+
+    </article>
+  <div class="pagination">
+    <a href="/blog/archives">Blog Archives</a>
+      <a class="next" href="/blog/pages/15/">Newer &rarr;</a>
+  </div>
+</div>
+
+<aside class="sidebar">
+    <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+      <li class="post">
+        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
+      </li>
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+</aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'developingonstaxmanade';
+      
+        var disqus_script = 'count.js';
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

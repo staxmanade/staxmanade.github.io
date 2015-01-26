@@ -71,6 +71,35 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
+    <p class="meta">
+          <time datetime="2011-06-18T17:15:00.000Z" pubdate data-updated="true">Jun 18th 2011</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I was doing some basic Git training for a customer this past week and they asked about how to setup their repositories to push/pull from a network share. I thought it would be simple and we spent a few minutes in class trying to accomplish it. We stopped trying in class and I took it as a homework assignment to figure it out before the next lesson. It was a little bit of a struggle to get this working for me, so I thought I’d throw this out there for any windows developers trying to do a similar thing.</p>  <p>&#160;</p>  <p>I tend to prefer the command line to any of the git UI tools (except when visualizing history, and diffing files). In this post I’m going to show how you can do it through a command line, but I’ll also show how you can do it with git gui which, in this case, is a few less steps.</p>  <p>&#160;</p>  <h3>How to push a local repository up to an (un-initialized) remote windows share.</h3>  <h5>&#160;</h5>  <h4>Command Line:</h4>  <p>I tend to run git within PowerShell, however the following set of commands <strong>cannot be run within the PowerShell</strong> prompt. If you figure out a way, I’d love to hear about it. And since I use the PowerShell prompt, I’m not sure how this would play out with the bash command.</p>  <p>Open a command prompt (cmd.exe) and follow the below steps to create a remote windows repository share.    <br /></p>  <p>CD into the context of your local repository. Say my repo was at “C:\Code\MyGitRepo1”.</p>  <blockquote>   <p>cd C:\Code\MyGitRepo1&#160; <br /></p> </blockquote>  <p>Next we’re going to change our current directory to the remote share location. </p>  <blockquote>   <p>Something I learned during this process is that cmd.exe doesn’t allow you to “cd” into a UNC network share path.</p> </blockquote>  <p>To get around not being allowed to “cd” into a UNC network share we’ll use the <a href="http://technet.microsoft.com/en-us/library/bb490978.aspx">pushd</a> command. The reason this works is because it is actually going to map a network drive to the network share location.</p>  <blockquote>   <p>pushd <a href="file://\\remoteServer\git\Share\Folder\Path">\\remoteServer\git\Share\Folder\Path</a></p> </blockquote>  <p>Now that we’re in the remote location we can create a bare git repository.</p>  <blockquote>   <p>mkdir MyGitRepo1      <br />cd MyGitRepo1       <br />git init --bare       <br /></p> </blockquote>  <p>Your remote empty repository has now been created. Let’s go back to our local repository</p>  <blockquote>   <p><font style="background-color: #ffffff">popd</font></p> </blockquote>  <p>popd will “CD” back to the previous location (“C:\Code\MyGitRepo1”) and also remove the network share the pushd command created above.</p>  <p>So we should be back in the context of our local git repo.</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code\MyGitRepo1\ &gt;</font></p> </blockquote>  <p>&#160;</p>  <p>Now all we need to do is add the newly created remote bare repository to our local repo and push our code up.</p>  <p><strong>Notice the direction of the slashes in the path below (this stumped me for a bit)</strong>&#160;</p>  <blockquote>   <p>git remote add origin //remoteServer/git/Share/Folder/Path/MyGitRepo1      <br />git push origin master       <br /></p> </blockquote>  <p>Kind of a pain at the command prompt really, but it’s not something that’s done all that often.</p>  <h4>Using Git gui instead:</h4>  <p>Open up the GUI</p>  <blockquote>   <p><font style="background-color: #ffffff">git gui</font></p> </blockquote>  <p>Click the [Remote-&gt;Add] menu option to bring up the “Add Remote” dialog.</p>  <p><a href="http://lh3.ggpht.com/-ftWDdPbwLuU/TfzdIjeomCI/AAAAAAAAAPs/V7fp-tYQGTE/s1600-h/image%25255B3%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-2J7R5Ywqg5Q/TfzdKYd7u1I/AAAAAAAAAPw/RVRd1qA4Mwg/image_thumb%25255B1%25255D.png?imgmax=800" width="306" height="179" /></a></p>  <p>Enter the name for your remote “origin” is pretty typical for the central repository, but you can call this whatever you want. Then type the remote location. <strong>Notice the direction of the slashes.</strong></p>  <p><a href="http://lh4.ggpht.com/-rK0DGmJVatM/TfzdK_fEhyI/AAAAAAAAAP0/040v3iV28YU/s1600-h/image%25255B7%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/-2lkEQOqsj3I/TfzdLjmbWvI/AAAAAAAAAP4/6LZzJP94Cmk/image_thumb%25255B3%25255D.png?imgmax=800" width="414" height="305" /></a></p>  <p>Now you should be good to go.</p>  <p>&#160;</p>  <p>Hope this helps someone else, and if anyone knows of a better/easier way I’d love to hear it.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Thanks for the nice comment. In regards to  your question, I&#39;m afraid I&#39;m not familiar enough to be of help.<br /><br />You might take your question over to StackOverflow.com as there are some very smart people over there that might be able to help.<br /><br />Good Luck</div>
+</div>
+<div class='comment'>
+<div class='author'>Djilali Tabbouche</div>
+<div class='content'>
+Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy applications to both linux and windows server.<br />No problem on linux using ssh and pushing to windows throuh network shares works fine but I have one issue with post-receive hooks: I use this hook to checkout the remote repository to the application directory and run configuration tasks and on windows, the git command use the local computer environment (git-dir and work-tree).<br />I&#39;ve tried every options without success.<br /><br />Any idea?</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/04/using-vsdbcmd-to-deploy-entity/">Using VSDBCMD to deploy an Entity Framework (EF) CodeFirst (or any other) database to AppHarbor</a></h1>
     <p class="meta">
           <time datetime="2011-04-13T22:51:00.000Z" pubdate data-updated="true">Apr 13th 2011</time>
@@ -213,40 +242,6 @@
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-databind-to-anonymous-type/">Silverlight – DataBind to an Anonymous type (Who knew?)</a></h1>
-    <p class="meta">
-          <time datetime="2010-05-23T02:36:00.000Z" pubdate data-updated="true">May 22nd 2010</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I searched the web for the idea first. I was certain somebody had blogged about this before, and just wanted to quickly confirm it’s truth. Unfortunately all I came across were work-a-rounds and people telling you it’s not possible. So hopefully this post will help the next guy.</p>  <p>Since anonymous types are generated in an assembly as <a href="http://msdn.microsoft.com/en-us/library/7c5ka91b(VS.80).aspx">internal</a> types, by default, if you try to DataBind to an anonymous type, you’ll probably receive a binding error much like the following.</p>  <pre>System.Windows.Data Error: <br />    Cannot get 'Age' value (type 'System.Int32') from '{ Name = World, Age = 23 }' (type '&lt;&gt;f__AnonymousType0`2[System.String,System.Int32]'). <br />    BindingExpression: Path='Age' DataItem='{ Name = World, Age = 23 }' (HashCode=-172495608);<br />    target element is 'System.Windows.Controls.TextBlock' (Name=''); <br />    target property is 'Text' (type 'System.String').. <br />    System.MethodAccessException: Attempt by method 'System.Windows.CLRPropertyListener.get_Value()' <br />    to access method '&lt;&gt;f__AnonymousType0`2&lt;System.__Canon,System.Int32&gt;.get_Age()' failed.<br /><br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Windows.CLRPropertyListener.get_Value()<br />   at System.Windows.PropertyAccessPathStep.ConnectToPropertyInSo...</pre><br /><br /><h4>Turns out, it _IS_ possible to DataBind to an anonymous type in Silverlight.</h4><br /><br /><p>All you have to do is expose your privates. Placing the following into your AssemblyInfo.cs will give the built in bindings the ability DataBind to your object(s).</p><br /><br /><p><strong><br />    <br />[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Windows&quot;)]</strong></p><br /><br /><p>&#160;</p><br /><br /><p>I’m not going to say whether this is or is not a good idea, and I’m sure there’s many ways to abuse it.</p><br /><br /><p>Don’t inhale too much of this stuff.</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-W.Meints<br /><br />I&#39;m not sure I understand your question. Could you elaborate a little?</div>
-</div>
-<div class='comment'>
-<div class='author'>W.Meints</div>
-<div class='content'>
-What about dynamics, does the same trick apply to those kind of objects as well?</div>
-</div>
-<div class='comment'>
-<div class='author'>Obsidience</div>
-<div class='content'>
-I prefer to keep my privates unexposed, thank you very much! ;)</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/10/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -281,6 +276,9 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
       </li>
       <li class="post">
@@ -297,9 +295,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
       </li>
       <li class="post">
         <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
-      </li>
-      <li class="post">
-        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a>
       </li>
   </ul>
 </section>
