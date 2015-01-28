@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Don’t forget what’s happening behind the syntactic sugar. (C# events)</a></h1>
+    <p class="meta">
+          <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>In a comment posted by Lashas to the i4o project over at Codeplex (<a href="http://i4o.codeplex.com/WorkItem/View.aspx?WorkItemId=13114">comment here</a>), he suggested a great performance improvement where instead of assigning an event’s handler directly to a handler method callback, we assign it to a field containing the handler. Initially I was skeptical of his change until I profiled it for myself. And after thinking about it for a second it made total sense.</p>  <p>The original implementation of adding an event handler to the property we used the C# syntax as follows.</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>where “IndexableCollection_PropertyChanged” is a method defined as </p>  <blockquote>   <p>private void IndexableCollection_PropertyChanged(object sender, PropertyChangedEventArgs e)      <br />{…} </p> </blockquote>  <p>Lashas’s suggested performance improvement was to initialize a private field, assign it to the IndexableCollection_PropertyChanged and add/remove the property changed handler from the field instead of the example outlined above.</p>  <p><strong>Field definitaion:</strong></p>  <blockquote>   <p>private PropertyChangedEventHandler _propertyChangedHandler;</p> </blockquote>  <p><strong>Initialization (in the constructor of the class)</strong></p>  <blockquote>   <p>_propertyChangedHandler = IndexableCollection_PropertyChanged;</p> </blockquote>  <p>Usage then becomes</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += _propertyChangedHandler;</p> </blockquote>  <p>Lashas reported approximately 30-40% performance improvement when adding/removing items from the collection by the suggested change.</p>  <p><strong>Why is that?</strong></p>  <p>Well, if you think about it, what is this line?</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += IndexableCollection_PropertyChanged;</p> </blockquote>  <p>but just a little <em>Syntactic Sugar</em> on top of actually doing…</p>  <blockquote>   <p>(item as INotifyPropertyChanged).PropertyChanged += new PropertyChangedEventHandler (IndexableCollection_PropertyChanged);</p> </blockquote>  <p>and by the suggested change of assigning a field to the property change we avoid all the “new PropertyChangedEventHandler(…)” calls. This object creation can happen once in the constructor of the collection and not on every add/remove of an item.</p>  <p>Just a good reminder that you need to constantly be aware of what is happening under the covers. The saying <em>most complexity can be solved by another layer of </em><a href="http://en.wikipedia.org/wiki/Abstraction_(computer_science)"><em>abstraction</em></a> can cause issues when you don’t truly understand (or at least remember) what that layer is actually doing.</p>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/development-environment-mergecompare/">Development Environment Merge/Compare Tools Setup in Visual Studio/TFS</a></h1>
     <p class="meta">
           <time datetime="2009-08-13T15:49:00.000Z" pubdate data-updated="true">Aug 13th 2009</time>
@@ -319,22 +335,6 @@ Thanks man!<br /><br />It works fine.</div>
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/to-be-checked-in-or-not/">To be checked in or not!</a></h1>
-    <p class="meta">
-          <time datetime="2009-04-24T20:05:00.000Z" pubdate data-updated="true">Apr 24th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SfIbnCZ8_eI/AAAAAAAAAHY/Vq8B-9nF0eQ/s1600-h/image%5B8%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SfIbnVdevlI/AAAAAAAAAHc/YYPOugrcFPA/image_thumb%5B4%5D.png?imgmax=800" width="604" height="289" /></a></p>  </div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -369,6 +369,9 @@ Thanks man!<br /><br />It works fine.</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
       </li>
       <li class="post">
@@ -385,9 +388,6 @@ Thanks man!<br /><br />It works fine.</div>
       </li>
       <li class="post">
         <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
       </li>
   </ul>
 </section>

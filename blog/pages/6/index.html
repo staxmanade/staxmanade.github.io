@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-15T04:46:00.000Z" pubdate data-updated="true">Feb 14th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FakeO" target="_blank">FakeO</a> is a fake object generation library. It doesn’t seem to play nicely with objects that require parameters in the constructor. However if you have lots of classes that have a default constructor and plain old get/set properties this project might be very useful.</p>  <p>You can even specify not just random text or numbers to generate, but some specific context driven data.</p>  <p>For example:</p>  <ul>   <li>Random company name </li>    <li>Lorem Ipsum to various lengths. </li>    <li>Phone numbers </li>    <li>Random strings based on a regex. </li>    <li>etc…      <br /></li> </ul>  <blockquote>   <pre>// example FakeO call<br />var comp = FakeO.Create.Fake&lt;Company&gt;(<br />                c =&gt; c.Name = FakeO.Company.Name(),<br />                c =&gt; c.Phone = FakeO.Phone.Number(),<br />                c =&gt; c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200</pre></blockquote>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/">NuGet Project Uncovered: NaturalSpec</a></h1>
     <p class="meta">
           <time datetime="2012-02-14T04:45:00.000Z" pubdate data-updated="true">Feb 13th 2012</time>
@@ -213,30 +229,6 @@
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-intx/">NuGet Project Uncovered: IntX</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-04T04:28:00.000Z" pubdate data-updated="true">Feb 3rd 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p>Have you ever wanted to generate a number that could potentially have millions of digits and do arbitrary mathematical operations against it? Ya, me neither. But if I did, I would take a look at this project.</p>  <p><a href="http://nuget.org/packages/IntX" target="_blank">IntX</a> is </p>  <blockquote>   <p>an arbitrary precision integers class written in pure C# with fast - about O(N * log N) - multiplication/division algorithms implementation. Runs on .NET 2.0+.</p> </blockquote>  <p>The <a href="http://intx.codeplex.com/" target="_blank">intx.codeplex</a> site has quite a bit of info about the project (<a href="http://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read" target="_blank">TL;DR</a>). If you’d like to learn more I’d suggest checking it out.</p></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Generic Cialis</div>
-<div class='content'>
-Honey is sweet, but the bee stings</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/7/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -271,6 +263,9 @@ Honey is sweet, but the bee stings</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
       </li>
       <li class="post">
@@ -287,9 +282,6 @@ Honey is sweet, but the bee stings</div>
       </li>
       <li class="post">
         <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
       </li>
   </ul>
 </section>

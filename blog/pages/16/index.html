@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/binarysearchordefault/">BinarySearchOrDefault()</a></h1>
+    <p class="meta">
+          <time datetime="2008-04-14T03:52:00.000Z" pubdate data-updated="true">Apr 13th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">Timing Debug Code Using Lambda&#x27;s</a></h1>
     <p class="meta">
           <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
@@ -131,6 +147,9 @@ Lambda, not lamda. ;)</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
       </li>
       <li class="post">
@@ -147,9 +166,6 @@ Lambda, not lamda. ;)</div>
       </li>
       <li class="post">
         <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
       </li>
   </ul>
 </section>

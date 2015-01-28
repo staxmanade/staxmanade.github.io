@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-01-26T23:02:16Z</updated>
+    <updated>2015-01-28T00:40:34Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,51 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Setting Jenkins up to run XCTool and Xcode Simulator Tests]]></title>
+        <id>http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/</id>
+        <link href="http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">
+        </link>
+        <updated>2015-01-28T00:40:34Z</updated>
+        <summary type="html"><![CDATA[We recently [migrated an older Jenkins C.I. server over](http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/) to a newer...]]></summary>
+        <content type="html"><![CDATA[<p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don&#39;t include the last bit (that worked for me), so I hope this helps you...</p>
+<h1 id="why-can-t-i-run-the-xcode-simulator-on-a-jenkins-server-">Why Can&#39;t I run the Xcode Simulator on a Jenkins server?</h1>
+<h3 id="some-error-messages-i-encountered-along-the-way-">Some Error Messages I Encountered Along the Way:</h3>
+<pre><code>Tried to install the test host app &#39;com.myapp.test&#39; but failed.
+
+Preparing test environment failed.
+
+-[TEST_BUNDLE FAILED_TO_START] 
+
+There was a problem starting the test bundle: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
+
+Test did not run: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
+
+2015-01-21 12:02:19.296 xcodebuild[35135:875297]  iPhoneSimulator: Timed out waiting 120 seconds for simulator to boot, current state is 1.
+
+Testing failed:
+Test target MyProjectTests encountered an error (Timed out waiting 120 seconds for simulator to boot, current state is 1. If you believe this error represents a bug, please attach the log file at /var/folders/yf/49df70js2xn524f9c3835zx0000087/T/com.apple.dt.XCTest-status/Session-2015-01-21_12:00:19-sXA35e.log)
+** TEST FAILED **
+</code></pre><h3 id="need-to-run-a-gui-user-">Need to run a GUI user.</h3>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it&#39;s U.I...</p>
+<p>Below is a great resource to get you most of the way there.</p>
+<p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
+<p>Once you&#39;ve followed the instructions in the above post and you still can&#39;t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don&#39;t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
+<pre><code class="lang-diff">-       &lt;key&gt;SessionCreate&lt;/key&gt;
+-       &lt;true /&gt;
+</code></pre>
+<p>Once I removed this key, restarted the server, everything started building/working correctly.</p>
+<h1 id="in-summary-">In summary:</h1>
+<ol>
+<li>Auto-login with a jenkins user</li>
+<li>Get your plist moved over to the <code>LaunchAgents</code> folder (see post linked above)</li>
+<li>Remove the <code>SessionCreate</code> key</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How to Migrate a Jenkins Job to New Jenkins Server]]></title>
         <id>http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/</id>
@@ -1104,56 +1149,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
 <li><a href="http://blog.zerosharp.com/setting-up-octopress-on-windows/">Thanks to this post</a> to get started on the windows. Some steps I excluded since I&#39;d alredy setup the blog initially on my Mac.</li>
 </ul>
 <p>Now I can use the power of git to manage my website and blog and I can leverage whatever development tools I would like depending on the platform. If you are new to Octopress it is helpful to study the documentation and structure of the files within your cloned repository. The first thing to note is that you have two branches in the repository: the source branch contains the Ruby scripts and utilities you will use to generate your blog content. The master branch is where your published content will live. The second thing to note is that while you can do the git integrations yourself for deploying the blog, it is best to stick to the RAKE task for deploying your content. This will automate copying your content to the _deploy subdirectory and pushing the update to the master branch.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 1 - Introduction]]></title>
-        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/</id>
-        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">
-        </link>
-        <updated>2014-04-13T03:19:53Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 1 - Introduction]]></summary>
-        <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="http://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>After hosting my blog on <a href="http://blogspot.com">BlogSpot.com</a> for over 5 years, it was time to move.</p>
-<p>As someone with the development background I have and constantly growing knowledge of the web, it always bugged me that my blog was hosted on BlogSpot.</p>
-<p>When I first started blogging over 5 years ago, it was a great starter site. Free, simple, easy to configure and it was a great place to throw content up with very little friction. But my desire to write posts using <a href="http://en.m.wikipedia.org/wiki/Markdown">Markdown</a>, host my content on a site where I felt like I had complete control, and lets face it, I just wanted a codebase I could tinker with and throw up coding experiments.</p>
-<p>I recently completed migration of my <a href="http://staxmanade.blogspot.com">staxmanade.blogspot.com</a> site to its new location here on <a href="http://staxmanade.com">staxmanade.com</a> which is graciously being hosted for free by <a href="https://github.com">GitHub</a>.</p>
-<p>If you currently have a blog on BlogSpot/Blogger and are interested in migrating to Octopress or any other blog, the following series of posts may be of use.</p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 1</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - (current) - Introduction
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
 ]]></content>
     </entry>
 </feed>

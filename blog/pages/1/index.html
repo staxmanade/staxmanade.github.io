@@ -71,6 +71,55 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-28T00:40:34.767Z" pubdate data-updated="true">Jan 27th 2015</time>
+
+
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/#disqus_thread" data-disqus-identifier="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don&#39;t include the last bit (that worked for me), so I hope this helps you...</p>
+<h1 id="why-can-t-i-run-the-xcode-simulator-on-a-jenkins-server-">Why Can&#39;t I run the Xcode Simulator on a Jenkins server?</h1>
+<h3 id="some-error-messages-i-encountered-along-the-way-">Some Error Messages I Encountered Along the Way:</h3>
+<pre><code>Tried to install the test host app &#39;com.myapp.test&#39; but failed.
+
+Preparing test environment failed.
+
+-[TEST_BUNDLE FAILED_TO_START] 
+
+There was a problem starting the test bundle: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
+
+Test did not run: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
+
+2015-01-21 12:02:19.296 xcodebuild[35135:875297]  iPhoneSimulator: Timed out waiting 120 seconds for simulator to boot, current state is 1.
+
+Testing failed:
+Test target MyProjectTests encountered an error (Timed out waiting 120 seconds for simulator to boot, current state is 1. If you believe this error represents a bug, please attach the log file at /var/folders/yf/49df70js2xn524f9c3835zx0000087/T/com.apple.dt.XCTest-status/Session-2015-01-21_12:00:19-sXA35e.log)
+** TEST FAILED **
+</code></pre><h3 id="need-to-run-a-gui-user-">Need to run a GUI user.</h3>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it&#39;s U.I...</p>
+<p>Below is a great resource to get you most of the way there.</p>
+<p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
+<p>Once you&#39;ve followed the instructions in the above post and you still can&#39;t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don&#39;t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
+<pre><code class="lang-diff">-       &lt;key&gt;SessionCreate&lt;/key&gt;
+-       &lt;true /&gt;
+</code></pre>
+<p>Once I removed this key, restarted the server, everything started building/working correctly.</p>
+<h1 id="in-summary-">In summary:</h1>
+<ol>
+<li>Auto-login with a jenkins user</li>
+<li>Get your plist moved over to the <code>LaunchAgents</code> folder (see post linked above)</li>
+<li>Remove the <code>SessionCreate</code> key</li>
+</ol>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a></h1>
     <p class="meta">
           <time datetime="2015-01-26T23:02:16.269Z" pubdate data-updated="true">Jan 26th 2015</time>
@@ -523,42 +572,6 @@ git push origin release
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
-    <p class="meta">
-          <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
-
-
-        <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="some-background">Some background</h1>
-<p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I&#39;ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
-<p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
-<p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="what-is-it-">What is it?</h1>
-<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
-<p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don&#39;t get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
-<p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
-<h1 id="does-it-only-work-on-windows-or-on-the-mac-">Does it only work on Windows or on the Mac?</h1>
-<p>At the moment it works on both. </p>
-<ul>
-<li>For Windows I have an implementation in Powershell. </li>
-<li>For the Mac you can alias to a Bash script.</li>
-</ul>
-<h1 id="download-at-github-">Download at GitHub!</h1>
-<p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1 id="what-s-next-">What&#39;s next?</h1>
-<p>I&#39;d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I&#39;d also love to get some feedback on how to best or more easily get this into peoples&#39;s development environment. For now it&#39;s pretty manual and since it&#39;s all about your profile, a bit personal, so probably a good thing that it&#39;s not automatically installed.</p>
-<p>Happy Commanding!</p>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -592,6 +605,9 @@ git push origin release
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
       </li>
       <li class="post">
@@ -608,9 +624,6 @@ git push origin release
       </li>
       <li class="post">
         <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a>
       </li>
   </ul>
 </section>
