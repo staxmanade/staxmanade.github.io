@@ -79,10 +79,10 @@
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1>How to update a git branch OTHER than the one you’re currently on.</h1>
+<div class="entry-content"><h1>How to update a git branch OTHER than the one you're currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
 </code></pre>
-<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don’t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
 <p>I was starting to dislike the switch branch dance to trigger a new build.</p>
 <h3>What I used to do:</h3>
 <pre><code># When I was on the master branch
@@ -121,16 +121,16 @@ git push origin release
         <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I’d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+<div class="entry-content"><p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1>Some background</h1>
 <p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I’ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
+<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I've developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
 <p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
 <p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1>What is it?</h1>
-<p>In short, it’s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<p>In short, it's a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
 <p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don’t get slapped in the face with an error saying “cannot find a rakefile.” Instead I continue on my way like I knew what I was doing.</p>
+<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don't get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
 <p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
 <h1>Does it only work on Windows or on the Mac?</h1>
 <p>At the moment it works on both.</p>
@@ -140,9 +140,9 @@ git push origin release
 </ul>
 <h1>Download at GitHub!</h1>
 <p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1>What’s next?</h1>
-<p>I’d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I’d also love to get some feedback on how to best or more easily get this into peoples’s development environment. For now it’s pretty manual and since it’s all about your profile, a bit personal, so probably a good thing that it’s not automatically installed.</p>
+<h1>What's next?</h1>
+<p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
+<p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
 <p>Happy Commanding!</p>
 </div>
 
@@ -158,15 +158,15 @@ git push origin release
     </p>
 </header>
 <div class="entry-content"><h1>Challenge</h1>
-<p>Let’s say you’ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you’re curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don’t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
 <p>And since:</p>
 <blockquote>
 <p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
 <p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
 <h1>Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let’s take a dive into the compiler to see if this is something we can work around…</p>
+<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
 <h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
 <ol>
 <li>Get It</li>
@@ -175,28 +175,28 @@ git push origin release
 <li>Use it</li>
 </ol>
 <h2>Get it</h2>
-<p>Before we can get too far, let’s first install the compiler onto our system.</p>
-<p>I’ll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
+<p>Before we can get too far, let's first install the compiler onto our system.</p>
+<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
 <pre><code>npm install -g typescript
 </code></pre>
 <p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
 <h2>Copy it</h2>
-<p>We probably don’t want to modify the globally installed version of <code>tsc</code> so we’ll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
+<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
 <p>If on Windows or Mac</p>
 <pre><code>where tsc
 </code></pre>
 <blockquote>
-<p>NOTE: if you’re using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won’t help us out in this case.</p>
+<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
 </blockquote>
-<p>Once you’ve found the path to your version of <code>tsc</code></p>
+<p>Once you've found the path to your version of <code>tsc</code></p>
 <p>Mine was in</p>
 <ul>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
 </ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You’ll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
+<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
 <p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you’re done you should have a directory that looks something like this</p>
+<p>When you're done you should have a directory that looks something like this</p>
 <pre><code>
 ﻿﻿--MyJSCompiler
   <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
@@ -229,19 +229,19 @@ git push origin release
 </code></pre>
 <p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
 <h2>Hack it</h2>
-<p>Since we have a local version we can hack on now, let’s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
 <p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
 <pre><code class="language-diff">     function isTSFile(fname) {
 <span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
 <span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
      }
 </code></pre>
-<p>We’ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
+<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
 <h2>Use it</h2>
-<p>I won’t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don’t the compiler will take the input javascript file and overwrite it with it’s compiled version.</p>
-<h1>!!WARNING!! I’ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don’t the compiler will take the input javascript file and overwrite the original with it’s compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript’s version looks compared to your own, but I’ll leave that up to you to play with.</p>
+<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
+<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
+<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
 </div>
 
@@ -257,7 +257,7 @@ git push origin release
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -292,8 +292,8 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Now that I’ve migrated to Octopress, I’m in the process of finding my new blogging flow.</p>
-<p>I’m currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
+<p>Now that I've migrated to Octopress, I'm in the process of finding my new blogging flow.</p>
+<p>I'm currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
 <ul>
 <li>Windows
 <ul>
@@ -314,7 +314,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </ul>
 </li>
 </ul>
-<p>My worry is that some of these don’t have the best spell-check support - so here’s hoping I double-check my work along the way :P.</p>
+<p>My worry is that some of these don't have the best spell-check support - so here's hoping I double-check my work along the way :P.</p>
 </div>
 
     </article>
@@ -329,7 +329,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -366,9 +366,9 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </div></p>
 <p>This one is quick and easy.</p>
 <p>I noticed that my original RSS feed <code>staxmanade.blogspot.com/feeds/posts/default</code> was 302 redirecting to <code>http://feeds.feedburner.com/DevelopingOnStaxmande</code>.</p>
-<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth’d with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
+<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth'd with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
 <p>After doing this, I noticed 3 of my previously posted blogs show-up-again, but I can live with that.</p>
-<p>Now you’ve hopefully migrated your blog’s RSS subscribers automatically without loosing any.</p>
+<p>Now you've hopefully migrated your blog's RSS subscribers automatically without loosing any.</p>
 </div>
 
     </article>
@@ -383,7 +383,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -436,7 +436,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -471,46 +471,46 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I’ll talk about how I setup automatic redirection from the old blog to the new blog.</p>
+<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I'll talk about how I setup automatic redirection from the old blog to the new blog.</p>
 <blockquote>
 <p>Sorry, this post gets a little long, mostly because there is lots evolved, and I took some time to explain it along the way.</p>
 </blockquote>
-<p>So, I’m not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let’s not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
+<p>So, I'm not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let's not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
 <h3>Reasons for redirection:</h3>
 <ul>
-<li>I’d like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
-<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to ‘migrate’ not, start fresh.</li>
+<li>I'd like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
+<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to 'migrate' not, start fresh.</li>
 </ul>
-<p>I probably won’t ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I’ve made in the past, but at least they will end up at my new blog.</p>
+<p>I probably won't ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I've made in the past, but at least they will end up at my new blog.</p>
 <h3>Goals for the redirection.</h3>
 <ul>
 <li>
 <p>Users who click on a link to the old blog should redirect successfully to the new site.</p>
 </li>
 <li>
-<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog’s search rankings would carry over to my new blog.</p>
+<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog's search rankings would carry over to my new blog.</p>
 <blockquote>
-<p>DISCLAIMER: Given the steps in the post, I’m not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
+<p>DISCLAIMER: Given the steps in the post, I'm not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
 </blockquote>
 </li>
 </ul>
-<p>Now, while I’m not 100% confident my search rankings carried over, I’m fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
-<h1>What’s involved for redirection?</h1>
+<p>Now, while I'm not 100% confident my search rankings carried over, I'm fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
+<h1>What's involved for redirection?</h1>
 <ol>
 <li>Tell BlogSpot to redirect each post at <code>staxmanade.blogspot.com</code> to the new location.</li>
 <li>Handle that redirection on the Octopress side.</li>
 </ol>
-<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don’t have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
-<h3>Let’s get into why this wasn’t as straight forward.</h3>
-<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you’ll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
-<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don’t provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can’t use on our static site.</p>
+<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don't have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
+<h3>Let's get into why this wasn't as straight forward.</h3>
+<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you'll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
+<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don't provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can't use on our static site.</p>
 <p>The direction I took was to use the <code>&lt;$BlogItemNumber$&gt;</code> which is like a really long <code>id</code> value, leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">Jekyll alias generator</a> and end up doing two redirects.</p>
 <ol>
 <li>from <code>staxmanade.blogspot.com/SomeBlogUrl</code> -&gt; <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code></li>
 <li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
 </ol>
-<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that’s installed, we need to update all of our blog posts to add in the ‘alias’ that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
-<p>{{ gist 10562366 “InsertBloggerAliasIntoJekyllPost.ps1” }}</p>
+<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that's installed, we need to update all of our blog posts to add in the 'alias' that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
+<p><script src="https://gist.github.com/10562366.js?file=InsertBloggerAliasIntoJekyllPost.ps1"></script></p>
 <p>In summary, the above code is:</p>
 <ol>
 <li>Parsing the blogger xml</li>
@@ -521,11 +521,11 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <p>Look in your blogger xml for a sample ID, it looks like</p>
 <pre><code>&lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
 </code></pre>
-<p>What we care about is the <code>BigNumber</code> after the &quot;…post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
+<p>What we care about is the <code>BigNumber</code> after the &quot;...post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
 <p>If you completed the above and run <code>rake generate</code> and <code>rake preview</code>, test out that your redirections are correct.</p>
 <p>After I completed this and on my blog, <a href="https://staxmanade.com/blog/7515836382847059837">staxmanade.com/blog/7515836382847059837</a> should redirect me to an actual post.</p>
-<p>Once you’re happy with your Octopress’s blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
-<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url’s, we can go back to BlogSpot and update our template to redirect to our static site.</p>
+<p>Once you're happy with your Octopress's blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
+<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url's, we can go back to BlogSpot and update our template to redirect to our static site.</p>
 <p>I used the below template (note search/replace your domain etc) before dropping this into your site.</p>
 <h1>Update Blogger template to redirect.</h1>
 <ol>
@@ -533,10 +533,10 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
 <li>Modify the below template for your own site.</li>
 </ol>
-<p>{{ gist 10562366 “BloggerRedirect.html” }}</p>
-<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don’t see the middle/transition page.</p>
+<p><script src="https://gist.github.com/10562366.js?file=BloggerRedirect.html"></script></p>
+<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don't see the middle/transition page.</p>
 <blockquote>
-<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I’m not that cool, so my blog could handle some downtime :P</p>
+<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
 </blockquote>
 </div>
 
@@ -552,7 +552,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -587,7 +587,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Once you’ve ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
+<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
 <ol>
 <li>Cross-Post links (where I referenced one of my other posts)</li>
 <li>Broken links.</li>
@@ -600,13 +600,13 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <p>but now should link to</p>
 <pre><code>/blog/2013/12/format-your-net-exceptions-to-see
 </code></pre>
-<p>If you’re on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
-<p>I don’t recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I’ll let you figure out the rest of how to get that task done.</p>
+<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
+<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
 <h2>Fix broken links</h2>
-<p>Once you’re done fixing up cross-post links, we want to make sure we didn’t mess anything up, and while we’re at it, fix any old or out-dated links.</p>
+<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
 <p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
 <p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
-<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn’t able to fix up all of my external links, but that’s the way of the web unfortunately. I haven’t done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
+<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
 </div>
 
     </article>
@@ -621,7 +621,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -658,18 +658,18 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </div></p>
 <p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
 <h1>Translate export <code>xml</code> to Octopress posts</h1>
-<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it’s fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
+<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it's fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
 <ol>
 <li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code></li>
 </ol>
 <ul>
-<li>Note: there are a number of forks of the script - if one doesn’t work, browse other changes and see if something fits your needs.</li>
+<li>Note: there are a number of forks of the script - if one doesn't work, browse other changes and see if something fits your needs.</li>
 </ul>
 <ol start="2">
 <li>
 <p>From the command line go to a temporary folder and execute</p>
 <p><code>ruby {pathToImporterFile}/BloggerImporter.rb '{PathToBloggerExport}/blog-03-19-2014.xml'</code></p>
-<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don’t have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn’t port it back then. I’m sure it’s possible, but wasn’t worth my time (since it works on my mac and was a one-time task).</p>
+<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don't have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn't port it back then. I'm sure it's possible, but wasn't worth my time (since it works on my mac and was a one-time task).</p>
 <pre><code class="language-ruby"><span class="hljs-constant">C</span><span class="hljs-symbol">:/Ruby193/lib/ruby/site_ruby/</span><span class="hljs-number">1.9</span>.<span class="hljs-number">1</span>/rubygems/custom_require.<span class="hljs-symbol">rb:</span><span class="hljs-number">36</span><span class="hljs-symbol">:in</span> <span class="hljs-string">`require': cannot load such file -- nokogiri (LoadE
 rror)
         from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `</span><span class="hljs-keyword">require</span><span class="hljs-string">'
@@ -679,17 +679,17 @@ rror)
 </li>
 <li>
 <p>You should now you have your content.</p>
-<p>After you’ve run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
+<p>After you've run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
 <pre><code>~/code/temp&gt; ls
 _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
 </code></pre>
-<p>I didn’t end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
+<p>I didn't end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
 </li>
 <li>
 <p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
 </li>
 <li>
-<p>At this point you’ve successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way…</p>
+<p>At this point you've successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</p>
 </li>
 <li>
 <p>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</p>
@@ -698,7 +698,7 @@ _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
 <p>If your preview looks right use <code>rake deploy</code> to put your changes on github.</p>
 </li>
 </ol>
-<p>Hopefully it all worked out and you’re looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn’t necessary (I can’t recall anymore) but it was quick to work through.</p>
+<p>Hopefully it all worked out and you're looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn't necessary (I can't recall anymore) but it was quick to work through.</p>
 <blockquote>
 <p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
 </blockquote>
@@ -716,7 +716,7 @@ _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
     </p>
 </header>
 <div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -751,7 +751,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel…</p>
+<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
 <h1>Steps to export content.</h1>
 <ol>
 <li>Log in to your [<a href="http://BlogSpot.com(http://BlogSpot.com)">BlogSpot.com(http://BlogSpot.com)</a> admin portal</li>
@@ -761,9 +761,9 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <li>Save the file somewhere safe so we can refer to it later</li>
 </ol>
 <p><img src="/images/posts/blogger_settings.png" alt="Blogger Settings"></p>
-<h2>What’s in this export file?</h2>
-<p>This file contains the raw content and metadata around each of your blog posts. You won’t get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that’s lower on the priority).</p>
-<p>Here is a snippet of a single entry from the exported file. In later posts we’ll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
+<h2>What's in this export file?</h2>
+<p>This file contains the raw content and metadata around each of your blog posts. You won't get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that's lower on the priority).</p>
+<p>Here is a snippet of a single entry from the exported file. In later posts we'll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
 <h2>Sample Entry from Blogspot Export File</h2>
 <pre><code class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-title">entry</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">id</span>&gt;</span>tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837<span class="hljs-tag">&lt;/<span class="hljs-title">id</span>&gt;</span>
@@ -845,6 +845,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

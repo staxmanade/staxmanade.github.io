@@ -80,8 +80,8 @@
     </p>
 </header>
 <div class="entry-content"><p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don’t include the last bit (that worked for me), so I hope this helps you…</p>
-<h1>Why Can’t I run the Xcode Simulator on a Jenkins server?</h1>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
+<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
 <h3>Some Error Messages I Encountered Along the Way:</h3>
 <pre><code>Tried to install the test host app 'com.myapp.test' but failed.
 
@@ -100,11 +100,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 ** TEST FAILED **
 </code></pre>
 <h3>Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it’s U.I…</p>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
 <p>Below is a great resource to get you most of the way there.</p>
 <p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you’ve followed the instructions in the above post and you still can’t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don’t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
 <p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
 <pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
 <span class="hljs-deletion">-       &lt;true /&gt;</span>
@@ -196,6 +196,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

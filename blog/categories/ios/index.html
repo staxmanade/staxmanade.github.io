@@ -80,12 +80,12 @@
     </p>
 </header>
 <div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
-<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you’re reviewing, your brain is now having to decide if anomalies in the formatting of your project’s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
-<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio’s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
-<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I’d highly recommend you check them out.</p>
-<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that’s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you're reviewing, your brain is now having to decide if anomalies in the formatting of your project's source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio's built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I'd highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that's a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
 <p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
-<p><s>Unfortunately it’s not as easy to install as <code>brew install clang-format</code></s> (It’s now as easy to install as <code>brew install clang-format</code>), but I’ll show you not only how to get it installed manually, but a command to easily format your code.</p>
+<p><s>Unfortunately it's not as easy to install as <code>brew install clang-format</code></s> (It's now as easy to install as <code>brew install clang-format</code>), but I'll show you not only how to get it installed manually, but a command to easily format your code.</p>
 <h1>How to install <code>clang-format</code> manually</h1>
 <p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
 <ol>
@@ -97,7 +97,7 @@
 </li>
 <li>Copy that URL and place it into the following set of commands.</li>
 </ol>
-<p>From a command prompt, navigate to a folder where you’d like to save or store the <code>clang</code> tools.</p>
+<p>From a command prompt, navigate to a folder where you'd like to save or store the <code>clang</code> tools.</p>
 <ol>
 <li>Remove the older version if there was one, and create a folder to work in
 <code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
@@ -121,10 +121,10 @@ ln -s <span class="hljs-variable">$(</span><span class="hljs-keyword">pwd</span>
 clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help</span>
 </code></pre>
 <h1>How to setup your project style guide</h1>
-<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let’s walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before you use the command line tool to rip through our project, let’s first set the standards you’d like clang-format to adhere to when formatting our code.</p>
+<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let's walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before you use the command line tool to rip through our project, let's first set the standards you'd like clang-format to adhere to when formatting our code.</p>
 <p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
-<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project’s Objective-C files.</p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project's Objective-C files.</p>
 <p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
 <p>Here is one I have used before.</p>
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">Chromium</span>
@@ -148,9 +148,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">None</span>
 </code></pre>
 <h1>Format all our files at once</h1>
-<p>Now that you have a <code>.clang-format</code> file which helps to define our project’s styling conventions, you can begin our initial formatting sweep.</p>
-<p>First let’s create a command that gives us all the files you want to process.</p>
-<p>Here’s my initial example (executed in a zsh shell):</p>
+<p>Now that you have a <code>.clang-format</code> file which helps to define our project's styling conventions, you can begin our initial formatting sweep.</p>
+<p>First let's create a command that gives us all the files you want to process.</p>
+<p>Here's my initial example (executed in a zsh shell):</p>
 <p><code>ls MyProject/*.[hm]</code></p>
 <p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
 <p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
@@ -178,10 +178,10 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
     </p>
 </header>
 <div class="entry-content"><p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p>
-<p>I’m new enough to iOS development that solutions don’t yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p>
+<p>I'm new enough to iOS development that solutions don't yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p>
 <p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p>
-<p>If you need something like this, I’ve pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it’ll give you enough hints to get started on your own implementation.</p>
-<p>I’m open to feedback. Post any suggestions/alternative ideas to the github repo.</p>
+<p>If you need something like this, I've pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it'll give you enough hints to get started on your own implementation.</p>
+<p>I'm open to feedback. Post any suggestions/alternative ideas to the github repo.</p>
 <h1>Where do I get it?</h1>
 <h2><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2>
 <p>Hope you find this useful.</p>
@@ -240,6 +240,7 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

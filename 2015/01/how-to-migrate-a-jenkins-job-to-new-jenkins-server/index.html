@@ -91,11 +91,11 @@
 <li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
 <li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
 </ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click “reload config” to force Jenkins to reload configuration from the disk.</p>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
 </blockquote>
 <p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
 <h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple…</p>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
 <ul>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
@@ -106,7 +106,7 @@
 <li>First download the Jenkins CLI jar.</li>
 </ol>
 <ul>
-<li>You can do this from your jenkin’s CLI page within your installed Jenkins instance.</li>
+<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
 </ul>
 <p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
 <ol start="2">
@@ -114,16 +114,16 @@
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
 <ol start="3">
-<li>Using one job from the list above, let’s copy the xml of a job to the clipboard. (I’m using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
+<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job’s xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
 <ol start="4">
-<li>If the above command placed a job’s XML into the clipboard, you can use the below command to add it to the new server.</li>
+<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
 </ol>
 <p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli’s <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps…</p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+<p>Hope this helps...</p>
 </div>
 
                 <footer>
@@ -204,6 +204,7 @@
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

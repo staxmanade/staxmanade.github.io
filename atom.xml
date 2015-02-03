@@ -23,14 +23,14 @@
 <p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
 </blockquote>
 <h2>What are Approval Tests?</h2>
-<p>At it’s core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
+<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
 <p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
 <p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
-<p>With Approval Tests, you can take whatever output you’re wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
+<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
 <p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
-<p>The work to find and start up your favorite diff tool comparing previously “approved” files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
-<h1>Let’s walk through an example</h1>
-<p>If you’ve done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I’ve contrive a sample test using the AAA style in JavaScript.</p>
+<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
+<h1>Let's walk through an example</h1>
+<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
 <pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
 describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
@@ -49,9 +49,9 @@ describe(<span class="hljs-string">"when testing something"</span>, <span class=
     });
 });
 </code></pre>
-<p>At a high level, if you are writing tests with an object, and have a way to translate that object’s state into a text or image representation, wouldn’t it be great if you could save that state into a file, essentially locking down the state of the test?</p>
+<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
 <p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
-<h1>Let’s turn our AAA test above into an Approval Test</h1>
+<h1>Let's turn our AAA test above into an Approval Test</h1>
 <pre><code class="language-diff">var approvals = require('approvals');
 describe("when testing something", function(){
     it("should do something special", function(){
@@ -73,16 +73,16 @@ describe("when testing something", function(){
 </code></pre>
 <p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
 <h1>How Approval Tests Work</h1>
-<p>Approval Tests works by taking the object or value you’re trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn’t exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
+<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
 <p>At this point we have to choose between a number of options:</p>
 <ul>
 <li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
 <li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
-<li>Or we do nothing as we want to start over…</li>
+<li>Or we do nothing as we want to start over...</li>
 </ul>
-<p>Now we run our test again and if the test passes - then we know that we’ve finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
+<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
 <blockquote>
-<p>If the above explanation still isn’t clear, I’d recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco’s</a> video’s on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
+<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
 </blockquote>
 <h1>Next Steps!</h1>
 <p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
@@ -97,8 +97,8 @@ describe("when testing something", function(){
         <updated>2015-01-28T00:40:34Z</updated>
         <summary type="html"><![CDATA[We recently [migrated an older Jenkins C.I. server over](http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/) to a newer...]]></summary>
         <content type="html"><![CDATA[<p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don’t include the last bit (that worked for me), so I hope this helps you…</p>
-<h1>Why Can’t I run the Xcode Simulator on a Jenkins server?</h1>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
+<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
 <h3>Some Error Messages I Encountered Along the Way:</h3>
 <pre><code>Tried to install the test host app 'com.myapp.test' but failed.
 
@@ -117,11 +117,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 ** TEST FAILED **
 </code></pre>
 <h3>Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it’s U.I…</p>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
 <p>Below is a great resource to get you most of the way there.</p>
 <p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you’ve followed the instructions in the above post and you still can’t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don’t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
 <p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
 <pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
 <span class="hljs-deletion">-       &lt;true /&gt;</span>
@@ -154,11 +154,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
 <li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
 </ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click “reload config” to force Jenkins to reload configuration from the disk.</p>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
 </blockquote>
 <p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
 <h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple…</p>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
 <ul>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
@@ -169,7 +169,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>First download the Jenkins CLI jar.</li>
 </ol>
 <ul>
-<li>You can do this from your jenkin’s CLI page within your installed Jenkins instance.</li>
+<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
 </ul>
 <p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
 <ol start="2">
@@ -177,16 +177,16 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
 <ol start="3">
-<li>Using one job from the list above, let’s copy the xml of a job to the clipboard. (I’m using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
+<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job’s xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
 <ol start="4">
-<li>If the above command placed a job’s XML into the clipboard, you can use the below command to add it to the new server.</li>
+<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
 </ol>
 <p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli’s <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps…</p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+<p>Hope this helps...</p>
 ]]></content>
     </entry>
     <entry>
@@ -211,12 +211,12 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
         <updated>2015-01-14T05:49:01Z</updated>
         <summary type="html"><![CDATA[Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular b...]]></summary>
         <content type="html"><![CDATA[<p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
-<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you’re reviewing, your brain is now having to decide if anomalies in the formatting of your project’s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
-<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio’s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
-<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I’d highly recommend you check them out.</p>
-<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that’s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you're reviewing, your brain is now having to decide if anomalies in the formatting of your project's source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio's built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I'd highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that's a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
 <p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
-<p><s>Unfortunately it’s not as easy to install as <code>brew install clang-format</code></s> (It’s now as easy to install as <code>brew install clang-format</code>), but I’ll show you not only how to get it installed manually, but a command to easily format your code.</p>
+<p><s>Unfortunately it's not as easy to install as <code>brew install clang-format</code></s> (It's now as easy to install as <code>brew install clang-format</code>), but I'll show you not only how to get it installed manually, but a command to easily format your code.</p>
 <h1>How to install <code>clang-format</code> manually</h1>
 <p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
 <ol>
@@ -228,7 +228,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </li>
 <li>Copy that URL and place it into the following set of commands.</li>
 </ol>
-<p>From a command prompt, navigate to a folder where you’d like to save or store the <code>clang</code> tools.</p>
+<p>From a command prompt, navigate to a folder where you'd like to save or store the <code>clang</code> tools.</p>
 <ol>
 <li>Remove the older version if there was one, and create a folder to work in
 <code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
@@ -252,10 +252,10 @@ ln -s <span class="hljs-variable">$(</span><span class="hljs-keyword">pwd</span>
 clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help</span>
 </code></pre>
 <h1>How to setup your project style guide</h1>
-<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let’s walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before you use the command line tool to rip through our project, let’s first set the standards you’d like clang-format to adhere to when formatting our code.</p>
+<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let's walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before you use the command line tool to rip through our project, let's first set the standards you'd like clang-format to adhere to when formatting our code.</p>
 <p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
-<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project’s Objective-C files.</p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project's Objective-C files.</p>
 <p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
 <p>Here is one I have used before.</p>
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">Chromium</span>
@@ -279,9 +279,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">None</span>
 </code></pre>
 <h1>Format all our files at once</h1>
-<p>Now that you have a <code>.clang-format</code> file which helps to define our project’s styling conventions, you can begin our initial formatting sweep.</p>
-<p>First let’s create a command that gives us all the files you want to process.</p>
-<p>Here’s my initial example (executed in a zsh shell):</p>
+<p>Now that you have a <code>.clang-format</code> file which helps to define our project's styling conventions, you can begin our initial formatting sweep.</p>
+<p>First let's create a command that gives us all the files you want to process.</p>
+<p>Here's my initial example (executed in a zsh shell):</p>
 <p><code>ls MyProject/*.[hm]</code></p>
 <p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
 <p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
@@ -308,48 +308,48 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <blockquote>
 <p>In summary I left my Octopress blog behind quite a while ago, and this site has been statically generated with a custom tooling build up around gulpjs and node.</p>
 </blockquote>
-<h1>Some of the details…</h1>
+<h1>Some of the details...</h1>
 <p>After I <a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">migrated from Blogspot to Octopress</a> I started running into workflow issues and <a href="https://github.com/jekyll/jekyll/issues/2226">other issues</a> that turned me off from Octopress/Jekyll (at least for my own site).</p>
-<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with…</p>
+<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with...</p>
 <blockquote>
 <p>So I did what every developer does. I wrote my own.</p>
 </blockquote>
 <p>Using <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> to capture previous renderings of the Octopress generated version of <a href="http://staxmanade.com">staxmanade.com</a>, I was surprised at how quickly I ported my Octopress generated site to a new custom static site generator.</p>
-<p>I’m not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I’ve implemented.</p>
+<p>I'm not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I've implemented.</p>
 <h2>Personal struggles with Octopress:</h2>
 <ul>
-<li>Octopress site generation was too SLOW for me. There’s even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you’re working on generate fast, but this just bothered me from a fundamental level.</li>
-<li>I’m not a Ruby developer and don’t have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I’m a developer and its part of the process)</li>
-<li>Disliked that every time I <code>rake gen_deploy</code> I didn’t know the exact code-diff that was changed since the previous version. I’d like to know exactly what files have changed and how they have changed before they get deployed. (again, there’s probably a solution here, but didn’t really care to dig deeper)</li>
-<li>There’s an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
+<li>Octopress site generation was too SLOW for me. There's even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you're working on generate fast, but this just bothered me from a fundamental level.</li>
+<li>I'm not a Ruby developer and don't have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I'm a developer and its part of the process)</li>
+<li>Disliked that every time I <code>rake gen_deploy</code> I didn't know the exact code-diff that was changed since the previous version. I'd like to know exactly what files have changed and how they have changed before they get deployed. (again, there's probably a solution here, but didn't really care to dig deeper)</li>
+<li>There's an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
 </ul>
 <h1>So what did I end up with?</h1>
-<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I’ve thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
+<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I've thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
 <h1>How is this better ~err~ different?</h1>
 <ul>
 <li>Regenerating my site only takes about 6 seconds (as opposed to the Octopress 30+)</li>
 <li>I learned <a href="http://gulpjs.com">gulp</a>, and node.js streams along the way.</li>
 <li>Built by myself — which was a good for the learning experience.</li>
-<li>Don’t have to set the codepage to <code>65001</code> for Windows machines.</li>
+<li>Don't have to set the codepage to <code>65001</code> for Windows machines.</li>
 <li>Series support.
 <ul>
-<li>I’ve implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they’re a feature I’ve quite liked and was relatively easy to implement using my custom site generator.</li>
+<li>I've implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they're a feature I've quite liked and was relatively easy to implement using my custom site generator.</li>
 </ul>
 </li>
 <li>Easy post tagging for a custom feed that gets cross-posted to <a href="http://elegantcode.com">elegantcode.com</a></li>
 <li>The <a href="http://togglejs.github.io/">tog</a> is easy to extend with custom commands and has a number of pre-built commands already ready to go.</li>
 </ul>
-<p>Since I’ve not put a huge amount of time into it - and I haven’t exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
+<p>Since I've not put a huge amount of time into it - and I haven't exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
 <h1>How is this worse?</h1>
 <ul>
-<li>I have to maintain it (this is both a blessing and a curse) - don’t get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
-<li>I haven’t yet ditched the Octopress theme, so that change will be coming at some point.</li>
-<li>I don’t have any automated process to deploying changes. So I can’t just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
-<li>My <code>gulp watch</code> is not working correctly and it’s not yet wired up to <code>livereload</code> which would be a nice next step…</li>
+<li>I have to maintain it (this is both a blessing and a curse) - don't get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
+<li>I haven't yet ditched the Octopress theme, so that change will be coming at some point.</li>
+<li>I don't have any automated process to deploying changes. So I can't just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
+<li>My <code>gulp watch</code> is not working correctly and it's not yet wired up to <code>livereload</code> which would be a nice next step...</li>
 </ul>
-<h1>BUT…</h1>
-<p>This is my site so it’s all up to me to make it right…</p>
-<p>It’s been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren’t enough).</p>
+<h1>BUT...</h1>
+<p>This is my site so it's all up to me to make it right...</p>
+<p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
 ]]></content>
     </entry>
     <entry>
@@ -360,11 +360,11 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
         <updated>2014-12-29T16:12:11Z</updated>
         <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
         <content type="html"><![CDATA[<p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I’m going to put this here so I can find it later…</p>
+<p>I'm going to put this here so I can find it later...</p>
 <h1>Create a merge-wrapper script</h1>
 <p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven’t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
 <h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
@@ -378,14 +378,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </li>
 <li>
 <p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I’d be happy to take contributions of other diff tools in this gist if you leave a comment with yours…</p>
+<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
-<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.js” }}</p>
-<p>Below was an attempt at using a bash script to manage what I do above, it’ll work for some, but I didn’t want to maintain this - prefer the JS version instead.</p>
-<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.sh” }}</p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
+<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires the .gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.sh \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# # How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;#&#10;&#10;BASE=$1&#10;LOCAL=$2&#10;REMOTE=$3&#10;MERGED=$4&#10;&#10;if [[ $BASE == *.png ]]; then&#10;  echo &#34;Image diff..&#34;;&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;else&#10;  #Finally, the default case:&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#34;&#10;  #CMD=&#34;opendiff \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; -ancestor \&#34;$REMOTE\&#34; -mergeFile \&#34;$MERGED\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;fi&#10;</code></pre></noscript></div></p>
 <h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we’ve created our merge wrapper script we need to tell git how to use it.</p>
+<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
@@ -406,14 +406,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <h2>What is it?</h2>
 <p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
 <h1>What pain does this solve?</h1>
-<p>I’ve recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
+<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
 <p>This typically involves:</p>
 <ol>
 <li>Opening the Outlook appointment</li>
 <li>Copying just the conference phone number (without extension)</li>
 <li>Pasting it in Skype to dial</li>
 <li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype’s number pad area</li>
+<li>Pasting in Skype's number pad area</li>
 <li>Type or use the mouse to press the final <code>#</code> key.</li>
 </ol>
 <h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
@@ -425,14 +425,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </ol>
 <p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
 <h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you’re probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you’re on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you’re in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
+<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
 <blockquote>
-<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm…</p>
+<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
 </blockquote>
-<h1>Still early…</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you’d like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I’m not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
+<h1>Still early...</h1>
+<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
+<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
 ]]></content>
     </entry>
     <entry>
@@ -443,27 +443,27 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
         <updated>2014-12-14T00:45:43Z</updated>
         <summary type="html"><![CDATA[> This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of ...]]></summary>
         <content type="html"><![CDATA[<blockquote>
-<p>This post may seem a bit longer than my usual posts. It’s one I’ve slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you’re considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
+<p>This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you're considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
 </blockquote>
 <h1>Background</h1>
 <p>My previous job afforded me the opportunity to work from home a couple days out of the week. While putting my wife through school, those days were great. I would start work extra early so I could leave early and watch our little girl while my wife headed off to class. The early start was great because these quiet mornings were often the most productive part of my day. The lack of distractions such as email, meetings, and instant message chats along with the quiet focus time all contributed to this increased productivity.</p>
 <p>While I quite enjoyed this time, was often productive, and it helped my family I still preferred to go into the office over working from home.</p>
 <p>So why did I still prefer going to the office over working from home?</p>
-<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn’t pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
+<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn't pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
 <p>This experience and the feeling it left me with is what concerned me about the new job I was about to take.</p>
 <h1>Worried to take a remote / work from home job.</h1>
 <p>Given my limited work from home experience, I was concerned about working remotely 100% of the time. However, the new opportunity to work for a <a href="http://vertigo.com">consulting firm I admired,</a> and the thought of being able to constantly try new technologies, and business domains was really appealing.</p>
-<p>I have now worked remotely for Vertigo for over 3 years and I’d like to share a list of Pros/Cons that I’ve gathered through my experience working from home full time.</p>
-<h1>Con’s to working from home</h1>
-<p>Now, while Con’s do not outweigh the Pro’s for me, there is quite a bit of grey area here, so let’s review some con’s.</p>
+<p>I have now worked remotely for Vertigo for over 3 years and I'd like to share a list of Pros/Cons that I've gathered through my experience working from home full time.</p>
+<h1>Con's to working from home</h1>
+<p>Now, while Con's do not outweigh the Pro's for me, there is quite a bit of grey area here, so let's review some con's.</p>
 <ul>
-<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I’ve tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I’ve had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house…</li>
+<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I've tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I've had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house...</li>
 <li>Shipping Hardware.
 <ul>
 <li>This one is a bit of a pain. Working for a consulting firm means there are many of different projects that require varying hardware configurations. From <a href="http://www.amazon.com/gp/product/B00NFXON1Q/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00NFXON1Q&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=EL5GYMNM3KI4HBGO">Xboxes</a>, test phones, tablets, computers, and even <a href="http://www.amazon.com/gp/product/B00I7JZNIU/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00I7JZNIU&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=3SZPKBVY7VEVBMO7">TVs</a>. I semi-regularly run to FedEx and send something to H.Q. or the Apple Store or Best Buy to pick up some hardware based on the needs of a project.</li>
 </ul>
 </li>
-<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it’s so easy to work from home. This takes a bit of discipline.</li>
+<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it's so easy to work from home. This takes a bit of discipline.</li>
 <li>Sitting in the office chair when the amazingly yummy aromas of some fresh home cooking - distracting me from being productive as the smell is driving my stomach to scream at me to go downstairs for some food!</li>
 <li>Communication
 <ul>
@@ -473,43 +473,43 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <li>It often takes a little more discipline to take breaks.</li>
 <li>Time Zones
 <ul>
-<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company’s headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
+<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company's headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
 </ul>
 </li>
 </ul>
-<h1>Pro’s to working from home</h1>
+<h1>Pro's to working from home</h1>
 <ul>
 <li>Home office temperature!
 <ul>
-<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It’s either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you’re the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you’re too cold, put on some clothes or crank up the heat.</li>
+<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It's either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you're the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you're too cold, put on some clothes or crank up the heat.</li>
 </ul>
 </li>
 <li>Commute
 <ul>
 <li>I often joke with my fellow Californian commute ridden co-workers when they complain about traffic that day that I narrowly avoided a 3 (lego) car pile-up on my way to the office.</li>
-<li>I live where it’s cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
-<li>Plus there’s the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
+<li>I live where it's cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
+<li>Plus there's the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
 </ul>
 </li>
 <li>More family time overall. Since my coffee, water, bathroom breaks all lead to opportunities where I can say hello to the family.</li>
-<li><a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">SWEATPANTS!</a> My wife recently <a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">introduced me to sweatpants</a>. OMG they are comfortable, try wearing those at the stuffy-formal-office…</li>
-<li>Quiet place to focus. It’s easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
+<li><a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">SWEATPANTS!</a> My wife recently <a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">introduced me to sweatpants</a>. OMG they are comfortable, try wearing those at the stuffy-formal-office...</li>
+<li>Quiet place to focus. It's easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
 <li>We have all the usual necessities at home,
 <ul>
 <li>Tools (for that time you need a screwdriver)</li>
-<li>Easy access to hygiene related products/tools. Ever need to take a shower in the middle of the day? Change of clothes (spilled coffee…)? Or brush your teeth?</li>
+<li>Easy access to hygiene related products/tools. Ever need to take a shower in the middle of the day? Change of clothes (spilled coffee....)? Or brush your teeth?</li>
 </ul>
 </li>
 <li>Invest in your office.
 <ul>
-<li>When you invest in your home office, you’re investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
+<li>When you invest in your home office, you're investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
 </ul>
 </li>
-<li>Lunch at home. My wife is a great cook. I’m spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
-<li>My wife just brought me the most amazing homemade burrito. I didn’t even care I was on a video call with my team. nom…nom…nom…</li>
-<li>One of my favorite perks, is not even a perk that any company could offer (or even replace). I take the opportunity to for 10-minute break in the afternoon, where I walk up the street to meet my daughter at the bus stop. This is so much more important in my life than practically any company can offer (like free lunches, ping-pong table, etc…).</li>
-<li>Scheduling an at-home call is easy. It’s rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
-<li>David’s Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn’t thought of, which I totally agree.
+<li>Lunch at home. My wife is a great cook. I'm spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
+<li>My wife just brought me the most amazing homemade burrito. I didn't even care I was on a video call with my team. nom...nom...nom...</li>
+<li>One of my favorite perks, is not even a perk that any company could offer (or even replace). I take the opportunity to for 10-minute break in the afternoon, where I walk up the street to meet my daughter at the bus stop. This is so much more important in my life than practically any company can offer (like free lunches, ping-pong table, etc...).</li>
+<li>Scheduling an at-home call is easy. It's rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
+<li>David's Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn't thought of, which I totally agree.
 <ul>
 <li>You struggle on problems and your kid walks in the room and puts your life in perspective.</li>
 <li>I can listen to my music turned way up!</li>
@@ -517,10 +517,10 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </li>
 </ul>
 <h1>What about distractions?</h1>
-<p>I get this a lot, when I tell others I work from home. “I don’t know how you don’t get distracted with other things to do at home.” This may be a very individual thing. While, there can be distractions at home, I’ve always been a focused individual and I would say it’s often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
+<p>I get this a lot, when I tell others I work from home. &quot;I don't know how you don't get distracted with other things to do at home.&quot; This may be a very individual thing. While, there can be distractions at home, I've always been a focused individual and I would say it's often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
 <h1>Not-so socially appropriate</h1>
 <ul>
-<li>When you’re at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there’s no stress, or stomach pain… Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
+<li>When you're at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there's no stress, or stomach pain... Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
 </ul>
 ]]></content>
     </entry>
@@ -532,12 +532,12 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
         <updated>2014-11-30T16:43:50Z</updated>
         <summary type="html"><![CDATA[# TL;DR]]></summary>
         <content type="html"><![CDATA[<h1>TL;DR</h1>
-<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later…</strong></p>
+<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
 <h1>More Context</h1>
 <p>We all know that communication is important, and often where things go awry.</p>
-<p>I sometimes wonder if I’m alone in this thinking, but don’t think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it’s awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
-<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later…</strong> is a great way to notify me that you’ve received the email (and may take some time to respond).</p>
-<p>I don’t necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
+<p>I sometimes wonder if I'm alone in this thinking, but don't think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it's awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
+<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you've received the email (and may take some time to respond).</p>
+<p>I don't necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
 ]]></content>
     </entry>
     <entry>
@@ -547,10 +547,10 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
         </link>
         <updated>2014-06-03T16:38:06Z</updated>
         <summary type="html"><![CDATA[# How to update a git branch OTHER than the one you're currently on.]]></summary>
-        <content type="html"><![CDATA[<h1>How to update a git branch OTHER than the one you’re currently on.</h1>
+        <content type="html"><![CDATA[<h1>How to update a git branch OTHER than the one you're currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
 </code></pre>
-<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don’t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
 <p>I was starting to dislike the switch branch dance to trigger a new build.</p>
 <h3>What I used to do:</h3>
 <pre><code># When I was on the master branch
@@ -585,16 +585,16 @@ git push origin release
         </link>
         <updated>2014-05-24T20:27:55Z</updated>
         <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
-        <content type="html"><![CDATA[<p>I’d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+        <content type="html"><![CDATA[<p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1>Some background</h1>
 <p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I’ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
+<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I've developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
 <p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
 <p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1>What is it?</h1>
-<p>In short, it’s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<p>In short, it's a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
 <p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don’t get slapped in the face with an error saying “cannot find a rakefile.” Instead I continue on my way like I knew what I was doing.</p>
+<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don't get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
 <p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
 <h1>Does it only work on Windows or on the Mac?</h1>
 <p>At the moment it works on both.</p>
@@ -604,9 +604,9 @@ git push origin release
 </ul>
 <h1>Download at GitHub!</h1>
 <p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1>What’s next?</h1>
-<p>I’d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I’d also love to get some feedback on how to best or more easily get this into peoples’s development environment. For now it’s pretty manual and since it’s all about your profile, a bit personal, so probably a good thing that it’s not automatically installed.</p>
+<h1>What's next?</h1>
+<p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
+<p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
 <p>Happy Commanding!</p>
 ]]></content>
     </entry>
@@ -618,15 +618,15 @@ git push origin release
         <updated>2014-05-18T17:27:29Z</updated>
         <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>
         <content type="html"><![CDATA[<h1>Challenge</h1>
-<p>Let’s say you’ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you’re curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don’t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
 <p>And since:</p>
 <blockquote>
 <p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
 <p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
 <h1>Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let’s take a dive into the compiler to see if this is something we can work around…</p>
+<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
 <h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
 <ol>
 <li>Get It</li>
@@ -635,28 +635,28 @@ git push origin release
 <li>Use it</li>
 </ol>
 <h2>Get it</h2>
-<p>Before we can get too far, let’s first install the compiler onto our system.</p>
-<p>I’ll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
+<p>Before we can get too far, let's first install the compiler onto our system.</p>
+<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
 <pre><code>npm install -g typescript
 </code></pre>
 <p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
 <h2>Copy it</h2>
-<p>We probably don’t want to modify the globally installed version of <code>tsc</code> so we’ll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
+<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
 <p>If on Windows or Mac</p>
 <pre><code>where tsc
 </code></pre>
 <blockquote>
-<p>NOTE: if you’re using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won’t help us out in this case.</p>
+<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
 </blockquote>
-<p>Once you’ve found the path to your version of <code>tsc</code></p>
+<p>Once you've found the path to your version of <code>tsc</code></p>
 <p>Mine was in</p>
 <ul>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
 </ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You’ll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
+<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
 <p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you’re done you should have a directory that looks something like this</p>
+<p>When you're done you should have a directory that looks something like this</p>
 <pre><code>
 ﻿﻿--MyJSCompiler
   <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
@@ -689,19 +689,19 @@ git push origin release
 </code></pre>
 <p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
 <h2>Hack it</h2>
-<p>Since we have a local version we can hack on now, let’s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
 <p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
 <pre><code class="language-diff">     function isTSFile(fname) {
 <span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
 <span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
      }
 </code></pre>
-<p>We’ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
+<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
 <h2>Use it</h2>
-<p>I won’t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don’t the compiler will take the input javascript file and overwrite it with it’s compiled version.</p>
-<h1>!!WARNING!! I’ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don’t the compiler will take the input javascript file and overwrite the original with it’s compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript’s version looks compared to your own, but I’ll leave that up to you to play with.</p>
+<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
+<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
+<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
 ]]></content>
     </entry>
@@ -713,7 +713,7 @@ git push origin release
         <updated>2014-04-20T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -748,8 +748,8 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Now that I’ve migrated to Octopress, I’m in the process of finding my new blogging flow.</p>
-<p>I’m currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
+<p>Now that I've migrated to Octopress, I'm in the process of finding my new blogging flow.</p>
+<p>I'm currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
 <ul>
 <li>Windows
 <ul>
@@ -770,7 +770,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </ul>
 </li>
 </ul>
-<p>My worry is that some of these don’t have the best spell-check support - so here’s hoping I double-check my work along the way :P.</p>
+<p>My worry is that some of these don't have the best spell-check support - so here's hoping I double-check my work along the way :P.</p>
 ]]></content>
     </entry>
     <entry>
@@ -781,7 +781,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <updated>2014-04-19T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 8 - Redirect Atom/RSS in FeedBurner]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -818,9 +818,9 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </div></p>
 <p>This one is quick and easy.</p>
 <p>I noticed that my original RSS feed <code>staxmanade.blogspot.com/feeds/posts/default</code> was 302 redirecting to <code>http://feeds.feedburner.com/DevelopingOnStaxmande</code>.</p>
-<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth’d with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
+<p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth'd with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
 <p>After doing this, I noticed 3 of my previously posted blogs show-up-again, but I can live with that.</p>
-<p>Now you’ve hopefully migrated your blog’s RSS subscribers automatically without loosing any.</p>
+<p>Now you've hopefully migrated your blog's RSS subscribers automatically without loosing any.</p>
 ]]></content>
     </entry>
     <entry>
@@ -831,7 +831,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <updated>2014-04-18T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -880,7 +880,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <updated>2014-04-17T03:20:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -915,46 +915,46 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I’ll talk about how I setup automatic redirection from the old blog to the new blog.</p>
+<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I'll talk about how I setup automatic redirection from the old blog to the new blog.</p>
 <blockquote>
 <p>Sorry, this post gets a little long, mostly because there is lots evolved, and I took some time to explain it along the way.</p>
 </blockquote>
-<p>So, I’m not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let’s not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
+<p>So, I'm not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let's not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
 <h3>Reasons for redirection:</h3>
 <ul>
-<li>I’d like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
-<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to ‘migrate’ not, start fresh.</li>
+<li>I'd like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
+<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to 'migrate' not, start fresh.</li>
 </ul>
-<p>I probably won’t ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I’ve made in the past, but at least they will end up at my new blog.</p>
+<p>I probably won't ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I've made in the past, but at least they will end up at my new blog.</p>
 <h3>Goals for the redirection.</h3>
 <ul>
 <li>
 <p>Users who click on a link to the old blog should redirect successfully to the new site.</p>
 </li>
 <li>
-<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog’s search rankings would carry over to my new blog.</p>
+<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog's search rankings would carry over to my new blog.</p>
 <blockquote>
-<p>DISCLAIMER: Given the steps in the post, I’m not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
+<p>DISCLAIMER: Given the steps in the post, I'm not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
 </blockquote>
 </li>
 </ul>
-<p>Now, while I’m not 100% confident my search rankings carried over, I’m fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
-<h1>What’s involved for redirection?</h1>
+<p>Now, while I'm not 100% confident my search rankings carried over, I'm fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
+<h1>What's involved for redirection?</h1>
 <ol>
 <li>Tell BlogSpot to redirect each post at <code>staxmanade.blogspot.com</code> to the new location.</li>
 <li>Handle that redirection on the Octopress side.</li>
 </ol>
-<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don’t have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
-<h3>Let’s get into why this wasn’t as straight forward.</h3>
-<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you’ll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
-<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don’t provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can’t use on our static site.</p>
+<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don't have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
+<h3>Let's get into why this wasn't as straight forward.</h3>
+<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you'll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
+<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don't provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can't use on our static site.</p>
 <p>The direction I took was to use the <code>&lt;$BlogItemNumber$&gt;</code> which is like a really long <code>id</code> value, leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">Jekyll alias generator</a> and end up doing two redirects.</p>
 <ol>
 <li>from <code>staxmanade.blogspot.com/SomeBlogUrl</code> -&gt; <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code></li>
 <li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
 </ol>
-<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that’s installed, we need to update all of our blog posts to add in the ‘alias’ that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
-<p>{{ gist 10562366 “InsertBloggerAliasIntoJekyllPost.ps1” }}</p>
+<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that's installed, we need to update all of our blog posts to add in the 'alias' that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
+<p><div><script src='https://gist.github.com/staxmanade/10562366'></script><noscript><pre><code># The following script inserts Blogger/BlogSpot id&#39;s as a post &#10;# alias into OctoPress posts (used during a migration from Blogger to BlogSpot)&#10;#&#10;# 1. CD into your OctoPress _posts folder&#10;# 2. Configure the path to your exported BlogSpot/Blogger exportedPosts.xml file&#10;# 3. Configure your Blogspot website to search/replace for.&#10;&#10;# File path to your blogger export&#10;$bloggerXmlFeed = &#34;..\..\..\blog-03-19-2014.xml&#34;&#10;&#10;# note the trailing slash&#10;$bloggerRootDomainUrl = &#39;http://staxmanade.blogspot.com/&#39;&#10;&#10;# Get the blogger feed as an XML object (PowerhShell is great with XML)&#10;$xml = ([xml] (cat $bloggerXmlFeed))&#10;&#10;# filter only &#39;blog posts&#39;. We want to ignore any other types of entries.&#10;$posts = $xml.feed.entry | where { $_.category.term -eq &#39;http://schemas.google.com/blogger/2008/kind#post&#39; };&#10;&#10;# filter only posts that were published (Ignore drafts)&#10;$posts = $posts | ?{ !($_.control.draft -eq &#39;yes&#39;) }&#10;&#10;# for each post&#10;$posts | %{ &#10;&#10;    #get the post id&#10;    $_.id | %{ $id = $_.split(&#39;-&#39;)[2] };&#10;&#10;    #get the original url slug&#10;    $url = ($_.link | where { &#10;            $_.rel -eq &#39;alternate&#39; &#10;        } | %{ $_.href }).replace($bloggerRootDomainUrl, &#39;&#39;).replace(&#39;/&#39;, &#39;-&#39;);&#10;&#10;    # what day was the post on?&#10;    $day = &#34;{0:00}&#34; -f ($_.published | %{ ([datetime]$_).Day })&#10;&#10;    # calculate new path based on day&#10;    $fileName = $url.Substring(0, 7) + &#34;-$day&#34; + $url.Substring(7)&#10;    &#10;    # validate there is a file to work with.&#10;    if(!(test-path $fileName)) {&#10;        &#34;id        - $($_.id)&#34;&#10;        &#34;published - $($_.published)&#34;&#10;        Write-Error &#34;could not find path: $fileName&#34;&#10;    } else {&#10;        # load the file (into a variable)&#10;        $content = (Get-Content $fileName)&#10;        $delimeter = 0&#10;&#9;&#9;    $alias = &#34;alias: /blog/$id&#34;&#10;&#9;&#9;    &#10;&#9;&#9;    # inject the &#39;alias into the blog&#39;s YAML at the end of the yaml heading (before the &#34;---&#34;)&#10;        $content = $content | %{ if($_ -eq &#34;---&#34;) { $delimeter++; }; if($delimeter -eq 2) { $alias; $delimeter++; }; $_ }&#10;&#10;    &#9;&#9;# save the modified file&#10;        Set-Content -Path $fileName -Value $content;&#10;    }&#10;}</code></pre></noscript></div></p>
 <p>In summary, the above code is:</p>
 <ol>
 <li>Parsing the blogger xml</li>
@@ -965,11 +965,11 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <p>Look in your blogger xml for a sample ID, it looks like</p>
 <pre><code>&lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
 </code></pre>
-<p>What we care about is the <code>BigNumber</code> after the &quot;…post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
+<p>What we care about is the <code>BigNumber</code> after the &quot;...post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
 <p>If you completed the above and run <code>rake generate</code> and <code>rake preview</code>, test out that your redirections are correct.</p>
 <p>After I completed this and on my blog, <a href="https://staxmanade.com/blog/7515836382847059837">staxmanade.com/blog/7515836382847059837</a> should redirect me to an actual post.</p>
-<p>Once you’re happy with your Octopress’s blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
-<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url’s, we can go back to BlogSpot and update our template to redirect to our static site.</p>
+<p>Once you're happy with your Octopress's blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
+<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url's, we can go back to BlogSpot and update our template to redirect to our static site.</p>
 <p>I used the below template (note search/replace your domain etc) before dropping this into your site.</p>
 <h1>Update Blogger template to redirect.</h1>
 <ol>
@@ -977,10 +977,10 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
 <li>Modify the below template for your own site.</li>
 </ol>
-<p>{{ gist 10562366 “BloggerRedirect.html” }}</p>
-<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don’t see the middle/transition page.</p>
+<p><div><script src='https://gist.github.com/staxmanade/10562366'></script><noscript><pre><code>&#60;html dir=&#34;&#60;$BlogLanguageDirection$&#62;&#34;&#62;&#10;&#60;head&#62;&#10; &#60;title&#62;301 Moved Permanently&#60;/title&#62;&#10;&#60;noscript&#62;&#10;&#60;ItemPage&#62;&#60;Blogger&#62;&#60;meta http-equiv=&#34;refresh&#34; content=&#34;0,url=http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#34;&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#10;&#60;MainOrArchivePage&#62;&#60;meta http-equiv=&#34;refresh&#34; content=&#34;0,url=http://staxmanade.com&#34;&#62;&#60;/MainOrArchivePage&#62;&#10;&#60;/noscript&#62;&#10;&#60;script type=&#34;text/javascript&#34;&#62;&#10;document.location.href = &#39;&#60;ItemPage&#62;&#60;Blogger&#62;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#60;MainOrArchivePage&#62;http://staxmanade.com&#60;/MainOrArchivePage&#62;&#39;;&#10;&#60;/script&#62;&#10;&#60;meta name=&#34;robots&#34; content=&#34;noindex,follow&#34; /&#62;&#10;&#60;style type=&#34;text/css&#34;&#62;#navbar-iframe {display: none;}&#60;/style&#62;&#10;&#60;/head&#62;&#10;&#60;body&#62;This page has moved to&#10;&#60;ItemPage&#62;&#60;Blogger&#62;&#60;a href=&#34;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#34;&#62;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#60;/a&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#10;&#60;MainOrArchivePage&#62;&#60;a href=&#34;http://staxmanade.com&#34;&#62;staxmanade.com&#60;/a&#62;&#60;/MainOrArchivePage&#62;&#10;&#60;/body&#62;&#10;&#60;/html&#62;</code></pre></noscript></div></p>
+<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don't see the middle/transition page.</p>
 <blockquote>
-<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I’m not that cool, so my blog could handle some downtime :P</p>
+<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
 </blockquote>
 ]]></content>
     </entry>
@@ -992,7 +992,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <updated>2014-04-17T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 5 - Fix Links]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -1027,7 +1027,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Once you’ve ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
+<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
 <ol>
 <li>Cross-Post links (where I referenced one of my other posts)</li>
 <li>Broken links.</li>
@@ -1040,13 +1040,13 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <p>but now should link to</p>
 <pre><code>/blog/2013/12/format-your-net-exceptions-to-see
 </code></pre>
-<p>If you’re on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
-<p>I don’t recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I’ll let you figure out the rest of how to get that task done.</p>
+<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
+<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
 <h2>Fix broken links</h2>
-<p>Once you’re done fixing up cross-post links, we want to make sure we didn’t mess anything up, and while we’re at it, fix any old or out-dated links.</p>
+<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
 <p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
 <p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
-<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn’t able to fix up all of my external links, but that’s the way of the web unfortunately. I haven’t done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
+<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
 ]]></content>
     </entry>
     <entry>
@@ -1057,7 +1057,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         <updated>2014-04-16T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -1094,18 +1094,18 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 </div></p>
 <p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
 <h1>Translate export <code>xml</code> to Octopress posts</h1>
-<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it’s fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
+<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it's fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
 <ol>
 <li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code></li>
 </ol>
 <ul>
-<li>Note: there are a number of forks of the script - if one doesn’t work, browse other changes and see if something fits your needs.</li>
+<li>Note: there are a number of forks of the script - if one doesn't work, browse other changes and see if something fits your needs.</li>
 </ul>
 <ol start="2">
 <li>
 <p>From the command line go to a temporary folder and execute</p>
 <p><code>ruby {pathToImporterFile}/BloggerImporter.rb '{PathToBloggerExport}/blog-03-19-2014.xml'</code></p>
-<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don’t have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn’t port it back then. I’m sure it’s possible, but wasn’t worth my time (since it works on my mac and was a one-time task).</p>
+<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don't have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn't port it back then. I'm sure it's possible, but wasn't worth my time (since it works on my mac and was a one-time task).</p>
 <pre><code class="language-ruby"><span class="hljs-constant">C</span><span class="hljs-symbol">:/Ruby193/lib/ruby/site_ruby/</span><span class="hljs-number">1.9</span>.<span class="hljs-number">1</span>/rubygems/custom_require.<span class="hljs-symbol">rb:</span><span class="hljs-number">36</span><span class="hljs-symbol">:in</span> <span class="hljs-string">`require': cannot load such file -- nokogiri (LoadE
 rror)
         from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `</span><span class="hljs-keyword">require</span><span class="hljs-string">'
@@ -1115,17 +1115,17 @@ rror)
 </li>
 <li>
 <p>You should now you have your content.</p>
-<p>After you’ve run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
+<p>After you've run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
 <pre><code>~/code/temp&gt; ls
 _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
 </code></pre>
-<p>I didn’t end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
+<p>I didn't end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
 </li>
 <li>
 <p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
 </li>
 <li>
-<p>At this point you’ve successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way…</p>
+<p>At this point you've successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</p>
 </li>
 <li>
 <p>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</p>
@@ -1134,7 +1134,7 @@ _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
 <p>If your preview looks right use <code>rake deploy</code> to put your changes on github.</p>
 </li>
 </ol>
-<p>Hopefully it all worked out and you’re looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn’t necessary (I can’t recall anymore) but it was quick to work through.</p>
+<p>Hopefully it all worked out and you're looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn't necessary (I can't recall anymore) but it was quick to work through.</p>
 <blockquote>
 <p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
 </blockquote>
@@ -1148,7 +1148,7 @@ _drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
         <updated>2014-04-15T03:19:53Z</updated>
         <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content]]></summary>
         <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
 </span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
@@ -1183,7 +1183,7 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
         </li>
     </ul>
 </div></p>
-<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel…</p>
+<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
 <h1>Steps to export content.</h1>
 <ol>
 <li>Log in to your [<a href="http://BlogSpot.com(http://BlogSpot.com)">BlogSpot.com(http://BlogSpot.com)</a> admin portal</li>
@@ -1193,9 +1193,9 @@ I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-
 <li>Save the file somewhere safe so we can refer to it later</li>
 </ol>
 <p><img src="/images/posts/blogger_settings.png" alt="Blogger Settings"></p>
-<h2>What’s in this export file?</h2>
-<p>This file contains the raw content and metadata around each of your blog posts. You won’t get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that’s lower on the priority).</p>
-<p>Here is a snippet of a single entry from the exported file. In later posts we’ll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
+<h2>What's in this export file?</h2>
+<p>This file contains the raw content and metadata around each of your blog posts. You won't get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that's lower on the priority).</p>
+<p>Here is a snippet of a single entry from the exported file. In later posts we'll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
 <h2>Sample Entry from Blogspot Export File</h2>
 <pre><code class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-title">entry</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">id</span>&gt;</span>tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837<span class="hljs-tag">&lt;/<span class="hljs-title">id</span>&gt;</span>

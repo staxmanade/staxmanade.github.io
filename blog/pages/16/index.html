@@ -79,7 +79,7 @@
         
     </p>
 </header>
-<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a “getter” function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
+<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
 <p>I originally had a Property that exposed some value where, if in a certain state, would throw an exception.</p>
 <p>Microsoft FxCop recommends.</p>
 <blockquote>
@@ -89,7 +89,7 @@ GetHashCode, which users do not expect to raise exceptions.
 Therefore calls to these methods are not commonly
 wrapped in try catch blocks.</p>
 </blockquote>
-<p>So if FxCop recommends not raising an exception from a Property’s getter, we’ll just throw it in a function. Come to find out now FxCop says…</p>
+<p>So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...</p>
 <blockquote>
 <p>Properties should be used instead of Get/Set methods
 in most situations. Methods are preferable to properties
@@ -101,7 +101,7 @@ is static but returns a mutable value; or the member
 returns an array.</p>
 </blockquote>
 <p>So, which is the best method?</p>
-<p>I went back to the Property method because it really is mimicking the usage of a property…</p>
+<p>I went back to the Property method because it really is mimicking the usage of a property...</p>
 <p>Any suggestions out there?</p>
 </div>
 
@@ -205,6 +205,7 @@ Lambda, not lamda. ;)</div>
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

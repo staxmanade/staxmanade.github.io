@@ -83,48 +83,48 @@
 <blockquote>
 <p>In summary I left my Octopress blog behind quite a while ago, and this site has been statically generated with a custom tooling build up around gulpjs and node.</p>
 </blockquote>
-<h1>Some of the details…</h1>
+<h1>Some of the details...</h1>
 <p>After I <a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">migrated from Blogspot to Octopress</a> I started running into workflow issues and <a href="https://github.com/jekyll/jekyll/issues/2226">other issues</a> that turned me off from Octopress/Jekyll (at least for my own site).</p>
-<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with…</p>
+<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with...</p>
 <blockquote>
 <p>So I did what every developer does. I wrote my own.</p>
 </blockquote>
 <p>Using <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> to capture previous renderings of the Octopress generated version of <a href="http://staxmanade.com">staxmanade.com</a>, I was surprised at how quickly I ported my Octopress generated site to a new custom static site generator.</p>
-<p>I’m not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I’ve implemented.</p>
+<p>I'm not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I've implemented.</p>
 <h2>Personal struggles with Octopress:</h2>
 <ul>
-<li>Octopress site generation was too SLOW for me. There’s even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you’re working on generate fast, but this just bothered me from a fundamental level.</li>
-<li>I’m not a Ruby developer and don’t have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I’m a developer and its part of the process)</li>
-<li>Disliked that every time I <code>rake gen_deploy</code> I didn’t know the exact code-diff that was changed since the previous version. I’d like to know exactly what files have changed and how they have changed before they get deployed. (again, there’s probably a solution here, but didn’t really care to dig deeper)</li>
-<li>There’s an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
+<li>Octopress site generation was too SLOW for me. There's even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you're working on generate fast, but this just bothered me from a fundamental level.</li>
+<li>I'm not a Ruby developer and don't have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I'm a developer and its part of the process)</li>
+<li>Disliked that every time I <code>rake gen_deploy</code> I didn't know the exact code-diff that was changed since the previous version. I'd like to know exactly what files have changed and how they have changed before they get deployed. (again, there's probably a solution here, but didn't really care to dig deeper)</li>
+<li>There's an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
 </ul>
 <h1>So what did I end up with?</h1>
-<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I’ve thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
+<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I've thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
 <h1>How is this better ~err~ different?</h1>
 <ul>
 <li>Regenerating my site only takes about 6 seconds (as opposed to the Octopress 30+)</li>
 <li>I learned <a href="http://gulpjs.com">gulp</a>, and node.js streams along the way.</li>
 <li>Built by myself — which was a good for the learning experience.</li>
-<li>Don’t have to set the codepage to <code>65001</code> for Windows machines.</li>
+<li>Don't have to set the codepage to <code>65001</code> for Windows machines.</li>
 <li>Series support.
 <ul>
-<li>I’ve implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they’re a feature I’ve quite liked and was relatively easy to implement using my custom site generator.</li>
+<li>I've implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they're a feature I've quite liked and was relatively easy to implement using my custom site generator.</li>
 </ul>
 </li>
 <li>Easy post tagging for a custom feed that gets cross-posted to <a href="http://elegantcode.com">elegantcode.com</a></li>
 <li>The <a href="http://togglejs.github.io/">tog</a> is easy to extend with custom commands and has a number of pre-built commands already ready to go.</li>
 </ul>
-<p>Since I’ve not put a huge amount of time into it - and I haven’t exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
+<p>Since I've not put a huge amount of time into it - and I haven't exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
 <h1>How is this worse?</h1>
 <ul>
-<li>I have to maintain it (this is both a blessing and a curse) - don’t get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
-<li>I haven’t yet ditched the Octopress theme, so that change will be coming at some point.</li>
-<li>I don’t have any automated process to deploying changes. So I can’t just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
-<li>My <code>gulp watch</code> is not working correctly and it’s not yet wired up to <code>livereload</code> which would be a nice next step…</li>
+<li>I have to maintain it (this is both a blessing and a curse) - don't get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
+<li>I haven't yet ditched the Octopress theme, so that change will be coming at some point.</li>
+<li>I don't have any automated process to deploying changes. So I can't just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
+<li>My <code>gulp watch</code> is not working correctly and it's not yet wired up to <code>livereload</code> which would be a nice next step...</li>
 </ul>
-<h1>BUT…</h1>
-<p>This is my site so it’s all up to me to make it right…</p>
-<p>It’s been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren’t enough).</p>
+<h1>BUT...</h1>
+<p>This is my site so it's all up to me to make it right...</p>
+<p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
 </div>
 
             </article>
@@ -180,6 +180,7 @@
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

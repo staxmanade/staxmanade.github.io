@@ -286,15 +286,15 @@ There is a button on the top of the solution explorer for going offline/online. 
         
     </p>
 </header>
-<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for… so then I spent some time googling and couldn’t find anything on the net describing this and why it compiled.</p>
-<p>basically what I’m talking about is if you have some code</p>
+<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn't find anything on the net describing this and why it compiled.</p>
+<p>basically what I'm talking about is if you have some code</p>
 <pre><code class="language-C#"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(string myparam)</span>
 </span>{
     <span class="hljs-keyword">int</span> a = <span class="hljs-annotation">@myparam</span>.Length;
 }
 </code></pre>
-<p>Notice the @ sign in front of the myparam variable… That is what I saw in my co-workers code and I couldn’t explain how that worked…</p>
-<p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again…</p>
+<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
+<p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
 <pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
 </span>{
     PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
@@ -302,24 +302,24 @@ There is a button on the top of the solution explorer for going offline/online. 
     RemoveDeadEvents();
 }
 </code></pre>
-<p>I did some more googling and still can’t find anything, (I’m sure it’s out there, just can’t put together the right search criteria)…</p>
-<p>Then I went back to the code, looked at it for a minute, and it dawned on me that “event” is a keyword in c#… Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.</p>
+<p>I did some more googling and still can't find anything, (I'm sure it's out there, just can't put together the right search criteria)...</p>
+<p>Then I went back to the code, looked at it for a minute, and it dawned on me that &quot;event&quot; is a keyword in c#... Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.</p>
 <p>So I wrote a little test to see if this hypothesis was correct.</p>
 <pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> <span class="hljs-keyword">class</span>)</span>
 </span>{
     <span class="hljs-keyword">int</span> a = <span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
-<p>this won’t compile because of the “class” keyword…</p>
+<p>this won't compile because of the &quot;class&quot; keyword...</p>
 <p>then I put the @ sign in front of class</p>
 <pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> @<span class="hljs-keyword">class</span>)</span>
 </span>{
     <span class="hljs-keyword">int</span> a = @<span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
-<p>and it not only compiled, but you also get intellisense on the variable…</p>
-<p>How cool…</p>
-<p>I’m not sure I would do that on a regular basis, seems like it might be a bit of a pain to write… However maybe framework code may need to have this to allow it to be more readable to it’s consumers? Anyone know why on this?</p>
+<p>and it not only compiled, but you also get intellisense on the variable...</p>
+<p>How cool...</p>
+<p>I'm not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it's consumers? Anyone know why on this?</p>
 <p><h2>Comments</h2></p>
 <div class='comments'>
 <div class='comment'>
@@ -346,21 +346,21 @@ That is exactly what it is for, so you can use reserved words for variable names
         
     </p>
 </header>
-<div class="entry-content"><p>We’ve implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general…</p>
-<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here’s the basic interface.</p>
+<div class="entry-content"><p>We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...</p>
+<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.</p>
 <pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> IValidatedResult&lt;T&gt;
 </span>{
   T Result { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
   List&lt;<span class="hljs-built_in">string</span>&gt; ValidationIssues { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
-<p>Now if you had a method that exposed this generic result object through your web service…</p>
+<p>Now if you had a method that exposed this generic result object through your web service...</p>
 <pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span><span class="hljs-params">(<span class="hljs-keyword">string</span> param1)</span>
 </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt;(param1.Length);
 }
 </code></pre>
-<p>Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like…</p>
+<p>Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...</p>
 <pre><code class="language-C#"><span class="hljs-keyword">public</span> partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidatedResultOflong</span> : <span class="hljs-title">object</span>, <span class="hljs-title">System</span>.<span class="hljs-title">ComponentModel</span>.<span class="hljs-title">INotifyPropertyChanged</span>
 </span>{
 
@@ -405,11 +405,11 @@ That is exactly what it is for, so you can use reserved words for variable names
   <span class="hljs-comment">// stripped out the INotifyPropertyChanged goo</span>
 }
 </code></pre>
-<p>Notice the non generic type <code>ValidatedResultOflong</code> that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling… if we had to create different handling methods for all of these different objects, that could prove to be laborious…</p>
-<p>Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T… Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.</p>
-<p>Then I thought I would try something… Can you have a partial class in one area which contains a common property, in this case each contains a “Result” and a “ValidationIssues” property and another partial class in a different location that declares it implements an interface which defines that “Result” and “ValidationIssues” property… and would that compile?</p>
-<p>So I wrote my first test…</p>
-<p>Here is our auto generated partial class simulated…</p>
+<p>Notice the non generic type <code>ValidatedResultOflong</code> that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...</p>
+<p>Say I wanted to write an extension method to do some generic processing on all objects that are a ValidatedResult of T... Unfortunately there is no common signature we can key off of to write this method with the proxy code generated by V.S.</p>
+<p>Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a &quot;Result&quot; and a &quot;ValidationIssues&quot; property and another partial class in a different location that declares it implements an interface which defines that &quot;Result&quot; and &quot;ValidationIssues&quot; property... and would that compile?</p>
+<p>So I wrote my first test...</p>
+<p>Here is our auto generated partial class simulated...</p>
 <pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
 {
   <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> Result { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
@@ -424,8 +424,8 @@ That is exactly what it is for, so you can use reserved words for variable names
 <p>And now the specific implementation with a long Result type.</p>
 <pre><code class="language-C#">public partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> : <span class="hljs-title">IResult</span><span class="hljs-inheritance">&lt;<span class="hljs-parent">long</span></span>&gt; {}</span>
 </code></pre>
-<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled… This was great news. This meant I could create a generic processor for my wcf objects in silverlight… I’ll show how on the silverlight side below…</p>
-<p>I defined the validated result contract as follows…</p>
+<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...</p>
+<p>I defined the validated result contract as follows...</p>
 <pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> IResultProperty&lt;T&gt;
 </span>{
   T Result { <span class="hljs-keyword">get</span>; }
@@ -436,11 +436,11 @@ That is exactly what it is for, so you can use reserved words for variable names
   List&lt;<span class="hljs-built_in">string</span>&gt; ValidationIssues { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
-<p>This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like… ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.</p>
-<p>Here’s an example of the partial class for the <code>ValidatedResultOflong</code></p>
+<p>This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.</p>
+<p>Here's an example of the partial class for the <code>ValidatedResultOflong</code></p>
 <pre><code class="language-C#">public partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidatedResultOflong</span> : <span class="hljs-title">IValidatedResult</span><span class="hljs-inheritance">&lt;<span class="hljs-parent">long</span></span>&gt; { }</span>
 </code></pre>
-<p>With that in place, this meant I could create some generic handling methods for all of my objects that now implement <code>IValidatedResult&lt;T&gt;</code>…</p>
+<p>With that in place, this meant I could create some generic handling methods for all of my objects that now implement <code>IValidatedResult&lt;T&gt;</code>...</p>
 <pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> HasValidationIssues&lt;T&gt;(<span class="hljs-keyword">this</span> T validatedResult)
 <span class="hljs-keyword">where</span> T : IValidatedResult&lt;T&gt;
 {
@@ -452,14 +452,14 @@ That is exactly what it is for, so you can use reserved words for variable names
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
 </code></pre>
-<p>Don’t know if i’ve very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that… Pretty cool…</p>
+<p>Don't know if i've very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...</p>
 <h2>Comments</h2>
 <div class='comments'>
 <div class='comment'>
 <div class='author'>Jason.Jarrett</div>
 <div class='content'>
   Interesting observation. Thanks for sharing.
-<p>I haven’t pushed it very far (bool, string, MyCustomObject, etc)</div></p>
+<p>I haven't pushed it very far (bool, string, MyCustomObject, etc)</div></p>
 </div>
 <div class='comment'>
   <div class='author'>Boris Modylevsky</div>
@@ -585,6 +585,7 @@ Thanks for the patch, I applied it today.</div>
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>

@@ -80,11 +80,11 @@
     </p>
 </header>
 <div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I’m going to put this here so I can find it later…</p>
+<p>I'm going to put this here so I can find it later...</p>
 <h1>Create a merge-wrapper script</h1>
 <p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven’t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
 <h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
@@ -98,14 +98,14 @@
 </li>
 <li>
 <p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I’d be happy to take contributions of other diff tools in this gist if you leave a comment with yours…</p>
+<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
-<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.js” }}</p>
-<p>Below was an attempt at using a bash script to manage what I do above, it’ll work for some, but I didn’t want to maintain this - prefer the JS version instead.</p>
-<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.sh” }}</p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
+<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.sh"></script></p>
 <h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we’ve created our merge wrapper script we need to tell git how to use it.</p>
+<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
@@ -192,6 +192,7 @@
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
+  <a href="/blog/archives/">More posts...</a>
 </section>
 
 <section>
