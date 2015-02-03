@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Approval Tests - Overview - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="I first started using the &#x60;.Net&#x60; version of Approval Tests and found so much value in it, I [created a port of the tool](https://github.com/approvals/...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/01/approval-tests---overview/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/approval-tests---overview/">Approval Tests - Overview</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-30T16:38:06.494Z" pubdate data-updated="true">Jan 30th 2015</time>
+
+
+        <a href="/2015/01/approval-tests---overview/#disqus_thread" data-disqus-identifier="/2015/01/approval-tests---overview/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I first started using the <code>.Net</code> version of Approval Tests and found so much value in it, I <a href="https://github.com/approvals/Approvals.NodeJS">created a port of the tool</a> that I can use in <a href="http://nodejs.org">Node.JS</a>. This post is intended as a rough overview of Approval Tests, and will be using the <a href="https://github.com/approvals/Approvals.NodeJS">NodeJS port</a> in my examples below.</p>
+<blockquote>
+<p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
+</blockquote>
+<h2>What are Approval Tests?</h2>
+<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
+<p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
+<p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
+<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
+<p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
+<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
+<h1>Let's walk through an example</h1>
+<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
+<pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+
+        <span class="hljs-comment">// Arrange</span>
+        <span class="hljs-comment">// setup the initial state for the test</span>
+        <span class="hljs-keyword">var</span> obj = { valueA: <span class="hljs-string">"test"</span>, valueB: <span class="hljs-number">1234</span> };
+
+        <span class="hljs-comment">// Act - Do some business logic on the object</span>
+        obj.valueC = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-comment">// Assert - verify the state of the item under test</span>
+        assert.equal(obj.valueA, <span class="hljs-string">"test"</span>)
+        assert.equal(obj.valueB, <span class="hljs-number">1234</span>);
+        assert.equal(obj.valueC, <span class="hljs-literal">true</span>);
+    });
+});
+</code></pre>
+<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
+<p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
+<h1>Let's turn our AAA test above into an Approval Test</h1>
+<pre><code class="language-diff">var approvals = require('approvals');
+describe("when testing something", function(){
+    it("should do something special", function(){
+
+        // Arrange
+        // setup the initial state for the test
+        var obj = { valueA: "test", valueB: 1234 };
+
+        // Act - Do some business logic on the object
+        obj.valueC = true;
+
+        // Assert - verify the state of the item under test
+<span class="hljs-deletion">-        assert.equal(obj.valueA, "test")</span>
+<span class="hljs-deletion">-        assert.equal(obj.valueB, 1234);</span>
+<span class="hljs-deletion">-        assert.equal(obj.valueC, true);</span>
+<span class="hljs-addition">+        approvals.verifyAsJSON(__dirname, "sampleTest", obj);</span>
+    });
+});
+</code></pre>
+<p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
+<h1>How Approval Tests Work</h1>
+<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
+<p>At this point we have to choose between a number of options:</p>
+<ul>
+<li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
+<li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
+<li>Or we do nothing as we want to start over...</li>
+</ul>
+<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
+<blockquote>
+<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
+</blockquote>
+<h1>Next Steps!</h1>
+<p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
+<p>Happy Approving!</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-01-30T16:38:06.494Z" pubdate data-updated="true">Jan 30th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/approvals/'>Approvals</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/01/approval-tests---overview/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/01/approval-tests---overview/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/" title="Previous Post: Setting Jenkins up to run XCTool and Xcode Simulator Tests">&laquo; Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+      <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
+      </li>
+      <li class="post">
+        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
+      </li>
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'developingonstaxmanade';
+      
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/01/approval-tests---overview/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

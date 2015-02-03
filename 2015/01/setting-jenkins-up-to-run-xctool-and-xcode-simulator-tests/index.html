@@ -80,36 +80,37 @@
     </p>
 </header>
 <div class="entry-content"><p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don&#39;t include the last bit (that worked for me), so I hope this helps you...</p>
-<h1 id="why-can-t-i-run-the-xcode-simulator-on-a-jenkins-server-">Why Can&#39;t I run the Xcode Simulator on a Jenkins server?</h1>
-<h3 id="some-error-messages-i-encountered-along-the-way-">Some Error Messages I Encountered Along the Way:</h3>
-<pre><code>Tried to install the test host app &#39;com.myapp.test&#39; but failed.
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
+<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
+<h3>Some Error Messages I Encountered Along the Way:</h3>
+<pre><code>Tried to install the test host app 'com.myapp.test' but failed.
 
 Preparing test environment failed.
 
 -[TEST_BUNDLE FAILED_TO_START] 
+    
+There was a problem starting the test bundle: Simulator 'iPhone 6' was not prepared: Failed for unknown reason.
 
-There was a problem starting the test bundle: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
-
-Test did not run: Simulator &#39;iPhone 6&#39; was not prepared: Failed for unknown reason.
+Test did not run: Simulator 'iPhone 6' was not prepared: Failed for unknown reason.
 
 2015-01-21 12:02:19.296 xcodebuild[35135:875297]  iPhoneSimulator: Timed out waiting 120 seconds for simulator to boot, current state is 1.
 
 Testing failed:
 Test target MyProjectTests encountered an error (Timed out waiting 120 seconds for simulator to boot, current state is 1. If you believe this error represents a bug, please attach the log file at /var/folders/yf/49df70js2xn524f9c3835zx0000087/T/com.apple.dt.XCTest-status/Session-2015-01-21_12:00:19-sXA35e.log)
 ** TEST FAILED **
-</code></pre><h3 id="need-to-run-a-gui-user-">Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it&#39;s U.I...</p>
+</code></pre>
+<h3>Need to run a GUI user.</h3>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
 <p>Below is a great resource to get you most of the way there.</p>
 <p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you&#39;ve followed the instructions in the above post and you still can&#39;t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don&#39;t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
 <p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
-<pre><code class="lang-diff">-       &lt;key&gt;SessionCreate&lt;/key&gt;
--       &lt;true /&gt;
+<pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
+<span class="hljs-deletion">-       &lt;true /&gt;</span>
 </code></pre>
 <p>Once I removed this key, restarted the server, everything started building/working correctly.</p>
-<h1 id="in-summary-">In summary:</h1>
+<h1>In summary:</h1>
 <ol>
 <li>Auto-login with a jenkins user</li>
 <li>Get your plist moved over to the <code>LaunchAgents</code> folder (see post linked above)</li>
@@ -136,6 +137,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 
                     <p class="meta">
                         <a class="basic-alignment left" href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/" title="Previous Post: How to Migrate a Jenkins Job to New Jenkins Server">&laquo; How to Migrate a Jenkins Job to New Jenkins Server</a>
+                        <a class="basic-alignment right" href="/2015/01/approval-tests---overview/" title="Next Post: Approval Tests - Overview">Approval Tests - Overview &raquo;</a>
                     </p>
                 </footer>
             </article>
@@ -173,6 +175,9 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -189,9 +194,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

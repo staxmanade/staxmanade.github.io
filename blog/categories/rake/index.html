@@ -79,28 +79,28 @@
         <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="some-background">Some background</h1>
+<div class="entry-content"><p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+<h1>Some background</h1>
 <p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I&#39;ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
+<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I've developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
 <p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
 <p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="what-is-it-">What is it?</h1>
-<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<h1>What is it?</h1>
+<p>In short, it's a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
 <p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don&#39;t get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
+<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don't get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
 <p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
-<h1 id="does-it-only-work-on-windows-or-on-the-mac-">Does it only work on Windows or on the Mac?</h1>
-<p>At the moment it works on both. </p>
+<h1>Does it only work on Windows or on the Mac?</h1>
+<p>At the moment it works on both.</p>
 <ul>
-<li>For Windows I have an implementation in Powershell. </li>
+<li>For Windows I have an implementation in Powershell.</li>
 <li>For the Mac you can alias to a Bash script.</li>
 </ul>
-<h1 id="download-at-github-">Download at GitHub!</h1>
+<h1>Download at GitHub!</h1>
 <p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1 id="what-s-next-">What&#39;s next?</h1>
-<p>I&#39;d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I&#39;d also love to get some feedback on how to best or more easily get this into peoples&#39;s development environment. For now it&#39;s pretty manual and since it&#39;s all about your profile, a bit personal, so probably a good thing that it&#39;s not automatically installed.</p>
+<h1>What's next?</h1>
+<p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
+<p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
 <p>Happy Commanding!</p>
 </div>
 
@@ -152,6 +152,9 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -168,9 +171,6 @@
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

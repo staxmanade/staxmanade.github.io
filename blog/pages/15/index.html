@@ -71,6 +71,65 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/t4-text-templating-in-silverlight/">T4 Text Templating in Silverlight (Thanks Oleg Sych!)</a></h1>
+    <p class="meta">
+          <time datetime="2008-12-13T19:33:00.000Z" pubdate data-updated="true">Dec 13th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>First if you're new text templating, please go read <a href="http://www.olegsych.com/"><strong>Oleg Sych's blog</strong></a>. This, as far as I've found, is the (Bible, Koran, TheWord, etc...) of visual studio's T4 Text Templating.</p>  <p>If you already know how to add a T4 template to a project, skip this how to and go to &quot;How to make a T4 template work with a Silverlight project:&quot;.</p>  <h4>How to add a T4 template to a Visual Studio .Net Project:</h4>  <p>Given the following project:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUQN_Pr532I/AAAAAAAAAC4/_x4OMFOOwK4/s1600-h/image%5B2%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="113" alt="Initial Silverlight Project" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUQN_fxvVsI/AAAAAAAAAC8/jzH_-wBKdgM/image_thumb.png?imgmax=800" width="198" border="0" /></a> </p>  <p>Bring up the add new item dialog.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQN_qg5PxI/AAAAAAAAADA/cABtBqHGrN4/s1600-h/image%5B6%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="171" alt="Add New Item" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQN_wRvlHI/AAAAAAAAADE/KXKPDylPW98/image_thumb%5B2%5D.png?imgmax=800" width="384" border="0" /></a> </p>  <p>Select a &quot;Text File&quot; and rename the extension to a .tt.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOAGcv8AI/AAAAAAAAADI/Fu1hXUKYd5k/s1600-h/image%5B19%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="264" alt="Add a new t4 template" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUQOApnwZlI/AAAAAAAAADM/cbKFl7fmKBE/image_thumb%5B13%5D.png?imgmax=800" width="428" border="0" /></a> </p>  <p>You should end up with a .tt template file and under it where the generated out put of the template will land.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBOBPYtI/AAAAAAAAADQ/OqjSBzOcaM8/s1600-h/image%5B22%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="137" alt="T4Sample.tt" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUQOBW7qKTI/AAAAAAAAADU/q3NVgQXtvFA/image_thumb%5B14%5D.png?imgmax=800" width="244" border="0" /></a> </p>  <p>You may also notice the following errors in your errors pane.</p>  <ul>   <li>Compiling transformation: The type or namespace name 'CompilerError' does not exist in the namespace 'System.CodeDom.Compiler' (are you missing an assembly reference?) </li>    <li>Compiling transformation: The type 'System.CodeDom.Compiler.CompilerErrorCollection' is defined in an assembly that is not referenced. You must add a reference to assembly 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.      <br />Compiling transformation: 'System.CodeDom.Compiler.CompilerErrorCollection' does not contain a definition for 'Add' </li>    <li>A namespace does not directly contain members such as fields or methods </li> </ul>  <p> This is where Oleg Sych comes to the rescue...</p>  <h4>How to make a T4 template work with a Silverlight project:</h4>  <blockquote>   <p><strong>Side Note:</strong> So, I had a couple emails back and fourth with Oleg about trying to get T4 to work in Silverlight. Almost all of his emails had some sort of sentence that went like this. <em>&quot;Try adding {S<strong>omeSpecialT4RelatedWord</strong>} and then do {<strong>this special thing</strong>} and report your findings back to me&quot;. This is where the {S<strong>omeSpecialT4RelatedWord</strong>} would stump me. So I would search Google for &quot;T4 {S<strong>omeSpecialT4RelatedWord</strong>}&quot; </em>and <a href="http://www.olegsych.com/">Oleg Sych's blog</a> was the first hit for each search. And not only was it the first hit, but when I would look the post for that {S<strong>omeSpecialT4RelatedWord</strong>} the answer was there and exactly what I needed. Thanks Oleg.</p> </blockquote>  <p>&#160;</p>  <p>Fortunately, to get the T4 templates to work within a Silverlight project you only need to put an &lt;#@ assembly #&gt; directive telling the template where to get a reference to the System.dll.</p>  <p>Below is a sample template:</p>  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">&lt;#@ template language=<span style="color: #006080">&quot;C#&quot;</span> #&gt;<br />&lt;#@ assembly name=<span style="color: #006080">&quot;C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&quot;</span> #&gt;<br /><span style="color: #0000ff">namespace</span> SampleT4 <br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>And below is the output:</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #0000ff">namespace</span> SampleT4<br />{ <br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeClassSample <br />    { <br />    } <br />}</pre><br /></div><br /><br /><p>That's it!!!</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+@Bill I&#39;m afraid I don&#39;t have enough context to really help you. On top of that I haven&#39;t worked with silverlight in a long time :(.<br /><br />Hope you get it figured out.</div>
+</div>
+<div class='comment'>
+<div class='author'>Bill Lanza</div>
+<div class='content'>
+I know this post is old, but....<br />I am using VS2010 and Silverlight and am trying to implement T4 templates with inheritence.  I create a baseclass.tt in a separate assembly and it compiles. However, when I try to inherit from it I get the error:<br /><br />An invalid base class was specified for the Transformation class. The base class must derive from Microsoft.VisualStudio.TextTemplating.TextTransformation. <br /><br />Is this not possible in SL?<br /><br />Thanks,<br />Bill</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Could you help me understand why you have to have a reference to the two different assemblies with the same type?</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Regarding Aquilax comment, using objects defined in both assemblies. Is there any solution for that problem ?<br /><br />Regards Swan B</div>
+</div>
+<div class='comment'>
+<div class='author'>Aquilax</div>
+<div class='content'>
+It works as long that you don&#39;t use objects defined in both assemblies, for example System.Text.RegularExpressions.Regex, otherwise it throws the exception:<br />Compiling transformation: The type &#39;System.Text.RegularExpressions.Regex&#39; exists in both &#39;c:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll&#39; and &#39;c:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v3.0\system.dll&#39;</div>
+</div>
+<div class='comment'>
+<div class='author'>timvw</div>
+<div class='content'>
+Thanks for publishing this knowledge. Saved me a lot of time.</div>
+</div>
+<div class='comment'>
+<div class='author'>br1</div>
+<div class='content'>
+Thank you.</div>
+</div>
+<div class='comment'>
+<div class='author'>Алексей</div>
+<div class='content'>
+Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblogs.asp.net/alexeyzakharov/</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-silverlight-unit-tests-little-more/">i4o &amp; Silverlight Unit Tests (A little more work than the i4o library)</a></h1>
     <p class="meta">
           <time datetime="2008-12-08T06:37:00.000Z" pubdate data-updated="true">Dec 7th 2008</time>
@@ -227,53 +286,53 @@ There is a button on the top of the solution explorer for going offline/online. 
         
     </p>
 </header>
-<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn&#39;t find anything on the net describing this and why it compiled.</p>
-<p>basically what I&#39;m talking about is if you have some code</p>
-<pre><code class="lang-C#">private void MyMethod(string myparam)
-{
-    int a = @myparam.Length;
+<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn't find anything on the net describing this and why it compiled.</p>
+<p>basically what I'm talking about is if you have some code</p>
+<pre><code class="language-C#"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(string myparam)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-annotation">@myparam</span>.Length;
 }
 </code></pre>
-<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn&#39;t explain how that worked...</p>
+<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
 <p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
-<pre><code class="lang-C#">public void UnregisterSubscriber(string publishedEventName, EventHandler subscriber)
-{
-    PublishedEvent @event = GetEvent(publishedEventName);
-    @event.RemoveSubscriber(subscriber);
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
+</span>{
+    PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
+    @<span class="hljs-keyword">event</span>.RemoveSubscriber(subscriber);
     RemoveDeadEvents();
 }
 </code></pre>
-<p>I did some more googling and still can&#39;t find anything, (I&#39;m sure it&#39;s out there, just can&#39;t put together the right search criteria)...</p>
+<p>I did some more googling and still can't find anything, (I'm sure it's out there, just can't put together the right search criteria)...</p>
 <p>Then I went back to the code, looked at it for a minute, and it dawned on me that &quot;event&quot; is a keyword in c#... Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.</p>
 <p>So I wrote a little test to see if this hypothesis was correct.</p>
-<pre><code class="lang-C#">private static void MyMethod(string class)
-{
-    int a = class.Length;
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> <span class="hljs-keyword">class</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
-<p>this won&#39;t compile because of the &quot;class&quot; keyword...</p>
+<p>this won't compile because of the &quot;class&quot; keyword...</p>
 <p>then I put the @ sign in front of class</p>
-<pre><code class="lang-C#">private static void MyMethod(string @class)
-{
-    int a = @class.Length;
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> @<span class="hljs-keyword">class</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = @<span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
 <p>and it not only compiled, but you also get intellisense on the variable...</p>
 <p>How cool...</p>
-<p>I&#39;m not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it&#39;s consumers? Anyone know why on this?  </p>
-<p><h2>Comments</h2></p>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-nice one :), had me fooled for a bit too when I found a variable named @@delegate</div>
-</div>
-<div class='comment'>
-<div class='author'>Justin Chase</div>
-<div class='content'>
-That is exactly what it is for, so you can use reserved words for variable names. You&#39;ll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won&#39;t have a compile error if it happens to be a C# keyword.</div>
-</div>
-</div>
+<p>I'm not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it's consumers? Anyone know why on this?</p>
+<p>&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;div class='comments'&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Anonymous&lt;/div&gt;
+&lt;div class='content'&gt;
+nice one :), had me fooled for a bit too when I found a variable named @@delegate&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Justin Chase&lt;/div&gt;
+&lt;div class='content'&gt;
+That is exactly what it is for, so you can use reserved words for variable names. You'll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won't have a compile error if it happens to be a C# keyword.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>
 </div>
 
     </article>
@@ -287,63 +346,63 @@ That is exactly what it is for, so you can use reserved words for variable names
         
     </p>
 </header>
-<div class="entry-content"><p>We&#39;ve implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...</p>
-<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here&#39;s the basic interface.</p>
-<pre><code class="lang-C#">public interface IValidatedResult&lt;T&gt;
-{
-  T Result { get; set; }
-  List&lt;string&gt; ValidationIssues { get; set; }
+<div class="entry-content"><p>We've implemented a silverlight 2 business application communicating through WCF and I just had to blog about something I found possible in .net in general...</p>
+<p>On the server side we have a very simple generic object used to communicate validation issues back to our Silverlight client when a web service method is called. Here's the basic interface.</p>
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> IValidatedResult&lt;T&gt;
+</span>{
+  T Result { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+  List&lt;<span class="hljs-built_in">string</span>&gt; ValidationIssues { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
 <p>Now if you had a method that exposed this generic result object through your web service...</p>
-<pre><code class="lang-C#">public ValidatedResult&lt;long&gt; StringLength(string param1)
-{
-  return new ValidatedResult&lt;long&gt;(param1.Length);
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span><span class="hljs-params">(<span class="hljs-keyword">string</span> param1)</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt;(param1.Length);
 }
 </code></pre>
 <p>Now if you to to the silverlight project tell Visual Studio to generate a proxy for you (against the service you just created) it will give you a proxy with an object that is not generic. You end up with some autogenerated code that looks more like...</p>
-<pre><code class="lang-C#">public partial class ValidatedResultOflong : object, System.ComponentModel.INotifyPropertyChanged
-{
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidatedResultOflong</span> : <span class="hljs-title">object</span>, <span class="hljs-title">System</span>.<span class="hljs-title">ComponentModel</span>.<span class="hljs-title">INotifyPropertyChanged</span>
+</span>{
 
-  private long ResultField;
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> ResultField;
 
-  private System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssuesField;
+  <span class="hljs-keyword">private</span> System.Collections.ObjectModel.ObservableCollection&lt;<span class="hljs-keyword">string</span>&gt; ValidationIssuesField;
 
   [System.Runtime.Serialization.DataMemberAttribute()]
-  public long Result
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> Result
   {
-    get
+    <span class="hljs-keyword">get</span>
     {
-      return this.ResultField;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ResultField;
     }
-    set
+    <span class="hljs-keyword">set</span>
     {
-      if ((this.ResultField.Equals(value) != true))
+      if ((<span class="hljs-keyword">this</span>.ResultField.Equals(value) != <span class="hljs-literal">true</span>))
       {
-        this.ResultField = value;
-        this.RaisePropertyChanged(&quot;Result&quot;);
+        <span class="hljs-keyword">this</span>.ResultField = value;
+        <span class="hljs-keyword">this</span>.RaisePropertyChanged(<span class="hljs-string">"Result"</span>);
       }
     }
   }
 
   [System.Runtime.Serialization.DataMemberAttribute()]
-  public System.Collections.ObjectModel.ObservableCollection&lt;string&gt; ValidationIssues
+  <span class="hljs-keyword">public</span> System.Collections.ObjectModel.ObservableCollection&lt;<span class="hljs-keyword">string</span>&gt; ValidationIssues
   {
-    get
+    <span class="hljs-keyword">get</span>
     {
-      return this.ValidationIssuesField;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ValidationIssuesField;
     }
-    set
+    <span class="hljs-keyword">set</span>
     {
-      if ((object.ReferenceEquals(this.ValidationIssuesField, value) != true))
+      if ((object.ReferenceEquals(<span class="hljs-keyword">this</span>.ValidationIssuesField, value) != <span class="hljs-literal">true</span>))
       {
-        this.ValidationIssuesField = value;
-        this.RaisePropertyChanged(&quot;ValidationIssues&quot;);
+        <span class="hljs-keyword">this</span>.ValidationIssuesField = value;
+        <span class="hljs-keyword">this</span>.RaisePropertyChanged(<span class="hljs-string">"ValidationIssues"</span>);
       }
     }
   }
 
-  // stripped out the INotifyPropertyChanged goo
+  <span class="hljs-comment">// stripped out the INotifyPropertyChanged goo</span>
 }
 </code></pre>
 <p>Notice the non generic type <code>ValidatedResultOflong</code> that was generated? This non generic object is great and all except when you want to do some generic processing on these objects. For things like error handling, validation handling... if we had to create different handling methods for all of these different objects, that could prove to be laborious...</p>
@@ -351,95 +410,94 @@ That is exactly what it is for, so you can use reserved words for variable names
 <p>Then I thought I would try something... Can you have a partial class in one area which contains a common property, in this case each contains a &quot;Result&quot; and a &quot;ValidationIssues&quot; property and another partial class in a different location that declares it implements an interface which defines that &quot;Result&quot; and &quot;ValidationIssues&quot; property... and would that compile?</p>
 <p>So I wrote my first test...</p>
 <p>Here is our auto generated partial class simulated...</p>
-<pre><code class="lang-C#">public partial class Foo
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
 {
-  public bool Result { get; set; }
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> Result { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
 <p>I then wrote a generic result of T to define the object has a Result property.</p>
-<pre><code class="lang-C#">public interface IResult&lt;T&gt;
-{
-  T Result { get; set; }
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IResult</span>&lt;<span class="hljs-title">T</span>&gt;
+</span>{
+  T Result { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
 <p>And now the specific implementation with a long Result type.</p>
-<pre><code class="lang-C#">public partial class Foo : IResult&lt;long&gt; {}
+<pre><code class="language-C#">public partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> : <span class="hljs-title">IResult</span><span class="hljs-inheritance">&lt;<span class="hljs-parent">long</span></span>&gt; {}</span>
 </code></pre>
-<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I&#39;ll show how on the silverlight side below...</p>
+<p>After putting those three structures together I hit Build in VS and to my surprise (at first, but now it makes total sense) it compiled... This was great news. This meant I could create a generic processor for my wcf objects in silverlight... I'll show how on the silverlight side below...</p>
 <p>I defined the validated result contract as follows...</p>
-<pre><code class="lang-C#">public interface IResultProperty&lt;T&gt;
-{
-  T Result { get; }
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> IResultProperty&lt;T&gt;
+</span>{
+  T Result { <span class="hljs-keyword">get</span>; }
 }
 
-public interface IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;
-{
-  List&lt;string&gt; ValidationIssues { get; set; }
+<span class="hljs-keyword">public</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> IValidatedResult&lt;T&gt; : IResultProperty&lt;T&gt;
+</span>{
+  List&lt;<span class="hljs-built_in">string</span>&gt; ValidationIssues { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 }
 </code></pre>
 <p>This meant I could quickly create partial class stubs for each of the wcf generated objects that looked like... ValidatedResultOf{object} and would define to the compiler that all these objects truly implemented the ValidationIssues and Result property.</p>
-<p>Here&#39;s an example of the partial class for the <code>ValidatedResultOflong</code></p>
-<pre><code class="lang-C#">public partial class ValidatedResultOflong : IValidatedResult&lt;long&gt; { }
+<p>Here's an example of the partial class for the <code>ValidatedResultOflong</code></p>
+<pre><code class="language-C#">public partial <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidatedResultOflong</span> : <span class="hljs-title">IValidatedResult</span><span class="hljs-inheritance">&lt;<span class="hljs-parent">long</span></span>&gt; { }</span>
 </code></pre>
 <p>With that in place, this meant I could create some generic handling methods for all of my objects that now implement <code>IValidatedResult&lt;T&gt;</code>...</p>
-<pre><code class="lang-C#">public static bool HasValidationIssues&lt;T&gt;(this T validatedResult)
-where T : IValidatedResult&lt;T&gt;
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> HasValidationIssues&lt;T&gt;(<span class="hljs-keyword">this</span> T validatedResult)
+<span class="hljs-keyword">where</span> T : IValidatedResult&lt;T&gt;
 {
-  if (validatedResult != null &amp;amp;&amp;amp;
-  validatedResult.ValidationIssues != null &amp;amp;&amp;amp;
-  validatedResult.ValidationIssues.Count &gt; 0)
-  return true;
-  else
-  return false;
+  <span class="hljs-keyword">if</span> (validatedResult != <span class="hljs-keyword">null</span> &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues != <span class="hljs-keyword">null</span> &amp;amp;&amp;amp;
+  validatedResult.ValidationIssues.Count &gt; <span class="hljs-number">0</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+  <span class="hljs-keyword">else</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
 </code></pre>
-<p>Don&#39;t know if i&#39;ve very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...</p>
-<h2 id="comments">Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-  Interesting observation. Thanks for sharing.
+<p>Don't know if i've very heard anyone talk about one partial class containing some property or common method and being able to create another partial class that defines the interface contract for that... Pretty cool...</p>
+<h2>Comments</h2>
+<p>&lt;div class='comments'&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Jason.Jarrett&lt;/div&gt;
+&lt;div class='content'&gt;
+Interesting observation. Thanks for sharing.</p>
+<p>I haven't pushed it very far (bool, string, MyCustomObject, etc)&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Boris Modylevsky&lt;/div&gt;
+&lt;div class='content'&gt;
+Thanks for the post. It's really exciting to receive a proxy of Generic class. It really works smoothly with &quot;simple&quot; classes. But more complex ones result with random names in Silverlight proxy. For example, my <code>_SimpleTree&lt;Item&gt;_</code> became <em>SimpleTreeNodeOfItemErNMAaNV</em>&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Jason.Jarrett&lt;/div&gt;
+&lt;div class='content'&gt;
+Ok, I quickly threw an example together. I didn't comment much, but the code's there and &quot;works on my box...&quot;</p>
+<pre><code>Let me know if you have any troubles either understanding it, or getting it working.
 
-  I haven&#39;t pushed it very far (bool, string, MyCustomObject, etc)</div>
-</div>
-<div class='comment'>
-  <div class='author'>Boris Modylevsky</div>
-  <div class='content'>
-    Thanks for the post. It&#39;s really exciting to receive a proxy of Generic class. It really works smoothly with &quot;simple&quot; classes. But more complex ones result with random names in Silverlight proxy. For example, my <code>_SimpleTree&lt;Item&gt;_</code> became <em>SimpleTreeNodeOfItemErNMAaNV</em></div>
-  </div>
-<div class='comment'>
-  <div class='author'>Jason.Jarrett</div>
-  <div class='content'>
-    Ok, I quickly threw an example together. I didn&#39;t comment much, but the code&#39;s there and &quot;works on my box...&quot;
+I've never used this file host service, but giving it a try... I've placed the project here [ http://www.filesavr.com/validatedresultsample](http://www.filesavr.com/validatedresultsample)
 
-    Let me know if you have any troubles either understanding it, or getting it working.
+Also the only concepts to really look at here are the `ValidatedResult&lt;T&gt;`` and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.
 
-    I&#39;ve never used this file host service, but giving it a try... I&#39;ve placed the project here <a href="http://www.filesavr.com/validatedresultsample"> http://www.filesavr.com/validatedresultsample</a>
-
-    Also the only concepts to really look at here are the `ValidatedResult<T>`` and the notion of the partial classes used along side the VS service reference code to get the extension methods to work... This by no means follows best practices with some of this stuff.
-
-    Good luck!</div>
-  </div>
-<div class='comment'>
-  <div class='author'>greg</div>
-  <div class='content'>
-    ... very much appreciated!!</div>
-  </div>
-<div class='comment'>
-  <div class='author'>Jason.Jarrett</div>
-  <div class='content'>
-    Greg,
-
-    I will try to put together an example and post it here soon.</div>
-  </div>
-<div class='comment'>
-  <div class='author'>greg</div>
-  <div class='content'>
-    ... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.
-    Thanks in advance.</div>
-  </div>
-</div>
+Good luck!&lt;/div&gt;
+</code></pre>
+<p>&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;greg&lt;/div&gt;
+&lt;div class='content'&gt;
+... very much appreciated!!&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Jason.Jarrett&lt;/div&gt;
+&lt;div class='content'&gt;
+Greg,</p>
+<pre><code>I will try to put together an example and post it here soon.&lt;/div&gt;
+</code></pre>
+<p>&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;greg&lt;/div&gt;
+&lt;div class='content'&gt;
+... too many snippets for me to get the big picture... It looks promising, though. Do you have a simple working example you could post? I am interested in the generic proxy concept whether used within Silverlight or otherwise.
+Thanks in advance.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>
 </div>
 
     </article>
@@ -469,43 +527,6 @@ Your work on this patch is trully appreciated.  That listbox issue was trully an
 Thanks for the patch, I applied it today.</div>
 </div>
 </div>
-</div>
-
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
-    <p class="meta">
-          <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
-<p>I originally had a Property that exposed some value where, if in a certain state, would throw an exception.</p>
-<p>Microsoft FxCop recommends.</p>
-<blockquote>
-<p>Do not explicitly raise exceptions from unexpected
-locations. There are some methods, such as Equals and
-GetHashCode, which users do not expect to raise exceptions.
-Therefore calls to these methods are not commonly
-wrapped in try catch blocks.</p>
-</blockquote>
-<p>So if FxCop recommends not raising an exception from a Property&#39;s getter, we&#39;ll just throw it in a function. Come to find out now FxCop says...</p>
-<blockquote>
-<p>Properties should be used instead of Get/Set methods
-in most situations. Methods are preferable to properties
-in the following situations: the operation is a conversion,
-is expensive or has an observable side-effect; the
-order of execution is important; calling the member
-twice in succession creates different results; a member
-is static but returns a mutable value; or the member
-returns an array.</p>
-</blockquote>
-<p>So, which is the best method?</p>
-<p>I went back to the Property method because it really is mimicking the usage of a property...</p>
-<p>Any suggestions out there?</p>
 </div>
 
     </article>
@@ -543,6 +564,9 @@ returns an array.</p>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -559,9 +583,6 @@ returns an array.</p>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

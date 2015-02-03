@@ -79,53 +79,53 @@
         
     </p>
 </header>
-<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn&#39;t find anything on the net describing this and why it compiled.</p>
-<p>basically what I&#39;m talking about is if you have some code</p>
-<pre><code class="lang-C#">private void MyMethod(string myparam)
-{
-    int a = @myparam.Length;
+<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn't find anything on the net describing this and why it compiled.</p>
+<p>basically what I'm talking about is if you have some code</p>
+<pre><code class="language-C#"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(string myparam)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-annotation">@myparam</span>.Length;
 }
 </code></pre>
-<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn&#39;t explain how that worked...</p>
+<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
 <p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
-<pre><code class="lang-C#">public void UnregisterSubscriber(string publishedEventName, EventHandler subscriber)
-{
-    PublishedEvent @event = GetEvent(publishedEventName);
-    @event.RemoveSubscriber(subscriber);
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
+</span>{
+    PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
+    @<span class="hljs-keyword">event</span>.RemoveSubscriber(subscriber);
     RemoveDeadEvents();
 }
 </code></pre>
-<p>I did some more googling and still can&#39;t find anything, (I&#39;m sure it&#39;s out there, just can&#39;t put together the right search criteria)...</p>
+<p>I did some more googling and still can't find anything, (I'm sure it's out there, just can't put together the right search criteria)...</p>
 <p>Then I went back to the code, looked at it for a minute, and it dawned on me that &quot;event&quot; is a keyword in c#... Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.</p>
 <p>So I wrote a little test to see if this hypothesis was correct.</p>
-<pre><code class="lang-C#">private static void MyMethod(string class)
-{
-    int a = class.Length;
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> <span class="hljs-keyword">class</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
-<p>this won&#39;t compile because of the &quot;class&quot; keyword...</p>
+<p>this won't compile because of the &quot;class&quot; keyword...</p>
 <p>then I put the @ sign in front of class</p>
-<pre><code class="lang-C#">private static void MyMethod(string @class)
-{
-    int a = @class.Length;
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> @<span class="hljs-keyword">class</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = @<span class="hljs-keyword">class</span>.Length;
 }
 </code></pre>
 <p>and it not only compiled, but you also get intellisense on the variable...</p>
 <p>How cool...</p>
-<p>I&#39;m not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it&#39;s consumers? Anyone know why on this?  </p>
-<p><h2>Comments</h2></p>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-nice one :), had me fooled for a bit too when I found a variable named @@delegate</div>
-</div>
-<div class='comment'>
-<div class='author'>Justin Chase</div>
-<div class='content'>
-That is exactly what it is for, so you can use reserved words for variable names. You&#39;ll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won&#39;t have a compile error if it happens to be a C# keyword.</div>
-</div>
-</div>
+<p>I'm not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it's consumers? Anyone know why on this?</p>
+<p>&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;div class='comments'&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Anonymous&lt;/div&gt;
+&lt;div class='content'&gt;
+nice one :), had me fooled for a bit too when I found a variable named @@delegate&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class='comment'&gt;
+&lt;div class='author'&gt;Justin Chase&lt;/div&gt;
+&lt;div class='content'&gt;
+That is exactly what it is for, so you can use reserved words for variable names. You'll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won't have a compile error if it happens to be a C# keyword.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>
 </div>
 
                 <footer>
@@ -181,6 +181,9 @@ That is exactly what it is for, so you can use reserved words for variable names
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -197,9 +200,6 @@ That is exactly what it is for, so you can use reserved words for variable names
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

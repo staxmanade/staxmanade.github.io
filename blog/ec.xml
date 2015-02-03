@@ -19,7 +19,7 @@
         <updated>2015-01-15T00:17:25Z</updated>
         <summary type="html"><![CDATA[Today Microsoft published an article on their [BizSpark Featured Startups](http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/tr...]]></summary>
         <content type="html"><![CDATA[<p>Today Microsoft published an article on their <a href="http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/trustworthy-cloud-logistics-for-first-responders.aspx">BizSpark Featured Startups</a> blog about <a href="http://resgrid.com">Resgrid</a>!</p>
-<h3 id="what-is-resgrid-">What is Resgrid?</h3>
+<h3>What is Resgrid?</h3>
 <p>Resgrid is a software as a service product hosted on Microsoft Azure that provides logistics, management and communication tools to first responder organizations such as volunteer fire, career fire, EMS, search and rescue, public safety, disaster relief organizations, etc.</p>
 <p>My partner <a href="http://www.designlimbo.com/">Shawn Jackson</a> and I created <a href="http://resgrid.com">Resgrid</a> a few years ago and the buzz is exciting to see.</p>
 <p>If you have any interest in following some technical aspects of this little startup. <a href="http://www.designlimbo.com/">Shawn</a> often posts interesting articles both technical and startup/business related on <a href="http://www.designlimbo.com/">his site</a>.</p>
@@ -33,35 +33,39 @@
         <updated>2014-12-29T16:12:11Z</updated>
         <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
         <content type="html"><![CDATA[<p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I&#39;m going to put this here so I can find it later...</p>
-<h1 id="create-a-merge-wrapper-script">Create a merge-wrapper script</h1>
-<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain. </p>
+<p>I'm going to put this here so I can find it later...</p>
+<h1>Create a merge-wrapper script</h1>
+<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven&#39;t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
-<h3 id="customize-the-merge-wrapper-js-">Customize the <code>merge-wrapper.js</code></h3>
+<h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
-<li><p>Extend with other diff tool support:</p>
-<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>. </p>
+<li>
+<p>Extend with other diff tool support:</p>
+<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
 </li>
-<li><p>Modify which diff tool is used per extension:</p>
-<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup. </p>
+<li>
+<p>Modify which diff tool is used per extension:</p>
+<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
 </li>
-<li><p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I&#39;d be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+<li>
+<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
+<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
 <p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it&#39;ll work for some, but I didn&#39;t want to maintain this - prefer the JS version instead.</p>
+<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
 <p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires the .gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.sh \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# # How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;#&#10;&#10;BASE=$1&#10;LOCAL=$2&#10;REMOTE=$3&#10;MERGED=$4&#10;&#10;if [[ $BASE == *.png ]]; then&#10;  echo &#34;Image diff..&#34;;&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;else&#10;  #Finally, the default case:&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#34;&#10;  #CMD=&#34;opendiff \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; -ancestor \&#34;$REMOTE\&#34; -mergeFile \&#34;$MERGED\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;fi&#10;</code></pre></noscript></div></p>
-<h1 id="setup-gitconfig-">Setup <code>~/.gitconfig</code></h1>
-<p>Now that we&#39;ve created our merge wrapper script we need to tell git how to use it.</p>
+<h1>Setup <code>~/.gitconfig</code></h1>
+<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
-[mergetool &quot;merge_wrapper&quot;]
-    cmd = $HOME/dotfiles/tools/merge-wrapper.js \&quot;$BASE\&quot; \&quot;$LOCAL\&quot; \&quot;$REMOTE\&quot; \&quot;$MERGED\&quot;
-</code></pre>]]></content>
+[mergetool <span class="hljs-string">"merge_wrapper"</span>]
+    cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
+</code></pre>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Introducing SkypeIt - Command Line Skype Phone Calls]]></title>
@@ -70,22 +74,22 @@
         </link>
         <updated>2014-12-24T22:22:17Z</updated>
         <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit) ]]></summary>
-        <content type="html"><![CDATA[<h1 id="-skypeit-https-github-com-staxmanade-skypeit-"><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
+        <content type="html"><![CDATA[<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
 <p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
-<h2 id="what-is-it-">What is it?</h2>
+<h2>What is it?</h2>
 <p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
-<h1 id="what-pain-does-this-solve-">What pain does this solve?</h1>
-<p>I&#39;ve recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge. </p>
+<h1>What pain does this solve?</h1>
+<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
 <p>This typically involves:</p>
 <ol>
 <li>Opening the Outlook appointment</li>
 <li>Copying just the conference phone number (without extension)</li>
 <li>Pasting it in Skype to dial</li>
 <li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype&#39;s number pad area</li>
+<li>Pasting in Skype's number pad area</li>
 <li>Type or use the mouse to press the final <code>#</code> key.</li>
 </ol>
-<h1 id="how-does-skypeit-https-github-com-staxmanade-skypeit-improve-this-">How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
+<h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
 <p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
 <ol>
 <li>Open the Outlook appointment</li>
@@ -93,15 +97,15 @@
 <li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
 </ol>
 <p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
-<h1 id="-skypeit-https-github-com-staxmanade-skypeit-even-better-with-teams-"><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you&#39;re probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-###  ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you&#39;re on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you&#39;re in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
+<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
+<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
 <blockquote>
 <p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
 </blockquote>
-<h1 id="still-early-">Still early...</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you&#39;d like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I&#39;m not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
+<h1>Still early...</h1>
+<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
+<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
 ]]></content>
     </entry>
     <entry>
@@ -112,76 +116,84 @@
         <updated>2014-12-14T00:45:43Z</updated>
         <summary type="html"><![CDATA[> This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of ...]]></summary>
         <content type="html"><![CDATA[<blockquote>
-<p>This post may seem a bit longer than my usual posts. It&#39;s one I&#39;ve slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you&#39;re considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
+<p>This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you're considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
 </blockquote>
-<h1 id="background">Background</h1>
+<h1>Background</h1>
 <p>My previous job afforded me the opportunity to work from home a couple days out of the week. While putting my wife through school, those days were great. I would start work extra early so I could leave early and watch our little girl while my wife headed off to class. The early start was great because these quiet mornings were often the most productive part of my day. The lack of distractions such as email, meetings, and instant message chats along with the quiet focus time all contributed to this increased productivity.</p>
 <p>While I quite enjoyed this time, was often productive, and it helped my family I still preferred to go into the office over working from home.</p>
 <p>So why did I still prefer going to the office over working from home?</p>
-<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn&#39;t pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
+<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn't pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
 <p>This experience and the feeling it left me with is what concerned me about the new job I was about to take.</p>
-<h1 id="worried-to-take-a-remote-work-from-home-job-">Worried to take a remote / work from home job.</h1>
+<h1>Worried to take a remote / work from home job.</h1>
 <p>Given my limited work from home experience, I was concerned about working remotely 100% of the time. However, the new opportunity to work for a <a href="http://vertigo.com">consulting firm I admired,</a> and the thought of being able to constantly try new technologies, and business domains was really appealing.</p>
-<p>I have now worked remotely for Vertigo for over 3 years and I&#39;d like to share a list of Pros/Cons that I&#39;ve gathered through my experience working from home full time.</p>
-<h1 id="con-s-to-working-from-home">Con&#39;s to working from home</h1>
-<p>Now, while Con&#39;s do not outweigh the Pro&#39;s for me, there is quite a bit of grey area here, so let&#39;s review some con&#39;s.</p>
+<p>I have now worked remotely for Vertigo for over 3 years and I'd like to share a list of Pros/Cons that I've gathered through my experience working from home full time.</p>
+<h1>Con's to working from home</h1>
+<p>Now, while Con's do not outweigh the Pro's for me, there is quite a bit of grey area here, so let's review some con's.</p>
 <ul>
-<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I&#39;ve tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I&#39;ve had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house...</li>
-<li>Shipping Hardware.<ul>
+<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I've tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I've had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house...</li>
+<li>Shipping Hardware.
+<ul>
 <li>This one is a bit of a pain. Working for a consulting firm means there are many of different projects that require varying hardware configurations. From <a href="http://www.amazon.com/gp/product/B00NFXON1Q/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00NFXON1Q&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=EL5GYMNM3KI4HBGO">Xboxes</a>, test phones, tablets, computers, and even <a href="http://www.amazon.com/gp/product/B00I7JZNIU/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00I7JZNIU&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=3SZPKBVY7VEVBMO7">TVs</a>. I semi-regularly run to FedEx and send something to H.Q. or the Apple Store or Best Buy to pick up some hardware based on the needs of a project.</li>
 </ul>
 </li>
-<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it&#39;s so easy to work from home. This takes a bit of discipline.</li>
+<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it's so easy to work from home. This takes a bit of discipline.</li>
 <li>Sitting in the office chair when the amazingly yummy aromas of some fresh home cooking - distracting me from being productive as the smell is driving my stomach to scream at me to go downstairs for some food!</li>
-<li>Communication<ul>
+<li>Communication
+<ul>
 <li>Being remote, you have to become an over-communicator. An email here and there is fine, but combine that with chat/I.M., phone calls, video chat calls (preferred), and more emails. However, you have to work a little harder to be noticed, especially if you have to compete with people who are all working in the same office.</li>
 </ul>
 </li>
 <li>It often takes a little more discipline to take breaks.</li>
-<li>Time Zones<ul>
-<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company&#39;s headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
-</ul>
-</li>
-</ul>
-<h1 id="pro-s-to-working-from-home">Pro&#39;s to working from home</h1>
+<li>Time Zones
 <ul>
-<li>Home office temperature!<ul>
-<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It&#39;s either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you&#39;re the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you&#39;re too cold, put on some clothes or crank up the heat.</li>
+<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company's headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
 </ul>
 </li>
-<li>Commute<ul>
+</ul>
+<h1>Pro's to working from home</h1>
+<ul>
+<li>Home office temperature!
+<ul>
+<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It's either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you're the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you're too cold, put on some clothes or crank up the heat.</li>
+</ul>
+</li>
+<li>Commute
+<ul>
 <li>I often joke with my fellow Californian commute ridden co-workers when they complain about traffic that day that I narrowly avoided a 3 (lego) car pile-up on my way to the office.</li>
-<li>I live where it&#39;s cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
-<li>Plus there&#39;s the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
+<li>I live where it's cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
+<li>Plus there's the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
 </ul>
 </li>
 <li>More family time overall. Since my coffee, water, bathroom breaks all lead to opportunities where I can say hello to the family.</li>
 <li><a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">SWEATPANTS!</a> My wife recently <a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">introduced me to sweatpants</a>. OMG they are comfortable, try wearing those at the stuffy-formal-office...</li>
-<li>Quiet place to focus. It&#39;s easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
-<li>We have all the usual necessities at home,<ul>
+<li>Quiet place to focus. It's easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
+<li>We have all the usual necessities at home,
+<ul>
 <li>Tools (for that time you need a screwdriver)</li>
 <li>Easy access to hygiene related products/tools. Ever need to take a shower in the middle of the day? Change of clothes (spilled coffee....)? Or brush your teeth?</li>
 </ul>
 </li>
-<li>Invest in your office.<ul>
-<li>When you invest in your home office, you&#39;re investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
+<li>Invest in your office.
+<ul>
+<li>When you invest in your home office, you're investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
 </ul>
 </li>
-<li>Lunch at home. My wife is a great cook. I&#39;m spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
-<li>My wife just brought me the most amazing homemade burrito. I didn&#39;t even care I was on a video call with my team. nom...nom...nom...</li>
+<li>Lunch at home. My wife is a great cook. I'm spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
+<li>My wife just brought me the most amazing homemade burrito. I didn't even care I was on a video call with my team. nom...nom...nom...</li>
 <li>One of my favorite perks, is not even a perk that any company could offer (or even replace). I take the opportunity to for 10-minute break in the afternoon, where I walk up the street to meet my daughter at the bus stop. This is so much more important in my life than practically any company can offer (like free lunches, ping-pong table, etc...).</li>
-<li>Scheduling an at-home call is easy. It&#39;s rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
-<li>David&#39;s Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn&#39;t thought of, which I totally agree.<ul>
+<li>Scheduling an at-home call is easy. It's rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
+<li>David's Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn't thought of, which I totally agree.
+<ul>
 <li>You struggle on problems and your kid walks in the room and puts your life in perspective.</li>
 <li>I can listen to my music turned way up!</li>
 </ul>
 </li>
 </ul>
-<h1 id="what-about-distractions-">What about distractions?</h1>
-<p>I get this a lot, when I tell others I work from home. &quot;I don&#39;t know how you don&#39;t get distracted with other things to do at home.&quot; This may be a very individual thing. While, there can be distractions at home, I&#39;ve always been a focused individual and I would say it&#39;s often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
-<h1 id="not-so-socially-appropriate">Not-so socially appropriate</h1>
+<h1>What about distractions?</h1>
+<p>I get this a lot, when I tell others I work from home. &quot;I don't know how you don't get distracted with other things to do at home.&quot; This may be a very individual thing. While, there can be distractions at home, I've always been a focused individual and I would say it's often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
+<h1>Not-so socially appropriate</h1>
 <ul>
-<li>When you&#39;re at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there&#39;s no stress, or stomach pain... Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
+<li>When you're at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there's no stress, or stomach pain... Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
 </ul>
 ]]></content>
     </entry>
@@ -192,29 +204,35 @@
         </link>
         <updated>2014-06-03T16:38:06Z</updated>
         <summary type="html"><![CDATA[# How to update a git branch OTHER than the one you're currently on.]]></summary>
-        <content type="html"><![CDATA[<h1 id="how-to-update-a-git-branch-other-than-the-one-you-re-currently-on-">How to update a git branch OTHER than the one you&#39;re currently on.</h1>
+        <content type="html"><![CDATA[<h1>How to update a git branch OTHER than the one you're currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre><p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don&#39;t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+</code></pre>
+<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
 <p>I was starting to dislike the switch branch dance to trigger a new build.</p>
-<h3 id="what-i-used-to-do-">What I used to do:</h3>
+<h3>What I used to do:</h3>
 <pre><code># When I was on the master branch
 git checkout release
 git merge master
 git push
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
 </blockquote>
-<h3 id="after-digging-a-bit-i-found-the-answer-">After digging a bit, I found the answer.</h3>
+<h3>After digging a bit, I found the answer.</h3>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre><p>So to trigger a new build from master I can just:</p>
+</code></pre>
+<p>So to trigger a new build from master I can just:</p>
 <pre><code>git branch -f release master
 git push origin release
-</code></pre><p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
+</code></pre>
+<p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
 <p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
 <pre><code>git push origin local_branch:remote_branch
-</code></pre><p>So my workflow would look more like</p>
+</code></pre>
+<p>So my workflow would look more like</p>
 <pre><code>git push origin master:release
-</code></pre><p>Happy Automation!</p>
+</code></pre>
+<p>Happy Automation!</p>
 ]]></content>
     </entry>
     <entry>
@@ -224,28 +242,28 @@ git push origin release
         </link>
         <updated>2014-05-24T20:27:55Z</updated>
         <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
-        <content type="html"><![CDATA[<p>I&#39;d like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="some-background">Some background</h1>
+        <content type="html"><![CDATA[<p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
+<h1>Some background</h1>
 <p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I&#39;ve developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
+<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I've developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
 <p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
 <p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1 id="what-is-it-">What is it?</h1>
-<p>In short, it&#39;s a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
+<h1>What is it?</h1>
+<p>In short, it's a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
 <p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don&#39;t get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
+<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don't get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
 <p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
-<h1 id="does-it-only-work-on-windows-or-on-the-mac-">Does it only work on Windows or on the Mac?</h1>
-<p>At the moment it works on both. </p>
+<h1>Does it only work on Windows or on the Mac?</h1>
+<p>At the moment it works on both.</p>
 <ul>
-<li>For Windows I have an implementation in Powershell. </li>
+<li>For Windows I have an implementation in Powershell.</li>
 <li>For the Mac you can alias to a Bash script.</li>
 </ul>
-<h1 id="download-at-github-">Download at GitHub!</h1>
+<h1>Download at GitHub!</h1>
 <p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1 id="what-s-next-">What&#39;s next?</h1>
-<p>I&#39;d like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I&#39;d also love to get some feedback on how to best or more easily get this into peoples&#39;s development environment. For now it&#39;s pretty manual and since it&#39;s all about your profile, a bit personal, so probably a good thing that it&#39;s not automatically installed.</p>
+<h1>What's next?</h1>
+<p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
+<p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
 <p>Happy Commanding!</p>
 ]]></content>
     </entry>
@@ -256,87 +274,91 @@ git push origin release
         </link>
         <updated>2014-05-18T17:27:29Z</updated>
         <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>
-        <content type="html"><![CDATA[<h1 id="challenge">Challenge</h1>
-<p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+        <content type="html"><![CDATA[<h1>Challenge</h1>
+<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
 <p>And since:</p>
 <blockquote>
 <p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
 <p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
-<h1 id="challenge-accepted-">Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let&#39;s take a dive into the compiler to see if this is something we can work around...</p>
-<h3 id="what-are-the-steps-we-need-to-accomplish-to-make-the-compiler-accept-plain-js-files-">What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
+<h1>Challenge Accepted.</h1>
+<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
+<h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
 <ol>
 <li>Get It</li>
 <li>Copy it</li>
 <li>Hack it</li>
 <li>Use it</li>
 </ol>
-<h2 id="get-it">Get it</h2>
-<p>Before we can get too far, let&#39;s first install the compiler onto our system.</p>
-<p>I&#39;ll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
+<h2>Get it</h2>
+<p>Before we can get too far, let's first install the compiler onto our system.</p>
+<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
 <pre><code>npm install -g typescript
-</code></pre><p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>&#39;ing your TypeScript code.</p>
-<h2 id="copy-it">Copy it</h2>
-<p>We probably don&#39;t want to modify the globally installed version of <code>tsc</code> so we&#39;ll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
+</code></pre>
+<p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
+<h2>Copy it</h2>
+<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
 <p>If on Windows or Mac</p>
 <pre><code>where tsc
-</code></pre><blockquote>
-<p>NOTE: if you&#39;re using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won&#39;t help us out in this case.</p>
+</code></pre>
+<blockquote>
+<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
 </blockquote>
-<p>Once you&#39;ve found the path to your version of <code>tsc</code></p>
+<p>Once you've found the path to your version of <code>tsc</code></p>
 <p>Mine was in</p>
 <ul>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
 </ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You&#39;ll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
+<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
 <p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you&#39;re done you should have a directory that looks something like this</p>
+<p>When you're done you should have a directory that looks something like this</p>
 <pre><code>
 ﻿﻿--MyJSCompiler
-  |   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc
-  |   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd
-  |   
+  <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
+  <span class="hljs-string">|   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd</span>
+  <span class="hljs-string">|   </span>
   ----node_modules
       ----.bin
-      |       tsc
-      |       tsc.cmd
-      |       
+      <span class="hljs-string">|       tsc</span>
+      <span class="hljs-string">|       tsc.cmd</span>
+      <span class="hljs-string">|       </span>
       ----typescript
-          |   .npmignore
-          |   CopyrightNotice.txt
-          |   LICENSE.txt
-          |   package.json
-          |   README.txt
-          |   ThirdPartyNoticeText.txt
-          |   
+          <span class="hljs-string">|   .npmignore</span>
+          <span class="hljs-string">|   CopyrightNotice.txt</span>
+          <span class="hljs-string">|   LICENSE.txt</span>
+          <span class="hljs-string">|   package.json</span>
+          <span class="hljs-string">|   README.txt</span>
+          <span class="hljs-string">|   ThirdPartyNoticeText.txt</span>
+          <span class="hljs-string">|   </span>
           ----bin
-              |   lib.d.ts
-              |   tsc
-              |   tsc.js
-              |   typescript.js
-              |   
+              <span class="hljs-string">|   lib.d.ts</span>
+              <span class="hljs-string">|   tsc</span>
+              <span class="hljs-string">|   tsc.js</span>
+              <span class="hljs-string">|   typescript.js</span>
+              <span class="hljs-string">|   </span>
               ----resources
-                  |   diagnosticMessages.generated.json
-                  |   
+                  <span class="hljs-string">|   diagnosticMessages.generated.json</span>
+                  <span class="hljs-string">|   </span>
                   ----(*.json files excluded for brevity)
-</code></pre><p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
-<h2 id="hack-it">Hack it</h2>
-<p>Since we have a local version we can hack on now, let&#39;s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+
+</code></pre>
+<p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
+<h2>Hack it</h2>
+<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
 <p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
-<pre><code class="lang-diff">     function isTSFile(fname) {
--        return isFileOfExtension(fname, &quot;.ts&quot;);
-+        return isFileOfExtension(fname, &quot;.ts&quot;) || isFileOfExtension(fname, &quot;.js&quot;);
+<pre><code class="language-diff">     function isTSFile(fname) {
+<span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
+<span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
      }
 </code></pre>
-<p>We&#39;ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
-<h2 id="use-it">Use it</h2>
-<p>I won&#39;t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite it with it&#39;s compiled version.</p>
-<h1 id="-warning-i-ll-say-that-again-to-use-it-be-sure-to-use-the-out-file-or-outdir-directory-options-because-if-you-don-t-the-compiler-will-take-the-input-javascript-file-and-overwrite-the-original-with-it-s-compiled-version-">!!WARNING!! I&#39;ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite the original with it&#39;s compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript&#39;s version looks compared to your own, but I&#39;ll leave that up to you to play with.</p>
+<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
+<h2>Use it</h2>
+<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
+<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
+<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
 ]]></content>
     </entry>

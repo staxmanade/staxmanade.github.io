@@ -71,6 +71,40 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/how-do-i-get-uispyexe-on-my-windows-7/">How do I get UISpy.exe on my Windows 7 Developer Machine?</a></h1>
+    <p class="meta">
+          <time datetime="2009-09-16T04:47:00.000Z" pubdate data-updated="true">Sep 15th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I know there’s a tool somewhere in some SDK called UISpy.exe. It looks like this.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt1IXfT6I/AAAAAAAAAKo/JLGWllGQoP4/s1600-h/ms727247.UI_Spy_Main_WindowenusVS.90.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" border="0" alt="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt19BG-II/AAAAAAAAAKs/yqtWK4N0wW4/ms727247.UI_Spy_Main_WindowenusVS.90%5B1%5D.png?imgmax=800" width="582" height="379" /></a> </p>  <p>You can read all about it here - <a href="http://msdn.microsoft.com/en-us/library/ms727247.aspx">http://msdn.microsoft.com/en-us/library/ms727247.aspx</a></p>  <h3>But can you find it?</h3>  <p>The docs in that link above state…</p>  <blockquote>   <p><img alt="ms727247.alert_note(en-us,VS.90).gif" src="http://i.msdn.microsoft.com/ms727247.alert_note(en-us,VS.90).gif" /><strong>Note: </strong>UI Spy is installed with the Microsoft Windows SDK. It is located in the \bin folder of the SDK installation path (uispy.exe) or can be accessed from the Start menu (Start\All Programs\Microsoft Windows SDK\Tools\UISpy).</p> </blockquote>  <p>If I go take a look at the (Start\All Programs\Microsoft Windows SDK\Tools\UISpy) as shown in the image below. UISpy is nowhere to be found. </p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt2SEUeTI/AAAAAAAAAKw/xonEojREdHc/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt2mwJQvI/AAAAAAAAAK0/Vx7KaZRd5DQ/image_thumb3.png?imgmax=800" width="262" height="273" /></a> </p>  <p>In some forum post somewhere – I saw that I had to install the .Net Framework 3.0 SDK. Which is strange since I have the 3.5 framework already installed and the tool isn’t there. Oh well, I found it (I thought), downloaded it and tried to run the setup. Where in Windows 7 I was prompted with the following dialog.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt23upSBI/AAAAAAAAAK4/HUXuugP2xRg/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." border="0" alt="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt3aUZroI/AAAAAAAAAK8/fHdAqCJ6Iac/image_thumb1.png?imgmax=800" width="505" height="178" /></a> </p>  <p>Ok, fine I’ll do that…</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt3u65DjI/AAAAAAAAALA/QAvI1Zp_Hz0/s1600-h/image11.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4Drga_I/AAAAAAAAALE/dCtpGc-6GkY/image_thumb5.png?imgmax=800" width="417" height="531" /></a> </p>  <p>Searching the list of features to turn on and off, the only one that looks anything like what I’m looking for (outlined in red) has already been installed.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4qWSiSI/AAAAAAAAALI/Ya5JCyYXnUM/s1600-h/image15.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt51K4FZI/AAAAAAAAALM/J1rd0mLj0rM/image_thumb7.png?imgmax=800" width="310" height="656" /></a> </p>  <p>Off to do more research…</p>  <p></p>  <p></p>  <p></p>  <p>Then I run into this blog <a href="http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx">http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx</a></p>  <p>Eventually I download the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=4377F86D-C913-4B5C-B87E-EF72E5B4E065&amp;displaylang=en">Windows SDK for Vista Update</a>. Run the install wizard with all the defaults except this screen…</p>  <p>As the blog post states – make sure you take a pre-install snapshot of the following registry key</p>  <p><strong>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs      <br /></strong>Before Install:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt6ZlcgnI/AAAAAAAAALU/ZO60FHxNAoU/s1600-h/image41.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt65BUX4I/AAAAAAAAALY/_vCcUqbSlEs/image_thumb25.png?imgmax=800" width="583" height="171" /></a>&#160; </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt7eZeWoI/AAAAAAAAALc/n6FH5PRb2f0/s1600-h/image19.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt7yOdPSI/AAAAAAAAALg/ntpi_5ggbzg/image_thumb9.png?imgmax=800" width="585" height="554" /></a>&#160;</p>  <p>After Install:    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt8q6jHFI/AAAAAAAAALk/gop2PBD1vPY/s1600-h/image47.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt-uhEUmI/AAAAAAAAALo/mxzr0oast6I/image_thumb29.png?imgmax=800" width="581" height="176" /></a> </p>  <p></p>  <p></p>  <p></p>  <p>I reverted the changes back to v6.0A in the registry above…</p>  <h3>And TAH-DAH UISpy.exe has been found.</h3>  <p>C:\Program Files\Microsoft SDKs\Windows\v6.0\Bin\UISpy.exe</p>  <p>Pain in the A$$… But it seems to work.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I never experienced a dialog. However, this post is rather old and things have changed since. I have not tried to run these steps since then. Good Luck</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Thank you, however, when i done and open the UISpy, it pop up a dialog about stopping the tool. How can i handle it!</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+I have to agree with you, real pain in the a$$. Seriously, your post helped me a lot more specifically with the registry rollback.<br /><br />Thanks</div>
+</div>
+</div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/dont-forget-whats-happening-behind/">Don’t forget what’s happening behind the syntactic sugar. (C# events)</a></h1>
     <p class="meta">
           <time datetime="2009-08-27T04:55:00.000Z" pubdate data-updated="true">Aug 26th 2009</time>
@@ -311,30 +345,6 @@ Good to know. Actually I did know about it but I think I had it backwards, I tho
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/05/console-icon-swapping-just-for-fun/">Console Icon Swapping – Just for fun…</a></h1>
-    <p class="meta">
-          <time datetime="2009-05-10T06:48:00.000Z" pubdate data-updated="true">May 9th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I took the new logo for <a title="Silverlight Testing Automation Tool" href="http://statlight.net/" target="_blank">StatLight</a> and created a/an .ico (by going to <a href="http://www.convertico.com/" target="_blank">convertico.com</a>) for use as a <a href="http://en.wikipedia.org/wiki/Favicon" target="_blank">FavIcon</a> and so I could fancy up a couple of the windows just for fun. What I ended up figuring out, was how to change the icon for a running console window.</p>  <p>It’s actually pretty easy… Here is the class I wrote and use.</p>  <pre><span style="color: #0000ff">internal</span> <span style="color: #0000ff">class</span> ConsoleIconSwapper : IDisposable<br />{<br />    IntPtr consoleWindowHwnd;<br /><br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">const</span> <span style="color: #0000ff">int</span> WM_SETICON = 0x80;	<span style="color: #008000">// Api constant</span><br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">const</span> <span style="color: #0000ff">int</span> ICON_SMALL = 0;	<span style="color: #008000">// Api constant</span><br /><br />    [DllImport(&quot;<span style="color: #8b0000">user32.dll</span>&quot;)]<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">extern</span> <span style="color: #0000ff">int</span> SendMessage(IntPtr hwnd, <span style="color: #0000ff">int</span> message, <span style="color: #0000ff">int</span> wParam, IntPtr lParam);<br /><br />    [DllImport(&quot;<span style="color: #8b0000">kernel32</span>&quot;)]<br />    <span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">extern</span> IntPtr GetConsoleWindow();<br /><br />    <span style="color: #0000ff">public</span> ConsoleIconSwapper()<br />    {<br />        consoleWindowHwnd = GetConsoleWindow();<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> ShowConsoleIcon(Icon icon)<br />    {<br />        SendMessage(consoleWindowHwnd, WM_SETICON, ICON_SMALL, icon.Handle);<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> ChangeIconback()<br />    {<br />        SendMessage(consoleWindowHwnd, WM_SETICON, ICON_SMALL, (IntPtr)0);<br />    }<br /><br />    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Dispose()<br />    {<br />        ChangeIconback();<br />    }<br />}</pre><br /><br /><p>And here is how I use it.</p><br /><br /><pre><span style="color: #0000ff">using</span> (var consoleIconSwapper = <span style="color: #0000ff">new</span> ConsoleIconSwapper())<br />{<br />    consoleIconSwapper.ShowConsoleIcon(CoreResources.FavIcon);<br />    <span style="color: #008000">/*<br />     *  Code Here<br />     */</span><br />}</pre><br /><br /><p>This is what it looks like when in use…</p><br /><br /><p>Before:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SgZ4p24wrvI/AAAAAAAAAIA/jrcqzHB68ek/s1600-h/image%5B21%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; margin-left: 0px; border-top: 0px; margin-right: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SgZ4qKHQ1wI/AAAAAAAAAIE/37QrEplXSvs/image_thumb%5B9%5D.png?imgmax=800" width="175" height="32" /></a><br /><br />  <br />During:<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SgZ4qaSofLI/AAAAAAAAAII/gD57RvvY0QM/s1600-h/image%5B22%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SgZ4qswfXEI/AAAAAAAAAIQ/WQoqtYfLgLo/image_thumb%5B10%5D.png?imgmax=800" width="162" height="48" /></a> <br /><br />  <br />After:<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SgZ4q51vbkI/AAAAAAAAAIY/tM64Vif9A04/s1600-h/image%5B25%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; margin-left: 0px; border-top: 0px; margin-right: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SgZ4rAQeMhI/AAAAAAAAAIg/UrpNW9pDftU/image_thumb%5B13%5D.png?imgmax=800" width="175" height="32" /></a></p><br /><br /><p>Amused by simple things :)</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>CLS</div>
-<div class='content'>
-Thanks man!<br /><br />It works fine.</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -369,6 +379,9 @@ Thanks man!<br /><br />It works fine.</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -385,9 +398,6 @@ Thanks man!<br /><br />It works fine.</div>
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

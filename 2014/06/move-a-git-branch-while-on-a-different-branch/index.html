@@ -79,29 +79,35 @@
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1 id="how-to-update-a-git-branch-other-than-the-one-you-re-currently-on-">How to update a git branch OTHER than the one you&#39;re currently on.</h1>
+<div class="entry-content"><h1>How to update a git branch OTHER than the one you're currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre><p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don&#39;t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+</code></pre>
+<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
 <p>I was starting to dislike the switch branch dance to trigger a new build.</p>
-<h3 id="what-i-used-to-do-">What I used to do:</h3>
+<h3>What I used to do:</h3>
 <pre><code># When I was on the master branch
 git checkout release
 git merge master
 git push
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
 </blockquote>
-<h3 id="after-digging-a-bit-i-found-the-answer-">After digging a bit, I found the answer.</h3>
+<h3>After digging a bit, I found the answer.</h3>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre><p>So to trigger a new build from master I can just:</p>
+</code></pre>
+<p>So to trigger a new build from master I can just:</p>
 <pre><code>git branch -f release master
 git push origin release
-</code></pre><p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
+</code></pre>
+<p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
 <p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
 <pre><code>git push origin local_branch:remote_branch
-</code></pre><p>So my workflow would look more like</p>
+</code></pre>
+<p>So my workflow would look more like</p>
 <pre><code>git push origin master:release
-</code></pre><p>Happy Automation!</p>
+</code></pre>
+<p>Happy Automation!</p>
 </div>
 
                 <footer>
@@ -161,6 +167,9 @@ git push origin release
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -177,9 +186,6 @@ git push origin release
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

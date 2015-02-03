@@ -80,35 +80,39 @@
     </p>
 </header>
 <div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I&#39;m going to put this here so I can find it later...</p>
-<h1 id="create-a-merge-wrapper-script">Create a merge-wrapper script</h1>
-<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain. </p>
+<p>I'm going to put this here so I can find it later...</p>
+<h1>Create a merge-wrapper script</h1>
+<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven&#39;t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
-<h3 id="customize-the-merge-wrapper-js-">Customize the <code>merge-wrapper.js</code></h3>
+<h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
-<li><p>Extend with other diff tool support:</p>
-<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>. </p>
+<li>
+<p>Extend with other diff tool support:</p>
+<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
 </li>
-<li><p>Modify which diff tool is used per extension:</p>
-<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup. </p>
+<li>
+<p>Modify which diff tool is used per extension:</p>
+<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
 </li>
-<li><p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I&#39;d be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+<li>
+<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
+<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
 <p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it&#39;ll work for some, but I didn&#39;t want to maintain this - prefer the JS version instead.</p>
+<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
 <p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.sh"></script></p>
-<h1 id="setup-gitconfig-">Setup <code>~/.gitconfig</code></h1>
-<p>Now that we&#39;ve created our merge wrapper script we need to tell git how to use it.</p>
+<h1>Setup <code>~/.gitconfig</code></h1>
+<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
-[mergetool &quot;merge_wrapper&quot;]
-    cmd = $HOME/dotfiles/tools/merge-wrapper.js \&quot;$BASE\&quot; \&quot;$LOCAL\&quot; \&quot;$REMOTE\&quot; \&quot;$MERGED\&quot;
-</code></pre></div>
+[mergetool <span class="hljs-string">"merge_wrapper"</span>]
+    cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
+</code></pre>
+</div>
 
                 <footer>
                     <p class="meta">
@@ -167,6 +171,9 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -183,9 +190,6 @@
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

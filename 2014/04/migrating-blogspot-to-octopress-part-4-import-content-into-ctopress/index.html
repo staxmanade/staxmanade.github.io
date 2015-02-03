@@ -79,9 +79,9 @@
         <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> &lt;span class=&quot;warning-highlight&quot;&gt;
+I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+&lt;/span&gt; <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
     <p>This article is <strong>Part 4</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
@@ -116,36 +116,48 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
     </ul>
 </div></p>
 <p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
-<h1 id="translate-export-xml-to-octopress-posts">Translate export <code>xml</code> to Octopress posts</h1>
-<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it&#39;s fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
+<h1>Translate export <code>xml</code> to Octopress posts</h1>
+<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it's fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
 <ol>
-<li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code><ul>
-<li>Note: there are a number of forks of the script - if one doesn&#39;t work, browse other changes and see if something fits your needs.</li>
-</ul>
-</li>
-<li><p>From the command line go to a temporary folder and execute</p>
-<p> <code>ruby {pathToImporterFile}/BloggerImporter.rb &#39;{PathToBloggerExport}/blog-03-19-2014.xml&#39;</code></p>
-<p> When I tried it on my windows machine I received the following error. Sorry Windows folks, I don&#39;t have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn&#39;t port it back then. I&#39;m sure it&#39;s possible, but wasn&#39;t worth my time (since it works on my mac and was a one-time task).</p>
-<pre><code class="lang-ruby"> C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;: cannot load such file -- nokogiri (LoadE
- rror)
-         from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;
-         from BloggerImporter.rb:2:in `&lt;main&gt;&#39;
-</code></pre>
-<p> (One possible issue noted by a colleague: the ruby script requires a gem, <a href="http://nokogiri.org/">Nokigiri</a>, which is not supported on Windows by Ruby 2 at the time of this writing. This can be circumvented by either reinstalling Ruby 1.9.3 or by leveraging a tool like yari which allows you to pick the version of Ruby you wish to leverage with a script - a helpful StackOverflow answer exists <a href="http://stackoverflow.com/a/17318410/64">here</a>.)</p>
-</li>
-<li><p>You should now you have your content.</p>
-<p> After you&#39;ve run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
-<pre><code> ~/code/temp&gt; ls
- _drafts     _posts    BloggerImporter.rb
-</code></pre><p> I didn&#39;t end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
-</li>
-<li><p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
-</li>
-<li>At this point you&#39;ve successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</li>
-<li>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</li>
-<li>If your preview looks right use <code>rake deploy</code> to put your changes on github.</li>
+<li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code></li>
 </ol>
-<p>Hopefully it all worked out and you&#39;re looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn&#39;t necessary (I can&#39;t recall anymore) but it was quick to work through.</p>
+<ul>
+<li>Note: there are a number of forks of the script - if one doesn't work, browse other changes and see if something fits your needs.</li>
+</ul>
+<ol start="2">
+<li>
+<p>From the command line go to a temporary folder and execute</p>
+<p><code>ruby {pathToImporterFile}/BloggerImporter.rb '{PathToBloggerExport}/blog-03-19-2014.xml'</code></p>
+<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don't have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn't port it back then. I'm sure it's possible, but wasn't worth my time (since it works on my mac and was a one-time task).</p>
+<pre><code class="language-ruby"><span class="hljs-constant">C</span><span class="hljs-symbol">:/Ruby193/lib/ruby/site_ruby/</span><span class="hljs-number">1.9</span>.<span class="hljs-number">1</span>/rubygems/custom_require.<span class="hljs-symbol">rb:</span><span class="hljs-number">36</span><span class="hljs-symbol">:in</span> <span class="hljs-string">`require': cannot load such file -- nokogiri (LoadE
+rror)
+        from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `</span><span class="hljs-keyword">require</span><span class="hljs-string">'
+        from BloggerImporter.rb:2:in `&lt;main&gt;'</span>
+</code></pre>
+<p>(One possible issue noted by a colleague: the ruby script requires a gem, <a href="http://nokogiri.org/">Nokigiri</a>, which is not supported on Windows by Ruby 2 at the time of this writing. This can be circumvented by either reinstalling Ruby 1.9.3 or by leveraging a tool like yari which allows you to pick the version of Ruby you wish to leverage with a script - a helpful StackOverflow answer exists <a href="http://stackoverflow.com/a/17318410/64">here</a>.)</p>
+</li>
+<li>
+<p>You should now you have your content.</p>
+<p>After you've run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
+<pre><code>~/code/temp&gt; ls
+_drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
+</code></pre>
+<p>I didn't end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
+</li>
+<li>
+<p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
+</li>
+<li>
+<p>At this point you've successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</p>
+</li>
+<li>
+<p>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</p>
+</li>
+<li>
+<p>If your preview looks right use <code>rake deploy</code> to put your changes on github.</p>
+</li>
+</ol>
+<p>Hopefully it all worked out and you're looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn't necessary (I can't recall anymore) but it was quick to work through.</p>
 <blockquote>
 <p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
 </blockquote>
@@ -209,6 +221,9 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -225,9 +240,6 @@ I&#39;ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---n
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

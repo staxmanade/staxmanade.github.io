@@ -79,87 +79,91 @@
         <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/#disqus_thread" data-disqus-identifier="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1 id="challenge">Challenge</h1>
-<p>Let&#39;s say you&#39;ve been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you&#39;re curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don&#39;t want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
+<div class="entry-content"><h1>Challenge</h1>
+<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
+<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
 <p>And since:</p>
 <blockquote>
 <p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
 <p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
-<h1 id="challenge-accepted-">Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let&#39;s take a dive into the compiler to see if this is something we can work around...</p>
-<h3 id="what-are-the-steps-we-need-to-accomplish-to-make-the-compiler-accept-plain-js-files-">What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
+<h1>Challenge Accepted.</h1>
+<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
+<h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
 <ol>
 <li>Get It</li>
 <li>Copy it</li>
 <li>Hack it</li>
 <li>Use it</li>
 </ol>
-<h2 id="get-it">Get it</h2>
-<p>Before we can get too far, let&#39;s first install the compiler onto our system.</p>
-<p>I&#39;ll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
+<h2>Get it</h2>
+<p>Before we can get too far, let's first install the compiler onto our system.</p>
+<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
 <pre><code>npm install -g typescript
-</code></pre><p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>&#39;ing your TypeScript code.</p>
-<h2 id="copy-it">Copy it</h2>
-<p>We probably don&#39;t want to modify the globally installed version of <code>tsc</code> so we&#39;ll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
+</code></pre>
+<p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
+<h2>Copy it</h2>
+<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
 <p>If on Windows or Mac</p>
 <pre><code>where tsc
-</code></pre><blockquote>
-<p>NOTE: if you&#39;re using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won&#39;t help us out in this case.</p>
+</code></pre>
+<blockquote>
+<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
 </blockquote>
-<p>Once you&#39;ve found the path to your version of <code>tsc</code></p>
+<p>Once you've found the path to your version of <code>tsc</code></p>
 <p>Mine was in</p>
 <ul>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
 <li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
 </ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You&#39;ll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
+<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
 <p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you&#39;re done you should have a directory that looks something like this</p>
+<p>When you're done you should have a directory that looks something like this</p>
 <pre><code>
 ﻿﻿--MyJSCompiler
-  |   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc
-  |   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd
-  |   
+  <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
+  <span class="hljs-string">|   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd</span>
+  <span class="hljs-string">|   </span>
   ----node_modules
       ----.bin
-      |       tsc
-      |       tsc.cmd
-      |       
+      <span class="hljs-string">|       tsc</span>
+      <span class="hljs-string">|       tsc.cmd</span>
+      <span class="hljs-string">|       </span>
       ----typescript
-          |   .npmignore
-          |   CopyrightNotice.txt
-          |   LICENSE.txt
-          |   package.json
-          |   README.txt
-          |   ThirdPartyNoticeText.txt
-          |   
+          <span class="hljs-string">|   .npmignore</span>
+          <span class="hljs-string">|   CopyrightNotice.txt</span>
+          <span class="hljs-string">|   LICENSE.txt</span>
+          <span class="hljs-string">|   package.json</span>
+          <span class="hljs-string">|   README.txt</span>
+          <span class="hljs-string">|   ThirdPartyNoticeText.txt</span>
+          <span class="hljs-string">|   </span>
           ----bin
-              |   lib.d.ts
-              |   tsc
-              |   tsc.js
-              |   typescript.js
-              |   
+              <span class="hljs-string">|   lib.d.ts</span>
+              <span class="hljs-string">|   tsc</span>
+              <span class="hljs-string">|   tsc.js</span>
+              <span class="hljs-string">|   typescript.js</span>
+              <span class="hljs-string">|   </span>
               ----resources
-                  |   diagnosticMessages.generated.json
-                  |   
+                  <span class="hljs-string">|   diagnosticMessages.generated.json</span>
+                  <span class="hljs-string">|   </span>
                   ----(*.json files excluded for brevity)
-</code></pre><p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
-<h2 id="hack-it">Hack it</h2>
-<p>Since we have a local version we can hack on now, let&#39;s find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
+
+</code></pre>
+<p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
+<h2>Hack it</h2>
+<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
 <p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
-<pre><code class="lang-diff">     function isTSFile(fname) {
--        return isFileOfExtension(fname, &quot;.ts&quot;);
-+        return isFileOfExtension(fname, &quot;.ts&quot;) || isFileOfExtension(fname, &quot;.js&quot;);
+<pre><code class="language-diff">     function isTSFile(fname) {
+<span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
+<span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
      }
 </code></pre>
-<p>We&#39;ve now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
-<h2 id="use-it">Use it</h2>
-<p>I won&#39;t be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite it with it&#39;s compiled version.</p>
-<h1 id="-warning-i-ll-say-that-again-to-use-it-be-sure-to-use-the-out-file-or-outdir-directory-options-because-if-you-don-t-the-compiler-will-take-the-input-javascript-file-and-overwrite-the-original-with-it-s-compiled-version-">!!WARNING!! I&#39;ll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don&#39;t the compiler will take the input javascript file and overwrite the original with it&#39;s compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript&#39;s version looks compared to your own, but I&#39;ll leave that up to you to play with.</p>
+<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
+<h2>Use it</h2>
+<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
+<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
+<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
+<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
 </div>
 
@@ -219,6 +223,9 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -235,9 +242,6 @@
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

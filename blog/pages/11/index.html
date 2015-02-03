@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/statlight-goes-open-source/">StatLight – Goes Open Source</a></h1>
+    <p class="meta">
+          <time datetime="2009-12-11T03:27:00.000Z" pubdate data-updated="true">Dec 10th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>Although I made a very minor attempt at making <a href="http://statlight.net" target="_blank">StatLight</a> a “for-sale” product, I knew when I started that open-source was most likely going to be my long term path for <a href="http://statlight.net" target="_blank">StatLight</a>.</p>  <h5>What is it? (Silverlight Testing Automation Tool)</h5>  <p>StatLight is a tool developed for automating the setup, running, and gathering results of Silverlight unit tests. StatLight helps to speed up the feedback cycles while practicing<a href="http://en.wikipedia.org/wiki/Test-driven_development"> TDD</a>/<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>/(insert your test style here) during Silverlight development.</p>  <h5>Where can I get StatLight?</h5>  <p><a href="http://StatLight.CodePlex.com">http://StatLight.CodePlex.com</a></p>  <p>&#160;</p>  <h4>Happy Coding !!!</h4>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/go-to-definition-tip-with-c-var-keyword/">Go to Definition Tip with the C# ‘var’ keyword</a></h1>
     <p class="meta">
           <time datetime="2009-12-02T06:09:00.000Z" pubdate data-updated="true">Dec 1st 2009</time>
@@ -127,34 +143,36 @@
         
     </p>
 </header>
-<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I&#39;ve done (wished I could have done automatically in the past) that I want to save for reference later.</p>
-<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything&#39;s a Singleton architecture is no easy task. I won&#39;t go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I&#39;ve slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They&#39;ve given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
-<h5 id="powershell-assisted-regular-expression-search-and-replace-">PowerShell assisted regular expression search and replace.</h5>
+<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I've done (wished I could have done automatically in the past) that I want to save for reference later.</p>
+<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything's a Singleton architecture is no easy task. I won't go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I've slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They've given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
+<h5>PowerShell assisted regular expression search and replace.</h5>
 <p>In my case, the specific regular expression needed to find</p>
 <pre><code>    SomeBusinessLogicClass.Instance.SomeFooMethod(bar);
-</code></pre><p>and replace it with</p>
-<pre><code>    Resolve().SomeFooMethod(bar);
-</code></pre><p>Below is the PowerShell script I used.</p>
-<pre><code class="lang-PowerShell"># define the find and replacement regular expressions.
-$regex_find = &#39;([a-zA-Z]+)\\.Instance\\.&#39;
-$regex_replace = &#39;Resolve().&#39;
+</code></pre>
+<p>and replace it with</p>
+<pre><code>    Resolve<span class="hljs-comment">()</span>.SomeFooMethod<span class="hljs-comment">(bar)</span>;
+</code></pre>
+<p>Below is the PowerShell script I used.</p>
+<pre><code class="language-PowerShell"><span class="hljs-comment"># define the find and replacement regular expressions.</span>
+<span class="hljs-variable">$regex_find</span> = <span class="hljs-string">'([a-zA-Z]+)\\.Instance\\.'</span>
+<span class="hljs-variable">$regex_replace</span> = <span class="hljs-string">'Resolve().'</span>
 
-# get all the C# files we want to search/replace through
-$allFiles = Get-ChildItem -Filter *.cs -Recurse
+<span class="hljs-comment"># get all the C# files we want to search/replace through</span>
+<span class="hljs-variable">$allFiles</span> = <span class="hljs-built_in">Get-ChildItem</span> -Filter *.cs -Recurse
 
-foreach($fileToReplace in $allFiles)
+<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$fileToReplace</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$allFiles</span>)
 {
-    $fileString = $fileToReplace.FullName
-    if([String]::Join([Environment]::NewLine, (Get-Content -Path $fileString)) -match $regex_find)
+    <span class="hljs-variable">$fileString</span> = <span class="hljs-variable">$fileToReplace</span>.FullName
+    <span class="hljs-keyword">if</span>([String]::Join([Environment]::NewLine, (<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>)) <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>)
     {
-        # make the file writable so we can update it
-        $fileToReplace.IsReadOnly = $false;
-        Write-Host &quot;applying fix to - $fileString&quot;
+        <span class="hljs-comment"># make the file writable so we can update it</span>
+        <span class="hljs-variable">$fileToReplace</span>.IsReadOnly = <span class="hljs-variable">$false</span>;
+        <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">"applying fix to - <span class="hljs-variable">$fileString</span>"</span>
 
-        # here&#39;s where we load up the file iterate through each line   
-        # replace any of the regex matches
-        # and save the file back to the original location
-        Set-Content $fileString -Value ((Get-Content -Path $fileString) | foreach { if( $_ -match $regex_find) { $_ -replace $regex_find, $regex_replace } else { $_ } } )
+        <span class="hljs-comment"># here's where we load up the file iterate through each line   </span>
+        <span class="hljs-comment"># replace any of the regex matches</span>
+        <span class="hljs-comment"># and save the file back to the original location</span>
+        <span class="hljs-built_in">Set-Content</span> <span class="hljs-variable">$fileString</span> -Value ((<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>) | <span class="hljs-keyword">foreach</span> { <span class="hljs-keyword">if</span>( <span class="hljs-variable">$_</span> <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>) { <span class="hljs-variable">$_</span> <span class="hljs-operator">-replace</span> <span class="hljs-variable">$regex_find</span>, <span class="hljs-variable">$regex_replace</span> } <span class="hljs-keyword">else</span> { <span class="hljs-variable">$_</span> } } )
     }
 }
 </code></pre>
@@ -164,7 +182,7 @@ foreach($fileToReplace in $allFiles)
 <li>Some of the files &quot;end of file&quot; changed (added an extra end line in some cases)</li>
 </ul>
 </blockquote>
-<h5 id="team-foundation-server-tip-to-detect-the-changed-files-">Team Foundation Server tip to detect the changed files.</h5>
+<h5>Team Foundation Server tip to detect the changed files.</h5>
 <p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>. Once installed, fire up the PowerShell console given in the start menu</p>
 <p><img src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
 <p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p>
@@ -254,40 +272,6 @@ foreach($fileToReplace in $allFiles)
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/how-do-i-get-uispyexe-on-my-windows-7/">How do I get UISpy.exe on my Windows 7 Developer Machine?</a></h1>
-    <p class="meta">
-          <time datetime="2009-09-16T04:47:00.000Z" pubdate data-updated="true">Sep 15th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I know there’s a tool somewhere in some SDK called UISpy.exe. It looks like this.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt1IXfT6I/AAAAAAAAAKo/JLGWllGQoP4/s1600-h/ms727247.UI_Spy_Main_WindowenusVS.90.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" border="0" alt="ms727247.UI_Spy_Main_Window(en-us,VS.90)[1]" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt19BG-II/AAAAAAAAAKs/yqtWK4N0wW4/ms727247.UI_Spy_Main_WindowenusVS.90%5B1%5D.png?imgmax=800" width="582" height="379" /></a> </p>  <p>You can read all about it here - <a href="http://msdn.microsoft.com/en-us/library/ms727247.aspx">http://msdn.microsoft.com/en-us/library/ms727247.aspx</a></p>  <h3>But can you find it?</h3>  <p>The docs in that link above state…</p>  <blockquote>   <p><img alt="ms727247.alert_note(en-us,VS.90).gif" src="http://i.msdn.microsoft.com/ms727247.alert_note(en-us,VS.90).gif" /><strong>Note: </strong>UI Spy is installed with the Microsoft Windows SDK. It is located in the \bin folder of the SDK installation path (uispy.exe) or can be accessed from the Start menu (Start\All Programs\Microsoft Windows SDK\Tools\UISpy).</p> </blockquote>  <p>If I go take a look at the (Start\All Programs\Microsoft Windows SDK\Tools\UISpy) as shown in the image below. UISpy is nowhere to be found. </p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt2SEUeTI/AAAAAAAAAKw/xonEojREdHc/s1600-h/image7.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt2mwJQvI/AAAAAAAAAK0/Vx7KaZRd5DQ/image_thumb3.png?imgmax=800" width="262" height="273" /></a> </p>  <p>In some forum post somewhere – I saw that I had to install the .Net Framework 3.0 SDK. Which is strange since I have the 3.5 framework already installed and the tool isn’t there. Oh well, I found it (I thought), downloaded it and tried to run the setup. Where in Windows 7 I was prompted with the following dialog.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt23upSBI/AAAAAAAAAK4/HUXuugP2xRg/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." border="0" alt="You must use &quot;Turn Windows features on or off&quot; in the Control Panel to install or configure Microsoft .NET Framework 3.0." src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt3aUZroI/AAAAAAAAAK8/fHdAqCJ6Iac/image_thumb1.png?imgmax=800" width="505" height="178" /></a> </p>  <p>Ok, fine I’ll do that…</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt3u65DjI/AAAAAAAAALA/QAvI1Zp_Hz0/s1600-h/image11.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4Drga_I/AAAAAAAAALE/dCtpGc-6GkY/image_thumb5.png?imgmax=800" width="417" height="531" /></a> </p>  <p>Searching the list of features to turn on and off, the only one that looks anything like what I’m looking for (outlined in red) has already been installed.</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt4qWSiSI/AAAAAAAAALI/Ya5JCyYXnUM/s1600-h/image15.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt51K4FZI/AAAAAAAAALM/J1rd0mLj0rM/image_thumb7.png?imgmax=800" width="310" height="656" /></a> </p>  <p>Off to do more research…</p>  <p></p>  <p></p>  <p></p>  <p>Then I run into this blog <a href="http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx">http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx</a></p>  <p>Eventually I download the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=4377F86D-C913-4B5C-B87E-EF72E5B4E065&amp;displaylang=en">Windows SDK for Vista Update</a>. Run the install wizard with all the defaults except this screen…</p>  <p>As the blog post states – make sure you take a pre-install snapshot of the following registry key</p>  <p><strong>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs      <br /></strong>Before Install:<a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt6ZlcgnI/AAAAAAAAALU/ZO60FHxNAoU/s1600-h/image41.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt65BUX4I/AAAAAAAAALY/_vCcUqbSlEs/image_thumb25.png?imgmax=800" width="583" height="171" /></a>&#160; </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SrBt7eZeWoI/AAAAAAAAALc/n6FH5PRb2f0/s1600-h/image19.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SrBt7yOdPSI/AAAAAAAAALg/ntpi_5ggbzg/image_thumb9.png?imgmax=800" width="585" height="554" /></a>&#160;</p>  <p>After Install:    <br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SrBt8q6jHFI/AAAAAAAAALk/gop2PBD1vPY/s1600-h/image47.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SrBt-uhEUmI/AAAAAAAAALo/mxzr0oast6I/image_thumb29.png?imgmax=800" width="581" height="176" /></a> </p>  <p></p>  <p></p>  <p></p>  <p>I reverted the changes back to v6.0A in the registry above…</p>  <h3>And TAH-DAH UISpy.exe has been found.</h3>  <p>C:\Program Files\Microsoft SDKs\Windows\v6.0\Bin\UISpy.exe</p>  <p>Pain in the A$$… But it seems to work.</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-I never experienced a dialog. However, this post is rather old and things have changed since. I have not tried to run these steps since then. Good Luck</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Thank you, however, when i done and open the UISpy, it pop up a dialog about stopping the tool. How can i handle it!</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-I have to agree with you, real pain in the a$$. Seriously, your post helped me a lot more specifically with the registry rollback.<br /><br />Thanks</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/12/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -322,6 +306,9 @@ I have to agree with you, real pain in the a$$. Seriously, your post helped me a
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -338,9 +325,6 @@ I have to agree with you, real pain in the a$$. Seriously, your post helped me a
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>

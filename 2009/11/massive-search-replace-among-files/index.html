@@ -79,34 +79,36 @@
         
     </p>
 </header>
-<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I&#39;ve done (wished I could have done automatically in the past) that I want to save for reference later.</p>
-<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything&#39;s a Singleton architecture is no easy task. I won&#39;t go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I&#39;ve slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They&#39;ve given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
-<h5 id="powershell-assisted-regular-expression-search-and-replace-">PowerShell assisted regular expression search and replace.</h5>
+<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I've done (wished I could have done automatically in the past) that I want to save for reference later.</p>
+<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything's a Singleton architecture is no easy task. I won't go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I've slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They've given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
+<h5>PowerShell assisted regular expression search and replace.</h5>
 <p>In my case, the specific regular expression needed to find</p>
 <pre><code>    SomeBusinessLogicClass.Instance.SomeFooMethod(bar);
-</code></pre><p>and replace it with</p>
-<pre><code>    Resolve().SomeFooMethod(bar);
-</code></pre><p>Below is the PowerShell script I used.</p>
-<pre><code class="lang-PowerShell"># define the find and replacement regular expressions.
-$regex_find = &#39;([a-zA-Z]+)\\.Instance\\.&#39;
-$regex_replace = &#39;Resolve().&#39;
+</code></pre>
+<p>and replace it with</p>
+<pre><code>    Resolve<span class="hljs-comment">()</span>.SomeFooMethod<span class="hljs-comment">(bar)</span>;
+</code></pre>
+<p>Below is the PowerShell script I used.</p>
+<pre><code class="language-PowerShell"><span class="hljs-comment"># define the find and replacement regular expressions.</span>
+<span class="hljs-variable">$regex_find</span> = <span class="hljs-string">'([a-zA-Z]+)\\.Instance\\.'</span>
+<span class="hljs-variable">$regex_replace</span> = <span class="hljs-string">'Resolve().'</span>
 
-# get all the C# files we want to search/replace through
-$allFiles = Get-ChildItem -Filter *.cs -Recurse
+<span class="hljs-comment"># get all the C# files we want to search/replace through</span>
+<span class="hljs-variable">$allFiles</span> = <span class="hljs-built_in">Get-ChildItem</span> -Filter *.cs -Recurse
 
-foreach($fileToReplace in $allFiles)
+<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$fileToReplace</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$allFiles</span>)
 {
-    $fileString = $fileToReplace.FullName
-    if([String]::Join([Environment]::NewLine, (Get-Content -Path $fileString)) -match $regex_find)
+    <span class="hljs-variable">$fileString</span> = <span class="hljs-variable">$fileToReplace</span>.FullName
+    <span class="hljs-keyword">if</span>([String]::Join([Environment]::NewLine, (<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>)) <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>)
     {
-        # make the file writable so we can update it
-        $fileToReplace.IsReadOnly = $false;
-        Write-Host &quot;applying fix to - $fileString&quot;
+        <span class="hljs-comment"># make the file writable so we can update it</span>
+        <span class="hljs-variable">$fileToReplace</span>.IsReadOnly = <span class="hljs-variable">$false</span>;
+        <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">"applying fix to - <span class="hljs-variable">$fileString</span>"</span>
 
-        # here&#39;s where we load up the file iterate through each line   
-        # replace any of the regex matches
-        # and save the file back to the original location
-        Set-Content $fileString -Value ((Get-Content -Path $fileString) | foreach { if( $_ -match $regex_find) { $_ -replace $regex_find, $regex_replace } else { $_ } } )
+        <span class="hljs-comment"># here's where we load up the file iterate through each line   </span>
+        <span class="hljs-comment"># replace any of the regex matches</span>
+        <span class="hljs-comment"># and save the file back to the original location</span>
+        <span class="hljs-built_in">Set-Content</span> <span class="hljs-variable">$fileString</span> -Value ((<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>) | <span class="hljs-keyword">foreach</span> { <span class="hljs-keyword">if</span>( <span class="hljs-variable">$_</span> <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>) { <span class="hljs-variable">$_</span> <span class="hljs-operator">-replace</span> <span class="hljs-variable">$regex_find</span>, <span class="hljs-variable">$regex_replace</span> } <span class="hljs-keyword">else</span> { <span class="hljs-variable">$_</span> } } )
     }
 }
 </code></pre>
@@ -116,7 +118,7 @@ foreach($fileToReplace in $allFiles)
 <li>Some of the files &quot;end of file&quot; changed (added an extra end line in some cases)</li>
 </ul>
 </blockquote>
-<h5 id="team-foundation-server-tip-to-detect-the-changed-files-">Team Foundation Server tip to detect the changed files.</h5>
+<h5>Team Foundation Server tip to detect the changed files.</h5>
 <p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>. Once installed, fire up the PowerShell console given in the start menu</p>
 <p><img src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
 <p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p>
@@ -178,6 +180,9 @@ foreach($fileToReplace in $allFiles)
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
       <li class="post">
@@ -194,9 +199,6 @@ foreach($fileToReplace in $allFiles)
       </li>
       <li class="post">
         <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a>
       </li>
   </ul>
 </section>
