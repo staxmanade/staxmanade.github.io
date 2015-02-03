@@ -79,9 +79,9 @@
         <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> &lt;span class=&quot;warning-highlight&quot;&gt;
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-&lt;/span&gt; <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
     <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
@@ -115,7 +115,7 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
         </li>
     </ul>
 </div></p>
-<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
+<p>Once you’ve ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
 <ol>
 <li>Cross-Post links (where I referenced one of my other posts)</li>
 <li>Broken links.</li>
@@ -128,13 +128,13 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <p>but now should link to</p>
 <pre><code>/blog/2013/12/format-your-net-exceptions-to-see
 </code></pre>
-<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
-<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
+<p>If you’re on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
+<p>I don’t recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I’ll let you figure out the rest of how to get that task done.</p>
 <h2>Fix broken links</h2>
-<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
+<p>Once you’re done fixing up cross-post links, we want to make sure we didn’t mess anything up, and while we’re at it, fix any old or out-dated links.</p>
 <p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
 <p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
-<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
+<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn’t able to fix up all of my external links, but that’s the way of the web unfortunately. I haven’t done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
 </div>
 
                 <footer>

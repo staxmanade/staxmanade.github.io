@@ -80,8 +80,8 @@
     </p>
 </header>
 <div class="entry-content"><p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
-<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don’t include the last bit (that worked for me), so I hope this helps you…</p>
+<h1>Why Can’t I run the Xcode Simulator on a Jenkins server?</h1>
 <h3>Some Error Messages I Encountered Along the Way:</h3>
 <pre><code>Tried to install the test host app 'com.myapp.test' but failed.
 
@@ -100,11 +100,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 ** TEST FAILED **
 </code></pre>
 <h3>Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it’s U.I…</p>
 <p>Below is a great resource to get you most of the way there.</p>
 <p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>Once you’ve followed the instructions in the above post and you still can’t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don’t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
 <p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
 <pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
 <span class="hljs-deletion">-       &lt;true /&gt;</span>
@@ -141,11 +141,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
 <li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
 </ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click “reload config” to force Jenkins to reload configuration from the disk.</p>
 </blockquote>
 <p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
 <h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple…</p>
 <ul>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
@@ -156,7 +156,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>First download the Jenkins CLI jar.</li>
 </ol>
 <ul>
-<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
+<li>You can do this from your jenkin’s CLI page within your installed Jenkins instance.</li>
 </ul>
 <p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
 <ol start="2">
@@ -164,16 +164,16 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
 <ol start="3">
-<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
+<li>Using one job from the list above, let’s copy the xml of a job to the clipboard. (I’m using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job’s xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
 <ol start="4">
-<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
+<li>If the above command placed a job’s XML into the clipboard, you can use the below command to add it to the new server.</li>
 </ol>
 <p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps...</p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli’s <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+<p>Hope this helps…</p>
 </div>
 
             </article>

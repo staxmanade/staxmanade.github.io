@@ -79,9 +79,9 @@
         <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> &lt;span class=&quot;warning-highlight&quot;&gt;
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-&lt;/span&gt; <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I’ve <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>﻿
 <div class="seriesNote">
     <p>This article is <strong>Part 3</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
@@ -115,19 +115,19 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
         </li>
     </ul>
 </div></p>
-<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel...</p>
+<p>Thanks to Google for allowing us to <a href="https://support.google.com/blogger/answer/97416?hl=en">export our own content</a> and providing an easy way to get it all in one download. If we had to go manually read each item in an atom feed or web scrape the content off of a web page, this small series would be more like a novel…</p>
 <h1>Steps to export content.</h1>
 <ol>
-<li>Log in to your [BlogSpot.com(http://BlogSpot.com) admin portal</li>
+<li>Log in to your [<a href="http://BlogSpot.com(http://BlogSpot.com)">BlogSpot.com(http://BlogSpot.com)</a> admin portal</li>
 <li>Go to the <code>Settings</code> tab</li>
 <li>Select the <code>Other</code> option under Settings</li>
 <li>Under Blog tools select <code>Export blog</code></li>
 <li>Save the file somewhere safe so we can refer to it later</li>
 </ol>
 <p><img src="/images/posts/blogger_settings.png" alt="Blogger Settings"></p>
-<h2>What's in this export file?</h2>
-<p>This file contains the raw content and metadata around each of your blog posts. You won't get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that's lower on the priority).</p>
-<p>Here is a snippet of a single entry from the exported file. In later posts we'll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
+<h2>What’s in this export file?</h2>
+<p>This file contains the raw content and metadata around each of your blog posts. You won’t get any of your images, but all of your original blog images are probably hosted on external sites. This is next on my list of things to add to the port-list (and will possibly extend this series even more). I would like to download each of my images locally, save them to my Octopress <a href="http://github.com/staxmanade/staxmanade.github.io">git repo</a> and update my posts to link to the local versions of the images (but that’s lower on the priority).</p>
+<p>Here is a snippet of a single entry from the exported file. In later posts we’ll delv deeper into this to extract metadata an setup redirection from BlogSpot to our new blog.</p>
 <h2>Sample Entry from Blogspot Export File</h2>
 <pre><code class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-title">entry</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">id</span>&gt;</span>tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837<span class="hljs-tag">&lt;/<span class="hljs-title">id</span>&gt;</span>

@@ -84,14 +84,14 @@
 <p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
 </blockquote>
 <h2>What are Approval Tests?</h2>
-<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
+<p>At it’s core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
 <p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
 <p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
-<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
+<p>With Approval Tests, you can take whatever output you’re wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
 <p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
-<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
-<h1>Let's walk through an example</h1>
-<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
+<p>The work to find and start up your favorite diff tool comparing previously “approved” files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
+<h1>Let’s walk through an example</h1>
+<p>If you’ve done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I’ve contrive a sample test using the AAA style in JavaScript.</p>
 <pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
 describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
     it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
@@ -110,9 +110,9 @@ describe(<span class="hljs-string">"when testing something"</span>, <span class=
     });
 });
 </code></pre>
-<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
+<p>At a high level, if you are writing tests with an object, and have a way to translate that object’s state into a text or image representation, wouldn’t it be great if you could save that state into a file, essentially locking down the state of the test?</p>
 <p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
-<h1>Let's turn our AAA test above into an Approval Test</h1>
+<h1>Let’s turn our AAA test above into an Approval Test</h1>
 <pre><code class="language-diff">var approvals = require('approvals');
 describe("when testing something", function(){
     it("should do something special", function(){
@@ -134,16 +134,16 @@ describe("when testing something", function(){
 </code></pre>
 <p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
 <h1>How Approval Tests Work</h1>
-<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
+<p>Approval Tests works by taking the object or value you’re trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn’t exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
 <p>At this point we have to choose between a number of options:</p>
 <ul>
 <li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
 <li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
-<li>Or we do nothing as we want to start over...</li>
+<li>Or we do nothing as we want to start over…</li>
 </ul>
-<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
+<p>Now we run our test again and if the test passes - then we know that we’ve finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
 <blockquote>
-<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
+<p>If the above explanation still isn’t clear, I’d recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco’s</a> video’s on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
 </blockquote>
 <h1>Next Steps!</h1>
 <p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
@@ -162,8 +162,8 @@ describe("when testing something", function(){
     </p>
 </header>
 <div class="entry-content"><p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
-<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
+<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don’t include the last bit (that worked for me), so I hope this helps you…</p>
+<h1>Why Can’t I run the Xcode Simulator on a Jenkins server?</h1>
 <h3>Some Error Messages I Encountered Along the Way:</h3>
 <pre><code>Tried to install the test host app 'com.myapp.test' but failed.
 
@@ -182,11 +182,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 ** TEST FAILED **
 </code></pre>
 <h3>Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
+<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it’s U.I…</p>
 <p>Below is a great resource to get you most of the way there.</p>
 <p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
+<p>Once you’ve followed the instructions in the above post and you still can’t get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
+<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don’t have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
 <p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
 <pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
 <span class="hljs-deletion">-       &lt;true /&gt;</span>
@@ -223,11 +223,11 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
 <li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
 </ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click “reload config” to force Jenkins to reload configuration from the disk.</p>
 </blockquote>
 <p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
 <h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple…</p>
 <ul>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
 <li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
@@ -238,7 +238,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>First download the Jenkins CLI jar.</li>
 </ol>
 <ul>
-<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
+<li>You can do this from your jenkin’s CLI page within your installed Jenkins instance.</li>
 </ul>
 <p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
 <ol start="2">
@@ -246,16 +246,16 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
 <ol start="3">
-<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
+<li>Using one job from the list above, let’s copy the xml of a job to the clipboard. (I’m using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
 </ol>
 <p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job’s xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
 <ol start="4">
-<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
+<li>If the above command placed a job’s XML into the clipboard, you can use the below command to add it to the new server.</li>
 </ol>
 <p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps...</p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli’s <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+<p>Hope this helps…</p>
 </div>
 
     </article>
@@ -288,12 +288,12 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
     </p>
 </header>
 <div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
-<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you're reviewing, your brain is now having to decide if anomalies in the formatting of your project's source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
-<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio's built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
-<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I'd highly recommend you check them out.</p>
-<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that's a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
+<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you’re reviewing, your brain is now having to decide if anomalies in the formatting of your project’s source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
+<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio’s built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
+<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I’d highly recommend you check them out.</p>
+<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that’s a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
 <p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
-<p><s>Unfortunately it's not as easy to install as <code>brew install clang-format</code></s> (It's now as easy to install as <code>brew install clang-format</code>), but I'll show you not only how to get it installed manually, but a command to easily format your code.</p>
+<p><s>Unfortunately it’s not as easy to install as <code>brew install clang-format</code></s> (It’s now as easy to install as <code>brew install clang-format</code>), but I’ll show you not only how to get it installed manually, but a command to easily format your code.</p>
 <h1>How to install <code>clang-format</code> manually</h1>
 <p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
 <ol>
@@ -305,7 +305,7 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </li>
 <li>Copy that URL and place it into the following set of commands.</li>
 </ol>
-<p>From a command prompt, navigate to a folder where you'd like to save or store the <code>clang</code> tools.</p>
+<p>From a command prompt, navigate to a folder where you’d like to save or store the <code>clang</code> tools.</p>
 <ol>
 <li>Remove the older version if there was one, and create a folder to work in
 <code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
@@ -329,10 +329,10 @@ ln -s <span class="hljs-variable">$(</span><span class="hljs-keyword">pwd</span>
 clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help</span>
 </code></pre>
 <h1>How to setup your project style guide</h1>
-<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let's walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before you use the command line tool to rip through our project, let's first set the standards you'd like clang-format to adhere to when formatting our code.</p>
+<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let’s walk through some steps I used to apply a standard code format to the project.</p>
+<p>But, before you use the command line tool to rip through our project, let’s first set the standards you’d like clang-format to adhere to when formatting our code.</p>
 <p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
-<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project's Objective-C files.</p>
+<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project’s Objective-C files.</p>
 <p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
 <p>Here is one I have used before.</p>
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">Chromium</span>
@@ -356,9 +356,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">None</span>
 </code></pre>
 <h1>Format all our files at once</h1>
-<p>Now that you have a <code>.clang-format</code> file which helps to define our project's styling conventions, you can begin our initial formatting sweep.</p>
-<p>First let's create a command that gives us all the files you want to process.</p>
-<p>Here's my initial example (executed in a zsh shell):</p>
+<p>Now that you have a <code>.clang-format</code> file which helps to define our project’s styling conventions, you can begin our initial formatting sweep.</p>
+<p>First let’s create a command that gives us all the files you want to process.</p>
+<p>Here’s my initial example (executed in a zsh shell):</p>
 <p><code>ls MyProject/*.[hm]</code></p>
 <p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
 <p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
@@ -389,48 +389,48 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <blockquote>
 <p>In summary I left my Octopress blog behind quite a while ago, and this site has been statically generated with a custom tooling build up around gulpjs and node.</p>
 </blockquote>
-<h1>Some of the details...</h1>
+<h1>Some of the details…</h1>
 <p>After I <a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">migrated from Blogspot to Octopress</a> I started running into workflow issues and <a href="https://github.com/jekyll/jekyll/issues/2226">other issues</a> that turned me off from Octopress/Jekyll (at least for my own site).</p>
-<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with...</p>
+<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with…</p>
 <blockquote>
 <p>So I did what every developer does. I wrote my own.</p>
 </blockquote>
 <p>Using <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> to capture previous renderings of the Octopress generated version of <a href="http://staxmanade.com">staxmanade.com</a>, I was surprised at how quickly I ported my Octopress generated site to a new custom static site generator.</p>
-<p>I'm not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I've implemented.</p>
+<p>I’m not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I’ve implemented.</p>
 <h2>Personal struggles with Octopress:</h2>
 <ul>
-<li>Octopress site generation was too SLOW for me. There's even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you're working on generate fast, but this just bothered me from a fundamental level.</li>
-<li>I'm not a Ruby developer and don't have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I'm a developer and its part of the process)</li>
-<li>Disliked that every time I <code>rake gen_deploy</code> I didn't know the exact code-diff that was changed since the previous version. I'd like to know exactly what files have changed and how they have changed before they get deployed. (again, there's probably a solution here, but didn't really care to dig deeper)</li>
-<li>There's an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
+<li>Octopress site generation was too SLOW for me. There’s even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you’re working on generate fast, but this just bothered me from a fundamental level.</li>
+<li>I’m not a Ruby developer and don’t have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I’m a developer and its part of the process)</li>
+<li>Disliked that every time I <code>rake gen_deploy</code> I didn’t know the exact code-diff that was changed since the previous version. I’d like to know exactly what files have changed and how they have changed before they get deployed. (again, there’s probably a solution here, but didn’t really care to dig deeper)</li>
+<li>There’s an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
 </ul>
 <h1>So what did I end up with?</h1>
-<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I've thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
+<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I’ve thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
 <h1>How is this better ~err~ different?</h1>
 <ul>
 <li>Regenerating my site only takes about 6 seconds (as opposed to the Octopress 30+)</li>
 <li>I learned <a href="http://gulpjs.com">gulp</a>, and node.js streams along the way.</li>
 <li>Built by myself — which was a good for the learning experience.</li>
-<li>Don't have to set the codepage to <code>65001</code> for Windows machines.</li>
+<li>Don’t have to set the codepage to <code>65001</code> for Windows machines.</li>
 <li>Series support.
 <ul>
-<li>I've implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they're a feature I've quite liked and was relatively easy to implement using my custom site generator.</li>
+<li>I’ve implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they’re a feature I’ve quite liked and was relatively easy to implement using my custom site generator.</li>
 </ul>
 </li>
 <li>Easy post tagging for a custom feed that gets cross-posted to <a href="http://elegantcode.com">elegantcode.com</a></li>
 <li>The <a href="http://togglejs.github.io/">tog</a> is easy to extend with custom commands and has a number of pre-built commands already ready to go.</li>
 </ul>
-<p>Since I've not put a huge amount of time into it - and I haven't exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
+<p>Since I’ve not put a huge amount of time into it - and I haven’t exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
 <h1>How is this worse?</h1>
 <ul>
-<li>I have to maintain it (this is both a blessing and a curse) - don't get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
-<li>I haven't yet ditched the Octopress theme, so that change will be coming at some point.</li>
-<li>I don't have any automated process to deploying changes. So I can't just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
-<li>My <code>gulp watch</code> is not working correctly and it's not yet wired up to <code>livereload</code> which would be a nice next step...</li>
+<li>I have to maintain it (this is both a blessing and a curse) - don’t get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
+<li>I haven’t yet ditched the Octopress theme, so that change will be coming at some point.</li>
+<li>I don’t have any automated process to deploying changes. So I can’t just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
+<li>My <code>gulp watch</code> is not working correctly and it’s not yet wired up to <code>livereload</code> which would be a nice next step…</li>
 </ul>
-<h1>BUT...</h1>
-<p>This is my site so it's all up to me to make it right...</p>
-<p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
+<h1>BUT…</h1>
+<p>This is my site so it’s all up to me to make it right…</p>
+<p>It’s been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren’t enough).</p>
 </div>
 
     </article>
@@ -445,11 +445,11 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
     </p>
 </header>
 <div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I'm going to put this here so I can find it later...</p>
+<p>I’m going to put this here so I can find it later…</p>
 <h1>Create a merge-wrapper script</h1>
 <p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven’t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
 <h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
@@ -463,14 +463,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </li>
 <li>
 <p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+<p>I’d be happy to take contributions of other diff tools in this gist if you leave a comment with yours…</p>
 </li>
 </ol>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.sh"></script></p>
+<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.js” }}</p>
+<p>Below was an attempt at using a bash script to manage what I do above, it’ll work for some, but I didn’t want to maintain this - prefer the JS version instead.</p>
+<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.sh” }}</p>
 <h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
+<p>Now that we’ve created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
@@ -495,14 +495,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <h2>What is it?</h2>
 <p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
 <h1>What pain does this solve?</h1>
-<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
+<p>I’ve recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
 <p>This typically involves:</p>
 <ol>
 <li>Opening the Outlook appointment</li>
 <li>Copying just the conference phone number (without extension)</li>
 <li>Pasting it in Skype to dial</li>
 <li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype's number pad area</li>
+<li>Pasting in Skype’s number pad area</li>
 <li>Type or use the mouse to press the final <code>#</code> key.</li>
 </ol>
 <h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
@@ -514,14 +514,14 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </ol>
 <p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
 <h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
+<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you’re probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>Or even better, if you’re on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you’re in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
 <blockquote>
-<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
+<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm…</p>
 </blockquote>
-<h1>Still early...</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
+<h1>Still early…</h1>
+<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you’d like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
+<p>I’m not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
 </div>
 
     </article>
@@ -536,27 +536,27 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
     </p>
 </header>
 <div class="entry-content"><blockquote>
-<p>This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you're considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
+<p>This post may seem a bit longer than my usual posts. It’s one I’ve slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you’re considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
 </blockquote>
 <h1>Background</h1>
 <p>My previous job afforded me the opportunity to work from home a couple days out of the week. While putting my wife through school, those days were great. I would start work extra early so I could leave early and watch our little girl while my wife headed off to class. The early start was great because these quiet mornings were often the most productive part of my day. The lack of distractions such as email, meetings, and instant message chats along with the quiet focus time all contributed to this increased productivity.</p>
 <p>While I quite enjoyed this time, was often productive, and it helped my family I still preferred to go into the office over working from home.</p>
 <p>So why did I still prefer going to the office over working from home?</p>
-<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn't pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
+<p>I did not feel as connected to the group, which left me feeling as thought I was always playing catchup. All of those water-cooler discussions and inpromptu office meetings where I (or anyone else remote) wasn’t pulled into more often not left me feeling like I was not able to keep on top of what was going on.</p>
 <p>This experience and the feeling it left me with is what concerned me about the new job I was about to take.</p>
 <h1>Worried to take a remote / work from home job.</h1>
 <p>Given my limited work from home experience, I was concerned about working remotely 100% of the time. However, the new opportunity to work for a <a href="http://vertigo.com">consulting firm I admired,</a> and the thought of being able to constantly try new technologies, and business domains was really appealing.</p>
-<p>I have now worked remotely for Vertigo for over 3 years and I'd like to share a list of Pros/Cons that I've gathered through my experience working from home full time.</p>
-<h1>Con's to working from home</h1>
-<p>Now, while Con's do not outweigh the Pro's for me, there is quite a bit of grey area here, so let's review some con's.</p>
+<p>I have now worked remotely for Vertigo for over 3 years and I’d like to share a list of Pros/Cons that I’ve gathered through my experience working from home full time.</p>
+<h1>Con’s to working from home</h1>
+<p>Now, while Con’s do not outweigh the Pro’s for me, there is quite a bit of grey area here, so let’s review some con’s.</p>
 <ul>
-<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I've tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I've had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house...</li>
+<li>Less human/social interaction on a daily basis. As an introvert, and a software developer, this is generally not too bad. This was a bigger concern for me originally and is much less of an issue now that I’ve tried it out. I make sure to take some time to have great Skype video calls with fellow remote coworkers and I also try to offset this by participating in local user groups or and other social occasions. However, the best medicine for this is a simple trip to the park with my little girls. I will say that I’ve had a day or two where I jumped at the opportunity to take a trip to Costco or other errand just so I could get out of the house…</li>
 <li>Shipping Hardware.
 <ul>
 <li>This one is a bit of a pain. Working for a consulting firm means there are many of different projects that require varying hardware configurations. From <a href="http://www.amazon.com/gp/product/B00NFXON1Q/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00NFXON1Q&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=EL5GYMNM3KI4HBGO">Xboxes</a>, test phones, tablets, computers, and even <a href="http://www.amazon.com/gp/product/B00I7JZNIU/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00I7JZNIU&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=3SZPKBVY7VEVBMO7">TVs</a>. I semi-regularly run to FedEx and send something to H.Q. or the Apple Store or Best Buy to pick up some hardware based on the needs of a project.</li>
 </ul>
 </li>
-<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it's so easy to work from home. This takes a bit of discipline.</li>
+<li>It can be a little too easy to sit at the personal computer in the evening and reach over to my work computer to reply to a late work-related email, or hammer on some code. So you need to be careful about the work/family balance when it’s so easy to work from home. This takes a bit of discipline.</li>
 <li>Sitting in the office chair when the amazingly yummy aromas of some fresh home cooking - distracting me from being productive as the smell is driving my stomach to scream at me to go downstairs for some food!</li>
 <li>Communication
 <ul>
@@ -566,43 +566,43 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <li>It often takes a little more discipline to take breaks.</li>
 <li>Time Zones
 <ul>
-<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company's headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
+<li>Time Zones are a hassle from many different angles, even when you work at an office; however, working remotely often means your employer has hired you because you are not near them. This increases the chance that you are several or more timezones away from your company’s headquarters. Which can mean the usual things like meal planning, start/stop times, etc require a bit more planning and accommodation.</li>
 </ul>
 </li>
 </ul>
-<h1>Pro's to working from home</h1>
+<h1>Pro’s to working from home</h1>
 <ul>
 <li>Home office temperature!
 <ul>
-<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It's either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you're the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you're too cold, put on some clothes or crank up the heat.</li>
+<li>Like most indoor jobs, AC and Heat are good amenities to have, but in big buildings people cannot often control the temperature. It’s either too cold or too hot as big buildings have a mind of their own (their airflow and ventilation kinks). However, working from home, you’re the <strong>master of your indoor weather</strong>. If you get hot, take off some clothes or turn on the AC. If you’re too cold, put on some clothes or crank up the heat.</li>
 </ul>
 </li>
 <li>Commute
 <ul>
 <li>I often joke with my fellow Californian commute ridden co-workers when they complain about traffic that day that I narrowly avoided a 3 (lego) car pile-up on my way to the office.</li>
-<li>I live where it's cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
-<li>Plus there's the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
+<li>I live where it’s cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
+<li>Plus there’s the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
 </ul>
 </li>
 <li>More family time overall. Since my coffee, water, bathroom breaks all lead to opportunities where I can say hello to the family.</li>
-<li><a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">SWEATPANTS!</a> My wife recently <a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">introduced me to sweatpants</a>. OMG they are comfortable, try wearing those at the stuffy-formal-office...</li>
-<li>Quiet place to focus. It's easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
+<li><a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">SWEATPANTS!</a> My wife recently <a href="http://www.amazon.com/gp/product/B00GLLVH72/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00GLLVH72&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=FCMDP27PBQTYHNTS">introduced me to sweatpants</a>. OMG they are comfortable, try wearing those at the stuffy-formal-office…</li>
+<li>Quiet place to focus. It’s easy to isolate yourself from the outside world if you need some quiet time to focus and be productive. Shut off the I.M., put phone on do not disturb, close email and get some serious work done.</li>
 <li>We have all the usual necessities at home,
 <ul>
 <li>Tools (for that time you need a screwdriver)</li>
-<li>Easy access to hygiene related products/tools. Ever need to take a shower in the middle of the day? Change of clothes (spilled coffee....)? Or brush your teeth?</li>
+<li>Easy access to hygiene related products/tools. Ever need to take a shower in the middle of the day? Change of clothes (spilled coffee…)? Or brush your teeth?</li>
 </ul>
 </li>
 <li>Invest in your office.
 <ul>
-<li>When you invest in your home office, you're investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
+<li>When you invest in your home office, you’re investing in yourself. Get a good chair, desk, keyboard, mouse, etc.</li>
 </ul>
 </li>
-<li>Lunch at home. My wife is a great cook. I'm spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
-<li>My wife just brought me the most amazing homemade burrito. I didn't even care I was on a video call with my team. nom...nom...nom...</li>
-<li>One of my favorite perks, is not even a perk that any company could offer (or even replace). I take the opportunity to for 10-minute break in the afternoon, where I walk up the street to meet my daughter at the bus stop. This is so much more important in my life than practically any company can offer (like free lunches, ping-pong table, etc...).</li>
-<li>Scheduling an at-home call is easy. It's rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
-<li>David's Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn't thought of, which I totally agree.
+<li>Lunch at home. My wife is a great cook. I’m spoiled to nearly always have a great set of leftovers in the fridge. Keeping me from eating out all the time. Not having to worry about someone eating my leftover chicken-wings (ya, that really happened - not even funny - You know who you are!)</li>
+<li>My wife just brought me the most amazing homemade burrito. I didn’t even care I was on a video call with my team. nom…nom…nom…</li>
+<li>One of my favorite perks, is not even a perk that any company could offer (or even replace). I take the opportunity to for 10-minute break in the afternoon, where I walk up the street to meet my daughter at the bus stop. This is so much more important in my life than practically any company can offer (like free lunches, ping-pong table, etc…).</li>
+<li>Scheduling an at-home call is easy. It’s rarely a problem to have a fix-it man come by, or cable-guy, or if a package needs to be signed for, working from home makes this easy.</li>
+<li>David’s Additions: I shared a draft of this post to a <a href="http://t3rse.com/">good friend and coworker</a> and he gave me some other tips, I hadn’t thought of, which I totally agree.
 <ul>
 <li>You struggle on problems and your kid walks in the room and puts your life in perspective.</li>
 <li>I can listen to my music turned way up!</li>
@@ -610,10 +610,10 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </li>
 </ul>
 <h1>What about distractions?</h1>
-<p>I get this a lot, when I tell others I work from home. &quot;I don't know how you don't get distracted with other things to do at home.&quot; This may be a very individual thing. While, there can be distractions at home, I've always been a focused individual and I would say it's often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
+<p>I get this a lot, when I tell others I work from home. “I don’t know how you don’t get distracted with other things to do at home.” This may be a very individual thing. While, there can be distractions at home, I’ve always been a focused individual and I would say it’s often easier to be distracted at the office with office chit-chat, meetings, going out to lunch, etc.</p>
 <h1>Not-so socially appropriate</h1>
 <ul>
-<li>When you're at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there's no stress, or stomach pain... Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
+<li>When you’re at the office, possibly in a long meeting, what do you do if you have some gas? Working remotely, there’s no stress, or stomach pain… Mute your conference call, relax and nobody is the wiser. (Except this one time, I did such a thing not realizing my wife was within an earshot. Yea, a bit embarrassing but we had a laugh over it.)</li>
 </ul>
 </div>
 
@@ -629,12 +629,12 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
     </p>
 </header>
 <div class="entry-content"><h1>TL;DR</h1>
-<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
+<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later…</strong></p>
 <h1>More Context</h1>
 <p>We all know that communication is important, and often where things go awry.</p>
-<p>I sometimes wonder if I'm alone in this thinking, but don't think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it's awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
-<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you've received the email (and may take some time to respond).</p>
-<p>I don't necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
+<p>I sometimes wonder if I’m alone in this thinking, but don’t think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it’s awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
+<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later…</strong> is a great way to notify me that you’ve received the email (and may take some time to respond).</p>
+<p>I don’t necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
 </div>
 
     </article>

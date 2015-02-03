@@ -80,42 +80,42 @@
     </p>
 </header>
 <div class="entry-content"><h4>What is an Auto Mocking Container?</h4>
-<p>This post started to get a little long, so I won't re-explain the concept.</p>
+<p>This post started to get a little long, so I won’t re-explain the concept.</p>
 <p><a href="http://lostechies.com/joshuaflanagan/">Joshua Flanagan</a> wrote a nice overview at his <a href="http://www.lostechies.com/">Los Techies</a> blog: <a href="http://www.lostechies.com/blogs/joshuaflanagan/archive/2009/02/03/auto-mocking-explained.aspx">Auto mocking Explained</a>.</p>
 <p>My post is mainly here to describe the Unity version of an automocking container I threw together.</p>
 <h4>In Jan 2009 I blogged about my initial version of the Unity AutoMocker - Why am I blogging about it again?</h4>
 <p>I originally wrote the AutoMocker for the Unity container a year ago (Jan 2009, in Silverlight), and finally got around to placing the code up in the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project in June of 2009.</p>
-<p>I'm writing another post today in hopes to:</p>
+<p>I’m writing another post today in hopes to:</p>
 <ol>
 <li>Get some feedback on how this little snippet of code should continue.</li>
 <li>Give a little more how-to/example code</li>
 <li>Describe some updates I made since I originally created it.</li>
 </ol>
 <h4>Where can I get it?</h4>
-<p>This is one part where I'd appreciate some feedback.</p>
+<p>This is one part where I’d appreciate some feedback.</p>
 <p>I have two slightly different versions out there (currently).</p>
 <p>I have one version at the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode</a> repository where I was working on it, and the other I threw up at <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a>.</p>
-<p>The core of the UnityAutoMockContainer is the same in both places, it's how the tests are separated out that differ.</p>
-<p>In the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode repository</a> it's an all in one self contained single file (that you can copy into your own test project(s)). You can then setup a single test in your own testing framework that runs all internal automocker tests (in case you need to modify it yourself, and don't want to break any existing functionality). EX: test</p>
+<p>The core of the UnityAutoMockContainer is the same in both places, it’s how the tests are separated out that differ.</p>
+<p>In the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode repository</a> it’s an all in one self contained single file (that you can copy into your own test project(s)). You can then setup a single test in your own testing framework that runs all internal automocker tests (in case you need to modify it yourself, and don’t want to break any existing functionality). EX: test</p>
 <pre><code class="language-C#">    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
     public void Should_run_all_UnityAutoMockContainer_internal_tests<span class="hljs-list">()</span>
     {
         Moq.AutoMocking.SelfTesting.UnityAutoMockContainerFixture.RunAllTests<span class="hljs-list">(<span class="hljs-keyword">Console.WriteLine</span>)</span><span class="hljs-comment">;</span>
     }
 </span></code></pre>
-<p>I kind of like this format as it makes it easy to port between test libraries. Can't say I like having the tests in the same file as the core, but it certainly is not a large chunk of code (so far) so it's relatively small to maintain and definitely easier to manage as a single .cs file than another assembly (which would have to be version dependent on both Unity and Moq).</p>
+<p>I kind of like this format as it makes it easy to port between test libraries. Can’t say I like having the tests in the same file as the core, but it certainly is not a large chunk of code (so far) so it’s relatively small to maintain and definitely easier to manage as a single .cs file than another assembly (which would have to be version dependent on both Unity and Moq).</p>
 <p>The <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> is definitely where I think this helper should end up (and it is there). I just happened to break the tests out into the Silverlight test project and the core is alone in a file.</p>
-<p>It's current state isn't as easy to copy to a test library (Silverlight/Desktop/Unity 1.2/Unity 2.0) as the one at <a href="http://elegantcode.com/">ElegantCode</a>. What does anyone think? Should I put them all together in one file?</p>
+<p>It’s current state isn’t as easy to copy to a test library (Silverlight/Desktop/Unity 1.2/Unity 2.0) as the one at <a href="http://elegantcode.com/">ElegantCode</a>. What does anyone think? Should I put them all together in one file?</p>
 <p>However it ends up (1. all in one file or two (1 test) (1 core)) it will continue to be maintained on the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>
 <h4>What is the high level API of the container?</h4>
-<p>It's pretty simple, (currently) there are four methods on the container.</p>
+<p>It’s pretty simple, (currently) there are four methods on the container.</p>
 <p>Two for registering items with the container. Say you want to register an already created instance, or say you want to map an interface to a concrete class and <em>not</em> have the container generate mocks automatically for special cases.</p>
-<p>And two for pulling items out of the container. Whether you want a instance of T or a Mock&lt;T&gt;, it gives you ways to retrieve both.</p>
+<p>And two for pulling items out of the container. Whether you want a instance of T or a Mock<T>, it gives you ways to retrieve both.</p>
 <blockquote>
 <p><img src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S0DLkezvL7I/AAAAAAAAANQ/3CZqGQAh-fA/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
 </blockquote>
 <h4>How can I setup my own registrations with the container?</h4>
-<p>Say I don't want to have the container generate mocks for specific items and I want to supply specific configuration to the UnityContainer.</p>
+<p>Say I don’t want to have the container generate mocks for specific items and I want to supply specific configuration to the UnityContainer.</p>
 <pre><code class="language-C#"> <span class="hljs-keyword">public</span> UnityAutoMockContainer RegisterInstance&lt;TService&gt;(TService instance)
 
  <span class="hljs-keyword">public</span> UnityAutoMockContainer <span class="hljs-keyword">Register</span>&lt;TService, TImplementation&gt;() 
@@ -126,17 +126,17 @@
         .Register<span class="hljs-tag">&lt;<span class="hljs-title">IServiceA,</span> <span class="hljs-attribute">ServiceA</span>&gt;</span>()
         .Register<span class="hljs-tag">&lt;<span class="hljs-title">IServiceB,</span> <span class="hljs-attribute">ServiceB</span>&gt;</span>();
 </code></pre>
-<p>Let me know: I haven't tested or played around with how this automocking container deals with any container specific xml configuration… So although I don't think you should probably have that in a test assembly (stuff happens). Let me know if there are any issues.</p>
+<p>Let me know: I haven’t tested or played around with how this automocking container deals with any container specific xml configuration… So although I don’t think you should probably have that in a test assembly (stuff happens). Let me know if there are any issues.</p>
 <h4>How do I get items out of the container?</h4>
-<p>First is the Resolve&lt;T&gt;(). It will pull an item T out of the container. (Creating it if not already existing)</p>
+<p>First is the Resolve<T>(). It will pull an item T out of the container. (Creating it if not already existing)</p>
 <p><code>public T Resolve&lt;T&gt;()</code></p>
-<p>When T is an interface Resolve&lt;T&gt; (unless you setup registration specifically with the container) should return basically <code>(new Mock()).Object</code></p>
-<p>When T is a concrete Class, the container should return an instance of T and any of it's dependencies will be satisfied by mocks. (Note that T will not be any sort of mocked instance of T, unless you used the GetMock as described below first)</p>
+<p>When T is an interface Resolve<T> (unless you setup registration specifically with the container) should return basically <code>(new Mock()).Object</code></p>
+<p>When T is a concrete Class, the container should return an instance of T and any of it’s dependencies will be satisfied by mocks. (Note that T will not be any sort of mocked instance of T, unless you used the GetMock as described below first)</p>
 <p><code>public Mock GetMock() where T : class</code></p>
 <p>When T is an interface GetMock should return basically <code>(new Mock())</code></p>
-<p>When T is a concrete Class, the container should return a new Mock() and any of it's dependencies will be satisfied by mocks.</p>
+<p>When T is a concrete Class, the container should return a new Mock() and any of it’s dependencies will be satisfied by mocks.</p>
 <h4>How do I use the UnityAutoMockContainer?</h4>
-<p>It's pretty basic, you first create an instance of the UnityAutoMockContainer, and from there you can ask it for mocks of an (Interface, Class, or Abstract Class).</p>
+<p>It’s pretty basic, you first create an instance of the UnityAutoMockContainer, and from there you can ask it for mocks of an (Interface, Class, or Abstract Class).</p>
 <p>If you request an instance of a concrete class, or abstract class, the UnityAutoMockContainer will stuff mocks in for any constructor dependencies of your concrete class (if it can). You can then request from the container those same dependencies one at a time and either apply mocking setups or verifications.</p>
 <blockquote>
 <p>NOTE: Anything the container creates will live as a singleton instance in the container. So any other requests from the container will always return the originally created instance. Therefore, each distinct scenario in a test suite should have their own instances of the container.</p>
@@ -242,9 +242,9 @@ public class Example__how_to_pull_items_from_the_UnityAutoMockContainer_when_ver
     }
 }
 </span></span></span></code></pre>
-<p>Next, you may have noticed that the system under test had a complicated internal method (that may not necessarily be testable). You can use the AutoMocker to create the system under test as a Mock itself, so we can override some of the behavior. Here's how you could quickly do that.</p>
+<p>Next, you may have noticed that the system under test had a complicated internal method (that may not necessarily be testable). You can use the AutoMocker to create the system under test as a Mock itself, so we can override some of the behavior. Here’s how you could quickly do that.</p>
 <blockquote>
-<p>Aside: I'm not saying this is a good practice or aids in good component design, just saying it's possible</p>
+<p>Aside: I’m not saying this is a good practice or aids in good component design, just saying it’s possible</p>
 </blockquote>
 <pre><code class="language-C#"><span class="hljs-list">[<span class="hljs-keyword">TestFixture</span>]
 public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method_on_the_SystemUnderTest_to_test_a_certain_behavior
@@ -287,7 +287,7 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
     }
 }
 </span></span></span></code></pre>
-<p>It's amazing how much redundant test setup code this little helper has saved me in my tests. I hope others can find some use with this as well.</p>
+<p>It’s amazing how much redundant test setup code this little helper has saved me in my tests. I hope others can find some use with this as well.</p>
 </div>
 
                 <footer>

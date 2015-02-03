@@ -80,11 +80,11 @@
     </p>
 </header>
 <div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I'm going to put this here so I can find it later...</p>
+<p>I’m going to put this here so I can find it later…</p>
 <h1>Create a merge-wrapper script</h1>
 <p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+<p>I haven’t yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
 <h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
@@ -98,14 +98,14 @@
 </li>
 <li>
 <p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+<p>I’d be happy to take contributions of other diff tools in this gist if you leave a comment with yours…</p>
 </li>
 </ol>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires the .gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.sh \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# # How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;#&#10;&#10;BASE=$1&#10;LOCAL=$2&#10;REMOTE=$3&#10;MERGED=$4&#10;&#10;if [[ $BASE == *.png ]]; then&#10;  echo &#34;Image diff..&#34;;&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;else&#10;  #Finally, the default case:&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#34;&#10;  #CMD=&#34;opendiff \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; -ancestor \&#34;$REMOTE\&#34; -mergeFile \&#34;$MERGED\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;fi&#10;</code></pre></noscript></div></p>
+<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.js” }}</p>
+<p>Below was an attempt at using a bash script to manage what I do above, it’ll work for some, but I didn’t want to maintain this - prefer the JS version instead.</p>
+<p>{{ gist 69db226ae58bdce518cb “merge-wrapper.sh” }}</p>
 <h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
+<p>Now that we’ve created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
     tool = merge_wrapper
@@ -125,10 +125,10 @@
         <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1>How to update a git branch OTHER than the one you're currently on.</h1>
+<div class="entry-content"><h1>How to update a git branch OTHER than the one you’re currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
 </code></pre>
-<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
+<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don’t want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
 <p>I was starting to dislike the switch branch dance to trigger a new build.</p>
 <h3>What I used to do:</h3>
 <pre><code># When I was on the master branch
@@ -184,10 +184,10 @@ git push origin release
     </p>
 </header>
 <div class="entry-content"><p>If your not using source control for your coding projects, get off my lawn. :P (#JustHadToSayIt)</p>
-<p>Now that I'm only reaching people who use source control (serious developers), I'd like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
+<p>Now that I’m only reaching people who use source control (serious developers), I’d like to ask that you focus hard to only commit changes that belong to a single topic at a time. Think <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> for code commits/check-ins.</p>
 <h4>What is a topical commit?</h4>
-<p>That almost looks like 'tropical' and wouldn't it be nice to be in a tropical place doing commits to your code, but I digress...</p>
-<p>The topics I'm referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</p>
+<p>That almost looks like ‘tropical’ and wouldn’t it be nice to be in a tropical place doing commits to your code, but I digress…</p>
+<p>The topics I’m referring to are specific functional units of change where each tiny commit is related to a single topic or theme.</p>
 <p>For example:</p>
 <ul>
 <li>adding feature X</li>
@@ -197,12 +197,12 @@ git push origin release
 <li>Updating comments/documentation</li>
 <li>*** code formatting ***</li>
 </ul>
-<p>I highlighted that last one for a reason as it's the impetus for writing this post.</p>
-<h3>Don't mix topics/themes within a single commit!</h3>
-<p>Instead break them into multiple commits. If you're using git, checkout '<a href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/">git add -p</a>'</p>
+<p>I highlighted that last one for a reason as it’s the impetus for writing this post.</p>
+<h3>Don’t mix topics/themes within a single commit!</h3>
+<p>Instead break them into multiple commits. If you’re using git, checkout '<a href="http://johnkary.net/blog/git-add-p-the-most-powerful-git-feature-youre-not-using-yet/">git add -p</a>'</p>
 <p>If you have a one line bug fix but the file has 20 lines of code formatting changes (you know who you are). It makes determining what the bug fix is nearly impossible from the changes that are code formatting.</p>
-<p>Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you've left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</p>
-<p>Let's just NOT mix topics in our commits, ok?</p>
+<p>Using tools like git bisect to look at history become difficult. Pull Requests in GitHub become difficult to understand. If you’ve left a codebase for a while and come back, try reading changes that have happened over time to get caught up can be extremely difficult to do if your commits are not topically based.</p>
+<p>Let’s just NOT mix topics in our commits, ok?</p>
 <p>K, THX bye!</p>
 <p>Happy Coding!</p>
 </div>
