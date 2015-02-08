@@ -65,7 +65,7 @@
 </code></pre>
 <p>You would get a diff between the the originally <code>approved</code> file and the newly downloaded file.</p>
 <h1>Scenario 2:</h1>
-<p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
+<p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's own post as I'm going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
 <p>Until next time...</p>
 ]]></content>
     </entry>
