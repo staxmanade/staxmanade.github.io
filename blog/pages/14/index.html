@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/2-for-fluent-specification-extensions/">(-2) for [Fluent] Specification Extensions</a></h1>
+    <p class="meta">
+          <time datetime="2009-02-07T23:23:00.000Z" pubdate data-updated="true">Feb 7th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p></p>  <p>If you read my previous posts about [Fluent] Specification Extensions then you know that I'm still in an experimental phase of this idea.</p> <ol>   <li><a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> </li>    <li><a href="/2009/02/fluent-specification-extensions-1-more">(+1) for [Fluent] Specification Extensions</a> </li> </ol> <p>There are two more things I've found that are going against the specification extensions idea. The first one below is related to all specification extensions, not just the fluent flavored specification extensions. </p> <h5><strong>-1.</strong> If you have a test that for some reason has an assertion in the middle of some code.</h5> <pre>[Fact]<br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> MockAsExistingInterfaceAfterObjectSucceedsIfNotNew()<br />{<br />	var mock = <span style="color: #0000ff">new</span> Mock&lt;IBag&gt;();<br /><br />	mock.As&lt;IFoo&gt;().SetupGet(x =&gt; x.Value).Returns(25);<br /><br />	((IFoo)mock.Object).Value.ShouldEqual(25);<br /><br />	var fm = mock.As&lt;IFoo&gt;();<br /><br />	fm.Setup(f =&gt; f.Execute());<br />}</pre><p>It's a little difficult to tell where the assertion is because you don't get the syntax highlighting help from the static class name &quot;Assert&quot;.</p><pre><font color="#25c08e">Assert</font>.Equal(25, (IFoo)mock.Object);</pre><p>However I don't think the reason above is anything to stop using the pattern for a couple of the following:</p><br /><ol><li>How often do you have assertions in the middle of your code?</li><li>If you are doing your tests right, it doesn't take long to scan the above code for the &quot;.Should...&quot; extension method.</li></ol><h5>-1. Daniel from the Moq project tweeted Scott Bellware about his spec unit projects <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs?r=41" target="_blank">SpecificationExtensions.cs</a></h5><blockquote><p>@bellware shouldn't specunit ShouldNotEqual/etc. return the actual object rather than the expected? To chain other calls <a href="http://is.gd/iJuB">http://is.gd/iJuB</a></p></blockquote><blockquote><p>@bellware and ShouldBeNull/NotBeNull could also return the object: obj.ShouldNotBeNull().ShouldEqual(...), right?</p></blockquote><p>with Scott's response being...</p><blockquote><p>@kzu no because that would contribute to crowding many observations into a single method</p></blockquote><p>To that I say, True, if you are doing pure Context/Specification based unit testing. However most of us aren't actually doing it (maybe we should?) so why not allow the test to say</p><pre>someString<br />  .ShouldNotBeNull<br />  .ShouldEqual(...)?</pre><p>So for now... I'm going to continue to go with the Fluent Specification Extensions.</p>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions-1-more/">(+1) for [Fluent] Specification Extensions</a></h1>
     <p class="meta">
           <time datetime="2009-02-07T06:10:00.000Z" pubdate data-updated="true">Feb 6th 2009</time>
@@ -363,40 +379,6 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i-can-stand-mass-mailings-especially/">I can&#x27;t stand mass mailings... (Especially when you can&#x27;t turn them off)</a></h1>
-    <p class="meta">
-          <time datetime="2008-12-18T16:50:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>&#160;</p>  <p>WTF?</p>  <p>&#160;</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1GD0Gsu9I/AAAAAAAAAEA/kQnqb6e0zvQ/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="282" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1GE2bg3DI/AAAAAAAAAEE/laLPaWK_1go/image_thumb1.png?imgmax=800" width="425" border="0" /></a> </p>  <p>&#160;</p>  <p>UPDATE: Thanks to Justin for pointing out my tarddedness... I should have left the boxes checked. However when I tried that I got the same error :(</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1GF8R1bgI/AAAAAAAAAEI/XSsgBF7T_Tw/s1600-h/image%5B5%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="269" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SU1GG2nn3KI/AAAAAAAAAEM/qhVrd7dL4lQ/image_thumb%5B2%5D.png?imgmax=800" width="434" border="0" /></a></p>  <p>Apparently it's not a &quot;temporary problem&quot;... or they could define temporary since this has been there for several days now.</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Justin: Good point... Unfortunately I just re-tried it with the check boxes checked and received the same error :(</div>
-</div>
-<div class='comment'>
-<div class='author'>Justin Chase</div>
-<div class='content'>
-Looks like you have your checkboxes backwards. If you can't stand mass mail then you should check "do not recieve..." boxes, right?</div>
-</div>
-<div class='comment'>
-<div class='author'>Will Hull</div>
-<div class='content'>
-Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up properly.</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/15/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -431,6 +413,9 @@ Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up pr
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
       </li>
       <li class="post">
@@ -447,9 +432,6 @@ Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up pr
       </li>
       <li class="post">
         <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

@@ -392,7 +392,7 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
 </ol>
 <p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that's installed, we need to update all of our blog posts to add in the 'alias' that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
-<p><div><script src='https://gist.github.com/staxmanade/10562366'></script><noscript><pre><code># The following script inserts Blogger/BlogSpot id&#39;s as a post &#10;# alias into OctoPress posts (used during a migration from Blogger to BlogSpot)&#10;#&#10;# 1. CD into your OctoPress _posts folder&#10;# 2. Configure the path to your exported BlogSpot/Blogger exportedPosts.xml file&#10;# 3. Configure your Blogspot website to search/replace for.&#10;&#10;# File path to your blogger export&#10;$bloggerXmlFeed = &#34;..\..\..\blog-03-19-2014.xml&#34;&#10;&#10;# note the trailing slash&#10;$bloggerRootDomainUrl = &#39;http://staxmanade.blogspot.com/&#39;&#10;&#10;# Get the blogger feed as an XML object (PowerhShell is great with XML)&#10;$xml = ([xml] (cat $bloggerXmlFeed))&#10;&#10;# filter only &#39;blog posts&#39;. We want to ignore any other types of entries.&#10;$posts = $xml.feed.entry | where { $_.category.term -eq &#39;http://schemas.google.com/blogger/2008/kind#post&#39; };&#10;&#10;# filter only posts that were published (Ignore drafts)&#10;$posts = $posts | ?{ !($_.control.draft -eq &#39;yes&#39;) }&#10;&#10;# for each post&#10;$posts | %{ &#10;&#10;    #get the post id&#10;    $_.id | %{ $id = $_.split(&#39;-&#39;)[2] };&#10;&#10;    #get the original url slug&#10;    $url = ($_.link | where { &#10;            $_.rel -eq &#39;alternate&#39; &#10;        } | %{ $_.href }).replace($bloggerRootDomainUrl, &#39;&#39;).replace(&#39;/&#39;, &#39;-&#39;);&#10;&#10;    # what day was the post on?&#10;    $day = &#34;{0:00}&#34; -f ($_.published | %{ ([datetime]$_).Day })&#10;&#10;    # calculate new path based on day&#10;    $fileName = $url.Substring(0, 7) + &#34;-$day&#34; + $url.Substring(7)&#10;    &#10;    # validate there is a file to work with.&#10;    if(!(test-path $fileName)) {&#10;        &#34;id        - $($_.id)&#34;&#10;        &#34;published - $($_.published)&#34;&#10;        Write-Error &#34;could not find path: $fileName&#34;&#10;    } else {&#10;        # load the file (into a variable)&#10;        $content = (Get-Content $fileName)&#10;        $delimeter = 0&#10;&#9;&#9;    $alias = &#34;alias: /blog/$id&#34;&#10;&#9;&#9;    &#10;&#9;&#9;    # inject the &#39;alias into the blog&#39;s YAML at the end of the yaml heading (before the &#34;---&#34;)&#10;        $content = $content | %{ if($_ -eq &#34;---&#34;) { $delimeter++; }; if($delimeter -eq 2) { $alias; $delimeter++; }; $_ }&#10;&#10;    &#9;&#9;# save the modified file&#10;        Set-Content -Path $fileName -Value $content;&#10;    }&#10;}</code></pre></noscript></div></p>
+<p><script src="https://gist.github.com/10562366.js?file=InsertBloggerAliasIntoJekyllPost.ps1"></script></p>
 <p>In summary, the above code is:</p>
 <ol>
 <li>Parsing the blogger xml</li>
@@ -415,7 +415,7 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
 <li>Modify the below template for your own site.</li>
 </ol>
-<p><div><script src='https://gist.github.com/staxmanade/10562366'></script><noscript><pre><code>&#60;html dir=&#34;&#60;$BlogLanguageDirection$&#62;&#34;&#62;&#10;&#60;head&#62;&#10; &#60;title&#62;301 Moved Permanently&#60;/title&#62;&#10;&#60;noscript&#62;&#10;&#60;ItemPage&#62;&#60;Blogger&#62;&#60;meta http-equiv=&#34;refresh&#34; content=&#34;0,url=http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#34;&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#10;&#60;MainOrArchivePage&#62;&#60;meta http-equiv=&#34;refresh&#34; content=&#34;0,url=http://staxmanade.com&#34;&#62;&#60;/MainOrArchivePage&#62;&#10;&#60;/noscript&#62;&#10;&#60;script type=&#34;text/javascript&#34;&#62;&#10;document.location.href = &#39;&#60;ItemPage&#62;&#60;Blogger&#62;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#60;MainOrArchivePage&#62;http://staxmanade.com&#60;/MainOrArchivePage&#62;&#39;;&#10;&#60;/script&#62;&#10;&#60;meta name=&#34;robots&#34; content=&#34;noindex,follow&#34; /&#62;&#10;&#60;style type=&#34;text/css&#34;&#62;#navbar-iframe {display: none;}&#60;/style&#62;&#10;&#60;/head&#62;&#10;&#60;body&#62;This page has moved to&#10;&#60;ItemPage&#62;&#60;Blogger&#62;&#60;a href=&#34;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#34;&#62;http://staxmanade.com/blog/&#60;$BlogItemNumber$&#62;&#60;/a&#62;&#60;/Blogger&#62;&#60;/ItemPage&#62;&#10;&#60;MainOrArchivePage&#62;&#60;a href=&#34;http://staxmanade.com&#34;&#62;staxmanade.com&#60;/a&#62;&#60;/MainOrArchivePage&#62;&#10;&#60;/body&#62;&#10;&#60;/html&#62;</code></pre></noscript></div></p>
+<p><script src="https://gist.github.com/10562366.js?file=BloggerRedirect.html"></script></p>
 <p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don't see the middle/transition page.</p>
 <blockquote>
 <p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
@@ -820,6 +820,9 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
+      </li>
+      <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
       </li>
       <li class="post">
@@ -836,9 +839,6 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
       </li>
       <li class="post">
         <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
-      </li>
-      <li class="post">
-        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
