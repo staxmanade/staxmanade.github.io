@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Chocolatey - The free and open source windows app store. - Developing on Staxmanade</title>
+  <title>How to Remove Files in Git that Should Have Been Ignored - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing m...">
+   <meta name="description" content="If sometimes come upon existing applications that use [Git](http://git-scm.com) where files were added to the repository that should have originally b...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">
+  <link rel="canonical" href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,38 +71,52 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
     <p class="meta">
-          <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
+          <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
 
 
-        
+        <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/#disqus_thread" data-disqus-identifier="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing more than to make life setting up your dev machine a piece of cake.</p>  <h4>What is Chocolatey?</h4>  <p>Straight from the <a href="http://chocolatey.org">Chocolatey.org</a> site:</p>  <blockquote>   <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with windows in mind.</p> </blockquote>  <p>If you’ve not ever used a linux machine or understand what the power of an “apt-get” like tool is, well It’s basically the simplest possible way to install an application to your machine. </p>  <p>What could be simpler than finding the app’s website, download the app, and next, next, next through the the installer? How about just typing “chocolaty install notepadplusplus” at a powershell command prompt? That simple little command will download and install Notepad++ right on your machine with virtually no need to interact with the installer. AWESOME!!!</p>  <blockquote>   <p><strong>Disclaimer!</strong></p>    <p>I know there are other installer applications out there that aggregate and install different&#160; programs; however, to be honest, I don’t use any of them. I am also going to assume that most of them aren’t catered to the windows developer (maybe I’m wrong). Either way I like this project and I’m just trying to share it with the community. <strong>So There…</strong></p> </blockquote>  <p>Ok, my above salesmanship is a little loud mouthy, but maybe your interest is peaked enough to give it a try.</p>  <h4>How do I install Chocolatey?</h4>  <p>It’s about as simple to install Chocolatey as it is to use Chocolatey to install other applications. One single powershell command. Just paste the below command in your powershell prompt and let er rip.</p>  <blockquote>   <p>First, make sure you have your powershell environment set to “Unrestricted”.<a href="http://lh6.ggpht.com/-4sSRlJeweTI/TozckReE5MI/AAAAAAAAASA/JG0ULKiPil0/s1600-h/image8.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/-Vviqle2o908/TozclWiZ6TI/AAAAAAAAASE/1-_0QwA6KAs/image_thumb4.png?imgmax=800" width="644" height="235" /></a></p> </blockquote>  <p>Run the Chocolatey install.</p>  <pre>  iex ((new-object net.webclient).DownloadString(&quot;http://bit.ly/psChocInstall&quot;))</pre><br />  <h4>Packages!</h4>  <p>Now that you have chocolatey installed, head over to the <a href="http://Chocolatey.org">Chocolatey.org</a> website and browse the packages you can now install.</p>  <p>EX:</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code&gt;<strong>chocolatey install notepadplusplus</strong></font></p> </blockquote>  <h4>How can I know when new packages are added to the Chocolatey.org feed?</h4>  <p>You can get more background on this approach by following my previous post <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></p>  <p>The direct RSS link I have is as follows:</p>  <blockquote>   <p><a href="http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <p>Plug that into your RSS reader and you should be notified when new packages are added to the Chocolatey.org feed.</p>  <p>Happy Setting up your Dev Machine!</p></div>
+<div class="entry-content"><p>If sometimes come upon existing applications that use <a href="http://git-scm.com">Git</a> where files were added to the repository that should have originally been ignored. Sometimes this is because the <code>.gitignore</code> file is missing, or because certain rules were not include that probably should have been from the start.</p>
+<p>There are ways in <code>git</code> to completely rewrite history to <a href="http://gitready.com/beginner/2009/03/06/ignoring-doesnt-remove-a-file.html">remove all traces</a> of the file, however most of the time, it's good to leave a commit saying <code>removed files that should have originally been ignored</code> as a good starting point (depending on the project/repo).</p>
+<p>Here is a small workflow I've found to be pretty effective in helping to clean up a repository, or at least let you know what files would have originally been ignored had you setup a <code>.gitignore</code> file with some project standards...</p>
+<h1>Create a well meaning <code>.gitignore</code> file</h1>
+<p>You can go to <a href="https://www.gitignore.io">gitignore.io</a> and type some words like <code>xcode</code>, <code>node</code>, <code>osx</code>, or whatever platform/IDE you use for development and generate a pretty good <a href="http://git-scm.com/docs/gitignore"><code>.gitignore</code></a> base file.</p>
+<h1>Create or Update local <code>.gitignore</code></h1>
+<p>Once you've update your local <code>.gitignore</code> file with the rules you'd like to use, you can use the below to commit your changes;</p>
+<pre><code>git add .gitignore
+git commit -m 'updating .gitignore'
+</code></pre>
+<h1>Remove the files that should have originally been ignored.</h1>
+<p>Now we want to figure out what files may have been added originally that shouldn't be there. You can run the following two commands to see which files to find this out.</p>
+<pre><code>git rm --cached -r .
+git add .
+</code></pre>
+<p>Now if you <code>git status</code> you can see what files should probably be deleted from the git repo and using the newly updated <code>.gitignore</code> file will now be ignored going forward.</p>
+<p>Go ahead an commit these changes (assuming you're happy with what is being deleted and ignored).</p>
+<p>Happy Gitting!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
+                          <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
+    <a class='category' href='/blog/categories/git/'>git</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2011/09/whats-happening-on-nuget-feed/" title="Previous Post: What’s happening on the NuGet feed (leveraging OData in an RSS reader)">&laquo; What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a>
-                        <a class="basic-alignment right" href="/2011/10/excited-to-announce-my-new-career/" title="Next Post: Excited to Announce My New Career Opportunity">Excited to Announce My New Career Opportunity &raquo;</a>
+                        <a class="basic-alignment left" href="/2015/02/approval-tests---command-line-tool--cli-/" title="Previous Post: Approval Tests - Command Line Tool (CLI)">&laquo; Approval Tests - Command Line Tool (CLI)</a>
                     </p>
                 </footer>
             </article>
@@ -204,8 +218,11 @@
 <script type="text/javascript">
       var disqus_shortname = 'developingonstaxmanade';
       
-        var disqus_script = 'count.js';
-    (function () {
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

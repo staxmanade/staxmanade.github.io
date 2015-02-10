@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-02-08T05:29:48Z</updated>
+    <updated>2015-02-10T00:50:58Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,33 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to Remove Files in Git that Should Have Been Ignored]]></title>
+        <id>http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/</id>
+        <link href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">
+        </link>
+        <updated>2015-02-10T00:50:58Z</updated>
+        <summary type="html"><![CDATA[If sometimes come upon existing applications that use [Git](http://git-scm.com) where files were added to the repository that should have originally b...]]></summary>
+        <content type="html"><![CDATA[<p>If sometimes come upon existing applications that use <a href="http://git-scm.com">Git</a> where files were added to the repository that should have originally been ignored. Sometimes this is because the <code>.gitignore</code> file is missing, or because certain rules were not include that probably should have been from the start.</p>
+<p>There are ways in <code>git</code> to completely rewrite history to <a href="http://gitready.com/beginner/2009/03/06/ignoring-doesnt-remove-a-file.html">remove all traces</a> of the file, however most of the time, it's good to leave a commit saying <code>removed files that should have originally been ignored</code> as a good starting point (depending on the project/repo).</p>
+<p>Here is a small workflow I've found to be pretty effective in helping to clean up a repository, or at least let you know what files would have originally been ignored had you setup a <code>.gitignore</code> file with some project standards...</p>
+<h1>Create a well meaning <code>.gitignore</code> file</h1>
+<p>You can go to <a href="https://www.gitignore.io">gitignore.io</a> and type some words like <code>xcode</code>, <code>node</code>, <code>osx</code>, or whatever platform/IDE you use for development and generate a pretty good <a href="http://git-scm.com/docs/gitignore"><code>.gitignore</code></a> base file.</p>
+<h1>Create or Update local <code>.gitignore</code></h1>
+<p>Once you've update your local <code>.gitignore</code> file with the rules you'd like to use, you can use the below to commit your changes;</p>
+<pre><code>git add .gitignore
+git commit -m 'updating .gitignore'
+</code></pre>
+<h1>Remove the files that should have originally been ignored.</h1>
+<p>Now we want to figure out what files may have been added originally that shouldn't be there. You can run the following two commands to see which files to find this out.</p>
+<pre><code>git rm --cached -r .
+git add .
+</code></pre>
+<p>Now if you <code>git status</code> you can see what files should probably be deleted from the git repo and using the newly updated <code>.gitignore</code> file will now be ignored going forward.</p>
+<p>Go ahead an commit these changes (assuming you're happy with what is being deleted and ignored).</p>
+<p>Happy Gitting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Approval Tests - Command Line Tool (CLI)]]></title>
         <id>http://staxmanade.com/2015/02/approval-tests---command-line-tool--cli-/</id>
@@ -1105,97 +1132,6 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
 <p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
 <p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress]]></title>
-        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/</id>
-        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">
-        </link>
-        <updated>2014-04-16T03:19:53Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress]]></summary>
-        <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 4</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - (current) - Import Content into Octopress
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
-<h1>Translate export <code>xml</code> to Octopress posts</h1>
-<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it's fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
-<ol>
-<li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code></li>
-</ol>
-<ul>
-<li>Note: there are a number of forks of the script - if one doesn't work, browse other changes and see if something fits your needs.</li>
-</ul>
-<ol start="2">
-<li>
-<p>From the command line go to a temporary folder and execute</p>
-<p><code>ruby {pathToImporterFile}/BloggerImporter.rb '{PathToBloggerExport}/blog-03-19-2014.xml'</code></p>
-<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don't have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn't port it back then. I'm sure it's possible, but wasn't worth my time (since it works on my mac and was a one-time task).</p>
-<pre><code class="language-ruby"><span class="hljs-constant">C</span><span class="hljs-symbol">:/Ruby193/lib/ruby/site_ruby/</span><span class="hljs-number">1.9</span>.<span class="hljs-number">1</span>/rubygems/custom_require.<span class="hljs-symbol">rb:</span><span class="hljs-number">36</span><span class="hljs-symbol">:in</span> <span class="hljs-string">`require': cannot load such file -- nokogiri (LoadE
-rror)
-        from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `</span><span class="hljs-keyword">require</span><span class="hljs-string">'
-        from BloggerImporter.rb:2:in `&lt;main&gt;'</span>
-</code></pre>
-<p>(One possible issue noted by a colleague: the ruby script requires a gem, <a href="http://nokogiri.org/">Nokigiri</a>, which is not supported on Windows by Ruby 2 at the time of this writing. This can be circumvented by either reinstalling Ruby 1.9.3 or by leveraging a tool like yari which allows you to pick the version of Ruby you wish to leverage with a script - a helpful StackOverflow answer exists <a href="http://stackoverflow.com/a/17318410/64">here</a>.)</p>
-</li>
-<li>
-<p>You should now you have your content.</p>
-<p>After you've run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
-<pre><code>~/code/temp&gt; ls
-_drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
-</code></pre>
-<p>I didn't end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
-</li>
-<li>
-<p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
-</li>
-<li>
-<p>At this point you've successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</p>
-</li>
-<li>
-<p>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</p>
-</li>
-<li>
-<p>If your preview looks right use <code>rake deploy</code> to put your changes on github.</p>
-</li>
-</ol>
-<p>Hopefully it all worked out and you're looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn't necessary (I can't recall anymore) but it was quick to work through.</p>
-<blockquote>
-<p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
-</blockquote>
 ]]></content>
     </entry>
 </feed>

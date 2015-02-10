@@ -71,6 +71,37 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
+
+
+        <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/#disqus_thread" data-disqus-identifier="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If sometimes come upon existing applications that use <a href="http://git-scm.com">Git</a> where files were added to the repository that should have originally been ignored. Sometimes this is because the <code>.gitignore</code> file is missing, or because certain rules were not include that probably should have been from the start.</p>
+<p>There are ways in <code>git</code> to completely rewrite history to <a href="http://gitready.com/beginner/2009/03/06/ignoring-doesnt-remove-a-file.html">remove all traces</a> of the file, however most of the time, it's good to leave a commit saying <code>removed files that should have originally been ignored</code> as a good starting point (depending on the project/repo).</p>
+<p>Here is a small workflow I've found to be pretty effective in helping to clean up a repository, or at least let you know what files would have originally been ignored had you setup a <code>.gitignore</code> file with some project standards...</p>
+<h1>Create a well meaning <code>.gitignore</code> file</h1>
+<p>You can go to <a href="https://www.gitignore.io">gitignore.io</a> and type some words like <code>xcode</code>, <code>node</code>, <code>osx</code>, or whatever platform/IDE you use for development and generate a pretty good <a href="http://git-scm.com/docs/gitignore"><code>.gitignore</code></a> base file.</p>
+<h1>Create or Update local <code>.gitignore</code></h1>
+<p>Once you've update your local <code>.gitignore</code> file with the rules you'd like to use, you can use the below to commit your changes;</p>
+<pre><code>git add .gitignore
+git commit -m 'updating .gitignore'
+</code></pre>
+<h1>Remove the files that should have originally been ignored.</h1>
+<p>Now we want to figure out what files may have been added originally that shouldn't be there. You can run the following two commands to see which files to find this out.</p>
+<pre><code>git rm --cached -r .
+git add .
+</code></pre>
+<p>Now if you <code>git status</code> you can see what files should probably be deleted from the git repo and using the newly updated <code>.gitignore</code> file will now be ignored going forward.</p>
+<p>Go ahead an commit these changes (assuming you're happy with what is being deleted and ignored).</p>
+<p>Happy Gitting!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
     <p class="meta">
           <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
@@ -284,6 +315,9 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
       </li>
       <li class="post">
@@ -300,9 +334,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
       </li>
       <li class="post">
         <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
