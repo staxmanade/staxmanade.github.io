@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Diff Two Xcode Targets - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="If you&#x27;ve ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while a...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
+
+
+        <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
+<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
+<blockquote>
+<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
+</blockquote>
+<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
+<h1>Install it with <a href="https://npm.org">npm</a></h1>
+<pre><code>npm install -g diffxcodetargets
+</code></pre>
+<h1>How to use it?</h1>
+<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
+<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
+
+Could not find TargetA ''. Possible targets are:
+  - targetA
+  - targetB
+</code></pre>
+<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
+<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
+</code></pre>
+<h1>How does it work?</h1>
+<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="htts://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
+<h1>What's missing?</h1>
+<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="htts://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
+<p>Happy Diffing!</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/xcode/'>XCode</a>
+    <a class='category' href='/blog/categories/diffxcodetargets/'>diffXcodeTargets</a>
+    <a class='category' href='/blog/categories//'></a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/" title="Previous Post: How to Remove Files in Git that Should Have Been Ignored">&laquo; How to Remove Files in Git that Should Have Been Ignored</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+      <li class="post">
+        <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
+      </li>
+      <li class="post">
+        <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
+      </li>
+      <li class="post">
+        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
+      </li>
+  </ul>
+  <a href="/blog/archives/">More posts...</a>
+</section>
+
+<section>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+        </aside>
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+<script type="text/javascript">
+      var disqus_shortname = 'developingonstaxmanade';
+      
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>
