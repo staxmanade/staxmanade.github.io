@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/duplicate-dom-elements-with-same-id/">Duplicate DOM elements with the same ID</a></h1>
+    <p class="meta">
+          <time datetime="2010-12-09T13:41:00.000Z" pubdate data-updated="true">Dec 9th 2010</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>This is a short post. Saving this snippet it for myself for later.</p>  <p>If you ever have a html DOM element with a duplicate ID value, how do you detect the issue? It’s sometimes hard to find/debug until you really understand what has happened.</p>  <p>Taking inspiration from the solution in the following stackoverflow question. <a href="http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom">http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom</a></p>  <p>I wrote little helper that will alert you early in the development phase if you do something that causes a DOM element with duplicate ID’s.</p>  <p>Place the following script at the bottom of your global master page footer during development, and you will be notified of any issues early in the process.</p>  <pre class="">// Requires: jQuery<br />(function(document, $){<br />    // little debug helper script to notify us when the <br />    // dom is updated with a contains duplicate ID'd elements<br />    $(document).bind('DOMNodeInserted', function (event) {<br /><br />        var duplicateDomElements = [];<br /><br />        $('[id]').map(function () {<br />            var ids = $('[id=' + this.id + ']');<br />            if (ids.length &gt; 1 &amp;&amp; ids[0] == this) {<br />                duplicateDomElements.push(this.id);<br />            }<br />        });<br /><br />        if (duplicateDomElements.length &gt; 0) {<br />            alert('Recent action duplicated a dom element ID with name(s) [' + duplicateDomElements + ']');<br />        }<br /><br />    });<br />})(document, jQuery);<br /><br /><br /><font face="Arial">How do others typically deal with the issue?</font></pre></div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
     <p class="meta">
           <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
@@ -231,40 +247,6 @@ I prefer to keep my privates unexposed, thank you very much! ;)</div>
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/networking-brain-fart/">Networking Brain Fart.</a></h1>
-    <p class="meta">
-          <time datetime="2010-01-22T01:59:00.000Z" pubdate data-updated="true">Jan 21st 2010</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>This one was just too funny to not write down. The epitome of a <a href="http://en.wikipedia.org/wiki/Brain_fart">Brain Fart</a>.</p>  <p>There sure seem to be quote a few posts lately talking about the Software (Crafts-Man/Woman/person/whatever); I may have many many more years of Craft practicum to study up on before I can truly consider myself a Craftsman. However, it’s humbling to screw up and remember that we are human. Below is one such story. Luckily there was no software, business value, or puppies hurt in the process.</p>  <h4>Setup:</h4>  <p>I work from home part time. Where I usually just remote desktop into my 64bit, quad-core, 12 gig of ram, supercomputer desktop at work. (I’m sure I’ll read this post in the future and go what? supercomputer? you have no idea young man.) I choose the RDP network latency over not being able to compile (in under XXX_too_much_time_XXX) on my laptop at home. (It’s part time one day a week and not worth the investment to beef up the home setup. -- yet) <strong>Point is: I’m working from home and via remote desktop on my computer at the office</strong>.</p>  <p>So I’m working on this project and…let’s just say I somehow got into a position where I thought my best option was to take my solution offline from TFS. (long story I don’t want to overshadow the “Brain Fart” part of this post)</p>  <p>This is where I got into trouble…</p>  <h4>How do I take my solution offline from TFS?</h4>  <p>I searched for how to take my solution offline and found this great post “<a href="http://ozgrant.com/2008/06/01/force-visual-studio-to-think-tfs-is-offline/">Force Visual Studio to think TFS is offline</a>” which outlines several options…</p>  <blockquote>   <p>Option 1 – Use the ‘tfpt tweakui’ utility</p>    <p>Option 2 – Yank the network cable before starting Visual Studio</p>    <p>Option 3 – Set a registry key</p> </blockquote>  <p><strong>Option 1:</strong> I didn’t think I had TFS Power Tools installed (turns out I did, just didn’t spend the 2 seconds to figure it out - doh).</p>  <p><strong>Option 3</strong>: I couldn’t seem to get the registry key version to work (for some reason???) &amp; wasn’t interested in wasting the day to figure it out.</p>  <p><strong>--- So what was left?</strong></p>  <p><strong>Option 2</strong>: “Yank the network cable before starting Visual Studio”. I didn’t yank the cord because clearly I’m not at the office so how could I do that????, but tried the next best thing. <strong>I disabled my network connection </strong>(so I could open the solution and have it NOT find TFS)<strong>.</strong></p>  <p><img style="display: block; float: none; margin-left: auto; margin-right: auto" src="http://i223.photobucket.com/albums/dd272/Solblade44/You%20Fail/fail-i-told-you.jpg" /></p>  <p>If you missed the detail earlier in the post – I said that I was working through <a href="http://en.wikipedia.org/wiki/Remote_Desktop_Protocol">RDP</a>. </p>  <p>Huh - Not anymore… Sigh!</p>  <p>Some days it may just be safer to work from home (disconnected from the world).</p>  <p>&#160;</p>  <h5>P.S. thanks to a co-worker for getting me back online :)</h5>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-I know there is (supposed to be this button) but for some reason whenever I&#39;m on a machine with Visual Studio &amp; TFS It&#39;s never there... :)</div>
-</div>
-<div class='comment'>
-<div class='author'>justinmchase</div>
-<div class='content'>
-What&#39;s even worse is that there&#39;s a little button on the top of the Solution Explorer when you have a project that&#39;s associated with TFS and you just click it ;)</div>
-</div>
-<div class='comment'>
-<div class='author'>Obsidience</div>
-<div class='content'>
-if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll yank the cable for real :-P</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/11/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -299,6 +281,9 @@ if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll y
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
       </li>
       <li class="post">
@@ -315,9 +300,6 @@ if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll y
       </li>
       <li class="post">
         <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

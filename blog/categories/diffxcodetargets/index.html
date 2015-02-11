@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Powershell Text-To-Speech and fun with a 4yr old. - Developing on Staxmanade</title>
+  <title>Category: diffXcodeTargets - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one....">
+   <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">
+  <link rel="canonical" href="http://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -43,7 +43,7 @@
 
 </head>
 
-<body  class=" ">
+<body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 </hgroup>
@@ -68,51 +68,51 @@
 <div id="main">
     <div id="content">
 
-        <div>
-            <article class="hentry" role="article">
+        <div class="blog-index">
+            <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a></h1>
     <p class="meta">
-          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
+          <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
 
 
-        
+        <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
+<div class="entry-content"><p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
+<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
+<blockquote>
+<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
+</blockquote>
+<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
+<h1>Install it with <a href="https://npm.org">npm</a></h1>
+<pre><code>npm install -g diffxcodetargets
+</code></pre>
+<h1>How to use it?</h1>
+<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
+<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
+
+Could not find TargetA ''. Possible targets are:
+  - targetA
+  - targetB
+</code></pre>
+<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
+<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
+</code></pre>
+<h1>How does it work?</h1>
+<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="htts://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
+<h1>What's missing?</h1>
+<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="htts://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
+<p>Happy Diffing!</p>
 </div>
 
-                <footer>
-                    <p class="meta">
-                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
-
-                          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
-
-
-                        <span class="categories">
-    <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
-</span>
-
-                    </p>
-                    <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Tweet</a>
-</div>
-
-                    <p class="meta">
-                        <a class="basic-alignment left" href="/2011/07/slightly-modified-cd-command-for/" title="Previous Post: Slightly modified “CD” Command for Powershell">&laquo; Slightly modified “CD” Command for Powershell</a>
-                        <a class="basic-alignment right" href="/2011/09/whats-happening-on-nuget-feed/" title="Next Post: What’s happening on the NuGet feed (leveraging OData in an RSS reader)">What’s happening on the NuGet feed (leveraging OData in an RSS reader) &raquo;</a>
-                    </p>
-                </footer>
             </article>
-            <section>
-                <h1>Comments</h1>
-                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-            </section>
+            <div class="pagination">
+                <a href="/blog/archives">Blog Archives</a>
+            </div>
         </div>
-
         <aside class="sidebar">
             <section>
 	<!-- Begin MailChimp Signup Form -->
@@ -192,6 +192,7 @@
 
 
         </aside>
+ 
 
     </div>
 </div>

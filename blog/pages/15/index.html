@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-update/">i4o: Update (Index for Objects)</a></h1>
+    <p class="meta">
+          <time datetime="2008-12-20T19:10:00.000Z" pubdate data-updated="true">Dec 20th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>Recently I was added as a developer to the <a href="http://www.codeplex.com/i4o" target="_blank">i4o codeplex project</a> by <a href="http://blog.magenic.com/blogs/aarone/default.aspx" target="_blank">Aaron</a> and last night I made my first commit.</p>  <p>There were a few pretty big changes to the library. I'll highlight some of them below, and in a couple future posts will describe in a little more detail how you can use these features.</p>  <h4>Removed the IndexableAttribute:</h4>  <p>This was removed for two reasons.</p>  <ul>   <li>It did not allow you index objects you didn't own. </li> </ul>  <p>Say you want to index a collection of System.IO.FileInfo objects. Since that's owned by the .Net framework, you can't apply an attribute to the properties of the class you want to index.</p>  <p>The solution to that was to allow adding indexed properties dynamically, however you had to give it a string representing the property name, which leads into the second issue... </p>  <ul>   <li>Didn't provide any compile time checking or refactor support for properties using the dynamic add/remove methods. </li> </ul>  <p>If you refactored a property and forgot to rename the string to match the refactor you would end up with a runtime error.</p>  <p>To resolve the two issues above I've introduced the <strong>IndexSpecification&lt;T&gt;</strong> (I'll describe how to use it a later post)</p>  <h4>Performance tuning:</h4>  <p>Although we haven't enhanced the Linq support for IndexableCollection (should come soon), I was able to eek some performance by doing some internal caching of property types and a few other tweaks resulting in the Index creation becoming about 30% faster...</p>  <h4>Fluent interface for managing the Indexes</h4>  <p>The last big change which fits in with the IndexSpecification&lt;T&gt; is the Fluent interface for dynamically adding/removing properties to be indexed. One short example could be:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1DKLdou8I/AAAAAAAAAD4/JBUBIgkDNNo/s1600-h/image3.png"><img style="border-width: 0px;" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1DKcGWDjI/AAAAAAAAAD8/zU7TUvRY2T0/image_thumb1.png?imgmax=800" width="347" border="0" height="217" /></a></p></div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/leverage-live-mesh-to-sync-windows-live/">Leverage Live Mesh to sync Windows Live Writer blog drafts between and multiple computers.</a></h1>
     <p class="meta">
           <time datetime="2008-12-19T04:33:00.000Z" pubdate data-updated="true">Dec 18th 2008</time>
@@ -326,66 +342,6 @@ There is a button on the top of the solution explorer for going offline/online. 
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/how-can-c-variable-have-sign-in-front/">How can C# variable have an @ sign in front of it?</a></h1>
-    <p class="meta">
-          <time datetime="2008-09-14T04:26:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content"><p>I remember a year ago I noticed in some code a coworker put together had a variable with an @ sign in front of it. At first I was baffled that it even compiled. I asked my c-worker about it and he said he had no clue as to why it was there and what it was for... so then I spent some time googling and couldn't find anything on the net describing this and why it compiled.</p>
-<p>basically what I'm talking about is if you have some code</p>
-<pre><code class="language-C#"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(string myparam)</span>
-</span>{
-    <span class="hljs-keyword">int</span> a = <span class="hljs-annotation">@myparam</span>.Length;
-}
-</code></pre>
-<p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
-<p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
-</span>{
-    PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
-    @<span class="hljs-keyword">event</span>.RemoveSubscriber(subscriber);
-    RemoveDeadEvents();
-}
-</code></pre>
-<p>I did some more googling and still can't find anything, (I'm sure it's out there, just can't put together the right search criteria)...</p>
-<p>Then I went back to the code, looked at it for a minute, and it dawned on me that &quot;event&quot; is a keyword in c#... Then I thought, maybe this is what you can do to use a C# keyword in another context than the desired reason to have the keyword.</p>
-<p>So I wrote a little test to see if this hypothesis was correct.</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> <span class="hljs-keyword">class</span>)</span>
-</span>{
-    <span class="hljs-keyword">int</span> a = <span class="hljs-keyword">class</span>.Length;
-}
-</code></pre>
-<p>this won't compile because of the &quot;class&quot; keyword...</p>
-<p>then I put the @ sign in front of class</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MyMethod</span><span class="hljs-params">(<span class="hljs-built_in">string</span> @<span class="hljs-keyword">class</span>)</span>
-</span>{
-    <span class="hljs-keyword">int</span> a = @<span class="hljs-keyword">class</span>.Length;
-}
-</code></pre>
-<p>and it not only compiled, but you also get intellisense on the variable...</p>
-<p>How cool...</p>
-<p>I'm not sure I would do that on a regular basis, seems like it might be a bit of a pain to write... However maybe framework code may need to have this to allow it to be more readable to it's consumers? Anyone know why on this?</p>
-<p><h2>Comments</h2></p>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-nice one :), had me fooled for a bit too when I found a variable named @@delegate</div>
-</div>
-<div class='comment'>
-<div class='author'>Justin Chase</div>
-<div class='content'>
-That is exactly what it is for, so you can use reserved words for variable names. You'll see this in some of the .NET framework even, with method parameters named @object in some places. I suspect it was added to C# specifically to be compatible with libraries written in other languages so that when it generates methods for you and uses the defined parameter name it won't have a compile error if it happens to be a C# keyword.</div>
-</div>
-</div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/16/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -420,6 +376,9 @@ That is exactly what it is for, so you can use reserved words for variable names
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
       </li>
       <li class="post">
@@ -436,9 +395,6 @@ That is exactly what it is for, so you can use reserved words for variable names
       </li>
       <li class="post">
         <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-02-10T00:50:58Z</updated>
+    <updated>2015-02-11T01:23:02Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,42 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to Diff Two Xcode Targets]]></title>
+        <id>http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/</id>
+        <link href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">
+        </link>
+        <updated>2015-02-11T01:23:02Z</updated>
+        <summary type="html"><![CDATA[If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while a...]]></summary>
+        <content type="html"><![CDATA[<p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
+<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
+<blockquote>
+<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
+</blockquote>
+<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
+<h1>Install it with <a href="https://npm.org">npm</a></h1>
+<pre><code>npm install -g diffxcodetargets
+</code></pre>
+<h1>How to use it?</h1>
+<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
+<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
+
+Could not find TargetA ''. Possible targets are:
+  - targetA
+  - targetB
+</code></pre>
+<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
+<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
+</code></pre>
+<h1>How does it work?</h1>
+<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="htts://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
+<h1>What's missing?</h1>
+<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="htts://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
+<p>Happy Diffing!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How to Remove Files in Git that Should Have Been Ignored]]></title>
         <id>http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/</id>
@@ -1067,71 +1103,6 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <blockquote>
 <p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 5 - Fix Links]]></title>
-        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/</id>
-        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">
-        </link>
-        <updated>2014-04-17T03:19:53Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 5 - Fix Links]]></summary>
-        <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - (current) - Fix Links
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
-<ol>
-<li>Cross-Post links (where I referenced one of my other posts)</li>
-<li>Broken links.</li>
-</ol>
-<h2>Cross post links</h2>
-<p>I used a text editor and some command line magic to search for <code>http://staxmanade.blogspot.com/</code> and replace it with <code>/blog/</code> so that my cross-referencing posts could link to a relative version of the blog instead of the full blogspot domain.</p>
-<p>Depending on how you configure your <a href="http://jekyllrb.com/docs/permalinks/">permalinks</a> you may need to do some more link manipulation. I had to search <code>.html</code> at the end of my cross-referencign posts and be sure to delete it since my old reference would look like</p>
-<pre><code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html
-</code></pre>
-<p>but now should link to</p>
-<pre><code>/blog/2013/12/format-your-net-exceptions-to-see
-</code></pre>
-<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
-<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
-<h2>Fix broken links</h2>
-<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
-<p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
-<p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
-<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
 ]]></content>
     </entry>
 </feed>

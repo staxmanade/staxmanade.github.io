@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
+    <p class="meta">
+          <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing more than to make life setting up your dev machine a piece of cake.</p>  <h4>What is Chocolatey?</h4>  <p>Straight from the <a href="http://chocolatey.org">Chocolatey.org</a> site:</p>  <blockquote>   <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with windows in mind.</p> </blockquote>  <p>If you’ve not ever used a linux machine or understand what the power of an “apt-get” like tool is, well It’s basically the simplest possible way to install an application to your machine. </p>  <p>What could be simpler than finding the app’s website, download the app, and next, next, next through the the installer? How about just typing “chocolaty install notepadplusplus” at a powershell command prompt? That simple little command will download and install Notepad++ right on your machine with virtually no need to interact with the installer. AWESOME!!!</p>  <blockquote>   <p><strong>Disclaimer!</strong></p>    <p>I know there are other installer applications out there that aggregate and install different&#160; programs; however, to be honest, I don’t use any of them. I am also going to assume that most of them aren’t catered to the windows developer (maybe I’m wrong). Either way I like this project and I’m just trying to share it with the community. <strong>So There…</strong></p> </blockquote>  <p>Ok, my above salesmanship is a little loud mouthy, but maybe your interest is peaked enough to give it a try.</p>  <h4>How do I install Chocolatey?</h4>  <p>It’s about as simple to install Chocolatey as it is to use Chocolatey to install other applications. One single powershell command. Just paste the below command in your powershell prompt and let er rip.</p>  <blockquote>   <p>First, make sure you have your powershell environment set to “Unrestricted”.<a href="http://lh6.ggpht.com/-4sSRlJeweTI/TozckReE5MI/AAAAAAAAASA/JG0ULKiPil0/s1600-h/image8.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/-Vviqle2o908/TozclWiZ6TI/AAAAAAAAASE/1-_0QwA6KAs/image_thumb4.png?imgmax=800" width="644" height="235" /></a></p> </blockquote>  <p>Run the Chocolatey install.</p>  <pre>  iex ((new-object net.webclient).DownloadString(&quot;http://bit.ly/psChocInstall&quot;))</pre><br />  <h4>Packages!</h4>  <p>Now that you have chocolatey installed, head over to the <a href="http://Chocolatey.org">Chocolatey.org</a> website and browse the packages you can now install.</p>  <p>EX:</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code&gt;<strong>chocolatey install notepadplusplus</strong></font></p> </blockquote>  <h4>How can I know when new packages are added to the Chocolatey.org feed?</h4>  <p>You can get more background on this approach by following my previous post <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></p>  <p>The direct RSS link I have is as follows:</p>  <blockquote>   <p><a href="http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <p>Plug that into your RSS reader and you should be notified when new packages are added to the Chocolatey.org feed.</p>  <p>Happy Setting up your Dev Machine!</p></div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2011/09/whats-happening-on-nuget-feed/">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></h1>
     <p class="meta">
           <time datetime="2011-09-27T14:09:00.000Z" pubdate data-updated="true">Sep 27th 2011</time>
@@ -247,22 +263,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/12/duplicate-dom-elements-with-same-id/">Duplicate DOM elements with the same ID</a></h1>
-    <p class="meta">
-          <time datetime="2010-12-09T13:41:00.000Z" pubdate data-updated="true">Dec 9th 2010</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>This is a short post. Saving this snippet it for myself for later.</p>  <p>If you ever have a html DOM element with a duplicate ID value, how do you detect the issue? It’s sometimes hard to find/debug until you really understand what has happened.</p>  <p>Taking inspiration from the solution in the following stackoverflow question. <a href="http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom">http://stackoverflow.com/questions/482763/jquery-to-check-for-duplicate-ids-in-a-dom</a></p>  <p>I wrote little helper that will alert you early in the development phase if you do something that causes a DOM element with duplicate ID’s.</p>  <p>Place the following script at the bottom of your global master page footer during development, and you will be notified of any issues early in the process.</p>  <pre class="">// Requires: jQuery<br />(function(document, $){<br />    // little debug helper script to notify us when the <br />    // dom is updated with a contains duplicate ID'd elements<br />    $(document).bind('DOMNodeInserted', function (event) {<br /><br />        var duplicateDomElements = [];<br /><br />        $('[id]').map(function () {<br />            var ids = $('[id=' + this.id + ']');<br />            if (ids.length &gt; 1 &amp;&amp; ids[0] == this) {<br />                duplicateDomElements.push(this.id);<br />            }<br />        });<br /><br />        if (duplicateDomElements.length &gt; 0) {<br />            alert('Recent action duplicated a dom element ID with name(s) [' + duplicateDomElements + ']');<br />        }<br /><br />    });<br />})(document, jQuery);<br /><br /><br /><font face="Arial">How do others typically deal with the issue?</font></pre></div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/10/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -297,6 +297,9 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
       </li>
       <li class="post">
@@ -313,9 +316,6 @@ Hi Jason, thanks for your post.<br />I&#39;m using this exact setup to deploy ap
       </li>
       <li class="post">
         <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
