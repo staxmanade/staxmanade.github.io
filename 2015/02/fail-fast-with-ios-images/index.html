@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Developer humor - Developing on Staxmanade</title>
+  <title>Fail Fast With iOS Images - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I literally cried this morning as I scanned these posts.     Note: Don&#x27;t have a drink in hand or mouth when reading these.   Enjoy:     http://martinv...">
+   <meta name="description" content="# Problem: iOS app has unwieldy, unorganized and poorly named images">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2013/05/developer-humor/">
+  <link rel="canonical" href="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,35 +71,53 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/05/developer-humor/">Developer humor</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a></h1>
     <p class="meta">
-          <time datetime="2013-05-09T17:43:00.000Z" pubdate data-updated="true">May 9th 2013</time>
+          <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
 
 
-        
+        <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
+<div class="entry-content"><h1>Problem: iOS app has unwieldy, unorganized and poorly named images</h1>
+<p>I've been working on a team that took over a good sized legacy iOS project where it's usage of images became a little unwieldy. Between the various app clones (targets), shared images, and images that aren't even used we'd like to reorganize, rename and just clean up the app in general.</p>
+<p>But, one thing that makes me nervous is how easy it is to rename an image, forget or miss a magic-string that tries to load that image and now we've introduced a bug that may be difficult to diagnose or even discover that we introduced it.</p>
+<h1>Let's fail fast?</h1>
+<p>Failing fast in this context means, how can we, during development and testing time quickly fail when running the app to determine where an image attempting to be loaded does not.</p>
+<blockquote>
+<p>Ideally we wouldn't even have these magic-strings to deal with. Using some tool to automatically generate a compile-time safe construct that we can use to load images. However until both A) I find the darn tool that I once-upon stumbled across that does this (please leave a comment to remind me if you find it before I do...) and B) we get sed tool integrated, I threw this little helper to quickly fail fast and help us find broken image references within our iOS applications.</p>
+</blockquote>
+<h1>How does it work?</h1>
+<p>It's a simple little <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html">Category</a> that overrides the <code>imageNamed:</code> selector of <code>UIImage</code> and if the original cannot load an image (returns <code>nil</code>) then it will fail with a helpful assertion message.</p>
+<p>This utility allowed us to quickly find images that were missing while doing our big clean sweep.</p>
+<h1>How to integrate?</h1>
+<p>It should be as simple as adding the <code>.h</code> &amp; <code>.m</code> files to your project and their respective targets and you should be off to the races.</p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.h"></script></p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.m"></script></p>
+<h1>For DEBUG mode only...</h1>
+<p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
+<p>Happy Missing Image Bashing!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2013-05-09T17:43:00.000Z" pubdate data-updated="true">May 9th 2013</time>
+                          <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
 
 
-                        
+                        <span class="categories">
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/fail%20fast/'>Fail Fast</a>
+</span>
+
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/05/developer-humor/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/05/developer-humor/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/02/fail-fast-with-ios-images/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2013/03/richeditbox-gives-unauthorizedaccessexc/" title="Previous Post: RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.">&laquo; RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a>
-                        <a class="basic-alignment right" href="/2013/06/authentication-error-connecting-to-git/" title="Next Post: Authentication error connecting to Git on TFS">Authentication error connecting to Git on TFS &raquo;</a>
+                        <a class="basic-alignment left" href="/2015/02/how-to-diff-two-xcode-targets/" title="Previous Post: How to Diff Two Xcode Targets">&laquo; How to Diff Two Xcode Targets</a>
                     </p>
                 </footer>
             </article>
@@ -201,8 +219,11 @@
 <script type="text/javascript">
       var disqus_shortname = 'developingonstaxmanade';
       
-        var disqus_script = 'count.js';
-    (function () {
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/02/fail-fast-with-ios-images/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

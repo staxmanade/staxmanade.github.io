@@ -71,6 +71,37 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
+
+
+        <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1>Problem: iOS app has unwieldy, unorganized and poorly named images</h1>
+<p>I've been working on a team that took over a good sized legacy iOS project where it's usage of images became a little unwieldy. Between the various app clones (targets), shared images, and images that aren't even used we'd like to reorganize, rename and just clean up the app in general.</p>
+<p>But, one thing that makes me nervous is how easy it is to rename an image, forget or miss a magic-string that tries to load that image and now we've introduced a bug that may be difficult to diagnose or even discover that we introduced it.</p>
+<h1>Let's fail fast?</h1>
+<p>Failing fast in this context means, how can we, during development and testing time quickly fail when running the app to determine where an image attempting to be loaded does not.</p>
+<blockquote>
+<p>Ideally we wouldn't even have these magic-strings to deal with. Using some tool to automatically generate a compile-time safe construct that we can use to load images. However until both A) I find the darn tool that I once-upon stumbled across that does this (please leave a comment to remind me if you find it before I do...) and B) we get sed tool integrated, I threw this little helper to quickly fail fast and help us find broken image references within our iOS applications.</p>
+</blockquote>
+<h1>How does it work?</h1>
+<p>It's a simple little <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html">Category</a> that overrides the <code>imageNamed:</code> selector of <code>UIImage</code> and if the original cannot load an image (returns <code>nil</code>) then it will fail with a helpful assertion message.</p>
+<p>This utility allowed us to quickly find images that were missing while doing our big clean sweep.</p>
+<h1>How to integrate?</h1>
+<p>It should be as simple as adding the <code>.h</code> &amp; <code>.m</code> files to your project and their respective targets and you should be off to the races.</p>
+<p><div><script src='https://gist.github.com/staxmanade/6f462e1829a9976783c0'></script><noscript><pre><code>//&#10;//  UIImage+FailFast.h&#10;//&#10;//  Created by Jason Jarrett on 2/11/15.&#10;//  Copyright (c) 2015 Jason Jarrett. All rights reserved.&#10;//&#10;&#10;#import &#60;UIKit/UIKit.h&#62;&#10;&#10;@interface UIImage (FailFast)&#10;@end&#10;</code></pre></noscript></div></p>
+<p><div><script src='https://gist.github.com/staxmanade/6f462e1829a9976783c0'></script><noscript><pre><code>//&#10;//  UIImage+FailFast.m&#10;//&#10;//  Created by Jason Jarrett on 2/11/15.&#10;//  Copyright (c) 2015 Jason Jarrett. All rights reserved.&#10;//&#10;&#10;// Let&#39;s only use this in a DEBUG/developer mode&#10;#if DEBUG&#10;&#10;#import &#34;UIImage+FailFast.h&#34;&#10;#import &#34;objc/runtime.h&#34;&#10;&#10;static Method origImageNamedMethod = nil;&#10;static NSArray *imagesAllowedToBeMissing;&#10;&#10;@implementation UIImage (FailFast)&#10;&#10;+ (void)load {&#10;&#10;    // Swizzle the core [UIImage imageNamed:name] selector with our custom selector&#10;    origImageNamedMethod = class_getClassMethod (self, @selector (imageNamed:));&#10;    method_exchangeImplementations (origImageNamedMethod, class_getClassMethod (self, @selector (assertIfImageNamedNotFound:)));&#10;&#10;    static dispatch_once_t onceToken;&#10;    dispatch_once (&#38;onceToken, ^{&#10;        // Setup a colleciton of images that may be missing but are allowed to be nil&#10;        imagesAllowedToBeMissing = @[&#10;                                     // TODO: if any images are OK missing - add them here&#10;                                     // @&#34;&#34;,&#10;                                     ];&#10;    });&#10;}&#10;&#10;+ (UIImage *)assertIfImageNamedNotFound:(NSString *)name {&#10;    NSLog (@&#34;Loading image named: %@&#34;, name);&#10;&#10;    // This will call the original core imageNamed selector which actually loads the image&#10;    UIImage *image = [self assertIfImageNamedNotFound:name];&#10;&#10;    if ([imagesAllowedToBeMissing indexOfObject:name] == NSNotFound) {&#10;        NSAssert (image != nil, @&#34;Failed to load imageNamed: %@&#34;, name);&#10;    }&#10;&#10;    return image;&#10;}&#10;&#10;@end&#10;&#10;#endif</code></pre></noscript></div></p>
+<h1>For DEBUG mode only...</h1>
+<p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
+<p>Happy Missing Image Bashing!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a></h1>
     <p class="meta">
           <time datetime="2015-01-14T05:49:01.820Z" pubdate data-updated="true">Jan 13th 2015</time>
@@ -219,6 +250,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
       </li>
       <li class="post">
@@ -235,9 +269,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
       </li>
       <li class="post">
         <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
