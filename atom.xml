@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-02-12T17:06:12Z</updated>
+    <updated>2015-02-23T07:02:12Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,84 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Mac Equivalent of the Windows Registry - ish]]></title>
+        <id>http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/</id>
+        <link href="http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/">
+        </link>
+        <updated>2015-02-23T07:02:12Z</updated>
+        <summary type="html"><![CDATA[If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the [Wi...]]></summary>
+        <content type="html"><![CDATA[<p>If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> .</p>
+<p>However, if you've always been more of a Mac user, don't run away just yet as you may learn something.</p>
+<p>In case you don't know what the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> is, here is a short definition from our good ol' friend <a href="http://en.wikipedia.org/wiki/Windows_Registry">Wikipedia</a>.</p>
+<blockquote>
+<p>Windows Registry is a hierarchical database that stores configuration settings and options on Microsoft Windows operating systems. It contains settings for low-level operating system components and for applications running on the platform that have opted to use the Registry.</p>
+</blockquote>
+<p>You have probably already figured that since it's called the <code>Windows Registry</code> that there is likely not a <code>Mac Registry</code> that looks/operates the same way.</p>
+<p>You are correct; however, where do all of the system and applications settings get stored if there is no registry?</p>
+<p>If the Windows Registry is a place where system and application settings are stored, then the Mac equivalent of the Windows Registry would be a series of <code>.plist</code> files in several preferences folder on the Mac.</p>
+<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And <img class="emoji" title="boom" alt="boom" src="https://assets.github.com/images/icons/emoji/unicode/d83d.png" height="20" width="20" align="absmiddle"> BOOM <img class="emoji" title="boom" alt="boom" src="https://assets.github.com/images/icons/emoji/unicode/d83d.png" height="20" width="20" align="absmiddle"> just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
+<h1>What are <code>.plist</code> files?</h1>
+<p>A <code>.plist</code> file is a configuration file that contains a list of properties in either plain text or binary format. I'll go into more later about how to read and update values in these files later in the post.</p>
+<p>For more info on plist files, <a href="http://en.wikipedia.org/wiki/Property_list">check out the Wikipedia page...</a></p>
+<h1>Where can I find plist files?</h1>
+<p>I know of at least 2 locations that host the common system and application <code>.plist</code> files.</p>
+<p>The first one is user specific and is in the following location:</p>
+<pre><code>~/Library/Preferences/
+</code></pre>
+<p>In my case (since my user name is <code>jason</code>)</p>
+<pre><code>/Users/jason/Library/Preferences/
+</code></pre>
+<p>The second location one is at the root of the system:</p>
+<pre><code>/Library/Preferences/
+</code></pre>
+<p>If you look into these folders you'll see a large number of plist files that follow reverse domain name convention (like <code>com.apple.sample</code>).</p>
+<p>Here are some (not all) examples of system configuration plist files:</p>
+<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.ActivityMonitor</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.AddressBook</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.finder</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.preference</span><span class="hljs-class">.general</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.TextEdit</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.Safari</span><span class="hljs-class">.plist</span>
+</code></pre>
+<p>In the same folder as the sample configuration files listed above are where you can find <code>plist</code> files that are associated to applications installed on the system.</p>
+<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.dt</span><span class="hljs-class">.Xcode</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.google</span><span class="hljs-class">.Chrome</span><span class="hljs-class">.plist</span>
+org<span class="hljs-class">.herf</span><span class="hljs-class">.Flux</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><span class="hljs-class">.plist</span>
+</code></pre>
+<p>Now that we can find system and application configuration <code>plist</code> files, if you try to open them in a text editor you may notice that many of them are in a binary format which would be challenging to read and understand, let alone edit.</p>
+<h1>How do I read these files?</h1>
+<p>The Mac comes with a command line utility called <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> for reading and writing to these <code>.plist</code> files.</p>
+<p>If you take an example from the above list of plist files, you can, at the command prompt type the following:</p>
+<p><code>defaults read com.apple.fin&lt;tab&gt;</code> (where <code>&lt;tab&gt;</code> is the tab key that allows tab completion of the rest of the property list format) and be sure to exclude the <code>.plist</code> of the end so:</p>
+<pre><code>defaults read com.apple.finder
+</code></pre>
+<p>will print out all of the properties to the console so you can inspect what's there.</p>
+<p>You can pipe this output to <a href="http://en.wikipedia.org/wiki/Grep">grep</a> and filter for a setting name when doing searches. Once you've found a property name you want to look at you can pass it into the <code>defaults read</code> command to get the value of that specific property.</p>
+<h4>Example reading a single property:</h4>
+<pre><code>defaults read com.apple.finder AppleShowAllExtensions
+</code></pre>
+<h1>How to change property list settings?</h1>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Just like modifying the Windows Registry can mess up your system, you need to take care modifying system or application <code>plist</code> settings.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
+<p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
+<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
+<h3>So if my understanding above is somewhat correct, how did I update the source?</h3>
+<p>Similar to reading property list values you can use the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> command line tool to <code>write</code> changes back to the <code>.plist</code> files.</p>
+<p>As an example, here's how I update <a href="http://support.apple.com/en-us/HT201732">Finder</a> to show file extensions.</p>
+<pre><code>defaults write com.apple.finder AppleShowAllExtensions -boolean true
+</code></pre>
+<p>The configuration options are now endless.</p>
+<h1>In summary:</h1>
+<p>Using my new knowledge that app and system settings can be found in both <code>/Library/Preferences</code> and <code>~/Library/Preferences</code> and I can use the command line tool <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> to read/write to understand and update settings.</p>
+<p>I can now create a simple <code>.sh</code> script that allows me to pre-configure a new development machine with all of the settings I would like.</p>
+<p>Now, each time I catch myself trying to use an application's preferences U.I. I stop myself and try to find that setting in a plist file and create a CLI command that I can save into my development setup script.</p>
+<p>Happy Mac Settings Hacking!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fail Fast With iOS Images]]></title>
         <id>http://staxmanade.com/2015/02/fail-fast-with-ios-images/</id>
@@ -969,55 +1047,6 @@ I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-lo
 <p>So I went to <code>feedburner.com</code> where I was already logged in (due to being auth'd with google/blogger) and from their I selected my feed and chose <code>Edit Feed Details</code> where I could put in my new RSS feed to <code>http://staxmanade.com/atom.xml</code>.</p>
 <p>After doing this, I noticed 3 of my previously posted blogs show-up-again, but I can live with that.</p>
 <p>Now you've hopefully migrated your blog's RSS subscribers automatically without loosing any.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain]]></title>
-        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/</id>
-        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">
-        </link>
-        <updated>2014-04-18T03:19:53Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 7 - Setup a Custom Domain]]></summary>
-        <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 7</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - (current) - Setup a Custom Domain
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>To host your blog for free by GitHub, you are not required to buy a custom domain so this is an optional step, but one I took.</p>
-<p>The reason I have a complete post on this topic is primarily to say that I was able to accomplish this while not even at my desk.</p>
-<p>While out waiting for my daughter to complete practice, I sat on my iPhone and was able to not only buy the domain name <a href="http://staxmanade.com">staxmanade.com</a> but I also configured the CNAME on GitHub. By the time I got home from my daughters practice, I could hit my blog through the new domain <a href="http://staxmanade.com">staxmanade.com</a>. Exciting!</p>
-<p>You can use <a href="http://codercorral.com/blog/2013/07/24/how-to-setup-a-custom-domain-with-octopress-slash-github-pages/">this post</a> for a quick and simple walk through.</p>
 ]]></content>
     </entry>
 </feed>

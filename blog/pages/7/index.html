@@ -71,6 +71,22 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-11T04:39:00.000Z" pubdate data-updated="true">Feb 10th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
+</div>
+
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-studioshell/">NuGet Project Uncovered: StudioShell</a></h1>
     <p class="meta">
           <time datetime="2012-02-10T04:38:00.000Z" pubdate data-updated="true">Feb 9th 2012</time>
@@ -221,22 +237,6 @@ Honey is sweet, but the bee stings</div>
 </div>
 
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-verifyargs/">NuGet Project Uncovered: VerifyArgs</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-31T00:25:00.000Z" pubdate data-updated="true">Jan 30th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/VerifyArgs" target="_blank">VerifyArgs</a> is another approach to a <a href="http://stackoverflow.com/questions/299439/net-guard-class-library" target="_blank">guard</a> helper that takes an interesting approach.</p>  <blockquote>   <pre>Verify.NotNullOrEmpty(new { first, second });<br />Verify.Positive(new { secondCount });</pre><br /></blockquote><br /><br /><p><font face="Arial">Many of you might look at the above and think “<strong>But what about performance?” </strong>If that’s you, I’d have to say go test it out for yourself. But for nearly all cases out there I don’t think this level of performance is anything to be concerned with. The project’s <a href="http://verifyargs.codeplex.com/" target="_blank">home site</a> has a little blip that tries to address the performance concern.</font></p><br /><br /><p><a href="http://lh5.ggpht.com/-feaICDR7jaY/TxypIkCOIrI/AAAAAAAAAUA/qa0KObFt52w/s1600-h/image_thumb11_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb11_thumb" border="0" alt="image_thumb11_thumb" src="http://lh6.ggpht.com/-sm_T6Ku8UdY/TxypI9EeQZI/AAAAAAAAAUI/mda6ei2TvoI/image_thumb11_thumb_thumb.png?imgmax=800" width="362" height="171" /></a></p><br /><br /><p><a href="http://lh5.ggpht.com/-9LY6CQ91JZg/TxypI-olNWI/AAAAAAAAAUQ/yJpyZolWQ8M/s1600-h/image_thumb13_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb" border="0" alt="image_thumb13_thumb" src="http://lh5.ggpht.com/-KL-ysUi8dos/TxypJH6UkMI/AAAAAAAAAUY/W73QBDH8-aE/image_thumb13_thumb_thumb.png?imgmax=800" width="561" height="172" /></a></p><br /><br /><p>This project is great because of the fluent nature of each Verify.***</p>  </div>
-</div>
-
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/8/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -271,6 +271,9 @@ Honey is sweet, but the bee stings</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
       </li>
       <li class="post">
@@ -287,9 +290,6 @@ Honey is sweet, but the bee stings</div>
       </li>
       <li class="post">
         <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
