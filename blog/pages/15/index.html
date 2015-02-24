@@ -84,6 +84,7 @@
 <p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -173,6 +174,7 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -189,6 +191,7 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 <p>Recently I was added as a developer to the <a href="http://www.codeplex.com/i4o" target="_blank">i4o codeplex project</a> by <a href="http://blog.magenic.com/blogs/aarone/default.aspx" target="_blank">Aaron</a> and last night I made my first commit.</p>  <p>There were a few pretty big changes to the library. I'll highlight some of them below, and in a couple future posts will describe in a little more detail how you can use these features.</p>  <h4>Removed the IndexableAttribute:</h4>  <p>This was removed for two reasons.</p>  <ul>   <li>It did not allow you index objects you didn't own. </li> </ul>  <p>Say you want to index a collection of System.IO.FileInfo objects. Since that's owned by the .Net framework, you can't apply an attribute to the properties of the class you want to index.</p>  <p>The solution to that was to allow adding indexed properties dynamically, however you had to give it a string representing the property name, which leads into the second issue... </p>  <ul>   <li>Didn't provide any compile time checking or refactor support for properties using the dynamic add/remove methods. </li> </ul>  <p>If you refactored a property and forgot to rename the string to match the refactor you would end up with a runtime error.</p>  <p>To resolve the two issues above I've introduced the <strong>IndexSpecification&lt;T&gt;</strong> (I'll describe how to use it a later post)</p>  <h4>Performance tuning:</h4>  <p>Although we haven't enhanced the Linq support for IndexableCollection (should come soon), I was able to eek some performance by doing some internal caching of property types and a few other tweaks resulting in the Index creation becoming about 30% faster...</p>  <h4>Fluent interface for managing the Indexes</h4>  <p>The last big change which fits in with the IndexSpecification&lt;T&gt; is the Fluent interface for dynamically adding/removing properties to be indexed. One short example could be:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1DKLdou8I/AAAAAAAAAD4/JBUBIgkDNNo/s1600-h/image3.png"><img style="border-width: 0px;" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1DKcGWDjI/AAAAAAAAAD8/zU7TUvRY2T0/image_thumb1.png?imgmax=800" width="347" border="0" height="217" /></a></p></div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -205,6 +208,7 @@ Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on C
 <p>I decided to start blogging a little more regularly and one of the first things I ran into when researching the easiest way to create/publish blogs was <a href="http://windowslivewriter.spaces.live.com/" target="_blank">Windows Live Writer</a>. </p>  <p>I'm sold... This program handles just about everything I could need for blogging (I'm new to it, so haven't pushed it's limitations to far).</p>  <p>One problem I had with Live Writer was it saved all my drafts/posts on the computer I was logged into at the time. This meant the drafts I write at home can't be accessed at work and visa/versa...</p>  <p>To solve this I decided to wire them through the <a href="http://mesh.com" target="_blank">Microsoft Mesh</a>. If you haven't setup your mesh yet, I would highly recommend it. Just go to <a href="http://mesh.com" target="_blank">Mesh.com</a>, sign up/or in with a Windows Live account, install the client application, and your <strong>meshified</strong>...</p>  <blockquote>   <p>With Live Mesh, you can synchronize files with all of your devices, so you always have the latest versions handy. Access your files from any device or from the web, easily share them with others, and get notified whenever someone changes a file.</p> </blockquote>  <p>This means I can synchronize folders between my connected computers.</p>  <h4>Below I'll show the steps I used to setup my meshified weblog posts. </h4>  <ol>   <li>Find the location your Live Writer is storing your drafts/posts.      <br />      <br />For my Windows XP machine it was in...       <br /><em>C:\Documents and Settings\JasonJ\My Documents\My Weblog Posts\</em>       <br />      <br />For my work Vista pc the folder was in...       <br /><em>C:\Users\JasonJ\Documents\My Weblog Posts\ </em>      <br /></li>    <li>Next I created a folder in my mesh called &quot;BlogDrafts&quot;.      <br />      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskAwaA5eI/AAAAAAAAADg/8Q7CFRAD8Eo/s1600-h/image3.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="251" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskBgLf4RI/AAAAAAAAADk/PZqLvbz2NgQ/image_thumb1.png?imgmax=800" width="371" border="0" /></a> To do this you can right click in the mesh folder area and select &quot;Create folder in Live Mesh&quot;.<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/SUskCKk4VWI/AAAAAAAAADo/irg_OvuZjnU/s1600-h/image7.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="176" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SUskCoUxmFI/AAAAAAAAADs/JZV3udqjb4A/image_thumb3.png?imgmax=800" width="347" border="0" /></a> </li>    <li>A window will popup asking for the name of the new folder and the location this folder will live on your hard drive.      <br />      <br /><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SUskC_C6DeI/AAAAAAAAADw/s6bfcg4WOls/s1600-h/image14.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="123" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SUskDkjoclI/AAAAAAAAAD0/Ty6ZI-bJJAo/image_thumb8.png?imgmax=800" width="244" border="0" /></a>&#160; </li> </ol>  <p>I think that's everything... follow similar steps to get your other computers synced up to the mesh and you should be relieved that you can work on any computer and on any post.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -239,6 +243,7 @@ Weird.  I specialize in e-mail marketing.  Looks like their form isn't set up pr
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -298,6 +303,7 @@ Nice! Thx man.<BR/><BR/>Best regards,<BR/>Alexey Zakharov<BR/>Blog: http://weblo
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -327,6 +333,7 @@ For the Frequency property's implementation, you probably just need to return th
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -351,6 +358,7 @@ This comment has been removed by the author.</div>
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -367,6 +375,7 @@ This comment has been removed by the author.</div>
 <p>So I've been thinking lately of a problem that we will be solving at work that will require a user to follow these steps...</p>  <p>1. User selects some set of data to work with    <br />2. Some number crunching has to happen to give the user a report like interface     <br />3. User analyses that data, tweaks some value and will basically go to step 2 above...</p>  <p>This application is being build with <a href="http://silverlight.com/">Microsoft Silverlight</a> and in thinking about how to make step 2 above as smooth and responsive as possible, I thought &quot;Hey, what about i4o?&quot;</p>  <p>A quick Google for <a href="http://www.google.com/search?rlz=1C1GGLS_en-USUS299US303&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=I4o+silverlight" target="_blank">&quot;i4o Silverlight&quot;</a> and without digging too far I basically found nobody had tried it, or at least tried and told about i4o in Silverlight. So I thought I'd give a go...</p>  <p>&#160;</p>  <p>Step 1: Go get the code from from codeplex/i4o. I downloaded the latest <a href="http://www.codeplex.com/i4o/SourceControl/DownloadSourceCode.aspx?changeSetId=18968" target="_blank">source bits</a>.</p>  <p>Step 2: After extracting the .zip...Open up the project i4o.sln</p>  <p>Step 3: Add a new Silverlight class project</p>  <blockquote>   <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/STYrrIMcDdI/AAAAAAAAAB8/IV4m45c9Xxg/s1600-h/image%5B18%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="165" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STYrrnDcSrI/AAAAAAAAACA/i9L43771l6o/image_thumb%5B12%5D.png?imgmax=800" width="244" border="0" /></a> </p> </blockquote>  <p>Step 4: Now use the &quot;Add existing item&quot; option to add files to the Silverlight project. Browse to the i4o project folder to select the 3 i4o class files. You can add those to you Silverlight project as is or use the &quot;Add as Link&quot; feature to share the code across the platforms.</p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrsCqRHuI/AAAAAAAAACE/zyiseYEqdk0/s1600-h/image%5B17%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="183" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/STYrs8EynfI/AAAAAAAAACI/pazWy0Tu47o/image_thumb%5B11%5D.png?imgmax=800" width="244" border="0" /></a>&#160;</p>  <p>Step 5: once you've add the files to the Silverlight project final step is to &quot;BUILD&quot; the solution...</p>  <p>What's that you say? &quot;That's all there was to it?&quot; YA, my thoughts exactly, the project just compiled on the first try...</p>  <p>&#160;</p>  <p>DISCLAIMER: I haven't tried to use it yet... It's late and this idea popped into my head distracting me from getting to sleep. So I tried it and am quite satisfied for now.</p>  <p>&#160;</p>  <p>Up NEXT: Don't know if I'll do this sooner than later, if at all, but figure out how hard it would be to port the existing unit tests to see how they run in Silverlight...</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -401,6 +410,7 @@ Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archiv
 </div>
 </div>
 
+      
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/16/">&larr; Older</a>

@@ -102,6 +102,7 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -118,6 +119,7 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 <p>So today I was perusing my blog list and ran across a blog by Rick Strahl (<a href="http://www.west-wind.com/Weblog/posts/653034.aspx">Dynamic Delegates with Expression Trees</a>) which is referencing this post by Nate Kohari (<a href="http://kohari.org/2009/03/06/fast-late-bound-invocation-with-expression-trees/">Fast Late-Bound Invocation with Expression Trees</a>). </p>  <p>I first just thought it was a very interesting post and thought, “<em>wow, next time I have to do something requiring a ton of reflection method calls I’ll have to remember this”</em>. I took off with the family for the day and sometime during the day the idea popped into my head about trying it to read property’s values (since they are actually just a method call under the hood). And I do have the perfect place to try and spike this idea… </p>  <p>One of the things I’ve done to the i4o library is try to reduce the calls to reflection whenever possible. And the only one left that I couldn’t get past was having to use the PropertyInfo’s GetValue reflection call to get at a value for creating the property index. This generally isn’t a big deal because we only have to do it once, however it makes the initialization of the IndexableCollection&lt;T&gt; fairly expensive.</p>  <p>So I decided to spike the idea of using the DelegateFactory from Nate’s blog to read an object’s property values. And below I’m including the project that I spiked to test this idea out.</p>  <p>It compares how fast we can read values out of an object’s property by first using reflection and second using the dynamic delegate.</p>  <p>If you read Ricks post above, he mentions how the dynamic delegate idea is a little reflection expensive up front. However it only happens once and I ran a couple of tests…(p.s. i noticed a small flaw in my timing, however I don’t want to re-zip &amp; re-upload the spike… so if you see the timing flaw, cool…)</p>  <p>I noticed that after about the first 5000 reads the expense of the heavy up front reflection from DelegateFactory started to become negligent. And the more reads the more powerful the new reading strategy became. Take 1/5 million reads for example… normal reflection reading took .78 seconds, while the delegate reading took only .03 seconds which is a substantial increase.</p>  <p><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/PropertyReadSpike.zip" frameborder="0" scrolling="no"></iframe></p>  <p>After that I spiked it in the i4o project and proved that this could significantly increase the index build time of the an IndexableCollection&lt;T&gt;. I shelved the spike and am having Aaron take a look at the idea. We’ll see, I haven’t come up with any reasons why this could cause any issues, so it may be included…</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -134,6 +136,7 @@ That is weird. How are you doing the binding? Maybe it's just calling into the I
 <p>Moq 3.0 has been officially released and it comes with full Silverlight Support. You can download them here <a title=" http://moq.me/get " href="http://moq.me/get">http://moq.me/get     <br /></a></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SaIhYUZuZRI/AAAAAAAAAFI/igVHxx3p7tA/s1600-h/image%5B4%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="289" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhY8DKDWI/AAAAAAAAAFM/g77fjbsr6eU/image_thumb%5B2%5D.png?imgmax=800" width="645" border="0" /></a> </p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZLMqsrI/AAAAAAAAAFQ/igqqel0m1-U/s1600-h/image%5B8%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="98" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhZQpg9II/AAAAAAAAAFU/-yQ8zMt3lG8/image_thumb%5B4%5D.png?imgmax=800" width="310" border="0" /></a>&#160;<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZrL4CwI/AAAAAAAAAFY/T0BbBfoniCs/s1600-h/image%5B12%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="100" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhaJaClsI/AAAAAAAAAFc/pEz3fWLIvvM/image_thumb%5B6%5D.png?imgmax=800" width="310" border="0" /></a> </p>  <p>Now that it is official and when I get some spare time I will try and place my UnityAutoMocker up in the moq-contrib project shortly.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -163,6 +166,7 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -179,6 +183,7 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 <p></p>  <p>If you read my previous posts about [Fluent] Specification Extensions then you know that I'm still in an experimental phase of this idea.</p> <ol>   <li><a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> </li>    <li><a href="/2009/02/fluent-specification-extensions-1-more">(+1) for [Fluent] Specification Extensions</a> </li> </ol> <p>There are two more things I've found that are going against the specification extensions idea. The first one below is related to all specification extensions, not just the fluent flavored specification extensions. </p> <h5><strong>-1.</strong> If you have a test that for some reason has an assertion in the middle of some code.</h5> <pre>[Fact]<br /><span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> MockAsExistingInterfaceAfterObjectSucceedsIfNotNew()<br />{<br />	var mock = <span style="color: #0000ff">new</span> Mock&lt;IBag&gt;();<br /><br />	mock.As&lt;IFoo&gt;().SetupGet(x =&gt; x.Value).Returns(25);<br /><br />	((IFoo)mock.Object).Value.ShouldEqual(25);<br /><br />	var fm = mock.As&lt;IFoo&gt;();<br /><br />	fm.Setup(f =&gt; f.Execute());<br />}</pre><p>It's a little difficult to tell where the assertion is because you don't get the syntax highlighting help from the static class name &quot;Assert&quot;.</p><pre><font color="#25c08e">Assert</font>.Equal(25, (IFoo)mock.Object);</pre><p>However I don't think the reason above is anything to stop using the pattern for a couple of the following:</p><br /><ol><li>How often do you have assertions in the middle of your code?</li><li>If you are doing your tests right, it doesn't take long to scan the above code for the &quot;.Should...&quot; extension method.</li></ol><h5>-1. Daniel from the Moq project tweeted Scott Bellware about his spec unit projects <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs?r=41" target="_blank">SpecificationExtensions.cs</a></h5><blockquote><p>@bellware shouldn't specunit ShouldNotEqual/etc. return the actual object rather than the expected? To chain other calls <a href="http://is.gd/iJuB">http://is.gd/iJuB</a></p></blockquote><blockquote><p>@bellware and ShouldBeNull/NotBeNull could also return the object: obj.ShouldNotBeNull().ShouldEqual(...), right?</p></blockquote><p>with Scott's response being...</p><blockquote><p>@kzu no because that would contribute to crowding many observations into a single method</p></blockquote><p>To that I say, True, if you are doing pure Context/Specification based unit testing. However most of us aren't actually doing it (maybe we should?) so why not allow the test to say</p><pre>someString<br />  .ShouldNotBeNull<br />  .ShouldEqual(...)?</pre><p>So for now... I'm going to continue to go with the Fluent Specification Extensions.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -195,6 +200,7 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 <p>If you read my previous post about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> then you know that I'm still in an experimental phase of this idea.</p>  <p>I'd like to share one more positive I found by using the specification extensions in my testing framework. This benefit is there weather you use standard specification extension methods or try the fluent specification extensions. The idea is very basic, but I didn't even realize it's benefit until I ran into it directly.</p>  <p>And the great benefit is... (drum roll...errr..actually it's not mind blowing). By using extensions methods to provide assertion extensions on the objects we're testing, we've<strong> <u>abstracted the actual testing framework's assertion process.</u></strong><u> </u>(told you it wasn't mind blowing, but read along and see an example of how this abstraction could be good)</p>  <p>Now I know most times you won't ever change testing frameworks, however I just ran into this when attempting to port the Castle.DynamicProxy2 (DP2) to Silverlight. Their test project leveraged the NUnit testing framework, which hasn't officially been ported. You can find a quick <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">port by Jeff Wilcox</a> that will run in the Microsoft Silverlight Unit Testing Framework. However when I was porting the DP2 that hadn't been done, and I didn't feel like porting NUnit at the time.</p>  <p>So, by providing this abstraction layer (through the extension methods). You could then go in and easily swap what testing framework your project is leveraging to do it's assertions.</p>  <h6>NOTE: the port from NUnit to MSFT wouldn't have been that easy as the [TestMethod] in MSFT is sealed so I couldn't create a [Test] attribute that inherited from [TestMethod] to get the SL testing framework to run the tests w/out changing the DynamicProxy test code...aside from that issue...</h6>  <p>Let's take a concrete example of this abstraction benefit.</p>  <p>Notice how the Assert.IsInstanceOfType() in both NUnit and Microsoft's testing framework have the parameters reversed.</p>  <p>NUnit:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SY0lvWzbk4I/AAAAAAAAAEw/mikfS2Ad9TQ/s1600-h/image11%5B3%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="146" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SY0lv1_mpxI/AAAAAAAAAE0/UMgoOPFIoiY/image11_thumb%5B2%5D.png?imgmax=800" width="584" border="0" /></a> </p>  <p>Microsoft:</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SY0lwEt7LjI/AAAAAAAAAE4/cj4aScmZML4/s1600-h/image17%5B1%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="104" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SY0lwbo9p9I/AAAAAAAAAE8/xklqX1ujQj4/image17_thumb.png?imgmax=800" width="584" border="0" /></a> </p>  <p>If you were trying to switch from NUnit to MSFT or visa versa, a simple search and replace on [Test] for [TestMethod] would suffice for the majority of the needed port. However the Assert.IsInstanceOfType() would fail at compile time because of the parameter order. (and who know what else exactly is different)</p>  <p>If you could provide that layer of abstraction for the assertions, then to switch between NUnit and MSFT or visa versa would remain very simple, as you would only have to provide the framework specific changes only once.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -229,6 +235,7 @@ Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -278,6 +285,7 @@ I would really like an Automocker for the *WPF* side of things.</div>
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -307,6 +315,7 @@ In a nutshell, what's the trick to mocking with the given security constraints (
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -336,6 +345,7 @@ This is very good news. Thanks for the work.</div>
 </div>
 </div>
 
+      
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/15/">&larr; Older</a>

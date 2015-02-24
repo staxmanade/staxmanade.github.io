@@ -84,6 +84,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -100,6 +101,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/StudioShell" target="_blank">StudioShell</a> is a project that sort of blew my mind. The crazy PowerShell integration they’ve packaged into this visual studio extension is plain amazing.</p>  <p>I’d highly recommend watching the demo videos near the bottom of the project’s home codeplex site.</p>  <blockquote>   <p><a href="http://studioshell.codeplex.com/">http://studioshell.codeplex.com/</a></p></blockquote></div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -116,6 +118,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/AboditNLP" target="_blank">AboditNLP</a> is a <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank">Natural Language Processor</a> library. This kind of stuff in interesting, but not something I have chosen to spend my time on.</p>  <p>It has a demo <a href="http://nlp.abodit.com/home/demo">http://nlp.abodit.com/home/demo</a> which gives you sample things to type to the library. I noticed it was a bit case sensitive, but still, project is one to look into if you were to say build a home automation system.</p></div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -132,6 +135,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -148,6 +152,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -164,6 +169,7 @@
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -188,6 +194,7 @@ Honey is sweet, but the bee stings</div>
 </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -204,6 +211,7 @@ Honey is sweet, but the bee stings</div>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/thenathanjones/burro" target="_blank">Burro</a> is a project that I only quickly looked at. I don’t know all that it does, or how to get it up and running. In the project’s readme it says </p>  <blockquote>   <p>I'll put some examples up as things progress, for now you'll just have to work it out yourself.</p> </blockquote>  <p>What I do know is that it is supposed to parse build output from a build server in a consistent way. How do I know that? (The github project says).</p>  <blockquote>   <h3>What is it?</h3>    <p>Burro is a tool for parsing output from build servers in a consistent way.</p> </blockquote>  <p>I only put this in here as a project to look at. I think that parsing build output sounds very challenging and props to this project for giving it a go…</p>  </div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -220,6 +228,7 @@ Honey is sweet, but the bee stings</div>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/List/Packages/Chronic" target="_blank">Chronic</a> is a port of <a href="https://github.com/mojombo/chronic" target="_blank">Ruby’s Chronic</a> providing some natural language parsing for dates.</p>  <p>This is a pretty cool little utility as it lets you take some input like "tomorrow” or “two weeks ago” and turn that into a DateTime object.</p>  <p>Take a look at some tests I pulled from <a href="https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs">https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs</a>.</p>  <blockquote>   <p>[Fact]    <br />public void seven_days_from_now_at_midnight()     <br />{     <br />Parse(" seven days from now at midnight")     <br />.AssertEquals(Time.New(2006, 8, 24));     <br />}</p>    <p>[Fact]    <br />public void _2_weeks_ago()     <br />{     <br />Parse("2 weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br />}</p>    <p>[Fact]    <br />public void two_weeks_ago()     <br />{     <br />Parse("two weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br /></p> </blockquote>  <p>I tried playing with it a bit. There seem to be some cases sensitivity issues with the codebase now as “tomorrow” works but “Tomorrow” doesn’t. But I think that’s a great reason to be on GitHub. Fork, fix, and send a pull request. All better…</p></div>
 </div>
 
+      
     </article>
     <article>
         <header>
@@ -236,6 +245,7 @@ Honey is sweet, but the bee stings</div>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/EnumMetadata.Core" target="_blank">EnumMetadata.Core</a> provides some clean extensions over enums that give you access to metadata you place on enum values. This project’s approach is to use attributes on an Enum and some fancy extension methods to get at the data stored in attributes in a strongly typed way.</p>  <p>I couldn’t quickly get this project up and running on my x64 machine. I received the good ol BadImageFormat exception. I didn’t take enough interest to get it working at the time, and was able to get a pretty good picture of how to use it from the tests (if I had to). Just knowing this project is here is good enough for me at the moment.</p>  <p><strong>Side Note: </strong>It’s a different approach to the problem. Another strongly typed approach I tend to prefer can be found at the following <a href="https://gist.github.com/1604923" target="_blank">Gist here</a>. Not exactly an “enum” but gives a similar feel with access to more metadata and gives the possibility of adding behavior to each item.</p></div>
 </div>
 
+      
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/8/">&larr; Older</a>
