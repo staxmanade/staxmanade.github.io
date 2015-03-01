@@ -71,6 +71,34 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-28T21:36:32.671Z" pubdate data-updated="true">Feb 28th 2015</time>
+
+
+        <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Here's a short and fun little ditty I'm going to throw up here so I can find it later... <em>(because why would I try to memorize something so simple when I can put it here and share with you all?)</em>.</p>
+<h1>My Builds Are Speaking to Me</h1>
+<p>Running this command from my Mac command line window gives a nice audio feedback when builds are complete.</p>
+<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
+</code></pre>
+<h1>Some Context</h1>
+<p>While doing some project work on my Mac lately I'm in the situation where I am constantly running <code>gulp</code> at the command line. This workflow could apply to any CLI build tool like <a href="http://gulpjs.com">gulp</a>, <a href="https://github.com/ruby/rake">rake</a>, make, etc and ya I know I need to spend the time getting <code>gulp watch</code> to work but let's not worry about that for now...</p>
+<p>The build is not slow, but it's not fast (taking about 6) seconds. That's just enough time for me to <a href="https://www.youtube.com/watch?v=SSUXXzN26zg">see a squirrel</a> and by the time I realize the build is done, I've forgotten if I actually recently kicked off the build or if the most recent run is out of date from the latest code I've worked on...</p>
+<p>So I searched for a quick way to get some auditory feedback when my build was done so I could more efficiently continue the development flow...</p>
+<p>I first stumbled upon <a href="https://gist.github.com/taterbase/3154646">this gist</a> which has a NodeJS implementation <code>console.log(&quot;\007&quot;);</code>, but this produces the same beep I get when my unit tests fail - which I don't want when everything's good to go.</p>
+<p>Then I found someone mention the mac <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/say.1.html"><code>say</code></a> command which is WAY better for my needs and I settled on the following little command.</p>
+<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
+</code></pre>
+<p>Whats cool about this pattern is I can replace <code>gulp</code> with any other build tool on other projects like <code>rake</code>, <code>grunt</code>, <code>make</code>, etc...</p>
+<p>TODO: talk about choosing different voices...</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
     <p class="meta">
           <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
@@ -136,6 +164,9 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
       </li>
       <li class="post">
@@ -152,9 +183,6 @@
       </li>
       <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

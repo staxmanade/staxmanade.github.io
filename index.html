@@ -71,6 +71,35 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-28T21:36:32.671Z" pubdate data-updated="true">Feb 28th 2015</time>
+
+
+        <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Here's a short and fun little ditty I'm going to throw up here so I can find it later... <em>(because why would I try to memorize something so simple when I can put it here and share with you all?)</em>.</p>
+<h1>My Builds Are Speaking to Me</h1>
+<p>Running this command from my Mac command line window gives a nice audio feedback when builds are complete.</p>
+<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
+</code></pre>
+<h1>Some Context</h1>
+<p>While doing some project work on my Mac lately I'm in the situation where I am constantly running <code>gulp</code> at the command line. This workflow could apply to any CLI build tool like <a href="http://gulpjs.com">gulp</a>, <a href="https://github.com/ruby/rake">rake</a>, make, etc and ya I know I need to spend the time getting <code>gulp watch</code> to work but let's not worry about that for now...</p>
+<p>The build is not slow, but it's not fast (taking about 6) seconds. That's just enough time for me to <a href="https://www.youtube.com/watch?v=SSUXXzN26zg">see a squirrel</a> and by the time I realize the build is done, I've forgotten if I actually recently kicked off the build or if the most recent run is out of date from the latest code I've worked on...</p>
+<p>So I searched for a quick way to get some auditory feedback when my build was done so I could more efficiently continue the development flow...</p>
+<p>I first stumbled upon <a href="https://gist.github.com/taterbase/3154646">this gist</a> which has a NodeJS implementation <code>console.log(&quot;\007&quot;);</code>, but this produces the same beep I get when my unit tests fail - which I don't want when everything's good to go.</p>
+<p>Then I found someone mention the mac <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/say.1.html"><code>say</code></a> command which is WAY better for my needs and I settled on the following little command.</p>
+<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
+</code></pre>
+<p>Whats cool about this pattern is I can replace <code>gulp</code> with any other build tool on other projects like <code>rake</code>, <code>grunt</code>, <code>make</code>, etc...</p>
+<p>TODO: talk about choosing different voices...</p>
+</div>
+
+      <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a></h1>
     <p class="meta">
           <time datetime="2015-02-23T07:02:12.268Z" pubdate data-updated="true">Feb 22nd 2015</time>
@@ -532,105 +561,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 
       <a href="/2015/01/resgrid-on-bizspark-featured-startups/#disqus_thread" data-disqus-identifier="/2015/01/resgrid-on-bizspark-featured-startups/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">How to install clang-format and formatting Objective-C files</a></h1>
-    <p class="meta">
-          <time datetime="2015-01-14T05:49:01.820Z" pubdate data-updated="true">Jan 13th 2015</time>
-
-
-        <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
-<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you're reviewing, your brain is now having to decide if anomalies in the formatting of your project's source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
-<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio's built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
-<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I'd highly recommend you check them out.</p>
-<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that's a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
-<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
-<p><s>Unfortunately it's not as easy to install as <code>brew install clang-format</code></s> (It's now as easy to install as <code>brew install clang-format</code>), but I'll show you not only how to get it installed manually, but a command to easily format your code.</p>
-<h1>How to install <code>clang-format</code> manually</h1>
-<p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
-<ol>
-<li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
-<li>In chrome dev tools (On my mac, <code>⌘+⌥+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.
-<ul>
-<li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
-</ul>
-</li>
-<li>Copy that URL and place it into the following set of commands.</li>
-</ol>
-<p>From a command prompt, navigate to a folder where you'd like to save or store the <code>clang</code> tools.</p>
-<ol>
-<li>Remove the older version if there was one, and create a folder to work in
-<code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
-<li>Take the previously discovered link from above and use the following to download it into our working folder.
-<code>curl 'http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz' -o './clang-format/clang-format.tar.xz'</code></li>
-<li>Extract the tar file
-<code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
-<li>Remove any previously sym-linked linked version you have
-<code>rm -f ~/bin/clang-format</code></li>
-<li>Link the downloaded clang-format command into our <code>~/bin</code> folder
-<code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
-<li>Test the command works
-<code>clang-format --help</code></li>
-</ol>
-<p>Here are all of the steps above as a script:</p>
-<pre><code>rm -rf ./clang-<span class="hljs-keyword">format</span>/ &amp;&amp; mkdir -p ./clang-<span class="hljs-keyword">format</span>
-curl <span class="hljs-string">'http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz'</span> -o <span class="hljs-string">'./clang-format/clang-format.tar.xz'</span>
-tar xvfJ clang-<span class="hljs-keyword">format</span>/clang-<span class="hljs-keyword">format</span>.tar.xz -C ./clang-<span class="hljs-keyword">format</span>
-rm -f ~/bin/clang-<span class="hljs-keyword">format</span>
-ln -s <span class="hljs-variable">$(</span><span class="hljs-keyword">pwd</span>)/<span class="hljs-variable">$(</span>find clang-<span class="hljs-keyword">format</span> | grep bin/clang-<span class="hljs-keyword">format</span><span class="hljs-variable">$)</span> ~/bin/clang-<span class="hljs-keyword">format</span>
-clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help</span>
-</code></pre>
-<h1>How to setup your project style guide</h1>
-<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let's walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before you use the command line tool to rip through our project, let's first set the standards you'd like clang-format to adhere to when formatting our code.</p>
-<p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
-<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project's Objective-C files.</p>
-<p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
-<p>Here is one I have used before.</p>
-<pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">Chromium</span>
-
-<span class="http"><span class="hljs-attribute">AlignTrailingComments</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">AllowShortIfStatementsOnASingleLine</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">BreakBeforeBraces</span>: <span class="hljs-string">Attach</span>
-<span class="hljs-attribute">ColumnLimit</span>: <span class="hljs-string">0</span>
-<span class="hljs-attribute">IndentWidth</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">KeepEmptyLinesAtTheStartOfBlocks</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">Language</span>: <span class="hljs-string">Cpp</span>
-<span class="hljs-attribute">MaxEmptyLinesToKeep</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">ObjCSpaceAfterProperty</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">ObjCSpaceBeforeProtocolList</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">PointerBindsToType</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">SpacesBeforeTrailingComments</span>: <span class="hljs-string">1</span>
-<span class="hljs-attribute">TabWidth</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">UseTab</span>: <span class="hljs-string">Never</span>
-</span></code></pre>
-<p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
-<pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">None</span>
-</code></pre>
-<h1>Format all our files at once</h1>
-<p>Now that you have a <code>.clang-format</code> file which helps to define our project's styling conventions, you can begin our initial formatting sweep.</p>
-<p>First let's create a command that gives us all the files you want to process.</p>
-<p>Here's my initial example (executed in a zsh shell):</p>
-<p><code>ls MyProject/*.[hm]</code></p>
-<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
-<p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
-<p>You can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
-<h3><code>clang-format</code> options</h3>
-<p>In the above example you use the following <code>clang-format</code> options:</p>
-<ul>
-<li><code>-i</code> tells it to do an in-place edit of the file</li>
-<li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
-</ul>
-<h1>Did you have your project under source control before doing this?</h1>
-<p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
-<p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
-</div>
-
-      <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -664,6 +594,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
       </li>
       <li class="post">
@@ -680,9 +613,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
       </li>
       <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

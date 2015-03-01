@@ -71,6 +71,66 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/11/massive-search-replace-among-files/">Massive Search &amp; Replace Among Files Checked-in to TFS</a></h1>
+    <p class="meta">
+          <time datetime="2009-11-07T21:03:00.000Z" pubdate data-updated="true">Nov 7th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I've done (wished I could have done automatically in the past) that I want to save for reference later.</p>
+<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything's a Singleton architecture is no easy task. I won't go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I've slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They've given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
+<h5>PowerShell assisted regular expression search and replace.</h5>
+<p>In my case, the specific regular expression needed to find</p>
+<pre><code>    SomeBusinessLogicClass.Instance.SomeFooMethod(bar);
+</code></pre>
+<p>and replace it with</p>
+<pre><code>    Resolve<span class="hljs-comment">()</span>.SomeFooMethod<span class="hljs-comment">(bar)</span>;
+</code></pre>
+<p>Below is the PowerShell script I used.</p>
+<pre><code class="language-PowerShell"><span class="hljs-comment"># define the find and replacement regular expressions.</span>
+<span class="hljs-variable">$regex_find</span> = <span class="hljs-string">'([a-zA-Z]+)\\.Instance\\.'</span>
+<span class="hljs-variable">$regex_replace</span> = <span class="hljs-string">'Resolve().'</span>
+
+<span class="hljs-comment"># get all the C# files we want to search/replace through</span>
+<span class="hljs-variable">$allFiles</span> = <span class="hljs-built_in">Get-ChildItem</span> -Filter *.cs -Recurse
+
+<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$fileToReplace</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$allFiles</span>)
+{
+    <span class="hljs-variable">$fileString</span> = <span class="hljs-variable">$fileToReplace</span>.FullName
+    <span class="hljs-keyword">if</span>([String]::Join([Environment]::NewLine, (<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>)) <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>)
+    {
+        <span class="hljs-comment"># make the file writable so we can update it</span>
+        <span class="hljs-variable">$fileToReplace</span>.IsReadOnly = <span class="hljs-variable">$false</span>;
+        <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">"applying fix to - <span class="hljs-variable">$fileString</span>"</span>
+
+        <span class="hljs-comment"># here's where we load up the file iterate through each line   </span>
+        <span class="hljs-comment"># replace any of the regex matches</span>
+        <span class="hljs-comment"># and save the file back to the original location</span>
+        <span class="hljs-built_in">Set-Content</span> <span class="hljs-variable">$fileString</span> -Value ((<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>) | <span class="hljs-keyword">foreach</span> { <span class="hljs-keyword">if</span>( <span class="hljs-variable">$_</span> <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>) { <span class="hljs-variable">$_</span> <span class="hljs-operator">-replace</span> <span class="hljs-variable">$regex_find</span>, <span class="hljs-variable">$regex_replace</span> } <span class="hljs-keyword">else</span> { <span class="hljs-variable">$_</span> } } )
+    }
+}
+</code></pre>
+<blockquote>
+<p>Caveat:</p>
+<ul>
+<li>Some of the files &quot;end of file&quot; changed (added an extra end line in some cases)</li>
+</ul>
+</blockquote>
+<h5>Team Foundation Server tip to detect the changed files.</h5>
+<p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>. Once installed, fire up the PowerShell console given in the start menu</p>
+<p><img src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
+<p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p>
+<blockquote>
+<p>tfpt online /adds /diff /recursive .</p>
+</blockquote>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/10/integration-test-brought-to-you-by/">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</a></h1>
     <p class="meta">
           <time datetime="2009-10-26T05:02:00.000Z" pubdate data-updated="true">Oct 25th 2009</time>
@@ -276,56 +336,6 @@ Either approach is fine.  You could probably do a baseless merge (with the cmd l
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_9077/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 2 – Kanban Stages…</a></h1>
-    <p class="meta">
-          <time datetime="2009-08-06T14:21:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links</p><br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol><p>In the <a href="/2009/08/branch-per-feature-with-team-foundation_06">previous post (“How we got here”)</a> I provided a small intro into why and how my team arrived at a Branch-Per-Feature/Kanban development lifecycle.</p><p>In this post I’ll describe each stage of our current development lifecycle.</p><ol><li><strong>Triage</strong> – Initial drop point for <em><u>most</u></em> features. <ul><li>I say <em><u>most</u></em> because some head straight into other steps further along in the pipeline. </li><li><strong>Items are categorized by area or department </strong>(These map to an actual TFS Area)<br />   EX: Infrastructure, Operations, Billing, Client Services, etc… </li><li>Items are <strong>prioritized</strong>.<br />   Each department head &amp; higher gets the opportunity to prioritize within each Area. </li><li>The WIP in Triage is basically N/A. </li></ul></li><li><strong>Backlog</strong> – Items in the Backlog have been deemed important enough to begin their life in the pipeline and start being pulled through each stage. <ul><li>These items need extra <strong>research, design, and requirements gathering</strong>. </li><li>This is where items that were priority #1 in their respective Area go head to head with the #1’s in other Areas and can be further prioritized. </li><li>We try to keep the WIP in the Backlog to about 10 or less. </li></ul></li><li><strong>Queue</strong> – Items in the Queue are items that have no further design/requirements gathering needed and when a developer is ready can pull an item straight into development. <ul><li>We keep the WIP in the Queue to about 7 or less. </li></ul></li><li><strong>Development</strong> <ul><li>When the developer pulls an item from the Queue into development we <strong>create a branch in a <em>Branches</em></strong> folder and give it a name related to the feature being developed. All development for the feature is done in this branch. </li><li>In our current workflow,<strong> after the development of the feature is complete, the developer does a first pass of testing</strong>. (We have a fairly small shop, where all of the developers are testers and all of the testers are developers.) </li><li>When the developer is done testing the feature is (pushed) into Tester Pass 1. (this is part of why I stated above we have a semi-kanban &amp; not a true pull based kanban) </li><li><strong>IMPORTANT NOTE: <u>frequently forward merge from the trunk into the branch</u></strong> this helps to avoid issues later, and is a requirement before the next stage (testing). </li></ul></li><li><strong>Tester Pass 1</strong> <ul><li>A different person from the implementing developer needs to be brought up to speed as to what the feature is and the needed changes to accomplish the feature. </li><li>The tester here pounds away at the changes and gives feedback to the original developer of any issues/changes that may need to be made.<br /></li></ul><blockquote><p><strong>TFS Hint</strong>: When I become Tester 1 for a feature, one trick I use is to “pretend merge” the branch back into the trunk. I say pretend merge because I take all the normal steps to merge into the trunk up until the check-in part. I do this so I can see all the changed files easily and can diff each file with the trunk to find the exact source code changes. After a visual code review is complete I undo any changes and begin testing the branch.</p></blockquote></li><li><strong>User Acceptance</strong> – Before we merge the feature into the trunk, we do a review with the customer.  <ul><li>This allows us to get solid feedback before it gets merged into the trunk, one more testing pass, and deployed to production. This way we <strong>DON’T </strong>get feedback like <strong>“this is not what I need because it needs to do/be like…“ (after it’s been deployed)</strong> and instead get more of a <strong>“could you tweak it to be like…” which allows us to deliver what the customer actually needs</strong> and not what we interpreted the design to be. </li><li>Also since it’s not merged into the trunk, any changes requests as a result of the User Acceptance review allow us to take our time to get the change done right and not feel like we have to hurry the feature to catch the week’s deployment. We are able to correctly make the changes, and we can usually communicate to the user at the meeting what changes to the system mean, (if we change Feature A and add/remove/change how it operates it may not end up shipping in the next scheduled deployment (or next etc…)) </li></ul></li><li><strong>Merge Into Trunk</strong> - original developer is now responsible for merging the feature branch back into the trunk. <ul><li>If the changes made in the branch are more system-wide or architectural in nature, we will pair on complicated merges. </li><li>There is usually some coordination that may need to happen before a merge can be done. We don’t want to merge a new feature into the trunk when we’re creating a deployment snapshot and anything else that may determine we hold off on merging the feature. </li></ul></li><li><strong>Tester Pass 2</strong> <ul><li>After merging the new feature into the trunk is complete we have one more tester take a shot testing the newly merged features. We added this step to the kanban to help reduce potential regression bugs and help keep the quality band high before the feature was marked as done and queued for deployment. </li></ul></li><li><strong>Deployment</strong> – After all testing and user acceptance is complete the feature is moved to <strong>Deployment</strong>. <ul><li>This step is only to keep track of what is queued up for the next deployment cycle.<br /></li></ul><blockquote>When we started this new process, we attempted to <strong>deploy each feature as soon as it became available</strong>.<strong> </strong>This caused some issues, in part related to source control management and timing of pending Merges; however, <strong>the biggest issue revolved around deployment and interruption to the users</strong>. When we deployed once every 4-6 weeks with our old process, this wasn’t much of a problem for the users. However, deploying whenever a feature was ready caused some issues with our users. We settled on a<strong> weekly deployment (same day and time every week)</strong>, if there is something to be deployed it’s now on a regular schedule.<br /></blockquote><blockquote><strong>One other benefit of deploying on a regular weekly schedule is the cadence the team has adjusted to. </strong>There’s less confusion around “are we deploying today, tomorrow” etc… With deployments scheduled for a regular cadence, it’s much easier for us to create a process that is consistent, efficient and <strong>less error prone</strong>. </blockquote></li><li><strong>Completed</strong> - After the deployment is complete the task is moved to <strong>Completed</strong> and considered DONE! </li></ol><h5>Below is a screen shot of how it looks in our TFS work item view.</h5><blockquote><p>Yes, we hacked and crammed our kanban into the MSF-Agile template, and although it’s rough, it’s working better than our previous non-kanban ways.</p></blockquote><p>To move a feature though the kanban we select it in the “iteration path” drop down.<br /><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SnrlDlU10VI/AAAAAAAAAKI/U_1Y8ZaFvHw/s1600-h/image4.png"><img style="BORDER-RIGHT-WIDTH: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SnrlDyxXpTI/AAAAAAAAAKM/9kFKc4JMbeU/image_thumb2.png?imgmax=800" width="417" height="395" /></a></p></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-I don&#39;t disagree with the impression that another pass of testing once a branch has been merged could seem a little redundant. However, I think it really depends on your development shop and the context of the work being tested. We have a small shop (5 devs, 0 testers). So each pass of testing done by a different dev is a completely different set of experiences/backgrounds taking a look at a feature under test. In fact we&#39;ve found the second pass of testing to be extremely valuable and cost effective (finding/fixing bugs before they get deployed).<br /><br />About the automation part - we run a full automated test suite &amp; integration tests after each check-in to the trunk. However, (in our context -- 6yr old code base - very little code coverage, etc...) automated tests are just not enough to give the confidence that every merge means everything&#39;s green.<br /><br />There are many factors to take into consideration when deciding how your kanban should be setup and all the stages you will need. I&#39;m am certainly not speaking with authority on the subject, just experience (and only a small experience at that). But one of the great parts of this process is it&#39;s ability to change when a need is discovered.</div>
-</div>
-<div class='comment'>
-<div class='author'>Bealer</div>
-<div class='content'>
-Interesting approach. The main issue for me is the merge back into the trunk. You solve that with a 2nd round of testing.<br /><br />I&#39;m not sure if this is wasteful though. It&#39;s definitely needed to check the merge went ok, but it&#39;s a lot of inspection.<br /><br />The developer inspects his code, after working on it. Then a tester inspects it. Then another round of inspection takes place after the merge.<br /><br />That said, automation would solve a lot of that. The same tests could be re-run quickly (plus a bit of manual testing) to ensure everything was ok.<br /><br />What we may do in fact, is just have automation tests running constantly on our trunk. Do the merge, and if nothing breaks it&#39;s ok. If there were conflicts in merging, then we may do some manually testing around that area.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Have you seen the kanban process template over at codeplex?<br /><br />http://www.codeplex.com/site/search?projectSearchText=kanban<br /><br />I haven&#39;t taken a thorough look at the template myself, just know it&#39;s out there...</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason</div>
-<div class='content'>
-For process template customization, there are some great tips and tricks in this blog post: <br /><br />http://weblogs.asp.net/dmckinstry/archive/2006/01/03/434440.aspx<br /><br />I&#39;d really like to see someone develop a Lean/Kanban process template something like the Conchango Scrum template &amp; share it with the community.  Maybe even something that integrates with AgileZen or something similar to help visualize the Kanban.  Lots of opportunities in this space!</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-@Jason As far as TFS is concerned my blog title is probably a little misleading... I will have a very TFS centric post coming with the gotcha&#39;s and others I&#39;ve learned while implementing the process. We haven&#39;t gone as far as customizing the template or written any specific reports. I have a sql statement that gives a rough estimate of the time it takes for a feature to get through the pipeline, but feels more like a hack than a useful report.<br /><br />The big thing lacking for us in the tool at this point is the visibility of the kanban. Given time I could probably write a report or something else to display this information, but don&#39;t feel my time would best be spent there.<br /><br />If you have any good tips on how to slowly customize an existing template and morph it into something else, I would like to do things like you state in your comment &quot;remove iterations altogether and replace...&quot;.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason</div>
-<div class='content'>
-I like this approach.  I&#39;m curious if you&#39;ve developed any reports around your new template?  Have you looked into customizing your process template in such a way that you remove iterations altogether and replace with something like a &quot;Kanban Stage&quot; field?</div>
-</div>
-</div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/13/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -360,6 +370,9 @@ I like this approach.  I&#39;m curious if you&#39;ve developed any reports aroun
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
       </li>
       <li class="post">
@@ -376,9 +389,6 @@ I like this approach.  I&#39;m curious if you&#39;ve developed any reports aroun
       </li>
       <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

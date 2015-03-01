@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-enum-metadata/">NuGet Project Uncovered: Enum Metadata Library</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-01T00:26:00.000Z" pubdate data-updated="true">Jan 31st 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/EnumMetadata.Core" target="_blank">EnumMetadata.Core</a> provides some clean extensions over enums that give you access to metadata you place on enum values. This project’s approach is to use attributes on an Enum and some fancy extension methods to get at the data stored in attributes in a strongly typed way.</p>  <p>I couldn’t quickly get this project up and running on my x64 machine. I received the good ol BadImageFormat exception. I didn’t take enough interest to get it working at the time, and was able to get a pretty good picture of how to use it from the tests (if I had to). Just knowing this project is here is good enough for me at the moment.</p>  <p><strong>Side Note: </strong>It’s a different approach to the problem. Another strongly typed approach I tend to prefer can be found at the following <a href="https://gist.github.com/1604923" target="_blank">Gist here</a>. Not exactly an “enum” but gives a similar feel with access to more metadata and gives the possibility of adding behavior to each item.</p></div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-verifyargs/">NuGet Project Uncovered: VerifyArgs</a></h1>
     <p class="meta">
           <time datetime="2012-01-31T00:25:00.000Z" pubdate data-updated="true">Jan 30th 2012</time>
@@ -222,31 +239,6 @@
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">You are responsible for making that feature work. Write a test. Just do it…</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-07T05:59:00.000Z" pubdate data-updated="true">Jan 6th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Today the <a href="http://en.wikipedia.org/wiki/Project_manager">PM</a> of a project I am working on sent an email with a small list of issues that we needed to get resolved before shipping an early build to the customer for a weekly review. In his list of issues MY NAME was tagged next to a feature that I KNOW was working. I dev’d it, tested, saw it work.</p>  <p>Now the project I’m working on encourages unit tested code, which is a fantastic project to be on since I am a big proponent of Unit/Integration/Automated tests. Heck I wrote a tool to help run them easier (<a href="http://statlight.codeplex.com/">StatLight</a>).</p>  <h4>What I did.</h4>  <p>The problem was this. I dev’d a feature out in like 5 minutes, took about 2 seconds to decide if I should write a unit test to prove my feature worked and <b>this</b><b><i> </i></b><b>is where I failed</b>. Manually verified my change checked in the production code without its test and I was hurriedly moved on to the next task.</p>  <p>About 20 min later I get a quick <a href="http://en.wikipedia.org/wiki/Instant_messaging">I.M.</a> from a co-worker saying he had a small merge conflict in the file I just checked-in. Quickly told him how to get around his merge issue (not realizing after he checked in) that my “quick 5min dev task” was accidently removed in the merge.</p>  <h4>What I SHOULD have done!</h4>  <p>What I<b> should </b>have done was write the <strong>2 lines of test code first</strong>. <i>(you can argue test after/test first, I prefer test-first)</i>. Proven my code wasn’t working, by running the test, and then implement the 5 min feature making the test pass. Then when my co-worker ran into his merge issue.</p>  <p><img src="http://boldandfab.files.wordpress.com/2010/11/pow.jpg" width="179" height="126" /></p>  <p>Test would have failed telling him his merge didn’t go as planned.</p>  <h4>This would have also avoided</h4>  <ul>   <li>PM wouldn’t have had to discover the issue, Screenshot and write up an email. </li>    <li>I wouldn’t have had to peruse source control history to understand why my “working” feature wasn’t working. </li>    <li>I wouldn’t have had to willingly confess my sins in this post.</li> </ul>  <p>If your feature doesn’t have a coinciding automated test. How do you know it’s still working?</p>  <p>Happy Testing!</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>rcecil</div>
-<div class='content'>
-Love it!</div>
-</div>
-</div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/9/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -281,6 +273,9 @@ Love it!</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
       </li>
       <li class="post">
@@ -297,9 +292,6 @@ Love it!</div>
       </li>
       <li class="post">
         <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
