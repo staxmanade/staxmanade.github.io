@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-02-28T21:36:32Z</updated>
+    <updated>2015-03-07T06:19:53Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,37 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[In-App Unit Tests]]></title>
+        <id>http://staxmanade.com/2015/03/in-app-unit-tests/</id>
+        <link href="http://staxmanade.com/2015/03/in-app-unit-tests/">
+        </link>
+        <updated>2015-03-07T06:19:53Z</updated>
+        <summary type="html"><![CDATA[How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run...]]></summary>
+        <content type="html"><![CDATA[<p>How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run them? If the latter is true, then how often do you run them?</p>
+<p>For most, running tests is a simple command line tool like <code>gulp test</code> or <code>rake test</code> or a builtin function in your IDE. You may even have your system covered by a Continuous Integration server, or if you want to catch issues earlier possibly even a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">git pre-commit hook</a>.</p>
+<p>One thing we all probably know is the more difficult it is to run your tests, the less often they get run.</p>
+<p>What if you're building in an environment that does not allow for easy test automation? What if there are no current command line task runners for the environment you're developing in?</p>
+<p>You could spend way too much of your free time/life building a tool that can get the job done for you (cough - <a href="http://statlight.codeplex.com">long live StatLight/Silverlight</a> - cough). I would not necessarily recommend this approach unless you have the spare cycles to contribute a project like this to the broader community.</p>
+<p>So, given that there are no external tools to rely on, and you don't want to spend however long it will take to create one for the development environment you are in, how about finding a way to integrate some sort of test run within your existing application?</p>
+<p>I have always wanted to setup some unit tests that could run inside of an existing application. If you developed an app that had to ship on lots of devices (thinking android or iOS) and you could ask your users out in the wild to go to the settings page of your app and press a &quot;run tests&quot; button, how awesome would it be if this test run could collect data and send the test results back to you?</p>
+<p>This is not a new idea, nor terribly unique, but I've pondered this for quite some time and until recently have not had a project were I was forced to execute on it, until now...</p>
+<p>I'm playing with an app that is currently living inside a WinJS (Windows 8) (Metro - err do they call it that anymore?) environment and there are not any CLI tools out there that can be used to automate tests. However, it was easy enough to get <a href="http://mochajs.org/">Mocha</a> running within the app.</p>
+<p>With MochaJS in place, I proceeded to setup a WinJS Hub in my hub-based application, after make this testing hub the first hub in my project I now have test that run after every F5 (run) of the application.</p>
+<p>This will eventually have to be something I move out of the main landing U.I. when I get closer to shipping my app, but I'm liking the idea of being able to toggle my test U.I. and have them run right within my application, instantly on startup.</p>
+<h1>A few benefits of this approach:</h1>
+<ul>
+<li>It allows me to actually write tests in an application that doesn't natively support a testing runner.</li>
+<li>Fewer test gotch-ya's because of environmental reasons</li>
+<li>Instant feedback on each run</li>
+<li>It's an easy reminder to keep using and driving my development through tests, because the workflow is enabling it (and encouraging it).</li>
+<li>(this could be considered a down side but...) since the tests are living within the actual application, I have to be careful to construct my components no to depend too heavily on the environment or configuration as we wouldn't want unit tests to mess up the running application. While it could be seen as a bit of a pain, I'm really liking how this is forcing me to write loosely coupled, highly compossable components that can be easy to swap in/out.</li>
+</ul>
+<h3>Will I Actually Ship In-App Tests?</h3>
+<p>This one is up in the air, but so far I'm of the mind-set that I'll hide the unit-test run from the main hub, place a button deep in some about or setting page and modify the reporter to send send any failed test results, along with some metadata about the environment or system it's running on, like versions, screen size, or whatever is needed...</p>
+<p>Happy Testing!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Build Command with Auditory Feedback]]></title>
         <id>http://staxmanade.com/2015/02/build-command-with-auditory-feedback/</id>
@@ -952,74 +983,6 @@ git push origin release
 <h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
 <p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
 <p>Best of luck on your port to TypeScript.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></title>
-        <id>http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/</id>
-        <link href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">
-        </link>
-        <updated>2014-04-20T03:19:53Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Migrating from BlogSpot to Octopress - Part 9 - What's left?]]></summary>
-        <content type="html"><![CDATA[<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="http://staxmanade.com/2015/03/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 9</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - (current) - What's left?
-        </li>
-    </ul>
-</div></p>
-<p>Now that I've migrated to Octopress, I'm in the process of finding my new blogging flow.</p>
-<p>I'm currently editing markdown post drafts in a <a href="https://db.tt/NRNuL3PX">DropBox folder</a>. I have been leveraging some of the following tools to write MarkDown.</p>
-<ul>
-<li>Windows
-<ul>
-<li><a href="http://dillinger.io">dillinger.io</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
-<li><a href="http://code52.org/DownmarkerWPF/">MarkPad</a></li>
-<li><a href="http://notepad-plus-plus.org/">Notepad++</a></li>
-</ul>
-</li>
-<li>Mac
-<ul>
-<li><a href="http://dillinger.io">dillinger.io</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
-<li><a href="http://mouapp.com/">Mou</a></li>
-</ul>
-</li>
-<li>iPhone
-<ul>
-<li><a href="http://bywordapp.com/">Byword</a> (has <a href="https://db.tt/NRNuL3PX">DropBox</a> support)</li>
-</ul>
-</li>
-</ul>
-<p>My worry is that some of these don't have the best spell-check support - so here's hoping I double-check my work along the way :P.</p>
 ]]></content>
     </entry>
 </feed>

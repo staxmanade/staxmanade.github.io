@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>NuGet Project Uncovered: Northwind.Db - Developing on Staxmanade</title>
+  <title>In-App Unit Tests - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="   If you are coming to this series of posts for the first time you might check out my introductory post for a little context.   Northwind.Db is a ver...">
+   <meta name="description" content="How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">
+  <link rel="canonical" href="http://staxmanade.com/2015/03/in-app-unit-tests/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,38 +71,56 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">NuGet Project Uncovered: Northwind.Db</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In-App Unit Tests</a></h1>
     <p class="meta">
-          <time datetime="2012-02-08T04:34:00.000Z" pubdate data-updated="true">Feb 7th 2012</time>
+          <time datetime="2015-03-07T06:19:53.583Z" pubdate data-updated="true">Mar 6th 2015</time>
 
 
-        
+        <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
+<div class="entry-content"><p>How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run them? If the latter is true, then how often do you run them?</p>
+<p>For most, running tests is a simple command line tool like <code>gulp test</code> or <code>rake test</code> or a builtin function in your IDE. You may even have your system covered by a Continuous Integration server, or if you want to catch issues earlier possibly even a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">git pre-commit hook</a>.</p>
+<p>One thing we all probably know is the more difficult it is to run your tests, the less often they get run.</p>
+<p>What if you're building in an environment that does not allow for easy test automation? What if there are no current command line task runners for the environment you're developing in?</p>
+<p>You could spend way too much of your free time/life building a tool that can get the job done for you (cough - <a href="http://statlight.codeplex.com">long live StatLight/Silverlight</a> - cough). I would not necessarily recommend this approach unless you have the spare cycles to contribute a project like this to the broader community.</p>
+<p>So, given that there are no external tools to rely on, and you don't want to spend however long it will take to create one for the development environment you are in, how about finding a way to integrate some sort of test run within your existing application?</p>
+<p>I have always wanted to setup some unit tests that could run inside of an existing application. If you developed an app that had to ship on lots of devices (thinking android or iOS) and you could ask your users out in the wild to go to the settings page of your app and press a &quot;run tests&quot; button, how awesome would it be if this test run could collect data and send the test results back to you?</p>
+<p>This is not a new idea, nor terribly unique, but I've pondered this for quite some time and until recently have not had a project were I was forced to execute on it, until now...</p>
+<p>I'm playing with an app that is currently living inside a WinJS (Windows 8) (Metro - err do they call it that anymore?) environment and there are not any CLI tools out there that can be used to automate tests. However, it was easy enough to get <a href="http://mochajs.org/">Mocha</a> running within the app.</p>
+<p>With MochaJS in place, I proceeded to setup a WinJS Hub in my hub-based application, after make this testing hub the first hub in my project I now have test that run after every F5 (run) of the application.</p>
+<p>This will eventually have to be something I move out of the main landing U.I. when I get closer to shipping my app, but I'm liking the idea of being able to toggle my test U.I. and have them run right within my application, instantly on startup.</p>
+<h1>A few benefits of this approach:</h1>
+<ul>
+<li>It allows me to actually write tests in an application that doesn't natively support a testing runner.</li>
+<li>Fewer test gotch-ya's because of environmental reasons</li>
+<li>Instant feedback on each run</li>
+<li>It's an easy reminder to keep using and driving my development through tests, because the workflow is enabling it (and encouraging it).</li>
+<li>(this could be considered a down side but...) since the tests are living within the actual application, I have to be careful to construct my components no to depend too heavily on the environment or configuration as we wouldn't want unit tests to mess up the running application. While it could be seen as a bit of a pain, I'm really liking how this is forcing me to write loosely coupled, highly compossable components that can be easy to swap in/out.</li>
+</ul>
+<h3>Will I Actually Ship In-App Tests?</h3>
+<p>This one is up in the air, but so far I'm of the mind-set that I'll hide the unit-test run from the main hub, place a button deep in some about or setting page and modify the reporter to send send any failed test results, along with some metadata about the environment or system it's running on, like versions, screen size, or whatever is needed...</p>
+<p>Happy Testing!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2012-02-08T04:34:00.000Z" pubdate data-updated="true">Feb 7th 2012</time>
+                          <time datetime="2015-03-07T06:19:53.583Z" pubdate data-updated="true">Mar 6th 2015</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/nuget/'>NuGet</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/" data-via="staxmanade" data-counturl="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/03/in-app-unit-tests/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/03/in-app-unit-tests/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2012/02/nuget-project-uncovered-deleporter/" title="Previous Post: NuGet Project Uncovered: Deleporter">&laquo; NuGet Project Uncovered: Deleporter</a>
-                        <a class="basic-alignment right" href="/2012/02/nuget-project-uncovered-aboditnlp/" title="Next Post: NuGet Project Uncovered: AboditNLP">NuGet Project Uncovered: AboditNLP &raquo;</a>
+                        <a class="basic-alignment left" href="/2015/02/build-command-with-auditory-feedback/" title="Previous Post: Build Command with Auditory Feedback">&laquo; Build Command with Auditory Feedback</a>
                     </p>
                 </footer>
             </article>
@@ -204,8 +222,11 @@
 <script type="text/javascript">
       var disqus_shortname = 'developingonstaxmanade';
       
-        var disqus_script = 'count.js';
-    (function () {
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://staxmanade.com/2015/03/in-app-unit-tests/';
+        var disqus_url = 'http://staxmanade.com';
+        var disqus_script = 'embed.js';
+          (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

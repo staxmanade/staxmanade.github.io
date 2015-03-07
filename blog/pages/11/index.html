@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
+    <p class="meta">
+          <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I was playing around with some Silverlight profiling the other night to see if I could find any obvious issues with my open source project <a href="http://statlight.net" target="_blank">StatLight</a> and wound up writing a little script in PowerShell I hoped someone might find helpful.</p>  <h4>But I didn’t know you could profile a Silverlight app.</h4>  <p>I didn’t until I started doing some digging online. Now, the Silverlight profiling story (at least from what I’ve seen/tried) is not near the easy of say <a href="http://www.red-gate.com/products/ants_performance_profiler/index.htm">Redgate ANTS Performance Profiler</a>. However, it’s do-able. (And with this helper script – hopefully a little simpler?)</p>  <h4>How can I profile a Silverlight Application?</h4>  <p>I would recommend you read the following blog, which explains one way of doing it very well.</p>  <p><a title="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx" href="http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx">http://blogs.msdn.com/profiler/archive/2010/04/26/vs2010-silverlight-4-profiling.aspx</a></p>  <h4>So… what’s this script for?</h4>  <p>If you read the blog above, or have done this before, then you probably noticed that there was quite a series of commands you had to execute before you could wind up with a performance report. </p>  <p>I threw together a quick little PowerShell script in an attempt to automate smooth out the process.</p>  <h4>Hot do I use it?</h4>  <ol>   <li>Download the script &amp; save it somewhere. <a href="http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1"><strong>http://github.com/staxmanade/Scripts/blob/master/SilverlightProfiler.ps1</strong></a> </li>    <li>Open the PowerShell console. cd to the directory your xap/assemblies are stored.      <br />(EX: {myProject}\Bin\Debug\ ) </li>    <li>Execute:      <br />{pathToScript}\SilverlightProfiler.ps1 -urlPath &quot;{myProject}\Bin\Debug\TestPage.html&quot; </li>    <li>When your done profiling press enter to signal that your done.      <p></p> Once complete, it will print the location your profiling report was saved. You can then open it with Visual Studio. </li> </ol>  <h5>Couple of disclaimers.</h5>  <ul>   <li>Some paths are hard-coded to my x86 machine. </li>    <li>I had troubles running the built in visual studio .bat files (from powershell) that are supposed to set the environment variables. So I extracted out what vars I could find to make it work. </li>    <li>I’m not a profiling expert – just hacked this together to get it to work for me. </li> </ul>  <p>I hope this is useful, and if you know of a better way, I’m always interested in hearing your feedback.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/03/diffing-tool-feature-request/">Diffing tool feature request</a></h1>
     <p class="meta">
           <time datetime="2010-03-22T04:08:00.000Z" pubdate data-updated="true">Mar 21st 2010</time>
@@ -446,23 +463,6 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/11/enum-conversion-why-oh-why/">Enum conversion. Why Oh Why?</a></h1>
-    <p class="meta">
-          <time datetime="2009-11-15T07:02:00.000Z" pubdate data-updated="true">Nov 14th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sv-ngaEoLWI/AAAAAAAAAMg/EXgQWVuuS18/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ngh5lO_I/AAAAAAAAAMk/6Mlo3qg3Ysw/image_thumb1.png?imgmax=800" width="569" height="364" /></a>&#160;</p>  <p>What MSDN says: <a href="http://msdn.microsoft.com/en-us/library/sbbt4032.aspx">enum (C# Reference)</a></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ng8eAR3I/AAAAAAAAAMo/LlX88s7OQvc/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-nhJELZZI/AAAAAAAAAMs/nhAjJrMikiM/image_thumb11.png?imgmax=800" width="572" height="134" /></a></p>  <p>Why can’t this just work?</p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/12/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -497,6 +497,9 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/03/in-app-unit-tests/">In-App Unit Tests</a>
+      </li>
+      <li class="post">
         <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
       </li>
       <li class="post">
@@ -513,9 +516,6 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
       </li>
       <li class="post">
         <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
-      </li>
-      <li class="post">
-        <a href="/2015/01/approval-tests---overview/">Approval Tests - Overview</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
