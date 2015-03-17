@@ -71,6 +71,65 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-26T23:02:16.269Z" pubdate data-updated="true">Jan 26th 2015</time>
+
+
+        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/#disqus_thread" data-disqus-identifier="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>We recently setup a new <a href="http://jenkins-ci.org/">Jenkins</a> build server for some iOS applications and I wanted to find a quick way to copy a couple Jobs from the old server to the new one.</p>
+<p>Below are a few small options I found while working on the task.</p>
+<h2>Option 1: Copy <code>jobs</code> directory</h2>
+<p>One option (and seems to be the recommended one) is to just copy the <code>jobs</code> directory from the old server to the new one.</p>
+<p>From the documentation <a href="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins#AdministeringJenkins-Moving%252Fcopying%252Frenamingjobs">Moving/copying/renaming jobs</a>:</p>
+<blockquote>
+<p>You can:</p>
+<ol>
+<li>Move a job from one installation of Jenkins to another by simply copying the corresponding job directory.</li>
+<li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
+<li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
+</ol>
+<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
+</blockquote>
+<p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
+<h2>Option 2: Try one of the plugins out there</h2>
+<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
+<ul>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></li>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
+</ul>
+<h2>Option 3: Use <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI">Jenkins CLI</a></h2>
+<p>This is what I used, which worked nicely for only the few jobs we had. If you have a large number of Jenkins jobs, you may consider the first aproach above.</p>
+<ol>
+<li>First download the Jenkins CLI jar.</li>
+</ol>
+<ul>
+<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
+</ul>
+<p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
+<ol start="2">
+<li>Next we can use the following command (pointing to the old server) to list the jobs.</li>
+</ol>
+<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
+<ol start="3">
+<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
+</ol>
+<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
+<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
+<ol start="4">
+<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
+</ol>
+<p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
+<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
+<p>Hope this helps...</p>
+</div>
+
+      <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/#disqus_thread" data-disqus-identifier="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a></h1>
     <p class="meta">
           <time datetime="2015-01-15T00:17:25.470Z" pubdate data-updated="true">Jan 14th 2015</time>
@@ -535,106 +594,6 @@ git push origin release
 
       <a href="/2014/05/introducing-commandallthings/#disqus_thread" data-disqus-identifier="/2014/05/introducing-commandallthings/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">How to compile plain *.js (JavaScript) files with the TypeScript Compiler</a></h1>
-    <p class="meta">
-          <time datetime="2014-05-18T17:27:29.000Z" pubdate data-updated="true">May 18th 2014</time>
-
-
-        <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/#disqus_thread" data-disqus-identifier="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1>Challenge</h1>
-<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
-<p>And since:</p>
-<blockquote>
-<p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
-</blockquote>
-<p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
-<h1>Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
-<h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
-<ol>
-<li>Get It</li>
-<li>Copy it</li>
-<li>Hack it</li>
-<li>Use it</li>
-</ol>
-<h2>Get it</h2>
-<p>Before we can get too far, let's first install the compiler onto our system.</p>
-<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
-<pre><code>npm install -g typescript
-</code></pre>
-<p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
-<h2>Copy it</h2>
-<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
-<p>If on Windows or Mac</p>
-<pre><code>where tsc
-</code></pre>
-<blockquote>
-<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
-</blockquote>
-<p>Once you've found the path to your version of <code>tsc</code></p>
-<p>Mine was in</p>
-<ul>
-<li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
-<li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
-</ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
-<p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you're done you should have a directory that looks something like this</p>
-<pre><code>
-﻿﻿--MyJSCompiler
-  <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
-  <span class="hljs-string">|   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd</span>
-  <span class="hljs-string">|   </span>
-  ----node_modules
-      ----.bin
-      <span class="hljs-string">|       tsc</span>
-      <span class="hljs-string">|       tsc.cmd</span>
-      <span class="hljs-string">|       </span>
-      ----typescript
-          <span class="hljs-string">|   .npmignore</span>
-          <span class="hljs-string">|   CopyrightNotice.txt</span>
-          <span class="hljs-string">|   LICENSE.txt</span>
-          <span class="hljs-string">|   package.json</span>
-          <span class="hljs-string">|   README.txt</span>
-          <span class="hljs-string">|   ThirdPartyNoticeText.txt</span>
-          <span class="hljs-string">|   </span>
-          ----bin
-              <span class="hljs-string">|   lib.d.ts</span>
-              <span class="hljs-string">|   tsc</span>
-              <span class="hljs-string">|   tsc.js</span>
-              <span class="hljs-string">|   typescript.js</span>
-              <span class="hljs-string">|   </span>
-              ----resources
-                  <span class="hljs-string">|   diagnosticMessages.generated.json</span>
-                  <span class="hljs-string">|   </span>
-                  ----(*.json files excluded for brevity)
-
-</code></pre>
-<p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
-<h2>Hack it</h2>
-<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
-<p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
-<pre><code class="language-diff">     function isTSFile(fname) {
-<span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
-<span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
-     }
-</code></pre>
-<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
-<h2>Use it</h2>
-<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
-<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
-<p>Best of luck on your port to TypeScript.</p>
-</div>
-
-      <a href="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/#disqus_thread" data-disqus-identifier="/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -669,6 +628,9 @@ git push origin release
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a>
+      </li>
+      <li class="post">
         <a href="/2015/03/in-app-unit-tests/">In-App Unit Tests</a>
       </li>
       <li class="post">
@@ -685,9 +647,6 @@ git push origin release
       </li>
       <li class="post">
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

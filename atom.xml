@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-03-07T06:19:53Z</updated>
+    <updated>2015-03-17T03:47:16Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,22 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Starting to build an Xbox One Podcast Player]]></title>
+        <id>http://staxmanade.com/2015/03/starting-to-build-an-xbox-one-podcast-player/</id>
+        <link href="http://staxmanade.com/2015/03/starting-to-build-an-xbox-one-podcast-player/">
+        </link>
+        <updated>2015-03-17T03:47:16Z</updated>
+        <summary type="html"><![CDATA[I'm writing this email to announce	an early sneak peek into a project I've recently started to put some of my free time towards. Here's a preview from...]]></summary>
+        <content type="html"><![CDATA[<p>I'm writing this email to announce  an early sneak peek into a project I've recently started to put some of my free time towards. Here's a preview from a <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">small landing page</a> I've recently put together.</p>
+<blockquote>
+<p>If you, like myself, felt like the Xbox One platform was missing an essential Podcast player app, then you have come to the right place.</p>
+</blockquote>
+<h2>Have any interest in following along with me in this journey?</h2>
+<p>At the bottom of <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">this page</a> is a form, if you share your name and email, you'll get early access and an insider's view of the process of building an Xbox One application.</p>
+<h3>Learn More <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">here...</a></h3>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[In-App Unit Tests]]></title>
         <id>http://staxmanade.com/2015/03/in-app-unit-tests/</id>
@@ -888,101 +904,6 @@ git push origin release
 <p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
 <p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
 <p>Happy Commanding!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to compile plain *.js (JavaScript) files with the TypeScript Compiler]]></title>
-        <id>http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
-        <link href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
-        </link>
-        <updated>2014-05-18T17:27:29Z</updated>
-        <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>
-        <content type="html"><![CDATA[<h1>Challenge</h1>
-<p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>
-<p>The first hurdle you may stumble upon is - the <code>tsc</code> (TypeScript compiler) requires all of your files end with a <code>.ts</code> file extension. This can make quickly prototyping a port challenging. To get an idea of what a port to TypeScript will look like you don't want to deal with first renaming all of your files to .ts. Especially since there are probably files you want to not rename to TypeScript (like jQuery or AngularJS etc.</p>
-<p>And since:</p>
-<blockquote>
-<p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>
-</blockquote>
-<p>it seems reasonable that you could acquire the benefits of the TypeScript compiler for even your existing JavaScript codebase.</p>
-<h1>Challenge Accepted.</h1>
-<p>The TypeScript compiler is open source, so let's take a dive into the compiler to see if this is something we can work around...</p>
-<h3>What are the steps we need to accomplish to make the compiler accept plain <code>.js</code> files?</h3>
-<ol>
-<li>Get It</li>
-<li>Copy it</li>
-<li>Hack it</li>
-<li>Use it</li>
-</ol>
-<h2>Get it</h2>
-<p>Before we can get too far, let's first install the compiler onto our system.</p>
-<p>I'll use <a href="http://npmjs.org">npm</a> to install <a href="https://www.npmjs.org/package/typescript">typescript</a></p>
-<pre><code>npm install -g typescript
-</code></pre>
-<p>Note the <code>-g</code> here tells <code>npm</code> to install typescript globally. This adds the TypeScript compiler to your <code>PATH</code> so you can get right at <code>tsc</code>'ing your TypeScript code.</p>
-<h2>Copy it</h2>
-<p>We probably don't want to modify the globally installed version of <code>tsc</code> so we'll create a copy on our system to play around with. But, before we can do that we need to find where it is.</p>
-<p>If on Windows or Mac</p>
-<pre><code>where tsc
-</code></pre>
-<blockquote>
-<p>NOTE: if you're using the PowerShell console on windows be sure to type out <code>where.exe tsc</code> because <code>where</code> is aliased to <code>Where-Object</code> in PowerShell which won't help us out in this case.</p>
-</blockquote>
-<p>Once you've found the path to your version of <code>tsc</code></p>
-<p>Mine was in</p>
-<ul>
-<li><code>C:\Users\jason\AppData\Roaming\npm\tsc</code></li>
-<li><code>C:\Users\jason\AppData\Roaming\npm\tsc.cmd</code></li>
-</ul>
-<p>Look at the contents of the <code>tsc.cmd</code> for Windows and <code>tsc</code> for non Windows machines. You'll notice that they are essentially executing <code>node.exe</code> passing in an argument to another <code>tsc</code> file in the <code>node_modules</code> path.</p>
-<p>Take the two <code>tsc</code> and <code>tsc.cmd</code> files, copy them into a working folder <code>MyJSCompiler</code> and rename them. I named mine <code>jsc</code> <a href="https://www.youtube.com/watch?v=iDOhFIX3sWE">and he shall be my squishy</a>. Then take the contents of the <code>node_modules/typescript/*</code> folder (and path structure) and copy them to your working directory.</p>
-<p>When you're done you should have a directory that looks something like this</p>
-<pre><code>
-﻿﻿--MyJSCompiler
-  <span class="hljs-string">|   jsc                 &lt;-- notice the re-named file from tsc -&gt; jsc</span>
-  <span class="hljs-string">|   jsc.cmd             &lt;-- notice the re-named file from tsc.cmd -&gt; jsc.cmd</span>
-  <span class="hljs-string">|   </span>
-  ----node_modules
-      ----.bin
-      <span class="hljs-string">|       tsc</span>
-      <span class="hljs-string">|       tsc.cmd</span>
-      <span class="hljs-string">|       </span>
-      ----typescript
-          <span class="hljs-string">|   .npmignore</span>
-          <span class="hljs-string">|   CopyrightNotice.txt</span>
-          <span class="hljs-string">|   LICENSE.txt</span>
-          <span class="hljs-string">|   package.json</span>
-          <span class="hljs-string">|   README.txt</span>
-          <span class="hljs-string">|   ThirdPartyNoticeText.txt</span>
-          <span class="hljs-string">|   </span>
-          ----bin
-              <span class="hljs-string">|   lib.d.ts</span>
-              <span class="hljs-string">|   tsc</span>
-              <span class="hljs-string">|   tsc.js</span>
-              <span class="hljs-string">|   typescript.js</span>
-              <span class="hljs-string">|   </span>
-              ----resources
-                  <span class="hljs-string">|   diagnosticMessages.generated.json</span>
-                  <span class="hljs-string">|   </span>
-                  ----(*.json files excluded for brevity)
-
-</code></pre>
-<p>Now you should be able to call your local version of <code>jsc</code> at the command line.</p>
-<h2>Hack it</h2>
-<p>Since we have a local version we can hack on now, let's find out what needs to change. Thanks to <a href="http://stackoverflow.com/users/1704166/ryan-cavanaugh">Ryan</a> for already giving us a clue <a href="http://stackoverflow.com/questions/17533301/can-i-compile-a-js-file-with-the-typescript-compiler-without-renaming-it-to-a/17533590#17533590">here</a>.</p>
-<p>Open up the <code>node_modules/typescript/bin/tsc.js</code> file (in our working directory from the previous step) and apply the below diff/changes.</p>
-<pre><code class="language-diff">     function isTSFile(fname) {
-<span class="hljs-deletion">-        return isFileOfExtension(fname, ".ts");</span>
-<span class="hljs-addition">+        return isFileOfExtension(fname, ".ts") || isFileOfExtension(fname, ".js");</span>
-     }
-</code></pre>
-<p>We've now implemented a small tweak to the TypeScript compiler that allows us to compile plain JavaScript files.</p>
-<h2>Use it</h2>
-<p>I won't be going into how to use the <code>tsc</code> compiler in this post, but you can now call the compiler passing along your <code>*.js</code> files and begin learning what changes you will need to make to your existing codebase to satisfy the compiler.</p>
-<p>Be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite it with it's compiled version.</p>
-<h1>!!WARNING!! I'll say that again, to use it, be sure to use the <code>--out FILE</code> or <code>--outDir DIRECTORY</code> options because if you don't the compiler will take the input javascript file and overwrite the original with it's compiled version.</h1>
-<p>With source control, this can potentially be a fun experiment to see what TypeScript's version looks compared to your own, but I'll leave that up to you to play with.</p>
-<p>Best of luck on your port to TypeScript.</p>
 ]]></content>
     </entry>
 </feed>

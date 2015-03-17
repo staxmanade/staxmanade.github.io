@@ -92,8 +92,8 @@
 <p>This utility allowed us to quickly find images that were missing while doing our big clean sweep.</p>
 <h1>How to integrate?</h1>
 <p>It should be as simple as adding the <code>.h</code> &amp; <code>.m</code> files to your project and their respective targets and you should be off to the races.</p>
-<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.h"></script></p>
-<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.m"></script></p>
+<p><div><script src='https://gist.github.com/staxmanade/6f462e1829a9976783c0'></script><noscript><pre><code>//&#10;//  UIImage+FailFast.h&#10;//&#10;//  Created by Jason Jarrett on 2/11/15.&#10;//  Copyright (c) 2015 Jason Jarrett. All rights reserved.&#10;//&#10;&#10;#import &#60;UIKit/UIKit.h&#62;&#10;&#10;@interface UIImage (FailFast)&#10;@end&#10;</code></pre></noscript></div></p>
+<p><div><script src='https://gist.github.com/staxmanade/6f462e1829a9976783c0'></script><noscript><pre><code>//&#10;//  UIImage+FailFast.m&#10;//&#10;//  Created by Jason Jarrett on 2/11/15.&#10;//  Copyright (c) 2015 Jason Jarrett. All rights reserved.&#10;//&#10;&#10;// Let&#39;s only use this in a DEBUG/developer mode&#10;#if DEBUG&#10;&#10;#import &#34;UIImage+FailFast.h&#34;&#10;#import &#34;objc/runtime.h&#34;&#10;&#10;static Method origImageNamedMethod = nil;&#10;static NSArray *imagesAllowedToBeMissing;&#10;&#10;@implementation UIImage (FailFast)&#10;&#10;+ (void)load {&#10;&#10;    // Swizzle the core [UIImage imageNamed:name] selector with our custom selector&#10;    origImageNamedMethod = class_getClassMethod (self, @selector (imageNamed:));&#10;    method_exchangeImplementations (origImageNamedMethod, class_getClassMethod (self, @selector (assertIfImageNamedNotFound:)));&#10;&#10;    static dispatch_once_t onceToken;&#10;    dispatch_once (&#38;onceToken, ^{&#10;        // Setup a colleciton of images that may be missing but are allowed to be nil&#10;        imagesAllowedToBeMissing = @[&#10;                                     // TODO: if any images are OK missing - add them here&#10;                                     // @&#34;&#34;,&#10;                                     ];&#10;    });&#10;}&#10;&#10;+ (UIImage *)assertIfImageNamedNotFound:(NSString *)name {&#10;    NSLog (@&#34;Loading image named: %@&#34;, name);&#10;&#10;    // This will call the original core imageNamed selector which actually loads the image&#10;    UIImage *image = [self assertIfImageNamedNotFound:name];&#10;&#10;    if ([imagesAllowedToBeMissing indexOfObject:name] == NSNotFound) {&#10;        NSAssert (image != nil, @&#34;Failed to load imageNamed: %@&#34;, name);&#10;    }&#10;&#10;    return image;&#10;}&#10;&#10;@end&#10;&#10;#endif</code></pre></noscript></div></p>
 <h1>For DEBUG mode only...</h1>
 <p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
 <p>Happy Missing Image Bashing!</p>
@@ -250,6 +250,9 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a>
+      </li>
+      <li class="post">
         <a href="/2015/03/in-app-unit-tests/">In-App Unit Tests</a>
       </li>
       <li class="post">
@@ -266,9 +269,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
       </li>
       <li class="post">
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
