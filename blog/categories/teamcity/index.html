@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: TeamCity - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div class="blog-index">
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a></h1>
+    <p class="meta">
+          <time datetime="2015-04-13T04:18:37.055Z" pubdate data-updated="true">Apr 12th 2015</time>
+
+
+        <a href="/2015/04/look-at-where-definitelytyped-is-now/#disqus_thread" data-disqus-identifier="/2015/04/look-at-where-definitelytyped-is-now/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1>A Little Wondering</h1>
+<p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
+<p>While looking over the project template, I was surprised to see a familiar folder structure <code>typings/cordova/*</code> in the project.</p>
+<h2>Why is this folder structure familiar?</h2>
+<p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
+<p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
+<p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
+<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the NuGet.org, take a glance at the account and check out how many downloads there had been?</p>
+<p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
+<p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
+<p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>
+<p>This means that the <a href="http://teamcity.codebetter.com/">TeamCity over at CodeBetter</a> has pretty much been cranking out new and updated DefinitelyTyped TypeScript definitions for almost the last two years, but it's time to re-visit...</p>
+<h1>Thanks TeamCity @ CodeBetter</h1>
+<p>Before all of the new, cool, and hip online continuous integration systems came to be, one of the only free options for open source was an instance of <a href="https://www.jetbrains.com/teamcity/">JetBrains TeamCity</a> over at <a href="http://codebetter.com/">CodeBetter</a> and I'd like to throw out a big thank you for those at CodeBetter who put the time and effort into hosting this service for many of the .Net OSS projects out there.</p>
+<h1>Hello AppVeyor</h1>
+<p>I recently ported this job to an <a href="http://www.appveyor.com/">AppVeyor</a> build for the DT project and after a quick round of using their wonderful support to work through a hurdle, I completed a <a href="https://ci.appveyor.com/project/JasonJarrett/nugetautomation">new build</a> at AppVeyor that replicated the one originally hosted on the TeamCity server.</p>
+<p>So a HUGE thanks to AppVeyor for creating such great product, and offering free builds to the OSS community.</p>
+<p>I'll keep an eye on the new build for a while (before I forget about it) and hopefully it'll run for another long time to come.</p>
+<p>Happy TypeScripting!</p>
+</div>
+
+            </article>
+            <div class="pagination">
+                <a href="/blog/archives">Blog Archives</a>
+            </div>
+        </div>
+        <aside class="sidebar">
+            <section>
+	<!-- Begin MailChimp Signup Form -->
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup input.button {
+			width: inherit;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	</style>
+	<div id="mc_embed_signup">
+		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<h1>Subscribe</h1>
+			<p>Enter your email to recive recent blog posts and other news</p>
+			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
+			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		</form>
+	</div>
+	<!--End mc_embed_signup-->
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+      <li class="post">
+        <a href="/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a>
+      </li>
+      <li class="post">
+        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a>
+      </li>
+      <li class="post">
+        <a href="/2015/03/in-app-unit-tests/">In-App Unit Tests</a>
+      </li>
+      <li class="post">
+        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
+      </li>
+      <li class="post">
+        <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
+      </li>
+      <li class="post">
+        <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
+      </li>
+      <li class="post">
+        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
+      </li>
+  </ul>
+  <a href="/blog/archives/">More posts...</a>
+</section>
+
+<section>
+  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/js/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'staxmanade',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/js/github.js" type="text/javascript"> </script>
+</section>
+
+
+        </aside>
+ 
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

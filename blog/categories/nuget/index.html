@@ -71,6 +71,38 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a></h1>
+    <p class="meta">
+          <time datetime="2015-04-13T04:18:37.055Z" pubdate data-updated="true">Apr 12th 2015</time>
+
+
+        <a href="/2015/04/look-at-where-definitelytyped-is-now/#disqus_thread" data-disqus-identifier="/2015/04/look-at-where-definitelytyped-is-now/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1>A Little Wondering</h1>
+<p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
+<p>While looking over the project template, I was surprised to see a familiar folder structure <code>typings/cordova/*</code> in the project.</p>
+<h2>Why is this folder structure familiar?</h2>
+<p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
+<p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
+<p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
+<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the NuGet.org, take a glance at the account and check out how many downloads there had been?</p>
+<p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
+<p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
+<p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>
+<p>This means that the <a href="http://teamcity.codebetter.com/">TeamCity over at CodeBetter</a> has pretty much been cranking out new and updated DefinitelyTyped TypeScript definitions for almost the last two years, but it's time to re-visit...</p>
+<h1>Thanks TeamCity @ CodeBetter</h1>
+<p>Before all of the new, cool, and hip online continuous integration systems came to be, one of the only free options for open source was an instance of <a href="https://www.jetbrains.com/teamcity/">JetBrains TeamCity</a> over at <a href="http://codebetter.com/">CodeBetter</a> and I'd like to throw out a big thank you for those at CodeBetter who put the time and effort into hosting this service for many of the .Net OSS projects out there.</p>
+<h1>Hello AppVeyor</h1>
+<p>I recently ported this job to an <a href="http://www.appveyor.com/">AppVeyor</a> build for the DT project and after a quick round of using their wonderful support to work through a hurdle, I completed a <a href="https://ci.appveyor.com/project/JasonJarrett/nugetautomation">new build</a> at AppVeyor that replicated the one originally hosted on the TeamCity server.</p>
+<p>So a HUGE thanks to AppVeyor for creating such great product, and offering free builds to the OSS community.</p>
+<p>I'll keep an eye on the new build for a while (before I forget about it) and hopefully it'll run for another long time to come.</p>
+<p>Happy TypeScripting!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_22/">NuGet Project Uncovered: SpecificationExtensions.[MSTest | NUnit | Xunit]</a></h1>
     <p class="meta">
           <time datetime="2012-02-23T05:05:00.000Z" pubdate data-updated="true">Feb 22nd 2012</time>
@@ -604,6 +636,9 @@ Honey is sweet, but the bee stings</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a>
+      </li>
+      <li class="post">
         <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a>
       </li>
       <li class="post">
@@ -620,9 +655,6 @@ Honey is sweet, but the bee stings</div>
       </li>
       <li class="post">
         <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-03-17T03:47:16Z</updated>
+    <updated>2015-04-13T04:18:37Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,34 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Look at where DefinitelyTyped is Now]]></title>
+        <id>http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/</id>
+        <link href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">
+        </link>
+        <updated>2015-04-13T04:18:37Z</updated>
+        <summary type="html"><![CDATA[# A Little Wondering]]></summary>
+        <content type="html"><![CDATA[<h1>A Little Wondering</h1>
+<p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
+<p>While looking over the project template, I was surprised to see a familiar folder structure <code>typings/cordova/*</code> in the project.</p>
+<h2>Why is this folder structure familiar?</h2>
+<p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
+<p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
+<p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
+<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the NuGet.org, take a glance at the account and check out how many downloads there had been?</p>
+<p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
+<p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
+<p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>
+<p>This means that the <a href="http://teamcity.codebetter.com/">TeamCity over at CodeBetter</a> has pretty much been cranking out new and updated DefinitelyTyped TypeScript definitions for almost the last two years, but it's time to re-visit...</p>
+<h1>Thanks TeamCity @ CodeBetter</h1>
+<p>Before all of the new, cool, and hip online continuous integration systems came to be, one of the only free options for open source was an instance of <a href="https://www.jetbrains.com/teamcity/">JetBrains TeamCity</a> over at <a href="http://codebetter.com/">CodeBetter</a> and I'd like to throw out a big thank you for those at CodeBetter who put the time and effort into hosting this service for many of the .Net OSS projects out there.</p>
+<h1>Hello AppVeyor</h1>
+<p>I recently ported this job to an <a href="http://www.appveyor.com/">AppVeyor</a> build for the DT project and after a quick round of using their wonderful support to work through a hurdle, I completed a <a href="https://ci.appveyor.com/project/JasonJarrett/nugetautomation">new build</a> at AppVeyor that replicated the one originally hosted on the TeamCity server.</p>
+<p>So a HUGE thanks to AppVeyor for creating such great product, and offering free builds to the OSS community.</p>
+<p>I'll keep an eye on the new build for a while (before I forget about it) and hopefully it'll run for another long time to come.</p>
+<p>Happy TypeScripting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Starting to build an Xbox One Podcast Player]]></title>
         <id>http://staxmanade.com/2015/03/starting-to-build-an-xbox-one-podcast-player/</id>
@@ -872,38 +900,6 @@ git push origin release
 <pre><code>git push origin master:release
 </code></pre>
 <p>Happy Automation!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Introducing CommandAllThings]]></title>
-        <id>http://staxmanade.com/2014/05/introducing-commandallthings/</id>
-        <link href="http://staxmanade.com/2014/05/introducing-commandallthings/">
-        </link>
-        <updated>2014-05-24T20:27:55Z</updated>
-        <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
-        <content type="html"><![CDATA[<p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1>Some background</h1>
-<p>Do you use any command line build tools like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">Rake</a>, etc?</p>
-<p>I leverage these tools in many projects, both at work and on my own projects. I recently noticed that the muscle memory I've developed was slowing me down as I switch between projects and inadvertently use the wrong tool in the wrong project.</p>
-<p>When working on one project all day and typing <code>rake test</code> throughout the day, then switching to another project not using <code>rake</code> I found myself still typing <code>rake test</code> even though I needed to type <code>gulp test</code>, or <code>grunt build</code>. This really messes with my flow. All I wanted to do was <code>test</code> or <code>build</code> the current project.</p>
-<p>So I created <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
-<h1>What is it?</h1>
-<p>In short, it's a very simple abstraction on top of your usual task runners like <a href="http://gulpjs.com">GulpJS</a>, <a href="http://gruntjs.com">GruntJS</a>, <a href="http://rake.rubyforge.org/">rake</a>, etc that allows you to accidentally type the wrong tool and still accomplish the desired task with the right tool.</p>
-<p>By using aliases in either PowerShell or Bash we can route, <code>rake</code>, <code>gulp</code>, <code>grunt</code>, etc to <code>CommandAllThings</code> which will inspect the current directory, determine the correct tool and execute your task(s) with the correct tool.</p>
-<p>This is great. Now when I type in the wrong command <code>rake test</code> in a <code>gulp</code> project, I don't get slapped in the face with an error saying &quot;cannot find a rakefile.&quot; Instead I continue on my way like I knew what I was doing.</p>
-<p><img src="https://raw.githubusercontent.com/staxmanade/CommandAllThings/master/assets/SampleRakeCommand.png" alt="example screenshot of commandAllThings"></p>
-<h1>Does it only work on Windows or on the Mac?</h1>
-<p>At the moment it works on both.</p>
-<ul>
-<li>For Windows I have an implementation in Powershell.</li>
-<li>For the Mac you can alias to a Bash script.</li>
-</ul>
-<h1>Download at GitHub!</h1>
-<p><a href="https://github.com/staxmanade/CommandAllThings">Check it out!</a></p>
-<h1>What's next?</h1>
-<p>I'd like to look at adding other tools to the list. You can check out the project for other task runners I know about. And if you have any thoughts on how to detect the other types, drop me a note in the issues (or consider sending over a pull request).</p>
-<p>I'd also love to get some feedback on how to best or more easily get this into peoples's development environment. For now it's pretty manual and since it's all about your profile, a bit personal, so probably a good thing that it's not automatically installed.</p>
-<p>Happy Commanding!</p>
 ]]></content>
     </entry>
 </feed>
