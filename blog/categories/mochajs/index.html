@@ -83,11 +83,11 @@
 <p>I described a while back a scenario about running <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit tests</a>. So if you'd like some background on the subject have a look there before reading here.</p>
 </blockquote>
 <p>This post is going to give some specifics about how to run <a href="http://mochajs.org/">MochaJS</a> tests within a Microsoft Windows JavaScript application (WinJS).</p>
-<h1>Prerequisites</h1>
+<h2>Prerequisites</h2>
 <p>These steps assume you already have a WinJS application, possibly using the universal template or other. In the end it doesn't matter. As long as you have a project that probably has a <code>default.html</code> file and the ability to add <code>js</code> &amp; <code>css</code> files to.</p>
-<h1>Get Mocha</h1>
+<h2>Get Mocha</h2>
 <p>You can acquire the mocha library however you want, <a href="http://bower.io/">Bower</a>, <a href="http://npmjs.com/">Npm</a>, or download it manually from the site (<a href="http://mochajs.org/">mochajs.org</a>).</p>
-<h1>Reference Mocha Within Project &amp; App</h1>
+<h2>Reference Mocha Within Project &amp; App</h2>
 <p>However you get the mocha source, you need to both add references to the mocha js and css files into your project file either in a <code>*.jsproj</code> file or if using a universal shared app, in the shared project.</p>
 <p>Then you need to include a reference to the code in your <code>default.html</code> file.</p>
 <p>In my example below you can see I used bower to download the <a href="http://mochajs.org">MochaJS</a> library.</p>
@@ -114,7 +114,7 @@
 
 ...Rest of default.html file excluded
 </code></pre>
-<h1>Create a WinJS Control for hosting Mocha reporting.</h1>
+<h2>Create a WinJS Control for hosting Mocha reporting.</h2>
 <p>Below is a sample WinJS control that can be used to host the mocha html report.</p>
 <pre><code class="language-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
@@ -209,7 +209,7 @@
     });
 })();
 </code></pre>
-<h1>Handle global exceptions</h1>
+<h2>Handle global exceptions</h2>
 <p>If you write any async code (difficult not to these days) an exception or assertion failure will not be trapped by the internal try/catch mechanism's of Mocha in a Windows WinJS environment.</p>
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
@@ -258,7 +258,7 @@
         debugger;
     }
 </code></pre>
-<h1>Reference the test control.</h1>
+<h2>Reference the test control.</h2>
 <p>While developing out the application, I like to throw it front and center in the first hub of my apps home page hub control.</p>
 <p>Here's an example of how to reference the above control:</p>
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
