@@ -25,7 +25,7 @@
 <h1>Prerequisites</h1>
 <p>These steps assume you already have a WinJS application, possibly using the universal template or other. In the end it doesn't matter. As long as you have a project that probably has a <code>default.html</code> file and the ability to add <code>js</code> &amp; <code>css</code> files to.</p>
 <h1>Get Mocha</h1>
-<p>You can acquire the mocha library however you want, <a href="http://bower.io/">Bower</a>, (Npm)(<a href="http://npmjs.com/">http://npmjs.com/</a>), or download it manually from the site (<a href="http://mochajs.org/">mochajs.org</a>).</p>
+<p>You can acquire the mocha library however you want, <a href="http://bower.io/">Bower</a>, <a href="http://npmjs.com/">Npm</a>, or download it manually from the site (<a href="http://mochajs.org/">mochajs.org</a>).</p>
 <h1>Reference Mocha Within Project &amp; App</h1>
 <p>However you get the mocha source, you need to both add references to the mocha js and css files into your project file either in a <code>*.jsproj</code> file or if using a universal shared app, in the shared project.</p>
 <p>Then you need to include a reference to the code in your <code>default.html</code> file.</p>
