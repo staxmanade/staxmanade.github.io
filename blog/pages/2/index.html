@@ -71,6 +71,89 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/approval-tests---overview/">Approval Tests - Overview</a></h1>
+    <p class="meta">
+          <time datetime="2015-01-30T16:38:06.494Z" pubdate data-updated="true">Jan 30th 2015</time>
+
+
+        <a href="/2015/01/approval-tests---overview/#disqus_thread" data-disqus-identifier="/2015/01/approval-tests---overview/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I first started using the <code>.Net</code> version of Approval Tests and found so much value in it, I <a href="https://github.com/approvals/Approvals.NodeJS">created a port of the tool</a> that I can use in <a href="http://nodejs.org">Node.JS</a>. This post is intended as a rough overview of Approval Tests, and will be using the <a href="https://github.com/approvals/Approvals.NodeJS">NodeJS port</a> in my examples below.</p>
+<blockquote>
+<p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
+</blockquote>
+<h2>What are Approval Tests?</h2>
+<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
+<p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
+<p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
+<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
+<p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
+<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
+<h1>Let's walk through an example</h1>
+<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
+<pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
+describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+
+        <span class="hljs-comment">// Arrange</span>
+        <span class="hljs-comment">// setup the initial state for the test</span>
+        <span class="hljs-keyword">var</span> obj = { valueA: <span class="hljs-string">"test"</span>, valueB: <span class="hljs-number">1234</span> };
+
+        <span class="hljs-comment">// Act - Do some business logic on the object</span>
+        obj.valueC = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-comment">// Assert - verify the state of the item under test</span>
+        assert.equal(obj.valueA, <span class="hljs-string">"test"</span>)
+        assert.equal(obj.valueB, <span class="hljs-number">1234</span>);
+        assert.equal(obj.valueC, <span class="hljs-literal">true</span>);
+    });
+});
+</code></pre>
+<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
+<p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
+<h1>Let's turn our AAA test above into an Approval Test</h1>
+<pre><code class="language-diff">var approvals = require('approvals');
+describe("when testing something", function(){
+    it("should do something special", function(){
+
+        // Arrange
+        // setup the initial state for the test
+        var obj = { valueA: "test", valueB: 1234 };
+
+        // Act - Do some business logic on the object
+        obj.valueC = true;
+
+        // Assert - verify the state of the item under test
+<span class="hljs-deletion">-        assert.equal(obj.valueA, "test")</span>
+<span class="hljs-deletion">-        assert.equal(obj.valueB, 1234);</span>
+<span class="hljs-deletion">-        assert.equal(obj.valueC, true);</span>
+<span class="hljs-addition">+        approvals.verifyAsJSON(__dirname, "sampleTest", obj);</span>
+    });
+});
+</code></pre>
+<p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
+<h1>How Approval Tests Work</h1>
+<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
+<p>At this point we have to choose between a number of options:</p>
+<ul>
+<li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
+<li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
+<li>Or we do nothing as we want to start over...</li>
+</ul>
+<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
+<blockquote>
+<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
+</blockquote>
+<h1>Next Steps!</h1>
+<p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
+<p>Happy Approving!</p>
+</div>
+
+      <a href="/2015/01/approval-tests---overview/#disqus_thread" data-disqus-identifier="/2015/01/approval-tests---overview/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">Setting Jenkins up to run XCTool and Xcode Simulator Tests</a></h1>
     <p class="meta">
           <time datetime="2015-01-28T00:40:34.767Z" pubdate data-updated="true">Jan 27th 2015</time>
@@ -565,49 +648,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 
       <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
-    <p class="meta">
-          <time datetime="2014-06-03T16:38:06.494Z" pubdate data-updated="true">Jun 3rd 2014</time>
-
-
-        <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1>How to update a git branch OTHER than the one you're currently on.</h1>
-<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre>
-<p>I recently setup a <a href="http://en.wikipedia.org/wiki/Continuous_integration">C.I.</a> server to automatically generate builds of an iOS application and upload to <a href="http://testflightapp.com/">TestFlight</a>. I don't want each and every push to master to trigger a new TestFlight build, so I configured my C.I. server to watch the <code>release</code> branch.</p>
-<p>I was starting to dislike the switch branch dance to trigger a new build.</p>
-<h3>What I used to do:</h3>
-<pre><code># When I was on the master branch
-git checkout release
-git merge master
-git push
-</code></pre>
-<blockquote>
-<p>When things start to hurt, look for a better alternative. And with Git, there is almost always a more efficient way.</p>
-</blockquote>
-<h3>After digging a bit, I found the answer.</h3>
-<pre><code>git branch -f {branch-to-change} {commit-to-change-to}
-</code></pre>
-<p>So to trigger a new build from master I can just:</p>
-<pre><code>git branch -f release master
-git push origin release
-</code></pre>
-<p>Or wrap that in a <a href="http://gulpjs.com">Gulp</a> task <code>gulp tf</code>. And with <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a> I can now type <code>rake tf</code>, or <code>grunt tf</code> or <code>gulp tf</code> and they all trigger a new build to come out of TestFlight.</p>
-<p>Or if you wanted to skip moving your local branch, you could just update the remote branch directly.</p>
-<pre><code>git push origin local_branch:remote_branch
-</code></pre>
-<p>So my workflow would look more like</p>
-<pre><code>git push origin master:release
-</code></pre>
-<p>Happy Automation!</p>
-</div>
-
-      <a href="/2014/06/move-a-git-branch-while-on-a-different-branch/#disqus_thread" data-disqus-identifier="/2014/06/move-a-git-branch-while-on-a-different-branch/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -642,6 +682,9 @@ git push origin release
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a>
+      </li>
+      <li class="post">
         <a href="/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a>
       </li>
       <li class="post">
@@ -658,9 +701,6 @@ git push origin release
       </li>
       <li class="post">
         <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

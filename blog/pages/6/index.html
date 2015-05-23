@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></h1>
+    <p class="meta">
+          <time datetime="2012-11-01T16:55:00.000Z" pubdate data-updated="true">Nov 1st 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">Slightly modified “CD” Command for PowerShell</a>. <br />Since that point, I’ve made a number of updates and would like to share them.<br />The first change I made was to move the “CD” script in that post to a <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1" target="_blank">new location</a>. I’ve greatly extended how I setup my development environment and how my PowerShell environment is initialized. <br /><blockquote><span style="background-color: white;">If you’re interested in how I setup my PS profile, take a look at the readme. Combine the setup with some <a href="http://chocolatey.org/" target="_blank">Chocolatey</a> and some <a href="http://boxstarter.codeplex.com/" target="_blank">BoxStarter</a> and you’re on your way to an amazingly automated development environment setup.</span></blockquote>Now on to the features I’ve added to the CD command.<br /><ul><li>I often would do something like “CD $Profile” (which is a no-go because that is a file not a directory, but my intent was to get into the directory where the $Profile file lived).      <br />      <br />So I updated it so if you try to CD to a file, it will just take you to the directory where the file resides.       </li><li>If you try to CD into a folder that doesn’t exist, it now prompts you to create it. <em>You could bypass the prompt with a -force|-f flag.</em><a href="http://lh6.ggpht.com/-60i1Gy9oDaI/UJKpYXRavXI/AAAAAAAAAbY/2hB0iIpFEmc/s1600-h/image6.png"><img alt="image" border="0" height="124" src="http://lh4.ggpht.com/-OcSX7gH6dz0/UJKpY8jiewI/AAAAAAAAAbg/zakK10j3HvU/image_thumb2.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="524" /></a>       </li><li>Lastly I fixed an issue reported by a commenter in the previous post about trying to CD into a folder with the same name as a history index. If you had a folder named “4” and you typed “CD 4” it previously wouldn’t take you the 4 directory, but instead lookup item 4 in your CD history and take you there. Now if you specify a number and that number lives in the current directory it will take precedence over your history value. <em>(To be fair, I only added this feature, and even since I originally wrote about the CD command I have yet to run into a need for this case. Probably because I don’t name my directories with numbers)</em>. </li></ul>Something I had only recently noticed is this script appears to work with other PowerShell drive providers. I only did a cursory test but can CD into the HKLM:\Software\MyTestFolderThatShouldntExist and it will prompt to create the ‘folder’. If I say yes, I end up with a new registry folder. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh5.ggpht.com/-eqb3EKYnXNo/UJKpadhpcFI/AAAAAAAAAbo/jBmQj4iLjgA/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /> Not sure how useful that is, but with the abstraction layer PowerShell drives give us it’s interesting.<br /><br />If you’d like to grab just the CD script you can download it here.    <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a><br /><br />Happy system navigation with PowerShell.</div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
     <p class="meta">
           <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
@@ -222,23 +239,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">NuGet Project Uncovered: FastMember</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-16T04:48:00.000Z" pubdate data-updated="true">Feb 15th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FastMember" target="_blank">FastMember</a> would be something you pull in if you’re trying to do reflection to read properties of your objects, but starting to notice some performance issues. This project will emit some IL at runtime that can read your properties much faster than good old reflection (like below)</p>  <blockquote>   <p><font style="background-color: #ffffff">var value = typeof(MyObject).GetProperty(“MyProp”).GetValue(myObjInstance, new object[0]);</font></p> </blockquote>  <p>Replace the above with.</p>  <blockquote>   <pre>var accessor = TypeAccessor.Create(typeof(MyObject)); <br />var value = accessor[obj, “MyProp”];<br /></pre><br /></blockquote><br /><br /><p>This project lets you either read or assign values to properties. (See my test below)</p><br /><br /><p><a href="http://lh5.ggpht.com/-c07wZnNp_JQ/Tx-LBUyYFVI/AAAAAAAAAVg/hiErRW7eAqw/s1600-h/image_thumb1_thumb%25255B2%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image_thumb1_thumb" border="0" alt="image_thumb1_thumb" src="http://lh5.ggpht.com/-O9Oa3Z61lfc/Tx-LBzkyDtI/AAAAAAAAAVo/NtmF_YwKEfk/image_thumb1_thumb_thumb.png?imgmax=800" width="466" height="343" /></a></p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/7/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -273,6 +273,9 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a>
+      </li>
+      <li class="post">
         <a href="/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a>
       </li>
       <li class="post">
@@ -289,9 +292,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
       </li>
       <li class="post">
         <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
