@@ -153,6 +153,9 @@
 <span class="hljs-pi">    "use strict"</span>;
 
     <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// clear any current test results since mocha just appends.</span>
+        element.querySelector(<span class="hljs-string">'#mocha'</span>).innerHTML = <span class="hljs-string">""</span>;
+    
         <span class="hljs-comment">// If you want your tests to verify nothing is leaked globally...</span>
         mocha.checkLeaks();
 
@@ -173,7 +176,7 @@
             options = options || {};
 
             <span class="hljs-comment">// get our possibly already cached value of whether to run the tests on startup.</span>
-            <span class="hljs-keyword">var</span> runOnStart = localStorage.getItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>);
+            <span class="hljs-keyword">var</span> runOnStart = (<span class="hljs-built_in">JSON</span>.parse(localStorage.getItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>) || <span class="hljs-string">"true"</span>));
 
             <span class="hljs-comment">// checkbox to manage auto-run state</span>
             <span class="hljs-keyword">var</span> runOnStartCheckbox = element.querySelector(<span class="hljs-string">'#mochaTestsRunOnStart'</span>);
