@@ -71,6 +71,134 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/06/debugging-ios-autolayout-issues/">Debugging iOS AutoLayout Issues</a></h1>
+    <p class="meta">
+          <time datetime="2015-06-01T16:33:59.235Z" pubdate data-updated="true">Jun 1st 2015</time>
+
+
+        <a href="/2015/06/debugging-ios-autolayout-issues/#disqus_thread" data-disqus-identifier="/2015/06/debugging-ios-autolayout-issues/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>This tip may not be news to you, but it was to me so I'll put this up here to help you, but more to help myself when I get stuck down the road and forget how to do this.</p>
+<h1>Background</h1>
+<p>I just stumbled upon a way to help when debugging and diagnosing issues around ambiguous auto layout constraints (you know the kind where iOS just picks the one it feels like to remove?).</p>
+<p>Today I was researching why I was receiving the following output in my debugger console:</p>
+<pre><code>Unable <span class="hljs-built_in">to</span> simultaneously satisfy constraints.
+    Probably <span class="hljs-keyword">at</span> least <span class="hljs-constant">one</span> <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> constraints <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> following list is <span class="hljs-constant">one</span> you don<span class="hljs-string">'t want. Try this: (1) look at each constraint and try to figure out which you don'</span>t expect; (<span class="hljs-number">2</span>) find <span class="hljs-operator">the</span> code that added <span class="hljs-operator">the</span> unwanted constraint <span class="hljs-operator">or</span> constraints <span class="hljs-operator">and</span> fix <span class="hljs-keyword">it</span>. (Note: If you<span class="hljs-string">'re seeing NSAutoresizingMaskLayoutConstraints that you don'</span>t understand, refer <span class="hljs-built_in">to</span> <span class="hljs-operator">the</span> documentation <span class="hljs-keyword">for</span> <span class="hljs-operator">the</span> UIView property translatesAutoresizingMaskIntoConstraints) 
+(
+    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;"</span>,
+    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d6369e0 H:[UIView:0x7fc82aba1210]-(0)-|   (Names: '|':UIView:0x7fc82d6b9f80 )&gt;"</span>,
+    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d636a30 H:|-(0)-[UIView:0x7fc82aba1210]   (Names: '|':UIView:0x7fc82d6b9f80 )&gt;"</span>,
+    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e7fd0 'UIView-Encapsulated-Layout-Width' H:[UIView:0x7fc82d6b9f80(50)]&gt;"</span>
+)
+
+Will attempt <span class="hljs-built_in">to</span> recover <span class="hljs-keyword">by</span> breaking constraint 
+&lt;NSLayoutConstraint:<span class="hljs-number">0x7fc82d3e18a0</span> H:[UIView:<span class="hljs-number">0x7fc82aba1210</span>(<span class="hljs-number">768</span>)]&gt;
+
+Make <span class="hljs-operator">a</span> symbolic <span class="hljs-built_in">breakpoint</span> <span class="hljs-keyword">at</span> UIViewAlertForUnsatisfiableConstraints <span class="hljs-built_in">to</span> <span class="hljs-keyword">catch</span> this <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> debugger.
+The methods <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> UIConstraintBasedLayoutDebugging category <span class="hljs-command"><span class="hljs-keyword">on</span> <span class="hljs-title">UIView</span> <span class="hljs-title">listed</span> <span class="hljs-title">in</span> &lt;<span class="hljs-title">UIKit</span>/<span class="hljs-title">UIView</span>.<span class="hljs-title">h</span>&gt; <span class="hljs-title">may</span> <span class="hljs-title">also</span> <span class="hljs-title">be</span> <span class="hljs-title">helpful</span>.</span>
+</code></pre>
+<p>Now, I can tell from the above that theres an issue with the height constraint(s), but looking at this, I have no idea what view is being referenced which makes it quite difficult to jump to XCode and inspect the view's constraints.</p>
+<p>But I worked through it, and learned the following along the way. Hope this helps you.</p>
+<h1>How to set auto layout breakpoint in Xcode debugger</h1>
+<p>Using this text <code>Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.</code> I found this great post on stack overflow on <a href="http://stackoverflow.com/questions/26389273/how-to-trap-on-uiviewalertforunsatisfiableconstraints/26389957#26389957">How to trap on UIViewAlertForUnsatisfiableConstraints</a> but have copied below for reference.</p>
+<blockquote>
+<p>You'll want to add a Symbolic Breakpoint. Apple provides an excellent guide on how to do this.</p>
+<ol>
+<li>Open the Breakpoint Navigator <code>cmd+7</code></li>
+<li>Click the <code>Add</code> button in the lower left</li>
+<li>Select <code>Add Symbolic Breakpoint</code>...</li>
+<li>Where it says <code>Symbol</code> just type in <code>UIViewAlertForUnsatisfiableConstraints</code></li>
+</ol>
+<p>You can also treat it like any other breakpoint, turning it on and off, adding actions, or log messages.</p>
+</blockquote>
+<p>But that's only the first step. Once you've run the app and hit the breakpoint, you're left staring at assembly code and memory addresses, for example:</p>
+<pre><code>UIKit`UIViewAlertForUnsatisfiableConstraints:
+-&gt;  0x1131cc4a2 <span class="hljs-variable">&lt;+0&gt;</span>:   pushq  %rbp
+    0x1131cc4a3 <span class="hljs-variable">&lt;+1&gt;</span>:   movq   %rsp, %rbp
+    0x1131cc4a6 <span class="hljs-variable">&lt;+4&gt;</span>:   pushq  %r15
+    0x1131cc4a8 <span class="hljs-variable">&lt;+6&gt;</span>:   pushq  %r14
+    0x1131cc4aa <span class="hljs-variable">&lt;+8&gt;</span>:   pushq  %rbx
+    0x1131cc4ab <span class="hljs-variable">&lt;+9&gt;</span>:   pushq  %rax
+    0x1131cc4ac <span class="hljs-variable">&lt;+10&gt;</span>:  movq   %rsi, %r14
+    0x1131cc4af <span class="hljs-variable">&lt;+13&gt;</span>:  movq   %rdi, %r15
+    0x1131cc4b2 <span class="hljs-variable">&lt;+16&gt;</span>:  cmpq   $-0x1, 0x778796(%rip)     ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.result + 7
+    0x1131cc4ba <span class="hljs-variable">&lt;+24&gt;</span>:  jne    0x1131cc529               ; <span class="hljs-variable">&lt;+135&gt;</span>
+    0x1131cc4bc <span class="hljs-variable">&lt;+26&gt;</span>:  cmpb   $0x0, 0x778785(%rip)      ; _UIConstraintBasedLayoutPlaySoundWhenEngaged.__once + 7
+    0x1131cc4c3 <span class="hljs-variable">&lt;+33&gt;</span>:  je     0x1131cc4ed               ; <span class="hljs-variable">&lt;+75&gt;</span>
+    0x1131cc4c5 <span class="hljs-variable">&lt;+35&gt;</span>:  movq   0x73cd8c(%rip), %rdi      ; (void <span class="hljs-keyword">*</span>)0x0000000113925248: UIDevice
+    0x1131cc4cc <span class="hljs-variable">&lt;+42&gt;</span>:  movq   0x7108e5(%rip), %rsi      ; <span class="hljs-string">"currentDevice"</span>
+    0x1131cc4d3 <span class="hljs-variable">&lt;+49&gt;</span>:  movq   0x4d7aee(%rip), %rbx      ; (void <span class="hljs-keyword">*</span>)0x0000000114598000: objc_msgSend
+    0x1131cc4da <span class="hljs-variable">&lt;+56&gt;</span>:  callq  <span class="hljs-keyword">*</span>%rbx
+    0x1131cc4dc <span class="hljs-variable">&lt;+58&gt;</span>:  movq   0x71e375(%rip), %rsi      ; <span class="hljs-string">"_playSystemSound:"</span>
+    0x1131cc4e3 <span class="hljs-variable">&lt;+65&gt;</span>:  movl   $0x3ee, %edx
+    0x1131cc4e8 <span class="hljs-variable">&lt;+70&gt;</span>:  movq   %rax, %rdi
+    0x1131cc4eb <span class="hljs-variable">&lt;+73&gt;</span>:  callq  <span class="hljs-keyword">*</span>%rbx
+    0x1131cc4ed <span class="hljs-variable">&lt;+75&gt;</span>:  cmpq   $-0x1, 0x77877b(%rip)     ; _UIConstraintBasedLayoutLogUnsatisfiable.result + 7
+    0x1131cc4f5 <span class="hljs-variable">&lt;+83&gt;</span>:  jne    0x1131cc541               ; <span class="hljs-variable">&lt;+159&gt;</span>
+    0x1131cc4f7 <span class="hljs-variable">&lt;+85&gt;</span>:  cmpb   $0x0, 0x77876a(%rip)      ; _UIConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints.__once + 7
+    0x1131cc4fe <span class="hljs-variable">&lt;+92&gt;</span>:  je     0x1131cc51e               ; <span class="hljs-variable">&lt;+124&gt;</span>
+    0x1131cc500 <span class="hljs-variable">&lt;+94&gt;</span>:  leaq   0x53ba89(%rip), %rdi      ; <span class="hljs-comment">@"Unable to simultaneously satisfy constraints.\n\tProbably at least one of the constraints in the following list is one you don't want. Try this: (1) look at each constraint and try to figure out which you don't expect; (2) find the code that added the unwanted constraint or constraints and fix it. (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints) \n%@\n\nWill attempt to recover by breaking constraint \n%@\n\nMake a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.\nThe methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful."</span>
+    0x1131cc507 <span class="hljs-variable">&lt;+101&gt;</span>: xorl   %eax, %eax
+    0x1131cc509 <span class="hljs-variable">&lt;+103&gt;</span>: movq   %r14, %rsi
+    0x1131cc50c <span class="hljs-variable">&lt;+106&gt;</span>: movq   %r15, %rdx
+    0x1131cc50f <span class="hljs-variable">&lt;+109&gt;</span>: addq   $0x8, %rsp
+    0x1131cc513 <span class="hljs-variable">&lt;+113&gt;</span>: popq   %rbx
+    0x1131cc514 <span class="hljs-variable">&lt;+114&gt;</span>: popq   %r14
+    0x1131cc516 <span class="hljs-variable">&lt;+116&gt;</span>: popq   %r15
+    0x1131cc518 <span class="hljs-variable">&lt;+118&gt;</span>: popq   %rbp
+    0x1131cc519 <span class="hljs-variable">&lt;+119&gt;</span>: jmp    0x11331930c               ; symbol stub for: NSLog
+    0x1131cc51e <span class="hljs-variable">&lt;+124&gt;</span>: addq   $0x8, %rsp
+    0x1131cc522 <span class="hljs-variable">&lt;+128&gt;</span>: popq   %rbx
+    0x1131cc523 <span class="hljs-variable">&lt;+129&gt;</span>: popq   %r14
+    0x1131cc525 <span class="hljs-variable">&lt;+131&gt;</span>: popq   %r15
+    0x1131cc527 <span class="hljs-variable">&lt;+133&gt;</span>: popq   %rbp
+    0x1131cc528 <span class="hljs-variable">&lt;+134&gt;</span>: retq   
+    0x1131cc529 <span class="hljs-variable">&lt;+135&gt;</span>: leaq   0x778720(%rip), %rdi      ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.__once
+    0x1131cc530 <span class="hljs-variable">&lt;+142&gt;</span>: leaq   0x4fdb59(%rip), %rsi      ; __block_literal_global68
+    0x1131cc537 <span class="hljs-variable">&lt;+149&gt;</span>: callq  0x11331a2a8               ; symbol stub for: dispatch_once
+    0x1131cc53c <span class="hljs-variable">&lt;+154&gt;</span>: jmp    0x1131cc4bc               ; <span class="hljs-variable">&lt;+26&gt;</span>
+    0x1131cc541 <span class="hljs-variable">&lt;+159&gt;</span>: leaq   0x778728(%rip), %rdi      ; _UIConstraintBasedLayoutLogUnsatisfiable.__once
+    0x1131cc548 <span class="hljs-variable">&lt;+166&gt;</span>: leaq   0x4fdbc1(%rip), %rsi      ; __block_literal_global76
+    0x1131cc54f <span class="hljs-variable">&lt;+173&gt;</span>: callq  0x11331a2a8               ; symbol stub for: dispatch_once
+    0x1131cc554 <span class="hljs-variable">&lt;+178&gt;</span>: jmp    0x1131cc4f7               ; <span class="hljs-variable">&lt;+85&gt;</span>
+</code></pre>
+<h1>What next?</h1>
+<p>We can use the Xcode debug console output to gather more information than we see it initially provides.</p>
+<p>In the above example I'm going to take the following output:</p>
+<pre><code>Will attempt to recover by breaking constraint &lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;
+</code></pre>
+<p>Pull out the <code>UIView</code>'s memory address <code>0x7fd8fe59a440</code> and use the XCode console to get dig deeper and try to get a better understanding.</p>
+<h1>Printing views from memory addresses</h1>
+<p>The memory address <code>0x7fd8fe59a440</code> is a pointer to a <code>UIView</code>. Since we know that a <code>UIView</code> has other selectors we can query, we can begin to use these to dig deeper into the object and get a better understanding of which part of our view have auto layout constraints that are not playing nicely.</p>
+<p>First we try to look at just the UIView and see if that helps us get a grasp as to which view is causing our troubles.</p>
+<pre><code>po 0x7fc82aba1210
+</code></pre>
+<p>If this doesn't provide enough info as the below sample output shows (not very helpful).</p>
+<pre><code>(lldb) po <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82aba1210
+&lt;UIView: <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82aba1210; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82d338960&gt;&gt;
+</code></pre>
+<p>Maybe printing it's <a href="https://developer.apple.com/library/ios/technotes/tn2239/_index.html#//apple_ref/doc/uid/DTS40010638-CH1-SUBSECTION34"><code>recursiveDescription</code></a> will help out and in my case gives me a better idea of which component I'm actually trying to look at.</p>
+<pre><code>(lldb) po [<span class="hljs-number">0</span>x7fc82aba1210 recursiveDescription] 
+&lt;UIView: <span class="hljs-number">0</span>x7fc82aba1210; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d338960&gt;&gt;
+   | &lt;MYAPPButton: <span class="hljs-number">0</span>x7fc82d61c800; <span class="hljs-variable">baseClass =</span> UIButton; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); <span class="hljs-variable">opaque =</span> NO; <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82ab96570&gt;&gt;
+   |    | &lt;UIImageView: <span class="hljs-number">0</span>x7fc82d3f7b10; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">0</span> <span class="hljs-number">0</span>); <span class="hljs-variable">clipsToBounds =</span> YES; <span class="hljs-variable">opaque =</span> NO; <span class="hljs-variable">userInteractionEnabled =</span> NO; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d6e7020&gt;&gt;
+   | &lt;UIImageView: <span class="hljs-number">0</span>x7fc82d54a1c0; <span class="hljs-variable">frame =</span> (<span class="hljs-number">314</span> <span class="hljs-number">110</span>; <span class="hljs-number">140</span> <span class="hljs-number">140</span>); <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">userInteractionEnabled =</span> NO; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d52def0&gt;&gt;
+</code></pre>
+<p>Or if that's not enough context, then we can look at the view's superview and potentially even walk up the view's tree, printing out a different levels trying to understand which component is having trouble with auto layout.</p>
+<pre><code>po [[0x7fc82aba1210 superview] recursiveDescription]
+</code></pre>
+<p>Once you've narrowed down which view inside which component is causing you trouble, now it's up to digging and finding the problematic constraint...</p>
+<h1>Fix it</h1>
+<p>This part I can't add much color to help you, except to start by looking in your storyboard, xib or code wherever the constraints are being added to the particular view we diagnosed above.</p>
+<p>Hopefully this walk-through helps at least a little in diagnosing your auto layout constraint issues.</p>
+<p>Happy debugging!</p>
+</div>
+
+      <a href="/2015/06/debugging-ios-autolayout-issues/#disqus_thread" data-disqus-identifier="/2015/06/debugging-ios-autolayout-issues/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a></h1>
     <p class="meta">
           <time datetime="2015-05-23T21:32:45.540Z" pubdate data-updated="true">May 23rd 2015</time>
@@ -207,7 +335,7 @@
     <span class="hljs-comment">// This lets you use the control as a declarative control inside the </span>
     <span class="hljs-comment">// data-win-control attribute. </span>
 
-    WinJS.Namespace.define(<span class="hljs-string">"Pod.UI.Controls"</span>, {
+    WinJS.Namespace.define(<span class="hljs-string">"MyApp.Testing.Controls"</span>, {
         TestsControl: ControlConstructor
     });
 })();
@@ -620,69 +748,6 @@ git add .
 
       <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/#disqus_thread" data-disqus-identifier="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a></h1>
-    <p class="meta">
-          <time datetime="2015-02-08T05:29:48.180Z" pubdate data-updated="true">Feb 7th 2015</time>
-
-
-        <a href="/2015/02/approval-tests---command-line-tool--cli-/#disqus_thread" data-disqus-identifier="/2015/02/approval-tests---command-line-tool--cli-/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>In <a href="http://staxmanade.com/2015/01/approval-tests---overview/">my previous post</a> I introduced <a href="http://approvaltests.com">Approval Tests</a> using the <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> variant of the tool.</p>
-<p>In this post I'd like to go over how you can use the command line version of <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> for several different scenarios.</p>
-<h1>First thing first (How to Install)</h1>
-<p>Globally install <code>approvals</code> via <a href="https://www.npmjs.com/">npm</a>.</p>
-<pre><code>npm install -g approvals
-</code></pre>
-<p>Now that you have it installed, let's go over some scenarios that you can use the approvals tool.</p>
-<h1>Scenario 1: Compare JSON files downloaded from a web server.</h1>
-<p>Let's say you want to see a quick file diff between two api requests.</p>
-<p>You can use <code>curl</code> to download the file and pipe (<code>|</code>) it to the <code>approvals</code> CLI tool. We give it a name parameter which is used to generate the file name used to save to.</p>
-<p>So if you were to run:</p>
-<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
-</code></pre>
-<p>This would generate two files:</p>
-<p><code>githubOrg.received.txt</code> which at the time of this writing would look like:</p>
-<pre><code>{
-  "<span class="hljs-attribute">login</span>": <span class="hljs-value"><span class="hljs-string">"approvals"</span></span>,
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">36907</span></span>,
-  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals"</span></span>,
-  "<span class="hljs-attribute">repos_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/repos"</span></span>,
-  "<span class="hljs-attribute">events_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/events"</span></span>,
-  "<span class="hljs-attribute">members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/members{/member}"</span></span>,
-  "<span class="hljs-attribute">public_members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/public_members{/member}"</span></span>,
-  "<span class="hljs-attribute">avatar_url</span>": <span class="hljs-value"><span class="hljs-string">"https://avatars.githubusercontent.com/u/36907?v=3"</span></span>,
-  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">company</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">blog</span>": <span class="hljs-value"><span class="hljs-string">"http://approvaltests.com"</span></span>,
-  "<span class="hljs-attribute">location</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">public_repos</span>": <span class="hljs-value"><span class="hljs-number">13</span></span>,
-  "<span class="hljs-attribute">public_gists</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">followers</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">following</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">html_url</span>": <span class="hljs-value"><span class="hljs-string">"https://github.com/approvals"</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2008-11-27T06:03:58Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-12-28T03:02:33Z"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Organization"</span>
-</span>}
-</code></pre>
-<p>and an empty <code>githubOrg.approved.txt</code> file.</p>
-<p>Note when you first run this command you are prompted with the <code>received</code> file compared to the empty <code>approved</code> files; however, on an initial run, you can use the <code>--forceapproveall</code> argument to avoid the diff step and force all the contents of the <code>received</code> file into the <code>approved</code> file.</p>
-<p>Now if the remote file were to change on you and you run the below command again:</p>
-<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
-</code></pre>
-<p>You would get a diff between the the originally <code>approved</code> file and the newly downloaded file.</p>
-<h1>Scenario 2:</h1>
-<p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's own post as I'm going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
-<p>Until next time...</p>
-</div>
-
-      <a href="/2015/02/approval-tests---command-line-tool--cli-/#disqus_thread" data-disqus-identifier="/2015/02/approval-tests---command-line-tool--cli-/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -716,6 +781,9 @@ git add .
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/06/debugging-ios-autolayout-issues/">Debugging iOS AutoLayout Issues</a>
+      </li>
+      <li class="post">
         <a href="/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a>
       </li>
       <li class="post">
@@ -732,9 +800,6 @@ git add .
       </li>
       <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>

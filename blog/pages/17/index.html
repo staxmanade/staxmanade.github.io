@@ -71,6 +71,36 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/08/unitdrivens-ui-gets-minor-makeover/">UnitDriven&#x27;s UI Gets a Minor Makeover</a></h1>
+    <p class="meta">
+          <time datetime="2008-08-31T05:57:00.000Z" pubdate data-updated="true">Aug 30th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+I had some time to play around with and learn WPF within Silverlight. It's a modest start, but I just had to blog about it...<br /><br />We've started a project at my current job using Silverlight. Researching different framework options I ran across the <a href="http://codeplex.com/UnitDriven">UnitDriven</a> project on codeplex. After downloading and checking out the silverlight testing UI...<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s1600-h/Csla.net.Original.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://4.bp.blogspot.com/_L6Vw0x_R3iw/SLo1BRz-hyI/AAAAAAAAAAQ/u2fJw1V0ivw/s320/Csla.net.Original.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559412476544802" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />I decided this was a place I could take a stab at learning some silverlight UI. ok... So it's getting late and it's certainly not perfect, but here's where I am now.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s1600-h/Csla.net.NewSkin.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://3.bp.blogspot.com/_L6Vw0x_R3iw/SLo1XFQ2E0I/AAAAAAAAAAY/7_HbNVjZ9Ss/s320/Csla.net.NewSkin.jpg" alt="" id="BLOGGER_PHOTO_ID_5240559787065086786" border="0" /></a><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />The only really tricky piece was... The original UI used nested ListBox controls which threw me down a path of thinking the program was broken... basically with a ListBox inside of a ListBox you have to select the first item, then the sub item, and in this application, only then, can you select the "Run" button to execute the unit test... I spent time looking through code trying to figure out if there was a bug in the testing contexts.<br /><br />The solution to this was to convert the ListBox to an ItemsControl. Which allowed me to select multiple buttons without having to first select the ListBox sub item...<br /><br />I then had to wrap everything inside of a ScrollViewer because the ItemsControl doesn't create one automatically like the ListBox does.<br />[EDIT]<br />Unfortunately wrapping everything in the ScrollViewer removed a feature the older version had, namely, at the top of the control is a display of the # succeeded/# Total. Wrapping everything in the ScrollViewer removed the ability to scroll through tests while that value was being updated during tests...<br /><br />So I updated the main grid in the XAML, and shifted a few things around to allow this old feature to be seen in the new UI.<br />[/EDIT]<br /><br />after that was done, it was basically playing around with different styling elements to end up with the UI above.<br /><br />It was a good simple exploratoin into some of the Silverlight's WPF capabilities.</div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Nermin</div>
+<div class='content'>
+Your work on this patch is trully appreciated.  That listbox issue was trully annoying one.</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+Thanks for the patch, I applied it today.</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
     <p class="meta">
           <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
@@ -187,6 +217,9 @@ Lambda, not lamda. ;)</div>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
       <li class="post">
+        <a href="/2015/06/debugging-ios-autolayout-issues/">Debugging iOS AutoLayout Issues</a>
+      </li>
+      <li class="post">
         <a href="/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a>
       </li>
       <li class="post">
@@ -203,9 +236,6 @@ Lambda, not lamda. ;)</div>
       </li>
       <li class="post">
         <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a>
       </li>
   </ul>
   <a href="/blog/archives/">More posts...</a>
