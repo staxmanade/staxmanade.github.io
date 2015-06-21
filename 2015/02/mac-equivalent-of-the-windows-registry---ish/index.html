@@ -88,7 +88,7 @@
 <p>You have probably already figured that since it's called the <code>Windows Registry</code> that there is likely not a <code>Mac Registry</code> that looks/operates the same way.</p>
 <p>You are correct; however, where do all of the system and applications settings get stored if there is no registry?</p>
 <p>If the Windows Registry is a place where system and application settings are stored, then the Mac equivalent of the Windows Registry would be a series of <code>.plist</code> files in several preferences folder on the Mac.</p>
-<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And <img class="emoji" title="boom" alt="boom" src="https://assets.github.com/images/icons/emoji/unicode/d83d.png" height="20" width="20" align="absmiddle"> BOOM <img class="emoji" title="boom" alt="boom" src="https://assets.github.com/images/icons/emoji/unicode/d83d.png" height="20" width="20" align="absmiddle"> just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
+<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And BOOM just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
 <h1>What are <code>.plist</code> files?</h1>
 <p>A <code>.plist</code> file is a configuration file that contains a list of properties in either plain text or binary format. I'll go into more later about how to read and update values in these files later in the post.</p>
 <p>For more info on plist files, <a href="http://en.wikipedia.org/wiki/Property_list">check out the Wikipedia page...</a></p>
@@ -131,9 +131,9 @@ com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><
 <pre><code>defaults read com.apple.finder AppleShowAllExtensions
 </code></pre>
 <h1>How to change property list settings?</h1>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>Just like modifying the Windows Registry can mess up your system, you need to take care modifying system or application <code>plist</code> settings.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
 <p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
 <p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
@@ -179,85 +179,7 @@ com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><
             </section>
         </div>
 
-        <aside class="sidebar">
-            <section>
-	<!-- Begin MailChimp Signup Form -->
-	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
-	<style type="text/css">
-		#mc_embed_signup input.button {
-			width: inherit;
-			padding-left: 10px;
-			padding-right: 10px;
-		}
-	</style>
-	<div id="mc_embed_signup">
-		<form action="http://staxmanade.us8.list-manage1.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-			<h1>Subscribe</h1>
-			<p>Enter your email to recive recent blog posts and other news</p>
-			<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-		    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-		    <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" value=""></div>
-			<div class=""><input type="submit" value="Subscribe to blog" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-		</form>
-	</div>
-	<!--End mc_embed_signup-->
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-      <li class="post">
-        <a href="/2015/06/debugging-ios-autolayout-issues/">Debugging iOS AutoLayout Issues</a>
-      </li>
-      <li class="post">
-        <a href="/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a>
-      </li>
-      <li class="post">
-        <a href="/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a>
-      </li>
-      <li class="post">
-        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a>
-      </li>
-      <li class="post">
-        <a href="/2015/03/in-app-unit-tests/">In-App Unit Tests</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a>
-      </li>
-      <li class="post">
-        <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a>
-      </li>
-  </ul>
-  <a href="/blog/archives/">More posts...</a>
-</section>
 
-<section>
-  <h1>GitHub: <a href="https://github.com/staxmanade">@staxmanade</a></h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/js/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'staxmanade',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/js/github.js" type="text/javascript"> </script>
-</section>
-
-
-        </aside>
 
     </div>
 </div>
