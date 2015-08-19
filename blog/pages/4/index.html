@@ -71,6 +71,102 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a></h1>
+    <p class="meta">
+          <time datetime="2014-04-16T03:19:53.000Z" pubdate data-updated="true">Apr 15th 2014</time>
+
+
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I've <a href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        <li>
+            Part 4 - (current) - Import Content into Octopress
+        </li>
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
+        </li>
+    </ul>
+</div></p>
+<p>In the <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress">previous post</a> I discussed how to export your blog content from BlogSpot. Now that you have all of your content into a single <code>.xml</code> file, we need to translate that into the files and format that Octopress blog expects.</p>
+<h1>Translate export <code>xml</code> to Octopress posts</h1>
+<p>Thanks to a ruby script found in a <a href="https://gist.github.com/juniorz/1564581">gist</a>, it's fairly easy to get going provided you are able to leverage all the gem dependencies with your installation of ruby. On Windows this is tricky although fortunately there are tools like <a href="https://github.com/scottmuc/yari">yari</a> to help out.</p>
+<ol>
+<li>Download and save one of these <a href="https://gist.github.com/dnagir/1765496/forks">gists</a> somewhere and call it <code>BloggerImporter.rb</code></li>
+</ol>
+<ul>
+<li>Note: there are a number of forks of the script - if one doesn't work, browse other changes and see if something fits your needs.</li>
+</ul>
+<ol start="2">
+<li>
+<p>From the command line go to a temporary folder and execute</p>
+<p><code>ruby {pathToImporterFile}/BloggerImporter.rb '{PathToBloggerExport}/blog-03-19-2014.xml'</code></p>
+<p>When I tried it on my windows machine I received the following error. Sorry Windows folks, I don't have answers for every scenario here - I just jumped over to my Mac and tried again. I remember first trying this like a year ago and ran down a similar rat-hole trying to get this dependency to work which is probably why I didn't port it back then. I'm sure it's possible, but wasn't worth my time (since it works on my mac and was a one-time task).</p>
+<pre><code class="language-ruby"><span class="hljs-constant">C</span><span class="hljs-symbol">:/Ruby193/lib/ruby/site_ruby/</span><span class="hljs-number">1.9</span>.<span class="hljs-number">1</span>/rubygems/custom_require.<span class="hljs-symbol">rb:</span><span class="hljs-number">36</span><span class="hljs-symbol">:in</span> <span class="hljs-string">`require': cannot load such file -- nokogiri (LoadE
+rror)
+        from C:/Ruby193/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `</span><span class="hljs-keyword">require</span><span class="hljs-string">'
+        from BloggerImporter.rb:2:in `&lt;main&gt;'</span>
+</code></pre>
+<p>(One possible issue noted by a colleague: the ruby script requires a gem, <a href="http://nokogiri.org/">Nokigiri</a>, which is not supported on Windows by Ruby 2 at the time of this writing. This can be circumvented by either reinstalling Ruby 1.9.3 or by leveraging a tool like yari which allows you to pick the version of Ruby you wish to leverage with a script - a helpful StackOverflow answer exists <a href="http://stackoverflow.com/a/17318410/64">here</a>.)</p>
+</li>
+<li>
+<p>You should now you have your content.</p>
+<p>After you've run the <code>BloggerImporter.rb</code> command you should have at least two folders in your temporary folder.</p>
+<pre><code>~/code/temp&gt; ls
+_drafts     _posts    BloggerImporter<span class="hljs-class">.rb</span>
+</code></pre>
+<p>I didn't end up caring about anything in my <code>_drafts</code> folder, but the <code>_posts</code> folder is full of gold. This contains all of your exported content now broken out into a separate file per post in the form of <code>{year}-{month}-{day}-{title}.html</code>.</p>
+</li>
+<li>
+<p>Copy this content into the Octopress blog folder under <code>source/_posts/</code></p>
+</li>
+<li>
+<p>At this point you've successfully ported your content into your Octopress blog. Make sure you take tiny steps and <code>git commit...</code> the changes you care about along the way...</p>
+</li>
+<li>
+<p>Use <code>rake generate</code> and <code>rake preview</code> to see if it worked.</p>
+</li>
+<li>
+<p>If your preview looks right use <code>rake deploy</code> to put your changes on github.</p>
+</li>
+</ol>
+<p>Hopefully it all worked out and you're looking at your new Octopress blog with your old content all there. If I recall when I went through this process, there was one HTML file that <code>Jekyll</code> had issues compiling. I probably just modified the post or deleted somethign that wasn't necessary (I can't recall anymore) but it was quick to work through.</p>
+<blockquote>
+<p>side note: When I initially tried getting <a href="http://disqus.com">Disqus</a> to work after this and had trouble. <strong>Turned out this was because in the YAML metadata in each post <code>comments: false</code></strong> :)</p>
+</blockquote>
+</div>
+
+      <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Migrating from BlogSpot to Octopress - Part 3 - Export BlogSpot Content</a></h1>
     <p class="meta">
           <time datetime="2014-04-15T03:19:53.000Z" pubdate data-updated="true">Apr 14th 2014</time>
@@ -422,23 +518,6 @@ I've <a href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-lo
 <p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>
 <p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>
 <p>Happy Scripting!</p>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/">Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies</a></h1>
-    <p class="meta">
-          <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>If you’re unfamiliar with <a href="http://typescriptlang.org" target="_blank">TypeScript</a>, I’d highly recommend checking it out. <strong>It’s my new preferred way to write JavaScript based applications.</strong></p>  <p>If you write an application in TypeScript and need to interact with an external set of either JavaScript or <a href="http://en.wikipedia.org/wiki/C%2B%2B/CX" target="_blank">C++/CX</a> dependencies then you will quickly find that you are going to be mucking with some TypeScript Definition files and the more you take a dependency on the WinRT runtime the more type definitions you probably need to manually create.</p>  <p>It’s true that the TypeScript team has created a set of TypeScript Definition files for WinRT and WinJS, but I <a href="https://typescript.codeplex.com/discussions/462409" target="_blank">couldn’t get any comment</a> as to how they were generated. And the more I looked into what was provided, the more I realized that there were inconsistencies and inaccuracies that were not good. Which led me to believe that they weren’t working on a super-secret tool to automatically generate these for us.</p>  <h3>What is <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> ?</h3>  <p><a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> is a quick little attempt at automatically taking the type system provided to us by a C++/CX winmd or .Net assembly file and projecting that into a set of TypeScript Definition files. This tool can basically take anything that is <a href="http://www.ecma-international.org/publications/standards/Ecma-335.htm">Ecma 355</a> Common Language Infrastructure (CLI) and spit out a .d.ts file for you automatically.</p>  <h3>Why would I need this?</h3>  <p>In the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD#can-you-tell-me-why-i-would-use-this" target="_blank">project readme</a> I describe two use-cases that I know of (so far).</p>  <ol>   <li>If you build a 'Modern' (come on, we still call it Metro) Windows 8 app with <code>WinJS</code> and want to leverage <code>TypeScript</code>, wouldn't it be nice to get a set of TypeScript Definition files that reflect the native API's you're calling in the platform without manually creating the definition files?       <br></li>    <li>Say your building an MVC/WebAPI server application. It would be useful if your C.I./Build system could generate a set of TypeScript interfaces that were based on the server objects used to render your JSON API. This can be useful for client side JavaScript/TypeScript libraries that need to consume these objects and also provide a simple way to document the format of the input and output API response objects. </li> </ol>  <h3>How do I get the project and start using it?</h3>  <blockquote>   <p>Before you install the tool and dive in head first, I would like warn you that I have only been working on this for about 2 weeks (in my off-hours) and there is going to be lots of room for improvement. But it’s currently generating a solid set of .d.ts files for .winmd files.</p> </blockquote>  <p>Head over to the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">project home page</a> and check out the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">Readme</a> for some quick-start information.</p>  <p>I’d would love to hear feedback. If anyone is interested in helping out, you can submit new issues or review the open issues list and start submitting pull requests.</p>  <p>Happy TypeScripting!</p>  </div>
 </div>
 
       
