@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-08-18T16:41:22Z</updated>
+    <updated>2015-08-23T06:20:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -12,12 +12,36 @@
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
+        <title type="html"><![CDATA[Habit of a Solid Developer - Part 1 - Introduction]]></title>
+        <id>http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/</id>
+        <link href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">
+        </link>
+        <updated>2015-08-23T06:20:41Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 1 - Introduction]]></summary>
+        <content type="html"><![CDATA[<p>I've been thinking about some of the software development related habits that I've practiced and acquired over the years. I thought putting some of these down in posts and sharing would both help me solidify my own thinking on the subjects, but also provide a good place to link other developers or anyone I would like to send a topic when the context justifies it.</p>
+<p>For this first post, I'd like to highlight some older posts that fit well into this category:</p>
+<ul>
+<li><a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">You are responsible for making that feature work. Write a test. Just do it…</a></li>
+<li><a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes</a></li>
+<li><a href="http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/">Leave yourself a breadcrumb for tomorrow.</a></li>
+<li><a href="http://staxmanade.com/2013/05/developer-humor/">Developer humor</a>
+<ul>
+<li>Not a practice - but good to take a step back and laugh a bit...</li>
+</ul>
+</li>
+<li><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></li>
+<li><a href="http://staxmanade/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></li>
+</ul>
+<p>In future posts I'm going to write down some of the habits that I think have helped me become a better developer over the years. While I get glimpses of (being the old guy) in a room of developers, I know that my learning is never done and my future has more personal growth than I can even imagine. Regardless, I hope you find these posts useful.</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Hello World with TypeScript and JSX]]></title>
         <id>http://staxmanade.com/2015/08/playing-with-typescript-and-jsx/</id>
         <link href="http://staxmanade.com/2015/08/playing-with-typescript-and-jsx/">
         </link>
         <updated>2015-08-18T16:41:22Z</updated>
-        <summary type="html"><![CDATA[> If you're looking for a solid TypeScript JSX tutorial [this is a great resource](https://github.com/RyanCavanaugh/jsx-intro#reusable-components). ]]></summary>
+        <summary type="html"><![CDATA[> If you're looking for a solid TypeScript JSX tutorial [this is a great resource](https://github.com/RyanCavanaugh/jsx-intro#reusable-components).]]></summary>
         <content type="html"><![CDATA[<blockquote>
 <p>If you're looking for a solid TypeScript JSX tutorial <a href="https://github.com/RyanCavanaugh/jsx-intro#reusable-components">this is a great resource</a>.</p>
 </blockquote>
@@ -1310,47 +1334,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 [mergetool <span class="hljs-string">"merge_wrapper"</span>]
     cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Introducing SkypeIt - Command Line Skype Phone Calls]]></title>
-        <id>http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
-        <link href="http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">
-        </link>
-        <updated>2014-12-24T22:22:17Z</updated>
-        <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit) ]]></summary>
-        <content type="html"><![CDATA[<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
-<p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
-<h2>What is it?</h2>
-<p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
-<h1>What pain does this solve?</h1>
-<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
-<p>This typically involves:</p>
-<ol>
-<li>Opening the Outlook appointment</li>
-<li>Copying just the conference phone number (without extension)</li>
-<li>Pasting it in Skype to dial</li>
-<li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype's number pad area</li>
-<li>Type or use the mouse to press the final <code>#</code> key.</li>
-</ol>
-<h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
-<p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
-<ol>
-<li>Open the Outlook appointment</li>
-<li>Copy the conference phone number &amp; extension (if there is one) in one shot.</li>
-<li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
-</ol>
-<p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
-<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
-<blockquote>
-<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
-</blockquote>
-<h1>Still early...</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
 ]]></content>
     </entry>
 </feed>

@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>One of the Simplest Things You can do to Improve Email Communication - Developing on Staxmanade</title>
+  <title>Habit of a Solid Developer - Part 4 - Git Dance - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="# TL;DR">
+   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 4 - Git Dance">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">
+  <link rel="canonical" href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,43 +71,67 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">Habit of a Solid Developer - Part 4 - Git Dance</a></h1>
     <p class="meta">
-          <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
+          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
 
 
-        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
+        <a href="/2014/12/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2014/12/habit-of-a-solid-developer-git-dance/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1>TL;DR</h1>
-<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
-<h1>More Context</h1>
-<p>We all know that communication is important, and often where things go awry.</p>
-<p>I sometimes wonder if I'm alone in this thinking, but don't think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it's awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
-<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you've received the email (and may take some time to respond).</p>
-<p>I don't necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
+<div class="entry-content"><p>When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not actually going to talk much about the pro's and pro's of source control. I did want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
+<h1>Fetch remote changes</h1>
+<p>So if we know or don't know that there are change remotely</p>
+<pre><code>git fetch
+</code></pre>
+<p>or sometimes (if I have multiple remote repositories)</p>
+<pre><code>git fetch --all
+</code></pre>
+<p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
+<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph which allows me to take different paths before I decide to <code>merge</code> or <code>rebase</code>. <code>git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code.</p>
+<h1>Review remote changes</h1>
+<pre><code>gitk --all
+</code></pre>
+<p>Now the <code>gitk</code> U.I. is horrible to look at, but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> above.</p>
+<p>I use this time to not only code review changes, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
+<h1>Merge or Rebase</h1>
+<p>Once my review is complete, and I've taken a look at the overall changes, and I have a mental visual of what the current commit graph looks like as well as what I want the commit graph to represent when I'm done with my syncing. Once I decide what I want the git commit log to look like, I will decide to either:</p>
+<h2>Merge</h2>
+<pre><code>git merge [origin/master | otherBranch]
+</code></pre>
+<p>Or</p>
+<h2>Rebase</h2>
+<pre><code>git rebase [origin/master | otherBranch]
+</code></pre>
+<p>Once my changes have been synced up with the remote changes, I push them up.</p>
+<h1>Ship changes up to the origin</h1>
+<pre><code>git push origin master 
+</code></pre>
+<p>or</p>
+<pre><code>git push origin &lt;branchName&gt;
+</code></pre>
+<p>Now it's not a complicated workflow, but I like doing this fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
+                          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/productivity/'>productivity</a>
     <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevhabit</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2014/06/move-a-git-branch-while-on-a-different-branch/" title="Previous Post: Updating git branches.">&laquo; Updating git branches.</a>
-                        <a class="basic-alignment right" href="/2014/12/thoughts-on-working-remotely-from-home/" title="Next Post: Thoughts on Working Remotely from Home">Thoughts on Working Remotely from Home &raquo;</a>
+                        <a class="basic-alignment left" href="/2015/08/habit-of-a-solid-developer-introduction/" title="Previous Post: Habit of a Solid Developer - Part 1 - Introduction">&laquo; Habit of a Solid Developer - Part 1 - Introduction</a>
                     </p>
                 </footer>
             </article>
@@ -133,7 +157,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/';
+    var disqus_identifier = '/2014/12/habit-of-a-solid-developer-git-dance/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

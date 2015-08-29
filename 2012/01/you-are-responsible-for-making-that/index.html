@@ -81,14 +81,30 @@
 </header>
 <div class="entry-content">
 <div class='post'>
-<p>Today the <a href="http://en.wikipedia.org/wiki/Project_manager">PM</a> of a project I am working on sent an email with a small list of issues that we needed to get resolved before shipping an early build to the customer for a weekly review. In his list of issues MY NAME was tagged next to a feature that I KNOW was working. I dev’d it, tested, saw it work.</p>  <p>Now the project I’m working on encourages unit tested code, which is a fantastic project to be on since I am a big proponent of Unit/Integration/Automated tests. Heck I wrote a tool to help run them easier (<a href="http://statlight.codeplex.com/">StatLight</a>).</p>  <h4>What I did.</h4>  <p>The problem was this. I dev’d a feature out in like 5 minutes, took about 2 seconds to decide if I should write a unit test to prove my feature worked and <b>this</b><b><i> </i></b><b>is where I failed</b>. Manually verified my change checked in the production code without its test and I was hurriedly moved on to the next task.</p>  <p>About 20 min later I get a quick <a href="http://en.wikipedia.org/wiki/Instant_messaging">I.M.</a> from a co-worker saying he had a small merge conflict in the file I just checked-in. Quickly told him how to get around his merge issue (not realizing after he checked in) that my “quick 5min dev task” was accidently removed in the merge.</p>  <h4>What I SHOULD have done!</h4>  <p>What I<b> should </b>have done was write the <strong>2 lines of test code first</strong>. <i>(you can argue test after/test first, I prefer test-first)</i>. Proven my code wasn’t working, by running the test, and then implement the 5 min feature making the test pass. Then when my co-worker ran into his merge issue.</p>  <p><img src="http://boldandfab.files.wordpress.com/2010/11/pow.jpg" width="179" height="126" /></p>  <p>Test would have failed telling him his merge didn’t go as planned.</p>  <h4>This would have also avoided</h4>  <ul>   <li>PM wouldn’t have had to discover the issue, Screenshot and write up an email. </li>    <li>I wouldn’t have had to peruse source control history to understand why my “working” feature wasn’t working. </li>    <li>I wouldn’t have had to willingly confess my sins in this post.</li> </ul>  <p>If your feature doesn’t have a coinciding automated test. How do you know it’s still working?</p>  <p>Happy Testing!</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>rcecil</div>
-<div class='content'>
-Love it!</div>
-</div>
+<p>Today the <a href="http://en.wikipedia.org/wiki/Project_manager">PM</a> of a project I am working on sent an email with a small list of issues that we needed to get resolved before shipping an early build to the customer for a weekly review. In his list of issues MY NAME was tagged next to a feature that I KNOW was working. I dev’d it, tested, saw it work.</p>
+<p>Now the project I’m working on encourages unit tested code, which is a fantastic project to be on since I am a big proponent of Unit/Integration/Automated tests. Heck I wrote a tool to help run them easier (<a href="http://statlight.codeplex.com/">StatLight</a>).</p>
+<h4>What I did.</h4>
+<p>The problem was this. I dev’d a feature out in like 5 minutes, took about 2 seconds to decide if I should write a unit test to prove my feature worked and <b>this</b>
+<b>
+  <i>
+  </i>
+</b>
+<b>is where I failed</b>. Manually verified my change checked in the production code without its test and I was hurriedly moved on to the next task.</p>
+<p>About 20 min later I get a quick <a href="http://en.wikipedia.org/wiki/Instant_messaging">I.M.</a> from a co-worker saying he had a small merge conflict in the file I just checked-in. Quickly told him how to get around his merge issue (not realizing after he checked in) that my “quick 5min dev task” was accidently removed in the merge.</p>
+<h4>What I SHOULD have done!</h4>
+<p>What I<b> should </b>have done was write the <strong>2 lines of test code first</strong>. <i>(you can argue test after/test first, I prefer test-first)</i>. Proven my code wasn’t working, by running the test, and then implement the 5 min feature making the test pass. Then when my co-worker ran into his merge issue.</p>
+<p>
+  <img src="http://boldandfab.files.wordpress.com/2010/11/pow.jpg" width="179" height="126" />
+</p>
+<p>Test would have failed telling him his merge didn’t go as planned.</p>
+<h4>This would have also avoided</h4>
+<ul>
+  <li>PM wouldn’t have had to discover the issue, Screenshot and write up an email. </li>
+  <li>I wouldn’t have had to peruse source control history to understand why my “working” feature wasn’t working. </li>
+  <li>I wouldn’t have had to willingly confess my sins in this post.</li>
+</ul>
+<p>If your feature doesn’t have a coinciding automated test. How do you know it’s still working?</p>
+<p>Happy Testing!</p>
 </div>
 </div>
 
@@ -102,6 +118,7 @@ Love it!</div>
                         <span class="categories">
     <a class='category' href='/blog/categories/testing/'>Testing</a>
     <a class='category' href='/blog/categories/unit%20tests/'>Unit Tests</a>
+    <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevhabit</a>
 </span>
 
                     </p>

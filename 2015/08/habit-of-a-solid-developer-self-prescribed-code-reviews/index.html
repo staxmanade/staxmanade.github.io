@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
+    <p class="meta">
+          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
+
+
+        <a href="/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>One technique I use pretty regularly when working with a team or even my myself is to review code changes.</p>
+<p>Depending on the project, how many developers, time zones of committers, etc I shift how often or how thorough I review the changes but I almost always review every single commit.</p>
+<p>One good example on how I accomplished this was at a previous previous employer. I started work several hours before everyone else, and left before everyone. This meant that there was often end of day commits by other developers to review, and enough quiet time in the morning for me to take the time to do a solid review of the previous day's changes.</p>
+<p>While reviewing the previous day's changes, I would not only review other's changes, but I would also review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Doing this the next day provided enough time for my mental perspective to shifted. I was probably thinking about things a little more clearly. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made today.</p>
+<p>This morning review process was good from a number of other angles:</p>
+<ul>
+<li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.</li>
+<li>I could jot down questions on changes I couldn't understand (from others) which either led to asking for clarifications or even turned into possible suggestions that other developers could use to re-working their implementation even if it was as simple as (this part is unclear, could you add some extra comments here to help with clarity, or rename a variable to be a little more intention revealing).</li>
+<li>Easily catch when the project conventions were not being followed.</li>
+<li>Spot bugs being introduced.</li>
+<li>Suggest potentially better approaches.</li>
+</ul>
+<p>However, the most important thing I gained by doing this was:</p>
+<ul>
+<li>Gain a better understanding of the entire project.</li>
+<li>Learn from others.</li>
+</ul>
+<p>I once had a fellow developer say to me that they were blow away at how quick I could spin up on a brownfield project and get an architectural understanding so quickly that I could start not only contributing, but spot the places where we could improve general architectural patterns.</p>
+<p>I believe that reviewing the changes going into a code base each day allows me to keep a strong perspective on what is shifting within the project and be able to talk intelligibly when others start to get stuck on their work.</p>
+<h1>Code Reviews</h1>
+<p>If your team practices some form of code reviews, this is great for those participating in the review process. However it leaves the rest of the developers out of that specific review. However, this should not stop those not in the review room from participating and learning from the changes.</p>
+<p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I cannot only help the project out as a whole but I can very quickly come up to speed on a project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevhabit</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/08/habit-of-a-solid-developer-introduction/" title="Previous Post: Habit of a Solid Developer - Part 1 - Introduction">&laquo; Habit of a Solid Developer - Part 1 - Introduction</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

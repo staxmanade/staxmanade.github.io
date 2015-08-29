@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>One of the Simplest Things You can do to Improve Email Communication - Developing on Staxmanade</title>
+  <title>Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="# TL;DR">
+   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">
+  <link rel="canonical" href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,43 +71,47 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions</a></h1>
     <p class="meta">
-          <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
+          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
 
 
-        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
+        <a href="/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/#disqus_thread" data-disqus-identifier="/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><h1>TL;DR</h1>
-<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
-<h1>More Context</h1>
-<p>We all know that communication is important, and often where things go awry.</p>
-<p>I sometimes wonder if I'm alone in this thinking, but don't think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it's awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
-<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you've received the email (and may take some time to respond).</p>
-<p>I don't necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
+<div class="entry-content"><p>Every project generates it's own constraints. These may come from an architects's idea of &quot;best practice&quot; or it may come from the domain the software is written in, it may even be derived because of the language you're using. For example, in JavaScript we have linters that enforce rules like triple equals vs double equals.</p>
+<p>The class of convention can be wide raging, anything from the style or formatting of the code itself, or naming conventions of objects, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
+<p>Automating these convention will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention, but can even catch the most senior developer when they forget the convention all together.</p>
+<h1>Example of a project convention</h1>
+<p>In the past I worked on a mutual fund and stock trading engine. This engine depended heavily on time in places and deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes. But if someone ever used a <code>new Date()</code> in the code, this could potentially break this convention and not allow us to roll time when we required it.</p>
+<p>The above can be caught by running code reviews, but what if you had a test failure raise the issue before the code was even committed?</p>
+<p>This is a perfect scenario for automation. We simply put a unit test that searched through the code base for uses of <code>new Date()</code> and the test would fail if it found any of them.</p>
+<h1>Fail with solid path forward</h1>
+<p>The test described above would not just fail with a generic <code>do not use new Date()...</code> but is a good place to put a story about why <code>new Date()</code> was not allowed. So we would instruct the developer in the error message both why not to use <code>new Date()</code> but what to use in place of. You want to include the why here to easily educate those who are not aware of this convention or rule.</p>
+<h1>Provide a way to add exclusions or exceptions to the convention</h1>
+<p>For all conventions, these are generalizations that may not ALWAYS be necessary or ideal. There are almost always exceptions to the rule in software development, so allowing for the test code to be modified to enable exclusions to this rule is a good thing.</p>
+<h1>Some Automation Approaches</h1>
+<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase. Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
+                          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/productivity/'>productivity</a>
     <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevhabit</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2014/06/move-a-git-branch-while-on-a-different-branch/" title="Previous Post: Updating git branches.">&laquo; Updating git branches.</a>
-                        <a class="basic-alignment right" href="/2014/12/thoughts-on-working-remotely-from-home/" title="Next Post: Thoughts on Working Remotely from Home">Thoughts on Working Remotely from Home &raquo;</a>
+                        <a class="basic-alignment left" href="/2015/08/habit-of-a-solid-developer-introduction/" title="Previous Post: Habit of a Solid Developer - Part 1 - Introduction">&laquo; Habit of a Solid Developer - Part 1 - Introduction</a>
                     </p>
                 </footer>
             </article>
@@ -133,7 +137,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/';
+    var disqus_identifier = '/2015/08/habit-of-a-solid-developer-automatically-enforce-project-conventions/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

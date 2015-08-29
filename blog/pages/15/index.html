@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/moq-30-released-with-full-silverlight/">Moq 3.0 released (With Full Silverlight Support)</a></h1>
+    <p class="meta">
+          <time datetime="2009-02-23T04:09:00.000Z" pubdate data-updated="true">Feb 22nd 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>Moq 3.0 has been officially released and it comes with full Silverlight Support. You can download them here <a title=" http://moq.me/get " href="http://moq.me/get">http://moq.me/get     <br /></a></p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SaIhYUZuZRI/AAAAAAAAAFI/igVHxx3p7tA/s1600-h/image%5B4%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="289" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhY8DKDWI/AAAAAAAAAFM/g77fjbsr6eU/image_thumb%5B2%5D.png?imgmax=800" width="645" border="0" /></a> </p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZLMqsrI/AAAAAAAAAFQ/igqqel0m1-U/s1600-h/image%5B8%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="98" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SaIhZQpg9II/AAAAAAAAAFU/-yQ8zMt3lG8/image_thumb%5B4%5D.png?imgmax=800" width="310" border="0" /></a>&#160;<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhZrL4CwI/AAAAAAAAAFY/T0BbBfoniCs/s1600-h/image%5B12%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="100" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SaIhaJaClsI/AAAAAAAAAFc/pEz3fWLIvvM/image_thumb%5B6%5D.png?imgmax=800" width="310" border="0" /></a> </p>  <p>Now that it is official and when I get some spare time I will try and place my UnityAutoMocker up in the moq-contrib project shortly.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/xunit-light-for-silverlight/">xUnit (Light) for Silverlight</a></h1>
     <p class="meta">
           <time datetime="2009-02-09T07:09:00.000Z" pubdate data-updated="true">Feb 8th 2009</time>
@@ -381,23 +398,6 @@ That's a good point and I think you are correct...<BR/><BR/>I was just illustrat
 Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on Codeplex. I noticed in the discussions that someone mentioned the fact that if you have multiple expressions in your Where expression, that it won&#39;t use the index.<BR/><BR/>So does that mean, your example showing multiple properties being added to the index doesn&#39;t really help if you wanted to search your collection on both of the properties in the index?<BR/><BR/>For example, would this code use the index?<BR/><BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>From my testing, it appears that no benefit is achieved from using an IndexableCollection vs. a regular List in this case. Seems like there&#39;s no point in using the IndexableCollection if you need more than one property in the index. Am I missing something or is that correct?<BR/><BR/>Thanks,<BR/>Kevin</div>
 </div>
 </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-update/">i4o: Update (Index for Objects)</a></h1>
-    <p class="meta">
-          <time datetime="2008-12-20T19:10:00.000Z" pubdate data-updated="true">Dec 20th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Recently I was added as a developer to the <a href="http://www.codeplex.com/i4o" target="_blank">i4o codeplex project</a> by <a href="http://blog.magenic.com/blogs/aarone/default.aspx" target="_blank">Aaron</a> and last night I made my first commit.</p>  <p>There were a few pretty big changes to the library. I'll highlight some of them below, and in a couple future posts will describe in a little more detail how you can use these features.</p>  <h4>Removed the IndexableAttribute:</h4>  <p>This was removed for two reasons.</p>  <ul>   <li>It did not allow you index objects you didn't own. </li> </ul>  <p>Say you want to index a collection of System.IO.FileInfo objects. Since that's owned by the .Net framework, you can't apply an attribute to the properties of the class you want to index.</p>  <p>The solution to that was to allow adding indexed properties dynamically, however you had to give it a string representing the property name, which leads into the second issue... </p>  <ul>   <li>Didn't provide any compile time checking or refactor support for properties using the dynamic add/remove methods. </li> </ul>  <p>If you refactored a property and forgot to rename the string to match the refactor you would end up with a runtime error.</p>  <p>To resolve the two issues above I've introduced the <strong>IndexSpecification&lt;T&gt;</strong> (I'll describe how to use it a later post)</p>  <h4>Performance tuning:</h4>  <p>Although we haven't enhanced the Linq support for IndexableCollection (should come soon), I was able to eek some performance by doing some internal caching of property types and a few other tweaks resulting in the Index creation becoming about 30% faster...</p>  <h4>Fluent interface for managing the Indexes</h4>  <p>The last big change which fits in with the IndexSpecification&lt;T&gt; is the Fluent interface for dynamically adding/removing properties to be indexed. One short example could be:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SU1DKLdou8I/AAAAAAAAAD4/JBUBIgkDNNo/s1600-h/image3.png"><img style="border-width: 0px;" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/SU1DKcGWDjI/AAAAAAAAAD8/zU7TUvRY2T0/image_thumb1.png?imgmax=800" width="347" border="0" height="217" /></a></p></div>
 </div>
 
       
