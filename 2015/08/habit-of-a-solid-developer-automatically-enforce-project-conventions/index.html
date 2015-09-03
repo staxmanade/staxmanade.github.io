@@ -83,15 +83,24 @@
 <p>The class of convention can be wide raging, anything from the style or formatting of the code itself, or naming conventions of objects, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
 <p>Automating these convention will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention, but can even catch the most senior developer when they forget the convention all together.</p>
 <h1>Example of a project convention</h1>
-<p>In the past I worked on a mutual fund and stock trading engine. This engine depended heavily on time in places and deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes. But if someone ever used a <code>new Date()</code> in the code, this could potentially break this convention and not allow us to roll time when we required it.</p>
-<p>The above can be caught by running code reviews, but what if you had a test failure raise the issue before the code was even committed?</p>
-<p>This is a perfect scenario for automation. We simply put a unit test that searched through the code base for uses of <code>new Date()</code> and the test would fail if it found any of them.</p>
+<p>In the past I worked on a mutual fund and stock trading engine. This engine depended heavily on time in places and deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes. But if someone ever used a <code>new Date()</code> in the code, this could potentially break this convention and not allow us to roll time when we required it or even introduce hard to find bugs.</p>
+<p>The above can be caught by running code reviews. However, if this rule was baked into the system and automated the issue can be caught much earlier in the process.</p>
+<p>This is a great place for automation. We well placed a unit/integration or build test that searched through the code base for uses of <code>new Date()</code> and raises an error message explaining why...</p>
 <h1>Fail with solid path forward</h1>
-<p>The test described above would not just fail with a generic <code>do not use new Date()...</code> but is a good place to put a story about why <code>new Date()</code> was not allowed. So we would instruct the developer in the error message both why not to use <code>new Date()</code> but what to use in place of. You want to include the why here to easily educate those who are not aware of this convention or rule.</p>
+<p>The test described above would not just fail with a generic <code>do not use new Date()...</code>. This is a good place to document or share a story about why <code>new Date()</code> was not allowed. So we could educate the developer in the error message both why not to use <code>new Date()</code> but what to use in place of. You want to include the why here to make adoption of the conventions easier going forward.</p>
 <h1>Provide a way to add exclusions or exceptions to the convention</h1>
 <p>For all conventions, these are generalizations that may not ALWAYS be necessary or ideal. There are almost always exceptions to the rule in software development, so allowing for the test code to be modified to enable exclusions to this rule is a good thing.</p>
 <h1>Some Automation Approaches</h1>
-<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase. Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
+<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches (greps) the entire codebase. Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
+<h1>Examples of tools to help enforce conventions</h1>
+<ul>
+<li><a href="http://editorconfig.org">.editorconfig</a></li>
+<li><a href="http://www.amazon.com/gp/product/B00X8CMHOE/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=B00X8CMHOE&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=QP5QAOK3TMEWT5GU">ReSharper</a></li>
+<li>Your unit test projects</li>
+<li>Build scripts</li>
+<li>Continuous integration environments.</li>
+<li>Pull Requests and Code Reviews</li>
+</ul>
 </div>
 
                 <footer>
