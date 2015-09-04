@@ -71,6 +71,155 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">Browser only MochaJS tests using SystemJS</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-04T22:41:38.170Z" pubdate data-updated="true">Sep 4th 2015</time>
+
+
+        <a href="/2015/09/browser-only-mochajs-tests-using-systemjs/#disqus_thread" data-disqus-identifier="/2015/09/browser-only-mochajs-tests-using-systemjs/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<h1>TL;DR</h1>
+<p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/9HCO2XaBHyFOzHdJP0JM?p=preview">plnkr.co</a> go right ahead!</p>
+<h1>How to run our first Mocha test</h1>
+<p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily components my code for cleaner extraction into a project, gist or other...</p>
+<p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+    System.import(<span class="hljs-string">'./testInit.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>With the above in the <code>index.html</code> you should see some errors printed to the console as SystemJS is trying to load <code>./testInit.js</code> (but we haven't created it yet).</p>
+<p>Before we create the <code>testInit.js</code> file let's first create a couple sample MochaJS test files that we want to test.</p>
+<p>Here's our first test file: name it <code>mochaTest1.js</code></p>
+<p>Something cool about this test is once we get mocha wired up correctly, this test shows how seamlessly you can take a dependency on a 3rd party library like <a href="http://chaijs.com/">chaijs</a> for help with assertions.</p>
+<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+
+describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Create another test file <code>mochaTest2.js</code></p>
+<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+
+describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Creating two test files allows this sample to show how you can easily create and test multiple modules.</p>
+<h1>The meat and potatoes</h1>
+<p>Now is the juicy part on how to get Mocha to play nicely with this setup and run our tests.</p>
+<p>Create a file and call it <code>testInit.js</code> (same as we named in our <code>index.html</code> and referenced it via <code>System.import('./testInit.js')</code>) and paste the below.</p>
+<p>Feel free to read through it as I commented it thoroughly.</p>
+<pre><code><span class="hljs-comment">//</span>
+<span class="hljs-comment">// This tells SystemJS to load the mocha library</span>
+<span class="hljs-comment">// and allows us to interact with the library below.</span>
+<span class="hljs-comment">//</span>
+import mocha from <span class="hljs-string">'mocha'</span>;
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// This defines the list of test files we want to load and run tests against.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaTestScripts = [
+  <span class="hljs-string">'./mochaTest1.js'</span>,
+  <span class="hljs-string">'./mochaTest2.js'</span>
+];
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// If you have a global or two that get exposed from your </span>
+<span class="hljs-comment">// tests that is expected you can include them here</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> allowedMochaGlobals = [
+  <span class="hljs-string">'jQuery'</span>
+]
+
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Mocha needs a &lt;div id="mocha"&gt;&lt;/div&gt; for the browser</span>
+<span class="hljs-comment">// test reporter to inject test results in to the U.I.</span>
+<span class="hljs-comment">// Below just injects it at the bottom of the page. (You can get fancy here)</span>
+<span class="hljs-comment">// Maybe you create a button in your website and allow anyone to run tests.</span>
+<span class="hljs-comment">// Check out http://staxmanade.com/2015/03/in-app-unit-tests/ for more on the thought</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaDiv = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+mochaDiv.id = <span class="hljs-string">"mocha"</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(mochaDiv);
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Importing mocha with JSPM and ES6 doesn't expose the usual mocha globals.</span>
+<span class="hljs-comment">// I found this is one way to manually expose the globals, however if you know of a better way please let me know...</span>
+<span class="hljs-comment">//</span>
+mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context)</span> </span>{
+  <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
+
+  exports.afterEach = context.afterEach || context.teardown;
+  exports.after = context.after || context.suiteTeardown;
+  exports.beforeEach = context.beforeEach || context.setup;
+  exports.before = context.before || context.suiteSetup;
+  exports.describe = context.describe || context.suite;
+  exports.it = context.it || context.test;
+  exports.setup = context.setup || context.beforeEach;
+  exports.suiteSetup = context.suiteSetup || context.before;
+  exports.suiteTeardown = context.suiteTeardown || context.after;
+  exports.suite = context.suite || context.describe;
+  exports.teardown = context.teardown || context.afterEach;
+  exports.test = context.test || context.it;
+  exports.run = context.run;
+
+  <span class="hljs-comment">// now use SystemJS to load all test files</span>
+  Promise
+    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+      <span class="hljs-keyword">return</span> System.import(testScript);
+    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+      mocha.checkLeaks();
+      mocha.globals(allowedMochaGlobals);
+      mocha.run();
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
+      <span class="hljs-built_in">console</span>.error(err);
+    });
+
+});
+
+mocha.setup(<span class="hljs-string">'bdd'</span>);
+</code></pre>
+<blockquote>
+<p>Please let me know if you know of an easier way to get access to the mochas globals using SystemJS. The below works, but is a bit uncomfortable.</p>
+</blockquote>
+<h1>MochaJS Tests Right in the Browser...</h1>
+<p><strong>How awesome is this.</strong> Couple bits of bootstrap code, and we can go author whatever we want right in the browser using ES6 (err EcmaScript 2015) and we're off and running.</p>
+<h1><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> NOT FOR PRODUCTION WORKFLOWS (yet)! <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></h1>
+<p>This approach is primarily for allowing quick prototyping. Don't implement a complete app like this and then expect any performance. SystemJS can potentially download a large number of dependencies and you should read up on <a href="https://github.com/jspm/jspm-cli/wiki/Production-Workflows">JSPM production workflows</a>.</p>
+<p>Happy Browser-Only Testing.</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a></h1>
     <p class="meta">
           <time datetime="2015-05-23T21:32:45.540Z" pubdate data-updated="true">May 23rd 2015</time>

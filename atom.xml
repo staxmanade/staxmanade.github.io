@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-08-23T06:20:41Z</updated>
+    <updated>2015-09-04T22:41:38Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,151 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Browser only MochaJS tests using SystemJS]]></title>
+        <id>http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/</id>
+        <link href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">
+        </link>
+        <updated>2015-09-04T22:41:38Z</updated>
+        <summary type="html"><![CDATA[I've been poking at [SystemJS](https://github.com/systemjs/systemjs) (you may have heard of it through [JSPM](http://jspm.io)) and one of the first th...]]></summary>
+        <content type="html"><![CDATA[<p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<h1>TL;DR</h1>
+<p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/9HCO2XaBHyFOzHdJP0JM?p=preview">plnkr.co</a> go right ahead!</p>
+<h1>How to run our first Mocha test</h1>
+<p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily components my code for cleaner extraction into a project, gist or other...</p>
+<p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+    System.import(<span class="hljs-string">'./testInit.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>With the above in the <code>index.html</code> you should see some errors printed to the console as SystemJS is trying to load <code>./testInit.js</code> (but we haven't created it yet).</p>
+<p>Before we create the <code>testInit.js</code> file let's first create a couple sample MochaJS test files that we want to test.</p>
+<p>Here's our first test file: name it <code>mochaTest1.js</code></p>
+<p>Something cool about this test is once we get mocha wired up correctly, this test shows how seamlessly you can take a dependency on a 3rd party library like <a href="http://chaijs.com/">chaijs</a> for help with assertions.</p>
+<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+
+describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Create another test file <code>mochaTest2.js</code></p>
+<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+
+describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Creating two test files allows this sample to show how you can easily create and test multiple modules.</p>
+<h1>The meat and potatoes</h1>
+<p>Now is the juicy part on how to get Mocha to play nicely with this setup and run our tests.</p>
+<p>Create a file and call it <code>testInit.js</code> (same as we named in our <code>index.html</code> and referenced it via <code>System.import('./testInit.js')</code>) and paste the below.</p>
+<p>Feel free to read through it as I commented it thoroughly.</p>
+<pre><code><span class="hljs-comment">//</span>
+<span class="hljs-comment">// This tells SystemJS to load the mocha library</span>
+<span class="hljs-comment">// and allows us to interact with the library below.</span>
+<span class="hljs-comment">//</span>
+import mocha from <span class="hljs-string">'mocha'</span>;
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// This defines the list of test files we want to load and run tests against.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaTestScripts = [
+  <span class="hljs-string">'./mochaTest1.js'</span>,
+  <span class="hljs-string">'./mochaTest2.js'</span>
+];
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// If you have a global or two that get exposed from your </span>
+<span class="hljs-comment">// tests that is expected you can include them here</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> allowedMochaGlobals = [
+  <span class="hljs-string">'jQuery'</span>
+]
+
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Mocha needs a &lt;div id="mocha"&gt;&lt;/div&gt; for the browser</span>
+<span class="hljs-comment">// test reporter to inject test results in to the U.I.</span>
+<span class="hljs-comment">// Below just injects it at the bottom of the page. (You can get fancy here)</span>
+<span class="hljs-comment">// Maybe you create a button in your website and allow anyone to run tests.</span>
+<span class="hljs-comment">// Check out http://staxmanade.com/2015/03/in-app-unit-tests/ for more on the thought</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaDiv = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+mochaDiv.id = <span class="hljs-string">"mocha"</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(mochaDiv);
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Importing mocha with JSPM and ES6 doesn't expose the usual mocha globals.</span>
+<span class="hljs-comment">// I found this is one way to manually expose the globals, however if you know of a better way please let me know...</span>
+<span class="hljs-comment">//</span>
+mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context)</span> </span>{
+  <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
+
+  exports.afterEach = context.afterEach || context.teardown;
+  exports.after = context.after || context.suiteTeardown;
+  exports.beforeEach = context.beforeEach || context.setup;
+  exports.before = context.before || context.suiteSetup;
+  exports.describe = context.describe || context.suite;
+  exports.it = context.it || context.test;
+  exports.setup = context.setup || context.beforeEach;
+  exports.suiteSetup = context.suiteSetup || context.before;
+  exports.suiteTeardown = context.suiteTeardown || context.after;
+  exports.suite = context.suite || context.describe;
+  exports.teardown = context.teardown || context.afterEach;
+  exports.test = context.test || context.it;
+  exports.run = context.run;
+
+  <span class="hljs-comment">// now use SystemJS to load all test files</span>
+  Promise
+    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+      <span class="hljs-keyword">return</span> System.import(testScript);
+    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+      mocha.checkLeaks();
+      mocha.globals(allowedMochaGlobals);
+      mocha.run();
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
+      <span class="hljs-built_in">console</span>.error(err);
+    });
+
+});
+
+mocha.setup(<span class="hljs-string">'bdd'</span>);
+</code></pre>
+<blockquote>
+<p>Please let me know if you know of an easier way to get access to the mochas globals using SystemJS. The below works, but is a bit uncomfortable.</p>
+</blockquote>
+<h1>MochaJS Tests Right in the Browser...</h1>
+<p><strong>How awesome is this.</strong> Couple bits of bootstrap code, and we can go author whatever we want right in the browser using ES6 (err EcmaScript 2015) and we're off and running.</p>
+<h1><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> NOT FOR PRODUCTION WORKFLOWS (yet)! <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></h1>
+<p>This approach is primarily for allowing quick prototyping. Don't implement a complete app like this and then expect any performance. SystemJS can potentially download a large number of dependencies and you should read up on <a href="https://github.com/jspm/jspm-cli/wiki/Production-Workflows">JSPM production workflows</a>.</p>
+<p>Happy Browser-Only Testing.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Habit of a Solid Developer - Part 1 - Introduction]]></title>
         <id>http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/</id>
@@ -1292,48 +1437,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <h1>BUT...</h1>
 <p>This is my site so it's all up to me to make it right...</p>
 <p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Use different Git Diff Tools Per File Extension]]></title>
-        <id>http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>
-        <link href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
-        </link>
-        <updated>2014-12-29T16:12:11Z</updated>
-        <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
-        <content type="html"><![CDATA[<p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I'm going to put this here so I can find it later...</p>
-<h1>Create a merge-wrapper script</h1>
-<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
-<blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
-</blockquote>
-<h3>Customize the <code>merge-wrapper.js</code></h3>
-<ol>
-<li>
-<p>Extend with other diff tool support:</p>
-<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
-</li>
-<li>
-<p>Modify which diff tool is used per extension:</p>
-<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
-</li>
-<li>
-<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
-</li>
-</ol>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires the .gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.sh \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# # How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;#&#10;&#10;BASE=$1&#10;LOCAL=$2&#10;REMOTE=$3&#10;MERGED=$4&#10;&#10;if [[ $BASE == *.png ]]; then&#10;  echo &#34;Image diff..&#34;;&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;else&#10;  #Finally, the default case:&#10;  CMD=&#34;p4merge \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#34;&#10;  #CMD=&#34;opendiff \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; -ancestor \&#34;$REMOTE\&#34; -mergeFile \&#34;$MERGED\&#34;&#34;&#10;  echo $CMD&#10;  eval $CMD&#10;fi&#10;</code></pre></noscript></div></p>
-<h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
-<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
-<pre><code>[merge]
-    tool = merge_wrapper
-[mergetool <span class="hljs-string">"merge_wrapper"</span>]
-    cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
-</code></pre>
 ]]></content>
     </entry>
 </feed>
