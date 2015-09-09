@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dumptotext/">NuGet Project Uncovered: DumpToText</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-21T05:01:00.000Z" pubdate data-updated="true">Feb 20th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become its introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/DumpToText" target="_blank">DumpToText</a> is a single C# extension I wrote a little while back. The inspiration from this came from the need to view the values of an object graph quickly and easily during a TDD session.</p>  <p>Have you ever been doing TDD and something isn’t working quite as expected? Would it be nice to just dump out the values of an object quickly without having to spin up the debugger?</p>  <p>The inspiration for this project came from an amazing feature of <a href="http://www.linqpad.net/" target="_blank">LINQPad</a>. If you have ever used <a href="http://www.linqpad.net/" target="_blank">LINQPad</a> then you’re aware of the amazing ability for it to take any object and create a view of it’s data. Take the simple anonymous type below.</p>  <p><a href="http://lh5.ggpht.com/-FUvQoj6frYE/Tx-M2hAvSBI/AAAAAAAAAVw/Y4i1otS5L1k/s1600-h/image_thumb2_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb2_thumb" border="0" alt="image_thumb2_thumb" src="http://lh3.ggpht.com/-al7xfLogmlo/Tx-M28w8cWI/AAAAAAAAAV4/1okKyOMCZXo/image_thumb2_thumb_thumb.png?imgmax=800" width="471" height="315" /></a></p>  <p>Now wouldn’t it be great to have that “.Dump()” extension method at hand anywhere in your code and during a TDD session?</p>  <p>That’s why I create <a href="https://github.com/staxmanade/DumpToText" target="_blank">DumpToText</a>.</p>  <p>Now if I have a test as follows and want to see it’s data. I can use the ‘.DumpToText()” extension method to have it print out an ASCII based representation of the object graph.</p>  <p><a href="http://lh3.ggpht.com/-skkqYdCd2xM/Tx-M3FJvFuI/AAAAAAAAAWA/Pj8HLy2gP2E/s1600-h/image_thumb4_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb4_thumb" border="0" alt="image_thumb4_thumb" src="http://lh4.ggpht.com/-AAcGZRujy6o/Tx-M3YkzlsI/AAAAAAAAAWI/tB5hBy3iff8/image_thumb4_thumb_thumb.png?imgmax=800" width="323" height="178" /></a></p>  <p><a href="http://lh4.ggpht.com/-yhBKG4UbDVo/Tx-M3isuUYI/AAAAAAAAAWQ/e4StcIAJXwY/s1600-h/image_thumb6_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb" border="0" alt="image_thumb6_thumb" src="http://lh4.ggpht.com/-4NWr0JakVmU/Tx-M4OgEzYI/AAAAAAAAAWY/Y5spI1MEfTo/image_thumb6_thumb_thumb.png?imgmax=800" width="390" height="156" /></a></p>  <p>By default this just uses the System.Diagnostics.Trace(…) to write the output to, but you can override the “write” implementation by giving your own delegate as shown below.</p>  <p><a href="http://lh3.ggpht.com/-WqWFeyFE9-w/Tx-M4J_zk_I/AAAAAAAAAWg/PgFlXKctwzk/s1600-h/image_thumb8_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb" border="0" alt="image_thumb8_thumb" src="http://lh3.ggpht.com/-ZVMsOTKUgRo/Tx-M4ftO9JI/AAAAAAAAAWo/7MzVtczsP3o/image_thumb8_thumb_thumb.png?imgmax=800" width="871" height="52" /></a></p>  <p>The below shows an example of a nested object that also has an array of items.</p>  <p><a href="http://lh6.ggpht.com/-ggox20Cy7Uo/Tx-M478HrOI/AAAAAAAAAWw/evox5Gb8UoU/s1600-h/image_thumb14_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb14_thumb" border="0" alt="image_thumb14_thumb" src="http://lh5.ggpht.com/-YAC_6gYOxPk/Tx-M5PrZCnI/AAAAAAAAAW4/hYIHCALLCVg/image_thumb14_thumb_thumb.png?imgmax=800" width="264" height="171" /></a></p>  <p><a href="http://lh5.ggpht.com/-BG258OCC7hw/Tx-M5JXdreI/AAAAAAAAAXA/7gusCQdc-EA/s1600-h/image_thumb13_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb1" border="0" alt="image_thumb13_thumb1" src="http://lh6.ggpht.com/-ALeIoiAbOSA/Tx-M5oEQkJI/AAAAAAAAAXI/0ldXcIpDxmM/image_thumb13_thumb1_thumb.png?imgmax=800" width="573" height="349" /></a></p>  <h5>Anyone out there using <a href="http://approvaltests.sourceforge.net/" target="_blank">ApprovalTests</a>? (You can get it on NuGet)</h5>  <p>I’ve not taken the chance to use ApprovalTests yet in a project, but I have a strong feeling that my DumpToText helper could be very useful when leveraged in conjunction with ApprovalTests. If anyone out there is using ApprovalTests, I’d love to hear how it’s going, and if you think that DumpToText would be useful there.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/">NuGet Project Uncovered: Nancy</a></h1>
     <p class="meta">
           <time datetime="2012-02-20T04:59:00.000Z" pubdate data-updated="true">Feb 19th 2012</time>
@@ -218,23 +235,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Disruptor" target="_blank">Disruptor-net</a> is a port of the LMAX Disruptor which is a concurrent programming framework. The answer in this <a href="http://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work" target="_blank">StackOverflow question</a> gave a pretty good explanation of the project/pattern used.</p>  <p>Project Source: <a href="https://github.com/odeheurles/Disruptor-net">https://github.com/odeheurles/Disruptor-net</a></p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-11T04:39:00.000Z" pubdate data-updated="true">Feb 10th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
 </div>
 
       

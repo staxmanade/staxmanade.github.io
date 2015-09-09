@@ -71,6 +71,89 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-23T07:02:12.268Z" pubdate data-updated="true">Feb 22nd 2015</time>
+
+
+        <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/#disqus_thread" data-disqus-identifier="/2015/02/mac-equivalent-of-the-windows-registry---ish/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> .</p>
+<p>However, if you've always been more of a Mac user, don't run away just yet as you may learn something.</p>
+<p>In case you don't know what the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> is, here is a short definition from our good ol' friend <a href="http://en.wikipedia.org/wiki/Windows_Registry">Wikipedia</a>.</p>
+<blockquote>
+<p>Windows Registry is a hierarchical database that stores configuration settings and options on Microsoft Windows operating systems. It contains settings for low-level operating system components and for applications running on the platform that have opted to use the Registry.</p>
+</blockquote>
+<p>You have probably already figured that since it's called the <code>Windows Registry</code> that there is likely not a <code>Mac Registry</code> that looks/operates the same way.</p>
+<p>You are correct; however, where do all of the system and applications settings get stored if there is no registry?</p>
+<p>If the Windows Registry is a place where system and application settings are stored, then the Mac equivalent of the Windows Registry would be a series of <code>.plist</code> files in several preferences folder on the Mac.</p>
+<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And BOOM just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
+<h1>What are <code>.plist</code> files?</h1>
+<p>A <code>.plist</code> file is a configuration file that contains a list of properties in either plain text or binary format. I'll go into more later about how to read and update values in these files later in the post.</p>
+<p>For more info on plist files, <a href="http://en.wikipedia.org/wiki/Property_list">check out the Wikipedia page...</a></p>
+<h1>Where can I find plist files?</h1>
+<p>I know of at least 2 locations that host the common system and application <code>.plist</code> files.</p>
+<p>The first one is user specific and is in the following location:</p>
+<pre><code>~/Library/Preferences/
+</code></pre>
+<p>In my case (since my user name is <code>jason</code>)</p>
+<pre><code>/Users/jason/Library/Preferences/
+</code></pre>
+<p>The second location one is at the root of the system:</p>
+<pre><code>/Library/Preferences/
+</code></pre>
+<p>If you look into these folders you'll see a large number of plist files that follow reverse domain name convention (like <code>com.apple.sample</code>).</p>
+<p>Here are some (not all) examples of system configuration plist files:</p>
+<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.ActivityMonitor</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.AddressBook</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.finder</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.preference</span><span class="hljs-class">.general</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.TextEdit</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.apple</span><span class="hljs-class">.Safari</span><span class="hljs-class">.plist</span>
+</code></pre>
+<p>In the same folder as the sample configuration files listed above are where you can find <code>plist</code> files that are associated to applications installed on the system.</p>
+<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.dt</span><span class="hljs-class">.Xcode</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.google</span><span class="hljs-class">.Chrome</span><span class="hljs-class">.plist</span>
+org<span class="hljs-class">.herf</span><span class="hljs-class">.Flux</span><span class="hljs-class">.plist</span>
+com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><span class="hljs-class">.plist</span>
+</code></pre>
+<p>Now that we can find system and application configuration <code>plist</code> files, if you try to open them in a text editor you may notice that many of them are in a binary format which would be challenging to read and understand, let alone edit.</p>
+<h1>How do I read these files?</h1>
+<p>The Mac comes with a command line utility called <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> for reading and writing to these <code>.plist</code> files.</p>
+<p>If you take an example from the above list of plist files, you can, at the command prompt type the following:</p>
+<p><code>defaults read com.apple.fin&lt;tab&gt;</code> (where <code>&lt;tab&gt;</code> is the tab key that allows tab completion of the rest of the property list format) and be sure to exclude the <code>.plist</code> of the end so:</p>
+<pre><code>defaults read com.apple.finder
+</code></pre>
+<p>will print out all of the properties to the console so you can inspect what's there.</p>
+<p>You can pipe this output to <a href="http://en.wikipedia.org/wiki/Grep">grep</a> and filter for a setting name when doing searches. Once you've found a property name you want to look at you can pass it into the <code>defaults read</code> command to get the value of that specific property.</p>
+<h4>Example reading a single property:</h4>
+<pre><code>defaults read com.apple.finder AppleShowAllExtensions
+</code></pre>
+<h1>How to change property list settings?</h1>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Just like modifying the Windows Registry can mess up your system, you need to take care modifying system or application <code>plist</code> settings.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
+<p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
+<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
+<h3>So if my understanding above is somewhat correct, how did I update the source?</h3>
+<p>Similar to reading property list values you can use the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> command line tool to <code>write</code> changes back to the <code>.plist</code> files.</p>
+<p>As an example, here's how I update <a href="http://support.apple.com/en-us/HT201732">Finder</a> to show file extensions.</p>
+<pre><code>defaults write com.apple.finder AppleShowAllExtensions -boolean true
+</code></pre>
+<p>The configuration options are now endless.</p>
+<h1>In summary:</h1>
+<p>Using my new knowledge that app and system settings can be found in both <code>/Library/Preferences</code> and <code>~/Library/Preferences</code> and I can use the command line tool <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> to read/write to understand and update settings.</p>
+<p>I can now create a simple <code>.sh</code> script that allows me to pre-configure a new development machine with all of the settings I would like.</p>
+<p>Now, each time I catch myself trying to use an application's preferences U.I. I stop myself and try to find that setting in a plist file and create a CLI command that I can save into my development setup script.</p>
+<p>Happy Mac Settings Hacking!</p>
+</div>
+
+      <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/#disqus_thread" data-disqus-identifier="/2015/02/mac-equivalent-of-the-windows-registry---ish/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a></h1>
     <p class="meta">
           <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
@@ -547,66 +630,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </div>
 
       <a href="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/#disqus_thread" data-disqus-identifier="/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">Custom Static Blog Generator - No Longer Using Octopress</a></h1>
-    <p class="meta">
-          <time datetime="2015-01-04T00:34:11.868Z" pubdate data-updated="true">Jan 3rd 2015</time>
-
-
-        <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1>TL;DR</h1>
-<blockquote>
-<p>In summary I left my Octopress blog behind quite a while ago, and this site has been statically generated with a custom tooling build up around gulpjs and node.</p>
-</blockquote>
-<h1>Some of the details...</h1>
-<p>After I <a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">migrated from Blogspot to Octopress</a> I started running into workflow issues and <a href="https://github.com/jekyll/jekyll/issues/2226">other issues</a> that turned me off from Octopress/Jekyll (at least for my own site).</p>
-<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with...</p>
-<blockquote>
-<p>So I did what every developer does. I wrote my own.</p>
-</blockquote>
-<p>Using <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> to capture previous renderings of the Octopress generated version of <a href="http://staxmanade.com">staxmanade.com</a>, I was surprised at how quickly I ported my Octopress generated site to a new custom static site generator.</p>
-<p>I'm not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I've implemented.</p>
-<h2>Personal struggles with Octopress:</h2>
-<ul>
-<li>Octopress site generation was too SLOW for me. There's even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you're working on generate fast, but this just bothered me from a fundamental level.</li>
-<li>I'm not a Ruby developer and don't have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I'm a developer and its part of the process)</li>
-<li>Disliked that every time I <code>rake gen_deploy</code> I didn't know the exact code-diff that was changed since the previous version. I'd like to know exactly what files have changed and how they have changed before they get deployed. (again, there's probably a solution here, but didn't really care to dig deeper)</li>
-<li>There's an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
-</ul>
-<h1>So what did I end up with?</h1>
-<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I've thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
-<h1>How is this better ~err~ different?</h1>
-<ul>
-<li>Regenerating my site only takes about 6 seconds (as opposed to the Octopress 30+)</li>
-<li>I learned <a href="http://gulpjs.com">gulp</a>, and node.js streams along the way.</li>
-<li>Built by myself — which was a good for the learning experience.</li>
-<li>Don't have to set the codepage to <code>65001</code> for Windows machines.</li>
-<li>Series support.
-<ul>
-<li>I've implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they're a feature I've quite liked and was relatively easy to implement using my custom site generator.</li>
-</ul>
-</li>
-<li>Easy post tagging for a custom feed that gets cross-posted to <a href="http://elegantcode.com">elegantcode.com</a></li>
-<li>The <a href="http://togglejs.github.io/">tog</a> is easy to extend with custom commands and has a number of pre-built commands already ready to go.</li>
-</ul>
-<p>Since I've not put a huge amount of time into it - and I haven't exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
-<h1>How is this worse?</h1>
-<ul>
-<li>I have to maintain it (this is both a blessing and a curse) - don't get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
-<li>I haven't yet ditched the Octopress theme, so that change will be coming at some point.</li>
-<li>I don't have any automated process to deploying changes. So I can't just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
-<li>My <code>gulp watch</code> is not working correctly and it's not yet wired up to <code>livereload</code> which would be a nice next step...</li>
-</ul>
-<h1>BUT...</h1>
-<p>This is my site so it's all up to me to make it right...</p>
-<p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
-</div>
-
-      <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>

@@ -83,13 +83,13 @@
 <p>The class of conventions can encompass a wide range, anything from the style or formatting of the code itself, or naming conventions of objects, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
 <p>Finding a way to automatically check and enforce conventions will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention to even catching the most senior developer when they forget the convention all together (It's happened to me - forget).</p>
 <h1>One example of a project convention</h1>
-<p>In the past I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in places and deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes. Simulate billing over time rages. However, if someone ever used a <code>new Date()</code> in the code, this would break the convention and not allow us to roll time when we required it or even introduce hard to find bugs.</p>
-<p>This is a great place for automation. The above can be caught by running code reviews. However, if this rule was baked into the system and automated the issue can be caught much earlier in the process. With a well placed a unit/integration or build test that searched through the code base for uses of <code>new Date()</code> and raises an error message explaining why...</p>
+<p>In the past, I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in places and deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes. Simulate billing over time rages. However, if someone ever used a <code>new Date()</code> in the code, this would break the convention and not allow us to roll time when we required it or even introduce hard to find bugs.</p>
+<p>This is a great place for automation. The above can be caught by running code reviews. However, if this rule was baked into the system and automated the issue can be caught much earlier in the process. With a well-placed a unit/integration or build test that searched through the code base for uses of <code>new Date()</code> and raises an error message explaining why...</p>
 <h1>Fail with solid path forward</h1>
 <p>In our automated testing system, the convention/rule described above would not just fail a test with a generic <code>do not use new Date()...</code> message. This is a good place to document or share a story about why <code>new Date()</code> was not allowed. We failed the test with a long error message that described both why not to use <code>new Date()</code> but what to use in place.</p>
 <p>You want to include the why as well as the what here to make adoption of the conventions easier going forward for those not aware of them.</p>
 <h1>Allow Special Exclusions</h1>
-<p>For most conventions, they are generalizations that may not ALWAYS be necessary or ideal. There often times exceptions to the rule in software development, so allowing for the test code to be modified to enable exclusions to this rule is a good thing.</p>
+<p>For most conventions, they are generalizations that may not ALWAYS be necessary or ideal. There often times exceptions to the rule in software development, so allowing the test code to be modified to enable exclusions to this rule is a good thing.</p>
 <p>In the example convention of Date above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
 <h1>Some Automation Approaches</h1>
 <p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches (greps) the entire codebase. Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
@@ -123,7 +123,7 @@
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2015/09/browser-only-mochajs-tests-using-systemjs/" title="Previous Post: Browser only MochaJS tests using SystemJS">&laquo; Browser only MochaJS tests using SystemJS</a>
+                        <a class="basic-alignment left" href="/2015/09/jsmp-systemjs-starter-plunker/" title="Previous Post: JSMP/SystemJS Starter Plunker">&laquo; JSMP/SystemJS Starter Plunker</a>
                     </p>
                 </footer>
             </article>

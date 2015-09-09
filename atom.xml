@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-09-04T22:41:38Z</updated>
+    <updated>2015-09-09T05:35:11Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,28 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[JSMP/SystemJS Starter Plunker]]></title>
+        <id>http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/</id>
+        <link href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">
+        </link>
+        <updated>2015-09-09T05:35:11Z</updated>
+        <summary type="html"><![CDATA[I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.]]></summary>
+        <content type="html"><![CDATA[<p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
+<p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk (click below).</p>
+<h3><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSMP Starter Plunker</a></h3>
+<p>How to use:</p>
+<ol>
+<li>Click the link above</li>
+<li>Open the <code>app.js</code> file</li>
+<li>Start writing code!</li>
+<li>Click the <code>Run</code> to see your output.</li>
+</ol>
+<p>And if you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to a Plunk</p>
+<h3><a href="http://plnkr.co/edit/LLQQqg?p=preview">MochaJS w/ JSPM Plunker</a></h3>
+<p>Happy Prototyping!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Browser only MochaJS tests using SystemJS]]></title>
         <id>http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/</id>
@@ -1382,61 +1404,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 <h1>Did you have your project under source control before doing this?</h1>
 <p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
 <p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Custom Static Blog Generator - No Longer Using Octopress]]></title>
-        <id>http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/</id>
-        <link href="http://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">
-        </link>
-        <updated>2015-01-04T00:34:11Z</updated>
-        <summary type="html"><![CDATA[# TL;DR]]></summary>
-        <content type="html"><![CDATA[<h1>TL;DR</h1>
-<blockquote>
-<p>In summary I left my Octopress blog behind quite a while ago, and this site has been statically generated with a custom tooling build up around gulpjs and node.</p>
-</blockquote>
-<h1>Some of the details...</h1>
-<p>After I <a href="http://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">migrated from Blogspot to Octopress</a> I started running into workflow issues and <a href="https://github.com/jekyll/jekyll/issues/2226">other issues</a> that turned me off from Octopress/Jekyll (at least for my own site).</p>
-<p>It was also right around the time that <a href="http://gulpjs.com">GulpJS</a> came out and I needed a project to play around with...</p>
-<blockquote>
-<p>So I did what every developer does. I wrote my own.</p>
-</blockquote>
-<p>Using <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> to capture previous renderings of the Octopress generated version of <a href="http://staxmanade.com">staxmanade.com</a>, I was surprised at how quickly I ported my Octopress generated site to a new custom static site generator.</p>
-<p>I'm not writing this to convince you to leave Octopress for anything (especially <a href="http://togglejs.github.io">my home-grown tool</a>), but felt compelled to get a blog post out describing some of the cool little features I've implemented.</p>
-<h2>Personal struggles with Octopress:</h2>
-<ul>
-<li>Octopress site generation was too SLOW for me. There's even a helper rake task that moves your posts to a temporary folder to exclude from generation when you want to quickly see the post you're working on generate fast, but this just bothered me from a fundamental level.</li>
-<li>I'm not a Ruby developer and don't have the ability or desire to fork/maintain Jekyll or Octopress. I wanted to have something that I pretty much owned. (yea - that comes with a larger maintenance burden, but meh - I'm a developer and its part of the process)</li>
-<li>Disliked that every time I <code>rake gen_deploy</code> I didn't know the exact code-diff that was changed since the previous version. I'd like to know exactly what files have changed and how they have changed before they get deployed. (again, there's probably a solution here, but didn't really care to dig deeper)</li>
-<li>There's an issue on Windows where you end up mucking around with the <a href="http://www.tomordonez.com/blog/2014/07/30/installing-octopress-in-windows-server/">codepage</a>, which made working on things a bit of a headache.</li>
-</ul>
-<h1>So what did I end up with?</h1>
-<p>I now have a statically generated site all powered by <code>gulp</code> and a small library/command line tool I've thrown up here: <a href="http://togglejs.github.io/">Togglejs</a>.</p>
-<h1>How is this better ~err~ different?</h1>
-<ul>
-<li>Regenerating my site only takes about 6 seconds (as opposed to the Octopress 30+)</li>
-<li>I learned <a href="http://gulpjs.com">gulp</a>, and node.js streams along the way.</li>
-<li>Built by myself — which was a good for the learning experience.</li>
-<li>Don't have to set the codepage to <code>65001</code> for Windows machines.</li>
-<li>Series support.
-<ul>
-<li>I've implemented two different features for supporting a series. One allows me to control through YAML front matter posts and how they tie into a series topic. Another feature allows me to write out a series in a single markdown file, where I can specify a delimiter to split the articles up by. I may blog more about these in the future as they're a feature I've quite liked and was relatively easy to implement using my custom site generator.</li>
-</ul>
-</li>
-<li>Easy post tagging for a custom feed that gets cross-posted to <a href="http://elegantcode.com">elegantcode.com</a></li>
-<li>The <a href="http://togglejs.github.io/">tog</a> is easy to extend with custom commands and has a number of pre-built commands already ready to go.</li>
-</ul>
-<p>Since I've not put a huge amount of time into it - and I haven't exactly developed it to be a competitor to Octopress or other static site generators, it pretty much has just what I need it to have at the moment and not really anything more.</p>
-<h1>How is this worse?</h1>
-<ul>
-<li>I have to maintain it (this is both a blessing and a curse) - don't get the benefits of bug fixes by hundreds of contributors to Octopress.</li>
-<li>I haven't yet ditched the Octopress theme, so that change will be coming at some point.</li>
-<li>I don't have any automated process to deploying changes. So I can't just create a post on my phone, save to my repo and expect it to automatically show up online - but have ideas on how to do that.</li>
-<li>My <code>gulp watch</code> is not working correctly and it's not yet wired up to <code>livereload</code> which would be a nice next step...</li>
-</ul>
-<h1>BUT...</h1>
-<p>This is my site so it's all up to me to make it right...</p>
-<p>It's been a pleasure to build this up and just a fun little project to hack on (as if all the <a href="https://github.com/staxmanade/">other OSS projects</a> I hack on aren't enough).</p>
 ]]></content>
     </entry>
 </feed>

@@ -79,7 +79,7 @@
         <a href="/2014/12/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2014/12/habit-of-a-solid-developer-git-dance/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not going to talk about the pro's and pro's of source control. I did want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<div class="entry-content"><p>*** NOT SURE USING PRO'S AND PRO'S IS, BUT IT READS VERY ODDLY*** When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not going to talk about the pro's and pro's of source control. I did want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
 <p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
 <p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can just get wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
 <h1>Fetch remote changes</h1>
@@ -90,14 +90,14 @@
 <pre><code>git fetch --all
 </code></pre>
 <p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
-<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph which allows me to take different paths before I decide to <code>merge</code> or <code>rebase</code>. <code>git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I may not always want to merge a remote change.</p>
+<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph, which allows me to take different paths before I decide to <code>merge</code> or <code>rebase</code>. <code>git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I may not always want to merge a remote change.</p>
 <h1>Review remote changes</h1>
 <pre><code>gitk --all
 </code></pre>
-<p>Now the <code>gitk</code> U.I. is horrible to look at, but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> above. The <code>--all</code> is important as it will show you all branches (including remote branches) that were fetched.</p>
+<p>Now the <code>gitk</code> U.I. is horrible to look at, but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> above. The <code>--all</code> is important, as it will show you all branches (including remote branches) that were fetched.</p>
 <p>I use this overview to not only code review changes, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
 <h1>Merge or Rebase</h1>
-<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental visual of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to to look like when I'm done. I will decide to either:</p>
+<p>*** YOU HAVE TWO OF THE WORDS TO IN THIS ONE. TO TO *** Once my review is complete, I've taken a look at the overall changes, and I have a mental visual of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to to look like when I'm done. I will decide to either:</p>
 <h2>Merge</h2>
 <pre><code>git merge [origin/master | otherBranch]
 </code></pre>
@@ -112,7 +112,7 @@
 <p>or</p>
 <pre><code>git push origin &lt;branchName&gt;
 </code></pre>
-<p>Now it's not a complicated workflow and it can get a bit tricker, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
+<p>Now it's not a complicated workflow and it can get a bit trickier, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
 </div>
 
                 <footer>
@@ -132,7 +132,7 @@
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2015/09/browser-only-mochajs-tests-using-systemjs/" title="Previous Post: Browser only MochaJS tests using SystemJS">&laquo; Browser only MochaJS tests using SystemJS</a>
+                        <a class="basic-alignment left" href="/2015/09/jsmp-systemjs-starter-plunker/" title="Previous Post: JSMP/SystemJS Starter Plunker">&laquo; JSMP/SystemJS Starter Plunker</a>
                     </p>
                 </footer>
             </article>

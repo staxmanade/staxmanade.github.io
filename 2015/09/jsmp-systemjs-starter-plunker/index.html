@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Habit of a Solid Developer - Part 6 - Baby Steps When Making Changes - Developing on Staxmanade</title>
+  <title>JSMP/SystemJS Starter Plunker - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 6 - Baby Steps When Making Changes">
+   <meta name="description" content="I&#x27;m writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/">
+  <link rel="canonical" href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,45 +71,49 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/">Habit of a Solid Developer - Part 6 - Baby Steps When Making Changes</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
     <p class="meta">
-          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
+          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
 
 
-        <a href="/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/#disqus_thread" data-disqus-identifier="/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/">(Comments)</a>
+        <a href="/2015/09/jsmp-systemjs-starter-plunker/#disqus_thread" data-disqus-identifier="/2015/09/jsmp-systemjs-starter-plunker/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>Have you ever made some code changes and while in the process of making those changes realize you need to change something else, which leads to changes to that thing over there and then again to that thing up there, and down here, and over there and since we're in here and I've been meaning to tweak this well... and paused to realize you forgot the original goal of why you fell down this rat hole? No never? (well I have).</p>
-<p>If you're one who likes to apply the ol Boy Scout rule of <code>Always leave the campground cleaner than you found it</code> to your code, just don't (yet).</p>
-<p>Before you go around making a bunch of cleanup changes, fixing formatting, changing variable names, general cleanup. Accomplish a tiny part of your overall objective and commit just that change. If you see other things along the way, take note and come back to them later. Or if, like me you can't help yourself, just don't check all of those changes in at once. Use something like <code>git commit -p</code> to check in only relevant hunks of code that are related to a specific unit-of-work within the changes.</p>
-<p>If the job is to <code>rename a variable</code>, don't also <code>fix spelling, format code, extract method, etc...</code>. Save those other changes for different commits.</p>
-<h3>But what if you don't know what you're planning to change?</h3>
-<p>Sometimes, it's good to go off and spike a big swath of changes just to get an idea how much impact a refactor is going to be. Prototype something to get a good picture of whether something is possible or not or to see how many coupled items need to be adjusted along the way.</p>
-<p>However, you go into it knowing you will likely just undo all of your changes all together with the goal to surface more knowledgeable and either A) determine that it is a do-able change and should or should not even attempted or B) you've uncovered some challenges that can are not easily overcome and require more thought or another approach.</p>
-<p>It doesn't matter if you're making project-wide architectural changes or surgical bug fixes, if you can, <strong>try to take baby steps, commit the changes and verify each change along the way</strong>.</p>
-<p>TDD (Test Driven Development) is a great way to take as tiny a step as possible. With this approach, you can write a test, make it pass (consider that a change) and <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">possibly check it in</a> to source control.</p>
-<p>This approach is also important when debugging. Running around the codebase changing X, Y, and Z just to see if you can fix a bug will often times get you in a bigger mess than the original bug you tried to fix. Making one change at a time, verifying the bug, then the next change is quite often is a better approach. So consider going slow and taking baby steps.</p>
-<p>Hope this helps!</p>
+<div class="entry-content"><p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
+<p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk (click below).</p>
+<h3><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSMP Starter Plunker</a></h3>
+<p>How to use:</p>
+<ol>
+<li>Click the link above</li>
+<li>Open the <code>app.js</code> file</li>
+<li>Start writing code!</li>
+<li>Click the <code>Run</code> to see your output.</li>
+</ol>
+<p>And if you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to a Plunk</p>
+<h3><a href="http://plnkr.co/edit/LLQQqg?p=preview">MochaJS w/ JSPM Plunker</a></h3>
+<p>Happy Prototyping!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
+                          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevHabit</a>
+    <a class='category' href='/blog/categories/jspm/'>JSPM</a>
+    <a class='category' href='/blog/categories/mochajs/'>MochaJS</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2015/09/jsmp-systemjs-starter-plunker/" title="Previous Post: JSMP/SystemJS Starter Plunker">&laquo; JSMP/SystemJS Starter Plunker</a>
+                        <a class="basic-alignment left" href="/2015/09/browser-only-mochajs-tests-using-systemjs/" title="Previous Post: Browser only MochaJS tests using SystemJS">&laquo; Browser only MochaJS tests using SystemJS</a>
                     </p>
                 </footer>
             </article>
@@ -135,7 +139,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2014/12/habit-of-a-solid-developer-baby-steps-when-making-changes/';
+    var disqus_identifier = '/2015/09/jsmp-systemjs-starter-plunker/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
