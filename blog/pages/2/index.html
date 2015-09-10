@@ -263,7 +263,7 @@ Could not find TargetA ''. Possible targets are:
         <a href="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/#disqus_thread" data-disqus-identifier="/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>If sometimes come upon existing applications that use <a href="http://git-scm.com">Git</a> where files were added to the repository that should have originally been ignored. Sometimes this is because the <code>.gitignore</code> file is missing, or because certain rules were not include that probably should have been from the start.</p>
+<div class="entry-content"><p>I sometimes come upon existing applications that use <a href="http://git-scm.com">Git</a> where files were added to the repository that should have originally been ignored. Sometimes this is because the <code>.gitignore</code> file is missing, or because certain rules were not include that probably should have been from the start.</p>
 <p>There are ways in <code>git</code> to completely rewrite history to <a href="http://gitready.com/beginner/2009/03/06/ignoring-doesnt-remove-a-file.html">remove all traces</a> of the file, however most of the time, it's good to leave a commit saying <code>removed files that should have originally been ignored</code> as a good starting point (depending on the project/repo).</p>
 <p>Here is a small workflow I've found to be pretty effective in helping to clean up a repository, or at least let you know what files would have originally been ignored had you setup a <code>.gitignore</code> file with some project standards...</p>
 <h1>Create a well meaning <code>.gitignore</code> file</h1>

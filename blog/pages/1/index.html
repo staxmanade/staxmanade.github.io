@@ -93,7 +93,7 @@
 </div></p>
 <p>Every project generates it's own constraints. These may come from an Architect's idea of &quot;best practice&quot; or it may come from the domain the software is written in. It may even be derived because of the programming language you're using. For example, in JavaScript we have linters that encourage rules like triple equals <code>===</code> vs double equals <code>==</code>.</p>
 <p>Whatever the convention or rule is, one of the best steps you can take is to <strong>find a way to automatically enforce the convention</strong> once it can be established.</p>
-<p>The class of conventions can encompass a wide array of rules, anything from the formatting of the code, naming conventions, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
+<p>The class of conventions can encompass a wide array of rules; anything from the formatting of the code, naming conventions, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
 <p>Finding a way to automatically check and enforce conventions will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention to even catching the most senior developer when they forget the convention all together (It's happened to me - forget).</p>
 <h1>An example of a project convention</h1>
 <p>In the past, I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in various places like billing, trading, etc. Deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes or simulate billing over time rages.</p>
@@ -104,9 +104,9 @@
 <p>In the automated convention enforcement described above, the convention would not just fail a test with a generic <code>do not use new Date()...</code> message.</p>
 <p>This is a good place to document or share a story about why <code>new Date()</code> was not allowed. We failed the test with a long error message that described both why not to use <code>new Date()</code> and we included a sample snippet of what to use in its place.</p>
 <p>You want to include the why as well as the what here to make adoption of the conventions easier going forward for those new to the team or project.</p>
-<h1>Allow apecial exclusions</h1>
+<h1>Allow special exclusions</h1>
 <p>Most conventions are generalizations that may not ALWAYS be necessary or ideal. There often exceptions to the rule in software development, so allowing the test code to be extended to enable exclusions to this rule is a good thing.</p>
-<p>In the example above above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
+<p>In the example  above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
 <h1>Some automation approaches</h1>
 <p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase.</p>
 <p>Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
