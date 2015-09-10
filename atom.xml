@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-09-09T05:35:11Z</updated>
+    <updated>2015-09-09T06:20:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,48 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions]]></title>
+        <id>http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/</id>
+        <link href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">
+        </link>
+        <updated>2015-09-09T06:20:41Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 2</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - (current) - Automatically Enforce Project Conventions
+        </li>
+    </ul>
+</div></p>
+<p>Every project generates it's own constraints. These may come from an Architect's idea of &quot;best practice&quot; or it may come from the domain the software is written in. It may even be derived because of the programming language you're using. For example, in JavaScript we have linters that encourage rules like triple equals <code>===</code> vs double equals <code>==</code>.</p>
+<p>Whatever the convention or rule is, one of the best steps you can take is to <strong>find a way to automatically enforce the convention</strong> once it can be established.</p>
+<p>The class of conventions can encompass a wide array of rules, anything from the formatting of the code, naming conventions, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
+<p>Finding a way to automatically check and enforce conventions will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention to even catching the most senior developer when they forget the convention all together (It's happened to me - forget).</p>
+<h1>An example of a project convention</h1>
+<p>In the past, I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in various places like billing, trading, etc. Deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes or simulate billing over time rages.</p>
+<p>However, if someone ever used a <code>new Date()</code> in the code, this would break the convention by not using our abstraction and not allow us to roll time properly. This could lead to serious or hard to find bugs.</p>
+<p>Detecting the miss-use of Date in this application was a great place for automated enforcement.</p>
+<p>The above can be caught by running code reviews. However, we baked this convention into the system and automated the enforcement of it so that the issue could be caught much earlier in the development lifecycle. With a well-placed a unit/integration test that searched through the code base for uses of <code>new Date()</code> and raised an error message explaining why, we were able to be sure the projects convention was held and avoid potential bugs in the future.</p>
+<h1>Fail with a solid path forward</h1>
+<p>In the automated convention enforcement described above, the convention would not just fail a test with a generic <code>do not use new Date()...</code> message.</p>
+<p>This is a good place to document or share a story about why <code>new Date()</code> was not allowed. We failed the test with a long error message that described both why not to use <code>new Date()</code> and we included a sample snippet of what to use in its place.</p>
+<p>You want to include the why as well as the what here to make adoption of the conventions easier going forward for those new to the team or project.</p>
+<h1>Allow apecial exclusions</h1>
+<p>Most conventions are generalizations that may not ALWAYS be necessary or ideal. There often exceptions to the rule in software development, so allowing the test code to be extended to enable exclusions to this rule is a good thing.</p>
+<p>In the example above above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
+<h1>Some automation approaches</h1>
+<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase.</p>
+<p>Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
+<h1>Tools to help enforce conventions</h1>
+<p>I've started to <a href="https://github.com/staxmanade/automated-conventions">compile a small list</a> of tools that you may consider to help enforce conventions on your team. Please feel free to suggest others by submitting a pull-request.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[JSMP/SystemJS Starter Plunker]]></title>
         <id>http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/</id>
@@ -1310,100 +1352,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <p>Resgrid is a software as a service product hosted on Microsoft Azure that provides logistics, management and communication tools to first responder organizations such as volunteer fire, career fire, EMS, search and rescue, public safety, disaster relief organizations, etc.</p>
 <p>My partner <a href="http://www.designlimbo.com/">Shawn Jackson</a> and I created <a href="http://resgrid.com">Resgrid</a> a few years ago and the buzz is exciting to see.</p>
 <p>If you have any interest in following some technical aspects of this little startup. <a href="http://www.designlimbo.com/">Shawn</a> often posts interesting articles both technical and startup/business related on <a href="http://www.designlimbo.com/">his site</a>.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to install clang-format and formatting Objective-C files]]></title>
-        <id>http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/</id>
-        <link href="http://staxmanade.com/2015/01/how-to-install-clang-format-and-formatting-objective-c-files/">
-        </link>
-        <updated>2015-01-14T05:49:01Z</updated>
-        <summary type="html"><![CDATA[Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular b...]]></summary>
-        <content type="html"><![CDATA[<p>Formatting your code so it follows whatever conventions your team/company/self define is important. As developers who have to read code on a regular basis, you have to train ourselves to mentally parse code and spot where bugs may be lurking.</p>
-<p>However, if your code is not formatted in a consistent fashion, the cognitive load placed on your brain increases dramatically. Not only do you have to read, parse, and conceptualize the code you're reviewing, your brain is now having to decide if anomalies in the formatting of your project's source code are because of a problem in the code, or merely a difference in the code formatting or styling.</p>
-<p>Easy and automatic code formatting tools were something I really missed when I started using Xcode because Visual Studio's built-in formatting of a file is as simple as <code>CTRL+k+d</code>.</p>
-<p>This has definitely improved in recent years with the introduction of <a href="http://alcatraz.io/">Alcatraz</a> and <a href="https://github.com/travisjeffery/ClangFormat-Xcode">ClangFormat-Xcode</a> and I'd highly recommend you check them out.</p>
-<p>But, what if you just acquired a legacy project, that was hacked on by quite a number of different developers, with different styles, that's a total mess (from a style consistency perspective)? Or what if you wanted to have an easy <code>rake</code> task that automatically formatted the necessary code files?</p>
-<p>This is where a great little tool from the <a href="http://llvm.org">LLVM</a> project <code>clang-format</code> comes in handy.</p>
-<p><s>Unfortunately it's not as easy to install as <code>brew install clang-format</code></s> (It's now as easy to install as <code>brew install clang-format</code>), but I'll show you not only how to get it installed manually, but a command to easily format your code.</p>
-<h1>How to install <code>clang-format</code> manually</h1>
-<p>Thanks to <a href="http://nacho4d-nacho4d.blogspot.de/2013/11/clang-format.html">this post</a> for describing how to get (an older version of the tool), I put together the following steps that I hope you find useful.</p>
-<ol>
-<li>Go to the <a href="http://llvm.org/releases/download.html">LLVM Download page</a></li>
-<li>In chrome dev tools (On my mac, <code>⌘+⌥+J</code> aka <code>CMD+Option+J, make sure the</code>Elements<code>tab is selected, and</code>CMD+F<code>within the html source for</code>macosx-apple-darwin`.
-<ul>
-<li>as of writing this, I get a link to the following url <a href="http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz"><code>http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz</code></a></li>
-</ul>
-</li>
-<li>Copy that URL and place it into the following set of commands.</li>
-</ol>
-<p>From a command prompt, navigate to a folder where you'd like to save or store the <code>clang</code> tools.</p>
-<ol>
-<li>Remove the older version if there was one, and create a folder to work in
-<code>rm -rf ./clang-format/ &amp;&amp; mkdir -p ./clang-format</code></li>
-<li>Take the previously discovered link from above and use the following to download it into our working folder.
-<code>curl 'http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz' -o './clang-format/clang-format.tar.xz'</code></li>
-<li>Extract the tar file
-<code>tar xvfJ clang-format/clang-format.tar.xz -C ./clang-format</code></li>
-<li>Remove any previously sym-linked linked version you have
-<code>rm -f ~/bin/clang-format</code></li>
-<li>Link the downloaded clang-format command into our <code>~/bin</code> folder
-<code>ln -s $(pwd)/$(find clang-format | grep bin/clang-format$) ~/bin/clang-format</code></li>
-<li>Test the command works
-<code>clang-format --help</code></li>
-</ol>
-<p>Here are all of the steps above as a script:</p>
-<pre><code>rm -rf ./clang-<span class="hljs-keyword">format</span>/ &amp;&amp; mkdir -p ./clang-<span class="hljs-keyword">format</span>
-curl <span class="hljs-string">'http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz'</span> -o <span class="hljs-string">'./clang-format/clang-format.tar.xz'</span>
-tar xvfJ clang-<span class="hljs-keyword">format</span>/clang-<span class="hljs-keyword">format</span>.tar.xz -C ./clang-<span class="hljs-keyword">format</span>
-rm -f ~/bin/clang-<span class="hljs-keyword">format</span>
-ln -s <span class="hljs-variable">$(</span><span class="hljs-keyword">pwd</span>)/<span class="hljs-variable">$(</span>find clang-<span class="hljs-keyword">format</span> | grep bin/clang-<span class="hljs-keyword">format</span><span class="hljs-variable">$)</span> ~/bin/clang-<span class="hljs-keyword">format</span>
-clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help</span>
-</code></pre>
-<h1>How to setup your project style guide</h1>
-<p>Now that you have the command line <code>clang-format</code> tool installed, you can walk through how to use it to format our Objective-C code files. Let's walk through some steps I used to apply a standard code format to the project.</p>
-<p>But, before you use the command line tool to rip through our project, let's first set the standards you'd like clang-format to adhere to when formatting our code.</p>
-<p>At the root of your project (probably where your <code>.git</code> folder is), create a file called <code>.clang-format</code></p>
-<p>The <code>.clang-format</code> file contains the formatting rules for a project. Its structure is <a href="http://www.yaml.org/">YAML</a> and is what the <code>clang-format</code> CLI can read to format your project's Objective-C files.</p>
-<p>For details about the <code>.clang-format</code> file, you can <a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">check out the docs</a> to get a list of all of the options possible in this file.</p>
-<p>Here is one I have used before.</p>
-<pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">Chromium</span>
-
-<span class="http"><span class="hljs-attribute">AlignTrailingComments</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">AllowShortIfStatementsOnASingleLine</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">BreakBeforeBraces</span>: <span class="hljs-string">Attach</span>
-<span class="hljs-attribute">ColumnLimit</span>: <span class="hljs-string">0</span>
-<span class="hljs-attribute">IndentWidth</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">KeepEmptyLinesAtTheStartOfBlocks</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">Language</span>: <span class="hljs-string">Cpp</span>
-<span class="hljs-attribute">MaxEmptyLinesToKeep</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">ObjCSpaceAfterProperty</span>: <span class="hljs-string">true</span>
-<span class="hljs-attribute">ObjCSpaceBeforeProtocolList</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">PointerBindsToType</span>: <span class="hljs-string">false</span>
-<span class="hljs-attribute">SpacesBeforeTrailingComments</span>: <span class="hljs-string">1</span>
-<span class="hljs-attribute">TabWidth</span>: <span class="hljs-string">4</span>
-<span class="hljs-attribute">UseTab</span>: <span class="hljs-string">Never</span>
-</span></code></pre>
-<p>If you want to ignore a folder from being touched, you can place a <code>.clang-format</code> in that folder with the following option set:</p>
-<pre><code><span class="hljs-attribute">BasedOnStyle</span>: <span class="hljs-string">None</span>
-</code></pre>
-<h1>Format all our files at once</h1>
-<p>Now that you have a <code>.clang-format</code> file which helps to define our project's styling conventions, you can begin our initial formatting sweep.</p>
-<p>First let's create a command that gives us all the files you want to process.</p>
-<p>Here's my initial example (executed in a zsh shell):</p>
-<p><code>ls MyProject/*.[hm]</code></p>
-<p>Tweak this however you need so that you get a list of files to format from your project. You may want to be careful to exclude a CocoaPods folder, or other third party libraries and once you are happy with it, you can then pipe its output to <code>clang-format</code>.</p>
-<p><code>ls MyProject/*.[hm] | xargs clang-format -i -style=file</code></p>
-<p>You can use the <code>xargs</code> command to execute the <code>clang-format</code> command for each file in the output <code>ls</code>.</p>
-<h3><code>clang-format</code> options</h3>
-<p>In the above example you use the following <code>clang-format</code> options:</p>
-<ul>
-<li><code>-i</code> tells it to do an in-place edit of the file</li>
-<li><code>style=file</code> this tells <code>clang-format</code> to use our <code>.clang-format</code> style rules when formatting.</li>
-</ul>
-<h1>Did you have your project under source control before doing this?</h1>
-<p>I sure hope you have the project in source control. You should now be able to <code>git diff</code> or whatever you do to view your source changes and see the files that have been modified by the <code>clang-format</code> command.</p>
-<p>I hope this post was helpful in showing you how to install <code>clang-format</code> and use it to format your existing Objective-C project.</p>
 ]]></content>
     </entry>
 </feed>

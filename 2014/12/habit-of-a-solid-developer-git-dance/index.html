@@ -79,7 +79,19 @@
         <a href="/2014/12/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2014/12/habit-of-a-solid-developer-git-dance/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>*** NOT SURE USING PRO'S AND PRO'S IS, BUT IT READS VERY ODDLY*** When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not going to talk about the pro's and pro's of source control. I did want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<div class="entry-content"><p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+    </ul>
+</div></p>
+<p>*** NOT SURE USING PRO'S AND PRO'S IS, BUT IT READS VERY ODDLY*** When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not going to talk about the pro's and pro's of source control. I did want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
 <p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
 <p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can just get wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
 <h1>Fetch remote changes</h1>
@@ -107,7 +119,7 @@
 </code></pre>
 <p>Once my changes have been synced up with the remote changes, I push them up.</p>
 <h1>Ship changes up to the origin</h1>
-<pre><code>git push origin master 
+<pre><code>git push origin master
 </code></pre>
 <p>or</p>
 <pre><code>git push origin &lt;branchName&gt;
@@ -132,7 +144,7 @@
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2015/09/jsmp-systemjs-starter-plunker/" title="Previous Post: JSMP/SystemJS Starter Plunker">&laquo; JSMP/SystemJS Starter Plunker</a>
+                        <a class="basic-alignment left" href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/" title="Previous Post: Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions">&laquo; Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions</a>
                     </p>
                 </footer>
             </article>
