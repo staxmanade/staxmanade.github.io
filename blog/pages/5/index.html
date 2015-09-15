@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
+    <p class="meta">
+          <time datetime="2014-03-02T05:41:00.000Z" pubdate data-updated="true">Mar 1st 2014</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>A standard task I began placing in my projects lately is one that easily integrates with my build tool of choice (rake, psake, etc&#8230;) and when run, installs a git pre-commit hook into my local copy of the repo that will run tests before code is committ. I&#8217;ve fancied calling the task <em><a href="https://github.com/staxmanade/PutOnAHelmet">putOnAHelmet</a></em>.</p> <p>Come checkout a small <a href="https://github.com/staxmanade/PutOnAHelmet">little github repo </a> I started to keep track of various versions of this and feel free to open an issue or send a pull request with another one!</p> <p>I don&#8217;t want to get into details about pre-commit hooks and how you should author them in this post (maybe we can expand the language in the repo&#8217;s readme&#8230;). You can also check <a href="http://bit.ly/1bit9Pe">out other writings</a>&#8230; But one of the biggest problems I have with them is gits in-ability to easily keep track of pre-commit hooks much like it can with the rest of the projects source. </p> <p>Now it&#8217;s true that different people need the ability to customize these, but a general &#8220;running of tests&#8221; before committing is a great first step and I&#8217;ve found these set of tasks the easiest way to carry them from repo to repo.</p> <p>Hope others find this useful!</p> <p>Happy committing!</p></div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes.</a></h1>
     <p class="meta">
           <time datetime="2014-02-17T18:25:00.000Z" pubdate data-updated="true">Feb 17th 2014</time>
@@ -263,23 +280,6 @@
 <div class="entry-content">
 <div class='post'>
 <p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/windows-8-share-charm-data-inspector/">Windows 8 Share Charm Data Inspector</a></h1>
-    <p class="meta">
-          <time datetime="2013-03-13T04:12:00.000Z" pubdate data-updated="true">Mar 12th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>In a previous <a href="http://elegantcode.com/2013/03/03/windows-8-hackathon-good-for-participants-bad-for-microsoft/" target="_blank">post</a> I mentioned I would share the app I created during a Windows 8 hackathon event.</p>  <p>I spent some more time adding polish, testing, re-thinking my initial designs and today, I’m excited to say that it is now in the <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">app store</a>!</p>  <h4>What does this app do?</h4>  <p>The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> is an application that allows you to inspect the details of data being shared from other applications through the Windows 8 Share Charm (Win+H).</p>  <p>For example, if you open the <a href="http://apps.microsoft.com/windows/en-us/app/video/64b22df1-5a9c-4c88-aa1f-42cefaf8b281" target="_blank">Video</a> app, select a movie and use the share charm (Win+H) to share the video, what data is actually shared? The <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a> will appear up as an application you can share the just about any data with and you can inspect at a lower level what values are shared.</p>  <p><strong>This application will give you insights into data that you never thought was being shared.</strong></p>  <h4>How do I get the app?</h4>  <p>Open your Windows 8 App Store and search for “<a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">Share Data Inspector</a>”. (or click the link “View in Windows Store” button.</p>  <h4>I’d like to suggest a feature:</h4>  <p>If you’ve downloaded the trial app and would like to see some improvements. Head <a href="https://github.com/staxmanade/ShareDataInspector/issues" target="_blank">over to this site, suggest a feature</a> and help this application grow from a hackathon created app into a full-fledged application.</p>  <p>Happy Sharing!</p>  </div>
 </div>
 
       

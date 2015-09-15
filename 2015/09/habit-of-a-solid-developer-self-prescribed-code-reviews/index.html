@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">
+  <link rel="canonical" href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,12 +71,12 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
     <p class="meta">
-          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
+          <time datetime="2015-09-14T06:20:41.092Z" pubdate data-updated="true">Sep 13th 2015</time>
 
 
-        <a href="/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
+        <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
     </p>
 </header>
 <div class="entry-content"><p>﻿
@@ -89,50 +89,60 @@
         <li>
             Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
         </li>
+        <li>
+            Part 3 - (current) - Self Prescribed Code Reviews
+        </li>
     </ul>
 </div></p>
-<p>One technique I use regularly when working with a team or even by myself is to review code changes.</p>
-<p>Depending on the project, how many developers, time zones of committers, etc. I shift how often or how thorough I review the changes but I almost always review every single commit.</p>
-<p>One good example on how I accomplished this was at a previous employer. I started work several hours before everyone else, and left before everyone. This meant that there was often end of day commits by other developers to review, and enough quiet time in the morning for me to take the time to do a solid review of the previous day's changes.</p>
-<p>While reviewing the previous day's changes, I would not only review other's changes, but I would also review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Doing this the next day provided enough time for my mental perspective to have shifted. I was probably thinking about things a little more clearly. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made today.</p>
-<p>This morning review process was good from a number of other angles:</p>
+<blockquote>
+<p>One technique I use regularly when working with a team or even by myself is lots of individual code reviews.</p>
+</blockquote>
+<h1>This is not a formal (sit down with someone) code review.</h1>
+<p>This is a personal practice I found extremely useful.</p>
+<p>Granted, I'm not talking about reviewing every commit in a repository the <a href="https://www.youtube.com/watch?v=X0VH78ye4yY">size of Facebooks</a>. Most of the projects I have participated in are on small enough teams (between 1-10 people) that reviewing code changes either as they come in or in some block during the day is completely feasible.</p>
+<p>Depending on the project, how many developers, time zones of committers, I shift how often or how thorough I review the changes but I try to review each and every commit (or at least the branch merge). This is one reason why <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregating your code commits into tiny topical changes</a> is important.</p>
+<p>If you're working with a source control that doesn't have an easy way to do <a href="http://git-scm.com/docs/git-request-pull">pull requests</a>. Or some other code review functionality, you can still use the source control system to manually review changes or diffs between branches. Way back when I was <strong>forced</strong> to use TFS source control this was a much more manual process. I would open up Visual Studio, browse our TFS server and begin reviewing. These days, the power of a pull request is generally suffecient for this purpose.</p>
+<h1>What happens in this review?</h1>
+<p>One approach I've taken in the past is to block some time, possibly while warming up with a cup of coffee to begin reviewing the previous day's commits. I would use this time to not only review other developer's changes, but I would also re-review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Reviewing code the next day provided time for my mental perspective to have shifted. I was probably thinking about things a little more clearly after a nights rest. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made that day.</p>
+<p>Some other benefits the morning review process provided include:</p>
 <ul>
-<li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.
--<strong><em>CONSIDER REWORDING THIS</em></strong>I could jot down questions on changes I couldn't understand (from others) which either led to asking for clarifications or even turned into possible suggestions that other developers could use to re-working their implementation even if it was as simple as (this part is unclear, could you add some extra comments here to help with clarity, or rename a variable to be a little more intention revealing).</li>
-<li>Easily catch when the project conventions were not being followed.</li>
-<li>Spot bugs being introduced.</li>
+<li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.</li>
+<li>I could take notes on changes other's had made that were not clear. (Note: this is generally done in an environment that didn't perscribe peer-reviewing code changes). So I essentially took the job on personally to review other's changes. Provide feedback, or ask question to get more understanding of their changes.</li>
+<li>Easily catch when the project conventions were not being followed, when the <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">convention was not automated</a>.</li>
+<li>Potentially spot bugs being introduced.</li>
 <li>Suggest potentially better approaches.</li>
 </ul>
 <p>However, the most important thing I gained by doing this was:</p>
 <ul>
 <li>Gain a better understanding of the entire project.</li>
-<li>Learn from others.</li>
+<li>Learn from others. I'd like to think I'm a pretty good develoepr, but there is so much to know and learn that reading other's code provides a great way to learn something new (or possibly what not to do).</li>
 </ul>
-<p>I once had a fellow developer say to me that they were blown away at how quick I could spin up on a brownfield project and get an architectural understanding so quickly that I could start not only contributing, but spot the places where we could improve general architectural patterns or jump in and become productive on a problem set.</p>
+<p>I once had a fellow developer say to me that they were blown away at how quick I could spin up on a brownfield project and get an architectural understanding that I could apply that knowledge and not only contribute quickly, but spot the places where we could improve general architectural patterns or jump in and become productive on a problem set.</p>
 <p>I believe that reviewing the changes going into a code base each day allowed me to keep a strong perspective on what is shifting within the project and be able to talk intelligibly when others start to get stuck on their work.</p>
-<h1>Code Reviews</h1>
-<p>If your team practices some form of code reviews, this is great for those participating in the review process. However, it leaves the rest of the developers out of that specific review. However, this should not stop those not in the review room from participating and learning from the changes.</p>
+<h1>Formal Code Reviews</h1>
+<p>If your team practices some form of code review workflow, this is great for those participating in the review process. However, it leaves the rest of the developers out of that specific review.</p>
+<p>This should not stop those not in the review room (or pull request) from participating and learning from the changes.</p>
 <p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I can not only come up to speed on a project but can be helpful to all aspects of the project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
-<h1>Pull Requests</h1>
-<p>The example I gave above of reviewing commits that happened in the past did leave room for improvement. If we only had pull requests back then... If you're using GitHub or another system that supports a way to code review before the code is placed on the main line of code, this is obviously better than what I described above.</p>
 <h1>Just Review Everything</h1>
 <p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
+<p>Happy Reviewing!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2015-08-25T06:20:41.092Z" pubdate data-updated="true">Aug 24th 2015</time>
+                          <time datetime="2015-09-14T06:20:41.092Z" pubdate data-updated="true">Sep 13th 2015</time>
 
 
                         <span class="categories">
     <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevHabit</a>
+    <a class='category' href='/blog/categories/git/'>Git</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Tweet</a>
 </div>
 
                     <p class="meta">
@@ -162,7 +172,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2015/08/habit-of-a-solid-developer-self-prescribed-code-reviews/';
+    var disqus_identifier = '/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
