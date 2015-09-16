@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: tvOS - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body   >
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div class="blog-index">
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">tvOS Simulator Remote - Keyboard Shortcuts/Replacement</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-16T05:06:14.601Z" pubdate data-updated="true">Sep 15th 2015</time>
+
+
+        <a href="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/#disqus_thread" data-disqus-identifier="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've begun some baby steps on my journey to learn the new <a href="https://developer.apple.com/tvos/">Apple TV</a> development tools and platform and we just discovered that the cumbersome tvOS Simulator Remote can almost be ignored because we can use our development keyboards in it's place.</p>
+<p>Playing around with the new Apple <code>tvOS</code> development kit you may have noticed that using the simulator remote is quite annoying. Not only does it force you to take you hand off the keyboard (to move to the mouse), but's just plain awkward to have to hold down <code>Option</code> while you use the Mouse and <code>Swipe Up/Down/Left/Right</code> when you may be trying to do is navigate the U.I.</p>
+<p>Luckily a coworker stumbled upon the arrow key commands and we quickly figured out a mapping of <code>tvOS Remote Buttons</code> &lt;--&gt; <code>Keyboard Keys</code> that can help any developer navigate and test their <code>tvOS</code> app just a little faster within the simulator.</p>
+<!--
+| Mac Simulator Remote | Developer Keyboard Alias          | Notes                                                       |
+|----------------------|-----------------------------------|-------------------------------------------------------------|
+| Touch Surface (←, ↑, →, ↓)   | Keyboard Arrow Keys (←, ↑, →, ↓)  |                                                             |
+| Touch Surface (click/select)| `<Enter>`                  | Also `<Enter>` on the number pad does NOT appear to work.   |
+| `Menu`               | `Tap <ESC>`                       |                                                             |
+| `Home`               | `Long-Press <ESC>`                |                                                             |
+| `Siri`               | Unknown (so far)                  | Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post |
+| `Play/Pause`         | `<SpaceBar>`                      |                                                             |
+| `Volume Up/Down`     | Unknown (so far)                  |                                                             |
+-->
+<style>
+.atvRemoteDisplay table {
+  border-collapse: collapse;
+}
+.atvRemoteDisplay th {
+  font-size: larger;
+  font-weight: bolder;
+}
+.atvRemoteDisplay td, .atvRemoteDisplay th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}
+</style>
+<table class="atvRemoteDisplay">
+  <tr>
+    <th>Mac Simulator Remote</th>
+    <th>Developer Keyboard Alias</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Touch Surface (←, ↑, →, ↓)</td>
+    <td>Keyboard Arrow Keys (←, ↑, →, ↓)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Touch Surface (click/select)</td>
+    <td><code>&lt;Enter&gt;</code></td>
+    <td>Also <code>&lt;Enter&gt;</code> on the number pad does NOT appear to work.</td>
+  </tr>
+  <tr>
+    <td><code>Menu</code></td>
+    <td><code>Tap &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Home</code></td>
+    <td><code>Long-Press &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Siri</code></td>
+    <td>Unknown (so far)</td>
+    <td>Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post</td>
+  </tr>
+  <tr>
+    <td><code>Play/Pause</code></td>
+    <td><code>&lt;SpaceBar&gt;`</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Volume Up/Down</code></td>
+    <td>Unknown (so far)</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<blockquote>
+<p>If you discover what the two <code>Unknown</code> values above map to, leave a comment below and I'll update this post with the complete list.</p>
+</blockquote>
+<h4>Screenshot of Simulator Apple TV Remote</h4>
+<p><img src="../../../images/posts/AppleTVSimulatorRemote.png" alt="Screenshot of Simulator Apple TV Remote"></p>
+<h4>Diagram of actual Apple TV Remote</h4>
+<p><img alt="Diagram of tvOS buttons" style="max-width: 700px;" src="https://developer.apple.com/tvos/human-interface-guidelines/remote-and-interaction/images/remote-and-interaction-remote-diagram_2x.png" /></p>
+<p>Happy tvOS building!</p>
+</div>
+
+            </article>
+            <div class="pagination">
+                <a href="/blog/archives">Blog Archives</a>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

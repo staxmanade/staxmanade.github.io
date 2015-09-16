@@ -71,6 +71,27 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a></h1>
+    <p class="meta">
+          <time datetime="2015-03-17T03:47:16.590Z" pubdate data-updated="true">Mar 16th 2015</time>
+
+
+        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/#disqus_thread" data-disqus-identifier="/2015/03/starting-to-build-an-xbox-one-podcast-player/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I'm writing this email to announce  an early sneak peek into a project I've recently started to put some of my free time towards. Here's a preview from a <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">small landing page</a> I've recently put together.</p>
+<blockquote>
+<p>If you, like myself, felt like the Xbox One platform was missing an essential Podcast player app, then you have come to the right place.</p>
+</blockquote>
+<h2>Have any interest in following along with me in this journey?</h2>
+<p>At the bottom of <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">this page</a> is a form, if you share your name and email, you'll get early access and an insider's view of the process of building an Xbox One application.</p>
+<h3>Learn More <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">here...</a></h3>
+</div>
+
+      <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/#disqus_thread" data-disqus-identifier="/2015/03/starting-to-build-an-xbox-one-podcast-player/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In-App Unit Tests</a></h1>
     <p class="meta">
           <time datetime="2015-03-07T06:19:53.583Z" pubdate data-updated="true">Mar 6th 2015</time>
@@ -517,65 +538,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </div>
 
       <a href="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/#disqus_thread" data-disqus-identifier="/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">How to Migrate a Jenkins Job to New Jenkins Server</a></h1>
-    <p class="meta">
-          <time datetime="2015-01-26T23:02:16.269Z" pubdate data-updated="true">Jan 26th 2015</time>
-
-
-        <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/#disqus_thread" data-disqus-identifier="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>We recently setup a new <a href="http://jenkins-ci.org/">Jenkins</a> build server for some iOS applications and I wanted to find a quick way to copy a couple Jobs from the old server to the new one.</p>
-<p>Below are a few small options I found while working on the task.</p>
-<h2>Option 1: Copy <code>jobs</code> directory</h2>
-<p>One option (and seems to be the recommended one) is to just copy the <code>jobs</code> directory from the old server to the new one.</p>
-<p>From the documentation <a href="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins#AdministeringJenkins-Moving%252Fcopying%252Frenamingjobs">Moving/copying/renaming jobs</a>:</p>
-<blockquote>
-<p>You can:</p>
-<ol>
-<li>Move a job from one installation of Jenkins to another by simply copying the corresponding job directory.</li>
-<li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
-<li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
-</ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
-</blockquote>
-<p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
-<h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
-<ul>
-<li><s><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></s> Thanks to a comment below for pointing out this doesn't actually export jobs - but environment variables when the task runs...</li>
-<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
-</ul>
-<h2>Option 3: Use <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI">Jenkins CLI</a></h2>
-<p>This is what I used, which worked nicely for only the few jobs we had. If you have a large number of Jenkins jobs, you may consider the first aproach above.</p>
-<ol>
-<li>First download the Jenkins CLI jar.</li>
-</ol>
-<ul>
-<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
-</ul>
-<p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
-<ol start="2">
-<li>Next we can use the following command (pointing to the old server) to list the jobs.</li>
-</ol>
-<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
-<ol start="3">
-<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
-</ol>
-<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
-<ol start="4">
-<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
-</ol>
-<p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps...</p>
-</div>
-
-      <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/#disqus_thread" data-disqus-identifier="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>

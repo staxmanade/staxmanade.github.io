@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-09-14T06:20:41Z</updated>
+    <updated>2015-09-16T05:06:14Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,93 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[tvOS Simulator Remote - Keyboard Shortcuts/Replacement]]></title>
+        <id>http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/</id>
+        <link href="http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">
+        </link>
+        <updated>2015-09-16T05:06:14Z</updated>
+        <summary type="html"><![CDATA[I've begun some baby steps on my journey to learn the new [Apple TV](https://developer.apple.com/tvos/) development tools and platform and we just dis...]]></summary>
+        <content type="html"><![CDATA[<p>I've begun some baby steps on my journey to learn the new <a href="https://developer.apple.com/tvos/">Apple TV</a> development tools and platform and we just discovered that the cumbersome tvOS Simulator Remote can almost be ignored because we can use our development keyboards in it's place.</p>
+<p>Playing around with the new Apple <code>tvOS</code> development kit you may have noticed that using the simulator remote is quite annoying. Not only does it force you to take you hand off the keyboard (to move to the mouse), but's just plain awkward to have to hold down <code>Option</code> while you use the Mouse and <code>Swipe Up/Down/Left/Right</code> when you may be trying to do is navigate the U.I.</p>
+<p>Luckily a coworker stumbled upon the arrow key commands and we quickly figured out a mapping of <code>tvOS Remote Buttons</code> &lt;--&gt; <code>Keyboard Keys</code> that can help any developer navigate and test their <code>tvOS</code> app just a little faster within the simulator.</p>
+<!--
+| Mac Simulator Remote | Developer Keyboard Alias          | Notes                                                       |
+|----------------------|-----------------------------------|-------------------------------------------------------------|
+| Touch Surface (←, ↑, →, ↓)   | Keyboard Arrow Keys (←, ↑, →, ↓)  |                                                             |
+| Touch Surface (click/select)| `<Enter>`                  | Also `<Enter>` on the number pad does NOT appear to work.   |
+| `Menu`               | `Tap <ESC>`                       |                                                             |
+| `Home`               | `Long-Press <ESC>`                |                                                             |
+| `Siri`               | Unknown (so far)                  | Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post |
+| `Play/Pause`         | `<SpaceBar>`                      |                                                             |
+| `Volume Up/Down`     | Unknown (so far)                  |                                                             |
+-->
+<style>
+.atvRemoteDisplay table {
+  border-collapse: collapse;
+}
+.atvRemoteDisplay th {
+  font-size: larger;
+  font-weight: bolder;
+}
+.atvRemoteDisplay td, .atvRemoteDisplay th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}
+</style>
+<table class="atvRemoteDisplay">
+  <tr>
+    <th>Mac Simulator Remote</th>
+    <th>Developer Keyboard Alias</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Touch Surface (←, ↑, →, ↓)</td>
+    <td>Keyboard Arrow Keys (←, ↑, →, ↓)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Touch Surface (click/select)</td>
+    <td><code>&lt;Enter&gt;</code></td>
+    <td>Also <code>&lt;Enter&gt;</code> on the number pad does NOT appear to work.</td>
+  </tr>
+  <tr>
+    <td><code>Menu</code></td>
+    <td><code>Tap &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Home</code></td>
+    <td><code>Long-Press &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Siri</code></td>
+    <td>Unknown (so far)</td>
+    <td>Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post</td>
+  </tr>
+  <tr>
+    <td><code>Play/Pause</code></td>
+    <td><code>&lt;SpaceBar&gt;`</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Volume Up/Down</code></td>
+    <td>Unknown (so far)</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<blockquote>
+<p>If you discover what the two <code>Unknown</code> values above map to, leave a comment below and I'll update this post with the complete list.</p>
+</blockquote>
+<h4>Screenshot of Simulator Apple TV Remote</h4>
+<p><img src="../../../images/posts/AppleTVSimulatorRemote.png" alt="Screenshot of Simulator Apple TV Remote"></p>
+<h4>Diagram of actual Apple TV Remote</h4>
+<p><img alt="Diagram of tvOS buttons" style="max-width: 700px;" src="https://developer.apple.com/tvos/human-interface-guidelines/remote-and-interaction/images/remote-and-interaction-remote-diagram_2x.png" /></p>
+<p>Happy tvOS building!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews]]></title>
         <id>http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/</id>
@@ -303,6 +390,21 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
 </ul>
 <p>In future posts I'm going to write down some of the habits that I think have helped me become a better developer over the years. While I get glimpses of (being the old guy) in a room of developers, I know that my learning is never done and my future has more personal growth than I can even imagine. Regardless, I hope you find these posts useful.</p>
 <p>Happy Deving!</p>
+<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 1</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - (current) - Introduction
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+    </ul>
+</div></p>
 ]]></content>
     </entry>
     <entry>
@@ -1345,60 +1447,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 <li>Get your plist moved over to the <code>LaunchAgents</code> folder (see post linked above)</li>
 <li>Remove the <code>SessionCreate</code> key</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to Migrate a Jenkins Job to New Jenkins Server]]></title>
-        <id>http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/</id>
-        <link href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">
-        </link>
-        <updated>2015-01-26T23:02:16Z</updated>
-        <summary type="html"><![CDATA[We recently setup a new [Jenkins](http://jenkins-ci.org/) build server for some iOS applications and I wanted to find a quick way to copy a couple Job...]]></summary>
-        <content type="html"><![CDATA[<p>We recently setup a new <a href="http://jenkins-ci.org/">Jenkins</a> build server for some iOS applications and I wanted to find a quick way to copy a couple Jobs from the old server to the new one.</p>
-<p>Below are a few small options I found while working on the task.</p>
-<h2>Option 1: Copy <code>jobs</code> directory</h2>
-<p>One option (and seems to be the recommended one) is to just copy the <code>jobs</code> directory from the old server to the new one.</p>
-<p>From the documentation <a href="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins#AdministeringJenkins-Moving%252Fcopying%252Frenamingjobs">Moving/copying/renaming jobs</a>:</p>
-<blockquote>
-<p>You can:</p>
-<ol>
-<li>Move a job from one installation of Jenkins to another by simply copying the corresponding job directory.</li>
-<li>Make a copy of an existing job by making a clone of a job directory by a different name.</li>
-<li>Rename an existing job by renaming a directory. Note that the if you change a job name you will need to change any other job that tries to call the renamed job.</li>
-</ol>
-<p>Those operations can be done even when Jenkins is running. For changes like these to take effect, you have to click &quot;reload config&quot; to force Jenkins to reload configuration from the disk.</p>
-</blockquote>
-<p>For me, I skipped this option because I was having a hard time finding where the jobs directory was on the old server. (Or just too lazy to find it, and I only had a couple jobs to copy over)</p>
-<h2>Option 2: Try one of the plugins out there</h2>
-<p>There are some Jenkins plugins out there that provide some job export options. Here are a couple...</p>
-<ul>
-<li><s><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Exporter+Plugin">Job Exporter Plugin</a></s> Thanks to a comment below for pointing out this doesn't actually export jobs - but environment variables when the task runs...</li>
-<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/Job+Import+Plugin">Job Importer Plugin</a></li>
-</ul>
-<h2>Option 3: Use <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI">Jenkins CLI</a></h2>
-<p>This is what I used, which worked nicely for only the few jobs we had. If you have a large number of Jenkins jobs, you may consider the first aproach above.</p>
-<ol>
-<li>First download the Jenkins CLI jar.</li>
-</ol>
-<ul>
-<li>You can do this from your jenkin's CLI page within your installed Jenkins instance.</li>
-</ul>
-<p><img src="/images/posts/JenkinsCLIMenu.png" alt="jenkins CLI menu"></p>
-<ol start="2">
-<li>Next we can use the following command (pointing to the old server) to list the jobs.</li>
-</ol>
-<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ list-jobs</code></p>
-<ol start="3">
-<li>Using one job from the list above, let's copy the xml of a job to the clipboard. (I'm using a <code>Mac</code> which is were <code>pbcopy</code> &amp; <code>pbpaste</code> come from below)</li>
-</ol>
-<p><code>java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt;/ get-job &quot;NAME_OF_JOB&quot; | pbcopy</code></p>
-<p>This uses the cli <code>get-job &quot;NAME_OF_JOB&quot;</code> command to print the job's xml to <code>stdout</code>, which we pipe to <code>pbcopy</code> on the Mac to load the configuration into the clipboard. You could of course pipe the output to a file like <code>... &gt; job.xml</code></p>
-<ol start="4">
-<li>If the above command placed a job's XML into the clipboard, you can use the below command to add it to the new server.</li>
-</ol>
-<p><code>pbpaste | java -jar jenkins-cli.jar -s http://&lt;YourBuildServer&gt;:&lt;YourBuildServerPort&gt; create-job &quot;NAME_OF_JOB&quot;</code></p>
-<p>This uses <code>pbpaste</code> to take what is in the clipboard, send it to <code>stdin</code> and pipe it to the Jenkins cli's <code>create-job &quot;NAME_OF_JOB&quot;</code> command.</p>
-<p>Hope this helps...</p>
 ]]></content>
     </entry>
 </feed>
