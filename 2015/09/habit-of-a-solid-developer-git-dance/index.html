@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">
+  <link rel="canonical" href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,12 +71,12 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">Habit of a Solid Developer - Part 4 - Git Dance</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">Habit of a Solid Developer - Part 4 - Git Dance</a></h1>
     <p class="meta">
-          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
+          <time datetime="2015-09-30T06:20:41.092Z" pubdate data-updated="true">Sep 29th 2015</time>
 
 
-        <a href="/2014/12/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2014/12/habit-of-a-solid-developer-git-dance/">(Comments)</a>
+        <a href="/2015/09/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-git-dance/">(Comments)</a>
     </p>
 </header>
 <div class="entry-content"><p>﻿
@@ -92,11 +92,14 @@
         <li>
             Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
         </li>
+        <li>
+            Part 4 - (current) - Git Dance
+        </li>
     </ul>
 </div></p>
-<p>When it comes to solid dev habits, source control should be on the top of your list as a given, so much so that I'm not going to talk about the pro's and pro's (see what I did there?) of source control. I did however, want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<p>When it comes to solid dev habits, source control should be on the top of your list as a given. So much so that I'm not going to talk about the pro's and pro's (see what I did there?) of source control. I did however, want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
 <p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
-<p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can just get wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
+<p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can mostly be wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
 <h1><a href="http://git-scm.com/docs/git-fetch">Fetch</a> remote changes (don't <a href="http://git-scm.com/docs/git-pull">pull</a>)</h1>
 <p>So if we know or don't know that there are changes remotely</p>
 <pre><code>git fetch
@@ -106,14 +109,14 @@
 </code></pre>
 <p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
 <p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph before any action is taken. This allows me to take different paths depending on what the before commit graph looks like vs what I want the after to look like. <code>Git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I often don't want to just merge a remote change.</p>
-<p>After I have any remote changes pulled (err fetched) locally.</p>
+<p>After I have any remote changes pulled (err fetched) locally I like to get a mental model of the recent commits.</p>
 <h1>Review remote changes</h1>
 <pre><code>gitk --all
 </code></pre>
-<p>Now the <code>gitk</code> U.I. is horrible to look at (and I'm sure you have you're favorite git visualizer), but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> step above. The <code>--all</code> is important in gitk, as it will show you all branches (including remote branches) that were fetched.</p>
-<p>I use this overview to not only <a href="TODO">code review changes</a>, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
+<p>Now the <code>gitk</code> U.I. is horrible to look at (and I'm sure you have your favorite git visualizer), but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> step above. The <code>--all</code> is important in gitk, as it will show you all branches (including remote branches) that were fetched.</p>
+<p>I use this overview to not only <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">code review changes</a>, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
 <h1>Merge or Rebase</h1>
-<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental visual of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to look like when I'm done. I will decide to either:</p>
+<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental model of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to look like when I'm done. I will decide to either:</p>
 <h2>Merge</h2>
 <pre><code>git merge [origin/master | otherBranch]
 </code></pre>
@@ -136,7 +139,7 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2014-12-14T06:20:41.092Z" pubdate data-updated="true">Dec 13th 2014</time>
+                          <time datetime="2015-09-30T06:20:41.092Z" pubdate data-updated="true">Sep 29th 2015</time>
 
 
                         <span class="categories">
@@ -145,7 +148,7 @@
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/" data-via="staxmanade" data-counturl="http://staxmanade.com/2014/12/habit-of-a-solid-developer-git-dance/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">Tweet</a>
 </div>
 
                     <p class="meta">
@@ -175,7 +178,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2014/12/habit-of-a-solid-developer-git-dance/';
+    var disqus_identifier = '/2015/09/habit-of-a-solid-developer-git-dance/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/05/developer-humor/">Developer humor</a></h1>
+    <p class="meta">
+          <time datetime="2013-05-09T17:43:00.000Z" pubdate data-updated="true">May 9th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a></h1>
     <p class="meta">
           <time datetime="2013-03-20T04:06:00.000Z" pubdate data-updated="true">Mar 19th 2013</time>
@@ -256,23 +273,6 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
 <div class="entry-content">
 <div class='post'>
 A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly-modified-cd-command-for-powershell/" target="_blank">Slightly modified “CD” Command for PowerShell</a>. <br />Since that point, I’ve made a number of updates and would like to share them.<br />The first change I made was to move the “CD” script in that post to a <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1" target="_blank">new location</a>. I’ve greatly extended how I setup my development environment and how my PowerShell environment is initialized. <br /><blockquote><span style="background-color: white;">If you’re interested in how I setup my PS profile, take a look at the readme. Combine the setup with some <a href="http://chocolatey.org/" target="_blank">Chocolatey</a> and some <a href="http://boxstarter.codeplex.com/" target="_blank">BoxStarter</a> and you’re on your way to an amazingly automated development environment setup.</span></blockquote>Now on to the features I’ve added to the CD command.<br /><ul><li>I often would do something like “CD $Profile” (which is a no-go because that is a file not a directory, but my intent was to get into the directory where the $Profile file lived).      <br />      <br />So I updated it so if you try to CD to a file, it will just take you to the directory where the file resides.       </li><li>If you try to CD into a folder that doesn’t exist, it now prompts you to create it. <em>You could bypass the prompt with a -force|-f flag.</em><a href="http://lh6.ggpht.com/-60i1Gy9oDaI/UJKpYXRavXI/AAAAAAAAAbY/2hB0iIpFEmc/s1600-h/image6.png"><img alt="image" border="0" height="124" src="http://lh4.ggpht.com/-OcSX7gH6dz0/UJKpY8jiewI/AAAAAAAAAbg/zakK10j3HvU/image_thumb2.png?imgmax=800" style="background-image: none; border-bottom-width: 0px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; display: inline; padding-left: 0px; padding-right: 0px; padding-top: 0px;" title="image" width="524" /></a>       </li><li>Lastly I fixed an issue reported by a commenter in the previous post about trying to CD into a folder with the same name as a history index. If you had a folder named “4” and you typed “CD 4” it previously wouldn’t take you the 4 directory, but instead lookup item 4 in your CD history and take you there. Now if you specify a number and that number lives in the current directory it will take precedence over your history value. <em>(To be fair, I only added this feature, and even since I originally wrote about the CD command I have yet to run into a need for this case. Probably because I don’t name my directories with numbers)</em>. </li></ul>Something I had only recently noticed is this script appears to work with other PowerShell drive providers. I only did a cursory test but can CD into the HKLM:\Software\MyTestFolderThatShouldntExist and it will prompt to create the ‘folder’. If I say yes, I end up with a new registry folder. <img alt="Smile" class="wlEmoticon wlEmoticon-smile" src="http://lh5.ggpht.com/-eqb3EKYnXNo/UJKpadhpcFI/AAAAAAAAAbo/jBmQj4iLjgA/wlEmoticon-smile2.png?imgmax=800" style="border-bottom-style: none; border-left-style: none; border-right-style: none; border-top-style: none;" /> Not sure how useful that is, but with the abstraction layer PowerShell drives give us it’s interesting.<br /><br />If you’d like to grab just the CD script you can download it here.    <br /><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1</a><br /><br />Happy system navigation with PowerShell.</div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
-    <p class="meta">
-          <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopersgroup.com/">Northern Nevada Software Developers Group</a>.<br />If interested, the presentation material is up on my <a href="https://github.com/staxmanade/PowerShellPresentation">GitHub account</a>.<br />Thanks to all who attended!<br />Happy Scripting! </div>
 </div>
 
       

@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/to-be-checked-in-or-not/">To be checked in or not!</a></h1>
+    <p class="meta">
+          <time datetime="2009-04-24T20:05:00.000Z" pubdate data-updated="true">Apr 24th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SfIbnCZ8_eI/AAAAAAAAAHY/Vq8B-9nF0eQ/s1600-h/image%5B8%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SfIbnVdevlI/AAAAAAAAAHc/YYPOugrcFPA/image_thumb%5B4%5D.png?imgmax=800" width="604" height="289" /></a></p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/potentially-serious-bug-sql-server-2008/">Potentially SERIOUS bug. -- SQL Server 2008 Management Studio</a></h1>
     <p class="meta">
           <time datetime="2009-04-22T19:44:00.000Z" pubdate data-updated="true">Apr 22nd 2009</time>
@@ -319,41 +336,6 @@ Hey man,<br /><br />Why not add this to xUnit Contrib?<br /><br />Or have I just
 <div class="entry-content">
 <div class='post'>
 <p>If you read my previous post about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> then you know that I'm still in an experimental phase of this idea.</p>  <p>I'd like to share one more positive I found by using the specification extensions in my testing framework. This benefit is there weather you use standard specification extension methods or try the fluent specification extensions. The idea is very basic, but I didn't even realize it's benefit until I ran into it directly.</p>  <p>And the great benefit is... (drum roll...errr..actually it's not mind blowing). By using extensions methods to provide assertion extensions on the objects we're testing, we've<strong> <u>abstracted the actual testing framework's assertion process.</u></strong><u> </u>(told you it wasn't mind blowing, but read along and see an example of how this abstraction could be good)</p>  <p>Now I know most times you won't ever change testing frameworks, however I just ran into this when attempting to port the Castle.DynamicProxy2 (DP2) to Silverlight. Their test project leveraged the NUnit testing framework, which hasn't officially been ported. You can find a quick <a href="http://www.jeff.wilcox.name/2009/01/nunit-and-silverlight/">port by Jeff Wilcox</a> that will run in the Microsoft Silverlight Unit Testing Framework. However when I was porting the DP2 that hadn't been done, and I didn't feel like porting NUnit at the time.</p>  <p>So, by providing this abstraction layer (through the extension methods). You could then go in and easily swap what testing framework your project is leveraging to do it's assertions.</p>  <h6>NOTE: the port from NUnit to MSFT wouldn't have been that easy as the [TestMethod] in MSFT is sealed so I couldn't create a [Test] attribute that inherited from [TestMethod] to get the SL testing framework to run the tests w/out changing the DynamicProxy test code...aside from that issue...</h6>  <p>Let's take a concrete example of this abstraction benefit.</p>  <p>Notice how the Assert.IsInstanceOfType() in both NUnit and Microsoft's testing framework have the parameters reversed.</p>  <p>NUnit:</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SY0lvWzbk4I/AAAAAAAAAEw/mikfS2Ad9TQ/s1600-h/image11%5B3%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="146" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SY0lv1_mpxI/AAAAAAAAAE0/UMgoOPFIoiY/image11_thumb%5B2%5D.png?imgmax=800" width="584" border="0" /></a> </p>  <p>Microsoft:</p>  <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SY0lwEt7LjI/AAAAAAAAAE4/cj4aScmZML4/s1600-h/image17%5B1%5D.png"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="104" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SY0lwbo9p9I/AAAAAAAAAE8/xklqX1ujQj4/image17_thumb.png?imgmax=800" width="584" border="0" /></a> </p>  <p>If you were trying to switch from NUnit to MSFT or visa versa, a simple search and replace on [Test] for [TestMethod] would suffice for the majority of the needed port. However the Assert.IsInstanceOfType() would fail at compile time because of the parameter order. (and who know what else exactly is different)</p>  <p>If you could provide that layer of abstraction for the assertions, then to switch between NUnit and MSFT or visa versa would remain very simple, as you would only have to provide the framework specific changes only once.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/02/fluent-specification-extensions/">Fluent Specification Extensions</a></h1>
-    <p class="meta">
-          <time datetime="2009-02-05T00:14:00.000Z" pubdate data-updated="true">Feb 4th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p><strong>FYI: If you're familiar with extension methods, and how to use them in testing sceneries...the interesting part of this post is at the bottom starting at: "Ok, on to the point..."</strong></p><p>The C# extension methods give some amazing power when it comes to extending functionality of objects (we don't own) and I've spotted a pattern on several blogs and example unit testing snippets, especially in the Context Specification style testing areas that I find interesting.   <br /><br />The concept is to basically use the C# extension methods within a unit testing environment to give the system under test (SUT) more readability/understandability within the test code itself.   <br /><br />Here's an example of how you might normally write a unit test given the following SUT. </p>  <pre><span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> SystemUnderTest<br />{<br />  <span style="color:#0000ff;">public</span> SystemUnderTest() { PropertyUnderTest = "<span style="color:#8b0000;">Hello World!</span>"; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SomeStringProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />  <span style="color:#0000ff;">public</span> <span style="color:#0000ff;">bool</span> SomeBoolProperty { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />}</pre><p>You might write some unit tests that might look like...</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br /><br />Assert.IsTrue(sut.SomeBoolProperty);<br />Assert.AreEqual(sut.SomeStringProperty, "<span style="color:#8b0000;">Hello World!</span>");</pre><p>Now, the assertions above are small enough it's pretty easy to tell what's going on, however when you think about what your looking at, it actually present the best readability.</p><p>Let's take the string's AreEqual assertion for example...  You first read the "AreEqual", so now you have to allocate some (undefined as of yet) space in your head to store some data points that need to be evaluated all at once. (maybe I'm getting lazy as I get old, but the less I have to think when reading tests the more time I can spend understanding the domain being tested...)</p><p>Again, the example is over simplified, but I think you get the point.</p><h4>What if you could make the test syntax read and flow in a very readable and understandable manner?</h4><p>That's what the specification extensions give you. Given the two tests above and an a couple helper extension methods living in the testing library I could write something like.</p><pre>var sut = <span style="color:#0000ff;">new</span> SystemUnderTest();<br />sut.SomeBoolProperty.ShouldBeTrue();<br />sut.SomeBoolProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>It may just be me, but that just feels better, is more understandable, and the great thing is I didn't have to impact my domain objects to support this style of test...</p><p>Another great benefit is you don't have to type "Assert.xxxx(YYzzz)" each time you want to create an assertion. You can just type sut.SomeThing.{this where you get help from intellasense} giving you some great context based assertion options.</p><p>I googled for a library that had a pre-built set of extension assertions and ended up finding the <a href="http://code.google.com/p/specunit-net/source/browse/">http://code.google.com/p/specunit-net/source/browse/</a> by Scott Bellware. If you dig into the source of the project you can find a helper class called <a href="http://code.google.com/p/specunit-net/source/browse/trunk/src/SpecUnit/SpecificationExtensions.cs" target="_blank">SpecificationExtensions.cs</a> which basically gives you all the "Should..{your assertion here}" extension methods.</p><h4>Ok, on to the point real point (sorry it's taken so long).</h4><p>After downloading and playing with the extension specifications from Spec Unit, I thought what if we made that more fluent?</p><p>So I gave it a quick spike and instead of writing some tests that look like...</p><pre>sut.SomeStringProperty.ShouldNotBeNull();<br />sut.SomeStringProperty.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>));<br />sut.SomeStringProperty.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>"); </pre><p>You could have less wordy code and still retain all the meaning and readability with a set of fluent specification extensions.</p><pre>sut.SomeStringProperty<br />.ShouldNotBeNull()<br />.ShouldBeOfType(<span style="color:#0000ff;">typeof</span>(<span style="color:#0000ff;">string</span>))<br />.ShouldEqual("<span style="color:#8b0000;">Hello World!</span>");</pre><p>I haven't figured out what sorts of bad things this style of assertion could bring... but we'll experiment for a while...</p><p>Here's an example console app with the extensions included.</p><p><strong>DISCLAIMER</strong>: I haven't tested all the extensions so if you notice any issues please feel free to let me know...<br /><br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/FluentSpecificationExtensions.zip" frameborder="0" scrolling="no"></iframe></p></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jazz</div>
-<div class='content'>
-I just added this helpful extension method to my code. Thought of sharing it.<br /><br />public static IEnumerable ShouldContain(this IEnumerable collection, Func expectedCriteria)<br />        {<br />            collection.Any(expectedCriteria).ShouldBeTrue();<br />            return collection;<br />        }</div>
-</div>
-<div class='comment'>
-<div class='author'>tims</div>
-<div class='content'>
-You might find this useful:<br /><br />http://code.google.com/p/shouldit/<br /><br />ShouldIt is an open source library of fluent specification extensions that can be used with any unit testing framework.</div>
-</div>
-<div class='comment'>
-<div class='author'>DB</div>
-<div class='content'>
-Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
-</div>
-</div>
 </div>
 
       

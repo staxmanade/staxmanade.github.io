@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-09-16T05:06:14Z</updated>
+    <updated>2015-09-30T06:20:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,69 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Habit of a Solid Developer - Part 4 - Git Dance]]></title>
+        <id>http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/</id>
+        <link href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">
+        </link>
+        <updated>2015-09-30T06:20:41Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 4 - Git Dance]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - (current) - Git Dance
+        </li>
+    </ul>
+</div></p>
+<p>When it comes to solid dev habits, source control should be on the top of your list as a given. So much so that I'm not going to talk about the pro's and pro's (see what I did there?) of source control. I did however, want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
+<p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can mostly be wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
+<h1><a href="http://git-scm.com/docs/git-fetch">Fetch</a> remote changes (don't <a href="http://git-scm.com/docs/git-pull">pull</a>)</h1>
+<p>So if we know or don't know that there are changes remotely</p>
+<pre><code>git fetch
+</code></pre>
+<p>or sometimes (if I have multiple remotes)</p>
+<pre><code>git fetch --all
+</code></pre>
+<p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
+<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph before any action is taken. This allows me to take different paths depending on what the before commit graph looks like vs what I want the after to look like. <code>Git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I often don't want to just merge a remote change.</p>
+<p>After I have any remote changes pulled (err fetched) locally I like to get a mental model of the recent commits.</p>
+<h1>Review remote changes</h1>
+<pre><code>gitk --all
+</code></pre>
+<p>Now the <code>gitk</code> U.I. is horrible to look at (and I'm sure you have your favorite git visualizer), but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> step above. The <code>--all</code> is important in gitk, as it will show you all branches (including remote branches) that were fetched.</p>
+<p>I use this overview to not only <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">code review changes</a>, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
+<h1>Merge or Rebase</h1>
+<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental model of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to look like when I'm done. I will decide to either:</p>
+<h2>Merge</h2>
+<pre><code>git merge [origin/master | otherBranch]
+</code></pre>
+<p>Or</p>
+<h2>Rebase</h2>
+<pre><code>git rebase [origin/master | otherBranch]
+</code></pre>
+<p>Once my changes have been synced up with the remote changes, I push them up.</p>
+<h1>Ship changes up to the origin</h1>
+<pre><code>git push origin master
+</code></pre>
+<p>or</p>
+<pre><code>git push origin &lt;branchName&gt;
+</code></pre>
+<p>Now it's not a complicated workflow and it can get a bit trickier, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
+<p>Happy <code>gitting</code>!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[tvOS Simulator Remote - Keyboard Shortcuts/Replacement]]></title>
         <id>http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/</id>
@@ -118,6 +181,9 @@
         <li>
             Part 3 - (current) - Self Prescribed Code Reviews
         </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
     </ul>
 </div></p>
 <blockquote>
@@ -173,6 +239,9 @@
         </li>
         <li>
             Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
         </li>
     </ul>
 </div></p>
@@ -402,6 +471,9 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
         </li>
         <li>
             Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
         </li>
     </ul>
 </div></p>
@@ -1404,52 +1476,6 @@ describe("when testing something", function(){
 <h1>Next Steps!</h1>
 <p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
 <p>Happy Approving!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Setting Jenkins up to run XCTool and Xcode Simulator Tests]]></title>
-        <id>http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/</id>
-        <link href="http://staxmanade.com/2015/01/setting-jenkins-up-to-run-xctool-and-xcode-simulator-tests/">
-        </link>
-        <updated>2015-01-28T00:40:34Z</updated>
-        <summary type="html"><![CDATA[We recently [migrated an older Jenkins C.I. server over](http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/) to a newer...]]></summary>
-        <content type="html"><![CDATA[<p>We recently <a href="http://staxmanade.com/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">migrated an older Jenkins C.I. server over</a> to a newer one, and struggled to get <a href="https://github.com/facebook/xctool">XCTool</a> or <code>xcodebuild</code> to run unit tests where the simulator was needed.</p>
-<p>There are quite a number of blog posts out there that describe how to setup a C.I. Jenkins server on a Mac, but many of them don't include the last bit (that worked for me), so I hope this helps you...</p>
-<h1>Why Can't I run the Xcode Simulator on a Jenkins server?</h1>
-<h3>Some Error Messages I Encountered Along the Way:</h3>
-<pre><code>Tried to install the test host app 'com.myapp.test' but failed.
-
-Preparing test environment failed.
-
--[TEST_BUNDLE FAILED_TO_START] 
-    
-There was a problem starting the test bundle: Simulator 'iPhone 6' was not prepared: Failed for unknown reason.
-
-Test did not run: Simulator 'iPhone 6' was not prepared: Failed for unknown reason.
-
-2015-01-21 12:02:19.296 xcodebuild[35135:875297]  iPhoneSimulator: Timed out waiting 120 seconds for simulator to boot, current state is 1.
-
-Testing failed:
-Test target MyProjectTests encountered an error (Timed out waiting 120 seconds for simulator to boot, current state is 1. If you believe this error represents a bug, please attach the log file at /var/folders/yf/49df70js2xn524f9c3835zx0000087/T/com.apple.dt.XCTest-status/Session-2015-01-21_12:00:19-sXA35e.log)
-** TEST FAILED **
-</code></pre>
-<h3>Need to run a GUI user.</h3>
-<p>The Simulator needs to run in the context of an actual user where it can get a window handle and render it's U.I...</p>
-<p>Below is a great resource to get you most of the way there.</p>
-<p><a href="http://pivotallabs.com/ios-ci-jenkins/">iOS CI with Jenkins</a></p>
-<p>Once you've followed the instructions in the above post and you still can't get the Jenkins CI server to run your simulator tests, then check this last item which got it working for me.</p>
-<p>Open up your Jenkins <code>plist</code> file in the <code>LaunchAgents</code> folder. (If you don't have one in LaunchAgents, then go back to the linked blog post and follow that first).</p>
-<p>The key for me to get it working was to <strong>remove</strong> the <code>CreateSession</code> key from the <code>plist</code>.</p>
-<pre><code class="language-diff"><span class="hljs-deletion">-       &lt;key&gt;SessionCreate&lt;/key&gt;</span>
-<span class="hljs-deletion">-       &lt;true /&gt;</span>
-</code></pre>
-<p>Once I removed this key, restarted the server, everything started building/working correctly.</p>
-<h1>In summary:</h1>
-<ol>
-<li>Auto-login with a jenkins user</li>
-<li>Get your plist moved over to the <code>LaunchAgents</code> folder (see post linked above)</li>
-<li>Remove the <code>SessionCreate</code> key</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
