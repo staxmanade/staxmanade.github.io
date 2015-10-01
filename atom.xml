@@ -453,6 +453,9 @@ helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span 
 <p>If you haven't seen <a href="http://definitelytyped.org/tsd/">TSD</a> before it's a great package manger utility for TypeScript Type Definitions.</p>
 <p>It can be easily installed with <code>npm install -g tsd</code>.</p>
 <h3>Installing React Type Definitions</h3>
+<blockquote>
+<p>UPDATE: Originally below I used <code>tsd</code> to install <code>react</code> but if you check out the comments <code>react-global</code> works out better and you can avoid some of the hacks I put in place to compile React below.</p>
+</blockquote>
 <p><code>tsd install react</code> which <code>tsd</code> will download from <a href="http://definitelytyped.org">Definitely Typed</a> the <code>react.d.ts</code> and place it in <code>./typings/react/react.d.ts</code>.</p>
 <p>I then reference the file in our <code>helloWorld.tsx</code> which gives me the following:</p>
 <pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
