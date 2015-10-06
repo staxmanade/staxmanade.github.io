@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-09-30T06:20:41Z</updated>
+    <updated>2015-10-02T06:20:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,50 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Habit of a Solid Developer - Part 5 - Update or Add Documentation while Reading Code]]></title>
+        <id>http://staxmanade.com/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/</id>
+        <link href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">
+        </link>
+        <updated>2015-10-02T06:20:41Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 5 - Update or Add Documentation while Reading Code]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 5</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
+        <li>
+            Part 5 - (current) - Update or Add Documentation while Reading Code
+        </li>
+    </ul>
+</div></p>
+<p>While I generally sit on the side of the fence that your code should <strong>read clearly</strong> enough that comments should not be necessary. I concede that there are (often) times when a comment can really help to make the job of understanding the code much easier than just how a variable or method is named or organized.</p>
+<p>One example of such case is when you've gotten lost in the code and don't understand how a piece of it works.</p>
+<p>The second you figure or re-discover it's intent, <strong>try to add or update some comments</strong> in the code that may help you or the next person understand it more clearly in the future.</p>
+<p>You can argue that a comment should have been added initially, but life happens and we don't always save little nuances like we should or we're given a codebase that is not as clean as we would like. So if you catch yourself digging through some code and a bit confused in an area, take the time to document it (once you figure out what you didn't understand).</p>
+<p>This is especially true when you are the original writer of sed un-clear code. I know I've gone through code I've written and been like, &quot;hmm, no idea what I was thinking here...&quot; or &quot;well, there was a reason I did this stupid thing, but now I don't remember what that was. Wish I would have commented a little more to my future self&quot;.</p>
+<p>Sometimes it may be a simple variable rename or refactor that would clean it up. But <strong>don't just figure it out and not leave a breadcrumb</strong> for the next person (or yourself) to more easily grok the code.</p>
+<p><strong>Add clarity to un-clear code.</strong></p>
+<pre><code><span class="hljs-comment">// When I wrote this, only God and I understood what I was doing</span>
+<span class="hljs-comment">// Now, God only knows</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// http://stackoverflow.com/a/316233/1402137</span>
+</code></pre>
+<h1><a href="http://stackoverflow.com/questions/184618/what-is-the-best-comment-in-source-code-you-have-ever-encountered/316233">Now go read these comments</a> and enjoy!</h1>
+<p>Happy Understanding!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Habit of a Solid Developer - Part 4 - Git Dance]]></title>
         <id>http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/</id>
@@ -33,6 +77,9 @@
         </li>
         <li>
             Part 4 - (current) - Git Dance
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
         </li>
     </ul>
 </div></p>
@@ -184,6 +231,9 @@
         <li>
             Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
         </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
     </ul>
 </div></p>
 <blockquote>
@@ -243,6 +293,9 @@
         <li>
             Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
         </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
     </ul>
 </div></p>
 <p>Every project generates it's own constraints. These may come from an Architect's idea of &quot;best practice&quot; or it may come from the domain the software is written in. It may even be derived because of the programming language you're using. For example, in JavaScript we have linters that encourage rules like triple equals <code>===</code> vs double equals <code>==</code>.</p>
@@ -278,16 +331,21 @@
         <summary type="html"><![CDATA[I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.]]></summary>
         <content type="html"><![CDATA[<p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
 <p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk (click below).</p>
-<h3><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSMP Starter Plunker</a></h3>
-<p>How to use:</p>
+<h1>Full list of JSPM starter plunks</h1>
+<h2><a href="http://plnkr.co/edit/RwUyLb?p=preview">Basic Starter Plunk</a></h2>
+<h2><a href="http://plnkr.co/edit/XWVTSx?p=preview">React Stater Plunk</a></h2>
+<h2><a href="http://plnkr.co/edit/LLQQqg?p=preview">MochaJS Test Runner Plunk</a></h2>
+<hr>
+<h1>How to use:</h1>
 <ol>
-<li>Click the link above</li>
-<li>Open the <code>app.js</code> file</li>
+<li>Click one of the links above</li>
+<li>Review the various files. Open and edit the <code>app.js</code> file</li>
 <li>Start writing code!</li>
-<li>Click the <code>Run</code> to see your output.</li>
 </ol>
-<p>And if you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to a Plunk</p>
-<h3><a href="http://plnkr.co/edit/LLQQqg?p=preview">MochaJS w/ JSPM Plunker</a></h3>
+<blockquote>
+<p>Be sure to open your developer tools and monitor any console output for errors...</p>
+</blockquote>
+<p>If you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to the <a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM/MochaJS Plunk</a></p>
 <p>Happy Prototyping!</p>
 ]]></content>
     </entry>
@@ -474,6 +532,9 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
         </li>
         <li>
             Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
         </li>
     </ul>
 </div></p>
@@ -1398,84 +1459,6 @@ git add .
 <h1>Scenario 2:</h1>
 <p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's own post as I'm going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
 <p>Until next time...</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Approval Tests - Overview]]></title>
-        <id>http://staxmanade.com/2015/01/approval-tests---overview/</id>
-        <link href="http://staxmanade.com/2015/01/approval-tests---overview/">
-        </link>
-        <updated>2015-01-30T16:38:06Z</updated>
-        <summary type="html"><![CDATA[I first started using the `.Net` version of Approval Tests and found so much value in it, I [created a port of the tool](https://github.com/approvals/...]]></summary>
-        <content type="html"><![CDATA[<p>I first started using the <code>.Net</code> version of Approval Tests and found so much value in it, I <a href="https://github.com/approvals/Approvals.NodeJS">created a port of the tool</a> that I can use in <a href="http://nodejs.org">Node.JS</a>. This post is intended as a rough overview of Approval Tests, and will be using the <a href="https://github.com/approvals/Approvals.NodeJS">NodeJS port</a> in my examples below.</p>
-<blockquote>
-<p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
-</blockquote>
-<h2>What are Approval Tests?</h2>
-<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
-<p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
-<p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
-<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
-<p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
-<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
-<h1>Let's walk through an example</h1>
-<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
-<pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
-describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-    it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-
-        <span class="hljs-comment">// Arrange</span>
-        <span class="hljs-comment">// setup the initial state for the test</span>
-        <span class="hljs-keyword">var</span> obj = { valueA: <span class="hljs-string">"test"</span>, valueB: <span class="hljs-number">1234</span> };
-
-        <span class="hljs-comment">// Act - Do some business logic on the object</span>
-        obj.valueC = <span class="hljs-literal">true</span>;
-
-        <span class="hljs-comment">// Assert - verify the state of the item under test</span>
-        assert.equal(obj.valueA, <span class="hljs-string">"test"</span>)
-        assert.equal(obj.valueB, <span class="hljs-number">1234</span>);
-        assert.equal(obj.valueC, <span class="hljs-literal">true</span>);
-    });
-});
-</code></pre>
-<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
-<p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
-<h1>Let's turn our AAA test above into an Approval Test</h1>
-<pre><code class="language-diff">var approvals = require('approvals');
-describe("when testing something", function(){
-    it("should do something special", function(){
-
-        // Arrange
-        // setup the initial state for the test
-        var obj = { valueA: "test", valueB: 1234 };
-
-        // Act - Do some business logic on the object
-        obj.valueC = true;
-
-        // Assert - verify the state of the item under test
-<span class="hljs-deletion">-        assert.equal(obj.valueA, "test")</span>
-<span class="hljs-deletion">-        assert.equal(obj.valueB, 1234);</span>
-<span class="hljs-deletion">-        assert.equal(obj.valueC, true);</span>
-<span class="hljs-addition">+        approvals.verifyAsJSON(__dirname, "sampleTest", obj);</span>
-    });
-});
-</code></pre>
-<p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
-<h1>How Approval Tests Work</h1>
-<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
-<p>At this point we have to choose between a number of options:</p>
-<ul>
-<li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
-<li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
-<li>Or we do nothing as we want to start over...</li>
-</ul>
-<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
-<blockquote>
-<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
-</blockquote>
-<h1>Next Steps!</h1>
-<p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
-<p>Happy Approving!</p>
 ]]></content>
     </entry>
 </feed>
