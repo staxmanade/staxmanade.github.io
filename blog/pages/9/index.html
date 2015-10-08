@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">NuGet Project Uncovered: Deleporter</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-07T04:32:00.000Z" pubdate data-updated="true">Feb 6th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
     <p class="meta">
           <time datetime="2012-02-06T04:31:00.000Z" pubdate data-updated="true">Feb 5th 2012</time>
@@ -226,23 +243,6 @@ Honey is sweet, but the bee stings</div>
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Stimpack" target="_blank">Stimpack</a> is another project leveraging <a href="http://msdn.microsoft.com/en-us/data/gg577609" target="_blank">ReactiveExtensions (RX)</a>. It’s based off of <a href="http://www.reactiveui.net/" target="_blank">ReactiveUI</a> and has some interesting concepts for consideration with a <a href="http://en.wikipedia.org/wiki/Model_View_ViewModel" target="_blank">MVVM</a> pattern. </p>  <p>This was probably originally added to my To-Research list mostly because of the RX factor.</p>  <p>I didn’t find an good sample project on how to use it, but if you read through the <a href="https://github.com/shishkin/Stimpack/tree/master/Stimpack.Tests" target="_blank">fairly clean test project</a> you can probably figure out anything you need.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-anna/">NuGet Project Uncovered: Anna</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-27T00:21:00.000Z" pubdate data-updated="true">Jan 26th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/jfromaniello/Anna" target="_blank">Anna</a> is an event-driven HTTP server library leveraging the <a href="http://msdn.microsoft.com/en-us/data/gg577609" target="_blank">ReactiveExtensions (RX)</a>. </p>  <p>The below sample copied / shortened from the <a href="https://github.com/jfromaniello/Anna" target="_blank">GitHub site</a>.</p>  <blockquote>   <pre>using (var server = new HttpServer(&quot;http://*:1234/&quot;))<br />{<br />    // simple basic usage, all subscriptions will run in a single event-loop<br />    server.GET(&quot;/hello/{Name}&quot;)<br />          .Subscribe(ctx =&gt; ctx.Respond(&quot;Hello, &quot; + ctx.Request.UriArguments.Name + &quot;!&quot;));<br />}</pre></blockquote>  </div>
 </div>
 
       

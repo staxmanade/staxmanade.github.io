@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-10-02T06:20:41Z</updated>
+    <updated>2015-10-08T16:42:00Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,143 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[In App Unit test example with JSPM, React, WinJS and Mocha]]></title>
+        <id>http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/</id>
+        <link href="http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">
+        </link>
+        <updated>2015-10-08T16:42:00Z</updated>
+        <summary type="html"><![CDATA[A while back I wrote about [In App Unit Tests](http://staxmanade.com/2015/03/in-app-unit-tests/) and have been having too much fun creating little [st...]]></summary>
+        <content type="html"><![CDATA[<p>A while back I wrote about <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a> and have been having too much fun creating little <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">starter plunks</a> on <a href="http://plnkr.co">Plunker</a>. So...</p>
+<p>As a simple demonstration on in-app unit tests I've thrown together a little plunk that shows <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app tests</a> within the a <a href="https://github.com/winjs/winjs">WinJS</a> <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a>. And add to the layers of abstraction I'm using <a href="https://github.com/winjs/react-winjs">react-winjs</a> which I'm LOVING over normal WinJS development.</p>
+<h1>Link to: <a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM/React/WinJS/Mocha Plunk</a></h1>
+<p>If you like this starter, I have it and a few more linked here: <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">for re-use</a></p>
+<p>I'd like to highlight <a href="http://plnkr.co/edit/feKPEx?p=preview">this particular starter</a> at bit more in this post, not only because there are a few more concepts to this basic plunk, but also because I'm fairly happy with the MochaJS React component that I've now copied around and re-used a few times in some small projects where use <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a>.</p>
+<h1>Plunker file overview</h1>
+<ul>
+<li><code>index.html</code> - The index file is a very basic <a href="http://jspm.io">JSPM</a> bootstrap page that loads the <code>app.jsx</code> react component.</li>
+<li><code>app.jsx</code> - Defines a WinJS Pivot control where we render the in-app <code>MochaTests.jsx</code> React component. This also defines the test file(s) and using MochaJS's global detection we can tell the react <code>MochaTests</code> component what test files to load and run as well as what globals are allowed to exist.</li>
+<li><code>config.js</code> - This is JSPM's config that defines what version of React we're using and to use <code>babel</code> for transpilation.</li>
+<li><code>tests.js</code> - is our Mocha set of unit tests. We can have multiple test files if we want, just have to define what files to load in <code>app.jsx</code>.</li>
+</ul>
+<p>Lastly the <code>MochaTests.jsx</code> which I'll include the full component below:</p>
+<blockquote>
+<p>easier to copy-paste inherit for myself in the future</p>
+</blockquote>
+<pre><code><span class="hljs-keyword">import</span> mocha from <span class="hljs-string">'mocha'</span>;
+<span class="hljs-keyword">import</span> React from <span class="hljs-string">'react'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> MochaTests extends React.Component {
+
+    static <span class="hljs-keyword">get</span> propTypes() {
+        <span class="hljs-keyword">return</span> {
+            testScripts: React.PropTypes.array.isRequired,
+            allowedGlobals: React.PropTypes.array
+        };
+    }
+
+    <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(props) </span>{
+        <span class="hljs-keyword">super</span>(props);
+    }
+
+    componentDidMount() {
+
+        <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
+        <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
+        
+        <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
+        <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
+        <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
+        <span class="hljs-comment">// test scripts for the first run</span>
+        mocha.suite.on(<span class="hljs-string">'pre-require'</span>, context =&gt; {
+            <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
+
+            exports.afterEach = context.afterEach || context.teardown;
+            exports.after = context.after || context.suiteTeardown;
+            exports.beforeEach = context.beforeEach || context.setup;
+            exports.before = context.before || context.suiteSetup;
+            exports.describe = context.describe || context.suite;
+            exports.it = context.it || context.test;
+            exports.setup = context.setup || context.beforeEach;
+            exports.suiteSetup = context.suiteSetup || context.before;
+            exports.suiteTeardown = context.suiteTeardown || context.after;
+            exports.suite = context.suite || context.describe;
+            exports.teardown = context.teardown || context.afterEach;
+            exports.test = context.test || context.it;
+            exports.run = context.run;
+
+            <span class="hljs-comment">// now use SystemJS to load all test files</span>
+            Promise
+            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Adding Mocha Test File: "</span>, testScript);
+                <span class="hljs-keyword">return</span> System.import(testScript);
+            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
+                <span class="hljs-built_in">console</span>.error(err);
+            });
+        
+        });
+        mocha.setup(<span class="hljs-string">'bdd'</span>);
+    }
+
+    runTests() {
+        <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
+
+        <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
+        
+        mocha.checkLeaks();
+        mocha.globals(allowedGlobals);
+        mocha.run();
+
+    }
+
+    render() {
+        <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{<span class="hljs-rule">"\
+                  #<span class="hljs-attribute">mocha-stats em { \
+                      color</span>:<span class="hljs-value"> inherit</span></span>; <span class="hljs-rule">\
+                  }</span></span> \
+                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ <span class="hljs-rule">\
+                    <span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; <span class="hljs-rule">\
+                  }</span></span>\
+                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ <span class="hljs-rule">\
+                      <span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; <span class="hljs-rule">\
+                  }</span></span> \
+                "}</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runTests.bind(this)}</span>&gt;</span>Rerun Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        );
+    }
+}
+</span></code></pre>
+<p>Usage example of this React <code>MochaTests</code> component.</p>
+<pre><code>// <span class="hljs-type">Define</span> what test files get loaded by the <span class="hljs-type">MochaTests</span> component
+<span class="hljs-keyword">var</span> testScripts = [
+  './tests.js'
+];
+
+
+<span class="hljs-keyword">var</span> allowedTestGlobals = [
+  // <span class="hljs-type">Declare</span> what globals are allowed to be created during <span class="hljs-type">any</span> test runs.
+];
+
+
+// <span class="hljs-type">Usage</span> <span class="hljs-keyword">of</span> <span class="hljs-type">MochaTests</span> <span class="hljs-keyword">in</span> a react render() <span class="hljs-keyword">method</span>.
+&lt;<span class="hljs-type">MochaTests</span> testScripts={testScripts} allowedGlobals={allowedTestGlobals} /&gt;
+
+</code></pre>
+<p>I'm not expecting to see a large up-tick in WinJS apps out there with in-app unit tests that run in the browser, however hopefully the <code>MochaTests.jsx</code> React Component is of value to you and can be utilized outside of WinJS within almost any React app.</p>
+<p>Please drop a line if you end up using it or if it can be adapted. If there's value in the component, maybe</p>
+<h1>Known Issue</h1>
+<p>If the number of tests starts to go beyond the height of the pivot in this sample, it has an issue where the WinJS Pivot cuts off at the bottom not allowing you to scroll and see the rest of the test output. I haven't dug into it yet because I've been clicking the <code>failures: X</code> link and it filters the U.I. to just the erroring tests.</p>
+<p>If you happen to come up with a good solution, drop me a note - I'd love it. Thanks in advance!</p>
+<p>Happy Testing!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Habit of a Solid Developer - Part 5 - Update or Add Documentation while Reading Code]]></title>
         <id>http://staxmanade.com/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/</id>
@@ -336,6 +473,7 @@
 <h2><a href="http://plnkr.co/edit/XWVTSx?p=preview">React Starter Plunk</a></h2>
 <h2><a href="http://plnkr.co/edit/XKrZHJ?p=preview">React/WinJS Starter Plunk</a></h2>
 <h2><a href="http://plnkr.co/edit/LLQQqg?p=preview">MochaJS Test Runner Plunk</a></h2>
+<h2><a href="http://plnkr.co/edit/feKPEx?p=preview">React/WinJS/Mocha Plunk</a></h2>
 <hr>
 <h1>How to use:</h1>
 <ol>
@@ -1402,64 +1540,6 @@ git add .
 <p>Now if you <code>git status</code> you can see what files should probably be deleted from the git repo and using the newly updated <code>.gitignore</code> file will now be ignored going forward.</p>
 <p>Go ahead an commit these changes (assuming you're happy with what is being deleted and ignored).</p>
 <p>Happy Gitting!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Approval Tests - Command Line Tool (CLI)]]></title>
-        <id>http://staxmanade.com/2015/02/approval-tests---command-line-tool--cli-/</id>
-        <link href="http://staxmanade.com/2015/02/approval-tests---command-line-tool--cli-/">
-        </link>
-        <updated>2015-02-08T05:29:48Z</updated>
-        <summary type="html"><![CDATA[In [my previous post](http://staxmanade.com/2015/01/approval-tests---overview/) I introduced [Approval Tests](http://approvaltests.com) using the [App...]]></summary>
-        <content type="html"><![CDATA[<p>In <a href="http://staxmanade.com/2015/01/approval-tests---overview/">my previous post</a> I introduced <a href="http://approvaltests.com">Approval Tests</a> using the <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> variant of the tool.</p>
-<p>In this post I'd like to go over how you can use the command line version of <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> for several different scenarios.</p>
-<h1>First thing first (How to Install)</h1>
-<p>Globally install <code>approvals</code> via <a href="https://www.npmjs.com/">npm</a>.</p>
-<pre><code>npm install -g approvals
-</code></pre>
-<p>Now that you have it installed, let's go over some scenarios that you can use the approvals tool.</p>
-<h1>Scenario 1: Compare JSON files downloaded from a web server.</h1>
-<p>Let's say you want to see a quick file diff between two api requests.</p>
-<p>You can use <code>curl</code> to download the file and pipe (<code>|</code>) it to the <code>approvals</code> CLI tool. We give it a name parameter which is used to generate the file name used to save to.</p>
-<p>So if you were to run:</p>
-<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
-</code></pre>
-<p>This would generate two files:</p>
-<p><code>githubOrg.received.txt</code> which at the time of this writing would look like:</p>
-<pre><code>{
-  "<span class="hljs-attribute">login</span>": <span class="hljs-value"><span class="hljs-string">"approvals"</span></span>,
-  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">36907</span></span>,
-  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals"</span></span>,
-  "<span class="hljs-attribute">repos_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/repos"</span></span>,
-  "<span class="hljs-attribute">events_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/events"</span></span>,
-  "<span class="hljs-attribute">members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/members{/member}"</span></span>,
-  "<span class="hljs-attribute">public_members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/public_members{/member}"</span></span>,
-  "<span class="hljs-attribute">avatar_url</span>": <span class="hljs-value"><span class="hljs-string">"https://avatars.githubusercontent.com/u/36907?v=3"</span></span>,
-  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">company</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">blog</span>": <span class="hljs-value"><span class="hljs-string">"http://approvaltests.com"</span></span>,
-  "<span class="hljs-attribute">location</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-  "<span class="hljs-attribute">public_repos</span>": <span class="hljs-value"><span class="hljs-number">13</span></span>,
-  "<span class="hljs-attribute">public_gists</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">followers</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">following</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
-  "<span class="hljs-attribute">html_url</span>": <span class="hljs-value"><span class="hljs-string">"https://github.com/approvals"</span></span>,
-  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2008-11-27T06:03:58Z"</span></span>,
-  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-12-28T03:02:33Z"</span></span>,
-  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Organization"</span>
-</span>}
-</code></pre>
-<p>and an empty <code>githubOrg.approved.txt</code> file.</p>
-<p>Note when you first run this command you are prompted with the <code>received</code> file compared to the empty <code>approved</code> files; however, on an initial run, you can use the <code>--forceapproveall</code> argument to avoid the diff step and force all the contents of the <code>received</code> file into the <code>approved</code> file.</p>
-<p>Now if the remote file were to change on you and you run the below command again:</p>
-<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
-</code></pre>
-<p>You would get a diff between the the originally <code>approved</code> file and the newly downloaded file.</p>
-<h1>Scenario 2:</h1>
-<p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's own post as I'm going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
-<p>Until next time...</p>
 ]]></content>
     </entry>
 </feed>

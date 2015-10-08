@@ -102,15 +102,17 @@
 </div></p>
 <p>Have you ever made some code changes and while in the process of making those changes realize you need to change something else, which leads to changes to that thing over there and then again to that thing up there, and down here, and over there and since we're in here and I've been meaning to tweak this well... and paused to realize you forgot the original goal of why you fell down this rat hole? No never? (well I have). <code>git reset --hard</code> and start over :)</p>
 <p>If you're one who likes to apply the ol Boy Scout rule of <code>Always leave the campground cleaner than you found it</code> to your code, just don't (yet). Or get really good at <code>git add -p</code>.</p>
-<p>Before you go around making a bunch of cleanup changes, fixing formatting, changing variable names, general cleanup. Accomplish a tiny part of your overall objective and commit just that change. If you see other things along the way, take note and come back to them later. Or if, like me you can't help yourself, just don't check all of those changes in at once. Use something like <code>git commit -p</code> to <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregate your code commits into tiny topical changes</a>.</p>
+<p>Before you go around making a bunch of cleanup changes, fixing formatting, changing variable names, general cleanup. Accomplish a tiny part of your overall objective and commit just that change. If you see other things along the way, take note and come back to them later. Or if, like me you can't help yourself, just don't check all of those changes in at once. Use something like <code>git add -p</code> to <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregate your code commits into tiny topical changes</a>.</p>
 <p>If the job is to <code>rename a variable</code>, don't also <code>fix spelling, format code, extract method, etc...</code>. Save those other changes for different commits.</p>
 <h3>But what if you don't know what you're planning to change?</h3>
 <p>Sometimes, it's good to go off and spike a big swath of changes just to get an idea how much impact a refactor could have on the architecture or project as a whole. Prototype something to get a good picture of whether a change is possible or not or to see how many coupled items need to be adjusted along the way.</p>
-<p>However, you go into it knowing you will likely just undo all of your changes all together with the goal to surface more knowledgeable and either</p>
+<p>However, you go into it knowing you will likely just undo all of your changes all together with the goal to surface more knowledgeable and either:</p>
 <p>A) determine that it is a do-able change and should or should not even be attempted in a proper fashion
-B) or you've uncovered some challenges that can are not easily overcome and require more thought or prior preparatory refactorings.</p>
+B) or you've uncovered some challenges that are not easily overcome and require more thought or prior preparatory refactorings.</p>
+<h1>Use TDD as a forcing mechanism to small changes</h1>
 <p>TDD (Test Driven Development) is a great way to take as tiny a step as possible. With this approach, you can write a test, make it pass (consider that a change) and <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">possibly check it in</a> to source control.</p>
-<p>This approach is also important when debugging. Running around the codebase changing X, Y, and Z just to see if you can fix a bug will often times get you in a bigger mess than the original bug you tried to fix. Making one change at a time, verifying the bug, then the next change is quite often is a better approach. So consider going slow and taking baby steps.</p>
+<h1>Baby Steps when Debugging</h1>
+<p>Making baby steps is also important when debugging. Running around the codebase changing X, Y, and Z just to see if you can fix a bug will often times get you in a bigger mess than the original bug you tried to fix. Making one change at a time, verifying the bug, then the next change is quite often a better approach. So consider going slow and taking baby steps.</p>
 <p>It doesn't matter if you're making project-wide architectural changes or surgical bug fixes, if you can, <strong>try to take baby steps, commit the changes and verify each change along the way</strong>.</p>
 <p>Happy Baby Steps!</p>
 </div>
@@ -132,7 +134,7 @@ B) or you've uncovered some challenges that can are not easily overcome and requ
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/" title="Previous Post: Habit of a Solid Developer - Part 5 - Update or Add Documentation while Reading Code">&laquo; Habit of a Solid Developer - Part 5 - Update or Add Documentation while Reading Code</a>
+                        <a class="basic-alignment left" href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/" title="Previous Post: In App Unit test example with JSPM, React, WinJS and Mocha">&laquo; In App Unit test example with JSPM, React, WinJS and Mocha</a>
                     </p>
                 </footer>
             </article>

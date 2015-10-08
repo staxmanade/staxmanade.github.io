@@ -71,6 +71,69 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/approval-tests---command-line-tool--cli-/">Approval Tests - Command Line Tool (CLI)</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-08T05:29:48.180Z" pubdate data-updated="true">Feb 7th 2015</time>
+
+
+        <a href="/2015/02/approval-tests---command-line-tool--cli-/#disqus_thread" data-disqus-identifier="/2015/02/approval-tests---command-line-tool--cli-/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>In <a href="http://staxmanade.com/2015/01/approval-tests---overview/">my previous post</a> I introduced <a href="http://approvaltests.com">Approval Tests</a> using the <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> variant of the tool.</p>
+<p>In this post I'd like to go over how you can use the command line version of <a href="https://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> for several different scenarios.</p>
+<h1>First thing first (How to Install)</h1>
+<p>Globally install <code>approvals</code> via <a href="https://www.npmjs.com/">npm</a>.</p>
+<pre><code>npm install -g approvals
+</code></pre>
+<p>Now that you have it installed, let's go over some scenarios that you can use the approvals tool.</p>
+<h1>Scenario 1: Compare JSON files downloaded from a web server.</h1>
+<p>Let's say you want to see a quick file diff between two api requests.</p>
+<p>You can use <code>curl</code> to download the file and pipe (<code>|</code>) it to the <code>approvals</code> CLI tool. We give it a name parameter which is used to generate the file name used to save to.</p>
+<p>So if you were to run:</p>
+<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
+</code></pre>
+<p>This would generate two files:</p>
+<p><code>githubOrg.received.txt</code> which at the time of this writing would look like:</p>
+<pre><code>{
+  "<span class="hljs-attribute">login</span>": <span class="hljs-value"><span class="hljs-string">"approvals"</span></span>,
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">36907</span></span>,
+  "<span class="hljs-attribute">url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals"</span></span>,
+  "<span class="hljs-attribute">repos_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/repos"</span></span>,
+  "<span class="hljs-attribute">events_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/events"</span></span>,
+  "<span class="hljs-attribute">members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/members{/member}"</span></span>,
+  "<span class="hljs-attribute">public_members_url</span>": <span class="hljs-value"><span class="hljs-string">"https://api.github.com/orgs/approvals/public_members{/member}"</span></span>,
+  "<span class="hljs-attribute">avatar_url</span>": <span class="hljs-value"><span class="hljs-string">"https://avatars.githubusercontent.com/u/36907?v=3"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">company</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">blog</span>": <span class="hljs-value"><span class="hljs-string">"http://approvaltests.com"</span></span>,
+  "<span class="hljs-attribute">location</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
+  "<span class="hljs-attribute">public_repos</span>": <span class="hljs-value"><span class="hljs-number">13</span></span>,
+  "<span class="hljs-attribute">public_gists</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">followers</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">following</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">html_url</span>": <span class="hljs-value"><span class="hljs-string">"https://github.com/approvals"</span></span>,
+  "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2008-11-27T06:03:58Z"</span></span>,
+  "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2014-12-28T03:02:33Z"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Organization"</span>
+</span>}
+</code></pre>
+<p>and an empty <code>githubOrg.approved.txt</code> file.</p>
+<p>Note when you first run this command you are prompted with the <code>received</code> file compared to the empty <code>approved</code> files; however, on an initial run, you can use the <code>--forceapproveall</code> argument to avoid the diff step and force all the contents of the <code>received</code> file into the <code>approved</code> file.</p>
+<p>Now if the remote file were to change on you and you run the below command again:</p>
+<pre><code>curl <span class="hljs-string">https:</span><span class="hljs-comment">//api.github.com/orgs/approvals | approvals githubOrg</span>
+</code></pre>
+<p>You would get a diff between the the originally <code>approved</code> file and the newly downloaded file.</p>
+<h1>Scenario 2:</h1>
+<p>Ok, well I actually have another great scenario for using the approvals CLI, but I believe it deserves it's own post as I'm going to introduce some nifty configuration on a Mac that I've used to setup my own development servers automatically.</p>
+<p>Until next time...</p>
+</div>
+
+      <a href="/2015/02/approval-tests---command-line-tool--cli-/#disqus_thread" data-disqus-identifier="/2015/02/approval-tests---command-line-tool--cli-/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/approval-tests---overview/">Approval Tests - Overview</a></h1>
     <p class="meta">
           <time datetime="2015-01-30T16:38:06.494Z" pubdate data-updated="true">Jan 30th 2015</time>
@@ -626,27 +689,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </div>
 
       <a href="/2014/12/thoughts-on-working-remotely-from-home/#disqus_thread" data-disqus-identifier="/2014/12/thoughts-on-working-remotely-from-home/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">One of the Simplest Things You can do to Improve Email Communication</a></h1>
-    <p class="meta">
-          <time datetime="2014-11-30T16:43:50.774Z" pubdate data-updated="true">Nov 30th 2014</time>
-
-
-        <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1>TL;DR</h1>
-<p>Respond to emails with <strong>got it</strong>. Or some context-related reply, for example: <strong>thanks</strong> or <strong>will respond with further detail later...</strong></p>
-<h1>More Context</h1>
-<p>We all know that communication is important, and often where things go awry.</p>
-<p>I sometimes wonder if I'm alone in this thinking, but don't think I am. When I send an important email, I like to know that the person on the other end received it. It may be an email that will take the other person time to respond with the detail necessary, but it's awfully unproductive to send an email, and wait  a day or two before finding out that the communication was never received.</p>
-<p>Simply replying with <strong>got it</strong> or <strong>got it, will respond with more detail later...</strong> is a great way to notify me that you've received the email (and may take some time to respond).</p>
-<p>I don't necessarily care that my email takes priority, but at least knowing that the other end has seen it is 1/2 the battle.</p>
-</div>
-
-      <a href="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/#disqus_thread" data-disqus-identifier="/2014/11/one-of-the-simplest-things-you-can-do-to-improve-email-communication/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>
