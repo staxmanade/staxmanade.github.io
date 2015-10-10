@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Red - Possibly the Most Important Step in Red, Green, Refactor - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="If you do any sort of test driven development, you&#x27;ve likely heard of the following steps">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/">Red - Possibly the Most Important Step in Red, Green, Refactor</a></h1>
+    <p class="meta">
+          <time datetime="2015-10-10T05:24:02.467Z" pubdate data-updated="true">Oct 9th 2015</time>
+
+
+        <a href="/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/#disqus_thread" data-disqus-identifier="/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If you do any sort of test driven development, you've likely heard of the following steps</p>
+<ul>
+<li><strong>Red</strong>: In this case means you write a test first and see the <code>red</code> (meaning failing test).</li>
+<li><strong>Green</strong>: This is where you actually write a tiny bit of production code to see the red test from above go green and pass.</li>
+<li><strong>Refactor</strong>: Now that you have a passing test (or suite of tests) you can presumably safely refactor and apply any common code cleanup practices to the code.</li>
+</ul>
+<h1>The importance of the Red step.</h1>
+<p>I don't want to go in to each of these steps in detail today, but I did want to drill into the <code>Red</code> step by giving you a short little example that happened to me today.</p>
+<p>If you are interested in a little more detail on the subject check out:</p>
+<ul>
+<li><a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">http://www.jamesshore.com/Blog/Red-Green-Refactor.html</a></li>
+<li><a href="http://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html">http://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html</a></li>
+</ul>
+<p>If you're new to any sort of <a href="https://en.wikipedia.org/wiki/Test-driven_development">TDD</a>/<a href="https://en.wikipedia.org/wiki/Behavior-driven_development">BDD</a>/anything-DD you may not quite get how important this first step is, but hopefully the rest of this post helps...</p>
+<h1>Make sure it fails</h1>
+<p>The Red step is one of the most important, but one that a new practitioner may skip out of laziness. It takes discipline to write the failing test, run it and verify that it fails. It is so easy to write the test code AND the production code together, run it and see it pass that skipping the red step is something even seasoned veterans in the field can fall prey to.</p>
+<p>However, if you don't see the test fail, how do you know it will ever fail?</p>
+<p>I can tell you on numerous occasions in the past where I have written both production code and test code together, run it see it pass, just in case - comment out the production code and STILL see the test pass. Wait what?</p>
+<p>If you are not careful you may have created a bad test and if you run this Red step first and you don't see it turn Red, you likely have a problem.</p>
+<p>It could be a problem with the test itself, or possibly something you put in the test that is triggering something deeper in the system. It doesn't matter what the problem is, you first need to get the test to turn red before you write any production code to make it turn green.</p>
+<h1>Make sure it fails FOR THE RIGHT REASON</h1>
+<p>While it's easy to see a red bar and move on, it's also good to review the exact reason it failed. Did you get a <code>FileNotFoundException</code> exception when you were expecting a <code>NullReferenceException</code>? Or did you get an integer value of <code>10</code> when you were thinking at that moment it would have failed because it returned a string?</p>
+<p>If you're writing proper tests, your red step will include a true failure case that not only just fails, but fails for the reason you would expect it to fail - at least until you go to write the production code that satisfies the tests intent.</p>
+<h1>Now a little example.</h1>
+<p>In the example below I was behaving myself and I DID run the red step first. I am using plain-ish JavaScript (I say ish here because I'm using ES6 with babel compiler).</p>
+<blockquote>
+<p>It's much easier to make the type of mistake I'm going to highlight below with plain JavaScript than if you were using a statically typed language. You can try something like <a href="http://typescriptlang.org">TypeScript</a> for <a href="http://flowtype.org/">flow</a> as these compilers provide a static type checker over your JavaScript. Compilers are a great first test...</p>
+</blockquote>
+<p>Alas, I'm not doing that at the moment.</p>
+<p>So here is what I did...</p>
+<p>First I wrote a test:</p>
+<pre><code><span class="hljs-keyword">import</span> FeedData <span class="hljs-keyword">from</span> <span class="hljs-string">'../app/feed.js'</span>;
+
+describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+  <span class="hljs-keyword">var</span> feedCache;
+
+  before(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    feedCache = FeedData.loadCache();
+  });
+
+  it(<span class="hljs-string">"Feed Cache should have two items"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    expect(feedCache.length).to.equal(<span class="hljs-number">2</span>);
+  });
+
+});
+
+</code></pre>
+<p>When I tried to run it I got the error saying that <code>TypeError: FeedData.loadCache is not a function</code>. This was great and made total sense because I haven't written this <code>loadCache()</code> function yet.</p>
+<p>Next I opened up my <code>FeedData.js</code> file and added the <code>loadCache()</code> function.</p>
+<pre><code><span class="hljs-literal">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FeedData</span> </span>{
+  loadCache() {
+
+  }
+}
+</code></pre>
+<p>I left the implementation blank for now and re-ran my tests. Same error <code>TypeError: FeedData.loadCache is not a function</code> as above.</p>
+<p>That was odd, because I know I added the function but apparently it didn't think I had... some scratching... looking... hmm... Ahh ha - I had imported from <code>feed.js</code> not <code>feedData.js</code>.</p>
+<p>It's subtle, but in my app <code>feedData</code> and <code>feed</code> are different things. So I moved the function to the correct ES6 class and re-ran the tests. I was <strong>certain</strong> this time that it may fail but at least fail for the right reason (not a missing function).</p>
+<p>ARGGG....</p>
+<p>Again I got the same error <code>TypeError: FeedData.loadCache is not a function</code>. Ok, that was weird. Now I'm wondering if I have a caching problem in my browser, but before I try to debug Chrome's caching (kidding there, if I ever have to go that far I'm really having a rough day) I better have another look at my code.</p>
+<p>It didn't take long in this case to realize where my issue was. <code>FeedData</code> is an ES6 class and I'm calling what I thought was a static function on the class from within the test, however it wasn't declared as static in the implementation.</p>
+<p>Adding the <code>static</code> keyword below turned this function into what my test was originally expecting.</p>
+<pre><code><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> FeedData {
+  <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-title">loadCache</span><span class="hljs-params">()</span> </span>{
+
+  }
+}
+</code></pre>
+<p>Now, all this work just to get the first part of my <code>red</code> test. What a journey it's been for something as silly as declaring a function.</p>
+<p>It was a good reminder just how important the red step in red, green, refactor is.</p>
+<p>Happy Testing!</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-10-10T05:24:02.467Z" pubdate data-updated="true">Oct 9th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/" title="Previous Post: In App Unit test example with JSPM, React, WinJS and Mocha">&laquo; In App Unit test example with JSPM, React, WinJS and Mocha</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>
