@@ -243,8 +243,8 @@ alert(s);
 <pre><code class="language-python">s = <span class="hljs-string">"Python syntax highlighting"</span>
 <span class="hljs-keyword">print</span> s
 </code></pre>
-<pre><code><span class="hljs-keyword">No</span> language indicated, <span class="hljs-keyword">so</span> <span class="hljs-keyword">no</span> <span class="hljs-keyword">syntax</span> highlighting. 
-But let's throw <span class="hljs-keyword">in</span> a &amp;lt;b&amp;gt;tag&amp;lt;/b&amp;gt;.
+<pre><code><span class="hljs-keyword">No</span> language indicated, so <span class="hljs-keyword">no</span> syntax highlighting. 
+But let's throw in a &amp;<span class="hljs-keyword">lt</span>;b&amp;<span class="hljs-keyword">gt</span>;tag&amp;<span class="hljs-keyword">lt</span>;/b&amp;<span class="hljs-keyword">gt</span>;.
 </code></pre>
 <p></code></pre></p>
 <pre><code class="language-javascript"><span class="hljs-keyword">var</span> s = <span class="hljs-string">"JavaScript syntax highlighting"</span>;
@@ -259,20 +259,20 @@ But let's throw <span class="hljs-keyword">in</span> a &lt;b&gt;tag&lt;/b&gt;.
 <p><a name="tables"/></p>
 <h2>Tables</h2>
 <p>Tables aren't part of the core Markdown spec, but they are part of GFM and <em>Markdown Here</em> supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.</p>
-<pre><code><span class="hljs-constant">Colons </span>can be used to align columns.
+<pre><code>Colons can be used to align columns.
 
-| <span class="hljs-constant">Tables </span>       | <span class="hljs-constant">Are </span>          | <span class="hljs-constant">Cool </span> |
-| ------------- |<span class="hljs-symbol">:-------------</span><span class="hljs-symbol">:|</span> -----<span class="hljs-symbol">:|</span>
-| col <span class="hljs-number">3</span> is      | right-aligned | <span class="hljs-variable">$1600</span> |
-| col <span class="hljs-number">2</span> is      | centered      |   <span class="hljs-variable">$12</span> |
-| zebra stripes | are neat      |    <span class="hljs-variable">$1</span> |
+|<span class="hljs-string"> Tables        </span>|<span class="hljs-string"> Are           </span>|<span class="hljs-string"> Cool  </span>|
+|<span class="hljs-string"> ------------- </span>|<span class="hljs-string">:-------------:</span>|<span class="hljs-string"> -----:</span>|
+|<span class="hljs-string"> col 3 is      </span>|<span class="hljs-string"> right-aligned </span>|<span class="hljs-string"> $1600 </span>|
+|<span class="hljs-string"> col 2 is      </span>|<span class="hljs-string"> centered      </span>|<span class="hljs-string">   $12 </span>|
+|<span class="hljs-string"> zebra stripes </span>|<span class="hljs-string"> are neat      </span>|<span class="hljs-string">    $1 </span>|
 
-<span class="hljs-constant">The </span>outer pipes (|) are optional, <span class="hljs-keyword">and</span> you don<span class="hljs-string">'t need to make the raw Markdown line up prettily. You can also use inline Markdown.
+The outer pipes (|<span class="hljs-string">) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.
 
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
+Markdown </span>|<span class="hljs-string"> Less </span>|<span class="hljs-string"> Pretty
+--- </span>|<span class="hljs-string"> --- </span>|<span class="hljs-string"> ---
+*Still* </span>|<span class="hljs-string"> `renders` </span>|<span class="hljs-string"> **nicely**
+1 </span>|<span class="hljs-string"> 2 </span>|<span class="hljs-string"> 3
 </span></code></pre>
 <p>Colons can be used to align columns.</p>
 <table>
@@ -371,9 +371,9 @@ This line is only separated by a single newline, so it's a separate line in the 
 <p><a name="videos"/></p>
 <h2>Youtube videos</h2>
 <p>They can't be added directly but you can add an image with a link to the video like this:</p>
-<pre><code>&lt;a <span class="hljs-variable">href=</span><span class="hljs-string">"http://www.youtube.com/watch?feature=player_embedded&amp;v=YOUTUBE_VIDEO_ID_HERE
-"</span> <span class="hljs-variable">target=</span><span class="hljs-string">"_blank"</span>&gt;&lt;img <span class="hljs-variable">src=</span><span class="hljs-string">"http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg"</span> 
-<span class="hljs-variable">alt=</span><span class="hljs-string">"IMAGE ALT TEXT HERE"</span> <span class="hljs-variable">width=</span><span class="hljs-string">"240"</span> <span class="hljs-variable">height=</span><span class="hljs-string">"180"</span> <span class="hljs-variable">border=</span><span class="hljs-string">"10"</span> /&gt;&lt;/a&gt;
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.youtube.com/watch?feature=player_embedded&amp;v=YOUTUBE_VIDEO_ID_HERE
+"</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">"_blank"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg"</span> 
+<span class="hljs-attribute">alt</span>=<span class="hljs-value">"IMAGE ALT TEXT HERE"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"240"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"180"</span> <span class="hljs-attribute">border</span>=<span class="hljs-value">"10"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
 </code></pre>
 <p>Or, in pure Markdown, but losing the image sizing and border:</p>
 <pre><code>[<span class="hljs-link_label">![IMAGE ALT TEXT HERE</span>](<span class="hljs-link_url">http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg</span>)](<span class="hljs-link_url">http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE</span>)

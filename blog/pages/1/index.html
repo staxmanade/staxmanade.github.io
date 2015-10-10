@@ -95,19 +95,19 @@
 <blockquote>
 <p>easier to copy-paste inherit for myself in the future</p>
 </blockquote>
-<pre><code><span class="hljs-keyword">import</span> mocha from <span class="hljs-string">'mocha'</span>;
-<span class="hljs-keyword">import</span> React from <span class="hljs-string">'react'</span>;
+<pre><code><span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> MochaTests extends React.Component {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MochaTests</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
 
-    static <span class="hljs-keyword">get</span> propTypes() {
+    static get propTypes() {
         <span class="hljs-keyword">return</span> {
             testScripts: React.PropTypes.array.isRequired,
             allowedGlobals: React.PropTypes.array
         };
     }
 
-    <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(props) </span>{
+    constructor(props) {
         <span class="hljs-keyword">super</span>(props);
     }
 
@@ -138,11 +138,11 @@
             exports.run = context.run;
 
             <span class="hljs-comment">// now use SystemJS to load all test files</span>
-            Promise
-            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+            <span class="hljs-built_in">Promise</span>
+            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
                 <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Adding Mocha Test File: "</span>, testScript);
                 <span class="hljs-keyword">return</span> System.import(testScript);
-            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
                 <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
                 <span class="hljs-built_in">console</span>.error(err);
             });
@@ -165,26 +165,26 @@
     render() {
         <span class="hljs-keyword">return</span> (
             <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{<span class="hljs-rule">"\
-                  #<span class="hljs-attribute">mocha-stats em { \
-                      color</span>:<span class="hljs-value"> inherit</span></span>; <span class="hljs-rule">\
-                  }</span></span> \
-                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ <span class="hljs-rule">\
-                    <span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; <span class="hljs-rule">\
-                  }</span></span>\
-                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ <span class="hljs-rule">\
-                      <span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; <span class="hljs-rule">\
-                  }</span></span> \
+                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{"\
+                  #mocha-stats em { \
+                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> inherit</span></span>; \
+                  }</span> \
+                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ \
+                    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; \
+                  }</span>\
+                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ \
+                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; \
+                  }</span> \
                 "}</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
 
                 <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runTests.bind(this)}</span>&gt;</span>Rerun Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
 
                 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        );
+        )</span>;
     }
 }
-</span></code></pre>
+</code></pre>
 <p>Usage example of this React <code>MochaTests</code> component.</p>
 <pre><code>// <span class="hljs-type">Define</span> what test files get loaded by the <span class="hljs-type">MochaTests</span> component
 <span class="hljs-keyword">var</span> testScripts = [
@@ -604,9 +604,9 @@
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
-    System.import(<span class="hljs-string">'./testInit.js'</span>);
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+    System.<span class="hljs-keyword">import</span>(<span class="hljs-string">'./testInit.js'</span>);
   </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 
@@ -619,25 +619,25 @@
 <p>Before we create the <code>testInit.js</code> file let's first create a couple sample MochaJS test files that we want to test.</p>
 <p>Here's our first test file: name it <code>mochaTest1.js</code></p>
 <p>Something cool about this test is once we get mocha wired up correctly, this test shows how seamlessly you can take a dependency on a 3rd party library like <a href="http://chaijs.com/">chaijs</a> for help with assertions.</p>
-<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
 
-describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
   });
-  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
   });
 });
 </code></pre>
 <p>Create another test file <code>mochaTest2.js</code></p>
-<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
 
-describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
   });
-  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
   });
 });
@@ -651,7 +651,7 @@ describe(<span class="hljs-string">"This is another describe"</span>, <span clas
 <span class="hljs-comment">// This tells SystemJS to load the mocha library</span>
 <span class="hljs-comment">// and allows us to interact with the library below.</span>
 <span class="hljs-comment">//</span>
-import mocha from <span class="hljs-string">'mocha'</span>;
+<span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
 
 <span class="hljs-comment">//</span>
 <span class="hljs-comment">// This defines the list of test files we want to load and run tests against.</span>
@@ -685,7 +685,7 @@ mochaDiv.id = <span class="hljs-string">"mocha"</span>;
 <span class="hljs-comment">// Importing mocha with JSPM and ES6 doesn't expose the usual mocha globals.</span>
 <span class="hljs-comment">// I found this is one way to manually expose the globals, however if you know of a better way please let me know...</span>
 <span class="hljs-comment">//</span>
-mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context)</span> </span>{
+mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
 
   exports.afterEach = context.afterEach || context.teardown;
@@ -703,14 +703,14 @@ mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs
   exports.run = context.run;
 
   <span class="hljs-comment">// now use SystemJS to load all test files</span>
-  Promise
-    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+  <span class="hljs-built_in">Promise</span>
+    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
       <span class="hljs-keyword">return</span> System.import(testScript);
-    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       mocha.checkLeaks();
       mocha.globals(allowedMochaGlobals);
       mocha.run();
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
       <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
       <span class="hljs-built_in">console</span>.error(err);
     });
@@ -905,7 +905,7 @@ helloWorld.tsx(<span class="hljs-number">10</span>,<span class="hljs-number">14<
 <p>To fix this I create a type by using an <code>interface</code> like below:</p>
 <pre><code><span class="hljs-tag">interface</span> <span class="hljs-tag">HelloWorldProps</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">name</span>:<span class="hljs-value"> string</span></span>;
-<span class="hljs-rule">}</span></span>
+}</span>
 </code></pre>
 <p>When I call <code>React.createClass</code> I pass in the <code>HelloWorldProps</code> interface for the <code>props</code> (<code>P</code>) and an <code>any</code> for the state (<code>S</code>) like so: <code>React.createClass&lt;HelloWorldProps, any&gt;(...)</code></p>
 <h1>YAY IT COMPILES!!!</h1>
@@ -942,16 +942,16 @@ React.render(React.createElement(HelloMessage, {<span class="hljs-string">"name"
 <h1>Let's break our example on purpose to see how TypeScript responds?</h1>
 <p>I changed one character in two places in the working <code>helloWorld.tsx</code> file and when I run the compiler I get the following two errors. Can you spot what changed?</p>
 <pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> React = __React;</span>
-declare <span class="hljs-keyword">var</span> mountNode: any;
+<span class="hljs-keyword">import</span> React = __React;
+<span class="hljs-keyword">declare</span> <span class="hljs-keyword">var</span> mountNode: <span class="hljs-built_in">any</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">HelloWorldProps</span> </span>{
-  Name: string;
+<span class="hljs-interface"><span class="hljs-keyword">interface</span> HelloWorldProps </span>{
+  Name: <span class="hljs-built_in">string</span>;
 }
 
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, any&gt;({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.mane} &lt;div&gt;&lt;/div&gt;&lt;/div&gt;;
+<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, <span class="hljs-built_in">any</span>&gt;({
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.mane} &lt;div&gt;&lt;<span class="hljs-regexp">/div&gt;&lt;/</span>div&gt;;
   }
 });
 

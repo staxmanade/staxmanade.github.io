@@ -114,54 +114,54 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 </blockquote>
 <p>But that's only the first step. Once you've run the app and hit the breakpoint, you're left staring at assembly code and memory addresses, for example:</p>
 <pre><code>UIKit`UIViewAlertForUnsatisfiableConstraints:
--&gt;  0x1131cc4a2 <span class="hljs-variable">&lt;+0&gt;</span>:   pushq  %rbp
-    0x1131cc4a3 <span class="hljs-variable">&lt;+1&gt;</span>:   movq   %rsp, %rbp
-    0x1131cc4a6 <span class="hljs-variable">&lt;+4&gt;</span>:   pushq  %r15
-    0x1131cc4a8 <span class="hljs-variable">&lt;+6&gt;</span>:   pushq  %r14
-    0x1131cc4aa <span class="hljs-variable">&lt;+8&gt;</span>:   pushq  %rbx
-    0x1131cc4ab <span class="hljs-variable">&lt;+9&gt;</span>:   pushq  %rax
-    0x1131cc4ac <span class="hljs-variable">&lt;+10&gt;</span>:  movq   %rsi, %r14
-    0x1131cc4af <span class="hljs-variable">&lt;+13&gt;</span>:  movq   %rdi, %r15
-    0x1131cc4b2 <span class="hljs-variable">&lt;+16&gt;</span>:  cmpq   $-0x1, 0x778796(%rip)     ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.result + 7
-    0x1131cc4ba <span class="hljs-variable">&lt;+24&gt;</span>:  jne    0x1131cc529               ; <span class="hljs-variable">&lt;+135&gt;</span>
-    0x1131cc4bc <span class="hljs-variable">&lt;+26&gt;</span>:  cmpb   $0x0, 0x778785(%rip)      ; _UIConstraintBasedLayoutPlaySoundWhenEngaged.__once + 7
-    0x1131cc4c3 <span class="hljs-variable">&lt;+33&gt;</span>:  je     0x1131cc4ed               ; <span class="hljs-variable">&lt;+75&gt;</span>
-    0x1131cc4c5 <span class="hljs-variable">&lt;+35&gt;</span>:  movq   0x73cd8c(%rip), %rdi      ; (void <span class="hljs-keyword">*</span>)0x0000000113925248: UIDevice
-    0x1131cc4cc <span class="hljs-variable">&lt;+42&gt;</span>:  movq   0x7108e5(%rip), %rsi      ; <span class="hljs-string">"currentDevice"</span>
-    0x1131cc4d3 <span class="hljs-variable">&lt;+49&gt;</span>:  movq   0x4d7aee(%rip), %rbx      ; (void <span class="hljs-keyword">*</span>)0x0000000114598000: objc_msgSend
-    0x1131cc4da <span class="hljs-variable">&lt;+56&gt;</span>:  callq  <span class="hljs-keyword">*</span>%rbx
-    0x1131cc4dc <span class="hljs-variable">&lt;+58&gt;</span>:  movq   0x71e375(%rip), %rsi      ; <span class="hljs-string">"_playSystemSound:"</span>
-    0x1131cc4e3 <span class="hljs-variable">&lt;+65&gt;</span>:  movl   $0x3ee, %edx
-    0x1131cc4e8 <span class="hljs-variable">&lt;+70&gt;</span>:  movq   %rax, %rdi
-    0x1131cc4eb <span class="hljs-variable">&lt;+73&gt;</span>:  callq  <span class="hljs-keyword">*</span>%rbx
-    0x1131cc4ed <span class="hljs-variable">&lt;+75&gt;</span>:  cmpq   $-0x1, 0x77877b(%rip)     ; _UIConstraintBasedLayoutLogUnsatisfiable.result + 7
-    0x1131cc4f5 <span class="hljs-variable">&lt;+83&gt;</span>:  jne    0x1131cc541               ; <span class="hljs-variable">&lt;+159&gt;</span>
-    0x1131cc4f7 <span class="hljs-variable">&lt;+85&gt;</span>:  cmpb   $0x0, 0x77876a(%rip)      ; _UIConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints.__once + 7
-    0x1131cc4fe <span class="hljs-variable">&lt;+92&gt;</span>:  je     0x1131cc51e               ; <span class="hljs-variable">&lt;+124&gt;</span>
-    0x1131cc500 <span class="hljs-variable">&lt;+94&gt;</span>:  leaq   0x53ba89(%rip), %rdi      ; <span class="hljs-comment">@"Unable to simultaneously satisfy constraints.\n\tProbably at least one of the constraints in the following list is one you don't want. Try this: (1) look at each constraint and try to figure out which you don't expect; (2) find the code that added the unwanted constraint or constraints and fix it. (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints) \n%@\n\nWill attempt to recover by breaking constraint \n%@\n\nMake a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.\nThe methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful."</span>
-    0x1131cc507 <span class="hljs-variable">&lt;+101&gt;</span>: xorl   %eax, %eax
-    0x1131cc509 <span class="hljs-variable">&lt;+103&gt;</span>: movq   %r14, %rsi
-    0x1131cc50c <span class="hljs-variable">&lt;+106&gt;</span>: movq   %r15, %rdx
-    0x1131cc50f <span class="hljs-variable">&lt;+109&gt;</span>: addq   $0x8, %rsp
-    0x1131cc513 <span class="hljs-variable">&lt;+113&gt;</span>: popq   %rbx
-    0x1131cc514 <span class="hljs-variable">&lt;+114&gt;</span>: popq   %r14
-    0x1131cc516 <span class="hljs-variable">&lt;+116&gt;</span>: popq   %r15
-    0x1131cc518 <span class="hljs-variable">&lt;+118&gt;</span>: popq   %rbp
-    0x1131cc519 <span class="hljs-variable">&lt;+119&gt;</span>: jmp    0x11331930c               ; symbol stub for: NSLog
-    0x1131cc51e <span class="hljs-variable">&lt;+124&gt;</span>: addq   $0x8, %rsp
-    0x1131cc522 <span class="hljs-variable">&lt;+128&gt;</span>: popq   %rbx
-    0x1131cc523 <span class="hljs-variable">&lt;+129&gt;</span>: popq   %r14
-    0x1131cc525 <span class="hljs-variable">&lt;+131&gt;</span>: popq   %r15
-    0x1131cc527 <span class="hljs-variable">&lt;+133&gt;</span>: popq   %rbp
-    0x1131cc528 <span class="hljs-variable">&lt;+134&gt;</span>: retq   
-    0x1131cc529 <span class="hljs-variable">&lt;+135&gt;</span>: leaq   0x778720(%rip), %rdi      ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.__once
-    0x1131cc530 <span class="hljs-variable">&lt;+142&gt;</span>: leaq   0x4fdb59(%rip), %rsi      ; __block_literal_global68
-    0x1131cc537 <span class="hljs-variable">&lt;+149&gt;</span>: callq  0x11331a2a8               ; symbol stub for: dispatch_once
-    0x1131cc53c <span class="hljs-variable">&lt;+154&gt;</span>: jmp    0x1131cc4bc               ; <span class="hljs-variable">&lt;+26&gt;</span>
-    0x1131cc541 <span class="hljs-variable">&lt;+159&gt;</span>: leaq   0x778728(%rip), %rdi      ; _UIConstraintBasedLayoutLogUnsatisfiable.__once
-    0x1131cc548 <span class="hljs-variable">&lt;+166&gt;</span>: leaq   0x4fdbc1(%rip), %rsi      ; __block_literal_global76
-    0x1131cc54f <span class="hljs-variable">&lt;+173&gt;</span>: callq  0x11331a2a8               ; symbol stub for: dispatch_once
-    0x1131cc554 <span class="hljs-variable">&lt;+178&gt;</span>: jmp    0x1131cc4f7               ; <span class="hljs-variable">&lt;+85&gt;</span>
+-&gt;  <span class="hljs-number">0x1131cc4a2</span> &lt;+<span class="hljs-number">0</span>&gt;:   pushq  %rbp
+    <span class="hljs-number">0x1131cc4a3</span> &lt;+<span class="hljs-number">1</span>&gt;:   movq   %rsp, %rbp
+    <span class="hljs-number">0x1131cc4a6</span> &lt;+<span class="hljs-number">4</span>&gt;:   pushq  %r15
+    <span class="hljs-number">0x1131cc4a8</span> &lt;+<span class="hljs-number">6</span>&gt;:   pushq  %r14
+    <span class="hljs-number">0x1131cc4aa</span> &lt;+<span class="hljs-number">8</span>&gt;:   pushq  %rbx
+    <span class="hljs-number">0x1131cc4ab</span> &lt;+<span class="hljs-number">9</span>&gt;:   pushq  %rax
+    <span class="hljs-number">0x1131cc4ac</span> &lt;+<span class="hljs-number">10</span>&gt;:  movq   %rsi, %r14
+    <span class="hljs-number">0x1131cc4af</span> &lt;+<span class="hljs-number">13</span>&gt;:  movq   %rdi, %r15
+    <span class="hljs-number">0x1131cc4b2</span> &lt;+<span class="hljs-number">16</span>&gt;:  cmpq   $-<span class="hljs-number">0x1</span>, <span class="hljs-number">0x778796</span>(%rip)     ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.result + <span class="hljs-number">7</span>
+    <span class="hljs-number">0x1131cc4ba</span> &lt;+<span class="hljs-number">24</span>&gt;:  jne    <span class="hljs-number">0x1131cc529</span>               ; &lt;+<span class="hljs-number">135</span>&gt;
+    <span class="hljs-number">0x1131cc4bc</span> &lt;+<span class="hljs-number">26</span>&gt;:  cmpb   $<span class="hljs-number">0x0</span>, <span class="hljs-number">0x778785</span>(%rip)      ; _UIConstraintBasedLayoutPlaySoundWhenEngaged.__once + <span class="hljs-number">7</span>
+    <span class="hljs-number">0x1131cc4c3</span> &lt;+<span class="hljs-number">33</span>&gt;:  je     <span class="hljs-number">0x1131cc4ed</span>               ; &lt;+<span class="hljs-number">75</span>&gt;
+    <span class="hljs-number">0x1131cc4c5</span> &lt;+<span class="hljs-number">35</span>&gt;:  movq   <span class="hljs-number">0x73cd8c</span>(%rip), %rdi      ; (<span class="hljs-keyword">void</span> *)<span class="hljs-number">0x0000000113925248</span>: UIDevice
+    <span class="hljs-number">0x1131cc4cc</span> &lt;+<span class="hljs-number">42</span>&gt;:  movq   <span class="hljs-number">0x7108e5</span>(%rip), %rsi      ; <span class="hljs-string">"currentDevice"</span>
+    <span class="hljs-number">0x1131cc4d3</span> &lt;+<span class="hljs-number">49</span>&gt;:  movq   <span class="hljs-number">0x4d7aee</span>(%rip), %rbx      ; (<span class="hljs-keyword">void</span> *)<span class="hljs-number">0x0000000114598000</span>: objc_msgSend
+    <span class="hljs-number">0x1131cc4da</span> &lt;+<span class="hljs-number">56</span>&gt;:  callq  *%rbx
+    <span class="hljs-number">0x1131cc4dc</span> &lt;+<span class="hljs-number">58</span>&gt;:  movq   <span class="hljs-number">0x71e375</span>(%rip), %rsi      ; <span class="hljs-string">"_playSystemSound:"</span>
+    <span class="hljs-number">0x1131cc4e3</span> &lt;+<span class="hljs-number">65</span>&gt;:  movl   $<span class="hljs-number">0x3ee</span>, %edx
+    <span class="hljs-number">0x1131cc4e8</span> &lt;+<span class="hljs-number">70</span>&gt;:  movq   %rax, %rdi
+    <span class="hljs-number">0x1131cc4eb</span> &lt;+<span class="hljs-number">73</span>&gt;:  callq  *%rbx
+    <span class="hljs-number">0x1131cc4ed</span> &lt;+<span class="hljs-number">75</span>&gt;:  cmpq   $-<span class="hljs-number">0x1</span>, <span class="hljs-number">0x77877b</span>(%rip)     ; _UIConstraintBasedLayoutLogUnsatisfiable.result + <span class="hljs-number">7</span>
+    <span class="hljs-number">0x1131cc4f5</span> &lt;+<span class="hljs-number">83</span>&gt;:  jne    <span class="hljs-number">0x1131cc541</span>               ; &lt;+<span class="hljs-number">159</span>&gt;
+    <span class="hljs-number">0x1131cc4f7</span> &lt;+<span class="hljs-number">85</span>&gt;:  cmpb   $<span class="hljs-number">0x0</span>, <span class="hljs-number">0x77876a</span>(%rip)      ; _UIConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints.__once + <span class="hljs-number">7</span>
+    <span class="hljs-number">0x1131cc4fe</span> &lt;+<span class="hljs-number">92</span>&gt;:  je     <span class="hljs-number">0x1131cc51e</span>               ; &lt;+<span class="hljs-number">124</span>&gt;
+    <span class="hljs-number">0x1131cc500</span> &lt;+<span class="hljs-number">94</span>&gt;:  leaq   <span class="hljs-number">0x53ba89</span>(%rip), %rdi      ; @<span class="hljs-string">"Unable to simultaneously satisfy constraints.\n\tProbably at least one of the constraints in the following list is one you don't want. Try this: (1) look at each constraint and try to figure out which you don't expect; (2) find the code that added the unwanted constraint or constraints and fix it. (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints) \n%@\n\nWill attempt to recover by breaking constraint \n%@\n\nMake a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.\nThe methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful."</span>
+    <span class="hljs-number">0x1131cc507</span> &lt;+<span class="hljs-number">101</span>&gt;: xorl   %eax, %eax
+    <span class="hljs-number">0x1131cc509</span> &lt;+<span class="hljs-number">103</span>&gt;: movq   %r14, %rsi
+    <span class="hljs-number">0x1131cc50c</span> &lt;+<span class="hljs-number">106</span>&gt;: movq   %r15, %rdx
+    <span class="hljs-number">0x1131cc50f</span> &lt;+<span class="hljs-number">109</span>&gt;: addq   $<span class="hljs-number">0x8</span>, %rsp
+    <span class="hljs-number">0x1131cc513</span> &lt;+<span class="hljs-number">113</span>&gt;: popq   %rbx
+    <span class="hljs-number">0x1131cc514</span> &lt;+<span class="hljs-number">114</span>&gt;: popq   %r14
+    <span class="hljs-number">0x1131cc516</span> &lt;+<span class="hljs-number">116</span>&gt;: popq   %r15
+    <span class="hljs-number">0x1131cc518</span> &lt;+<span class="hljs-number">118</span>&gt;: popq   %rbp
+    <span class="hljs-number">0x1131cc519</span> &lt;+<span class="hljs-number">119</span>&gt;: jmp    <span class="hljs-number">0x11331930c</span>               ; symbol stub <span class="hljs-keyword">for</span>: NSLog
+    <span class="hljs-number">0x1131cc51e</span> &lt;+<span class="hljs-number">124</span>&gt;: addq   $<span class="hljs-number">0x8</span>, %rsp
+    <span class="hljs-number">0x1131cc522</span> &lt;+<span class="hljs-number">128</span>&gt;: popq   %rbx
+    <span class="hljs-number">0x1131cc523</span> &lt;+<span class="hljs-number">129</span>&gt;: popq   %r14
+    <span class="hljs-number">0x1131cc525</span> &lt;+<span class="hljs-number">131</span>&gt;: popq   %r15
+    <span class="hljs-number">0x1131cc527</span> &lt;+<span class="hljs-number">133</span>&gt;: popq   %rbp
+    <span class="hljs-number">0x1131cc528</span> &lt;+<span class="hljs-number">134</span>&gt;: retq   
+    <span class="hljs-number">0x1131cc529</span> &lt;+<span class="hljs-number">135</span>&gt;: leaq   <span class="hljs-number">0x778720</span>(%rip), %rdi      ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.__once
+    <span class="hljs-number">0x1131cc530</span> &lt;+<span class="hljs-number">142</span>&gt;: leaq   <span class="hljs-number">0x4fdb59</span>(%rip), %rsi      ; __block_literal_global68
+    <span class="hljs-number">0x1131cc537</span> &lt;+<span class="hljs-number">149</span>&gt;: callq  <span class="hljs-number">0x11331a2a8</span>               ; symbol stub <span class="hljs-keyword">for</span>: dispatch_once
+    <span class="hljs-number">0x1131cc53c</span> &lt;+<span class="hljs-number">154</span>&gt;: jmp    <span class="hljs-number">0x1131cc4bc</span>               ; &lt;+<span class="hljs-number">26</span>&gt;
+    <span class="hljs-number">0x1131cc541</span> &lt;+<span class="hljs-number">159</span>&gt;: leaq   <span class="hljs-number">0x778728</span>(%rip), %rdi      ; _UIConstraintBasedLayoutLogUnsatisfiable.__once
+    <span class="hljs-number">0x1131cc548</span> &lt;+<span class="hljs-number">166</span>&gt;: leaq   <span class="hljs-number">0x4fdbc1</span>(%rip), %rsi      ; __block_literal_global76
+    <span class="hljs-number">0x1131cc54f</span> &lt;+<span class="hljs-number">173</span>&gt;: callq  <span class="hljs-number">0x11331a2a8</span>               ; symbol stub <span class="hljs-keyword">for</span>: dispatch_once
+    <span class="hljs-number">0x1131cc554</span> &lt;+<span class="hljs-number">178</span>&gt;: jmp    <span class="hljs-number">0x1131cc4f7</span>               ; &lt;+<span class="hljs-number">85</span>&gt;
 </code></pre>
 <h1>What next?</h1>
 <p>We can use the Xcode debug console output to gather more information than we see it initially provides.</p>
@@ -175,15 +175,15 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <pre><code>po 0x7fc82aba1210
 </code></pre>
 <p>If this doesn't provide enough info as the below sample output shows (not very helpful).</p>
-<pre><code>(lldb) po <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82aba1210
-&lt;UIView: <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82aba1210; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0</span>x7<span class="hljs-built_in">fc</span>82d338960&gt;&gt;
+<pre><code>(lldb) po <span class="hljs-number">0x7fc82aba1210</span>
+&lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
 </code></pre>
 <p>Maybe printing it's <a href="https://developer.apple.com/library/ios/technotes/tn2239/_index.html#//apple_ref/doc/uid/DTS40010638-CH1-SUBSECTION34"><code>recursiveDescription</code></a> will help out and in my case gives me a better idea of which component I'm actually trying to look at.</p>
-<pre><code>(lldb) po [<span class="hljs-number">0</span>x7fc82aba1210 recursiveDescription] 
-&lt;UIView: <span class="hljs-number">0</span>x7fc82aba1210; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d338960&gt;&gt;
-   | &lt;MYAPPButton: <span class="hljs-number">0</span>x7fc82d61c800; <span class="hljs-variable">baseClass =</span> UIButton; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); <span class="hljs-variable">opaque =</span> NO; <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82ab96570&gt;&gt;
-   |    | &lt;UIImageView: <span class="hljs-number">0</span>x7fc82d3f7b10; <span class="hljs-variable">frame =</span> (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">0</span> <span class="hljs-number">0</span>); <span class="hljs-variable">clipsToBounds =</span> YES; <span class="hljs-variable">opaque =</span> NO; <span class="hljs-variable">userInteractionEnabled =</span> NO; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d6e7020&gt;&gt;
-   | &lt;UIImageView: <span class="hljs-number">0</span>x7fc82d54a1c0; <span class="hljs-variable">frame =</span> (<span class="hljs-number">314</span> <span class="hljs-number">110</span>; <span class="hljs-number">140</span> <span class="hljs-number">140</span>); <span class="hljs-variable">autoresize =</span> RM+BM; <span class="hljs-variable">userInteractionEnabled =</span> NO; <span class="hljs-variable">layer =</span> &lt;CALayer: <span class="hljs-number">0</span>x7fc82d52def0&gt;&gt;
+<pre><code>(lldb) po [<span class="hljs-number">0x7fc82aba1210</span> recursiveDescription] 
+&lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
+   | &lt;MYAPPButton: <span class="hljs-number">0x7fc82d61c800</span>; baseClass = UIButton; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); opaque = NO; autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82ab96570</span>&gt;&gt;
+   |    | &lt;UIImageView: <span class="hljs-number">0x7fc82d3f7b10</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">0</span> <span class="hljs-number">0</span>); clipsToBounds = YES; opaque = NO; userInteractionEnabled = NO; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d6e7020</span>&gt;&gt;
+   | &lt;UIImageView: <span class="hljs-number">0x7fc82d54a1c0</span>; frame = (<span class="hljs-number">314</span> <span class="hljs-number">110</span>; <span class="hljs-number">140</span> <span class="hljs-number">140</span>); autoresize = RM+BM; userInteractionEnabled = NO; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d52def0</span>&gt;&gt;
 </code></pre>
 <p>Or if that's not enough context, then we can look at the view's superview and potentially even walk up the view's tree, printing out a different levels trying to understand which component is having trouble with auto layout.</p>
 <pre><code>po [[0x7fc82aba1210 superview] recursiveDescription]
@@ -228,13 +228,13 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
     <span class="hljs-comment">&lt;!-- WinJS references --&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/winjs/css/ui-light.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/base.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/ui.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/base.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/ui.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 
     <span class="hljs-comment">&lt;!-- TESTS--&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
         mocha.setup(<span class="hljs-string">'bdd'</span>);
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 
@@ -252,7 +252,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
             <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">800px</span></span></span>;
             <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">600px</span></span></span>;
             <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> scroll</span></span>;
-        <span class="hljs-rule">}</span></span>
+        }</span>
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
@@ -277,10 +277,10 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
 </code></pre>
-<pre><code class="language-javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+<pre><code class="language-javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 <span class="hljs-pi">    "use strict"</span>;
 
-    <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-comment">// clear any current test results since mocha just appends.</span>
         element.querySelector(<span class="hljs-string">'#mocha'</span>).innerHTML = <span class="hljs-string">""</span>;
     
@@ -300,7 +300,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
         <span class="hljs-comment">// This function is called after the page control contents </span>
         <span class="hljs-comment">// have been loaded, controls have been activated, and </span>
         <span class="hljs-comment">// the resulting elements have been parented to the DOM. </span>
-        ready: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element, options)</span> </span>{
+        ready: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element, options</span>) </span>{
             options = options || {};
 
             <span class="hljs-comment">// get our possibly already cached value of whether to run the tests on startup.</span>
@@ -308,13 +308,13 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
             <span class="hljs-comment">// checkbox to manage auto-run state</span>
             <span class="hljs-keyword">var</span> runOnStartCheckbox = element.querySelector(<span class="hljs-string">'#mochaTestsRunOnStart'</span>);
-            runOnStartCheckbox.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            runOnStartCheckbox.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
                 localStorage.setItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>, runOnStartCheckbox.checked);
             });
 
             <span class="hljs-comment">// button to manually trigger a test run</span>
             <span class="hljs-keyword">var</span> mochaTestsRunButton = element.querySelector(<span class="hljs-string">'#mochaTestsRun'</span>);
-            mochaTestsRunButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+            mochaTestsRunButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
                 runMochaTests();
             })
             runOnStartCheckbox.checked = runOnStart;
@@ -345,7 +345,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
 <p>In you're <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
-<pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> </span>{
+<pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
 
         <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;
         <span class="hljs-keyword">if</span> (ex.detail.errorMessage) {
@@ -386,7 +386,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
         <span class="hljs-comment">// I like to be stopped while debugging to possibly</span>
         <span class="hljs-comment">// poke around and do further inspection</span>
-        debugger;
+        <span class="hljs-keyword">debugger</span>;
     }
 </code></pre>
 <h2>Reference the test control.</h2>
@@ -397,7 +397,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>hubPage<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
 
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/pages/hub/hub.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/tests/tests.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/tests/tests.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 
 ...page details trimmed for brevity...
@@ -416,18 +416,18 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
 </code></pre>
 <p>If you manage to get everything wired up correctly above, when you run the app (<code>F5</code>) your mocha tests should be all set and run automatically. Oh wait, let's not forget to add a mocha test :)...</p>
-<pre><code class="language-javascript">describe(<span class="hljs-string">'Mocha test spike'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+<pre><code class="language-javascript">describe(<span class="hljs-string">'Mocha test spike'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
 
-    it(<span class="hljs-string">"should report a passing test"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should report a passing test"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
       <span class="hljs-comment">// doing nothing should be a passing test</span>
     });
 
-    it(<span class="hljs-string">"should fail on a synchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should fail on a synchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports a test failure"</span>)
     });
 
-    it(<span class="hljs-string">"should fail on an asynchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
-        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should fail on an asynchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports an async test failure"</span>)
             done();
         }, <span class="hljs-number">100</span>);
@@ -459,7 +459,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
 <p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
 <p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
-<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the NuGet.org, take a glance at the account and check out how many downloads there had been?</p>
+<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the <a href="http://NuGet.org">NuGet.org</a>, take a glance at the account and check out how many downloads there had been?</p>
 <p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
 <p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
 <p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>

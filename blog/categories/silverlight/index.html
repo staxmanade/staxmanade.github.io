@@ -493,7 +493,7 @@ For the Frequency property's implementation, you probably just need to return th
 }
 </code></pre>
 <p>Now if you had a method that exposed this generic result object through your web service...</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span><span class="hljs-params">(<span class="hljs-keyword">string</span> param1)</span>
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> param1</span>)
 </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt;(param1.Length);
 }

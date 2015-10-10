@@ -100,13 +100,13 @@
 
     <span class="hljs-comment">&lt;!-- WinJS references --&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/winjs/css/ui-light.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/base.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/ui.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/base.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/ui.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 
     <span class="hljs-comment">&lt;!-- TESTS--&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
         mocha.setup(<span class="hljs-string">'bdd'</span>);
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 
@@ -124,7 +124,7 @@
             <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">800px</span></span></span>;
             <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">600px</span></span></span>;
             <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> scroll</span></span>;
-        <span class="hljs-rule">}</span></span>
+        }</span>
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
@@ -149,10 +149,10 @@
 <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
 </code></pre>
-<pre><code class="language-javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+<pre><code class="language-javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 <span class="hljs-pi">    "use strict"</span>;
 
-    <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-comment">// clear any current test results since mocha just appends.</span>
         element.querySelector(<span class="hljs-string">'#mocha'</span>).innerHTML = <span class="hljs-string">""</span>;
     
@@ -172,7 +172,7 @@
         <span class="hljs-comment">// This function is called after the page control contents </span>
         <span class="hljs-comment">// have been loaded, controls have been activated, and </span>
         <span class="hljs-comment">// the resulting elements have been parented to the DOM. </span>
-        ready: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(element, options)</span> </span>{
+        ready: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element, options</span>) </span>{
             options = options || {};
 
             <span class="hljs-comment">// get our possibly already cached value of whether to run the tests on startup.</span>
@@ -180,13 +180,13 @@
 
             <span class="hljs-comment">// checkbox to manage auto-run state</span>
             <span class="hljs-keyword">var</span> runOnStartCheckbox = element.querySelector(<span class="hljs-string">'#mochaTestsRunOnStart'</span>);
-            runOnStartCheckbox.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            runOnStartCheckbox.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
                 localStorage.setItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>, runOnStartCheckbox.checked);
             });
 
             <span class="hljs-comment">// button to manually trigger a test run</span>
             <span class="hljs-keyword">var</span> mochaTestsRunButton = element.querySelector(<span class="hljs-string">'#mochaTestsRun'</span>);
-            mochaTestsRunButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+            mochaTestsRunButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
                 runMochaTests();
             })
             runOnStartCheckbox.checked = runOnStart;
@@ -217,7 +217,7 @@
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
 <p>In you're <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
-<pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ex)</span> </span>{
+<pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
 
         <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;
         <span class="hljs-keyword">if</span> (ex.detail.errorMessage) {
@@ -258,7 +258,7 @@
 
         <span class="hljs-comment">// I like to be stopped while debugging to possibly</span>
         <span class="hljs-comment">// poke around and do further inspection</span>
-        debugger;
+        <span class="hljs-keyword">debugger</span>;
     }
 </code></pre>
 <h2>Reference the test control.</h2>
@@ -269,7 +269,7 @@
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>hubPage<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
 
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/pages/hub/hub.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/tests/tests.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/tests/tests.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 
 ...page details trimmed for brevity...
@@ -288,18 +288,18 @@
 
 </code></pre>
 <p>If you manage to get everything wired up correctly above, when you run the app (<code>F5</code>) your mocha tests should be all set and run automatically. Oh wait, let's not forget to add a mocha test :)...</p>
-<pre><code class="language-javascript">describe(<span class="hljs-string">'Mocha test spike'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+<pre><code class="language-javascript">describe(<span class="hljs-string">'Mocha test spike'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
 
-    it(<span class="hljs-string">"should report a passing test"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should report a passing test"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
       <span class="hljs-comment">// doing nothing should be a passing test</span>
     });
 
-    it(<span class="hljs-string">"should fail on a synchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should fail on a synchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports a test failure"</span>)
     });
 
-    it(<span class="hljs-string">"should fail on an asynchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span></span>{
-        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    it(<span class="hljs-string">"should fail on an asynchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports an async test failure"</span>)
             done();
         }, <span class="hljs-number">100</span>);

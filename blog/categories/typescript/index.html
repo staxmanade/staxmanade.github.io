@@ -192,7 +192,7 @@ helloWorld.tsx(<span class="hljs-number">10</span>,<span class="hljs-number">14<
 <p>To fix this I create a type by using an <code>interface</code> like below:</p>
 <pre><code><span class="hljs-tag">interface</span> <span class="hljs-tag">HelloWorldProps</span> <span class="hljs-rules">{
   <span class="hljs-rule"><span class="hljs-attribute">name</span>:<span class="hljs-value"> string</span></span>;
-<span class="hljs-rule">}</span></span>
+}</span>
 </code></pre>
 <p>When I call <code>React.createClass</code> I pass in the <code>HelloWorldProps</code> interface for the <code>props</code> (<code>P</code>) and an <code>any</code> for the state (<code>S</code>) like so: <code>React.createClass&lt;HelloWorldProps, any&gt;(...)</code></p>
 <h1>YAY IT COMPILES!!!</h1>
@@ -229,16 +229,16 @@ React.render(React.createElement(HelloMessage, {<span class="hljs-string">"name"
 <h1>Let's break our example on purpose to see how TypeScript responds?</h1>
 <p>I changed one character in two places in the working <code>helloWorld.tsx</code> file and when I run the compiler I get the following two errors. Can you spot what changed?</p>
 <pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> React = __React;</span>
-declare <span class="hljs-keyword">var</span> mountNode: any;
+<span class="hljs-keyword">import</span> React = __React;
+<span class="hljs-keyword">declare</span> <span class="hljs-keyword">var</span> mountNode: <span class="hljs-built_in">any</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">HelloWorldProps</span> </span>{
-  Name: string;
+<span class="hljs-interface"><span class="hljs-keyword">interface</span> HelloWorldProps </span>{
+  Name: <span class="hljs-built_in">string</span>;
 }
 
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, any&gt;({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.mane} &lt;div&gt;&lt;/div&gt;&lt;/div&gt;;
+<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, <span class="hljs-built_in">any</span>&gt;({
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.mane} &lt;div&gt;&lt;<span class="hljs-regexp">/div&gt;&lt;/</span>div&gt;;
   }
 });
 
@@ -324,7 +324,7 @@ interface <span class="hljs-type">HelloWorldProps</span> <span class="hljs-keywo
 <p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
 <p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
 <p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
-<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the NuGet.org, take a glance at the account and check out how many downloads there had been?</p>
+<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the <a href="http://NuGet.org">NuGet.org</a>, take a glance at the account and check out how many downloads there had been?</p>
 <p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
 <p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
 <p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>

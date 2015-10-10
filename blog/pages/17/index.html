@@ -337,7 +337,7 @@ There is a button on the top of the solution explorer for going offline/online. 
 </code></pre>
 <p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
 <p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber</span>)
 </span>{
     PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
     @<span class="hljs-keyword">event</span>.RemoveSubscriber(subscriber);
@@ -398,7 +398,7 @@ That is exactly what it is for, so you can use reserved words for variable names
 }
 </code></pre>
 <p>Now if you had a method that exposed this generic result object through your web service...</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span><span class="hljs-params">(<span class="hljs-keyword">string</span> param1)</span>
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt; <span class="hljs-title">StringLength</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> param1</span>)
 </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValidatedResult&lt;<span class="hljs-keyword">long</span>&gt;(param1.Length);
 }

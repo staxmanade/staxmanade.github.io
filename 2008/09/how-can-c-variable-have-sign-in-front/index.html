@@ -88,7 +88,7 @@
 </code></pre>
 <p>Notice the @ sign in front of the myparam variable... That is what I saw in my co-workers code and I couldn't explain how that worked...</p>
 <p>now, nearly a year later I was perusing through the SLUnity framework on codeplex [] and saw the @ sign again...</p>
-<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span><span class="hljs-params">(<span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber)</span>
+<pre><code class="language-C#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UnregisterSubscriber</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> publishedEventName, EventHandler subscriber</span>)
 </span>{
     PublishedEvent @<span class="hljs-keyword">event</span> = GetEvent(publishedEventName);
     @<span class="hljs-keyword">event</span>.RemoveSubscriber(subscriber);

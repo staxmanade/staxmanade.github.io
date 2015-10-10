@@ -152,38 +152,38 @@
     }
 
     [TestFixtureSetUp]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetupContext_ALL</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetupContext_ALL</span>(<span class="hljs-params"></span>)
     </span>{
         Before_all_tests();
         Because();
     }
 
     [TestFixtureTearDown]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">TearDownContext_ALL</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">TearDownContext_ALL</span>(<span class="hljs-params"></span>)
     </span>{
         After_all_tests();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Before_all_tests</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Before_all_tests</span>(<span class="hljs-params"></span>)
     </span>{
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Because</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Because</span>(<span class="hljs-params"></span>)
     </span>{
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">After_all_tests</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">After_all_tests</span>(<span class="hljs-params"></span>)
     </span>{
     }
 }
 </code></pre>
 <p>If I were given the following system to test.</p>
-<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceA</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunA</span><span class="hljs-params">()</span></span>; }
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceB</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunB</span><span class="hljs-params">()</span></span>; }
+<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceA</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunA</span>(<span class="hljs-params"></span>)</span>; }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceB</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunB</span>(<span class="hljs-params"></span>)</span>; }
 
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TestComponent</span>
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TestComponent</span><span class="hljs-params">(IServiceA serviceA, IServiceB serviceB)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TestComponent</span>(<span class="hljs-params">IServiceA serviceA, IServiceB serviceB</span>)
     </span>{
         ServiceA = serviceA;
         ServiceB = serviceB;
@@ -192,7 +192,7 @@
     <span class="hljs-keyword">public</span> IServiceA ServiceA { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
     <span class="hljs-keyword">public</span> IServiceB ServiceB { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RunAll</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RunAll</span>(<span class="hljs-params"></span>)
     </span>{
         <span class="hljs-keyword">if</span> (!HowDidItGo())
             <span class="hljs-keyword">return</span>;
@@ -200,7 +200,7 @@
         ServiceB.RunB();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">HowDidItGo</span><span class="hljs-params">()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">HowDidItGo</span>(<span class="hljs-params"></span>)
     </span>{
         <span class="hljs-comment">// some really nasty untestable code</span>
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;

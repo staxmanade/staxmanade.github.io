@@ -168,7 +168,7 @@
 <p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything's a Singleton architecture is no easy task. I won't go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I've slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They've given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
 <h5>PowerShell assisted regular expression search and replace.</h5>
 <p>In my case, the specific regular expression needed to find</p>
-<pre><code>    SomeBusinessLogicClass.Instance.SomeFooMethod(bar);
+<pre><code>    <span class="hljs-tag">SomeBusinessLogicClass</span><span class="hljs-class">.Instance</span><span class="hljs-class">.SomeFooMethod</span>(<span class="hljs-tag">bar</span>);
 </code></pre>
 <p>and replace it with</p>
 <pre><code>    Resolve<span class="hljs-comment">()</span>.SomeFooMethod<span class="hljs-comment">(bar)</span>;

@@ -92,9 +92,9 @@
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
-    System.import(<span class="hljs-string">'./testInit.js'</span>);
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+    System.<span class="hljs-keyword">import</span>(<span class="hljs-string">'./testInit.js'</span>);
   </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 
@@ -107,25 +107,25 @@
 <p>Before we create the <code>testInit.js</code> file let's first create a couple sample MochaJS test files that we want to test.</p>
 <p>Here's our first test file: name it <code>mochaTest1.js</code></p>
 <p>Something cool about this test is once we get mocha wired up correctly, this test shows how seamlessly you can take a dependency on a 3rd party library like <a href="http://chaijs.com/">chaijs</a> for help with assertions.</p>
-<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
 
-describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
   });
-  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
   });
 });
 </code></pre>
 <p>Create another test file <code>mochaTest2.js</code></p>
-<pre><code><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> { expect } from 'chai';</span>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
 
-describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
   });
-  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
   });
 });
@@ -139,7 +139,7 @@ describe(<span class="hljs-string">"This is another describe"</span>, <span clas
 <span class="hljs-comment">// This tells SystemJS to load the mocha library</span>
 <span class="hljs-comment">// and allows us to interact with the library below.</span>
 <span class="hljs-comment">//</span>
-import mocha from <span class="hljs-string">'mocha'</span>;
+<span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
 
 <span class="hljs-comment">//</span>
 <span class="hljs-comment">// This defines the list of test files we want to load and run tests against.</span>
@@ -173,7 +173,7 @@ mochaDiv.id = <span class="hljs-string">"mocha"</span>;
 <span class="hljs-comment">// Importing mocha with JSPM and ES6 doesn't expose the usual mocha globals.</span>
 <span class="hljs-comment">// I found this is one way to manually expose the globals, however if you know of a better way please let me know...</span>
 <span class="hljs-comment">//</span>
-mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context)</span> </span>{
+mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">context</span>) </span>{
   <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
 
   exports.afterEach = context.afterEach || context.teardown;
@@ -191,14 +191,14 @@ mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs
   exports.run = context.run;
 
   <span class="hljs-comment">// now use SystemJS to load all test files</span>
-  Promise
-    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(testScript)</span> </span>{
+  <span class="hljs-built_in">Promise</span>
+    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
       <span class="hljs-keyword">return</span> System.import(testScript);
-    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       mocha.checkLeaks();
       mocha.globals(allowedMochaGlobals);
       mocha.run();
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> </span>{
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
       <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
       <span class="hljs-built_in">console</span>.error(err);
     });
