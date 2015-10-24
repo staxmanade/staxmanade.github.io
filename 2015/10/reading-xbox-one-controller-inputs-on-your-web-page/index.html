@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Habit of a Solid Developer - Part 9 - Blogs - Developing on Staxmanade</title>
+  <title>Reading Xbox One Controller Inputs on Your Web Page - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 9 - Blogs">
+   <meta name="description" content="If you&#x27;ve ever tried to browse any website on the Xbox One, you&#x27;ll quickly find out that it&#x27;s ok, but not the same navigating a native application or ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-blogs/">
+  <link rel="canonical" href="http://staxmanade.com/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,61 +71,47 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-blogs/">Habit of a Solid Developer - Part 9 - Blogs</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/">Reading Xbox One Controller Inputs on Your Web Page</a></h1>
     <p class="meta">
-          <time datetime="2015-10-06T06:20:41.092Z" pubdate data-updated="true">Oct 5th 2015</time>
+          <time datetime="2015-10-24T05:19:36.729Z" pubdate data-updated="true">Oct 23rd 2015</time>
 
 
-        <a href="/2015/10/habit-of-a-solid-developer-blogs/#disqus_thread" data-disqus-identifier="/2015/10/habit-of-a-solid-developer-blogs/">(Comments)</a>
+        <a href="/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/#disqus_thread" data-disqus-identifier="/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 9</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-    </ul>
-</div></p>
-<p>I don't know if this is still a good way to consume development related content anymore. I feel like I really soaked up the blogs when there was some really solid content being put out on sites like <a href="http://codebetter.com">Code Better</a>, <a href="http://lostechies.com/">Los Techies</a>, <a href="http://elegantcode.com">Elegant Code</a>, and <a href="http://devlicio.us">Devlicious</a>.</p>
-<h1>Consider starting your own blog.</h1>
-<p>While there are lots of people out there blogging, not everyone is and not all solutions to every problem have been written.</p>
-<p>The technology landscape is always changing and there are always opportunities to write about what you're struggling with, learning, or are an expert in.</p>
-<p>My most successful blog posts are usually boring/dry topics that cover something that I struggle do to get detailed information on line about. Or ones that have bits/pieces scattered across various blogs, documentation sites, etc. If you can cleanly organize some topic of content, throw a blog post out there you can not only help the next guy coming along looking for help, but it's quite fun to see the visitors to your own blog grow.</p>
-<p>I'm currently using <a href="https://geo.itunes.apple.com/us/app/newsify-your-news-blog-rss/id510153374?mt=8&at=10lPYJ">Newsify: Your News, Blog &amp; RSS Feed Reader - Ben Alexander</a> to sync my <a href="https://feedly.com/">Feedly</a> subscriptions. This app is great for consuming content in places I don't feel like listening to a podcast.</p>
-<p>Happy Reading!</p>
+<div class="entry-content"><p>If you've ever tried to browse any website on the Xbox One, you'll quickly find out that it's ok, but not the same navigating a native application or game. I.E. on the Xbox One has a mouse and you can zoom around, navigate slowly through pages.</p>
+<p>But what if you could design your website to navigate and operate just like a native xbox application?</p>
+<p>I found a great write up of the <code>navigator.getGamepads()</code> api that the native I.E. browser implements <a href="http://gamedevelopment.tutsplus.com/tutorials/using-the-html5-gamepad-api-to-add-controller-support-to-browser-games--cms-21345">here</a>.</p>
+<p>It took a sample page he had, threw it into a <a href="http://output.jsbin.com/yivotocoju">jsbin</a>, modified it with following changes.</p>
+<ol>
+<li>Add the following <a href="http://codeseven.github.io/toastr/">toastr</a> library <code>&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>Add the following debug code</li>
+</ol>
+<pre><code><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'keydown'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>)</span>{
+    toastr.success(event.keyCode + <span class="hljs-string">" - "</span> + event.keyIdentifier );
+});
+</code></pre>
+<ol start="3">
+<li>Save the <a href="http://output.jsbin.com/yivotocoju">jsbin</a></li>
+<li>Walk over to my personal family Xbox One, open the jsbin page one I.E.</li>
+<li>Profit... (profit by learning what all the <code>keyCode</code> values are for each button on the controller)</li>
+</ol>
+<p>THIS WAS AWESOME...</p>
+<p>In fact I found out that these same values are confirmed in the WinJS source code...</p>
+<p><a href="https://github.com/winjs/winjs/blob/a59be9d74fe2245cc11ab289d9677158f9c8eabf/src/js/WinJS/Utilities/_ElementUtilities.js#L1898">https://github.com/winjs/winjs/blob/a59be9d74fe2245cc11ab289d9677158f9c8eabf/src/js/WinJS/Utilities/_ElementUtilities.js#L1898</a></p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2015-10-06T06:20:41.092Z" pubdate data-updated="true">Oct 5th 2015</time>
+                          <time datetime="2015-10-24T05:19:36.729Z" pubdate data-updated="true">Oct 23rd 2015</time>
 
 
-                        <span class="categories">
-    <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevHabit</a>
-</span>
-
+                        
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/10/habit-of-a-solid-developer-blogs/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/10/habit-of-a-solid-developer-blogs/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/">Tweet</a>
 </div>
 
                     <p class="meta">
@@ -155,7 +141,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2015/10/habit-of-a-solid-developer-blogs/';
+    var disqus_identifier = '/2015/10/reading-xbox-one-controller-inputs-on-your-web-page/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

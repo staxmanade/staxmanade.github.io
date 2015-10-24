@@ -71,6 +71,24 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/11/convert-existing-winjs-app-to-use/">Convert an existing WinJS app to use TypeScript</a></h1>
+    <p class="meta">
+          <time datetime="2013-11-29T19:38:00.000Z" pubdate data-updated="true">Nov 29th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD">ToTypeScriptD</a> github organization that walks through converting a new <a href="http://www.amazon.com/gp/product/B00EDSI7QO/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00EDSI7QO&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=A6Q7RZBFEARWWT2L">Windows 8</a> WinJS application to TypeScript.</p></p>
+<p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>
+<p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>
+<p>Happy Scripting!</p>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/10/introducing-totypescriptd-automatic/">Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies</a></h1>
     <p class="meta">
           <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Oct 31st 2013</time>
@@ -232,48 +250,6 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
 <p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>
 <p>Happy Git'ing!</p>
 </div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
-    <p class="meta">
-          <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-   <p>I created an <a href="http://github.com/staxmanade/PowershellPresentation" target="_blank">introductory presentation on PowerShell</a> a while back and posted it <a href="http://github.com/staxmanade/" target="_blank">on my GitHub</a>. I first gave the presentation at the <a href="http://softwaredevelopersgroup.com/">NNSDG</a> and decided to also submit it as a talk to the <a href="http://boisecodecamp.com/">Boise Code Camp</a> this year. (Looks like I'll be going – track me down <a href="https://twitter.com/staxmanade" target="_blank">@staxmanade</a> if you’d like to say hello)</p>
-   <p>I’ve become quite a fan of Markdown lately and thought, “what if this not only looked like PowerShell, but looked even better as Markdown…?”</p>
-   <p>After experimenting a little, I found that it actually works quite well.</p>
-   <p>For example:</p>
-   <p><strong>PowerShell (Markdown)</strong></p>
-   <pre>## String Interpolation<br /><br />### Single quotes `don't` interpolate<br />    'Hello $groupName' <br />    <br />### Double quotes `DO` interpolate<br />    &quot;Hello $groupName&quot;<br />        <br />    <br />### Wrap `$(...)` around expression within an string<br />    &quot;groupName variable is of type: $($groupName.GetType().FullName)&quot;<br />    &quot;2 + 1564 = $(2 + 1564)&quot;<br />    &quot;Current DateTime is = $(get-date)&quot;<br />    &quot;Current DateTime is = $([System.DateTime]::Now)&quot;<br /><br />    <br />### Escape characters with the ` (back-tick)<br />    &quot;Escape a quotation `&quot;This is quoted`&quot;.&quot;</pre>
-
-   <p>&#160;</p>
-
-   <p><strong>Formatted Markdown</strong></p>
-
-   <p><a href="http://lh5.ggpht.com/-lUeiRSS4rBo/URs3LcasBbI/AAAAAAAAAcY/h2NTLneqWP8/s1600-h/image11.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-iNFDygzQL0o/URs3L15uv8I/AAAAAAAAAcg/jbjRHwUTi8E/image_thumb4.png?imgmax=800" width="634" height="628" /></a></p>
-
-   <p>&#160;</p>
-
-   <p>One issue I have is the way GitHub/markdown formats extra whitespace (it doesn’t). So I’ve worked around that so that I can get the vertical whitespace that I need in the Markdown version by placing a link to a spacer image: </p>
-
-   <pre>![vertical space](<a href="http://is.gd/VertSpace">http://is.gd/VertSpace</a>)</pre>
-
-   <p>This isn’t ideal because my PowerShell is littered with this snippet, but something that can easily be search/replaced before using the raw version as a PowerShell script.</p>
-
-   <p>I also think that you could potentially do this with many different programming languages. (At least ones that don’t depend on whitespace and have a form of block comments)</p>
-
-   <p>Nifty eh?</p>
-
-   <p>Happy PowerDowning or MarkShelling!</p>
-</div></div>
 
       
     </article>

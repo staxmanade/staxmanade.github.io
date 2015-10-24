@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-10-10T05:24:02Z</updated>
+    <updated>2015-10-24T06:20:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,46 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Habit of a Solid Developer - Part 6 - Dig a Little Deeper]]></title>
+        <id>http://staxmanade.com/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/</id>
+        <link href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">
+        </link>
+        <updated>2015-10-24T06:20:41Z</updated>
+        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 6 - Dig a Little Deeper]]></summary>
+        <content type="html"><![CDATA[<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 6</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - (current) - Dig a Little Deeper
+        </li>
+    </ul>
+</div></p>
+<p>The number of things you can learn in this field is mind blowing. The rate at which change happens, frameworks come and go and the various levels of abstraction can be daunting at times.</p>
+<p>Regardless of how much or little you know, there is always a new level of abstraction you can dive into and get a better understanding of what's going on. I love the example <a href="http://hanselman.com">Scott Hanselman</a> uses about this topic in <a href="http://www.hanselman.com/blog/PleaseLearnToThinkAboutAbstractions.aspx">Please Learn to Think about Abstractions</a>.</p>
+<p>It is amazing how much you can accomplish without having a clue about what is going under your abstractions. But if you were to take a moment now and then to try to understand what those abstractions are hiding from you, it will likely open your eyes to a level of understanding and insight as to how to use the abstraction that you may likely not understand how you made it work without that deeper insight. The understanding may help you get just needed bit of performance improvement, or fault tolerance in your projects, or how to set things up to be more maintainable.</p>
+<p>An example of this for me recently is while working at <a href="http://vertigo.com/">Vertigo</a> I have helped to ship a number of streaming video based products without having to know anything about some of the specifics of say <a href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming">HLS</a>. On this recent project we were having issues with a live stream and it just so happened we could peek through an HTTP Debugger proxy at the raw streaming manifest. This was previously a scary place for me to dig in an try to understand. However, taking the time to understand various parts of the HLS Spec have not only made me appreciate what it takes to put together one of these live streams, but I have now become just that much stronger as a team member on a video related projects.</p>
+<p>As the famous philosopher Dory once said:</p>
+<p><img src="http://cdn.meme.am/instances/55766499.jpg" alt="Dory saying just keep digging, just keep digging, digging, digging"></p>
+<p>Happy Digging!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Red - Possibly the Most Important Step in Red, Green, Refactor]]></title>
         <id>http://staxmanade.com/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/</id>
@@ -255,6 +295,9 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
         <li>
             Part 5 - (current) - Update or Add Documentation while Reading Code
         </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
     </ul>
 </div></p>
 <p>While I generally sit on the side of the fence that your code should <strong>read clearly</strong> enough that comments should not be necessary. I concede that there are (often) times when a comment can really help to make the job of understanding the code much easier than just how a variable or method is named or organized.</p>
@@ -298,6 +341,9 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
         </li>
         <li>
             Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
         </li>
     </ul>
 </div></p>
@@ -452,6 +498,9 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
         <li>
             Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
         </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
     </ul>
 </div></p>
 <blockquote>
@@ -513,6 +562,9 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
         </li>
         <li>
             Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
         </li>
     </ul>
 </div></p>
@@ -757,6 +809,9 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
         </li>
         <li>
             Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
         </li>
     </ul>
 </div></p>
@@ -1560,42 +1615,6 @@ com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><
 <h1>For DEBUG mode only...</h1>
 <p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
 <p>Happy Missing Image Bashing!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to Diff Two Xcode Targets]]></title>
-        <id>http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/</id>
-        <link href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">
-        </link>
-        <updated>2015-02-11T01:23:02Z</updated>
-        <summary type="html"><![CDATA[If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while a...]]></summary>
-        <content type="html"><![CDATA[<p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
-<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
-<blockquote>
-<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
-</blockquote>
-<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
-<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
-<h1>Install it with <a href="https://npm.org">npm</a></h1>
-<pre><code>npm install -g diffxcodetargets
-</code></pre>
-<h1>How to use it?</h1>
-<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
-<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
-
-Could not find TargetA ''. Possible targets are:
-  - targetA
-  - targetB
-</code></pre>
-<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
-<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
-</code></pre>
-<h1>How does it work?</h1>
-<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
-<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="https://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
-<h1>What's missing?</h1>
-<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="https://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
-<p>Happy Diffing!</p>
 ]]></content>
     </entry>
 </feed>
