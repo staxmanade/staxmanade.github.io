@@ -71,6 +71,190 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">Integrate WinJS.Navigation with the Browser&#x27;s History</a></h1>
+    <p class="meta">
+          <time datetime="2015-10-31T17:30:40.860Z" pubdate data-updated="true">Oct 31st 2015</time>
+
+
+        <a href="/2015/10/integrate-winjs-navigation-with-the-browser-s-history/#disqus_thread" data-disqus-identifier="/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've been playing with <a href="https://github.com/winjs/winjs">WinJS</a> a bit lately, specifically the <a href="https://github.com/winjs/react-winjs">React-WinJS</a> and wanted the native WinJS Navigation to play a little nicer with a web browser. The original/default environment for WinJS app is within a WinRT/Metro application where there is no &quot;url/address&quot; bar to be seen.</p>
+<blockquote>
+<p>My uneducated guess is that the WinJS team decided not to worry about how <code>WinJS.Navigation</code> would integrate with a normal browser's history as there doesn't appear to be native integration or documentation about how to do it so far.</p>
+</blockquote>
+<p>I <a href="https://github.com/winjs/winjs/issues/1532">asked the team</a> if they had plans to work on any integration options, but only asked that last night so don't expect to hear back from over the weekend.</p>
+<p>So I spent a moment and prototyped one possible solution which works for this simple test using the browser's history api since I'm not looking to support browsers older than IE 10.</p>
+<p>Ideally we could leverage WinJS controls without worrying about how to &quot;integrate&quot; the <code>WinJS.Navigation</code> with anything, but sadly some of the WinJS controls take a dependency on <code>WinJS.Navigation</code> (like the BackButton) so finding a way to play nice with this can be challenging.</p>
+<p>If you want to get this prototype running yourself, you can:</p>
+<ol>
+<li>save both files below to a folder</li>
+<li>start up a simple web server. (I like to use <a href="http://npmjs.com/package/nws">nws</a>)</li>
+</ol>
+<p>This prototype is 2 files:</p>
+<ul>
+<li><code>index.html</code> &lt;-- basic JSPM bootstrapping and configuration</li>
+<li><code>app.jsx</code> &lt;-- my whole navigation app in here...</li>
+</ul>
+<h2>index.html</h2>
+<p>Couple mentions on this bootstrapping code:</p>
+<ol>
+<li>I set the background style to black (since in <code>app.jsx</code> I'm using the WinJS dark css) - this avoids a flash from white to black when the page loads</li>
+<li>This is using <a href="https://github.com/systemjs/systemjs">SystemJS</a> which makes it really easy to prototype and bootstrap dependencies like <a href="https://github.com/winjs/winjs">WinJS</a> and <a href="https://facebook.github.io/react/">React</a>. Please don't deploy something like this to production - follow proper <a href="https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md">JSPM production workflow procedures</a>...</li>
+<li>The <code>map</code> section in the <code>System.config</code> defines a pointer to a fork of <code>react-winjs</code> I have that supports <code>React 0.14</code> (so if you find this in the future and need it, try to use the native <code>react-winjs</code> if they've merged in <a href="https://github.com/winjs/react-winjs/pull/33">my pull request</a> instead.)</li>
+</ol>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span>&gt;</span><span class="css"> <span class="hljs-tag">body</span><span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> black</span></span>; }</span> </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+      System.config({
+        transpiler: <span class="hljs-string">'babel'</span>,
+        packages: {
+          <span class="hljs-string">'./'</span>: {
+            defaultExtension: <span class="hljs-literal">false</span>
+          }
+        },
+        map: {
+          <span class="hljs-string">'react'</span>: <span class="hljs-string">'npm:react@0.14'</span>,
+          <span class="hljs-string">'react-winjs'</span>: <span class="hljs-string">'github:staxmanade/react-winjs@2.4.0-react-0.14'</span>,
+        }
+      });
+
+      System.<span class="hljs-keyword">import</span>(<span class="hljs-string">'./app.jsx'</span>);
+
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"main"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>app.jsx</h2>
+<pre><code>import React <span class="hljs-keyword">from</span> 'react';
+import ReactDOM <span class="hljs-keyword">from</span> 'react-dom';
+import W<span class="hljs-keyword">in</span>JS <span class="hljs-keyword">from</span> 'npm:winjs';
+import 'npm:winjs/css/ui-dark.css!';
+import { BackButton } <span class="hljs-keyword">from</span> 'react-winjs';
+
+export <span class="hljs-keyword">default</span> class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.<span class="hljs-keyword">state</span> = {
+            nav: {
+                <span class="hljs-keyword">state</span>: W<span class="hljs-keyword">in</span>JS.Navigation.<span class="hljs-keyword">state</span>,
+                location: W<span class="hljs-keyword">in</span>JS.Navigation.location
+            }
+        }
+    }
+
+    componentWillMount () {
+        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"componentWillMount"</span>);
+        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"beforenavigate"</span>, this.handleBeforeNavigate.bind(this));
+        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"navigating"</span>, this.handleNavigating.bind(this));
+        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"navigated"</span>, this.handleNavigated.bind(this));
+        W<span class="hljs-keyword">in</span>JS.Navigation.navigate(this.<span class="hljs-keyword">state</span>.nav.location, this.<span class="hljs-keyword">state</span>.nav.<span class="hljs-keyword">state</span>);
+    }
+
+    componentWillUnmount () {
+        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"componentWillUnmount"</span>);
+        W<span class="hljs-keyword">in</span>JS.Navigation.removeEventListener(<span class="hljs-string">"navigated"</span>, this.handleNavigated);
+    }
+
+    handleBeforeNavigate(eventObject) {
+        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleBeforeNavigate:"</span>, eventObject);
+    }
+
+    handleNavigating(eventObject) {
+        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleNavigating:"</span>, eventObject);
+        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleNavigating delta:"</span>, eventObject.detail.delta);
+
+        var location = eventObject.detail.location;
+        var <span class="hljs-keyword">state</span> = eventObject.detail.<span class="hljs-keyword">state</span>;
+        var delta = eventObject.detail.delta;
+
+        if(delta <span class="hljs-variable">&lt; 0) {
+            window.history.go(delta);
+        } else {
+            window.history.pushState(state, "", "#" + location);
+        }
+
+        this.setState({
+            nav: {
+                location: location,
+                state: state
+            }
+        });
+
+    }
+
+    handleNavigated(eventObject) {
+        console.log("handleNavigated", eventObject);
+    }
+
+    gotoPage1Nested() {
+        WinJS.Navigation.navigate("/page1/nested");
+    }
+
+    gotoPage1() {
+        WinJS.Navigation.navigate("/page1");
+    }
+
+    render() {
+
+        console.log("render() location:", this.state.nav.location);
+
+        var componentWithBackButton = component =&gt;</span> {
+            return (
+                <span class="hljs-variable">&lt;div&gt;</span>
+                    <span class="hljs-variable">&lt;BackButton /&gt;</span>
+                    <span class="hljs-variable">&lt;div&gt;</span>
+                        {component}
+                    <span class="hljs-variable">&lt;/div&gt;</span>
+                <span class="hljs-variable">&lt;/div&gt;</span>
+            );
+        };
+
+        var page;
+
+        switch(this.<span class="hljs-keyword">state</span>.nav.location) {
+            case <span class="hljs-string">"/page1"</span>:
+                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span><span class="hljs-variable">&lt;br/&gt;</span> <span class="hljs-variable">&lt;button type="button" onClick={this.gotoPage1Nested.bind(this)}&gt;</span>Goto Page <span class="hljs-number">1</span> Nested<span class="hljs-variable">&lt;/button&gt;</span><span class="hljs-variable">&lt;/div&gt;</span>);
+            break;
+
+            case <span class="hljs-string">"/page1/nested"</span>:
+                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span> nested<span class="hljs-variable">&lt;/div&gt;</span>);
+            break;
+
+            case <span class="hljs-string">"/page2"</span>:
+                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span><span class="hljs-variable">&lt;/div&gt;</span>);
+            break;
+
+            <span class="hljs-keyword">default</span>:
+                page = (
+                    <span class="hljs-variable">&lt;div&gt;</span>
+                      <span class="hljs-variable">&lt;button type="button" onClick={this.gotoPage1.bind(this)}&gt;</span>Goto Page <span class="hljs-number">1</span><span class="hljs-variable">&lt;/button&gt;</span>
+                    <span class="hljs-variable">&lt;/div&gt;</span>
+                );
+        }
+
+        return page;
+    }
+}
+
+ReactDOM.render(<span class="hljs-variable">&lt;App /&gt;</span>, document.getElementById('main'));
+
+</code></pre>
+<p>Next I'd like to see if I could leverage something like <a href="https://github.com/flatiron/director">flatiron/director</a> for routing and get it to play nice with <code>WinJS.Navigation</code> and if I do, I'll post it as well...</p>
+<p>Hope this helps.</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">In App Unit test example with JSPM, React, WinJS and Mocha</a></h1>
     <p class="meta">
           <time datetime="2015-10-08T16:42:00.666Z" pubdate data-updated="true">Oct 8th 2015</time>

@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: React - Developing on Staxmanade</title>
+  <title>Integrate WinJS.Navigation with the Browser&#x27;s History - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="">
+   <meta name="description" content="I&#x27;ve been playing with [WinJS](https://github.com/winjs/winjs) a bit lately, specifically the [React-WinJS](https://github.com/winjs/react-winjs) and ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -43,7 +43,7 @@
 
 </head>
 
-<body   >
+<body  class=" ">
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 </hgroup>
@@ -68,8 +68,8 @@
 <div id="main">
     <div id="content">
 
-        <div class="blog-index">
-            <article>
+        <div>
+            <article class="hentry" role="article">
                   <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">Integrate WinJS.Navigation with the Browser&#x27;s History</a></h1>
     <p class="meta">
@@ -252,186 +252,34 @@ ReactDOM.render(<span class="hljs-variable">&lt;App /&gt;</span>, document.getEl
 <p>Hope this helps.</p>
 </div>
 
-            </article>
-            <article>
-                  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">In App Unit test example with JSPM, React, WinJS and Mocha</a></h1>
-    <p class="meta">
-          <time datetime="2015-10-08T16:42:00.666Z" pubdate data-updated="true">Oct 8th 2015</time>
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-10-31T17:30:40.860Z" pubdate data-updated="true">Oct 31st 2015</time>
 
 
-        <a href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/#disqus_thread" data-disqus-identifier="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>A while back I wrote about <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a> and have been having too much fun creating little <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">starter plunks</a> on <a href="http://plnkr.co">Plunker</a>. So...</p>
-<p>As a simple demonstration on in-app unit tests I've thrown together a little plunk that shows <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app tests</a> within the a <a href="https://github.com/winjs/winjs">WinJS</a> <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a>. And add to the layers of abstraction I'm using <a href="https://github.com/winjs/react-winjs">react-winjs</a> which I'm LOVING over normal WinJS development.</p>
-<h1>Link to: <a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM/React/WinJS/Mocha Plunk</a></h1>
-<p>If you like this starter, I have it and a few more linked here: <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">for re-use</a></p>
-<p>I'd like to highlight <a href="http://plnkr.co/edit/feKPEx?p=preview">this particular starter</a> at bit more in this post, not only because there are a few more concepts to this basic plunk, but also because I'm fairly happy with the MochaJS React component that I've now copied around and re-used a few times in some small projects where use <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a>.</p>
-<h1>Plunker file overview</h1>
-<ul>
-<li><code>index.html</code> - The index file is a very basic <a href="http://jspm.io">JSPM</a> bootstrap page that loads the <code>app.jsx</code> react component.</li>
-<li><code>app.jsx</code> - Defines a WinJS Pivot control where we render the in-app <code>MochaTests.jsx</code> React component. This also defines the test file(s) and using MochaJS's global detection we can tell the react <code>MochaTests</code> component what test files to load and run as well as what globals are allowed to exist.</li>
-<li><code>config.js</code> - This is JSPM's config that defines what version of React we're using and to use <code>babel</code> for transpilation.</li>
-<li><code>tests.js</code> - is our Mocha set of unit tests. We can have multiple test files if we want, just have to define what files to load in <code>app.jsx</code>.</li>
-</ul>
-<p>Lastly the <code>MochaTests.jsx</code> which I'll include the full component below:</p>
-<blockquote>
-<p>easier to copy-paste inherit for myself in the future</p>
-</blockquote>
-<pre><code><span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+                        <span class="categories">
+    <a class='category' href='/blog/categories/winjs/'>WinJS</a>
+    <a class='category' href='/blog/categories/react/'>React</a>
+    <a class='category' href='/blog/categories/prototype/'>Prototype</a>
+</span>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MochaTests</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-
-    static get propTypes() {
-        <span class="hljs-keyword">return</span> {
-            testScripts: React.PropTypes.array.isRequired,
-            allowedGlobals: React.PropTypes.array
-        };
-    }
-
-    constructor(props) {
-        <span class="hljs-keyword">super</span>(props);
-    }
-
-    componentDidMount() {
-
-        <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
-        <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
-        
-        <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
-        <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
-        <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
-        <span class="hljs-comment">// test scripts for the first run</span>
-        mocha.suite.on(<span class="hljs-string">'pre-require'</span>, context =&gt; {
-            <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
-
-            exports.afterEach = context.afterEach || context.teardown;
-            exports.after = context.after || context.suiteTeardown;
-            exports.beforeEach = context.beforeEach || context.setup;
-            exports.before = context.before || context.suiteSetup;
-            exports.describe = context.describe || context.suite;
-            exports.it = context.it || context.test;
-            exports.setup = context.setup || context.beforeEach;
-            exports.suiteSetup = context.suiteSetup || context.before;
-            exports.suiteTeardown = context.suiteTeardown || context.after;
-            exports.suite = context.suite || context.describe;
-            exports.teardown = context.teardown || context.afterEach;
-            exports.test = context.test || context.it;
-            exports.run = context.run;
-
-            <span class="hljs-comment">// now use SystemJS to load all test files</span>
-            <span class="hljs-built_in">Promise</span>
-            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
-                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Adding Mocha Test File: "</span>, testScript);
-                <span class="hljs-keyword">return</span> System.import(testScript);
-            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
-                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
-                <span class="hljs-built_in">console</span>.error(err);
-            });
-        
-        });
-        mocha.setup(<span class="hljs-string">'bdd'</span>);
-    }
-
-    runTests() {
-        <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
-
-        <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
-        
-        mocha.checkLeaks();
-        mocha.globals(allowedGlobals);
-        mocha.run();
-
-    }
-
-    render() {
-        <span class="hljs-keyword">return</span> (
-            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{"\
-                  #mocha-stats em { \
-                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> inherit</span></span>; \
-                  }</span> \
-                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ \
-                    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; \
-                  }</span>\
-                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ \
-                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; \
-                  }</span> \
-                "}</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
-
-                <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runTests.bind(this)}</span>&gt;</span>Rerun Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-
-                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        )</span>;
-    }
-}
-</code></pre>
-<p>Usage example of this React <code>MochaTests</code> component.</p>
-<pre><code>// <span class="hljs-type">Define</span> what test files get loaded by the <span class="hljs-type">MochaTests</span> component
-<span class="hljs-keyword">var</span> testScripts = [
-  './tests.js'
-];
-
-
-<span class="hljs-keyword">var</span> allowedTestGlobals = [
-  // <span class="hljs-type">Declare</span> what globals are allowed to be created during <span class="hljs-type">any</span> test runs.
-];
-
-
-// <span class="hljs-type">Usage</span> <span class="hljs-keyword">of</span> <span class="hljs-type">MochaTests</span> <span class="hljs-keyword">in</span> a react render() <span class="hljs-keyword">method</span>.
-&lt;<span class="hljs-type">MochaTests</span> testScripts={testScripts} allowedGlobals={allowedTestGlobals} /&gt;
-
-</code></pre>
-<p>I'm not expecting to see a large up-tick in WinJS apps out there with in-app unit tests that run in the browser, however hopefully the <code>MochaTests.jsx</code> React Component is of value to you and can be utilized outside of WinJS within almost any React app.</p>
-<p>Please drop a line if you end up using it or if it can be adapted. If there's value in the component, maybe</p>
-<h1>Known Issue</h1>
-<p>If the number of tests starts to go beyond the height of the pivot in this sample, it has an issue where the WinJS Pivot cuts off at the bottom not allowing you to scroll and see the rest of the test output. I haven't dug into it yet because I've been clicking the <code>failures: X</code> link and it filters the U.I. to just the erroring tests.</p>
-<p>If you happen to come up with a good solution, drop me a note - I'd love it. Thanks in advance!</p>
-<p>Happy Testing!</p>
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">Tweet</a>
 </div>
 
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/" title="Previous Post: Habit of a Solid Developer - Part 6 - Dig a Little Deeper">&laquo; Habit of a Solid Developer - Part 6 - Dig a Little Deeper</a>
+                    </p>
+                </footer>
             </article>
-            <article>
-                  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
-    <p class="meta">
-          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
-
-
-        <a href="/2015/09/jsmp-systemjs-starter-plunker/#disqus_thread" data-disqus-identifier="/2015/09/jsmp-systemjs-starter-plunker/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
-<p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk. I've created a number of starter plunks below (and continue to add to the list.</p>
-<h1>Full list of JSPM starter plunks</h1>
-<h2><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSPM Starter</a></h2>
-<h2><a href="http://plnkr.co/edit/XWVTSx?p=preview">JSPM, React</a></h2>
-<h2><a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM, MochaJS</a></h2>
-<h2><a href="http://plnkr.co/edit/TFbsNJ?p=preview">JSPM, React, MochaJS</a></h2>
-<h2><a href="http://plnkr.co/edit/QPDetQ?p=preview">JSPM, React, MochaJS, (Sample jsx Component test)</a></h2>
-<h2><a href="http://plnkr.co/edit/XKrZHJ?p=preview">JSPM, React, WinJS</a></h2>
-<h2><a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM, React, WinJS, MochaJS</a></h2>
-<hr>
-<h1>How to use:</h1>
-<ol>
-<li>Click one of the links above</li>
-<li>Review the various files. Open and edit the <code>app.js</code> file</li>
-<li>Start writing code!</li>
-</ol>
-<blockquote>
-<p>Be sure to open your developer tools and monitor any console output for errors...</p>
-</blockquote>
-<p>If you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to the <a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM/MochaJS Plunk</a></p>
-<p>Happy Prototyping!</p>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-
-            </article>
-            <div class="pagination">
-                <a href="/blog/archives">Blog Archives</a>
-            </div>
+            </section>
         </div>
 
 
@@ -444,6 +292,20 @@ ReactDOM.render(<span class="hljs-variable">&lt;App /&gt;</span>, document.getEl
 
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2015/10/integrate-winjs-navigation-with-the-browser-s-history/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 

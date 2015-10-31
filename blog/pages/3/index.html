@@ -71,6 +71,38 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
+
+
+        <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1>Problem: iOS app has unwieldy, unorganized and poorly named images</h1>
+<p>I've been working on a team that took over a good sized legacy iOS project where it's usage of images became a little unwieldy. Between the various app clones (targets), shared images, and images that aren't even used we'd like to reorganize, rename and just clean up the app in general.</p>
+<p>But, one thing that makes me nervous is how easy it is to rename an image, forget or miss a magic-string that tries to load that image and now we've introduced a bug that may be difficult to diagnose or even discover that we introduced it.</p>
+<h1>Let's fail fast?</h1>
+<p>Failing fast in this context means, how can we, during development and testing time quickly fail when running the app to determine where an image attempting to be loaded does not.</p>
+<blockquote>
+<p>Ideally we wouldn't even have these magic-strings to deal with. Using some tool to automatically generate a compile-time safe construct that we can use to load images. However until both A) I find the darn tool that I once-upon stumbled across that does this (please leave a comment to remind me if you find it before I do...) and B) we get sed tool integrated, I threw this little helper to quickly fail fast and help us find broken image references within our iOS applications.</p>
+</blockquote>
+<h1>How does it work?</h1>
+<p>It's a simple little <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html">Category</a> that overrides the <code>imageNamed:</code> selector of <code>UIImage</code> and if the original cannot load an image (returns <code>nil</code>) then it will fail with a helpful assertion message.</p>
+<p>This utility allowed us to quickly find images that were missing while doing our big clean sweep.</p>
+<h1>How to integrate?</h1>
+<p>It should be as simple as adding the <code>.h</code> &amp; <code>.m</code> files to your project and their respective targets and you should be off to the races.</p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.h"></script></p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.m"></script></p>
+<h1>For DEBUG mode only...</h1>
+<p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
+<p>Happy Missing Image Bashing!</p>
+</div>
+
+      <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a></h1>
     <p class="meta">
           <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
@@ -575,53 +607,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </div>
 
       <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
-    <p class="meta">
-          <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
-
-
-        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I'm going to put this here so I can find it later...</p>
-<h1>Create a merge-wrapper script</h1>
-<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
-<blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with <a href="http://Node.JS">Node.JS</a>.</p>
-</blockquote>
-<h3>Customize the <code>merge-wrapper.js</code></h3>
-<ol>
-<li>
-<p>Extend with other diff tool support:</p>
-<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
-</li>
-<li>
-<p>Modify which diff tool is used per extension:</p>
-<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
-</li>
-<li>
-<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
-</li>
-</ol>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.js%22%3Emerge-wrapper.js%3C%2Fa%3E"></script></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.sh%22%3Emerge-wrapper.sh%3C%2Fa%3E"></script></p>
-<h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
-<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
-<pre><code>[merge]
-    tool = merge_wrapper
-[mergetool <span class="hljs-string">"merge_wrapper"</span>]
-    cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
-</code></pre>
-</div>
-
-      <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>

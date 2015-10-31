@@ -71,6 +71,96 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-indexspecification-for/">i4o: IndexSpecification&lt;T&gt; for the IndexableCollection&lt;T&gt;</a></h1>
+    <p class="meta">
+          <time datetime="2008-12-26T05:42:00.000Z" pubdate data-updated="true">Dec 25th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p><span style="font-size:85%;">We've removed the IndexableAttribute from the i4o library and replaced it with the IndexSpecification&lt;T&gt;. Below I'll explain how you can add/remove/change the index for an IndexableCollection&lt;T&gt;.</span></p>  <p><span style="font-size:85%;">Let's show several examples on how to create an IndexableCollection&lt;T&gt;.</span></p>  <p>Given any enumeration of objects you can translate into an IndexableCollection&lt;T&gt;. For the examples below we're going to use an enumeration of the System.IO.FileInfo class. We are going to index the list of FileInfos by file Extension and weather the file IsReadOnly or not.</p>  <h4>Setup the list:</h4>  <pre><span style="color: rgb(0, 128, 0);">// Get our thing to index</span><br /><span style="color: rgb(0, 0, 255);">string</span> dir = @"<span style="color: rgb(139, 0, 0);">C:\Windows\System32\</span>";<br />var fileInfosFromDir = (from f <span style="color: rgb(0, 0, 255);">in</span> System.IO.Directory.GetFiles(dir, "<span style="color: rgb(139, 0, 0);">*.*</span>", SearchOption.AllDirectories)<br />                       select <span style="color: rgb(0, 0, 255);">new</span> FileInfo(f)).ToList();</pre><br /><br /><h4>Can create the IndexSpecification...</h4>...for the FileInfo's "Extension" and "IsReadOnly" properties and turn the list of FileInfos into an IndexableCollection using the IndexSpecification.<br /><br /><pre><span style="color: rgb(0, 128, 0);">// Create the index specification</span><br />var spec = <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(i =&gt; i.Extension)<br />   .Add(i =&gt; i.IsReadOnly);<br /><br /><span style="color: rgb(0, 128, 0);">// Turn the list of files into an Indexed collection of files</span><br />var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection(spec);</pre><h4>Create IndexableCollection&lt;T&gt; without IndexSpecification&lt;T&gt;:</h4><p>You are not required to specify and IndexSpecification&lt;T&gt; when creating the IndexableCollection&lt;T&gt;. You can translate the list into an IndexableCollection&lt;T&gt; and add properties to index after the fact. EX:</p><pre>var indexedFileInfosFromDir = fileInfosFromDir.ToIndexableCollection();<br /><br /><span style="color: rgb(0, 128, 0);">// Specify the properties to index dynamically (more late bound)</span><br />indexedFileInfosFromDir<br />   .CreateIndexFor(i =&gt; i.Extension)<br />   .CreateIndexFor(i =&gt; i.IsReadOnly);</pre><h4>Swap one IndexSpecification&lt;T&gt; for another:</h4><p>If you want to completely swap out the index at run time, you can give the IndexableCollection a new IndexSpecification</p><pre>var list = <span style="color: rgb(0, 0, 255);">new</span> List&lt;FileInfo&gt;();<br />var indexedList = list.ToIndexableCollection();<br /><br />indexedList.UseIndexSpecification(<br />   <span style="color: rgb(0, 0, 255);">new</span> IndexSpecification&lt;FileInfo&gt;()<br />   .Add(o =&gt; o.Directory)<br />   .Add(o =&gt; o.Name));</pre><p>I think that should cover most of the general cases. Hope this helps...</p></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Alex</div>
+<div class='content'>
+Nice Blog, i recently come to your blog through Google excellent knowledge keep on posting you guys.<br /><br />___________________<br /><a href="http://www.ukdissertations.net/sample_dissertations.htm" rel="nofollow">Dissertation Sample</a><br />___________________</div>
+</div>
+<div class='comment'>
+<div class='author'>marry</div>
+<div class='content'>
+Blogs are so informative where we get lots of information on any topic. Nice job keep it up!!<br />_____________________________<br /><br /><a href="http://www.ukdissertation.co.uk/dissertation_topics.htm" rel="nofollow">Dissertation Topics</a></div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+Hi Jason,<br /><br />Thank you for your response.<br />My Xml looks like<br /><br />University1<br />  Course1<br />    Student1<br />    Student2<br />University1<br />  Course2<br />    Student3<br />    Student4<br />University2<br />   Course1<br />     Student5<br />etc...<br /><br />XElement cimXml = XElement.Load(@"C:\Students.xml");<br /><br />So, here I am grouping on Universities.         <br />var universityGroupedElements = from ele in cimXml.Elements() group ele by ele.Name;<br /><br />Now I want to add indexes to University, Course, Student elements to make queries faster.<br /><br />Also, I want to group the courses in each university and also students in each course <br /><br />Please help, in writing some code.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+Hello @Satyanarayana<br /><br />I would be happy to help you, but have a request and a couple questions...<br /><br />1. I've realized my blog comments are starting to become a bit more of the i4o knowledge base than it deserves. Would you please ask your question over on the i4o Discussion board?<br /><br />2. I'd like a little more detail. What does the xml structure look like? What does the linq query look like that returns your "grouped" data? What is it you are trying to index/search?<br /><br />Thanks,<br />Jason</div>
+</div>
+<div class='comment'>
+<div class='author'>Satyanarayana Muddu</div>
+<div class='content'>
+I have a question how to use IndexSpecification for a nested collections in a xml file. For example<br />University<br />   Course<br />      Student<br /><br />I have list of Students from a various Courses and various Universities. I used Linq for Grouping Universities and Courses of Students. Now, I have question how to implement Indexing on Students, Courses and Universities.<br />Please give the implementation details .<br /><br />Thanks <br />Satya</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+At first, I was thinking of modifying i4o but after I have been testing, I have found the power behind i4o with simple changes the way you write query.<BR/><BR/>For example:  <BR/><BR/>Instead of writing this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>Try this..<BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot;);<BR/>var f2 = f.Where(fi.IsReadOnly == true);<BR/><BR/>(fi.Extension should be smaller group than fi.IsReadOnly)<BR/><BR/>From what I have tested,<BR/>It responses within a few milisecond.<BR/>I am happy with this.<BR/><BR/>Thank you for great work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan - I'm glad to see you're running your own benchmarks to test out the library.<BR/><BR/>Please keep in mind that this library is very simple, and is not a complete Linq implementation.<BR/><BR/>It provides some great benefits in the scenarios it was designed for. And I know Aaron has some more improvements on the way.<BR/><BR/>If you create any patches for the project, we are happy to take a look at any improvements you can come up with.<BR/><BR/>Thanks again</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+I have found another limitation of i4o and would like to share.<BR/><BR/>From the 'Demoi4o' project.<BR/><BR/>If I change this below query<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName == studentNameBox.Text<BR/>select student;<BR/><BR/>To<BR/><BR/>var studentsNamedAaronFromConstant =<BR/>from student in _testStudents<BR/>where student.FirstName.Contains(studentNameBox.Text)<BR/>select student;<BR/><BR/><BR/>It takes longest time!!</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Thanks so much for unit test.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+@Paiwan To test your question I wrote a unit test and just checked it in. You can view the test here http://i4o.codeplex.com/SourceControl/changeset/view/31862#398075<BR/><BR/>If this is what you were asking, then no it will not update the index.<BR/><BR/>You need to call the  IndexableCollection&lt;T&gt;.Add/Remove and not it&#39;s base type Collection&lt;T&gt;.Add/Remove for the indexes to be updated.<BR/><BR/>This is however something we&#39;d like to support in the future, which is why I checked in the failing test. We probably need to just implement ICollection&lt;T&gt; etc... and to fully support this.</div>
+</div>
+<div class='comment'>
+<div class='author'>Paiwan</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>I have a question.<BR/>If we have some changes on our base collection like add or delete, do we have to re create index or do some special steps?<BR/><BR/>Thanks,<BR/>Paiwan</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Ok, thanks for the confirmation. I wanted to make sure I wasn't crazy. :-)<BR/><BR/>I was excited when I saw your post and really like the syntax for adding properties to the IndexSpecification. Now, I guess I'll just wait until I can actually use it like that. From Aaron's blog, it sounds like he plans to introduce updates to the Where expression in the next release.<BR/><BR/>Thanks for your work on this library. I'm hoping this will make it possible to replace a subsytem of our app which currently relies on looking up factors in large in-memory sets of data by using XML. It loads large XML documents into memory and builds XPath queries to get to individual factors that it needs. The XPath queries themselves are pretty past, but I'm trying to use Linq-to-XML to project the XML into collections of strongly type objects that I can query with Where lambda's instead. It works well, but when the collections are large enough the queries are too much slower than the XPath version. I'm hoping the IndexableCollection will make it possible.<BR/><BR/>Kevin</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+That's a good point and I think you are correct...<BR/><BR/>I was just illustrating the power of the IndexSpecification. Unfortunately the extension methods used to evaluate the expression need some work.</div>
+</div>
+<div class='comment'>
+<div class='author'>Kevin</div>
+<div class='content'>
+Hi Jason,<BR/><BR/>Thanks for this post. I got to it from the i4o home page on Codeplex. I noticed in the discussions that someone mentioned the fact that if you have multiple expressions in your Where expression, that it won&#39;t use the index.<BR/><BR/>So does that mean, your example showing multiple properties being added to the index doesn&#39;t really help if you wanted to search your collection on both of the properties in the index?<BR/><BR/>For example, would this code use the index?<BR/><BR/>var f = indexedFileInfosFromDir.Where(fi =&gt; fi.Extension == &quot;txt&quot; &amp;&amp; fi.IsReadOnly == true);<BR/><BR/>From my testing, it appears that no benefit is achieved from using an IndexableCollection vs. a regular List in this case. Seems like there&#39;s no point in using the IndexableCollection if you need more than one property in the index. Am I missing something or is that correct?<BR/><BR/>Thanks,<BR/>Kevin</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-update/">i4o: Update (Index for Objects)</a></h1>
     <p class="meta">
           <time datetime="2008-12-20T19:10:00.000Z" pubdate data-updated="true">Dec 20th 2008</time>
@@ -318,36 +408,6 @@ Great stuff!<BR/>See:<BR/> <BR/>http://developer.db4o.com/blogs/community/archiv
 <div class="entry-content">
 <div class='post'>
 <p class="MsoNormal"></p><p class="MsoNormal">Can anyone explain why creating a default constructor (defined in a partial class) of an auto-generated Service References class for an object. Does not get executed when the object is created by a WCF service call?</p><p class="MsoNormal">I'll go through some of the basic steps I did to reproduce this, and I'll attach the project I created to do so. I would love if anyone had some insight into this... <a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a></p><p class="MsoNormal">1.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a web service that returns some complex type. (Class1)</p><p class="MsoNormal">2.<span class="Apple-tab-span" style="white-space:pre"> </span>Create a Silverlight app that can consume the service above. (Use the Add Service Reference so it will auto-generate a service reference file).</p><p class="MsoNormal">3.<span class="Apple-tab-span" style="white-space:pre"> </span>(in Silverlight) Create a partial class to extend the Class1 created by the service reference</p><p class="MsoNormal">4.<span class="Apple-tab-span" style="white-space:pre"> </span>Add a default constructor to this partial class.</p><p class="MsoNormal">5.<span class="Apple-tab-span" style="white-space:pre"> </span>Do something in this constructor to hint that it is called.</p><p class="MsoNormal">6.<span class="Apple-tab-span" style="white-space:pre"> </span>Run it and see that the default constructor is never called when making a WCF Silverlight service call.</p><p class="MsoNormal"><br /></p><p class="MsoNormal">WHY?</p><p class="MsoNormal"><br /></p><p class="MsoNormal">I have a full project put together that you should be able to unzip and run to see this behavior…</p><p class="MsoNormal"><a href="http://www.mediafire.com/?lzoyjmgty1l">SilverlightWcfConstructorTest.zip</a><br /></p><p class="MsoNormal"><br /></p><p class="MsoNormal">Update: I have a thread started at the <a href="http://silverlight.net/forums/p/52758/138056.aspx#138056">silverlight forums</a> on this topic...</p></div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/">unbound TFS project - how do I get the offline changes checked in?</a></h1>
-    <p class="meta">
-          <time datetime="2008-10-01T14:10:00.000Z" pubdate data-updated="true">Oct 1st 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-Our company's code is currently hosted at a third party development shop and once in a while my solution gets marked as "offline". When I right click on the root of the solution node I get an option to "Go Online". If I'm in this state and I go online, it connects to TFS and scans through the entire solution looking for modified files.<br /><br />So yesterday their internet was down ALL DAY (what a pain, I never realized how dependent I was on source control). So I was trying to edit a file and V.S. kept trying to check it out from TFS before making the edit, which would fail, and leave the file in a read only state. This sucked because I wasn't able make changes to any file.<br /><br />I did the first thing I knew of on how to get my files in a state that I could work with for the day. I went to File -> Source Control -> Change Source Control and proceeded to "Unbind" each project from tfs. This allowed me to work for the day, make changes, etc without being road blocked by TFS.<br /><br />Then this morning I came to work and the companies internet was working, and I was able to get to TFS successfully. I re-opened the solution, and unfortuantely in my "Pending Changes" tab there was only a couple files checked out. This was not good because I knew I made many more changes than it thought I had.<br /><br />This is where the first paragraph above comes into play... I wanted visual studio to figure out all the things I did yesterday because I knew I wasn't going to remember all the files I touched. So I googled about VS's offline/online modes and ran across this blog.<br /><br /><a href="http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx">http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx</a><br /><br />After reading some of the details about how VS works with TFS I decided to try and get my solution "offline" so I could bring it back online and allow it to figure out my changed files...<br /><br />To accomplish this I opened up regedit. Followed Ben's pointer to<br /><br />HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\9.0\TeamFoundation\Servers\<myexternalcompaniestfs>\<br /><br />In there I set<br />AutoReconnect=0<br />Offline=1<br /><br /><br />When I re-opened my solution. It opened in offline mode. I was then able to bring the solution online and as expected, it noticed all the changes I made yesterday. (THANK YOU TFS, would have been nice to do this w/out hacking the registry though).<br /><br /><br /></myexternalcompaniestfs></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Staxmanade</div>
-<div class='content'>
-If I click on my solution in the "Solution Explorer" the only buttons if have are...  "Properties", "Add New Solution Folder", and "Refresh Status" (this is a VisualSVN button)...<BR/><BR/>is there some sort of option I need to enable to see this command?</div>
-</div>
-<div class='comment'>
-<div class='author'>justncase</div>
-<div class='content'>
-There is a button on the top of the solution explorer for going offline/online. It's awfully convenient.</div>
-</div>
-</div>
 </div>
 
       

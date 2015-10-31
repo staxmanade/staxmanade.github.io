@@ -71,6 +71,36 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/10/unbound-tfs-project-how-do-i-get/">unbound TFS project - how do I get the offline changes checked in?</a></h1>
+    <p class="meta">
+          <time datetime="2008-10-01T14:10:00.000Z" pubdate data-updated="true">Oct 1st 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+Our company's code is currently hosted at a third party development shop and once in a while my solution gets marked as "offline". When I right click on the root of the solution node I get an option to "Go Online". If I'm in this state and I go online, it connects to TFS and scans through the entire solution looking for modified files.<br /><br />So yesterday their internet was down ALL DAY (what a pain, I never realized how dependent I was on source control). So I was trying to edit a file and V.S. kept trying to check it out from TFS before making the edit, which would fail, and leave the file in a read only state. This sucked because I wasn't able make changes to any file.<br /><br />I did the first thing I knew of on how to get my files in a state that I could work with for the day. I went to File -> Source Control -> Change Source Control and proceeded to "Unbind" each project from tfs. This allowed me to work for the day, make changes, etc without being road blocked by TFS.<br /><br />Then this morning I came to work and the companies internet was working, and I was able to get to TFS successfully. I re-opened the solution, and unfortuantely in my "Pending Changes" tab there was only a couple files checked out. This was not good because I knew I made many more changes than it thought I had.<br /><br />This is where the first paragraph above comes into play... I wanted visual studio to figure out all the things I did yesterday because I knew I wasn't going to remember all the files I touched. So I googled about VS's offline/online modes and ran across this blog.<br /><br /><a href="http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx">http://blogs.msdn.com/benryan/archive/2007/12/12/when-and-how-does-my-solution-go-offline.aspx</a><br /><br />After reading some of the details about how VS works with TFS I decided to try and get my solution "offline" so I could bring it back online and allow it to figure out my changed files...<br /><br />To accomplish this I opened up regedit. Followed Ben's pointer to<br /><br />HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\9.0\TeamFoundation\Servers\<myexternalcompaniestfs>\<br /><br />In there I set<br />AutoReconnect=0<br />Offline=1<br /><br /><br />When I re-opened my solution. It opened in offline mode. I was then able to bring the solution online and as expected, it noticed all the changes I made yesterday. (THANK YOU TFS, would have been nice to do this w/out hacking the registry though).<br /><br /><br /></myexternalcompaniestfs></div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Staxmanade</div>
+<div class='content'>
+If I click on my solution in the "Solution Explorer" the only buttons if have are...  "Properties", "Add New Solution Folder", and "Refresh Status" (this is a VisualSVN button)...<BR/><BR/>is there some sort of option I need to enable to see this command?</div>
+</div>
+<div class='comment'>
+<div class='author'>justncase</div>
+<div class='content'>
+There is a button on the top of the solution explorer for going offline/online. It's awfully convenient.</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/09/how-can-c-variable-have-sign-in-front/">How can C# variable have an @ sign in front of it?</a></h1>
     <p class="meta">
           <time datetime="2008-09-14T04:26:00.000Z" pubdate data-updated="true">Sep 13th 2008</time>
