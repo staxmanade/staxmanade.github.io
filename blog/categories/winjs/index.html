@@ -132,122 +132,173 @@
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
 </code></pre>
 <h2>app.jsx</h2>
-<pre><code>import React <span class="hljs-keyword">from</span> 'react';
-import ReactDOM <span class="hljs-keyword">from</span> 'react-dom';
-import W<span class="hljs-keyword">in</span>JS <span class="hljs-keyword">from</span> 'npm:winjs';
-import 'npm:winjs/css/ui-dark.css!';
-import { BackButton } <span class="hljs-keyword">from</span> 'react-winjs';
+<pre><code><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> WinJS <span class="hljs-keyword">from</span> <span class="hljs-string">'npm:winjs'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'npm:winjs/css/ui-dark.css!'</span>;
+<span class="hljs-keyword">import</span> { BackButton } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-winjs'</span>;
 
-export <span class="hljs-keyword">default</span> class App extends React.Component {
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WinJSBrowserHistory</span> </span>{
+    isNavigationBeingHandled;
+    isWinJSNavigationBackBeingHandled;
+    isNavigationTriggeredByPopStateEvent;
+
+    constructor(onApplyNavigaitonChange) {
+
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> onApplyNavigaitonChange !== <span class="hljs-string">"function"</span>) {
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Expecting first argumet to be a function that can take 2 parametes (location, state) =&gt; {}"</span>);
+        }
+
+        <span class="hljs-keyword">this</span>.onApplyNavigaitonChange = onApplyNavigaitonChange;
+
+        WinJS.Navigation.addEventListener(<span class="hljs-string">"beforenavigate"</span>, <span class="hljs-keyword">this</span>.handleBeforeNavigate.bind(<span class="hljs-keyword">this</span>));
+        WinJS.Navigation.addEventListener(<span class="hljs-string">"navigating"</span>, <span class="hljs-keyword">this</span>.handleNavigating.bind(<span class="hljs-keyword">this</span>));
+        WinJS.Navigation.addEventListener(<span class="hljs-string">"navigated"</span>, <span class="hljs-keyword">this</span>.handleNavigated.bind(<span class="hljs-keyword">this</span>));
+
+        <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'popstate'</span>, (eventObject) =&gt; {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'popstate'</span>, <span class="hljs-keyword">this</span>.isNavigationBeingHandled, eventObject);
+
+            <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.isNavigationBeingHandled &amp;&amp; !<span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled) {
+              <span class="hljs-keyword">this</span>.handlePopState(eventObject);
+            }
+            <span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled = <span class="hljs-literal">false</span>;
+        })
+    }
+
+    cleanup() {
+      WinJS.Navigation.removeEventListener(<span class="hljs-string">"navigated"</span>, <span class="hljs-keyword">this</span>.handleNavigated);
+    }
+
+
+    handlePopState(eventObject) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handlePopState"</span>, eventObject, location.hash);
+
+      <span class="hljs-keyword">this</span>.isNavigationTriggeredByPopStateEvent = <span class="hljs-literal">true</span>;
+
+      WinJS.Navigation.navigate(location.hash, location.state);
+    }
+
+    handleBeforeNavigate(eventObject) {
+        <span class="hljs-keyword">this</span>.isNavigationBeingHandled = <span class="hljs-literal">true</span>;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleBeforeNavigate:"</span>, eventObject);
+    }
+
+    handleNavigating(eventObject) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigating:"</span>, eventObject);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigating delta:"</span>, eventObject.detail.delta);
+
+        <span class="hljs-keyword">var</span> location = eventObject.detail.location;
+        <span class="hljs-keyword">var</span> state = eventObject.detail.state;
+        <span class="hljs-keyword">var</span> delta = eventObject.detail.delta;
+
+        <span class="hljs-keyword">this</span>.onApplyNavigaitonChange(location, state);
+
+        <span class="hljs-keyword">if</span>(delta &lt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled = <span class="hljs-literal">true</span>;
+            <span class="hljs-built_in">window</span>.history.go(delta);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">//router.setRoute(location);</span>
+            <span class="hljs-built_in">window</span>.history.pushState(state, <span class="hljs-string">""</span>, <span class="hljs-string">"#"</span> + location);
+        }
+    }
+
+    handleNavigated(eventObject) {
+        <span class="hljs-keyword">this</span>.isNavigationBeingHandled = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">this</span>.isNavigationTriggeredByPopStateEvent = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigated"</span>, eventObject);
+    }
+
+}
+
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
 
     constructor(props) {
-        super(props);
+        <span class="hljs-keyword">super</span>(props);
 
-        this.<span class="hljs-keyword">state</span> = {
+        <span class="hljs-keyword">this</span>.winJSBrowserHistory = <span class="hljs-keyword">new</span> WinJSBrowserHistory(<span class="hljs-keyword">this</span>.onApplyNavigaitonChange.bind(<span class="hljs-keyword">this</span>));
+
+        <span class="hljs-keyword">this</span>.state = {
             nav: {
-                <span class="hljs-keyword">state</span>: W<span class="hljs-keyword">in</span>JS.Navigation.<span class="hljs-keyword">state</span>,
-                location: W<span class="hljs-keyword">in</span>JS.Navigation.location
+                state: WinJS.Navigation.state,
+                location: WinJS.Navigation.location
             }
         }
     }
 
     componentWillMount () {
-        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"componentWillMount"</span>);
-        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"beforenavigate"</span>, this.handleBeforeNavigate.bind(this));
-        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"navigating"</span>, this.handleNavigating.bind(this));
-        W<span class="hljs-keyword">in</span>JS.Navigation.addEventListener(<span class="hljs-string">"navigated"</span>, this.handleNavigated.bind(this));
-        W<span class="hljs-keyword">in</span>JS.Navigation.navigate(this.<span class="hljs-keyword">state</span>.nav.location, this.<span class="hljs-keyword">state</span>.nav.<span class="hljs-keyword">state</span>);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"componentWillMount"</span>);
+        WinJS.Navigation.navigate(<span class="hljs-keyword">this</span>.state.nav.location, <span class="hljs-keyword">this</span>.state.nav.state);
     }
 
     componentWillUnmount () {
-        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"componentWillUnmount"</span>);
-        W<span class="hljs-keyword">in</span>JS.Navigation.removeEventListener(<span class="hljs-string">"navigated"</span>, this.handleNavigated);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"componentWillUnmount"</span>);
     }
 
-    handleBeforeNavigate(eventObject) {
-        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleBeforeNavigate:"</span>, eventObject);
-    }
-
-    handleNavigating(eventObject) {
-        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleNavigating:"</span>, eventObject);
-        console.<span class="hljs-keyword">log</span>(<span class="hljs-string">"handleNavigating delta:"</span>, eventObject.detail.delta);
-
-        var location = eventObject.detail.location;
-        var <span class="hljs-keyword">state</span> = eventObject.detail.<span class="hljs-keyword">state</span>;
-        var delta = eventObject.detail.delta;
-
-        if(delta <span class="hljs-variable">&lt; 0) {
-            window.history.go(delta);
-        } else {
-            window.history.pushState(state, "", "#" + location);
-        }
-
-        this.setState({
+    onApplyNavigaitonChange(location, state) {
+        <span class="hljs-keyword">this</span>.setState({
             nav: {
                 location: location,
                 state: state
             }
         });
-
-    }
-
-    handleNavigated(eventObject) {
-        console.log("handleNavigated", eventObject);
     }
 
     gotoPage1Nested() {
-        WinJS.Navigation.navigate("/page1/nested");
+        WinJS.Navigation.navigate(<span class="hljs-string">"/page1/nested"</span>);
     }
 
     gotoPage1() {
-        WinJS.Navigation.navigate("/page1");
+        WinJS.Navigation.navigate(<span class="hljs-string">"/page1"</span>);
     }
 
     render() {
 
-        console.log("render() location:", this.state.nav.location);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"render() location:"</span>, <span class="hljs-keyword">this</span>.state.nav.location);
 
-        var componentWithBackButton = component =&gt;</span> {
-            return (
-                <span class="hljs-variable">&lt;div&gt;</span>
-                    <span class="hljs-variable">&lt;BackButton /&gt;</span>
-                    <span class="hljs-variable">&lt;div&gt;</span>
+        <span class="hljs-keyword">var</span> componentWithBackButton = component =&gt; {
+            <span class="hljs-keyword">return</span> (
+                <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">BackButton</span> /&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
                         {component}
-                    <span class="hljs-variable">&lt;/div&gt;</span>
-                <span class="hljs-variable">&lt;/div&gt;</span>
-            );
+                    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+            )</span>;
         };
 
-        var page;
+        <span class="hljs-keyword">var</span> page;
 
-        switch(this.<span class="hljs-keyword">state</span>.nav.location) {
-            case <span class="hljs-string">"/page1"</span>:
-                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span><span class="hljs-variable">&lt;br/&gt;</span> <span class="hljs-variable">&lt;button type="button" onClick={this.gotoPage1Nested.bind(this)}&gt;</span>Goto Page <span class="hljs-number">1</span> Nested<span class="hljs-variable">&lt;/button&gt;</span><span class="hljs-variable">&lt;/div&gt;</span>);
-            break;
+        <span class="hljs-keyword">switch</span>(<span class="hljs-keyword">this</span>.state.nav.location) {
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page1"</span>:
+                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1<span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.gotoPage1Nested.bind(this)}</span>&gt;</span>Goto Page 1 Nested<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
+            <span class="hljs-keyword">break</span>;
 
-            case <span class="hljs-string">"/page1/nested"</span>:
-                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span> nested<span class="hljs-variable">&lt;/div&gt;</span>);
-            break;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page1/nested"</span>:
+                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1 nested<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
+            <span class="hljs-keyword">break</span>;
 
-            case <span class="hljs-string">"/page2"</span>:
-                page = componentWithBackButton(<span class="hljs-variable">&lt;div&gt;</span>page <span class="hljs-number">1</span><span class="hljs-variable">&lt;/div&gt;</span>);
-            break;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page2"</span>:
+                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
+            <span class="hljs-keyword">break</span>;
 
             <span class="hljs-keyword">default</span>:
                 page = (
-                    <span class="hljs-variable">&lt;div&gt;</span>
-                      <span class="hljs-variable">&lt;button type="button" onClick={this.gotoPage1.bind(this)}&gt;</span>Goto Page <span class="hljs-number">1</span><span class="hljs-variable">&lt;/button&gt;</span>
-                    <span class="hljs-variable">&lt;/div&gt;</span>
-                );
+                    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+                      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.gotoPage1.bind(this)}</span>&gt;</span>Goto Page 1<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                )</span>;
         }
 
-        return page;
+        <span class="hljs-keyword">return</span> page;
     }
 }
 
-ReactDOM.render(<span class="hljs-variable">&lt;App /&gt;</span>, document.getElementById('main'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">App</span> /&gt;</span>, document.getElementById('main'));
 
-</code></pre>
+</span></code></pre>
 <p>Next I'd like to see if I could leverage something like <a href="https://github.com/flatiron/director">flatiron/director</a> for routing and get it to play nice with <code>WinJS.Navigation</code> and if I do, I'll post it as well...</p>
 <p>Hope this helps.</p>
 </div>
