@@ -84,6 +84,7 @@
 <p>My uneducated guess is that the WinJS team decided not to worry about how <code>WinJS.Navigation</code> would integrate with a normal browser's history as there doesn't appear to be native integration or documentation about how to do it so far.</p>
 </blockquote>
 <p>I <a href="https://github.com/winjs/winjs/issues/1532">asked the team</a> if they had plans to work on any integration options, but only asked that last night so don't expect to hear back from over the weekend.</p>
+<h3>UPDATE: I got tired of updating this blog post with my bug fixes/iterations of the idea - so I've moved it over to GitHub: <a href="https://github.com/staxmanade/WinJSBrowserHistory">github.com/staxmanade/WinJSBrowserHistory</a>.</h3>
 <p>So I spent a moment and prototyped one possible solution which works for this simple test using the browser's history api since I'm not looking to support browsers older than IE 10.</p>
 <p>Ideally we could leverage WinJS controls without worrying about how to &quot;integrate&quot; the <code>WinJS.Navigation</code> with anything, but sadly some of the WinJS controls take a dependency on <code>WinJS.Navigation</code> (like the BackButton) so finding a way to play nice with this can be challenging.</p>
 <p>If you want to get this prototype running yourself, you can:</p>
