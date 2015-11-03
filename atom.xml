@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2015-10-31T17:30:40Z</updated>
+    <updated>2015-11-03T06:25:46Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,119 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2015 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to Base64 and save a binary audio file to local storage and play it back in the browser]]></title>
+        <id>http://staxmanade.com/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/</id>
+        <link href="http://staxmanade.com/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">
+        </link>
+        <updated>2015-11-03T06:25:46Z</updated>
+        <summary type="html"><![CDATA[I wanted to see if it was possible to save a small audio file into localStorage, read it back out and play the file. In this post I'll show you short ...]]></summary>
+        <content type="html"><![CDATA[<p>I wanted to see if it was possible to save a small audio file into localStorage, read it back out and play the file. In this post I'll show you short example on how to download an audio file, save it to localStorage, read it back and set it up for playback.</p>
+<h3>Disclaimers</h3>
+<p><img class="right" src="/images/worksOnMyMachine.png" alt="works on my machine"></p>
+<ul>
+<li>This was tested in IE 10 (Win 8), Chrome 46 (Mac), and Firefox 41 (Mac); however, some of the api's and techniques used in this demo are not supported in all browsers, such as the <a href="http://caniuse.com/#feat=filereader">FileReader</a>, <a href="http://caniuse.com/#feat=blobbuilder">Blob</a>, <a href="http://caniuse.com/#feat=promises">Promise</a>, and <a href="http://caniuse.com/#feat=fetch">fetch</a> api's. The Promise and fetch api's can be polyfilled. There may be polyfills for the other api's, but I haven't researched those.</li>
+<li>This post isn't going to go into much of the &quot;should I do this&quot;, as I'm sure you can come up with many reasons why you shouldn't. But I couldn't find any examples that demonstrated these steps in one place. So I prototyped the idea and am putting it here in case I do want to use this in the future sometime (or maybe you do too).</li>
+<li>My tests in Chrome didn't go great if I tried to re-run the experiment multiple times. Sometimes it would work, other times it seemed to get into a bad state and always raised a MediaError event. Refreshing the page would get it working again.</li>
+</ul>
+<h1>First we need an audio file</h1>
+<p>I don't want to point to any specific audio example since I'd feel bad if some poor soul's hosted mp3 file gets hammered (not likely) because of this example. But you just need a link to a simple, short <code>mp3</code> (or whatever audio type you're trying to test). If you look at the sample below replace <code>&lt;&lt;SampleAudioUrlHere&gt;&gt;</code> with the link to your test audio file.</p>
+<h1>Won't fit in localStorage?</h1>
+<p>If you're trying to save an audio file that's too large as a <code>Base64</code> encoded audio file will be larger than it's original size and we don't get very much space in <code>localStorage</code> then, ya you're using a file that's too large... Get something smaller or don't to this. Just sayin :P</p>
+<h1>How does it work?</h1>
+<ol>
+<li>Use <a href="https://fetch.spec.whatwg.org/">fetch</a> api we can easily get at the <code>blob()</code></li>
+<li>Run the <code>Blob</code> through the <code>FileReader</code></li>
+<li>Which also handily turned it into a data url for us</li>
+<li>The data url is just a base64 encoded string which is easy to save to localStorage</li>
+<li>read back it back out</li>
+<li>set the audio's <code>src</code> to the data audio string</li>
+<li>Profit!</li>
+</ol>
+<p>While I was prototyping this I was borrowing someone else short <code>mp3</code> file and to work around CORS (cross origin http request) I used the handy <code>https://crossorigin.me/&lt;&lt;SampleAudioUrlHere&gt;&gt;</code> service. This may be ok to do for a prototype, but you should't typically run your requests through this service. It's insecure and against pretty much all the different web religions.</p>
+<h1>Show me the code</h1>
+<p>This was just a quick <code>get-er-done</code> example. Lots of not-great-practices, but it demonstrates the possibility. Enjoy!</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    
+      <span class="hljs-comment">// Code goes here</span>
+      <span class="hljs-keyword">var</span> audioFileUrl = <span class="hljs-string">'&lt;&lt;SampleAudioUrlHere&gt;&gt;'</span>;
+      
+      <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        
+        <span class="hljs-keyword">var</span> downloadButton = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'download'</span>);
+        <span class="hljs-keyword">var</span> audioControl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'audio'</span>);
+      
+        audioControl.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+          <span class="hljs-built_in">console</span>.log(audioControl.error);
+        };
+      
+        downloadButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          
+          audioControl.src = <span class="hljs-literal">null</span>;
+          
+          fetch(audioFileUrl)
+            .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
+              res.blob().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">blob</span>) </span>{
+                <span class="hljs-keyword">var</span> size = blob.size;
+                <span class="hljs-keyword">var</span> type = blob.type;
+      
+                <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> FileReader();
+                reader.addEventListener(<span class="hljs-string">"loadend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      
+                  <span class="hljs-comment">// console.log('reader.result:', reader.result);</span>
+                  
+                  <span class="hljs-comment">// 1: play the base64 encoded data directly works</span>
+                  <span class="hljs-comment">// audioControl.src = reader.result;</span>
+      
+                  <span class="hljs-comment">// 2: Serialize the data to localStorage and read it back then play...</span>
+                  <span class="hljs-keyword">var</span> base64FileData = reader.result.toString();
+
+                  <span class="hljs-keyword">var</span> mediaFile = {
+                    fileUrl: audioFileUrl,
+                    size: blob.size,
+                    type: blob.type,
+                    src: base64FileData
+                  };
+                  
+                  <span class="hljs-comment">// save the file info to localStorage</span>
+                  localStorage.setItem(<span class="hljs-string">'myTest'</span>, <span class="hljs-built_in">JSON</span>.stringify(mediaFile));
+                  
+                  <span class="hljs-comment">// read out the file info from localStorage again</span>
+                  <span class="hljs-keyword">var</span> reReadItem = <span class="hljs-built_in">JSON</span>.parse(localStorage.getItem(<span class="hljs-string">'myTest'</span>));
+      
+                  audioControl.src = reReadItem.src;
+      
+                });
+      
+                reader.readAsDataURL(blob);
+      
+              });
+            });
+          
+        });
+        
+      };
+    
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"download"</span>&gt;</span>Run Example<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">controls</span>=<span class="hljs-value">"true"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+
+</code></pre>
+<p>I hope you found this quick tutorial useful. Would love to hear any feedback or thoughts on the approach.</p>
+<p>As earways, Happy Listening!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Integrate WinJS.Navigation with the Browser's History]]></title>
         <id>http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/</id>
@@ -1742,84 +1855,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
 </code></pre>
 <p>Whats cool about this pattern is I can replace <code>gulp</code> with any other build tool on other projects like <code>rake</code>, <code>grunt</code>, <code>make</code>, etc...</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Mac Equivalent of the Windows Registry - ish]]></title>
-        <id>http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/</id>
-        <link href="http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/">
-        </link>
-        <updated>2015-02-23T07:02:12Z</updated>
-        <summary type="html"><![CDATA[If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the [Wi...]]></summary>
-        <content type="html"><![CDATA[<p>If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> .</p>
-<p>However, if you've always been more of a Mac user, don't run away just yet as you may learn something.</p>
-<p>In case you don't know what the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> is, here is a short definition from our good ol' friend <a href="http://en.wikipedia.org/wiki/Windows_Registry">Wikipedia</a>.</p>
-<blockquote>
-<p>Windows Registry is a hierarchical database that stores configuration settings and options on Microsoft Windows operating systems. It contains settings for low-level operating system components and for applications running on the platform that have opted to use the Registry.</p>
-</blockquote>
-<p>You have probably already figured that since it's called the <code>Windows Registry</code> that there is likely not a <code>Mac Registry</code> that looks/operates the same way.</p>
-<p>You are correct; however, where do all of the system and applications settings get stored if there is no registry?</p>
-<p>If the Windows Registry is a place where system and application settings are stored, then the Mac equivalent of the Windows Registry would be a series of <code>.plist</code> files in several preferences folder on the Mac.</p>
-<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And BOOM just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
-<h1>What are <code>.plist</code> files?</h1>
-<p>A <code>.plist</code> file is a configuration file that contains a list of properties in either plain text or binary format. I'll go into more later about how to read and update values in these files later in the post.</p>
-<p>For more info on plist files, <a href="http://en.wikipedia.org/wiki/Property_list">check out the Wikipedia page...</a></p>
-<h1>Where can I find plist files?</h1>
-<p>I know of at least 2 locations that host the common system and application <code>.plist</code> files.</p>
-<p>The first one is user specific and is in the following location:</p>
-<pre><code>~/Library/Preferences/
-</code></pre>
-<p>In my case (since my user name is <code>jason</code>)</p>
-<pre><code>/Users/jason/Library/Preferences/
-</code></pre>
-<p>The second location one is at the root of the system:</p>
-<pre><code>/Library/Preferences/
-</code></pre>
-<p>If you look into these folders you'll see a large number of plist files that follow reverse domain name convention (like <code>com.apple.sample</code>).</p>
-<p>Here are some (not all) examples of system configuration plist files:</p>
-<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.ActivityMonitor</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.AddressBook</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.finder</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.preference</span><span class="hljs-class">.general</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.TextEdit</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.Safari</span><span class="hljs-class">.plist</span>
-</code></pre>
-<p>In the same folder as the sample configuration files listed above are where you can find <code>plist</code> files that are associated to applications installed on the system.</p>
-<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.dt</span><span class="hljs-class">.Xcode</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.google</span><span class="hljs-class">.Chrome</span><span class="hljs-class">.plist</span>
-org<span class="hljs-class">.herf</span><span class="hljs-class">.Flux</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><span class="hljs-class">.plist</span>
-</code></pre>
-<p>Now that we can find system and application configuration <code>plist</code> files, if you try to open them in a text editor you may notice that many of them are in a binary format which would be challenging to read and understand, let alone edit.</p>
-<h1>How do I read these files?</h1>
-<p>The Mac comes with a command line utility called <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> for reading and writing to these <code>.plist</code> files.</p>
-<p>If you take an example from the above list of plist files, you can, at the command prompt type the following:</p>
-<p><code>defaults read com.apple.fin&lt;tab&gt;</code> (where <code>&lt;tab&gt;</code> is the tab key that allows tab completion of the rest of the property list format) and be sure to exclude the <code>.plist</code> of the end so:</p>
-<pre><code>defaults read com.apple.finder
-</code></pre>
-<p>will print out all of the properties to the console so you can inspect what's there.</p>
-<p>You can pipe this output to <a href="http://en.wikipedia.org/wiki/Grep">grep</a> and filter for a setting name when doing searches. Once you've found a property name you want to look at you can pass it into the <code>defaults read</code> command to get the value of that specific property.</p>
-<h4>Example reading a single property:</h4>
-<pre><code>defaults read com.apple.finder AppleShowAllExtensions
-</code></pre>
-<h1>How to change property list settings?</h1>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>Just like modifying the Windows Registry can mess up your system, you need to take care modifying system or application <code>plist</code> settings.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
-<p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
-<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
-<h3>So if my understanding above is somewhat correct, how did I update the source?</h3>
-<p>Similar to reading property list values you can use the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> command line tool to <code>write</code> changes back to the <code>.plist</code> files.</p>
-<p>As an example, here's how I update <a href="http://support.apple.com/en-us/HT201732">Finder</a> to show file extensions.</p>
-<pre><code>defaults write com.apple.finder AppleShowAllExtensions -boolean true
-</code></pre>
-<p>The configuration options are now endless.</p>
-<h1>In summary:</h1>
-<p>Using my new knowledge that app and system settings can be found in both <code>/Library/Preferences</code> and <code>~/Library/Preferences</code> and I can use the command line tool <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> to read/write to understand and update settings.</p>
-<p>I can now create a simple <code>.sh</code> script that allows me to pre-configure a new development machine with all of the settings I would like.</p>
-<p>Now, each time I catch myself trying to use an application's preferences U.I. I stop myself and try to find that setting in a plist file and create a CLI command that I can save into my development setup script.</p>
-<p>Happy Mac Settings Hacking!</p>
 ]]></content>
     </entry>
 </feed>

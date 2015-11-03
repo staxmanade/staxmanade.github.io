@@ -71,6 +71,42 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
+
+
+        <a href="/2015/09/jsmp-systemjs-starter-plunker/#disqus_thread" data-disqus-identifier="/2015/09/jsmp-systemjs-starter-plunker/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
+<p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk. I've created a number of starter plunks below (and continue to add to the list.</p>
+<h1>Full list of JSPM starter plunks</h1>
+<h2><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSPM Starter</a></h2>
+<h2><a href="http://plnkr.co/edit/XWVTSx?p=preview">JSPM, React</a></h2>
+<h2><a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM, MochaJS</a></h2>
+<h2><a href="http://plnkr.co/edit/TFbsNJ?p=preview">JSPM, React, MochaJS</a></h2>
+<h2><a href="http://plnkr.co/edit/QPDetQ?p=preview">JSPM, React, MochaJS, (Sample jsx Component test)</a></h2>
+<h2><a href="http://plnkr.co/edit/XKrZHJ?p=preview">JSPM, React, WinJS</a></h2>
+<h2><a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM, React, WinJS, MochaJS</a></h2>
+<hr>
+<h1>How to use:</h1>
+<ol>
+<li>Click one of the links above</li>
+<li>Review the various files. Open and edit the <code>app.js</code> file</li>
+<li>Start writing code!</li>
+</ol>
+<blockquote>
+<p>Be sure to open your developer tools and monitor any console output for errors...</p>
+</blockquote>
+<p>If you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to the <a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM/MochaJS Plunk</a></p>
+<p>Happy Prototyping!</p>
+</div>
+
+      <a href="/2015/09/jsmp-systemjs-starter-plunker/#disqus_thread" data-disqus-identifier="/2015/09/jsmp-systemjs-starter-plunker/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">Browser only MochaJS tests using SystemJS</a></h1>
     <p class="meta">
           <time datetime="2015-09-04T22:41:38.170Z" pubdate data-updated="true">Sep 4th 2015</time>
@@ -1002,89 +1038,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 </div>
 
       <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/mac-equivalent-of-the-windows-registry---ish/">Mac Equivalent of the Windows Registry - ish</a></h1>
-    <p class="meta">
-          <time datetime="2015-02-23T07:02:12.268Z" pubdate data-updated="true">Feb 22nd 2015</time>
-
-
-        <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/#disqus_thread" data-disqus-identifier="/2015/02/mac-equivalent-of-the-windows-registry---ish/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>If you're a long time Windows power user and are recently switching over to the Mac, you may have wondered if there was something analogous to the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> .</p>
-<p>However, if you've always been more of a Mac user, don't run away just yet as you may learn something.</p>
-<p>In case you don't know what the <a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a> is, here is a short definition from our good ol' friend <a href="http://en.wikipedia.org/wiki/Windows_Registry">Wikipedia</a>.</p>
-<blockquote>
-<p>Windows Registry is a hierarchical database that stores configuration settings and options on Microsoft Windows operating systems. It contains settings for low-level operating system components and for applications running on the platform that have opted to use the Registry.</p>
-</blockquote>
-<p>You have probably already figured that since it's called the <code>Windows Registry</code> that there is likely not a <code>Mac Registry</code> that looks/operates the same way.</p>
-<p>You are correct; however, where do all of the system and applications settings get stored if there is no registry?</p>
-<p>If the Windows Registry is a place where system and application settings are stored, then the Mac equivalent of the Windows Registry would be a series of <code>.plist</code> files in several preferences folder on the Mac.</p>
-<p>While researching how to automate bootstrapping my Mac development computer, I stumbled upon large number of <code>.plist</code> files in several folders that correlate to the installed applications and system settings. And BOOM just like that I discovered the holy grail of my Mac's system and application settings - kind of like the first time lift up the curtain and discover the Windows Registry.</p>
-<h1>What are <code>.plist</code> files?</h1>
-<p>A <code>.plist</code> file is a configuration file that contains a list of properties in either plain text or binary format. I'll go into more later about how to read and update values in these files later in the post.</p>
-<p>For more info on plist files, <a href="http://en.wikipedia.org/wiki/Property_list">check out the Wikipedia page...</a></p>
-<h1>Where can I find plist files?</h1>
-<p>I know of at least 2 locations that host the common system and application <code>.plist</code> files.</p>
-<p>The first one is user specific and is in the following location:</p>
-<pre><code>~/Library/Preferences/
-</code></pre>
-<p>In my case (since my user name is <code>jason</code>)</p>
-<pre><code>/Users/jason/Library/Preferences/
-</code></pre>
-<p>The second location one is at the root of the system:</p>
-<pre><code>/Library/Preferences/
-</code></pre>
-<p>If you look into these folders you'll see a large number of plist files that follow reverse domain name convention (like <code>com.apple.sample</code>).</p>
-<p>Here are some (not all) examples of system configuration plist files:</p>
-<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.ActivityMonitor</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.AddressBook</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.finder</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.preference</span><span class="hljs-class">.general</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.TextEdit</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.apple</span><span class="hljs-class">.Safari</span><span class="hljs-class">.plist</span>
-</code></pre>
-<p>In the same folder as the sample configuration files listed above are where you can find <code>plist</code> files that are associated to applications installed on the system.</p>
-<pre><code>com<span class="hljs-class">.apple</span><span class="hljs-class">.dt</span><span class="hljs-class">.Xcode</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.google</span><span class="hljs-class">.Chrome</span><span class="hljs-class">.plist</span>
-org<span class="hljs-class">.herf</span><span class="hljs-class">.Flux</span><span class="hljs-class">.plist</span>
-com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><span class="hljs-class">.plist</span>
-</code></pre>
-<p>Now that we can find system and application configuration <code>plist</code> files, if you try to open them in a text editor you may notice that many of them are in a binary format which would be challenging to read and understand, let alone edit.</p>
-<h1>How do I read these files?</h1>
-<p>The Mac comes with a command line utility called <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> for reading and writing to these <code>.plist</code> files.</p>
-<p>If you take an example from the above list of plist files, you can, at the command prompt type the following:</p>
-<p><code>defaults read com.apple.fin&lt;tab&gt;</code> (where <code>&lt;tab&gt;</code> is the tab key that allows tab completion of the rest of the property list format) and be sure to exclude the <code>.plist</code> of the end so:</p>
-<pre><code>defaults read com.apple.finder
-</code></pre>
-<p>will print out all of the properties to the console so you can inspect what's there.</p>
-<p>You can pipe this output to <a href="http://en.wikipedia.org/wiki/Grep">grep</a> and filter for a setting name when doing searches. Once you've found a property name you want to look at you can pass it into the <code>defaults read</code> command to get the value of that specific property.</p>
-<h4>Example reading a single property:</h4>
-<pre><code>defaults read com.apple.finder AppleShowAllExtensions
-</code></pre>
-<h1>How to change property list settings?</h1>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>Just like modifying the Windows Registry can mess up your system, you need to take care modifying system or application <code>plist</code> settings.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
-<p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
-<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
-<h3>So if my understanding above is somewhat correct, how did I update the source?</h3>
-<p>Similar to reading property list values you can use the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> command line tool to <code>write</code> changes back to the <code>.plist</code> files.</p>
-<p>As an example, here's how I update <a href="http://support.apple.com/en-us/HT201732">Finder</a> to show file extensions.</p>
-<pre><code>defaults write com.apple.finder AppleShowAllExtensions -boolean true
-</code></pre>
-<p>The configuration options are now endless.</p>
-<h1>In summary:</h1>
-<p>Using my new knowledge that app and system settings can be found in both <code>/Library/Preferences</code> and <code>~/Library/Preferences</code> and I can use the command line tool <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> to read/write to understand and update settings.</p>
-<p>I can now create a simple <code>.sh</code> script that allows me to pre-configure a new development machine with all of the settings I would like.</p>
-<p>Now, each time I catch myself trying to use an application's preferences U.I. I stop myself and try to find that setting in a plist file and create a CLI command that I can save into my development setup script.</p>
-<p>Happy Mac Settings Hacking!</p>
-</div>
-
-      <a href="/2015/02/mac-equivalent-of-the-windows-registry---ish/#disqus_thread" data-disqus-identifier="/2015/02/mac-equivalent-of-the-windows-registry---ish/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>
