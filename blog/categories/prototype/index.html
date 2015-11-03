@@ -96,9 +96,9 @@
 <li>Use <a href="https://fetch.spec.whatwg.org/">fetch</a> api we can easily get at the <code>blob()</code></li>
 <li>Run the <code>Blob</code> through the <code>FileReader</code></li>
 <li>Which also handily turned it into a data url for us</li>
-<li>The data url is just a base64 encoded string which is easy to save to localStorage</li>
-<li>read back it back out</li>
-<li>set the audio's <code>src</code> to the data audio string</li>
+<li>The data url is just a base64 encoded string which is easy to save to <code>localStorage</code></li>
+<li>Read the string back out of <code>localStorage</code></li>
+<li>Set the audio's <code>src</code> attribute to the audio data url</li>
 <li>Profit!</li>
 </ol>
 <p>While I was prototyping this I was borrowing someone else short <code>mp3</code> file and to work around CORS (cross origin http request) I used the handy <code>https://crossorigin.me/&lt;&lt;SampleAudioUrlHere&gt;&gt;</code> service. This may be ok to do for a prototype, but you should't typically run your requests through this service. It's insecure and against pretty much all the different web religions.</p>
