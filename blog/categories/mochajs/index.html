@@ -71,6 +71,339 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">Testing Asynchronous Code with MochaJS and ES7 async/await</a></h1>
+    <p class="meta">
+          <time datetime="2015-11-12T02:59:21.475Z" pubdate data-updated="true">Nov 11th 2015</time>
+
+
+        <a href="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/#disqus_thread" data-disqus-identifier="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A JavaScript project I'm working on recently underwent a pretty good refactor. Many of the modules/methods in the application worked in a synchronous fashion which meant their unit tests were also generally synchronous. This was great because synchronous code is pretty much always easier to test since they're simpler and easier to reason about.</p>
+<p>However, even though I new early on that I would likely have to turn a good number of my synchronous methods into asynchronous ones I tried holding off on that as long as absolutely necessary. I was in a mode of prototyping as much of the application out as possible before I wanted to be worried/thinking about asynchronous aspects of the code base.</p>
+<p>Part of why I held of on this was because I was pretty confident using the new proposed ES7 <code>async/await</code> syntax to turn the sync code into async code relatively easily. While there were a few bumps along the refactor it actually went extremely well.</p>
+<p>An example of one bump I ran into included replacing <code>items.forEach(item =&gt; item.doSomethingNowThatWillBecomeAsyncSoon())</code> with something that worked asynchronously and I found <a href="http://pouchdb.com/2015/03/05/taming-the-async-beast-with-es7.html">this blog post</a> immensely helpful. Basically, don't try to await a <code>forEach</code> instead build a list of promises you can await.</p>
+<p>Another one I ran into was dealing with async mocha tests, which is what the rest of this post is about.</p>
+<p><a href="https://mochajs.org">MochaJS</a> is great because the asynchronous testing has been there from the beginning. If you've <code>done</code> (see what I did there?) any asynchronous testing with MochaJS then you already know that you can signal to Mocha an asynchronous test is <code>done</code> by calling the test's async callback method.</p>
+<p>Before we look at how to test asynchronous Mocha tests leveraging the new ES 7 async/await syntax, let's first take a little journey through some of the various asynchronous testing options with Mocha.</p>
+<blockquote>
+<p>Note: you will see example unit tests that use the <code>expect(...).to.equal(...)</code> style assertions from <a href="http://chaijs.com/api/bdd/">ChaiJS</a>.</p>
+</blockquote>
+<h1>How to create an asynchronous MochaJS test?</h1>
+<p>If you look at a normal synchronous test:</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>all we have to do to turn it into an asynchronous test is to add a callback function as the first parameter in the mocha test function (I like to call it <code>done</code>) like this</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>But that's an invalid asynchronous test.</p>
+<h1>Invalid basic async mocha test</h1>
+<p>This first async example test we shows is invalid because the <code>done</code> callback is never called. Here's another example using <code>setTimeout</code> to simulate proper asynchronicity. This will show up in Mocha as a timeout error because we never signal back to mocha by calling our <code>done</code> method.</p>
+<pre><code>it(<span class="hljs-string">"where we forget the done() callback!"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Test"</span>);
+    }, <span class="hljs-number">200</span>);
+});
+</code></pre>
+<h1>Valid basic async mocha test</h1>
+<p>When we call the <code>done</code> method it tells Mocha the asynchronous work/test is complete.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Valid basic async mocha test (that fails)</h1>
+<p>With asynchronous tests the way we tell Mocha the test failed is by passing an <code>Error</code> or <code>string</code> to the <code>done(...)</code> callback</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">(<span class="hljs-keyword">new</span> Error<span class="hljs-list">(<span class="hljs-string">"This is a sample failing async test"</span>)</span>)</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Invalid async with Promise mocha test</h1>
+<p>If you were to run the below test it would fail with a timeout error.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully!"</span>, function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    testPromise.then(function(<span class="hljs-literal">result</span>) {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello World!"</span>);
+        done();
+    }, done);
+});
+</code></pre>
+<p>If you were to open up your developer tools you may notice an error printed to the console:</p>
+<pre><code>    <span class="hljs-tag">Uncaught</span> (in promise) <span class="hljs-tag">i</span> {<span class="hljs-attribute">message</span>: <span class="hljs-string">"expected 'Hello!' to equal 'Hello World!'"</span>, <span class="hljs-attribute">showDiff</span>: true, <span class="hljs-attribute">actual</span>: <span class="hljs-string">"Hello!"</span>, <span class="hljs-attribute">expected</span>: <span class="hljs-string">"Hello World!"</span>}
+</code></pre>
+<p>The problem here is the <code>expect(result).to.equal(&quot;Hello World!&quot;);</code> above will fail before we can signal to Mocha via the <code>done()</code> of either an error or a completion which causes a timeout.</p>
+<p>We can update the above test with a <code>try/catch</code> around our expectations that could throw exceptions so that we can report any errors to Mocha if they happened.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span> {
+    var testPromise = new Promise<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">resolve</span>, reject)</span> {
+        setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+            resolve<span class="hljs-list">(<span class="hljs-string">"Hello World!"</span>)</span><span class="hljs-comment">;</span>
+        }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+    })</span><span class="hljs-comment">;</span>
+
+    testPromise.then<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>{
+        try {
+            expect<span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-string">"Hello!"</span>)</span><span class="hljs-comment">;</span>
+            done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+        } catch<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span> {
+            done<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span><span class="hljs-comment">;</span>
+        }
+    }, done)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>This will correctly report the error in the test.</p>
+<h1>Turn what we know above into async/await.</h1>
+<p>Now that we know there are some special things we need to do in our async mocha tests (<code>done</code> callbacks and <code>try/catch</code> around code that throws assertions), let's see what happens if we start to use the new ES7 async/await syntax in the language and if it can enable more readable asynchronous unit tests.</p>
+<p>The beauty of the async/await syntax is we get to reduce the <code>.then(callback, done)</code>... mumbo jumbo and turn that into code that reads like it were happening synchronously. The downside of this approach is that it's not happening synchronously and we can't forget that when we're looking at code and starting to use it this way. But overall it is generally easier to reason about in this style.</p>
+<p>The big changes from the above <code>Promise</code> style test and the transformed <code>async</code> test below are:</p>
+<ol>
+<li>Place the <code>async</code> word in front of the <code>async function(done){...</code>. This tells the system that inside of this function there may (or may not be) the use of the <code>await</code> keyword and in the end the function is turned into a <code>Promise</code> under the hood.</li>
+<li>We remove the <code>.then(function(result){</code> promise work and in place use the <code>await</code> keyword to have it return the promise value assign it to <code>result</code> so after that we can run our expectations against it.</li>
+<li>Notice we still have to call <code>done</code> because this is still an asynchronous test so we have to tell Mocha when it's done (even though it almost looks synchronous).</li>
+</ol>
+<p>If we look below, we see that we flatten out the callback promise work which can get difficult to read and follow over time. But before we get too excited there's one problem with how I converted this method. What happens if the <code>testPromise</code> were to reject? (where did that reject handling code go?).</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+    <span class="hljs-keyword">try</span> {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Handling errors with <code>async/await</code></h1>
+<p>One interesting implementation detail around async await is that exceptions and errors are handled just like you were to handle them in synchronous code using a <code>try/catch</code>.</p>
+<p>So in the above test if the <code>testPromise</code> were to have <code>rejected</code> the promise or raised another type of exception we would not have seen the error in our mocha test and would have once again run into a timeout error.</p>
+<p>The fix is to move the <code>try {</code> up above the <code>await testPromise;</code> so that any rejections form the asynchronous code OR errors thrown by our assertion library are caught and we can report them to Mocha.</p>
+<p>Below shows the fixed (failing) but more properly setup async/await mocha unit test.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Removing the test boilerplate</h1>
+<p>One I started seeing the pattern and use of <code>try/catch</code> boilerplate showing up in my async tests, it became apparent that there had to be a more terse approach that could help me avoid forgetting the <code>try/catch</code> needed in each async test. This was because I would often remember the <code>async/await</code> syntax changes for my async tests but would often forget the <code>try/catch</code> which often resulted in timeout errors instead of proper failures.</p>
+<blockquote>
+<p>another example below with the async/await and try/catch</p>
+</blockquote>
+<pre><code>it(<span class="hljs-string">"Using an async method with async/await!"</span>, async function(done) {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await somethingAsync();
+
+        expect(<span class="hljs-literal">result</span>).to.equal(something);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<p>So I refactored that to reduce the friction.</p>
+<h2>And the mochaAsync higher order function was born</h2>
+<p>This simple little guy takes an <code>async</code> function which looks like <code>async () =&gt; {...}</code>. It then returns a higher order function which is also asynchronous but has wrapped your test function in a try/catch and also takes care of calling the mocha <code>done</code> in the proper place (either after your test is asynchronously completed, or errors out).</p>
+<pre><code>var mochaAsync = <span class="hljs-function"><span class="hljs-params">(fn)</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> async (done) =&gt; {
+        <span class="hljs-keyword">try</span> {
+            await fn();
+            done();
+        } <span class="hljs-keyword">catch</span> (err) {
+            done(err);
+        }
+    };
+};
+</code></pre>
+<p>You can use it like this:</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Sample async/await mocha test using wrapper"</span>, mochaAsync<span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    var x = await someAsyncMethodToTest<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    expect<span class="hljs-list">(<span class="hljs-keyword">x</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-keyword">true</span>)</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>It can also be used with the mocha <code>before</code>, <code>beforeEach</code>, <code>after</code>, <code>afterEach</code> setup/teardown methods.</p>
+<pre><code>beforeEach<span class="hljs-list">(<span class="hljs-keyword">mochaAsync</span><span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    await someLongSetupCode<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>In closing.</h1>
+<p>This post may have seemed like quite a journey to get to the little poorly named <code>mochaAsync</code> helper but I hope it was helpful and I can't wait for the <code>async/await</code> syntax to become mainstream in JavaScript, but until then I'm thankful we have transpiring tools like <a href="http://babeljs.io">Babel</a> so we can take advantage of these features now. Especially in our tests...</p>
+<p>Happy Testing!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">In App Unit test example with JSPM, React, WinJS and Mocha</a></h1>
+    <p class="meta">
+          <time datetime="2015-10-08T16:42:00.666Z" pubdate data-updated="true">Oct 8th 2015</time>
+
+
+        <a href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/#disqus_thread" data-disqus-identifier="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A while back I wrote about <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a> and have been having too much fun creating little <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">starter plunks</a> on <a href="http://plnkr.co">Plunker</a>. So...</p>
+<p>As a simple demonstration on in-app unit tests I've thrown together a little plunk that shows <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app tests</a> within the a <a href="https://github.com/winjs/winjs">WinJS</a> <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a>. And add to the layers of abstraction I'm using <a href="https://github.com/winjs/react-winjs">react-winjs</a> which I'm LOVING over normal WinJS development.</p>
+<h1>Link to: <a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM/React/WinJS/Mocha Plunk</a></h1>
+<p>If you like this starter, I have it and a few more linked here: <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">for re-use</a></p>
+<p>I'd like to highlight <a href="http://plnkr.co/edit/feKPEx?p=preview">this particular starter</a> at bit more in this post, not only because there are a few more concepts to this basic plunk, but also because I'm fairly happy with the MochaJS React component that I've now copied around and re-used a few times in some small projects where use <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a>.</p>
+<h1>Plunker file overview</h1>
+<ul>
+<li><code>index.html</code> - The index file is a very basic <a href="http://jspm.io">JSPM</a> bootstrap page that loads the <code>app.jsx</code> react component.</li>
+<li><code>app.jsx</code> - Defines a WinJS Pivot control where we render the in-app <code>MochaTests.jsx</code> React component. This also defines the test file(s) and using MochaJS's global detection we can tell the react <code>MochaTests</code> component what test files to load and run as well as what globals are allowed to exist.</li>
+<li><code>config.js</code> - This is JSPM's config that defines what version of React we're using and to use <code>babel</code> for transpilation.</li>
+<li><code>tests.js</code> - is our Mocha set of unit tests. We can have multiple test files if we want, just have to define what files to load in <code>app.jsx</code>.</li>
+</ul>
+<p>Lastly the <code>MochaTests.jsx</code> which I'll include the full component below:</p>
+<blockquote>
+<p>easier to copy-paste inherit for myself in the future</p>
+</blockquote>
+<pre><code><span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MochaTests</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+
+    static get propTypes() {
+        <span class="hljs-keyword">return</span> {
+            testScripts: React.PropTypes.array.isRequired,
+            allowedGlobals: React.PropTypes.array
+        };
+    }
+
+    constructor(props) {
+        <span class="hljs-keyword">super</span>(props);
+    }
+
+    componentDidMount() {
+
+        <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
+        <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
+
+        <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
+        <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
+        <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
+        <span class="hljs-comment">// test scripts for the first run</span>
+        mocha.suite.on(<span class="hljs-string">'pre-require'</span>, context =&gt; {
+            <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
+
+            exports.afterEach = context.afterEach || context.teardown;
+            exports.after = context.after || context.suiteTeardown;
+            exports.beforeEach = context.beforeEach || context.setup;
+            exports.before = context.before || context.suiteSetup;
+            exports.describe = context.describe || context.suite;
+            exports.it = context.it || context.test;
+            exports.setup = context.setup || context.beforeEach;
+            exports.suiteSetup = context.suiteSetup || context.before;
+            exports.suiteTeardown = context.suiteTeardown || context.after;
+            exports.suite = context.suite || context.describe;
+            exports.teardown = context.teardown || context.afterEach;
+            exports.test = context.test || context.it;
+            exports.run = context.run;
+
+            <span class="hljs-comment">// now use SystemJS to load all test files</span>
+            <span class="hljs-built_in">Promise</span>
+            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
+                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Adding Mocha Test File: "</span>, testScript);
+                <span class="hljs-keyword">return</span> System.import(testScript);
+            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
+                <span class="hljs-built_in">console</span>.error(err);
+            });
+
+        });
+        mocha.setup(<span class="hljs-string">'bdd'</span>);
+    }
+
+    runTests() {
+        <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
+
+        <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
+
+        mocha.checkLeaks();
+        mocha.globals(allowedGlobals);
+        mocha.run();
+
+    }
+
+    render() {
+        <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{"\
+                  #mocha-stats em { \
+                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> inherit</span></span>; \
+                  }</span> \
+                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ \
+                    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; \
+                  }</span>\
+                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ \
+                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; \
+                  }</span> \
+                "}</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runTests.bind(this)}</span>&gt;</span>Rerun Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        )</span>;
+    }
+}
+</code></pre>
+<p>Usage example of this React <code>MochaTests</code> component.</p>
+<pre><code>// <span class="hljs-type">Define</span> what test files get loaded by the <span class="hljs-type">MochaTests</span> component
+<span class="hljs-keyword">var</span> testScripts = [
+  './tests.js'
+];
+
+
+<span class="hljs-keyword">var</span> allowedTestGlobals = [
+  // <span class="hljs-type">Declare</span> what globals are allowed to be created during <span class="hljs-type">any</span> test runs.
+];
+
+
+// <span class="hljs-type">Usage</span> <span class="hljs-keyword">of</span> <span class="hljs-type">MochaTests</span> <span class="hljs-keyword">in</span> a react render() <span class="hljs-keyword">method</span>.
+&lt;<span class="hljs-type">MochaTests</span> testScripts={testScripts} allowedGlobals={allowedTestGlobals} /&gt;
+
+</code></pre>
+<p>I'm not expecting to see a large up-tick in WinJS apps out there with in-app unit tests that run in the browser, however hopefully the <code>MochaTests.jsx</code> React Component is of value to you and can be utilized outside of WinJS within almost any React app.</p>
+<p>Please drop a line if you end up using it or if it can be adapted. If there's value in the component, maybe</p>
+<h1>Known Issue</h1>
+<p>If the number of tests starts to go beyond the height of the pivot in this sample, it has an issue where the WinJS Pivot cuts off at the bottom not allowing you to scroll and see the rest of the test output. I haven't dug into it yet because I've been clicking the <code>failures: X</code> link and it filters the U.I. to just the erroring tests.</p>
+<p>If you happen to come up with a good solution, drop me a note - I'd love it. Thanks in advance!</p>
+<p>Happy Testing!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
     <p class="meta">
           <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
@@ -101,6 +434,155 @@
 </blockquote>
 <p>If you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to the <a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM/MochaJS Plunk</a></p>
 <p>Happy Prototyping!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">Browser only MochaJS tests using SystemJS</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-04T22:41:38.170Z" pubdate data-updated="true">Sep 4th 2015</time>
+
+
+        <a href="/2015/09/browser-only-mochajs-tests-using-systemjs/#disqus_thread" data-disqus-identifier="/2015/09/browser-only-mochajs-tests-using-systemjs/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<h1>TL;DR</h1>
+<p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/LLQQqg?p=preview">plnkr.co</a> go right ahead!</p>
+<h1>How to run our first Mocha test</h1>
+<p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily components my code for cleaner extraction into a project, gist or other...</p>
+<p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+    System.<span class="hljs-keyword">import</span>(<span class="hljs-string">'./testInit.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>With the above in the <code>index.html</code> you should see some errors printed to the console as SystemJS is trying to load <code>./testInit.js</code> (but we haven't created it yet).</p>
+<p>Before we create the <code>testInit.js</code> file let's first create a couple sample MochaJS test files that we want to test.</p>
+<p>Here's our first test file: name it <code>mochaTest1.js</code></p>
+<p>Something cool about this test is once we get mocha wired up correctly, this test shows how seamlessly you can take a dependency on a 3rd party library like <a href="http://chaijs.com/">chaijs</a> for help with assertions.</p>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
+
+describe(<span class="hljs-string">"This is a describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Create another test file <code>mochaTest2.js</code></p>
+<pre><code><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
+
+describe(<span class="hljs-string">"This is another describe"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  it(<span class="hljs-string">"sample test that should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">true</span>);
+  });
+  it(<span class="hljs-string">"sample test that should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    expect(<span class="hljs-literal">true</span>).to.equal(<span class="hljs-literal">false</span>);
+  });
+});
+</code></pre>
+<p>Creating two test files allows this sample to show how you can easily create and test multiple modules.</p>
+<h1>The meat and potatoes</h1>
+<p>Now is the juicy part on how to get Mocha to play nicely with this setup and run our tests.</p>
+<p>Create a file and call it <code>testInit.js</code> (same as we named in our <code>index.html</code> and referenced it via <code>System.import('./testInit.js')</code>) and paste the below.</p>
+<p>Feel free to read through it as I commented it thoroughly.</p>
+<pre><code><span class="hljs-comment">//</span>
+<span class="hljs-comment">// This tells SystemJS to load the mocha library</span>
+<span class="hljs-comment">// and allows us to interact with the library below.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// This defines the list of test files we want to load and run tests against.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaTestScripts = [
+  <span class="hljs-string">'./mochaTest1.js'</span>,
+  <span class="hljs-string">'./mochaTest2.js'</span>
+];
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// If you have a global or two that get exposed from your</span>
+<span class="hljs-comment">// tests that is expected you can include them here</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> allowedMochaGlobals = [
+  <span class="hljs-string">'jQuery'</span>
+]
+
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Mocha needs a &lt;div id="mocha"&gt;&lt;/div&gt; for the browser</span>
+<span class="hljs-comment">// test reporter to inject test results in to the U.I.</span>
+<span class="hljs-comment">// Below just injects it at the bottom of the page. (You can get fancy here)</span>
+<span class="hljs-comment">// Maybe you create a button in your website and allow anyone to run tests.</span>
+<span class="hljs-comment">// Check out http://staxmanade.com/2015/03/in-app-unit-tests/ for more on the thought</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> mochaDiv = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+mochaDiv.id = <span class="hljs-string">"mocha"</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(mochaDiv);
+
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Importing mocha with JSPM and ES6 doesn't expose the usual mocha globals.</span>
+<span class="hljs-comment">// I found this is one way to manually expose the globals, however if you know of a better way please let me know...</span>
+<span class="hljs-comment">//</span>
+mocha.suite.on(<span class="hljs-string">'pre-require'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">context</span>) </span>{
+  <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
+
+  exports.afterEach = context.afterEach || context.teardown;
+  exports.after = context.after || context.suiteTeardown;
+  exports.beforeEach = context.beforeEach || context.setup;
+  exports.before = context.before || context.suiteSetup;
+  exports.describe = context.describe || context.suite;
+  exports.it = context.it || context.test;
+  exports.setup = context.setup || context.beforeEach;
+  exports.suiteSetup = context.suiteSetup || context.before;
+  exports.suiteTeardown = context.suiteTeardown || context.after;
+  exports.suite = context.suite || context.describe;
+  exports.teardown = context.teardown || context.afterEach;
+  exports.test = context.test || context.it;
+  exports.run = context.run;
+
+  <span class="hljs-comment">// now use SystemJS to load all test files</span>
+  <span class="hljs-built_in">Promise</span>
+    .all(mochaTestScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
+      <span class="hljs-keyword">return</span> System.import(testScript);
+    })).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      mocha.checkLeaks();
+      mocha.globals(allowedMochaGlobals);
+      mocha.run();
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
+      <span class="hljs-built_in">console</span>.error(err);
+    });
+
+});
+
+mocha.setup(<span class="hljs-string">'bdd'</span>);
+</code></pre>
+<blockquote>
+<p>Please let me know if you know of an easier way to get access to the mochas globals using SystemJS. The below works, but is a bit uncomfortable.</p>
+</blockquote>
+<h1>MochaJS Tests Right in the Browser...</h1>
+<p><strong>How awesome is this.</strong> Couple bits of bootstrap code, and we can go author whatever we want right in the browser using ES6 (err EcmaScript 2015) and we're off and running.</p>
+<h1><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> NOT FOR PRODUCTION WORKFLOWS (yet)! <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></h1>
+<p>This approach is primarily for allowing quick prototyping. Don't implement a complete app like this and then expect any performance. SystemJS can potentially download a large number of dependencies and you should read up on <a href="https://github.com/jspm/jspm-cli/wiki/Production-Workflows">JSPM production workflows</a>.</p>
+<p>Happy Browser-Only Testing.</p>
 </div>
 
             </article>

@@ -115,7 +115,7 @@
 
         <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
         <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
-        
+
         <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
         <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
         <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
@@ -146,7 +146,7 @@
                 <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
                 <span class="hljs-built_in">console</span>.error(err);
             });
-        
+
         });
         mocha.setup(<span class="hljs-string">'bdd'</span>);
     }
@@ -155,7 +155,7 @@
         <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
 
         <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
-        
+
         mocha.checkLeaks();
         mocha.globals(allowedGlobals);
         mocha.run();
@@ -218,7 +218,7 @@
 
                         <span class="categories">
     <a class='category' href='/blog/categories/react/'>React</a>
-    <a class='category' href='/blog/categories/mocha/'>Mocha</a>
+    <a class='category' href='/blog/categories/mochajs/'>MochaJS</a>
     <a class='category' href='/blog/categories/winjs/'>WinJS</a>
     <a class='category' href='/blog/categories/jspm/'>JSPM</a>
     <a class='category' href='/blog/categories/testing/'>Testing</a>

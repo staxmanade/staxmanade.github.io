@@ -71,6 +71,42 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In-App Unit Tests</a></h1>
+    <p class="meta">
+          <time datetime="2015-03-07T06:19:53.583Z" pubdate data-updated="true">Mar 6th 2015</time>
+
+
+        <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run them? If the latter is true, then how often do you run them?</p>
+<p>For most, running tests is a simple command line tool like <code>gulp test</code> or <code>rake test</code> or a builtin function in your IDE. You may even have your system covered by a Continuous Integration server, or if you want to catch issues earlier possibly even a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">git pre-commit hook</a>.</p>
+<p>One thing we all probably know is the more difficult it is to run your tests, the less often they get run.</p>
+<p>What if you're building in an environment that does not allow for easy test automation? What if there are no current command line task runners for the environment you're developing in?</p>
+<p>You could spend way too much of your free time/life building a tool that can get the job done for you (cough - <a href="http://statlight.codeplex.com">long live StatLight/Silverlight</a> - cough). I would not necessarily recommend this approach unless you have the spare cycles to contribute a project like this to the broader community.</p>
+<p>So, given that there are no external tools to rely on, and you don't want to spend however long it will take to create one for the development environment you are in, how about finding a way to integrate some sort of test run within your existing application?</p>
+<p>I have always wanted to setup some unit tests that could run inside of an existing application. If you developed an app that had to ship on lots of devices (thinking android or iOS) and you could ask your users out in the wild to go to the settings page of your app and press a &quot;run tests&quot; button, how awesome would it be if this test run could collect data and send the test results back to you?</p>
+<p>This is not a new idea, nor terribly unique, but I've pondered this for quite some time and until recently have not had a project were I was forced to execute on it, until now...</p>
+<p>I'm playing with an app that is currently living inside a WinJS (Windows 8) (Metro - err do they call it that anymore?) environment and there are not any CLI tools out there that can be used to automate tests. However, it was easy enough to get <a href="http://mochajs.org/">Mocha</a> running within the app.</p>
+<p>With MochaJS in place, I proceeded to setup a WinJS Hub in my hub-based application, after make this testing hub the first hub in my project I now have test that run after every F5 (run) of the application.</p>
+<p>This will eventually have to be something I move out of the main landing U.I. when I get closer to shipping my app, but I'm liking the idea of being able to toggle my test U.I. and have them run right within my application, instantly on startup.</p>
+<h1>A few benefits of this approach:</h1>
+<ul>
+<li>It allows me to actually write tests in an application that doesn't natively support a testing runner.</li>
+<li>Fewer test gotch-ya's because of environmental reasons</li>
+<li>Instant feedback on each run</li>
+<li>It's an easy reminder to keep using and driving my development through tests, because the workflow is enabling it (and encouraging it).</li>
+<li>(this could be considered a down side but...) since the tests are living within the actual application, I have to be careful to construct my components no to depend too heavily on the environment or configuration as we wouldn't want unit tests to mess up the running application. While it could be seen as a bit of a pain, I'm really liking how this is forcing me to write loosely coupled, highly compossable components that can be easy to swap in/out.</li>
+</ul>
+<h3>Will I Actually Ship In-App Tests?</h3>
+<p>This one is up in the air, but so far I'm of the mind-set that I'll hide the unit-test run from the main hub, place a button deep in some about or setting page and modify the reporter to send send any failed test results, along with some metadata about the environment or system it's running on, like versions, screen size, or whatever is needed...</p>
+<p>Happy Testing!</p>
+</div>
+
+      <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a></h1>
     <p class="meta">
           <time datetime="2015-02-28T21:36:32.671Z" pubdate data-updated="true">Feb 28th 2015</time>
@@ -540,25 +576,6 @@ Test target MyProjectTests encountered an error (Timed out waiting 120 seconds f
 </div>
 
       <a href="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/#disqus_thread" data-disqus-identifier="/2015/01/how-to-migrate-a-jenkins-job-to-new-jenkins-server/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">Resgrid is a BizSpark Featured Startup</a></h1>
-    <p class="meta">
-          <time datetime="2015-01-15T00:17:25.470Z" pubdate data-updated="true">Jan 14th 2015</time>
-
-
-        <a href="/2015/01/resgrid-on-bizspark-featured-startups/#disqus_thread" data-disqus-identifier="/2015/01/resgrid-on-bizspark-featured-startups/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>Today Microsoft published an article on their <a href="http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/trustworthy-cloud-logistics-for-first-responders.aspx">BizSpark Featured Startups</a> blog about <a href="http://resgrid.com">Resgrid</a>!</p>
-<h3>What is Resgrid?</h3>
-<p>Resgrid is a software as a service product hosted on Microsoft Azure that provides logistics, management and communication tools to first responder organizations such as volunteer fire, career fire, EMS, search and rescue, public safety, disaster relief organizations, etc.</p>
-<p>My partner <a href="http://www.designlimbo.com/">Shawn Jackson</a> and I created <a href="http://resgrid.com">Resgrid</a> a few years ago and the buzz is exciting to see.</p>
-<p>If you have any interest in following some technical aspects of this little startup. <a href="http://www.designlimbo.com/">Shawn</a> often posts interesting articles both technical and startup/business related on <a href="http://www.designlimbo.com/">his site</a>.</p>
-</div>
-
-      <a href="/2015/01/resgrid-on-bizspark-featured-startups/#disqus_thread" data-disqus-identifier="/2015/01/resgrid-on-bizspark-featured-startups/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>

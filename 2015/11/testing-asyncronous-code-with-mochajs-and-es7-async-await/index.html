@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Testing Asynchronous Code with MochaJS and ES7 async/await - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="A JavaScript project I&#x27;m working on recently underwent a pretty good refactor. Many of the modules/methods in the application worked in a synchronous ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">Testing Asynchronous Code with MochaJS and ES7 async/await</a></h1>
+    <p class="meta">
+          <time datetime="2015-11-12T02:59:21.475Z" pubdate data-updated="true">Nov 11th 2015</time>
+
+
+        <a href="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/#disqus_thread" data-disqus-identifier="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A JavaScript project I'm working on recently underwent a pretty good refactor. Many of the modules/methods in the application worked in a synchronous fashion which meant their unit tests were also generally synchronous. This was great because synchronous code is pretty much always easier to test since they're simpler and easier to reason about.</p>
+<p>However, even though I new early on that I would likely have to turn a good number of my synchronous methods into asynchronous ones I tried holding off on that as long as absolutely necessary. I was in a mode of prototyping as much of the application out as possible before I wanted to be worried/thinking about asynchronous aspects of the code base.</p>
+<p>Part of why I held of on this was because I was pretty confident using the new proposed ES7 <code>async/await</code> syntax to turn the sync code into async code relatively easily. While there were a few bumps along the refactor it actually went extremely well.</p>
+<p>An example of one bump I ran into included replacing <code>items.forEach(item =&gt; item.doSomethingNowThatWillBecomeAsyncSoon())</code> with something that worked asynchronously and I found <a href="http://pouchdb.com/2015/03/05/taming-the-async-beast-with-es7.html">this blog post</a> immensely helpful. Basically, don't try to await a <code>forEach</code> instead build a list of promises you can await.</p>
+<p>Another one I ran into was dealing with async mocha tests, which is what the rest of this post is about.</p>
+<p><a href="https://mochajs.org">MochaJS</a> is great because the asynchronous testing has been there from the beginning. If you've <code>done</code> (see what I did there?) any asynchronous testing with MochaJS then you already know that you can signal to Mocha an asynchronous test is <code>done</code> by calling the test's async callback method.</p>
+<p>Before we look at how to test asynchronous Mocha tests leveraging the new ES 7 async/await syntax, let's first take a little journey through some of the various asynchronous testing options with Mocha.</p>
+<blockquote>
+<p>Note: you will see example unit tests that use the <code>expect(...).to.equal(...)</code> style assertions from <a href="http://chaijs.com/api/bdd/">ChaiJS</a>.</p>
+</blockquote>
+<h1>How to create an asynchronous MochaJS test?</h1>
+<p>If you look at a normal synchronous test:</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>all we have to do to turn it into an asynchronous test is to add a callback function as the first parameter in the mocha test function (I like to call it <code>done</code>) like this</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>But that's an invalid asynchronous test.</p>
+<h1>Invalid basic async mocha test</h1>
+<p>This first async example test we shows is invalid because the <code>done</code> callback is never called. Here's another example using <code>setTimeout</code> to simulate proper asynchronicity. This will show up in Mocha as a timeout error because we never signal back to mocha by calling our <code>done</code> method.</p>
+<pre><code>it(<span class="hljs-string">"where we forget the done() callback!"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Test"</span>);
+    }, <span class="hljs-number">200</span>);
+});
+</code></pre>
+<h1>Valid basic async mocha test</h1>
+<p>When we call the <code>done</code> method it tells Mocha the asynchronous work/test is complete.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Valid basic async mocha test (that fails)</h1>
+<p>With asynchronous tests the way we tell Mocha the test failed is by passing an <code>Error</code> or <code>string</code> to the <code>done(...)</code> callback</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">(<span class="hljs-keyword">new</span> Error<span class="hljs-list">(<span class="hljs-string">"This is a sample failing async test"</span>)</span>)</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Invalid async with Promise mocha test</h1>
+<p>If you were to run the below test it would fail with a timeout error.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully!"</span>, function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    testPromise.then(function(<span class="hljs-literal">result</span>) {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello World!"</span>);
+        done();
+    }, done);
+});
+</code></pre>
+<p>If you were to open up your developer tools you may notice an error printed to the console:</p>
+<pre><code>    <span class="hljs-tag">Uncaught</span> (in promise) <span class="hljs-tag">i</span> {<span class="hljs-attribute">message</span>: <span class="hljs-string">"expected 'Hello!' to equal 'Hello World!'"</span>, <span class="hljs-attribute">showDiff</span>: true, <span class="hljs-attribute">actual</span>: <span class="hljs-string">"Hello!"</span>, <span class="hljs-attribute">expected</span>: <span class="hljs-string">"Hello World!"</span>}
+</code></pre>
+<p>The problem here is the <code>expect(result).to.equal(&quot;Hello World!&quot;);</code> above will fail before we can signal to Mocha via the <code>done()</code> of either an error or a completion which causes a timeout.</p>
+<p>We can update the above test with a <code>try/catch</code> around our expectations that could throw exceptions so that we can report any errors to Mocha if they happened.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span> {
+    var testPromise = new Promise<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">resolve</span>, reject)</span> {
+        setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+            resolve<span class="hljs-list">(<span class="hljs-string">"Hello World!"</span>)</span><span class="hljs-comment">;</span>
+        }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+    })</span><span class="hljs-comment">;</span>
+
+    testPromise.then<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>{
+        try {
+            expect<span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-string">"Hello!"</span>)</span><span class="hljs-comment">;</span>
+            done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+        } catch<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span> {
+            done<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span><span class="hljs-comment">;</span>
+        }
+    }, done)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>This will correctly report the error in the test.</p>
+<h1>Turn what we know above into async/await.</h1>
+<p>Now that we know there are some special things we need to do in our async mocha tests (<code>done</code> callbacks and <code>try/catch</code> around code that throws assertions), let's see what happens if we start to use the new ES7 async/await syntax in the language and if it can enable more readable asynchronous unit tests.</p>
+<p>The beauty of the async/await syntax is we get to reduce the <code>.then(callback, done)</code>... mumbo jumbo and turn that into code that reads like it were happening synchronously. The downside of this approach is that it's not happening synchronously and we can't forget that when we're looking at code and starting to use it this way. But overall it is generally easier to reason about in this style.</p>
+<p>The big changes from the above <code>Promise</code> style test and the transformed <code>async</code> test below are:</p>
+<ol>
+<li>Place the <code>async</code> word in front of the <code>async function(done){...</code>. This tells the system that inside of this function there may (or may not be) the use of the <code>await</code> keyword and in the end the function is turned into a <code>Promise</code> under the hood.</li>
+<li>We remove the <code>.then(function(result){</code> promise work and in place use the <code>await</code> keyword to have it return the promise value assign it to <code>result</code> so after that we can run our expectations against it.</li>
+<li>Notice we still have to call <code>done</code> because this is still an asynchronous test so we have to tell Mocha when it's done (even though it almost looks synchronous).</li>
+</ol>
+<p>If we look below, we see that we flatten out the callback promise work which can get difficult to read and follow over time. But before we get too excited there's one problem with how I converted this method. What happens if the <code>testPromise</code> were to reject? (where did that reject handling code go?).</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+    <span class="hljs-keyword">try</span> {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Handling errors with <code>async/await</code></h1>
+<p>One interesting implementation detail around async await is that exceptions and errors are handled just like you were to handle them in synchronous code using a <code>try/catch</code>.</p>
+<p>So in the above test if the <code>testPromise</code> were to have <code>rejected</code> the promise or raised another type of exception we would not have seen the error in our mocha test and would have once again run into a timeout error.</p>
+<p>The fix is to move the <code>try {</code> up above the <code>await testPromise;</code> so that any rejections form the asynchronous code OR errors thrown by our assertion library are caught and we can report them to Mocha.</p>
+<p>Below shows the fixed (failing) but more properly setup async/await mocha unit test.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Removing the test boilerplate</h1>
+<p>One I started seeing the pattern and use of <code>try/catch</code> boilerplate showing up in my async tests, it became apparent that there had to be a more terse approach that could help me avoid forgetting the <code>try/catch</code> needed in each async test. This was because I would often remember the <code>async/await</code> syntax changes for my async tests but would often forget the <code>try/catch</code> which often resulted in timeout errors instead of proper failures.</p>
+<blockquote>
+<p>another example below with the async/await and try/catch</p>
+</blockquote>
+<pre><code>it(<span class="hljs-string">"Using an async method with async/await!"</span>, async function(done) {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await somethingAsync();
+
+        expect(<span class="hljs-literal">result</span>).to.equal(something);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<p>So I refactored that to reduce the friction.</p>
+<h2>And the mochaAsync higher order function was born</h2>
+<p>This simple little guy takes an <code>async</code> function which looks like <code>async () =&gt; {...}</code>. It then returns a higher order function which is also asynchronous but has wrapped your test function in a try/catch and also takes care of calling the mocha <code>done</code> in the proper place (either after your test is asynchronously completed, or errors out).</p>
+<pre><code>var mochaAsync = <span class="hljs-function"><span class="hljs-params">(fn)</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> async (done) =&gt; {
+        <span class="hljs-keyword">try</span> {
+            await fn();
+            done();
+        } <span class="hljs-keyword">catch</span> (err) {
+            done(err);
+        }
+    };
+};
+</code></pre>
+<p>You can use it like this:</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Sample async/await mocha test using wrapper"</span>, mochaAsync<span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    var x = await someAsyncMethodToTest<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    expect<span class="hljs-list">(<span class="hljs-keyword">x</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-keyword">true</span>)</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>It can also be used with the mocha <code>before</code>, <code>beforeEach</code>, <code>after</code>, <code>afterEach</code> setup/teardown methods.</p>
+<pre><code>beforeEach<span class="hljs-list">(<span class="hljs-keyword">mochaAsync</span><span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    await someLongSetupCode<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>In closing.</h1>
+<p>This post may have seemed like quite a journey to get to the little poorly named <code>mochaAsync</code> helper but I hope it was helpful and I can't wait for the <code>async/await</code> syntax to become mainstream in JavaScript, but until then I'm thankful we have transpiring tools like <a href="http://babeljs.io">Babel</a> so we can take advantage of these features now. Especially in our tests...</p>
+<p>Happy Testing!</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2015-11-12T02:59:21.475Z" pubdate data-updated="true">Nov 11th 2015</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/mochajs/'>MochaJS</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/" title="Previous Post: Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps">&laquo; Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

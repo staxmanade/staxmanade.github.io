@@ -71,6 +71,199 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">Testing Asynchronous Code with MochaJS and ES7 async/await</a></h1>
+    <p class="meta">
+          <time datetime="2015-11-12T02:59:21.475Z" pubdate data-updated="true">Nov 11th 2015</time>
+
+
+        <a href="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/#disqus_thread" data-disqus-identifier="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A JavaScript project I'm working on recently underwent a pretty good refactor. Many of the modules/methods in the application worked in a synchronous fashion which meant their unit tests were also generally synchronous. This was great because synchronous code is pretty much always easier to test since they're simpler and easier to reason about.</p>
+<p>However, even though I new early on that I would likely have to turn a good number of my synchronous methods into asynchronous ones I tried holding off on that as long as absolutely necessary. I was in a mode of prototyping as much of the application out as possible before I wanted to be worried/thinking about asynchronous aspects of the code base.</p>
+<p>Part of why I held of on this was because I was pretty confident using the new proposed ES7 <code>async/await</code> syntax to turn the sync code into async code relatively easily. While there were a few bumps along the refactor it actually went extremely well.</p>
+<p>An example of one bump I ran into included replacing <code>items.forEach(item =&gt; item.doSomethingNowThatWillBecomeAsyncSoon())</code> with something that worked asynchronously and I found <a href="http://pouchdb.com/2015/03/05/taming-the-async-beast-with-es7.html">this blog post</a> immensely helpful. Basically, don't try to await a <code>forEach</code> instead build a list of promises you can await.</p>
+<p>Another one I ran into was dealing with async mocha tests, which is what the rest of this post is about.</p>
+<p><a href="https://mochajs.org">MochaJS</a> is great because the asynchronous testing has been there from the beginning. If you've <code>done</code> (see what I did there?) any asynchronous testing with MochaJS then you already know that you can signal to Mocha an asynchronous test is <code>done</code> by calling the test's async callback method.</p>
+<p>Before we look at how to test asynchronous Mocha tests leveraging the new ES 7 async/await syntax, let's first take a little journey through some of the various asynchronous testing options with Mocha.</p>
+<blockquote>
+<p>Note: you will see example unit tests that use the <code>expect(...).to.equal(...)</code> style assertions from <a href="http://chaijs.com/api/bdd/">ChaiJS</a>.</p>
+</blockquote>
+<h1>How to create an asynchronous MochaJS test?</h1>
+<p>If you look at a normal synchronous test:</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>all we have to do to turn it into an asynchronous test is to add a callback function as the first parameter in the mocha test function (I like to call it <code>done</code>) like this</p>
+<pre><code>it(<span class="hljs-string">"should work"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Synchronous test"</span>);
+});
+</code></pre>
+<p>But that's an invalid asynchronous test.</p>
+<h1>Invalid basic async mocha test</h1>
+<p>This first async example test we shows is invalid because the <code>done</code> callback is never called. Here's another example using <code>setTimeout</code> to simulate proper asynchronicity. This will show up in Mocha as a timeout error because we never signal back to mocha by calling our <code>done</code> method.</p>
+<pre><code>it(<span class="hljs-string">"where we forget the done() callback!"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Test"</span>);
+    }, <span class="hljs-number">200</span>);
+});
+</code></pre>
+<h1>Valid basic async mocha test</h1>
+<p>When we call the <code>done</code> method it tells Mocha the asynchronous work/test is complete.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Valid basic async mocha test (that fails)</h1>
+<p>With asynchronous tests the way we tell Mocha the test failed is by passing an <code>Error</code> or <code>string</code> to the <code>done(...)</code> callback</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using setTimeout to simulate asynchronous code!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span>{
+    setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+        done<span class="hljs-list">(<span class="hljs-keyword">new</span> Error<span class="hljs-list">(<span class="hljs-string">"This is a sample failing async test"</span>)</span>)</span><span class="hljs-comment">;</span>
+    }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>Invalid async with Promise mocha test</h1>
+<p>If you were to run the below test it would fail with a timeout error.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully!"</span>, function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    testPromise.then(function(<span class="hljs-literal">result</span>) {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello World!"</span>);
+        done();
+    }, done);
+});
+</code></pre>
+<p>If you were to open up your developer tools you may notice an error printed to the console:</p>
+<pre><code>    <span class="hljs-tag">Uncaught</span> (in promise) <span class="hljs-tag">i</span> {<span class="hljs-attribute">message</span>: <span class="hljs-string">"expected 'Hello!' to equal 'Hello World!'"</span>, <span class="hljs-attribute">showDiff</span>: true, <span class="hljs-attribute">actual</span>: <span class="hljs-string">"Hello!"</span>, <span class="hljs-attribute">expected</span>: <span class="hljs-string">"Hello World!"</span>}
+</code></pre>
+<p>The problem here is the <code>expect(result).to.equal(&quot;Hello World!&quot;);</code> above will fail before we can signal to Mocha via the <code>done()</code> of either an error or a completion which causes a timeout.</p>
+<p>We can update the above test with a <code>try/catch</code> around our expectations that could throw exceptions so that we can report any errors to Mocha if they happened.</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function<span class="hljs-list">(<span class="hljs-keyword">done</span>)</span> {
+    var testPromise = new Promise<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">resolve</span>, reject)</span> {
+        setTimeout<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+            resolve<span class="hljs-list">(<span class="hljs-string">"Hello World!"</span>)</span><span class="hljs-comment">;</span>
+        }, <span class="hljs-number">200</span>)</span><span class="hljs-comment">;</span>
+    })</span><span class="hljs-comment">;</span>
+
+    testPromise.then<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>{
+        try {
+            expect<span class="hljs-list">(<span class="hljs-keyword">result</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-string">"Hello!"</span>)</span><span class="hljs-comment">;</span>
+            done<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+        } catch<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span> {
+            done<span class="hljs-list">(<span class="hljs-keyword">err</span>)</span><span class="hljs-comment">;</span>
+        }
+    }, done)</span><span class="hljs-comment">;</span>
+})</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>This will correctly report the error in the test.</p>
+<h1>Turn what we know above into async/await.</h1>
+<p>Now that we know there are some special things we need to do in our async mocha tests (<code>done</code> callbacks and <code>try/catch</code> around code that throws assertions), let's see what happens if we start to use the new ES7 async/await syntax in the language and if it can enable more readable asynchronous unit tests.</p>
+<p>The beauty of the async/await syntax is we get to reduce the <code>.then(callback, done)</code>... mumbo jumbo and turn that into code that reads like it were happening synchronously. The downside of this approach is that it's not happening synchronously and we can't forget that when we're looking at code and starting to use it this way. But overall it is generally easier to reason about in this style.</p>
+<p>The big changes from the above <code>Promise</code> style test and the transformed <code>async</code> test below are:</p>
+<ol>
+<li>Place the <code>async</code> word in front of the <code>async function(done){...</code>. This tells the system that inside of this function there may (or may not be) the use of the <code>await</code> keyword and in the end the function is turned into a <code>Promise</code> under the hood.</li>
+<li>We remove the <code>.then(function(result){</code> promise work and in place use the <code>await</code> keyword to have it return the promise value assign it to <code>result</code> so after that we can run our expectations against it.</li>
+<li>Notice we still have to call <code>done</code> because this is still an asynchronous test so we have to tell Mocha when it's done (even though it almost looks synchronous).</li>
+</ol>
+<p>If we look below, we see that we flatten out the callback promise work which can get difficult to read and follow over time. But before we get too excited there's one problem with how I converted this method. What happens if the <code>testPromise</code> were to reject? (where did that reject handling code go?).</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+    <span class="hljs-keyword">try</span> {
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Handling errors with <code>async/await</code></h1>
+<p>One interesting implementation detail around async await is that exceptions and errors are handled just like you were to handle them in synchronous code using a <code>try/catch</code>.</p>
+<p>So in the above test if the <code>testPromise</code> were to have <code>rejected</code> the promise or raised another type of exception we would not have seen the error in our mocha test and would have once again run into a timeout error.</p>
+<p>The fix is to move the <code>try {</code> up above the <code>await testPromise;</code> so that any rejections form the asynchronous code OR errors thrown by our assertion library are caught and we can report them to Mocha.</p>
+<p>Below shows the fixed (failing) but more properly setup async/await mocha unit test.</p>
+<pre><code>it(<span class="hljs-string">"Using a Promise with async/await that resolves successfully with wrong expectation!"</span>, async function(done) {
+    <span class="hljs-keyword">var</span> testPromise = new <span class="hljs-type">Promise</span>(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(<span class="hljs-string">"Hello World!"</span>);
+        }, <span class="hljs-number">200</span>);
+    });
+
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await testPromise;
+
+        expect(<span class="hljs-literal">result</span>).to.equal(<span class="hljs-string">"Hello!"</span>);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<h1>Removing the test boilerplate</h1>
+<p>One I started seeing the pattern and use of <code>try/catch</code> boilerplate showing up in my async tests, it became apparent that there had to be a more terse approach that could help me avoid forgetting the <code>try/catch</code> needed in each async test. This was because I would often remember the <code>async/await</code> syntax changes for my async tests but would often forget the <code>try/catch</code> which often resulted in timeout errors instead of proper failures.</p>
+<blockquote>
+<p>another example below with the async/await and try/catch</p>
+</blockquote>
+<pre><code>it(<span class="hljs-string">"Using an async method with async/await!"</span>, async function(done) {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-literal">result</span> = await somethingAsync();
+
+        expect(<span class="hljs-literal">result</span>).to.equal(something);
+
+        done();
+    } catch(err) {
+        done(err);
+    }
+});
+</code></pre>
+<p>So I refactored that to reduce the friction.</p>
+<h2>And the mochaAsync higher order function was born</h2>
+<p>This simple little guy takes an <code>async</code> function which looks like <code>async () =&gt; {...}</code>. It then returns a higher order function which is also asynchronous but has wrapped your test function in a try/catch and also takes care of calling the mocha <code>done</code> in the proper place (either after your test is asynchronously completed, or errors out).</p>
+<pre><code>var mochaAsync = <span class="hljs-function"><span class="hljs-params">(fn)</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> async (done) =&gt; {
+        <span class="hljs-keyword">try</span> {
+            await fn();
+            done();
+        } <span class="hljs-keyword">catch</span> (err) {
+            done(err);
+        }
+    };
+};
+</code></pre>
+<p>You can use it like this:</p>
+<pre><code>it<span class="hljs-list">(<span class="hljs-string">"Sample async/await mocha test using wrapper"</span>, mochaAsync<span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    var x = await someAsyncMethodToTest<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+    expect<span class="hljs-list">(<span class="hljs-keyword">x</span>)</span>.to.equal<span class="hljs-list">(<span class="hljs-keyword">true</span>)</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>It can also be used with the mocha <code>before</code>, <code>beforeEach</code>, <code>after</code>, <code>afterEach</code> setup/teardown methods.</p>
+<pre><code>beforeEach<span class="hljs-list">(<span class="hljs-keyword">mochaAsync</span><span class="hljs-list">(<span class="hljs-keyword">async</span> <span class="hljs-list">()</span> =&gt; {
+    await someLongSetupCode<span class="hljs-list">()</span><span class="hljs-comment">;</span>
+})</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<h1>In closing.</h1>
+<p>This post may have seemed like quite a journey to get to the little poorly named <code>mochaAsync</code> helper but I hope it was helpful and I can't wait for the <code>async/await</code> syntax to become mainstream in JavaScript, but until then I'm thankful we have transpiring tools like <a href="http://babeljs.io">Babel</a> so we can take advantage of these features now. Especially in our tests...</p>
+<p>Happy Testing!</p>
+</div>
+
+      <a href="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/#disqus_thread" data-disqus-identifier="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps</a></h1>
     <p class="meta">
           <time datetime="2015-11-07T06:20:41.092Z" pubdate data-updated="true">Nov 6th 2015</time>
@@ -662,7 +855,7 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 
         <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
         <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
-        
+
         <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
         <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
         <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
@@ -693,7 +886,7 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
                 <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
                 <span class="hljs-built_in">console</span>.error(err);
             });
-        
+
         });
         mocha.setup(<span class="hljs-string">'bdd'</span>);
     }
@@ -702,7 +895,7 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
         <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
 
         <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
-        
+
         mocha.checkLeaks();
         mocha.globals(allowedGlobals);
         mocha.run();
@@ -981,79 +1174,6 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 </div>
 
       <a href="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/#disqus_thread" data-disqus-identifier="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
-    <p class="meta">
-          <time datetime="2015-09-14T06:20:41.092Z" pubdate data-updated="true">Sep 13th 2015</time>
-
-
-        <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 3</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - (current) - Self Prescribed Code Reviews
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
-        </li>
-    </ul>
-</div></p>
-<blockquote>
-<p>One technique I use regularly when working with a team or even by myself is lots of individual code reviews.</p>
-</blockquote>
-<h1>This is not a formal (sit down with someone) code review.</h1>
-<p>This is a personal practice I found extremely useful.</p>
-<p>Granted, I'm not talking about reviewing every commit in a repository the <a href="https://www.youtube.com/watch?v=X0VH78ye4yY">size of Facebooks</a>. Most of the projects I have participated in are on small enough teams (between 1-10 people) that reviewing code changes either as they come in or in some block during the day is completely feasible.</p>
-<p>Depending on the project, how many developers, time zones of committers, I shift how often or how thorough I review the changes but I try to review each and every commit (or at least the branch merge). This is one reason why <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregating your code commits into tiny topical changes</a> is important.</p>
-<p>If you're working with a source control that doesn't have an easy way to do <a href="http://git-scm.com/docs/git-request-pull">pull requests</a>. Or some other code review functionality, you can still use the source control system to manually review changes or diffs between branches. Way back when I was <strong>forced</strong> to use TFS source control this was a much more manual process. I would open up Visual Studio, browse our TFS server and begin reviewing. These days, the power of a pull request is generally suffecient for this purpose.</p>
-<h1>What happens in this review?</h1>
-<p>One approach I've taken in the past is to block some time, possibly while warming up with a cup of coffee to begin reviewing the previous day's commits. I would use this time to not only review other developer's changes, but I would also re-review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Reviewing code the next day provided time for my mental perspective to have shifted. I was probably thinking about things a little more clearly after a nights rest. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made that day.</p>
-<p>Some other benefits the morning review process provided include:</p>
-<ul>
-<li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.</li>
-<li>I could take notes on changes other's had made that were not clear. (Note: this is generally done in an environment that didn't perscribe peer-reviewing code changes). So I essentially took the job on personally to review other's changes. Provide feedback, or ask question to get more understanding of their changes.</li>
-<li>Easily catch when the project conventions were not being followed, when the <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">convention was not automated</a>.</li>
-<li>Potentially spot bugs being introduced.</li>
-<li>Suggest potentially better approaches.</li>
-</ul>
-<p>However, the most important thing I gained by doing this was:</p>
-<ul>
-<li>Gain a better understanding of the entire project.</li>
-<li>Learn from others. I'd like to think I'm a pretty good develoepr, but there is so much to know and learn that reading other's code provides a great way to learn something new (or possibly what not to do).</li>
-</ul>
-<p>I once had a fellow developer say to me that they were blown away at how quick I could spin up on a brownfield project and get an architectural understanding that I could apply that knowledge and not only contribute quickly, but spot the places where we could improve general architectural patterns or jump in and become productive on a problem set.</p>
-<p>I believe that reviewing the changes going into a code base each day allowed me to keep a strong perspective on what is shifting within the project and be able to talk intelligibly when others start to get stuck on their work.</p>
-<h1>Formal Code Reviews</h1>
-<p>If your team practices some form of code review workflow, this is great for those participating in the review process. However, it leaves the rest of the developers out of that specific review.</p>
-<p>This should not stop those not in the review room (or pull request) from participating and learning from the changes.</p>
-<p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I can not only come up to speed on a project but can be helpful to all aspects of the project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
-<h1>Just Review Everything</h1>
-<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
-<p>Happy Reviewing!</p>
-</div>
-
-      <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
