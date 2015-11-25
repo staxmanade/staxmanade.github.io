@@ -71,6 +71,36 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/potentially-serious-bug-sql-server-2008/">Potentially SERIOUS bug. -- SQL Server 2008 Management Studio</a></h1>
+    <p class="meta">
+          <time datetime="2009-04-22T19:44:00.000Z" pubdate data-updated="true">Apr 22nd 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <h5><strong>UPDATE</strong>: <a href="http://connect.microsoft.com/SQLServer/feedback/ViewFeedback.aspx?FeedbackID=434465">Microsoft’s acknowledged the bug</a>… </h5>  <p>We had a scenario (several weeks back) where a co-worker was connecting/changing connection between different sql servers and ended up in a state where the Microsoft SQL Server Management Studio said he was connected to one server however when executing queries it was connected to a different server.</p>  <p>This issue has been in the back of my mind ever since as a “what if this happens when connected to a production database and not my local dev box” issue. <strong>(WARNING: SERIOUS DATA CORRUPTION MAY OCCUR, when connected to the wrong server unknowingly)</strong>     <br />NOTE: Luckily, we recently gave read-only rights to our dev AD user accounts so this situation couldn’t happen. I know, I know, “why didn’t we have that from the beginning?”……It happens, anyway…</p>  <p>Well, today I had the issue when working between my Dev box and our Test server and it took another developer (Thanks <a href="http://blogs.vertigo.com/personal/KeithC/Blog/default.aspx">Keith Craig</a> from <a href="http://vertigo.com/">Vertigo Software</a>) to help me figure out the data I was looking at was not actually the data from the server I thought I was connected to.</p>  <h4>Screenshot of the problem:</h4>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9znnFVA2I/AAAAAAAAAGg/IKSZ0G0a2uc/s1600-h/image%5B80%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zn6m79WI/AAAAAAAAAGk/g3MFRsXosPM/image_thumb%5B44%5D.png?imgmax=800" width="583" height="176" /></a> </p>  <h4>How to get into that state…</h4>  <ol>   <li>Start with a query connected to a remote database.      <br /><strong>NOTE: The two servers in red are the same. (Yay, we’re in a good state)        <br /></strong><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zoFlU4xI/AAAAAAAAAGo/1h9D7imn7IE/s1600-h/image%5B67%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zoePT_NI/AAAAAAAAAGs/5MbzroqWfc4/image_thumb%5B37%5D.png?imgmax=800" width="587" height="181" /></a> </li>    <li>Click the “New Query” button to open a new query window.      <br /><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9zolT1-MI/AAAAAAAAAGw/c2nVVkPNhnM/s1600-h/image%5B11%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zokyQjEI/AAAAAAAAAG0/-_ac3kcfC-Y/image_thumb%5B5%5D.png?imgmax=800" width="267" height="104" /></a> </li>    <li>Right click in the new empty query window, while it’s loading, and you (might) get the option to Connect. (if you’re fast enough)      <br /><strong>NOTE: This happens if you right click before the window finishes initializing it’s connection to the original server (in this case the remote database server). Usually this dialog gives you the “Change Connection” option when connected, but if you’re fast enough you can get the “Connect” option and the “Change Connection” will be disabled.        <br /></strong>&#160;<a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zpFCI01I/AAAAAAAAAG4/N2RyXe126XI/s1600-h/image%5B72%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Se9zpWnCC9I/AAAAAAAAAG8/MkhCXu6Z-Z4/image_thumb%5B40%5D.png?imgmax=800" width="655" height="234" /></a> </li>    <li>Click “Connect” and choose to the new desired server. In this case I’m going to connect to (local)      <br /><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/Se9zpmM2FXI/AAAAAAAAAHA/t47nPurq3t4/s1600-h/image%5B20%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zp48_DyI/AAAAAAAAAHE/_93Vimltrl0/image_thumb%5B10%5D.png?imgmax=800" width="411" height="156" /></a> </li>    <li>That’s it, I’m now connected to the original server <strong><u>FILES</u></strong>, even though it says I'm connected to the server entered in the dialog above <strong><u>(local)</u></strong>.       <br />&#160;&#160; <a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/Se9zqBTmYBI/AAAAAAAAAHI/_vxrTOlW_6s/s1600-h/image%5B84%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/Se9zqaGoMcI/AAAAAAAAAHM/vupnhlDVQhw/image_thumb%5B46%5D.png?imgmax=800" width="583" height="176" /></a> </li> </ol>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p>&#160;</p>  <h4>Current Work Around to Avoid this Problem:</h4>  <h1 align="center"><u><em>PATIENCE</em></u></h1>  <p>To avoid the issue, wait till the query window has time to finish it’s initialization and has connect to the previous server. Then you can Right-Click –&gt; Connection –&gt; Change Connection…</p>  <p>&#160;</p>  <p>Hope this helps someone else… because, like I stated earlier… <strong>(WARNING: SERIOUS DATA CORRUPTION MAY OCCUR, when connected to the wrong server unknowingly)</strong></p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason Jarrett</div>
+<div class='content'>
+I don&#39;t have any sql server builds that I can test anymore. This was an old post and I&#39;ve since forgotten all about it... Looks like Microsoft closed it as &quot;won&#39;t fix&quot; http://connect.microsoft.com/SQLServer/feedback/details/434465/management-studio-can-display-connection-to-wrong-server</div>
+</div>
+<div class='comment'>
+<div class='author'>Anonymous</div>
+<div class='content'>
+Hi Jason,<br /><br />I tried to reproduce this bug in SSMS 2008 (10.0.5500.0), and the Connect option is disabled while the new query window is initializing. Looks like it&#39;s fixed to me.<br /><br />Please can you verify.<br />Thanks<br />Andy</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/04/t4-replacement-for-add-service/">T4 replacement for “Add Service Reference”</a></h1>
     <p class="meta">
           <time datetime="2009-04-10T23:22:00.000Z" pubdate data-updated="true">Apr 10th 2009</time>
@@ -322,56 +352,6 @@ You might find this useful:<br /><br />http://code.google.com/p/shouldit/<br /><
 <div class='author'>DB</div>
 <div class='content'>
 Whats up Stax! Man, you are always deep into stuff I can't understand!</div>
-</div>
-</div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/silverlight-automocker-with-unity/">Silverlight AutoMocker with Unity container and Moq</a></h1>
-    <p class="meta">
-          <time datetime="2009-01-24T07:14:00.000Z" pubdate data-updated="true">Jan 23rd 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>A couple weeks back I threw out a <a href="/2009/01/silverlight-moq-automocker-teaser" target="_blank">Teaser about a Silverlight AutoMocker</a>... Here's the follow up I promised.</p>  <p><strong><u> UPDATE: Moq 3.0 released with full Silverlight support </u></strong><a href="http://moq.me/get"><strong><u>http://moq.me/get </u></strong></a></p>  <p>I've been working on this off and on for a while now, and finally decided to sit down and finalize (at least this version) of both Moq for Silverlight and an AutoMocking container backed by the <a href="http://codeplex.com/Unity" target="_blank">Unity IoC</a> from Microsoft.</p>  <p>This isn't by any means &quot;Official&quot;, but probably not far from what will be coming out when it's done... </p>  <p>Below are the necessary steps (I can come up with) to get an official version of Moq.</p>  <ol>   <li>We need an &quot;Official&quot; build of the Castle.DynamicProxy2 dependency      <ol>       <li>Create NAnt build scripts (Jonathon Rossi said he'd try to work on it this weekend 1/23) Thank God! It tried porting the NAnt build to Silverlight and each of the 3 times I got so lost I gave up... :( </li>        <li>Fix the Castle.Core-Silverlight build (some changes have occurred to the main without being pushed to the Silverlight Version) </li>        <li>Create an official binaries of          <ol>           <li>Castle.Core </li>            <li>Castle.DynamicProxy </li>         </ol>       </li>     </ol>   </li>    <li>Port Moq to Silverlight      <ol>       <li>I supplied a patch to Daniel a while ago, but he said he wouldn't include it until #1 above. </li>     </ol>   </li> </ol>  <p>But until the official versions become available, here are what I have so far!!!</p>  <p><strong>UPDATE</strong>: oops, realized I posted the files below as .7z. You can download and install the free open source zip utility here <a href="http://www.7-zip.org/">http://www.7-zip.org/</a></p>  <p>&#160;</p>  <p>This contains the Moq, Moq-Contrib (w/unity AutoMocker) source    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/src-MoqAndMoqContribForSilverlight.7z" frameborder="0" scrolling="no"></iframe></p>  <p>This contains all the binaries you need to run Moq...    <br /><iframe style="border-right: #dde5e9 1px solid; padding-right: 0px; border-top: #dde5e9 1px solid; padding-left: 0px; padding-bottom: 0px; margin: 3px; border-left: #dde5e9 1px solid; width: 240px; padding-top: 0px; border-bottom: #dde5e9 1px solid; height: 66px; background-color: #ffffff" marginwidth="0" marginheight="0" src="http://cid-c0f357e4555270e7.skydrive.live.com/embedrowdetail.aspx/Public/bin-MoqAndMoqContribForSilverlight.7z" frameborder="0" scrolling="no"></iframe></p>  <p>&#160;</p>  <p>Please keep in mind I'm by no means an IoC pro and the whole AutoMocker was a one afternoon attempt at throwing one together that I could use in Silverlight. It's very basic, but seems to support most of what I need for now.</p>  <p>Could an AutoMocking container backed by Moq and Unity be a project that the community needs?</p>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-@Mark<br /><br />I&#39;ve been disconnected from the castle dynamic proxy for quite a while. (Last I knew Mr. Rossi was going to get it into the build process) If that&#39;s true, building from src would be your best bet. If it&#39;s not possible through the NAnt script, then, the way I originally did it, was opening up the Silverlight project in VS and building that way... (I think you have to run the NAnt build at least once for it to setup the AssemblyInfo.cs stuff before you try to vs build)<br /><br />Hope this helps. (sorry I don&#39;t have more info than this)</div>
-</div>
-<div class='comment'>
-<div class='author'>Mark</div>
-<div class='content'>
-Re: the error with generic constraints - I created a test for this and it is fixed on the main build see here: http://support.castleproject.org/projects/DYNPROXY/issues/view/DYNPROXY-ISSUE-92<br /><br />I&#39;m not sure how to get this into a silverlight version - there doesn&#39;t seem to be a Silverlight build. Can you help?<br /><br />Thanks<br /><br />Mark</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-Any chance you could send an example test?</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Hi Jason, <BR/>This is really cool...thanks!<BR/><BR/>I thought you might want to know about an error I received. When mocking an interface containing generic parameter constraints, I receive the error... <BR/><BR/>System.BadImageFormatException: An attempt was made to load a program with an incorrect format.<BR/><BR/>...when running the test. <BR/><BR/>Thanks!</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-@Adam - There's two things you can do.<BR/><BR/>1. Moq-contrib at google code already has an AutoMocker that uses the AutoFac IoC.<BR/><BR/>or<BR/><BR/>2. Take my source, recompile the AutoMocker in .net (make sure to get the correct full-framework dependencies)<BR/><BR/>Hope that helps...</div>
-</div>
-<div class='comment'>
-<div class='author'>Adam</div>
-<div class='content'>
-I would really like an Automocker for the *WPF* side of things.</div>
 </div>
 </div>
 </div>
