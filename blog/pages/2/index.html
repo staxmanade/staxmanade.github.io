@@ -71,6 +71,89 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">Habit of a Solid Developer - Part 4 - Git Dance</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-30T06:20:41.092Z" pubdate data-updated="true">Sep 29th 2015</time>
+
+
+        <a href="/2015/09/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-git-dance/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - (current) - Git Dance
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
+        </li>
+    </ul>
+</div></p>
+<p>When it comes to solid dev habits, source control should be on the top of your list as a given. So much so that I'm not going to talk about the pro's and pro's (see what I did there?) of source control. I did however, want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
+<p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can mostly be wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
+<h1><a href="http://git-scm.com/docs/git-fetch">Fetch</a> remote changes (don't <a href="http://git-scm.com/docs/git-pull">pull</a>)</h1>
+<p>So if we know or don't know that there are changes remotely</p>
+<pre><code>git fetch
+</code></pre>
+<p>or sometimes (if I have multiple remotes)</p>
+<pre><code>git fetch --all
+</code></pre>
+<p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
+<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph before any action is taken. This allows me to take different paths depending on what the before commit graph looks like vs what I want the after to look like. <code>Git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I often don't want to just merge a remote change.</p>
+<p>After I have any remote changes pulled (err fetched) locally I like to get a mental model of the recent commits.</p>
+<h1>Review remote changes</h1>
+<pre><code>gitk --all
+</code></pre>
+<p>Now the <code>gitk</code> U.I. is horrible to look at (and I'm sure you have your favorite git visualizer), but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> step above. The <code>--all</code> is important in gitk, as it will show you all branches (including remote branches) that were fetched.</p>
+<p>I use this overview to not only <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">code review changes</a>, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
+<h1>Merge or Rebase</h1>
+<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental model of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to look like when I'm done. I will decide to either:</p>
+<h2>Merge</h2>
+<pre><code>git merge [origin/master | otherBranch]
+</code></pre>
+<p>Or</p>
+<h2>Rebase</h2>
+<pre><code>git rebase [origin/master | otherBranch]
+</code></pre>
+<p>Once my changes have been synced up with the remote changes, I push them up.</p>
+<h1>Ship changes up to the origin</h1>
+<pre><code>git push origin master
+</code></pre>
+<p>or</p>
+<pre><code>git push origin &lt;branchName&gt;
+</code></pre>
+<p>Now it's not a complicated workflow and it can get a bit trickier, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
+<p>Happy <code>gitting</code>!</p>
+</div>
+
+      <a href="/2015/09/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-git-dance/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">tvOS Simulator Remote - Keyboard Shortcuts/Replacement</a></h1>
     <p class="meta">
           <time datetime="2015-09-16T05:06:14.601Z" pubdate data-updated="true">Sep 15th 2015</time>
@@ -199,6 +282,9 @@
         <li>
             Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
         </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
+        </li>
     </ul>
 </div></p>
 <blockquote>
@@ -274,6 +360,9 @@
         </li>
         <li>
             Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
         </li>
     </ul>
 </div></p>
@@ -542,6 +631,9 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
         </li>
         <li>
             Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
         </li>
     </ul>
 </div></p>
@@ -1161,39 +1253,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
       <a href="/2015/05/running-in-app-mocha-tests-within-winjs/#disqus_thread" data-disqus-identifier="/2015/05/running-in-app-mocha-tests-within-winjs/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a></h1>
-    <p class="meta">
-          <time datetime="2015-04-13T04:18:37.055Z" pubdate data-updated="true">Apr 12th 2015</time>
-
-
-        <a href="/2015/04/look-at-where-definitelytyped-is-now/#disqus_thread" data-disqus-identifier="/2015/04/look-at-where-definitelytyped-is-now/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1>A Little Wondering</h1>
-<p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
-<p>While looking over the project template, I was surprised to see a familiar folder structure <code>typings/cordova/*</code> in the project.</p>
-<h2>Why is this folder structure familiar?</h2>
-<p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
-<p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
-<p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
-<p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the <a href="http://NuGet.org">NuGet.org</a>, take a glance at the account and check out how many downloads there had been?</p>
-<p><img src="/images/posts/definitelyTypedNugetAccountApril2015.png" alt="DefinitelyTyped NuGet account"></p>
-<p>** HOLY Typings **, there've been over 2 million DT type definitions?</p>
-<p>This little ditty was neat to find. I haven't done a ton with TypeScript in a while, but it's quite amazing to see the traction it is starting to gain.</p>
-<p>This means that the <a href="http://teamcity.codebetter.com/">TeamCity over at CodeBetter</a> has pretty much been cranking out new and updated DefinitelyTyped TypeScript definitions for almost the last two years, but it's time to re-visit...</p>
-<h1>Thanks TeamCity @ CodeBetter</h1>
-<p>Before all of the new, cool, and hip online continuous integration systems came to be, one of the only free options for open source was an instance of <a href="https://www.jetbrains.com/teamcity/">JetBrains TeamCity</a> over at <a href="http://codebetter.com/">CodeBetter</a> and I'd like to throw out a big thank you for those at CodeBetter who put the time and effort into hosting this service for many of the .Net OSS projects out there.</p>
-<h1>Hello AppVeyor</h1>
-<p>I recently ported this job to an <a href="http://www.appveyor.com/">AppVeyor</a> build for the DT project and after a quick round of using their wonderful support to work through a hurdle, I completed a <a href="https://ci.appveyor.com/project/JasonJarrett/nugetautomation">new build</a> at AppVeyor that replicated the one originally hosted on the TeamCity server.</p>
-<p>So a HUGE thanks to AppVeyor for creating such great product, and offering free builds to the OSS community.</p>
-<p>I'll keep an eye on the new build for a while (before I forget about it) and hopefully it'll run for another long time to come.</p>
-<p>Happy TypeScripting!</p>
-</div>
-
-      <a href="/2015/04/look-at-where-definitelytyped-is-now/#disqus_thread" data-disqus-identifier="/2015/04/look-at-where-definitelytyped-is-now/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -1205,7 +1264,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
     </div>
 </div>
 <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2016 - Jason Jarrett - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 </footer>
