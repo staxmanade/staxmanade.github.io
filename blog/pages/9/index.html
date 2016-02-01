@@ -71,6 +71,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">NuGet Project Uncovered: FastMember</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-16T04:48:00.000Z" pubdate data-updated="true">Feb 15th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/FastMember" target="_blank">FastMember</a> would be something you pull in if you’re trying to do reflection to read properties of your objects, but starting to notice some performance issues. This project will emit some IL at runtime that can read your properties much faster than good old reflection (like below)</p>  <blockquote>   <p><font style="background-color: #ffffff">var value = typeof(MyObject).GetProperty(“MyProp”).GetValue(myObjInstance, new object[0]);</font></p> </blockquote>  <p>Replace the above with.</p>  <blockquote>   <pre>var accessor = TypeAccessor.Create(typeof(MyObject)); <br />var value = accessor[obj, “MyProp”];<br /></pre><br /></blockquote><br /><br /><p>This project lets you either read or assign values to properties. (See my test below)</p><br /><br /><p><a href="http://lh5.ggpht.com/-c07wZnNp_JQ/Tx-LBUyYFVI/AAAAAAAAAVg/hiErRW7eAqw/s1600-h/image_thumb1_thumb%25255B2%25255D.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image_thumb1_thumb" border="0" alt="image_thumb1_thumb" src="http://lh5.ggpht.com/-O9Oa3Z61lfc/Tx-LBzkyDtI/AAAAAAAAAVo/NtmF_YwKEfk/image_thumb1_thumb_thumb.png?imgmax=800" width="466" height="343" /></a></p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fakeo/">NuGet Project Uncovered: FakeO</a></h1>
     <p class="meta">
           <time datetime="2012-02-15T04:46:00.000Z" pubdate data-updated="true">Feb 14th 2012</time>
@@ -218,23 +235,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-06T04:31:00.000Z" pubdate data-updated="true">Feb 5th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
 </div>
 
       
