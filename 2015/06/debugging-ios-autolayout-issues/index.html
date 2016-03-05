@@ -84,7 +84,7 @@
 <p>I just stumbled upon a way to help when debugging and diagnosing issues around ambiguous auto layout constraints (you know the kind where iOS just picks the one it feels like to remove?).</p>
 <p>Today I was researching why I was receiving the following output in my debugger console:</p>
 <pre><code>Unable <span class="hljs-built_in">to</span> simultaneously satisfy constraints.
-    Probably <span class="hljs-keyword">at</span> least <span class="hljs-constant">one</span> <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> constraints <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> following list is <span class="hljs-constant">one</span> you don<span class="hljs-string">'t want. Try this: (1) look at each constraint and try to figure out which you don'</span>t expect; (<span class="hljs-number">2</span>) find <span class="hljs-operator">the</span> code that added <span class="hljs-operator">the</span> unwanted constraint <span class="hljs-operator">or</span> constraints <span class="hljs-operator">and</span> fix <span class="hljs-keyword">it</span>. (Note: If you<span class="hljs-string">'re seeing NSAutoresizingMaskLayoutConstraints that you don'</span>t understand, refer <span class="hljs-built_in">to</span> <span class="hljs-operator">the</span> documentation <span class="hljs-keyword">for</span> <span class="hljs-operator">the</span> UIView property translatesAutoresizingMaskIntoConstraints) 
+    Probably <span class="hljs-keyword">at</span> least <span class="hljs-constant">one</span> <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> constraints <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> following list is <span class="hljs-constant">one</span> you don<span class="hljs-string">'t want. Try this: (1) look at each constraint and try to figure out which you don'</span>t expect; (<span class="hljs-number">2</span>) find <span class="hljs-operator">the</span> code that added <span class="hljs-operator">the</span> unwanted constraint <span class="hljs-operator">or</span> constraints <span class="hljs-operator">and</span> fix <span class="hljs-keyword">it</span>. (Note: If you<span class="hljs-string">'re seeing NSAutoresizingMaskLayoutConstraints that you don'</span>t understand, refer <span class="hljs-built_in">to</span> <span class="hljs-operator">the</span> documentation <span class="hljs-keyword">for</span> <span class="hljs-operator">the</span> UIView property translatesAutoresizingMaskIntoConstraints)
 (
     <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;"</span>,
     <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d6369e0 H:[UIView:0x7fc82aba1210]-(0)-|   (Names: '|':UIView:0x7fc82d6b9f80 )&gt;"</span>,
@@ -92,7 +92,7 @@
     <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e7fd0 'UIView-Encapsulated-Layout-Width' H:[UIView:0x7fc82d6b9f80(50)]&gt;"</span>
 )
 
-Will attempt <span class="hljs-built_in">to</span> recover <span class="hljs-keyword">by</span> breaking constraint 
+Will attempt <span class="hljs-built_in">to</span> recover <span class="hljs-keyword">by</span> breaking constraint
 &lt;NSLayoutConstraint:<span class="hljs-number">0x7fc82d3e18a0</span> H:[UIView:<span class="hljs-number">0x7fc82aba1210</span>(<span class="hljs-number">768</span>)]&gt;
 
 Make <span class="hljs-operator">a</span> symbolic <span class="hljs-built_in">breakpoint</span> <span class="hljs-keyword">at</span> UIViewAlertForUnsatisfiableConstraints <span class="hljs-built_in">to</span> <span class="hljs-keyword">catch</span> this <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> debugger.
@@ -153,7 +153,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
     <span class="hljs-number">0x1131cc523</span> &lt;+<span class="hljs-number">129</span>&gt;: popq   %r14
     <span class="hljs-number">0x1131cc525</span> &lt;+<span class="hljs-number">131</span>&gt;: popq   %r15
     <span class="hljs-number">0x1131cc527</span> &lt;+<span class="hljs-number">133</span>&gt;: popq   %rbp
-    <span class="hljs-number">0x1131cc528</span> &lt;+<span class="hljs-number">134</span>&gt;: retq   
+    <span class="hljs-number">0x1131cc528</span> &lt;+<span class="hljs-number">134</span>&gt;: retq
     <span class="hljs-number">0x1131cc529</span> &lt;+<span class="hljs-number">135</span>&gt;: leaq   <span class="hljs-number">0x778720</span>(%rip), %rdi      ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.__once
     <span class="hljs-number">0x1131cc530</span> &lt;+<span class="hljs-number">142</span>&gt;: leaq   <span class="hljs-number">0x4fdb59</span>(%rip), %rsi      ; __block_literal_global68
     <span class="hljs-number">0x1131cc537</span> &lt;+<span class="hljs-number">149</span>&gt;: callq  <span class="hljs-number">0x11331a2a8</span>               ; symbol stub <span class="hljs-keyword">for</span>: dispatch_once
@@ -168,7 +168,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <p>In the above example I'm going to take the following output:</p>
 <pre><code>Will attempt to recover by breaking constraint &lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;
 </code></pre>
-<p>Pull out the <code>UIView</code>'s memory address <code>0x7fd8fe59a440</code> and use the XCode console to get dig deeper and try to get a better understanding.</p>
+<p>Pull out the <code>UIView</code>'s memory address <code>0x7fd8fe59a440</code> and use the XCode console to dig deeper and try to get a better understanding.</p>
 <h1>Printing views from memory addresses</h1>
 <p>The memory address <code>0x7fd8fe59a440</code> is a pointer to a <code>UIView</code>. Since we know that a <code>UIView</code> has other selectors we can query, we can begin to use these to dig deeper into the object and get a better understanding of which part of our view have auto layout constraints that are not playing nicely.</p>
 <p>First we try to look at just the UIView and see if that helps us get a grasp as to which view is causing our troubles.</p>
@@ -179,7 +179,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 &lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
 </code></pre>
 <p>Maybe printing it's <a href="https://developer.apple.com/library/ios/technotes/tn2239/_index.html#//apple_ref/doc/uid/DTS40010638-CH1-SUBSECTION34"><code>recursiveDescription</code></a> will help out and in my case gives me a better idea of which component I'm actually trying to look at.</p>
-<pre><code>(lldb) po [<span class="hljs-number">0x7fc82aba1210</span> recursiveDescription] 
+<pre><code>(lldb) po [<span class="hljs-number">0x7fc82aba1210</span> recursiveDescription]
 &lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
    | &lt;MYAPPButton: <span class="hljs-number">0x7fc82d61c800</span>; baseClass = UIButton; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); opaque = NO; autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82ab96570</span>&gt;&gt;
    |    | &lt;UIImageView: <span class="hljs-number">0x7fc82d3f7b10</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">0</span> <span class="hljs-number">0</span>); clipsToBounds = YES; opaque = NO; userInteractionEnabled = NO; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d6e7020</span>&gt;&gt;
