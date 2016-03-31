@@ -71,6 +71,56 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">Oops - how a simple bit of automation put NuGet services on edge...</a></h1>
+    <p class="meta">
+          <time datetime="2016-03-30T20:06:46.955Z" pubdate data-updated="true">Mar 30th 2016</time>
+
+
+        <a href="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/#disqus_thread" data-disqus-identifier="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>This past week I received an email from Microsoft's NuGet team asking if I could look into a bit of an issue with <a href="http://definitelytyped.org/">DefinitelyTyped's</a> NuGet package publishing.</p>
+<h2>Some Background</h2>
+<p>A really long time ago, I wanted to access DefinitelyTyped packages within Visual Studio via the NuGet package manager. So I quickly wrote up a <a href="https://github.com/DefinitelyTyped/NugetAutomation">powershell script</a> to accomplish this. This script has run almost continuously ever since, and primarily without issue.</p>
+<blockquote>
+<p>There's been a couple tweaks/issues along the way - as to be expected, but it's been primarily hands-off.</p>
+</blockquote>
+<p>As of today, <a href="https://www.nuget.org/profiles/DefinitelyTyped">these NuGet packages</a> have been downloaded over <code>5,268,852</code> times - wow.</p>
+<h1>What does the automation do?</h1>
+<p>All of the NuGet packages generated for DefinitelyTyped are run through a build process on the good servers at <a href="https://www.appveyor.com/">AppVeyor</a> (Thanks AppVeyor).</p>
+<p>Every 2 hours the task does some git-fu to figure out what DT packages have updated (since the last run) and publishes updated NuGet packages for each updated DT package.</p>
+<h1>The initial problem report:</h1>
+<p>First let me say that thanks to Yishai and Maarten from Microsoft who brought the issue to my attention and were extremely polite and patient with the raised issue. So thank you, thank you, thank you for the support and being so friendly while working through this...</p>
+<p><img src="/images/posts/nuget-automation-oops-initial-email.png" alt="service status image of problem with nuget"></p>
+<h1>Looking at <a href="http://status.nuget.org">status.nuget.org</a></h1>
+<p>It was pretty easy to see that every 2 hours a large spike in uploads to NuGet was happening.</p>
+<p><img src="/images/posts/nuget-automation-oops-before.png" alt="service status image of problem with nuget"></p>
+<p><img src="/images/posts/nuget-automation-oops-status-text.png" alt="service status image of problem with nuget"></p>
+<blockquote>
+<p>While I can't say for certain this incident report on the status page was due to the NuGet automation, it was around the same time the automation was pushing extra builds (and right before I was contacted by Microsoft).</p>
+</blockquote>
+<h1>Was that my automation oops?</h1>
+<p>I didn't recall getting an error email from AppVeyor so I was initially suspicious. But logging in and looking at build history: hmmm. Looking back at my email, looks like I did receive the first failed build email - but must have been busy day as I didn't happen to notice that one email (when I usually do from other projects).</p>
+<p><img src="/images/posts/nuget-automation-oops-appveyor-status.png" alt="service status image of problem with nuget"></p>
+<p>YIKES!... so I quickly responded to Microsoft saying I'd shut down the automated portion and dig into it.</p>
+<h1>The Problem &amp; Resolution</h1>
+<p>Turns out the problem was due to a <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/pull/8605">large pull request</a> that updated about every package in the DT repo. This meant it had to publish every single package, but for some reason (not showing in the logs) the AppVeyor job was failing at the end and not saving the fact that the packages were being updated on NuGet...</p>
+<p>I have a way to run the NuGet publish manually on a local machine so I pulled down the project and ran the complete build. This took quite a while (almost 3 hours) and eventually I discovered the problem.</p>
+<p>At the end of the script is a <code>git commit -m {msg}</code> command. This is an important step as it records what has been updated/published. The problem was due to the large number of packages published, the <code>{msg}</code> was so big that it was throwing an error saying the command line command was too long to execute. Causing the system to not complete the cycle and end up re-publishing all nuget packages every 2 hours.</p>
+<p>I was able to manually commit with <a href="https://github.com/DefinitelyTyped/NugetAutomation/commit/6d2a95975849749b496e48d12e199b9561dc2cfd">a shorter message</a> and it brought the system back to normal.</p>
+<p>And below is NuGet status after the fix.</p>
+<p><img src="/images/posts/nuget-automation-oops-after.png" alt="service status image of problem with nuget"></p>
+<h1>Thanks NuGet!</h1>
+<p>Turns out the NuGet team put some time into optimizing the publishing process of their service - so maybe there was a benefit to this whole fiasco, but hopefully we won't be hammering the system going forward :)</p>
+<p>So I'd like to say thanks again to the NuGet team for you're kind support email and professional way of handling the issue. This is a great example of how Microsoft is helping the OSS community and their support is really taking off and showing promise!</p>
+<h3>Also Good Point</h3>
+<p><img src="/images/posts/nuget-automation-oops-gates-quote.png" alt="service status image of problem with nuget"></p>
+<p>Happy NuGetting!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a></h1>
     <p class="meta">
           <time datetime="2015-04-13T04:18:37.055Z" pubdate data-updated="true">Apr 12th 2015</time>

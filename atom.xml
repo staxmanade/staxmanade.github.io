@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-01-31T07:20:41Z</updated>
+    <updated>2016-03-30T20:06:46Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,52 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Oops - how a simple bit of automation put NuGet services on edge...]]></title>
+        <id>http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/</id>
+        <link href="http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">
+        </link>
+        <updated>2016-03-30T20:06:46Z</updated>
+        <summary type="html"><![CDATA[This past week I received an email from Microsoft's NuGet team asking if I could look into a bit of an issue with [DefinitelyTyped's](http://definitel...]]></summary>
+        <content type="html"><![CDATA[<p>This past week I received an email from Microsoft's NuGet team asking if I could look into a bit of an issue with <a href="http://definitelytyped.org/">DefinitelyTyped's</a> NuGet package publishing.</p>
+<h2>Some Background</h2>
+<p>A really long time ago, I wanted to access DefinitelyTyped packages within Visual Studio via the NuGet package manager. So I quickly wrote up a <a href="https://github.com/DefinitelyTyped/NugetAutomation">powershell script</a> to accomplish this. This script has run almost continuously ever since, and primarily without issue.</p>
+<blockquote>
+<p>There's been a couple tweaks/issues along the way - as to be expected, but it's been primarily hands-off.</p>
+</blockquote>
+<p>As of today, <a href="https://www.nuget.org/profiles/DefinitelyTyped">these NuGet packages</a> have been downloaded over <code>5,268,852</code> times - wow.</p>
+<h1>What does the automation do?</h1>
+<p>All of the NuGet packages generated for DefinitelyTyped are run through a build process on the good servers at <a href="https://www.appveyor.com/">AppVeyor</a> (Thanks AppVeyor).</p>
+<p>Every 2 hours the task does some git-fu to figure out what DT packages have updated (since the last run) and publishes updated NuGet packages for each updated DT package.</p>
+<h1>The initial problem report:</h1>
+<p>First let me say that thanks to Yishai and Maarten from Microsoft who brought the issue to my attention and were extremely polite and patient with the raised issue. So thank you, thank you, thank you for the support and being so friendly while working through this...</p>
+<p><img src="/images/posts/nuget-automation-oops-initial-email.png" alt="service status image of problem with nuget"></p>
+<h1>Looking at <a href="http://status.nuget.org">status.nuget.org</a></h1>
+<p>It was pretty easy to see that every 2 hours a large spike in uploads to NuGet was happening.</p>
+<p><img src="/images/posts/nuget-automation-oops-before.png" alt="service status image of problem with nuget"></p>
+<p><img src="/images/posts/nuget-automation-oops-status-text.png" alt="service status image of problem with nuget"></p>
+<blockquote>
+<p>While I can't say for certain this incident report on the status page was due to the NuGet automation, it was around the same time the automation was pushing extra builds (and right before I was contacted by Microsoft).</p>
+</blockquote>
+<h1>Was that my automation oops?</h1>
+<p>I didn't recall getting an error email from AppVeyor so I was initially suspicious. But logging in and looking at build history: hmmm. Looking back at my email, looks like I did receive the first failed build email - but must have been busy day as I didn't happen to notice that one email (when I usually do from other projects).</p>
+<p><img src="/images/posts/nuget-automation-oops-appveyor-status.png" alt="service status image of problem with nuget"></p>
+<p>YIKES!... so I quickly responded to Microsoft saying I'd shut down the automated portion and dig into it.</p>
+<h1>The Problem &amp; Resolution</h1>
+<p>Turns out the problem was due to a <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/pull/8605">large pull request</a> that updated about every package in the DT repo. This meant it had to publish every single package, but for some reason (not showing in the logs) the AppVeyor job was failing at the end and not saving the fact that the packages were being updated on NuGet...</p>
+<p>I have a way to run the NuGet publish manually on a local machine so I pulled down the project and ran the complete build. This took quite a while (almost 3 hours) and eventually I discovered the problem.</p>
+<p>At the end of the script is a <code>git commit -m {msg}</code> command. This is an important step as it records what has been updated/published. The problem was due to the large number of packages published, the <code>{msg}</code> was so big that it was throwing an error saying the command line command was too long to execute. Causing the system to not complete the cycle and end up re-publishing all nuget packages every 2 hours.</p>
+<p>I was able to manually commit with <a href="https://github.com/DefinitelyTyped/NugetAutomation/commit/6d2a95975849749b496e48d12e199b9561dc2cfd">a shorter message</a> and it brought the system back to normal.</p>
+<p>And below is NuGet status after the fix.</p>
+<p><img src="/images/posts/nuget-automation-oops-after.png" alt="service status image of problem with nuget"></p>
+<h1>Thanks NuGet!</h1>
+<p>Turns out the NuGet team put some time into optimizing the publishing process of their service - so maybe there was a benefit to this whole fiasco, but hopefully we won't be hammering the system going forward :)</p>
+<p>So I'd like to say thanks again to the NuGet team for you're kind support email and professional way of handling the issue. This is a great example of how Microsoft is helping the OSS community and their support is really taking off and showing promise!</p>
+<h3>Also Good Point</h3>
+<p><img src="/images/posts/nuget-automation-oops-gates-quote.png" alt="service status image of problem with nuget"></p>
+<p>Happy NuGetting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Developer Friendly React Component Errors]]></title>
         <id>http://staxmanade.com/2016/01/developer-friendly-react-component-errors/</id>
@@ -1905,129 +1951,6 @@ interface <span class="hljs-type">HelloWorldProps</span> <span class="hljs-keywo
 <p>While it seemed a bit challenging getting started with TypeScript and JSX I could really see the benefit of the compiler helping out with React components going forward, and look forward to the future of this part of the project.</p>
 <p>Thanks to the TypeScript team and community that helped bring all of this support together!</p>
 <p>Happy <code>TSXing</code>!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Debugging iOS AutoLayout Issues]]></title>
-        <id>http://staxmanade.com/2015/06/debugging-ios-autolayout-issues/</id>
-        <link href="http://staxmanade.com/2015/06/debugging-ios-autolayout-issues/">
-        </link>
-        <updated>2015-06-01T16:33:59Z</updated>
-        <summary type="html"><![CDATA[This tip may not be news to you, but it was to me so I'll put this up here to help you, but more to help myself when I get stuck down the road and for...]]></summary>
-        <content type="html"><![CDATA[<p>This tip may not be news to you, but it was to me so I'll put this up here to help you, but more to help myself when I get stuck down the road and forget how to do this.</p>
-<h1>Background</h1>
-<p>I just stumbled upon a way to help when debugging and diagnosing issues around ambiguous auto layout constraints (you know the kind where iOS just picks the one it feels like to remove?).</p>
-<p>Today I was researching why I was receiving the following output in my debugger console:</p>
-<pre><code>Unable <span class="hljs-built_in">to</span> simultaneously satisfy constraints.
-    Probably <span class="hljs-keyword">at</span> least <span class="hljs-constant">one</span> <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> constraints <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> following list is <span class="hljs-constant">one</span> you don<span class="hljs-string">'t want. Try this: (1) look at each constraint and try to figure out which you don'</span>t expect; (<span class="hljs-number">2</span>) find <span class="hljs-operator">the</span> code that added <span class="hljs-operator">the</span> unwanted constraint <span class="hljs-operator">or</span> constraints <span class="hljs-operator">and</span> fix <span class="hljs-keyword">it</span>. (Note: If you<span class="hljs-string">'re seeing NSAutoresizingMaskLayoutConstraints that you don'</span>t understand, refer <span class="hljs-built_in">to</span> <span class="hljs-operator">the</span> documentation <span class="hljs-keyword">for</span> <span class="hljs-operator">the</span> UIView property translatesAutoresizingMaskIntoConstraints)
-(
-    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;"</span>,
-    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d6369e0 H:[UIView:0x7fc82aba1210]-(0)-|   (Names: '|':UIView:0x7fc82d6b9f80 )&gt;"</span>,
-    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d636a30 H:|-(0)-[UIView:0x7fc82aba1210]   (Names: '|':UIView:0x7fc82d6b9f80 )&gt;"</span>,
-    <span class="hljs-string">"&lt;NSLayoutConstraint:0x7fc82d3e7fd0 'UIView-Encapsulated-Layout-Width' H:[UIView:0x7fc82d6b9f80(50)]&gt;"</span>
-)
-
-Will attempt <span class="hljs-built_in">to</span> recover <span class="hljs-keyword">by</span> breaking constraint
-&lt;NSLayoutConstraint:<span class="hljs-number">0x7fc82d3e18a0</span> H:[UIView:<span class="hljs-number">0x7fc82aba1210</span>(<span class="hljs-number">768</span>)]&gt;
-
-Make <span class="hljs-operator">a</span> symbolic <span class="hljs-built_in">breakpoint</span> <span class="hljs-keyword">at</span> UIViewAlertForUnsatisfiableConstraints <span class="hljs-built_in">to</span> <span class="hljs-keyword">catch</span> this <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> debugger.
-The methods <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> UIConstraintBasedLayoutDebugging category <span class="hljs-command"><span class="hljs-keyword">on</span> <span class="hljs-title">UIView</span> <span class="hljs-title">listed</span> <span class="hljs-title">in</span> &lt;<span class="hljs-title">UIKit</span>/<span class="hljs-title">UIView</span>.<span class="hljs-title">h</span>&gt; <span class="hljs-title">may</span> <span class="hljs-title">also</span> <span class="hljs-title">be</span> <span class="hljs-title">helpful</span>.</span>
-</code></pre>
-<p>Now, I can tell from the above that theres an issue with the height constraint(s), but looking at this, I have no idea what view is being referenced which makes it quite difficult to jump to XCode and inspect the view's constraints.</p>
-<p>But I worked through it, and learned the following along the way. Hope this helps you.</p>
-<h1>How to set auto layout breakpoint in Xcode debugger</h1>
-<p>Using this text <code>Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.</code> I found this great post on stack overflow on <a href="http://stackoverflow.com/questions/26389273/how-to-trap-on-uiviewalertforunsatisfiableconstraints/26389957#26389957">How to trap on UIViewAlertForUnsatisfiableConstraints</a> but have copied below for reference.</p>
-<blockquote>
-<p>You'll want to add a Symbolic Breakpoint. Apple provides an excellent guide on how to do this.</p>
-<ol>
-<li>Open the Breakpoint Navigator <code>cmd+7</code></li>
-<li>Click the <code>Add</code> button in the lower left</li>
-<li>Select <code>Add Symbolic Breakpoint</code>...</li>
-<li>Where it says <code>Symbol</code> just type in <code>UIViewAlertForUnsatisfiableConstraints</code></li>
-</ol>
-<p>You can also treat it like any other breakpoint, turning it on and off, adding actions, or log messages.</p>
-</blockquote>
-<p>But that's only the first step. Once you've run the app and hit the breakpoint, you're left staring at assembly code and memory addresses, for example:</p>
-<pre><code>UIKit`UIViewAlertForUnsatisfiableConstraints:
--&gt;  <span class="hljs-number">0x1131cc4a2</span> &lt;+<span class="hljs-number">0</span>&gt;:   pushq  %rbp
-    <span class="hljs-number">0x1131cc4a3</span> &lt;+<span class="hljs-number">1</span>&gt;:   movq   %rsp, %rbp
-    <span class="hljs-number">0x1131cc4a6</span> &lt;+<span class="hljs-number">4</span>&gt;:   pushq  %r15
-    <span class="hljs-number">0x1131cc4a8</span> &lt;+<span class="hljs-number">6</span>&gt;:   pushq  %r14
-    <span class="hljs-number">0x1131cc4aa</span> &lt;+<span class="hljs-number">8</span>&gt;:   pushq  %rbx
-    <span class="hljs-number">0x1131cc4ab</span> &lt;+<span class="hljs-number">9</span>&gt;:   pushq  %rax
-    <span class="hljs-number">0x1131cc4ac</span> &lt;+<span class="hljs-number">10</span>&gt;:  movq   %rsi, %r14
-    <span class="hljs-number">0x1131cc4af</span> &lt;+<span class="hljs-number">13</span>&gt;:  movq   %rdi, %r15
-    <span class="hljs-number">0x1131cc4b2</span> &lt;+<span class="hljs-number">16</span>&gt;:  cmpq   $-<span class="hljs-number">0x1</span>, <span class="hljs-number">0x778796</span>(%rip)     ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.result + <span class="hljs-number">7</span>
-    <span class="hljs-number">0x1131cc4ba</span> &lt;+<span class="hljs-number">24</span>&gt;:  jne    <span class="hljs-number">0x1131cc529</span>               ; &lt;+<span class="hljs-number">135</span>&gt;
-    <span class="hljs-number">0x1131cc4bc</span> &lt;+<span class="hljs-number">26</span>&gt;:  cmpb   $<span class="hljs-number">0x0</span>, <span class="hljs-number">0x778785</span>(%rip)      ; _UIConstraintBasedLayoutPlaySoundWhenEngaged.__once + <span class="hljs-number">7</span>
-    <span class="hljs-number">0x1131cc4c3</span> &lt;+<span class="hljs-number">33</span>&gt;:  je     <span class="hljs-number">0x1131cc4ed</span>               ; &lt;+<span class="hljs-number">75</span>&gt;
-    <span class="hljs-number">0x1131cc4c5</span> &lt;+<span class="hljs-number">35</span>&gt;:  movq   <span class="hljs-number">0x73cd8c</span>(%rip), %rdi      ; (<span class="hljs-keyword">void</span> *)<span class="hljs-number">0x0000000113925248</span>: UIDevice
-    <span class="hljs-number">0x1131cc4cc</span> &lt;+<span class="hljs-number">42</span>&gt;:  movq   <span class="hljs-number">0x7108e5</span>(%rip), %rsi      ; <span class="hljs-string">"currentDevice"</span>
-    <span class="hljs-number">0x1131cc4d3</span> &lt;+<span class="hljs-number">49</span>&gt;:  movq   <span class="hljs-number">0x4d7aee</span>(%rip), %rbx      ; (<span class="hljs-keyword">void</span> *)<span class="hljs-number">0x0000000114598000</span>: objc_msgSend
-    <span class="hljs-number">0x1131cc4da</span> &lt;+<span class="hljs-number">56</span>&gt;:  callq  *%rbx
-    <span class="hljs-number">0x1131cc4dc</span> &lt;+<span class="hljs-number">58</span>&gt;:  movq   <span class="hljs-number">0x71e375</span>(%rip), %rsi      ; <span class="hljs-string">"_playSystemSound:"</span>
-    <span class="hljs-number">0x1131cc4e3</span> &lt;+<span class="hljs-number">65</span>&gt;:  movl   $<span class="hljs-number">0x3ee</span>, %edx
-    <span class="hljs-number">0x1131cc4e8</span> &lt;+<span class="hljs-number">70</span>&gt;:  movq   %rax, %rdi
-    <span class="hljs-number">0x1131cc4eb</span> &lt;+<span class="hljs-number">73</span>&gt;:  callq  *%rbx
-    <span class="hljs-number">0x1131cc4ed</span> &lt;+<span class="hljs-number">75</span>&gt;:  cmpq   $-<span class="hljs-number">0x1</span>, <span class="hljs-number">0x77877b</span>(%rip)     ; _UIConstraintBasedLayoutLogUnsatisfiable.result + <span class="hljs-number">7</span>
-    <span class="hljs-number">0x1131cc4f5</span> &lt;+<span class="hljs-number">83</span>&gt;:  jne    <span class="hljs-number">0x1131cc541</span>               ; &lt;+<span class="hljs-number">159</span>&gt;
-    <span class="hljs-number">0x1131cc4f7</span> &lt;+<span class="hljs-number">85</span>&gt;:  cmpb   $<span class="hljs-number">0x0</span>, <span class="hljs-number">0x77876a</span>(%rip)      ; _UIConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints.__once + <span class="hljs-number">7</span>
-    <span class="hljs-number">0x1131cc4fe</span> &lt;+<span class="hljs-number">92</span>&gt;:  je     <span class="hljs-number">0x1131cc51e</span>               ; &lt;+<span class="hljs-number">124</span>&gt;
-    <span class="hljs-number">0x1131cc500</span> &lt;+<span class="hljs-number">94</span>&gt;:  leaq   <span class="hljs-number">0x53ba89</span>(%rip), %rdi      ; @<span class="hljs-string">"Unable to simultaneously satisfy constraints.\n\tProbably at least one of the constraints in the following list is one you don't want. Try this: (1) look at each constraint and try to figure out which you don't expect; (2) find the code that added the unwanted constraint or constraints and fix it. (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints) \n%@\n\nWill attempt to recover by breaking constraint \n%@\n\nMake a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.\nThe methods in the UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful."</span>
-    <span class="hljs-number">0x1131cc507</span> &lt;+<span class="hljs-number">101</span>&gt;: xorl   %eax, %eax
-    <span class="hljs-number">0x1131cc509</span> &lt;+<span class="hljs-number">103</span>&gt;: movq   %r14, %rsi
-    <span class="hljs-number">0x1131cc50c</span> &lt;+<span class="hljs-number">106</span>&gt;: movq   %r15, %rdx
-    <span class="hljs-number">0x1131cc50f</span> &lt;+<span class="hljs-number">109</span>&gt;: addq   $<span class="hljs-number">0x8</span>, %rsp
-    <span class="hljs-number">0x1131cc513</span> &lt;+<span class="hljs-number">113</span>&gt;: popq   %rbx
-    <span class="hljs-number">0x1131cc514</span> &lt;+<span class="hljs-number">114</span>&gt;: popq   %r14
-    <span class="hljs-number">0x1131cc516</span> &lt;+<span class="hljs-number">116</span>&gt;: popq   %r15
-    <span class="hljs-number">0x1131cc518</span> &lt;+<span class="hljs-number">118</span>&gt;: popq   %rbp
-    <span class="hljs-number">0x1131cc519</span> &lt;+<span class="hljs-number">119</span>&gt;: jmp    <span class="hljs-number">0x11331930c</span>               ; symbol stub <span class="hljs-keyword">for</span>: NSLog
-    <span class="hljs-number">0x1131cc51e</span> &lt;+<span class="hljs-number">124</span>&gt;: addq   $<span class="hljs-number">0x8</span>, %rsp
-    <span class="hljs-number">0x1131cc522</span> &lt;+<span class="hljs-number">128</span>&gt;: popq   %rbx
-    <span class="hljs-number">0x1131cc523</span> &lt;+<span class="hljs-number">129</span>&gt;: popq   %r14
-    <span class="hljs-number">0x1131cc525</span> &lt;+<span class="hljs-number">131</span>&gt;: popq   %r15
-    <span class="hljs-number">0x1131cc527</span> &lt;+<span class="hljs-number">133</span>&gt;: popq   %rbp
-    <span class="hljs-number">0x1131cc528</span> &lt;+<span class="hljs-number">134</span>&gt;: retq
-    <span class="hljs-number">0x1131cc529</span> &lt;+<span class="hljs-number">135</span>&gt;: leaq   <span class="hljs-number">0x778720</span>(%rip), %rdi      ; _UIConstraintBasedLayoutPlaySoundOnUnsatisfiable.__once
-    <span class="hljs-number">0x1131cc530</span> &lt;+<span class="hljs-number">142</span>&gt;: leaq   <span class="hljs-number">0x4fdb59</span>(%rip), %rsi      ; __block_literal_global68
-    <span class="hljs-number">0x1131cc537</span> &lt;+<span class="hljs-number">149</span>&gt;: callq  <span class="hljs-number">0x11331a2a8</span>               ; symbol stub <span class="hljs-keyword">for</span>: dispatch_once
-    <span class="hljs-number">0x1131cc53c</span> &lt;+<span class="hljs-number">154</span>&gt;: jmp    <span class="hljs-number">0x1131cc4bc</span>               ; &lt;+<span class="hljs-number">26</span>&gt;
-    <span class="hljs-number">0x1131cc541</span> &lt;+<span class="hljs-number">159</span>&gt;: leaq   <span class="hljs-number">0x778728</span>(%rip), %rdi      ; _UIConstraintBasedLayoutLogUnsatisfiable.__once
-    <span class="hljs-number">0x1131cc548</span> &lt;+<span class="hljs-number">166</span>&gt;: leaq   <span class="hljs-number">0x4fdbc1</span>(%rip), %rsi      ; __block_literal_global76
-    <span class="hljs-number">0x1131cc54f</span> &lt;+<span class="hljs-number">173</span>&gt;: callq  <span class="hljs-number">0x11331a2a8</span>               ; symbol stub <span class="hljs-keyword">for</span>: dispatch_once
-    <span class="hljs-number">0x1131cc554</span> &lt;+<span class="hljs-number">178</span>&gt;: jmp    <span class="hljs-number">0x1131cc4f7</span>               ; &lt;+<span class="hljs-number">85</span>&gt;
-</code></pre>
-<h1>What next?</h1>
-<p>We can use the Xcode debug console output to gather more information than we see it initially provides.</p>
-<p>In the above example I'm going to take the following output:</p>
-<pre><code>Will attempt to recover by breaking constraint &lt;NSLayoutConstraint:0x7fc82d3e18a0 H:[UIView:0x7fc82aba1210(768)]&gt;
-</code></pre>
-<p>Pull out the <code>UIView</code>'s memory address <code>0x7fd8fe59a440</code> and use the XCode console to dig deeper and try to get a better understanding.</p>
-<h1>Printing views from memory addresses</h1>
-<p>The memory address <code>0x7fd8fe59a440</code> is a pointer to a <code>UIView</code>. Since we know that a <code>UIView</code> has other selectors we can query, we can begin to use these to dig deeper into the object and get a better understanding of which part of our view have auto layout constraints that are not playing nicely.</p>
-<p>First we try to look at just the UIView and see if that helps us get a grasp as to which view is causing our troubles.</p>
-<pre><code>po 0x7fc82aba1210
-</code></pre>
-<p>If this doesn't provide enough info as the below sample output shows (not very helpful).</p>
-<pre><code>(lldb) po <span class="hljs-number">0x7fc82aba1210</span>
-&lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
-</code></pre>
-<p>Maybe printing it's <a href="https://developer.apple.com/library/ios/technotes/tn2239/_index.html#//apple_ref/doc/uid/DTS40010638-CH1-SUBSECTION34"><code>recursiveDescription</code></a> will help out and in my case gives me a better idea of which component I'm actually trying to look at.</p>
-<pre><code>(lldb) po [<span class="hljs-number">0x7fc82aba1210</span> recursiveDescription]
-&lt;UIView: <span class="hljs-number">0x7fc82aba1210</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d338960</span>&gt;&gt;
-   | &lt;MYAPPButton: <span class="hljs-number">0x7fc82d61c800</span>; baseClass = UIButton; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">768</span> <span class="hljs-number">359</span>); opaque = NO; autoresize = RM+BM; layer = &lt;CALayer: <span class="hljs-number">0x7fc82ab96570</span>&gt;&gt;
-   |    | &lt;UIImageView: <span class="hljs-number">0x7fc82d3f7b10</span>; frame = (<span class="hljs-number">0</span> <span class="hljs-number">0</span>; <span class="hljs-number">0</span> <span class="hljs-number">0</span>); clipsToBounds = YES; opaque = NO; userInteractionEnabled = NO; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d6e7020</span>&gt;&gt;
-   | &lt;UIImageView: <span class="hljs-number">0x7fc82d54a1c0</span>; frame = (<span class="hljs-number">314</span> <span class="hljs-number">110</span>; <span class="hljs-number">140</span> <span class="hljs-number">140</span>); autoresize = RM+BM; userInteractionEnabled = NO; layer = &lt;CALayer: <span class="hljs-number">0x7fc82d52def0</span>&gt;&gt;
-</code></pre>
-<p>Or if that's not enough context, then we can look at the view's superview and potentially even walk up the view's tree, printing out a different levels trying to understand which component is having trouble with auto layout.</p>
-<pre><code>po [[0x7fc82aba1210 superview] recursiveDescription]
-</code></pre>
-<p>Once you've narrowed down which view inside which component is causing you trouble, now it's up to digging and finding the problematic constraint...</p>
-<h1>Fix it</h1>
-<p>This part I can't add much color to help you, except to start by looking in your storyboard, xib or code wherever the constraints are being added to the particular view we diagnosed above.</p>
-<p>Hopefully this walk-through helps at least a little in diagnosing your auto layout constraint issues.</p>
-<p>Happy debugging!</p>
 ]]></content>
     </entry>
 </feed>
