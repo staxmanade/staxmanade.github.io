@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-03-30T20:06:46Z</updated>
+    <updated>2016-04-10T16:40:42Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,23 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...]]></title>
+        <id>http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/</id>
+        <link href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">
+        </link>
+        <updated>2016-04-10T16:40:42Z</updated>
+        <summary type="html"><![CDATA[A while back I wrote about a replacement for the `cd` command on powershell that I wrote which provides some fun features such as history tracking, su...]]></summary>
+        <content type="html"><![CDATA[<p>A while back I wrote about a replacement for the <code>cd</code> command on powershell that I wrote which provides some fun features such as history tracking, support cd'ing to a folder when a file path is given, etc... It's been a while since I've touched this helpful little tool which sometimes I even forget I wrote it because it's something that's used practically every day and &quot;it just works&quot;.</p>
+<p>For more information, check out the older posts about it here <a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
+<h1>It now supports <code>cd ...</code></h1>
+<p>Well, today I threw a quick feature into this utility that I've become accustomed to using in zsh on my Mac.</p>
+<p>On many *nix command prompts you can type something like <code>cd ....</code>. This command translates indo <code>cd ..; cd ..; cd ..</code> (but executed as one command). The first <code>..</code> counts as one directory and then each ane every <code>.</code> after that counts as another directory up the tree.</p>
+<p>So now within PowerShell when I <code>cd</code> down into a deep folder structure, I can now use <code>cd .......</code> to go back up <code>N</code> folders.</p>
+<p>NOICE!</p>
+<p>Happy CD'ing!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Oops - how a simple bit of automation put NuGet services on edge...]]></title>
         <id>http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/</id>
@@ -1717,240 +1734,6 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
         </li>
     </ul>
 </div></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello World with TypeScript and JSX]]></title>
-        <id>http://staxmanade.com/2015/08/playing-with-typescript-and-jsx/</id>
-        <link href="http://staxmanade.com/2015/08/playing-with-typescript-and-jsx/">
-        </link>
-        <updated>2015-08-18T16:41:22Z</updated>
-        <summary type="html"><![CDATA[> If you're looking for a solid TypeScript JSX tutorial [this is a great resource](https://github.com/RyanCavanaugh/jsx-intro#reusable-components).]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>If you're looking for a solid TypeScript JSX tutorial <a href="https://github.com/RyanCavanaugh/jsx-intro#reusable-components">this is a great resource</a>.</p>
-</blockquote>
-<p>Last night I wanted to play with TypeScripts new support for <a href="http://jsx.github.io/">JSX</a>. In this post I'll walk through my process, and what I learned along the way. Hopefully you find this useful.</p>
-<p>While it doesn't yet exist in the current version (at the time of this writing TypeScript is at 1.5), you can however grab a copy of the nightly builds from npm.</p>
-<h1>Get the most recent nightly build.</h1>
-<pre><code>npm install -g typescript@next
-</code></pre>
-<blockquote>
-<p>The rest of this post was run against nightly build <code>Version 1.6.0-dev.20150814</code>.</p>
-</blockquote>
-<h2>Given this sample React/JSX</h2>
-<pre><code><span class="hljs-keyword">var</span> HelloMessage = React.createClass({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.name}&lt;/div&gt;;
-  }
-});
-
-React.render(&lt;HelloMessage name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<h1>Create a TypeScript version of a JSX file.</h1>
-<p>Just like how TypeScript doesn't read <code>.js</code> but looks for <code>.ts</code> files (<a href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">unless you hack it</a>). TypeScript doesn't read <code>.jsx</code> files. It instead looks for <code>.tsx</code> files.</p>
-<p>So if you save the above sample as a <code>helloWorld.tsx</code>, we can then run the <code>tsc</code> compiler against our <code>helloWorld.tsx</code> file.</p>
-<p>If I run <code>tsc helloWorld.tsx</code> I get the following errors:</p>
-<pre><code>&gt; tsc helloWorld<span class="hljs-class">.tsx</span>
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'React'</span>.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">3</span>,<span class="hljs-number">12</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">7</span>,<span class="hljs-number">1</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'React'</span>.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">7</span>,<span class="hljs-number">14</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">7</span>,<span class="hljs-number">44</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'mountNode'</span>.
-</code></pre>
-<h1>Working through the errors...</h1>
-<p>I could just show you the final output that compiles, but want to include my learning process (stumbling) as I fumble through and figure out the new command.</p>
-<h1>Fixing <code>error TS2304: Cannot find name 'React'.</code></h1>
-<p>If you've been using TypeScript for any amount of time, the first error should be easy to see. The compiler knows nothing about this thing called <code>React</code>. And I haven't used React with TypeScript before. I don't want to go write a bunch of TypeScript type definitions for react and can easily pull down ones created already by using <code>tsd</code> to install the Definitely Typed definitions for <code>React</code>.</p>
-<h3>What is tsd?</h3>
-<p>If you haven't seen <a href="http://definitelytyped.org/tsd/">TSD</a> before it's a great package manger utility for TypeScript Type Definitions.</p>
-<p>It can be easily installed with <code>npm install -g tsd</code>.</p>
-<h3>Installing React Type Definitions</h3>
-<blockquote>
-<p>UPDATE: Originally below I used <code>tsd</code> to install <code>react</code> but if you check out the comments <code>react-global</code> works out better and you can avoid some of the hacks I put in place to compile React below.</p>
-</blockquote>
-<p><code>tsd install react</code> which <code>tsd</code> will download from <a href="http://definitelytyped.org">Definitely Typed</a> the <code>react.d.ts</code> and place it in <code>./typings/react/react.d.ts</code>.</p>
-<p>I then reference the file in our <code>helloWorld.tsx</code> which gives me the following:</p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.name}&lt;/div&gt;;
-  }
-});
-
-React.render(&lt;HelloMessage name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<p>When I re-run <code>tsc helloWorld.tsx</code> hoping to get rid of the first error: hmmm</p>
-<pre><code>&gt; tsc helloWorld<span class="hljs-class">.tsx</span>
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">3</span>,<span class="hljs-number">20</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'React'</span>.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">5</span>,<span class="hljs-number">12</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">9</span>,<span class="hljs-number">1</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'React'</span>.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">9</span>,<span class="hljs-number">14</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">9</span>,<span class="hljs-number">44</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'mountNode'</span>.
-</code></pre>
-<p>Well, that didn't get rid of our <code>error TS2304: Cannot find name 'React'.</code>. This threw me for a bit but eventually figured out that you need set it up by adding <code>import React = __React;</code>.</p>
-<p>So that gives us this:</p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> React = __React;</span>
-
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.name}&lt;/div&gt;;
-  }
-});
-
-React.render(&lt;HelloMessage name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<p>Now we should see some errors going away. <strong>And we do...</strong></p>
-<pre><code>&gt; tsc helloWorld<span class="hljs-class">.tsx</span>
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">6</span>,<span class="hljs-number">12</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">10</span>,<span class="hljs-number">14</span>)</span></span>: error TS2607: JSX element class does not support attributes because it does not have <span class="hljs-tag">a</span> <span class="hljs-string">'props'</span> property
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">10</span>,<span class="hljs-number">14</span>)</span></span>: error TS17004: Cannot use JSX unless the <span class="hljs-string">'--jsx'</span> flag is provided.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">10</span>,<span class="hljs-number">44</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'mountNode'</span>.
-</code></pre>
-<h1>Fixing <code>error TS17004: Cannot use JSX unless the '--jsx' flag is provided.</code></h1>
-<p>The next error is new to me, but it makes some sense, so I add the <code>--jsx</code> flag to <code>tsc</code> and try <code>tsc --jsx helloWorld.tsx</code>, but looks like I missed a parameter to <code>--jsx</code>.</p>
-<pre><code>&gt; tsc --jsx helloWorld.tsx
-<span class="hljs-keyword">message</span> TS6081: Argument <span class="hljs-keyword">for</span> <span class="hljs-string">'--jsx'</span> must be <span class="hljs-string">'preserve'</span> <span class="hljs-keyword">or</span> <span class="hljs-string">'react'</span>.
-</code></pre>
-<p>In the current iteration of TypeScript 1.6 appears to have two options for <code>--jsx</code>, both <code>preserve</code> or <code>react</code>.</p>
-<ul>
-<li><code>preserve</code> will keep the <code>jsx</code> in the output. I presume this is so you can use tools like <code>JSX</code> to actually provide the translation.</li>
-<li><code>react</code> will remove the <code>jsx</code> syntax and turn it in to plain javascript so <code>&lt;div&gt;&lt;/div&gt;</code> in the TSX file would become <code>React.createElement(&quot;div&quot;, null)</code>.</li>
-</ul>
-<p>By passing the <code>react</code> option, here's where we end up:</p>
-<pre><code>&gt; tsc --jsx react helloWorld<span class="hljs-class">.tsx</span>
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">11</span>,<span class="hljs-number">14</span>)</span></span>: error TS2607: JSX element class does not support attributes because it does not have <span class="hljs-tag">a</span> <span class="hljs-string">'props'</span> property
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">11</span>,<span class="hljs-number">44</span>)</span></span>: error TS2304: Cannot find name <span class="hljs-string">'mountNode'</span>.
-</code></pre>
-<p>I'm going to tackle the last error next, as initially I didn't understand the JSX error above.</p>
-<h1>Fixing <code>error TS2304: Cannot find name 'mountNode'.</code></h1>
-<p>This one I'll just make the compiler happy and presume we defined <code>mountNode</code> as an html element probably a <code>&lt;div id=&quot;mountNode&quot;&gt;&lt;/div&gt;</code> somewhere in the global scope to keep this example short.</p>
-<p>I place <code>declare var mountNode: any;</code> near the top of my <code>helloWorld.tsx</code> file and we're left with one last error:</p>
-<pre><code>&gt; tsc <span class="hljs-comment">--jsx react helloWorld.tsx</span>
-helloWorld.tsx(<span class="hljs-number">10</span>,<span class="hljs-number">14</span>): <span class="hljs-keyword">error</span> TS2607: JSX element <span class="hljs-type">class</span> <span class="hljs-keyword">does</span> <span class="hljs-keyword">not</span> support attributes because <span class="hljs-keyword">it</span> <span class="hljs-keyword">does</span> <span class="hljs-keyword">not</span> have a 'props' <span class="hljs-keyword">property</span>
-</code></pre>
-<h1>Fixing <code>error TS2607: JSX element class does not support attributes because it does not have a 'props' property</code></h1>
-<p>This last error is actually the one that had me stumped, and mostly why I'm writing this lengthy post so I hope you find it and can work through it a little quicker than it took me.</p>
-<p>What's happening here is TypeScript is doing what it was intended to do. It's statically checking our JSX in this case.</p>
-<p>If you look at our sample above where we call <code>React.createClass(...)</code> and compare that to the type definition we see: <code>function createClass&lt;P, S&gt;(spec: ComponentSpec&lt;P, S&gt;): ClassicComponentClass&lt;P&gt;;</code> you may notice <code>P</code> and <code>S</code> generic parameters to <code>createClass&lt;P, S&gt;</code> which I didn't supply earlier.</p>
-<p>The naming here wasn't immediately obvious, but some snooping around in the type definitions and I eventually found out <code>P</code> is referring to the type we pass in defining the structure of the react <code>props</code> and <code>S</code> defines the <code>state</code>.</p>
-<p>So in this Hello World example when we placed <code>name=&quot;John&quot;</code> attribute inside the <code>&lt;HelloMessage name=&quot;John&quot; /&gt;</code> element and since we didn't give a <code>P</code> or <code>S</code> to the <code>React.createClass&lt;P,S&gt;(...)</code>, TypeScript was providing static type checking against an unknown type for <code>P &amp; S</code>. In this case saying that we can't apply the attributes to the element because we did not provide a generic type <code>P</code> to define what <code>props</code> are allowed to be included.</p>
-<p>To fix this I create a type by using an <code>interface</code> like below:</p>
-<pre><code><span class="hljs-tag">interface</span> <span class="hljs-tag">HelloWorldProps</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">name</span>:<span class="hljs-value"> string</span></span>;
-}</span>
-</code></pre>
-<p>When I call <code>React.createClass</code> I pass in the <code>HelloWorldProps</code> interface for the <code>props</code> (<code>P</code>) and an <code>any</code> for the state (<code>S</code>) like so: <code>React.createClass&lt;HelloWorldProps, any&gt;(...)</code></p>
-<h1>YAY IT COMPILES!!!</h1>
-<p>Compiling the below by using <code>tsc --jsx react helloWorld.tsx</code></p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-preprocessor"><span class="hljs-keyword">import</span> React = __React;</span>
-declare <span class="hljs-keyword">var</span> mountNode: any;
-
-<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">HelloWorldProps</span> </span>{
-  name: string;
-}
-
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, any&gt;({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.name}&lt;/div&gt;;
-  }
-});
-
-React.render(&lt;HelloMessage name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<p>We get the following output in <code>helloWorld.js</code></p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-keyword">var</span> React = __React;
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass({
-    render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> React.createElement(<span class="hljs-string">"div"</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">"Hello "</span>, <span class="hljs-keyword">this</span>.props.name, React.createElement(<span class="hljs-string">"div"</span>, <span class="hljs-literal">null</span>));
-    }
-});
-React.render(React.createElement(HelloMessage, {<span class="hljs-string">"name"</span>: <span class="hljs-string">"John"</span>}), mountNode);
-</code></pre>
-<h1>Let's improve it now...</h1>
-<p>Since we started with a plain JavaScript version of our sample and we're now using TypeScript we get to take advantage of some of what TypeScript brings to the table.</p>
-<p>But before we do this, let's first break our code (from a compiler) perspective to see what the above gave us...</p>
-<h1>Let's break our example on purpose to see how TypeScript responds?</h1>
-<p>I changed one character in two places in the working <code>helloWorld.tsx</code> file and when I run the compiler I get the following two errors. Can you spot what changed?</p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-keyword">import</span> React = __React;
-<span class="hljs-keyword">declare</span> <span class="hljs-keyword">var</span> mountNode: <span class="hljs-built_in">any</span>;
-
-<span class="hljs-interface"><span class="hljs-keyword">interface</span> HelloWorldProps </span>{
-  Name: <span class="hljs-built_in">string</span>;
-}
-
-<span class="hljs-keyword">var</span> HelloMessage = React.createClass&lt;HelloWorldProps, <span class="hljs-built_in">any</span>&gt;({
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello {<span class="hljs-keyword">this</span>.props.mane} &lt;div&gt;&lt;<span class="hljs-regexp">/div&gt;&lt;/</span>div&gt;;
-  }
-});
-
-React.render(&lt;HelloMessage name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<p>Output:</p>
-<pre><code>&gt; tsc --jsx react helloWorld<span class="hljs-class">.tsx</span>
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">15</span>,<span class="hljs-number">14</span>)</span></span>: error TS2324: Property <span class="hljs-string">'Name'</span> is missing <span class="hljs-keyword">in</span> type <span class="hljs-string">'HelloWorldProps'</span>.
-helloWorld.<span class="hljs-function"><span class="hljs-title">tsx</span><span class="hljs-params">(<span class="hljs-number">15</span>,<span class="hljs-number">28</span>)</span></span>: error TS2339: Property <span class="hljs-string">'name'</span> does not exist on type <span class="hljs-string">'HelloWorldProps'</span>.
-</code></pre>
-<p>Did you spot the change made? If you did, <strong>amazing</strong>. If you didn't, don't feel bad - it's a very simple and easy error to make when writing plain javascript. One that can't be found without actually executing plain JS, debugging, running unit tests or other checkers before even finding the error.</p>
-<p>If you didn't spot the change by looking directly at the code, can you spot the change by reading the compiler error output?</p>
-<p>Ok, give up? - I changed the <code>name</code> to <code>Name</code> in the <code>HelloWorldProps</code> interface definition AND in the JSX <code>this.props.mane</code> I spelled the props name <code>mane</code> wrong (should be <code>Name</code> according to our interface definition). So then why did we only get the error on line 15 (that's the <code>React.render(...)</code> line).</p>
-<p>TypeScript in this case is using the <code>HelloWorldProps</code> interface and it's definition to type-check the attributes used in the JSX <code>&lt;HelloMessage /&gt;</code>.</p>
-<p>This is great, the compiler found the error right in the JSX before we even tried to execute the code.</p>
-<h1>Why didn't it detect the <code>mane</code> mis-spelled variable?</h1>
-<p>I'm going to just take a guess on this one but I'm not a React guy yet, so it may have something to do with react internals (that I'm not feeling like digging into at the moment).</p>
-<p>If you look at the <code>react.d.ts</code> you'll see that <code>React.createClass&lt;P,S&gt;()</code> returns a type of <code>ClassicComponentClass&lt;P&gt;</code>.</p>
-<p>Thanks to a tip from Ryan (ya, the famous Ryan from the TypeScript team) has a great <a href="https://github.com/RyanCavanaugh/jsx-intro">write up about TypeScript and JSX</a> we should be avoiding all of the above use of <code>React.createClass(...)</code> and instead using the <code>ES6</code> <code>extends</code> functionality which we can leverage in TypeScript.</p>
-<h1>Let's re-write...</h1>
-<p>Turning the <code>HelloMessage</code> variable into an ES6 <code>class</code> we now also get type checking inside the component on <code>this.props</code> options. <strong>YAY!!!</strong>:</p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-keyword">import</span> <span class="hljs-type">React</span> = __React;
-declare <span class="hljs-keyword">var</span> mountNode: any;
-
-interface <span class="hljs-type">HelloWorldProps</span> <span class="hljs-keyword">extends</span> <span class="hljs-type">React</span>.<span class="hljs-type">Props</span>&lt;any&gt; {
-  <span class="hljs-type">Name</span>: string;
-}
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloMessage</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component&lt;HelloWorldProps</span>, {</span>}&gt; {
-  render() {
-    <span class="hljs-keyword">return</span> &lt;div&gt;<span class="hljs-type">Hello</span> {<span class="hljs-keyword">this</span>.props.mane}&lt;/div&gt;;
-  }
-}
-
-<span class="hljs-type">React</span>.render(&lt;<span class="hljs-type">HelloMessage</span> name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<p>The above gives us the following errors:</p>
-<pre><code>&gt; tsc <span class="hljs-comment">--jsx react helloWorld.tsx</span>
-helloWorld.tsx(<span class="hljs-number">11</span>,<span class="hljs-number">35</span>): error TS2339: <span class="hljs-keyword">Property</span> <span class="hljs-attribute">'mane</span>' does <span class="hljs-keyword">not</span> exist <span class="hljs-keyword">on</span> <span class="hljs-keyword">type</span> <span class="hljs-attribute">'HelloWorldProps</span>'.
-helloWorld.tsx(<span class="hljs-number">15</span>,<span class="hljs-number">14</span>): error TS2324: <span class="hljs-keyword">Property</span> <span class="hljs-attribute">'Name</span>' <span class="hljs-keyword">is</span> missing <span class="hljs-keyword">in</span> <span class="hljs-keyword">type</span> <span class="hljs-attribute">'HelloWorldProps</span>'.
-helloWorld.tsx(<span class="hljs-number">15</span>,<span class="hljs-number">28</span>): error TS2339: <span class="hljs-keyword">Property</span> <span class="hljs-attribute">'name</span>' does <span class="hljs-keyword">not</span> exist <span class="hljs-keyword">on</span> <span class="hljs-keyword">type</span> <span class="hljs-attribute">'HelloWorldProps</span>'.
-</code></pre>
-<h1>Final Answer</h1>
-<p>So, a bit long winded, but below is the final sample HelloWorld React TypeScript JSX prototype.</p>
-<pre><code><span class="hljs-comment">/// &lt;reference path="./typings/react/react.d.ts" /&gt;</span>
-<span class="hljs-keyword">import</span> <span class="hljs-type">React</span> = __React;
-declare <span class="hljs-keyword">var</span> mountNode: any;
-
-interface <span class="hljs-type">HelloWorldProps</span> <span class="hljs-keyword">extends</span> <span class="hljs-type">React</span>.<span class="hljs-type">Props</span>&lt;any&gt; {
-  name: string;
-}
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloMessage</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component&lt;HelloWorldProps</span>, {</span>}&gt; {
-  render() {
-    <span class="hljs-keyword">return</span> &lt;div&gt;<span class="hljs-type">Hello</span> {<span class="hljs-keyword">this</span>.props.name}&lt;/div&gt;;
-  }
-}
-
-<span class="hljs-type">React</span>.render(&lt;<span class="hljs-type">HelloMessage</span> name=<span class="hljs-string">"John"</span> /&gt;, mountNode);
-</code></pre>
-<h1>Wrap-up</h1>
-<p>While it seemed a bit challenging getting started with TypeScript and JSX I could really see the benefit of the compiler helping out with React components going forward, and look forward to the future of this part of the project.</p>
-<p>Thanks to the TypeScript team and community that helped bring all of this support together!</p>
-<p>Happy <code>TSXing</code>!</p>
 ]]></content>
     </entry>
 </feed>
