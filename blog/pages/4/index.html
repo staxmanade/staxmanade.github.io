@@ -71,6 +71,47 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
+
+
+        <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
+<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
+<blockquote>
+<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
+</blockquote>
+<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
+<h1>Install it with <a href="https://npm.org">npm</a></h1>
+<pre><code>npm install -g diffxcodetargets
+</code></pre>
+<h1>How to use it?</h1>
+<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
+<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
+
+Could not find TargetA ''. Possible targets are:
+  - targetA
+  - targetB
+</code></pre>
+<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
+<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
+</code></pre>
+<h1>How does it work?</h1>
+<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="https://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
+<h1>What's missing?</h1>
+<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="https://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
+<p>Happy Diffing!</p>
+</div>
+
+      <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
     <p class="meta">
           <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
@@ -581,52 +622,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </div>
 
       <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a></h1>
-    <p class="meta">
-          <time datetime="2014-12-24T22:22:17.461Z" pubdate data-updated="true">Dec 24th 2014</time>
-
-
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
-<p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
-<h2>What is it?</h2>
-<p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
-<h1>What pain does this solve?</h1>
-<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
-<p>This typically involves:</p>
-<ol>
-<li>Opening the Outlook appointment</li>
-<li>Copying just the conference phone number (without extension)</li>
-<li>Pasting it in Skype to dial</li>
-<li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype's number pad area</li>
-<li>Type or use the mouse to press the final <code>#</code> key.</li>
-</ol>
-<h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
-<p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
-<ol>
-<li>Open the Outlook appointment</li>
-<li>Copy the conference phone number &amp; extension (if there is one) in one shot.</li>
-<li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
-</ol>
-<p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
-<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
-<blockquote>
-<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
-</blockquote>
-<h1>Still early...</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
-</div>
-
-      <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/5/">&larr; Older</a>

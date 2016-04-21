@@ -105,9 +105,9 @@
 <p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>Not Found</code></pre></noscript></div></p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
 <p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>Not Found</code></pre></noscript></div></p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
 <h1>Setup <code>~/.gitconfig</code></h1>
 <p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
