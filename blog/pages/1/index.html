@@ -819,6 +819,7 @@ B) or you've uncovered some challenges that are not easily overcome and require 
     border-color: black;
     border-style: solid;
     background-color: white;
+    display: none;
 }
 </style>
 <div class="jj-signup-form">
@@ -858,14 +859,25 @@ B) or you've uncovered some challenges that are not easily overcome and require 
     </div>
   </div>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-try {
-    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-        document.querySelector('.jj-signup-form').style.display = "none";
-    });
-} catch(e) {
-    console.log(e);
-}
+  (function(){
+    try {
+      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
+        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+            document.querySelector('.jj-signup-form').style.display = "none";
+            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
+        });
+
+        setTimeout(function(){
+          document.querySelector('.jj-signup-form').style.display = "initial";
+        }, 40000);
+      }
+
+    } catch(e) {
+        console.log(e);
+    }
+  })();
 </script>
 
 </footer>

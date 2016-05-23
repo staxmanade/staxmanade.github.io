@@ -124,6 +124,7 @@ If you have a suggestion or want to pull-request it your self you can check it o
     border-color: black;
     border-style: solid;
     background-color: white;
+    display: none;
 }
 </style>
 <div class="jj-signup-form">
@@ -163,14 +164,25 @@ If you have a suggestion or want to pull-request it your self you can check it o
     </div>
   </div>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-try {
-    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-        document.querySelector('.jj-signup-form').style.display = "none";
-    });
-} catch(e) {
-    console.log(e);
-}
+  (function(){
+    try {
+      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
+        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+            document.querySelector('.jj-signup-form').style.display = "none";
+            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
+        });
+
+        setTimeout(function(){
+          document.querySelector('.jj-signup-form').style.display = "initial";
+        }, 40000);
+      }
+
+    } catch(e) {
+        console.log(e);
+    }
+  })();
 </script>
 
 </footer>
