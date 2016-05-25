@@ -46,20 +46,6 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +69,23 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dumptotext/">NuGet Project Uncovered: DumpToText</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-21T05:01:00.000Z" pubdate data-updated="true">Feb 20th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become its introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/DumpToText" target="_blank">DumpToText</a> is a single C# extension I wrote a little while back. The inspiration from this came from the need to view the values of an object graph quickly and easily during a TDD session.</p>  <p>Have you ever been doing TDD and something isn’t working quite as expected? Would it be nice to just dump out the values of an object quickly without having to spin up the debugger?</p>  <p>The inspiration for this project came from an amazing feature of <a href="http://www.linqpad.net/" target="_blank">LINQPad</a>. If you have ever used <a href="http://www.linqpad.net/" target="_blank">LINQPad</a> then you’re aware of the amazing ability for it to take any object and create a view of it’s data. Take the simple anonymous type below.</p>  <p><a href="http://lh5.ggpht.com/-FUvQoj6frYE/Tx-M2hAvSBI/AAAAAAAAAVw/Y4i1otS5L1k/s1600-h/image_thumb2_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb2_thumb" border="0" alt="image_thumb2_thumb" src="http://lh3.ggpht.com/-al7xfLogmlo/Tx-M28w8cWI/AAAAAAAAAV4/1okKyOMCZXo/image_thumb2_thumb_thumb.png?imgmax=800" width="471" height="315" /></a></p>  <p>Now wouldn’t it be great to have that “.Dump()” extension method at hand anywhere in your code and during a TDD session?</p>  <p>That’s why I create <a href="https://github.com/staxmanade/DumpToText" target="_blank">DumpToText</a>.</p>  <p>Now if I have a test as follows and want to see it’s data. I can use the ‘.DumpToText()” extension method to have it print out an ASCII based representation of the object graph.</p>  <p><a href="http://lh3.ggpht.com/-skkqYdCd2xM/Tx-M3FJvFuI/AAAAAAAAAWA/Pj8HLy2gP2E/s1600-h/image_thumb4_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb4_thumb" border="0" alt="image_thumb4_thumb" src="http://lh4.ggpht.com/-AAcGZRujy6o/Tx-M3YkzlsI/AAAAAAAAAWI/tB5hBy3iff8/image_thumb4_thumb_thumb.png?imgmax=800" width="323" height="178" /></a></p>  <p><a href="http://lh4.ggpht.com/-yhBKG4UbDVo/Tx-M3isuUYI/AAAAAAAAAWQ/e4StcIAJXwY/s1600-h/image_thumb6_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb" border="0" alt="image_thumb6_thumb" src="http://lh4.ggpht.com/-4NWr0JakVmU/Tx-M4OgEzYI/AAAAAAAAAWY/Y5spI1MEfTo/image_thumb6_thumb_thumb.png?imgmax=800" width="390" height="156" /></a></p>  <p>By default this just uses the System.Diagnostics.Trace(…) to write the output to, but you can override the “write” implementation by giving your own delegate as shown below.</p>  <p><a href="http://lh3.ggpht.com/-WqWFeyFE9-w/Tx-M4J_zk_I/AAAAAAAAAWg/PgFlXKctwzk/s1600-h/image_thumb8_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb" border="0" alt="image_thumb8_thumb" src="http://lh3.ggpht.com/-ZVMsOTKUgRo/Tx-M4ftO9JI/AAAAAAAAAWo/7MzVtczsP3o/image_thumb8_thumb_thumb.png?imgmax=800" width="871" height="52" /></a></p>  <p>The below shows an example of a nested object that also has an array of items.</p>  <p><a href="http://lh6.ggpht.com/-ggox20Cy7Uo/Tx-M478HrOI/AAAAAAAAAWw/evox5Gb8UoU/s1600-h/image_thumb14_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb14_thumb" border="0" alt="image_thumb14_thumb" src="http://lh5.ggpht.com/-YAC_6gYOxPk/Tx-M5PrZCnI/AAAAAAAAAW4/hYIHCALLCVg/image_thumb14_thumb_thumb.png?imgmax=800" width="264" height="171" /></a></p>  <p><a href="http://lh5.ggpht.com/-BG258OCC7hw/Tx-M5JXdreI/AAAAAAAAAXA/7gusCQdc-EA/s1600-h/image_thumb13_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb1" border="0" alt="image_thumb13_thumb1" src="http://lh6.ggpht.com/-ALeIoiAbOSA/Tx-M5oEQkJI/AAAAAAAAAXI/0ldXcIpDxmM/image_thumb13_thumb1_thumb.png?imgmax=800" width="573" height="349" /></a></p>  <h5>Anyone out there using <a href="http://approvaltests.sourceforge.net/" target="_blank">ApprovalTests</a>? (You can get it on NuGet)</h5>  <p>I’ve not taken the chance to use ApprovalTests yet in a project, but I have a strong feeling that my DumpToText helper could be very useful when leveraged in conjunction with ApprovalTests. If anyone out there is using ApprovalTests, I’d love to hear how it’s going, and if you think that DumpToText would be useful there.</p>  </div>
+</div>
+
+      
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nancy/">NuGet Project Uncovered: Nancy</a></h1>
@@ -236,23 +239,6 @@
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-11T04:39:00.000Z" pubdate data-updated="true">Feb 10th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nukito" target="_blank">Nukito</a> is a project that’s taking AutoMocking to another level and baking it into the tooling/framework. If you use xUnit and Moq and want to avoid much of your redundant mock setup/verify code. You might want to take a look at this project.</p>  <p>I didn’t dig very deep into this project, but it smells somewhat like <a href="http://nuget.org/packages/AutoFixture" target="_blank">AutoFixture</a> which I believe has more support for other frameworks and is a bit more popular. (Again I didn’t dig deep enough to understand the core differences).</p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/10/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -269,94 +255,67 @@
 
 
 <style>
-  .jj-signup-form {
+.jj-signup-form {
+    width: 300px;
     text-align: right;
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 300px;
-    display: none;
-  }
-</style>
 
-<style>
-    .jj-signup-form {
-        border-width: thin;
-        border-color: black;
-        border-style: solid;
-        background-color: white;
-    }
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
+    background-color: white;
+    display: none;
+}
 </style>
 <div class="jj-signup-form">
-    <button class="jj-signup-form-close">Close</button>
-    <div>
-        <!-- Begin MailChimp Signup Form -->
-        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            #mc_embed_signup {
-                background: #fff;
-                clear: left;
-                font: 14px Helvetica, Arial, sans-serif;
-            }
-            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+<button class="jj-signup-form-close">Close</button>
+<div>
+    <!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
 	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-        </style>
-        <div id="mc_embed_signup">
-            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
-                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                    <h2>Don't miss a post...</h2>
-                    <div class="mc-field-group">
-                        <label for="mce-FNAME">First Name </label>
-                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-                    </div>
-                    <div class="mc-field-group">
-                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-</label>
-                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-                    </div>
-                    <div id="mce-responses" class="clear">
-                        <div class="response" id="mce-error-response" style="display:none"></div>
-                        <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
-                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-            </form>
-        </div>
-        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-        <script type='text/javascript'>
-            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
-        </script>
-        <!--End mc_embed_signup-->
-    </div>
+</style>
+<div id="mc_embed_signup">
+<form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Don't miss a post...</h2>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 </div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+    </div>
+  </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-  (function(){
-    try {
-      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
-        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-            document.querySelector('.jj-signup-form').style.display = "none";
-            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
-        });
-
-        setTimeout(function(){
-          if(window.jjdisableSignupPopup) {
-            return;
-          }
-          document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
-      }
-
-    } catch(e) {
-        console.log(e);
-    }
-  })();
-
+try {
+    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+        document.querySelector('.jj-signup-form').style.display = "none";
+    });
+} catch(e) {
+    console.log(e);
+}
 </script>
+
 </footer>
   
 

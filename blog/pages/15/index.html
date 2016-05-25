@@ -46,20 +46,6 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +69,23 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/10/integration-test-brought-to-you-by/">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</a></h1>
+    <p class="meta">
+          <time datetime="2009-10-26T05:02:00.000Z" pubdate data-updated="true">Oct 25th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>One of the tools I’ve used the last half of a year and really enjoyed is the C# specification extension methods when writing unit test assertions. If you’re looking for a little more background on the topic, I wrote about <a href="/2009/02/fluent-specification-extensions">Fluent Specification Extensions</a> in a past blog.</p>  <p>Recently I wanted to execute a PowerShell script to do some automated <a href="http://en.wikipedia.org/wiki/Functional_testing">functional testing</a>. I wanted to execute an application and apply some assertions on the output of the software(basically running a console app, parse the xml output and assert on values in the output).</p>  <blockquote>   <p>FYI: I’m very new to PowerShell, so any suggestions on how I implemented the below are welcome…</p> </blockquote>  <p>I’ve seen a couple examples of writing test assertions in PowerShell out there. One example is <a href="http://www.psunit.org/">PSUnit</a>; however, this seemed a little heavy for my needs and not quite the syntactic sugar I was looking for.</p>  <p>Besides the syntax flavor I was desiring, another thing I wanted to do was leverage the power of NUnit.Framework’s assertion capabilities. I like the error messages generated when strings and other objects fail the assertion.</p>  <h5>Examples of end result ShouldLookLike()… </h5>  <p>$true.ShouldBeTrue()    <br />$false.ShouldBeFalse()     <br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)     <br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)     <br /></p>  <h5><strong>Step 1</strong>: Figure out how to write a C# style <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">extension method</a> in PowerShell.</h5>  <blockquote>   <p>I found a great blog post describing how to extend any PowerShell object to add extension methods. </p>    <p><a href="http://bartdesmet.net/blogs/bart/archive/2007/09/06/extension-methods-in-windows-powershell.aspx">Extension Methods in Windows PowerShell</a>       <br />      <br /></p> </blockquote>  <p>In short, to extend types in PowerShell leveraging the <a href="http://msdn.microsoft.com/en-us/library/ms714419(VS.85).aspx">Extended Type System</a>, you need to define them in an xml file and import the method definitions into the PowerShell runtime instance.</p>  <p>Below is PowerShell XML definition for my NUnit Specification Extensions.</p>  <pre class="brush: xml;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;<br />&lt;Types&gt;<br />    &lt;Type&gt;<br />        &lt;Name&gt;System.Object&lt;/Name&gt;<br />        &lt;Members&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeFalse&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsFalse($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldBeTrue&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::IsTrue($this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />            &lt;ScriptMethod&gt;<br />                &lt;Name&gt;ShouldNotEqual&lt;/Name&gt;<br />                &lt;Script&gt;<br />                    [NUnit.Framework.Assert]::AreNotEqual($args[0], $this)<br />                &lt;/Script&gt;<br />            &lt;/ScriptMethod&gt;<br />        &lt;/Members&gt;<br />    &lt;/Type&gt;<br />&lt;/Types&gt;</pre><br /><br /><h4>&#160;</h4><br /><br /><p>Take the above XML and save it to a file…</p><br /><br /><blockquote><br />  <p>NOTE: the file HAS to be saved with the extension <strong>.ps1xml</strong></p><br /><br />  <p>Ex: NunitSpecificationPowerShellExtensions<strong>.ps1xml</strong></p><br /></blockquote><br /><br /><h4>&#160;</h4><br /><br /><h5>Step 2: Load the extended type definition into the PowerShell runtime.</h5><br /><br /><p>Once you’ve saved the XML extended types to a file, you need to load it into the PowerShell runtime by executing the command below.</p><br /><br /><blockquote><br />  <p><br />    <br />Update-TypeData -PrependPath NunitSpecificationPowerShellExtensions.ps1xml <br /><br />    <br /><br /><br />    <br /></p><br /></blockquote><br /><br /><p><br />  <br />Before executing the above statement…Let’s quickly look at a System.String’s members and properties – just to show you what the extension methods look like when applied inside of the runtime.<a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/SuUtUHyzTHI/AAAAAAAAAMI/RYyswVWg2JQ/s1600-h/image%5B3%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SuUtVnUMsEI/AAAAAAAAAMM/KiZ3QVj1yQA/image_thumb%5B1%5D.png?imgmax=800" width="586" height="479" /></a></p><br /><br /><p>After executing the Update-TypeData command you’ll notice there are a number of “ScriptMethod” MemberTypes added to the object.</p><br /><br /><p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SuUtXQNAz2I/AAAAAAAAAMQ/5tqoE9oUG6I/s1600-h/image%5B19%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SuUtY0t9T1I/AAAAAAAAAMU/6lwJgXtWaUU/image_thumb%5B9%5D.png?imgmax=800" width="600" height="580" /></a> </p><br /><br /><p></p><br /><br /><p>Now if you try to execute one of those newly added extension methods, you may get the following error…</p><br /><br /><p>PS C:\&gt; $testVar.<strong>ShouldEqual</strong>(&quot;hello world&quot;) <br /><br />  <br />Exception calling &quot;ShouldEqual&quot; with &quot;1&quot; argument(s): &quot;<strong>Unable to find type [NUnit.Framework.Assert]: make sure that the <br />    <br />assembly containing this type is loaded.</strong>&quot; <br /><br />  <br />At line:1 char:21 <br /><br />  <br />+ $testVar.ShouldEqual &lt;&lt;&lt;&lt; (&quot;hello world&quot;) <br /><br />  <br />&#160;&#160;&#160; + CategoryInfo&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; : NotSpecified: (:) [], MethodInvocationException <br /><br />  <br />&#160;&#160;&#160; + FullyQualifiedErrorId : ScriptMethodRuntimeException</p><br /><br /><p></p><br /><br /><p>&#160;</p><br /><br /><p>This is because we need to load the NUnit.Framework assembly into the runtime before we can leverage the extension methods.</p><br /><br /><blockquote><br />  <p>[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null</p><br /></blockquote><br /><br /><p>&#160;</p><br /><br /><p>Now that the extension methods have been defined and loaded into the runtime, NUnit.Framework is loaded, we can now use the methods on any object that inherits from System.Object (which, as far as I know, is everything in PowerShell).</p><br /><br /><p>&#160;</p><br /><br /><p>And now, everything you need in one script (if you have the xml extended type file saved somewhere…)</p><br /><br /><pre># <br /># Update-TypeData -prependPath C:\Code\NunitSpecificationPowerShellExtensions.ps1xml<br />#<br /><br />[System.Reflection.Assembly]::LoadFrom(&quot;C:\Program Files\NUnit 2.5.2\bin\net-2.0\framework\nunit.framework.dll&quot;) | Out-Null<br /><br />$true.ShouldBeTrue()<br /><br />$false.ShouldBeFalse()<br /><br />&quot;a&quot;.ShouldEqual(&quot;a&quot;)<br /><br />&quot;a&quot;.ShouldNotEqual(&quot;b&quot;)<br /></pre>  </div>
+</div>
+
+      
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/10/invited-to-join-bloggers-over-at/">Invited to join the bloggers over at ElegantCode</a></h1>
@@ -323,36 +326,6 @@ I like this approach.  I&#39;m curious if you&#39;ve developed any reports aroun
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/08/branch-per-feature-with-team-foundation_06/">Branch-Per-Feature with Team Foundation Server (TFS) – Part 1 – How we got here…</a></h1>
-    <p class="meta">
-          <time datetime="2009-08-06T14:14:00.000Z" pubdate data-updated="true">Aug 6th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Branch-Per-Feature with Team Foundation Server (TFS)  Series Links<br /><ol><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_06">How we got here…</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_9077">Kanban Stages</a> </li><br />  <li><a href="/2009/08/branch-per-feature-with-team-foundation_12">Lessons Learned</a></li><br /></ol></p><p>During one of my blog reading catch-up afternoons, I ran across Derick Bailey <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-part-1-why.aspx">Branch-Per-Feature Source Control. Part 1 Why</a>. It is a great read into the subject, covering many of problems other source control methods introduce and how the Branch-Per-Feature concept alleviates some of these issues. It is also great to see a how it can be used in relation to a Kanban style of development. I look forward to his further posts about some of the details of this process with subversion. </p>  <p>While waiting for those posts, I thought I’d write up some of the things my team and I have learned while implementing a semi-Kanban process using <a href="http://msdn.microsoft.com/en-us/teamsystem/default.aspx">Team Foundation Server (TFS)</a>.</p>  <p>We practiced a <a href="http://en.wikipedia.org/wiki/Scrum_(development)">scrum</a> like agile process for about 3 years with a fair amount of success. However, about 4 months ago we hit the end of a very long “Sprint” (6 weeks). There were at least 3 major “features” built during this sprint and we also determined that since were going to be developing several large features, we would also take the time to upgrade our database server, since we would inherently, through the development time, be able to do a little database regression testing.</p>  <p>During the retrospective for this sprint there developed a couple themes revolving around </p>  <ol>   <li>Size and number of features developed made testing in the allotted sprint time difficult to complete each feature thoroughly. </li>    <li>The features developed at the beginning of the sprint were developed and tested very thoroughly, </li>    <li>The features developed near the end of the sprint felt rushed and resulted in some choices making some choices that may not have left the code </li>    <li>Upgrading a to a new database version AND deploying all these new features threw too many things in the mix for one deployment. </li>    <li>The items developed first sat behind the development firewall for in one case over 3 weeks, when that feature could have given the business value 3 weeks prior. </li> </ol>  <p>Our transition to Kanban was somewhat sudden. I had been reading kanban as a tool for delivering software for a couple months. I thought that many of the issues we were having with scrum could be resolved with a simple Kanban process. So I brought up the idea of doing “feature driven development” during the retrospective. What came as a shock to me was the welcoming the team gave this new idea. I had been thinking about how to bring the idea up for some time, and couldn’t imagine how the team would want to make the drastic change that this new style of development would require. After talking about it for a short time during this retrospective, just about everyone on the team seemed to jump all over the idea.</p>  <p>The team decided right then that we would give it a try for a while, work out the kinks, learn from it, and see how it would go.</p>  <p>When we first created our kanban, there was a much simpler pipeline of stages than the list I will outline as our current process. Most blogs/articles basically described starting with something simple like (Backlog, Dev, Test, Deploy). So we started with those very simple steps and it has been refined for our process.</p>  <p>We continued to value the retrospective and through this constant reflection were able to very quickly fine tune our process to something that, looking back, is really suiting us well.</p>  <p>We have been using the new approach for 4 months now and haven’t looked back. Some of the original things that the team was worried about when moving to the Branch-Per-Feature have all but washed away. In particular, <strong>one of the largest concerns everyone on the team had was the overhead branching and merging would bring into the process</strong>. <strong>And while it is a little bit more overhead than just opening the solution and pounding away, it brings many more benefits to the team than we loose in branching/merging time.</strong></p>  <p>In the next part I’ll describe the kanban stages our team has ironed out and how we mix that with the Branching-Per-Feature development.</p></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-@Jason - Fixed the links, sorry about that.</div>
-</div>
-<div class='comment'>
-<div class='author'>Jason Barile</div>
-<div class='content'>
-Very cool series - Thanks for posting.  Could you fix the link to the 2nd article at the top of this post?</div>
-</div>
-</div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/16/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -369,94 +342,67 @@ Very cool series - Thanks for posting.  Could you fix the link to the 2nd articl
 
 
 <style>
-  .jj-signup-form {
+.jj-signup-form {
+    width: 300px;
     text-align: right;
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 300px;
-    display: none;
-  }
-</style>
 
-<style>
-    .jj-signup-form {
-        border-width: thin;
-        border-color: black;
-        border-style: solid;
-        background-color: white;
-    }
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
+    background-color: white;
+    display: none;
+}
 </style>
 <div class="jj-signup-form">
-    <button class="jj-signup-form-close">Close</button>
-    <div>
-        <!-- Begin MailChimp Signup Form -->
-        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            #mc_embed_signup {
-                background: #fff;
-                clear: left;
-                font: 14px Helvetica, Arial, sans-serif;
-            }
-            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+<button class="jj-signup-form-close">Close</button>
+<div>
+    <!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
 	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-        </style>
-        <div id="mc_embed_signup">
-            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
-                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                    <h2>Don't miss a post...</h2>
-                    <div class="mc-field-group">
-                        <label for="mce-FNAME">First Name </label>
-                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-                    </div>
-                    <div class="mc-field-group">
-                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-</label>
-                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-                    </div>
-                    <div id="mce-responses" class="clear">
-                        <div class="response" id="mce-error-response" style="display:none"></div>
-                        <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
-                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-            </form>
-        </div>
-        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-        <script type='text/javascript'>
-            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
-        </script>
-        <!--End mc_embed_signup-->
-    </div>
+</style>
+<div id="mc_embed_signup">
+<form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Don't miss a post...</h2>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 </div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+    </div>
+  </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-  (function(){
-    try {
-      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
-        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-            document.querySelector('.jj-signup-form').style.display = "none";
-            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
-        });
-
-        setTimeout(function(){
-          if(window.jjdisableSignupPopup) {
-            return;
-          }
-          document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
-      }
-
-    } catch(e) {
-        console.log(e);
-    }
-  })();
-
+try {
+    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+        document.querySelector('.jj-signup-form').style.display = "none";
+    });
+} catch(e) {
+    console.log(e);
+}
 </script>
+
 </footer>
   
 

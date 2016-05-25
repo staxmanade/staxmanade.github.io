@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool) - Developing on Staxmanade</title>
+  <title>Configuring Git to Prompt You to Setup Name and Email for Each Repo - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="  About a week ago (May 21st 2010) I uploaded the v1.0 release of StatLight. You can review the list of changes on the StatLight v1.0 release page.   ...">
+   <meta name="description" content="Thought I&#x27;d share how I&#x27;m configuring &#x60;user.name&#x60; and &#x60;user.email&#x60; for git on my work computer. This is really just a post so when I forget how I did ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/">
+  <link rel="canonical" href="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -71,35 +71,71 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/">StatLight V1.0 &amp; V1.1 Released (Silverlight Testing Automation Tool)</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">Configuring Git to Prompt You to Setup Name and Email for Each Repo</a></h1>
     <p class="meta">
-          <time datetime="2010-05-31T03:00:00.000Z" pubdate data-updated="true">May 30th 2010</time>
+          <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
 
 
-        
+        <a href="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/#disqus_thread" data-disqus-identifier="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p><img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=StatLight&amp;DownloadId=95275&amp;Build=16586" /></p>  <p>About a week ago (May 21st 2010) I uploaded the v1.0 release of <a href="http://statlight.codeplex.com/" target="_blank">StatLight</a>. You can review the list of changes on the <a href="http://statlight.codeplex.com/releases/view/40090" target="_blank">StatLight v1.0 release page</a>. </p>  <p>I knew once I marked it v1.0, I would probably have updates to it &amp; sure enough… Microsoft’s <a href="http://www.jeff.wilcox.name" target="_blank">Jeff Wilcox</a> released a new version of the <a href="http://www.jeff.wilcox.name/2010/05/sl3-utf-bits/" target="_blank">Microsoft.Silverlight.Testing</a>.</p>  <p>I also incorporated some work done by <a href="http://www.justnbusiness.com/" target="_blank">Justin</a> who recently released a version of the <a href="http://unitdriven.codeplex.com/" target="_blank">UnitDriven</a> framework.</p>  <p>So there’s now a <a href="http://statlight.codeplex.com/releases/view/46227" target="_blank">v1.1</a> build out.</p>  <p>Happy Silverlight Testing!</p>  </div>
+<div class="entry-content"><p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
+<p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
+<p>For most, <code>user.name</code> shouldn't change, unless you're company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
+<p>When I clone projects I always clone them into a folder structure that looks like</p>
+<pre><code>|____~/code
+| |____personal/  &lt;--- <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> where I would put some OSS projects <span class="hljs-literal">that</span> I may be working <span class="hljs-literal">on</span> <span class="hljs-keyword">or</span> contributing <span class="hljs-keyword">to</span>.
+| |____work/      &lt;--- obviously work code goes <span class="hljs-keyword">in</span> here
+</code></pre>
+<p>Thanks to <a href="http://collectiveidea.com/blog/archives/2016/04/04/multiple-personalities-in-git/">this post</a> where I learned about <a href="http://direnv.net/">direnv</a> and followed the last option I basically used these steps...</p>
+<h1>Setup</h1>
+<ol>
+<li>
+<p>Install <code>direnv</code> - <code>brew install direnv</code> (What about Windows? see <a href="https://github.com/direnv/direnv/issues/124">this github issue</a> and help make it work)</p>
+</li>
+<li>
+<p>Create <code>.envrc</code> file <strong>for each profile</strong> needing to be setup with the following content</p>
+<pre><code>export GIT_AUTHOR_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_AUTHOR_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+export GIT_COMMITTER_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+</code></pre>
+</li>
+<li>
+<p>After installing and setting the <code>.envrc</code> files <a href="http://direnv.net/"><code>direnv</code></a> will prompt to use the env file which we accept by running <code>direnv allow</code>.</p>
+</li>
+</ol>
+<p>Now I should have the following structure</p>
+<pre><code>|<span class="hljs-string">____~/code
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____personal/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with personal git user/email
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____work/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with work git user/email
+
+</span></code></pre>
+<h1>What did this do?</h1>
+<p>Each time we <code>cd</code> into either a <code>personal/</code> or <code>work/</code> folder <code>direnv</code> will setup our shell with environment variables contained in that folder's <code>.envrc</code> file. This will then allow Git which respects these env vars and now we don't have to think about committing the wrong name/email to the wrong Git repositories.</p>
+<p>Happy Gitting!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2010-05-31T03:00:00.000Z" pubdate data-updated="true">May 30th 2010</time>
+                          <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
 
 
-                        
+                        <span class="categories">
+    <a class='category' href='/blog/categories/git/'>Git</a>
+</span>
+
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/05/statlight-v10-v11-released-silverlight/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2010/05/silverlight-databind-to-anonymous-type/" title="Previous Post: Silverlight – DataBind to an Anonymous type (Who knew?)">&laquo; Silverlight – DataBind to an Anonymous type (Who knew?)</a>
-                        <a class="basic-alignment right" href="/2010/09/odatas-dataservicequery-and-removing/" title="Next Post: OData’s DataServiceQuery and removing the .Expand(“MagicStrings”)">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) &raquo;</a>
+                        <a class="basic-alignment left" href="/2016/05/how-not-to-start-asynchronous-communication/" title="Previous Post: How NOT to Start Asynchronous Communication">&laquo; How NOT to Start Asynchronous Communication</a>
                     </p>
                 </footer>
             </article>
@@ -183,6 +219,20 @@ try {
 
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 

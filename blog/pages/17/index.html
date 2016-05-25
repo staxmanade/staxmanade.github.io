@@ -46,20 +46,6 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +69,41 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2009/03/silverlight-datagrid-not-sorting-when/">Silverlight DataGrid NOT sorting when binding to IEnumerable&lt;T&gt;</a></h1>
+    <p class="meta">
+          <time datetime="2009-03-26T04:36:00.000Z" pubdate data-updated="true">Mar 25th 2009</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>This may be common knowledge when working with a Silverlight DataGrid, or any grid control in .net. However, I fought through this lesson the other week.</p>  <p>We are using <a href="http://www.codeplex.com/CompositeWPF">Prism V2</a> in a business application at work. When databinding several grids to a presenter I tried to enable sorting and ran into an issue where the grid wouldn’t sort if the property being bound to was an IEnumerable&lt;T&gt;…</p>  <p>Once I changed the property’s type to a List&lt;T&gt; on the presentation model (and all the correct sorting xaml tags were set) the grid became sortable.</p>  <p>The other strange thing about this was I couldn’t find anything about it on the net… Is this something that is inherent with other data grids?</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Radenko Zec</div>
+<div class='content'>
+IEnumerable does not have sort method but generic List have Sort method.</div>
+</div>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+I probably left a few details out of this post...<BR/><BR/>I Set the grid's allows sorting property to true and every cell was a custom data template with the SortMember path set</div>
+</div>
+<div class='comment'>
+<div class='author'>Justin Chase</div>
+<div class='content'>
+That is weird. How are you doing the binding? Maybe it's just calling into the IList.Sort method? Seems like it should just use Enumerable.Sort though.</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2009/03/nate-delegatefactory-to-bypass/">Nate&#x27;s DelegateFactory to bypass reflection for reading properties. (speed up i4o)</a></h1>
@@ -326,23 +347,6 @@ This is very good news. Thanks for the work.</div>
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/01/what-do-when-silverlight-is-missing/">What do when Silverlight is missing some Base Class Library (BCL) functionality?</a></h1>
-    <p class="meta">
-          <time datetime="2009-01-02T19:24:00.000Z" pubdate data-updated="true">Jan 2nd 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>If you're doing any Silverlight development you've probably run into the problem <em>&quot;some method/property/functionality I'm used to using doesn't exist in the core framework&quot;</em> provided by Microsoft<em>.</em></p>  <p>What are your options?</p>  <ol>   <li>Write the logic yourself (you just might have to)</li>    <li>Use reflector on the full framework to see how it's done and attempt to (go back to step 1. )</li>    <li><strong>Or one I've been using lately. Take a look at the Mono project.</strong></li> </ol>  <p><em>DISCLAIMER: I'm not very familiar with much of the legal side of this option, so I highly recommend understanding Mono's licensing before going too far with their source.</em></p>  <p>However it's still a great source for learning how to implement something that was tucked away in the full framework's BCL.</p>  <p>And, with the power of Google, you can easily find what you're looking for...</p>  <p>Let's give an example:</p>  <p>Say, for instance, you need the IsNested property off of the System.Type object. The Silverlight version doesn't have that property, so let's go find out how it's implemented in Mono.</p>  <p>enter in a google serch: (we'll limit the search to the mono project's exposed svn site)</p>  <p>&#160;</p>  <p><strong><em><u>site:anonsvn.mono-project.com System.Type IsNested</u></em></strong></p>  <p><strong><em><u></u></em></strong></p>  <p>The second link down is the one we want.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5p_nNNnVI/AAAAAAAAAEQ/HcbLAdNoXgc/s1600-h/image%5B7%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="197" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qAcSPA4I/AAAAAAAAAEU/gl90iUeNPRY/image_thumb%5B5%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>Then you can click on &quot;View&quot; in the &quot;Links to HEAD&quot;</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/SV5qBYAL-YI/AAAAAAAAAEY/CNxiTsUDgtc/s1600-h/image%5B11%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="224" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/SV5qB8YAqzI/AAAAAAAAAEc/nY_Tq4eOetc/image_thumb%5B7%5D.png?imgmax=800" width="404" border="0" /></a> </p>  <p>And you end up looking at the .cs file source for System.Type. Just look in the page for the IsNested property and presto... </p>  <p>&#160;</p>  <p>I'm beginning to love open source and the advantages it provides to the community as a whole. Thanks Mono.</p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/18/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -359,94 +363,67 @@ This is very good news. Thanks for the work.</div>
 
 
 <style>
-  .jj-signup-form {
+.jj-signup-form {
+    width: 300px;
     text-align: right;
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 300px;
-    display: none;
-  }
-</style>
 
-<style>
-    .jj-signup-form {
-        border-width: thin;
-        border-color: black;
-        border-style: solid;
-        background-color: white;
-    }
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
+    background-color: white;
+    display: none;
+}
 </style>
 <div class="jj-signup-form">
-    <button class="jj-signup-form-close">Close</button>
-    <div>
-        <!-- Begin MailChimp Signup Form -->
-        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            #mc_embed_signup {
-                background: #fff;
-                clear: left;
-                font: 14px Helvetica, Arial, sans-serif;
-            }
-            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+<button class="jj-signup-form-close">Close</button>
+<div>
+    <!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
 	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-        </style>
-        <div id="mc_embed_signup">
-            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
-                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                    <h2>Don't miss a post...</h2>
-                    <div class="mc-field-group">
-                        <label for="mce-FNAME">First Name </label>
-                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-                    </div>
-                    <div class="mc-field-group">
-                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-</label>
-                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-                    </div>
-                    <div id="mce-responses" class="clear">
-                        <div class="response" id="mce-error-response" style="display:none"></div>
-                        <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
-                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-            </form>
-        </div>
-        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-        <script type='text/javascript'>
-            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
-        </script>
-        <!--End mc_embed_signup-->
-    </div>
+</style>
+<div id="mc_embed_signup">
+<form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Don't miss a post...</h2>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 </div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+    </div>
+  </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-  (function(){
-    try {
-      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
-        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-            document.querySelector('.jj-signup-form').style.display = "none";
-            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
-        });
-
-        setTimeout(function(){
-          if(window.jjdisableSignupPopup) {
-            return;
-          }
-          document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
-      }
-
-    } catch(e) {
-        console.log(e);
-    }
-  })();
-
+try {
+    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+        document.querySelector('.jj-signup-form').style.display = "none";
+    });
+} catch(e) {
+    console.log(e);
+}
 </script>
+
 </footer>
   
 

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-05-20T21:50:33Z</updated>
+    <updated>2016-05-25T22:16:39Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,52 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Configuring Git to Prompt You to Setup Name and Email for Each Repo]]></title>
+        <id>http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/</id>
+        <link href="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">
+        </link>
+        <updated>2016-05-25T22:16:39Z</updated>
+        <summary type="html"><![CDATA[Thought I'd share how I'm configuring `user.name` and `user.email` for git on my work computer. This is really just a post so when I forget how I did ...]]></summary>
+        <content type="html"><![CDATA[<p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
+<p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
+<p>For most, <code>user.name</code> shouldn't change, unless you're company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
+<p>When I clone projects I always clone them into a folder structure that looks like</p>
+<pre><code>|____~/code
+| |____personal/  &lt;--- <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> where I would put some OSS projects <span class="hljs-literal">that</span> I may be working <span class="hljs-literal">on</span> <span class="hljs-keyword">or</span> contributing <span class="hljs-keyword">to</span>.
+| |____work/      &lt;--- obviously work code goes <span class="hljs-keyword">in</span> here
+</code></pre>
+<p>Thanks to <a href="http://collectiveidea.com/blog/archives/2016/04/04/multiple-personalities-in-git/">this post</a> where I learned about <a href="http://direnv.net/">direnv</a> and followed the last option I basically used these steps...</p>
+<h1>Setup</h1>
+<ol>
+<li>
+<p>Install <code>direnv</code> - <code>brew install direnv</code> (What about Windows? see <a href="https://github.com/direnv/direnv/issues/124">this github issue</a> and help make it work)</p>
+</li>
+<li>
+<p>Create <code>.envrc</code> file <strong>for each profile</strong> needing to be setup with the following content</p>
+<pre><code>export GIT_AUTHOR_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_AUTHOR_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+export GIT_COMMITTER_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+</code></pre>
+</li>
+<li>
+<p>After installing and setting the <code>.envrc</code> files <a href="http://direnv.net/"><code>direnv</code></a> will prompt to use the env file which we accept by running <code>direnv allow</code>.</p>
+</li>
+</ol>
+<p>Now I should have the following structure</p>
+<pre><code>|<span class="hljs-string">____~/code
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____personal/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with personal git user/email
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____work/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with work git user/email
+
+</span></code></pre>
+<h1>What did this do?</h1>
+<p>Each time we <code>cd</code> into either a <code>personal/</code> or <code>work/</code> folder <code>direnv</code> will setup our shell with environment variables contained in that folder's <code>.envrc</code> file. This will then allow Git which respects these env vars and now we don't have to think about committing the wrong name/email to the wrong Git repositories.</p>
+<p>Happy Gitting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How NOT to Start Asynchronous Communication]]></title>
         <id>http://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/</id>
@@ -1541,37 +1587,6 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 <h1>Tools to help enforce conventions</h1>
 <p>I've started to <a href="https://github.com/staxmanade/automated-conventions">compile a small list</a> of tools that you may consider to help enforce conventions on your team. Please feel free to suggest others by submitting a pull-request.</p>
 <p>Happy Automating!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSMP/SystemJS Starter Plunker]]></title>
-        <id>http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/</id>
-        <link href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">
-        </link>
-        <updated>2015-09-09T05:35:11Z</updated>
-        <summary type="html"><![CDATA[I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.]]></summary>
-        <content type="html"><![CDATA[<p>I'm writing this post more for myself as a quick way to get going with JSPM, but if you find it useful please feel free.</p>
-<p>Since I've recently been playing with <a href="http://jspm.io">JSPM</a>, I've found it useful to kick-start my prototyping with a plunk. I've created a number of starter plunks below (and continue to add to the list.</p>
-<h1>Full list of JSPM starter plunks</h1>
-<h2><a href="http://plnkr.co/edit/RwUyLb?p=preview">JSPM Starter</a></h2>
-<h2><a href="http://plnkr.co/edit/XWVTSx?p=preview">JSPM, React</a></h2>
-<h2><a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM, MochaJS</a></h2>
-<h2><a href="http://plnkr.co/edit/TFbsNJ?p=preview">JSPM, React, MochaJS</a></h2>
-<h2><a href="http://plnkr.co/edit/QPDetQ?p=preview">JSPM, React, MochaJS, (Sample jsx Component test)</a></h2>
-<h2><a href="http://plnkr.co/edit/XKrZHJ?p=preview">JSPM, React, WinJS</a></h2>
-<h2><a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM, React, WinJS, MochaJS</a></h2>
-<hr>
-<h1>How to use:</h1>
-<ol>
-<li>Click one of the links above</li>
-<li>Review the various files. Open and edit the <code>app.js</code> file</li>
-<li>Start writing code!</li>
-</ol>
-<blockquote>
-<p>Be sure to open your developer tools and monitor any console output for errors...</p>
-</blockquote>
-<p>If you want to take more of a test driven approach to your prototype take a look at <a href="http://staxmanade.com/2015/09/browser-only-mochajs-tests-using-systemjs/">MochaJS with JSPM</a> or go directly to the <a href="http://plnkr.co/edit/LLQQqg?p=preview">JSPM/MochaJS Plunk</a></p>
-<p>Happy Prototyping!</p>
 ]]></content>
     </entry>
 </feed>

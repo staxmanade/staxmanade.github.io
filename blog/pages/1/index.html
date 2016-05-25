@@ -46,20 +46,6 @@
 <body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
-
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +69,57 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">Configuring Git to Prompt You to Setup Name and Email for Each Repo</a></h1>
+    <p class="meta">
+          <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
+
+
+        <a href="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/#disqus_thread" data-disqus-identifier="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
+<p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
+<p>For most, <code>user.name</code> shouldn't change, unless you're company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
+<p>When I clone projects I always clone them into a folder structure that looks like</p>
+<pre><code>|____~/code
+| |____personal/  &lt;--- <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> where I would put some OSS projects <span class="hljs-literal">that</span> I may be working <span class="hljs-literal">on</span> <span class="hljs-keyword">or</span> contributing <span class="hljs-keyword">to</span>.
+| |____work/      &lt;--- obviously work code goes <span class="hljs-keyword">in</span> here
+</code></pre>
+<p>Thanks to <a href="http://collectiveidea.com/blog/archives/2016/04/04/multiple-personalities-in-git/">this post</a> where I learned about <a href="http://direnv.net/">direnv</a> and followed the last option I basically used these steps...</p>
+<h1>Setup</h1>
+<ol>
+<li>
+<p>Install <code>direnv</code> - <code>brew install direnv</code> (What about Windows? see <a href="https://github.com/direnv/direnv/issues/124">this github issue</a> and help make it work)</p>
+</li>
+<li>
+<p>Create <code>.envrc</code> file <strong>for each profile</strong> needing to be setup with the following content</p>
+<pre><code>export GIT_AUTHOR_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_AUTHOR_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+export GIT_COMMITTER_EMAIL=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">email</span>&gt;</span>
+export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">your</span> <span class="hljs-attribute">name</span>&gt;</span>
+</code></pre>
+</li>
+<li>
+<p>After installing and setting the <code>.envrc</code> files <a href="http://direnv.net/"><code>direnv</code></a> will prompt to use the env file which we accept by running <code>direnv allow</code>.</p>
+</li>
+</ol>
+<p>Now I should have the following structure</p>
+<pre><code>|<span class="hljs-string">____~/code
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____personal/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with personal git user/email
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____work/
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">____.envrc   &lt;-- env settings with work git user/email
+
+</span></code></pre>
+<h1>What did this do?</h1>
+<p>Each time we <code>cd</code> into either a <code>personal/</code> or <code>work/</code> folder <code>direnv</code> will setup our shell with environment variables contained in that folder's <code>.envrc</code> file. This will then allow Git which respects these env vars and now we don't have to think about committing the wrong name/email to the wrong Git repositories.</p>
+<p>Happy Gitting!</p>
+</div>
+
+      <a href="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/#disqus_thread" data-disqus-identifier="/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">(Comments)</a>
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">How NOT to Start Asynchronous Communication</a></h1>
@@ -689,124 +726,6 @@ B) or you've uncovered some challenges that are not easily overcome and require 
 
       <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/#disqus_thread" data-disqus-identifier="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">How to Base64 and save a binary audio file to local storage and play it back in the browser</a></h1>
-    <p class="meta">
-          <time datetime="2015-11-03T06:25:46.857Z" pubdate data-updated="true">Nov 2nd 2015</time>
-
-
-        <a href="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/#disqus_thread" data-disqus-identifier="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I wanted to see if it was possible to save a small audio file into localStorage, read it back out and play the file. In this post I'll show you short example on how to download an audio file, save it to localStorage, read it back and set it up for playback.</p>
-<h3>Disclaimers</h3>
-<p><img class="right" src="/images/worksOnMyMachine.png" alt="works on my machine"></p>
-<ul>
-<li>This was tested in IE 10 (Win 8), Chrome 46 (Mac), and Firefox 41 (Mac); however, some of the api's and techniques used in this demo are not supported in all browsers, such as the <a href="http://caniuse.com/#feat=filereader">FileReader</a>, <a href="http://caniuse.com/#feat=blobbuilder">Blob</a>, <a href="http://caniuse.com/#feat=promises">Promise</a>, and <a href="http://caniuse.com/#feat=fetch">fetch</a> api's. The Promise and fetch api's can be polyfilled. There may be polyfills for the other api's, but I haven't researched those.</li>
-<li>This post isn't going to go into much of the &quot;should I do this&quot;, as I'm sure you can come up with many reasons why you shouldn't. But I couldn't find any examples that demonstrated these steps in one place. So I prototyped the idea and am putting it here in case I do want to use this in the future sometime (or maybe you do too).</li>
-<li>My tests in Chrome didn't go great if I tried to re-run the experiment multiple times. Sometimes it would work, other times it seemed to get into a bad state and always raised a MediaError event. Refreshing the page would get it working again.</li>
-</ul>
-<h1>First we need an audio file</h1>
-<p>I don't want to point to any specific audio example since I'd feel bad if some poor soul's hosted mp3 file gets hammered (not likely) because of this example. But you just need a link to a simple, short <code>mp3</code> (or whatever audio type you're trying to test). If you look at the sample below replace <code>&lt;&lt;SampleAudioUrlHere&gt;&gt;</code> with the link to your test audio file.</p>
-<h1>Won't fit in localStorage?</h1>
-<p>If you're trying to save an audio file that's too large as a <code>Base64</code> encoded audio file will be larger than it's original size and we don't get very much space in <code>localStorage</code> then, ya you're using a file that's too large... Get something smaller or don't to this. Just sayin :P</p>
-<h1>How does it work?</h1>
-<ol>
-<li>Use <a href="https://fetch.spec.whatwg.org/">fetch</a> api we can easily get at the <code>blob()</code></li>
-<li>Run the <code>Blob</code> through the <code>FileReader</code></li>
-<li>Which also handily turned it into a data url for us</li>
-<li>The data url is just a base64 encoded string which is easy to save to <code>localStorage</code></li>
-<li>Read the string back out of <code>localStorage</code></li>
-<li>Set the audio's <code>src</code> attribute to the audio data url</li>
-<li>Profit!</li>
-</ol>
-<p>While I was prototyping this I was borrowing someone else short <code>mp3</code> file and to work around CORS (cross origin http request) I used the handy <code>https://crossorigin.me/&lt;&lt;SampleAudioUrlHere&gt;&gt;</code> service. This may be ok to do for a prototype, but you should't typically run your requests through this service. It's insecure and against pretty much all the different web religions.</p>
-<h1>Show me the code</h1>
-<p>This was just a quick <code>get-er-done</code> example. Lots of not-great-practices, but it demonstrates the possibility. Enjoy!</p>
-<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
-    
-      <span class="hljs-comment">// Code goes here</span>
-      <span class="hljs-keyword">var</span> audioFileUrl = <span class="hljs-string">'&lt;&lt;SampleAudioUrlHere&gt;&gt;'</span>;
-      
-      <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-        
-        <span class="hljs-keyword">var</span> downloadButton = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'download'</span>);
-        <span class="hljs-keyword">var</span> audioControl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'audio'</span>);
-      
-        audioControl.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-          <span class="hljs-built_in">console</span>.log(audioControl.error);
-        };
-      
-        downloadButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-          
-          audioControl.src = <span class="hljs-literal">null</span>;
-          
-          fetch(audioFileUrl)
-            .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
-              res.blob().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">blob</span>) </span>{
-                <span class="hljs-keyword">var</span> size = blob.size;
-                <span class="hljs-keyword">var</span> type = blob.type;
-      
-                <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> FileReader();
-                reader.addEventListener(<span class="hljs-string">"loadend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-      
-                  <span class="hljs-comment">// console.log('reader.result:', reader.result);</span>
-                  
-                  <span class="hljs-comment">// 1: play the base64 encoded data directly works</span>
-                  <span class="hljs-comment">// audioControl.src = reader.result;</span>
-      
-                  <span class="hljs-comment">// 2: Serialize the data to localStorage and read it back then play...</span>
-                  <span class="hljs-keyword">var</span> base64FileData = reader.result.toString();
-
-                  <span class="hljs-keyword">var</span> mediaFile = {
-                    fileUrl: audioFileUrl,
-                    size: blob.size,
-                    type: blob.type,
-                    src: base64FileData
-                  };
-                  
-                  <span class="hljs-comment">// save the file info to localStorage</span>
-                  localStorage.setItem(<span class="hljs-string">'myTest'</span>, <span class="hljs-built_in">JSON</span>.stringify(mediaFile));
-                  
-                  <span class="hljs-comment">// read out the file info from localStorage again</span>
-                  <span class="hljs-keyword">var</span> reReadItem = <span class="hljs-built_in">JSON</span>.parse(localStorage.getItem(<span class="hljs-string">'myTest'</span>));
-      
-                  audioControl.src = reReadItem.src;
-      
-                });
-      
-                reader.readAsDataURL(blob);
-      
-              });
-            });
-          
-        });
-        
-      };
-    
-    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"download"</span>&gt;</span>Run Example<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">br</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">controls</span>=<span class="hljs-value">"true"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-
-<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
-
-</code></pre>
-<p>I hope you found this quick tutorial useful. Would love to hear any feedback or thoughts on the approach.</p>
-<p>As earways, Happy Listening!</p>
-</div>
-
-      <a href="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/#disqus_thread" data-disqus-identifier="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -822,94 +741,67 @@ B) or you've uncovered some challenges that are not easily overcome and require 
 
 
 <style>
-  .jj-signup-form {
+.jj-signup-form {
+    width: 300px;
     text-align: right;
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 300px;
-    display: none;
-  }
-</style>
 
-<style>
-    .jj-signup-form {
-        border-width: thin;
-        border-color: black;
-        border-style: solid;
-        background-color: white;
-    }
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
+    background-color: white;
+    display: none;
+}
 </style>
 <div class="jj-signup-form">
-    <button class="jj-signup-form-close">Close</button>
-    <div>
-        <!-- Begin MailChimp Signup Form -->
-        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            #mc_embed_signup {
-                background: #fff;
-                clear: left;
-                font: 14px Helvetica, Arial, sans-serif;
-            }
-            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+<button class="jj-signup-form-close">Close</button>
+<div>
+    <!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
 	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-        </style>
-        <div id="mc_embed_signup">
-            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
-                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                    <h2>Don't miss a post...</h2>
-                    <div class="mc-field-group">
-                        <label for="mce-FNAME">First Name </label>
-                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-                    </div>
-                    <div class="mc-field-group">
-                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-</label>
-                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-                    </div>
-                    <div id="mce-responses" class="clear">
-                        <div class="response" id="mce-error-response" style="display:none"></div>
-                        <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
-                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-            </form>
-        </div>
-        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-        <script type='text/javascript'>
-            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
-        </script>
-        <!--End mc_embed_signup-->
-    </div>
+</style>
+<div id="mc_embed_signup">
+<form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h2>Don't miss a post...</h2>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name </label>
+	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 </div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+    </div>
+  </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
 <script>
-  (function(){
-    try {
-      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
-        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
-            document.querySelector('.jj-signup-form').style.display = "none";
-            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
-        });
-
-        setTimeout(function(){
-          if(window.jjdisableSignupPopup) {
-            return;
-          }
-          document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
-      }
-
-    } catch(e) {
-        console.log(e);
-    }
-  })();
-
+try {
+    document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+        document.querySelector('.jj-signup-form').style.display = "none";
+    });
+} catch(e) {
+    console.log(e);
+}
 </script>
+
 </footer>
   
 
