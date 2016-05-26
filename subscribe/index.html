@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Debug - Developing on Staxmanade</title>
+  <title>Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="">
+   <meta name="description" content="Subscribe to Jason Jarrett&#x27;s Blog and Website (Developing on Staxmanade).">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="http://staxmanade.com/subscribe">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -81,43 +81,115 @@
 </nav>
 <div id="main">
     <div id="content">
-
-        <div class="blog-index">
-            <article>
-                  <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">Timing Debug Code Using Lambda&#x27;s</a></h1>
-    <p class="meta">
-          <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
-
-
         
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-whoops - Thanks for the suggested update...</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Lambda, not lamda. ;)</div>
-</div>
-</div>
-</div>
+<style>
+    .signup-page {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    #subscribe_input {
+        width: 100%;
+        max-width: 1000px;
+        font-size: xx-large;
+    }
 
-            </article>
-            <div class="pagination">
-                <a href="/blog/archives">Blog Archives</a>
-            </div>
+    #content div.jj-signup-form {
+        text-align: initial;
+        position: initial;
+        bottom: initial;
+        right: initial;
+        width: initial;
+        display: initial;
+
+        border-width: initial;
+        border-color: initial;
+        border-style: initial;
+        background-color: initial;
+    }
+    #content .jj-signup-form-close {
+        display: none;
+    }
+
+    .jj-signup-form > div {
+        width: 80%;
+        min-width: 300px;
+    }
+</style>
+<div class="signup-page">
+
+    <h1>
+        Several ways to get the most recent posts from Developing on Staxmanade.
+    </h1>
+
+    <h3>1. Subscribe by Email. </h3>
+    <p>I don't post often and won't share you're email with anyone.</p>
+    <style>
+    .jj-signup-form {
+        border-width: thin;
+        border-color: black;
+        border-style: solid;
+        background-color: white;
+    }
+</style>
+<div class="jj-signup-form">
+    <button class="jj-signup-form-close">Close</button>
+    <div>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica, Arial, sans-serif;
+            }
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
+                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+                    <h2>Don't miss a post...</h2>
+                    <div class="mc-field-group">
+                        <label for="mce-FNAME">First Name </label>
+                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+                    </div>
+                    <div class="mc-field-group">
+                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    </div>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+            </form>
         </div>
+        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+        <script type='text/javascript'>
+            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+        </script>
+        <!--End mc_embed_signup-->
+    </div>
+</div>
+    <script>
+        window.jjdisableSignupPopup = true;
+    </script>
 
+    <p>&nbsp;</p>
 
+    <h3>2. RSS</h3>
+    <p>
+
+        <input type="text" value="http://feeds.feedburner.com/DevelopingOnStaxmande" id="subscribe_input" />
+
+    </p>
+
+</div>
 
     </div>
 </div>
