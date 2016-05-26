@@ -12,9 +12,9 @@
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
-        <title type="html"><![CDATA[Configuring Git to Prompt You to Setup Name and Email for Each Repo]]></title>
-        <id>http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/</id>
-        <link href="http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/">
+        <title type="html"><![CDATA[Configuring Git to Use Different Name and Email Depending on Folder Context]]></title>
+        <id>http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</id>
+        <link href="http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">
         </link>
         <updated>2016-05-25T22:16:39Z</updated>
         <summary type="html"><![CDATA[Thought I'd share how I'm configuring `user.name` and `user.email` for git on my work computer. This is really just a post so when I forget how I did ...]]></summary>

@@ -749,7 +749,7 @@
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/2016/05/configuring-git-to-prompt-you-to-setup-name-and-email-for-each-repo/</loc>
+    <loc>http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</loc>
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
@@ -757,15 +757,11 @@
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/blog/archives</loc>
-    <lastmod>2016-05-25T22:16:39.455Z</lastmod>
-  </url>
-  <url>
     <loc>http://staxmanade.com/about/podcasts</loc>
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/apps/emscalc</loc>
+    <loc>http://staxmanade.com/about</loc>
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
@@ -773,7 +769,11 @@
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
-    <loc>http://staxmanade.com/about</loc>
+    <loc>http://staxmanade.com/apps/emscalc</loc>
+    <lastmod>2016-05-25T22:16:39.455Z</lastmod>
+  </url>
+  <url>
+    <loc>http://staxmanade.com/blog/archives</loc>
     <lastmod>2016-05-25T22:16:39.455Z</lastmod>
   </url>
   <url>
