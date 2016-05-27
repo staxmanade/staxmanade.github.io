@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-05-25T22:16:39Z</updated>
+    <updated>2016-05-26T04:36:41Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,86 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[How to Get Environment Variables Passed Through docker-compose to the Containers]]></title>
+        <id>http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/</id>
+        <link href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">
+        </link>
+        <updated>2016-05-26T04:36:41Z</updated>
+        <summary type="html"><![CDATA[I've been playing with a [little toy](https://github.com/staxmanade/sample-pouch-couch-databaseperuser) that uses [docker-compose](https://docs.docker...]]></summary>
+        <content type="html"><![CDATA[<p>I've been playing with a <a href="https://github.com/staxmanade/sample-pouch-couch-databaseperuser">little toy</a> that uses <a href="https://docs.docker.com/compose">docker-compose</a> to bring together a web app, couchdb, and redis container into an easy-ier-ish cohesive unit.</p>
+<p>While working on it (and to make it a bit more generic), my next step was to find a way to pass the database admin user/pass (and other configuraiton options) into the containers as <strong>environment variables</strong> which took me way longer to figure out than it should have...</p>
+<p>Hopefully this posts helps it click for you a little faster than it (didn't) for me :)</p>
+<p>If you land here, you've likely already poured over the different parts of documentation for docker, docker-compose and environment variables.</p>
+<p>Things like:</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/compose-file/#variable-substitution">https://docs.docker.com/compose/compose-file/#variable-substitution</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/#env-file">https://docs.docker.com/compose/compose-file/#env-file</a></li>
+<li><a href="http://stackoverflow.com/questions/29377853/how-to-use-environment-variables-in-docker-compose">http://stackoverflow.com/questions/29377853/how-to-use-environment-variables-in-docker-compose</a></li>
+<li>Google: <a href="http://lmgtfy.com/?q=docker-compose+environment+variables">docker-compose environment variables</a></li>
+</ul>
+<p>In case things drift in the product or docs, this post was written using <code>docker-compose version 1.7.1, build 0a9ab35</code> so keep that in mind...</p>
+<p>I think the difficult thing for me was piecing the various ways you can get environment variables defined and the necessary mapping required within the <code>docker-compose</code> file.</p>
+<h1>Environment Variable Setup Stages.</h1>
+<p>For me it didn't click until I was able to think about the stages that needed to exist for an environment variable to go from the development computer -&gt; to the -&gt; docker container.</p>
+<p>For now I'm thinking of using the following model...</p>
+<pre><code>
+ ------------------------       --------------------       ------------------
+|<span class="hljs-string">   Env Source           </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> docker-compose.yml </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> Docker Container </span>|
+|<span class="hljs-string">                        </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                    </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+|<span class="hljs-string">   A) .env file         </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> map env vars using </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> echo $DEMO_VAR   </span>|
+|<span class="hljs-string">   B) run-time terminal </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> enterpolation      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+|<span class="hljs-string">       env var          </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> in this file.      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+ ------------------------      ---------------------       ------------------
+</code></pre>
+<h1>A working example.</h1>
+<p>If you want to see all of this in one place <a href="https://github.com/staxmanade/example-working-docker-compose-environment-vars">check out this github example</a> which is outline below.</p>
+<p>The example above is layed out like so...</p>
+<pre><code>.
+|<span class="hljs-string">____.env
+</span>|<span class="hljs-string">____docker-compose.yml
+</span>|<span class="hljs-string">____env-file-test
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____docker-entrypoint.sh
+</span>|<span class="hljs-string"> </span>|____Dockerfile
+|<span class="hljs-string">____README.md
+</span></code></pre>
+<h1>The <code>.env</code> file:</h1>
+<p>This is where you can place each of the environment variables you need in here.</p>
+<pre><code>DEMO_VAR=Test <span class="hljs-built_in">value</span> <span class="hljs-built_in">from</span> .env <span class="hljs-built_in">file</span>!
+</code></pre>
+<p>As the <a href="https://docs.docker.com/compose/compose-file/#env-file">docs say</a> you can use <code># as comments</code> and blank lines in the file - all other lines must be in the format of <code>ENV_VAR=ENV_VALUE</code>.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in you're terminal's context will take presedent over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<h1>The <code>docker-compose.yml</code>:</h1>
+<pre><code><span class="hljs-keyword">version</span>: <span class="hljs-string">"2"</span>
+services:
+  some_server:
+    build: ./env-<span class="hljs-keyword">file</span>-<span class="hljs-keyword">test</span>
+    environment:
+     - DEMO_VAR=<span class="hljs-label">${DEMO_VAR}</span>
+</code></pre>
+<p>The above file is the part where I got tripped up, and once I added the <code>environment:</code> section it all clicked.</p>
+<p>You likely don't want every one of you're development or production server's environment variables to show up inside you're container. This file acts a bit like the <code>docker run -e ENV_VAR=FOO</code> option and allows you to select specific environment variables that are to be passed into the container.</p>
+<p>I like the declaritive approach of this file as it makes environment variable dependencies explicit.</p>
+<h1>The <code>env-file-test/Dockerfile</code>:</h1>
+<pre><code><span class="hljs-built_in">FROM</span> alpine
+
+<span class="hljs-built_in">ENV</span> DEMO_VAR WAT
+
+<span class="hljs-built_in">COPY</span> <span class="bash">docker-entrypoint.sh /
+</span><span class="hljs-built_in">ENTRYPOINT</span> <span class="bash">[<span class="hljs-string">"/docker-entrypoint.sh"</span>]
+</span></code></pre>
+<p>Pretty standard <code>Dockerfile</code>, but one thing I learned is you can setup default environment variables using the <a href="https://docs.docker.com/engine/reference/builder/#env">docker <code>ENV</code></a> directive. But these will be overriden by the <code>.env</code> file or variables in you're terminal's environment.</p>
+<h1>The <code>env-file-test/docker-entrypoint.sh</code></h1>
+<pre><code><span class="hljs-shebang">#!/bin/sh</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
+</code></pre>
+<p>This was just a sample script to print out the environment variable.</p>
+<h1>Some other things I learned</h1>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> The docs say you can specify you're own <code>env-file</code> or even multiple files, however I could not get that working. It always wanted to choose the <code>.env</code> file.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in you're terminal that also exists in your're <code>.env</code> file the terminal's environment takes presedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Happy Environment Setup!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Configuring Git to Use Different Name and Email Depending on Folder Context]]></title>
         <id>http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</id>
@@ -1523,70 +1603,6 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 <h1>Just Review Everything</h1>
 <p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
 <p>Happy Reviewing!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions]]></title>
-        <id>http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/</id>
-        <link href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">
-        </link>
-        <updated>2015-09-09T06:20:41Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions]]></summary>
-        <content type="html"><![CDATA[<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 2</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - (current) - Automatically Enforce Project Conventions
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
-        </li>
-    </ul>
-</div></p>
-<p>Every project generates it's own constraints. These may come from an Architect's idea of &quot;best practice&quot; or it may come from the domain the software is written in. It may even be derived because of the programming language you're using. For example, in JavaScript we have linters that encourage rules like triple equals <code>===</code> vs double equals <code>==</code>.</p>
-<p>Whatever the convention or rule is, one of the best steps you can take is to <strong>find a way to automatically enforce the convention</strong> once it can be established.</p>
-<p>The class of conventions can encompass a wide array of rules; anything from the formatting of the code, naming conventions, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
-<p>Finding a way to automatically check and enforce conventions will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention to even catching the most senior developer when they forget the convention all together (It's happened to me - forget).</p>
-<h1>An example of a project convention</h1>
-<p>In the past, I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in various places like billing, trading, etc. Deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes or simulate billing over time rages.</p>
-<p>However, if someone ever used a <code>new Date()</code> in the code, this would break the convention by not using our abstraction and not allow us to roll time properly. This could lead to serious or hard to find bugs.</p>
-<p>Detecting the miss-use of Date in this application was a great place for automated enforcement.</p>
-<p>The above can be caught by running code reviews. However, we baked this convention into the system and automated the enforcement of it so that the issue could be caught much earlier in the development lifecycle. With a well-placed a unit/integration test that searched through the code base for uses of <code>new Date()</code> and raised an error message explaining why, we were able to be sure the projects convention was held and avoid potential bugs in the future.</p>
-<h1>Fail with a solid path forward</h1>
-<p>In the automated convention enforcement described above, the convention would not just fail a test with a generic <code>do not use new Date()...</code> message.</p>
-<p>This is a good place to document or share a story about why <code>new Date()</code> was not allowed. We failed the test with a long error message that described both why not to use <code>new Date()</code> and we included a sample snippet of what to use in its place.</p>
-<p>You want to include the why as well as the what here to make adoption of the conventions easier going forward for those new to the team or project.</p>
-<h1>Allow special exclusions</h1>
-<p>Most conventions are generalizations that may not ALWAYS be necessary or ideal. There often exceptions to the rule in software development, so allowing the test code to be extended to enable exclusions to this rule is a good thing.</p>
-<p>In the example  above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
-<h1>Some automation approaches</h1>
-<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase.</p>
-<p>Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
-<h1>Tools to help enforce conventions</h1>
-<p>I've started to <a href="https://github.com/staxmanade/automated-conventions">compile a small list</a> of tools that you may consider to help enforce conventions on your team. Please feel free to suggest others by submitting a pull-request.</p>
-<p>Happy Automating!</p>
 ]]></content>
     </entry>
 </feed>

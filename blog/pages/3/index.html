@@ -85,6 +85,75 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-09T06:20:41.092Z" pubdate data-updated="true">Sep 8th 2015</time>
+
+
+        <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 2</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - (current) - Automatically Enforce Project Conventions
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
+        </li>
+    </ul>
+</div></p>
+<p>Every project generates it's own constraints. These may come from an Architect's idea of &quot;best practice&quot; or it may come from the domain the software is written in. It may even be derived because of the programming language you're using. For example, in JavaScript we have linters that encourage rules like triple equals <code>===</code> vs double equals <code>==</code>.</p>
+<p>Whatever the convention or rule is, one of the best steps you can take is to <strong>find a way to automatically enforce the convention</strong> once it can be established.</p>
+<p>The class of conventions can encompass a wide array of rules; anything from the formatting of the code, naming conventions, to obscure ways of doing X with component Y that if not done in that way will cause problems.</p>
+<p>Finding a way to automatically check and enforce conventions will help to not only keep the project on track if a newer developer is onboard and isn't aware of the convention to even catching the most senior developer when they forget the convention all together (It's happened to me - forget).</p>
+<h1>An example of a project convention</h1>
+<p>In the past, I worked on a mutual fund and stock trading engine. This entire system depended heavily on time in various places like billing, trading, etc. Deep down in the core of the application we built in an abstraction over the core Date implementation. This abstraction allowed us to do things like roll the date back for testing or debugging purposes or simulate billing over time rages.</p>
+<p>However, if someone ever used a <code>new Date()</code> in the code, this would break the convention by not using our abstraction and not allow us to roll time properly. This could lead to serious or hard to find bugs.</p>
+<p>Detecting the miss-use of Date in this application was a great place for automated enforcement.</p>
+<p>The above can be caught by running code reviews. However, we baked this convention into the system and automated the enforcement of it so that the issue could be caught much earlier in the development lifecycle. With a well-placed a unit/integration test that searched through the code base for uses of <code>new Date()</code> and raised an error message explaining why, we were able to be sure the projects convention was held and avoid potential bugs in the future.</p>
+<h1>Fail with a solid path forward</h1>
+<p>In the automated convention enforcement described above, the convention would not just fail a test with a generic <code>do not use new Date()...</code> message.</p>
+<p>This is a good place to document or share a story about why <code>new Date()</code> was not allowed. We failed the test with a long error message that described both why not to use <code>new Date()</code> and we included a sample snippet of what to use in its place.</p>
+<p>You want to include the why as well as the what here to make adoption of the conventions easier going forward for those new to the team or project.</p>
+<h1>Allow special exclusions</h1>
+<p>Most conventions are generalizations that may not ALWAYS be necessary or ideal. There often exceptions to the rule in software development, so allowing the test code to be extended to enable exclusions to this rule is a good thing.</p>
+<p>In the example  above we had a place in the unit test that allowed us to say &quot;In component M method Y we allowed the use of a single case of <code>new Date()</code>&quot;. The first exercise of the exclusion was built in to the original abstraction over time. But there were a couple other places we allowed it as I recall.</p>
+<h1>Some automation approaches</h1>
+<p>Depending on the convention, the approach to automation can vary. Sometimes it's as easy as adding a simple unit test. Other times it requires you jump out to a command line utility that searches the entire codebase.</p>
+<p>Whatever the convention, try to come up with a simple approach that can automatically be run through a continuous integration environment and can freely be there to watch over you and your team's conventions.</p>
+<h1>Tools to help enforce conventions</h1>
+<p>I've started to <a href="https://github.com/staxmanade/automated-conventions">compile a small list</a> of tools that you may consider to help enforce conventions on your team. Please feel free to suggest others by submitting a pull-request.</p>
+<p>Happy Automating!</p>
+</div>
+
+      <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
     <p class="meta">
           <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
@@ -1033,34 +1102,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 </div>
 
       <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/build-command-with-auditory-feedback/">Build Command with Auditory Feedback</a></h1>
-    <p class="meta">
-          <time datetime="2015-02-28T21:36:32.671Z" pubdate data-updated="true">Feb 28th 2015</time>
-
-
-        <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>Here's a short and fun little ditty I'm going to throw up here so I can find it later... <em>(because why would I try to memorize something so simple when I can put it here and share with you all?)</em>.</p>
-<h1>My Builds Are Speaking to Me</h1>
-<p>Running this command from my Mac command line window gives a nice audio feedback when builds are complete.</p>
-<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
-</code></pre>
-<h1>Some Context</h1>
-<p>While doing some project work on my Mac lately I'm in the situation where I am constantly running <code>gulp</code> at the command line. This workflow could apply to any CLI build tool like <a href="http://gulpjs.com">gulp</a>, <a href="https://github.com/ruby/rake">rake</a>, make, etc and ya I know I need to spend the time getting <code>gulp watch</code> to work but let's not worry about that for now...</p>
-<p>The build is not slow, but it's not fast (taking about 6) seconds. That's just enough time for me to <a href="https://www.youtube.com/watch?v=SSUXXzN26zg">see a squirrel</a> and by the time I realize the build is done, I've forgotten if I actually recently kicked off the build or if the most recent run is out of date from the latest code I've worked on...</p>
-<p>So I searched for a quick way to get some auditory feedback when my build was done so I could more efficiently continue the development flow...</p>
-<p>I first stumbled upon <a href="https://gist.github.com/taterbase/3154646">this gist</a> which has a NodeJS implementation <code>console.log(&quot;\007&quot;);</code>, but this produces the same beep I get when my unit tests fail - which I don't want when everything's good to go.</p>
-<p>Then I found someone mention the mac <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/say.1.html"><code>say</code></a> command which is WAY better for my needs and I settled on the following little command.</p>
-<pre><code>(gulp &amp;&amp; say 'super!') || say &quot;what the what?&quot; -v Albert
-</code></pre>
-<p>Whats cool about this pattern is I can replace <code>gulp</code> with any other build tool on other projects like <code>rake</code>, <code>grunt</code>, <code>make</code>, etc...</p>
-</div>
-
-      <a href="/2015/02/build-command-with-auditory-feedback/#disqus_thread" data-disqus-identifier="/2015/02/build-command-with-auditory-feedback/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>

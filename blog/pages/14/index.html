@@ -85,6 +85,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/03/diffing-tool-feature-request/">Diffing tool feature request</a></h1>
+    <p class="meta">
+          <time datetime="2010-03-22T04:08:00.000Z" pubdate data-updated="true">Mar 21st 2010</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>Most of us have probably tried different versions of a file diffing tool. Some are picky about their choice. Personally I’m fond of two different tools (mostly because they’re easy to find/install and setup). Here’s a post where I talk about how I like to integrate these tools when working with <a href="http://msdn.microsoft.com/en-us/teamsystem/dd408382.aspx">TFS</a> and Visual Studio - <a href="/2009/08/development-environment-mergecompare">/2009/08/development-environment-mergecompare.html</a></p>  <p>A couple months ago, I _slowly_ started learning <a href="http://git-scm.com/">Git</a>. Since that initial plunge, I’m now in a place where much of it still scary unknown; however, I know enough get what I need done. And when I get to the point where I need to do something I’ve never done, well I go figure it out, and it becomes another part of the personal Git toolbox.</p>  <p>I’ve been working git solely through the command line (in PowerShell actually). I know it’s not the best place to take full advantage of <a href="http://git-scm.com/">Git</a>; however, it’s working for me. </p>  <p>The other day needed to review changes in a file back in the commit history. Up until this point I had only diff’d uncommitted files with the most recent version of that file, and I already wired a visual diffing tool where I could then use the “git difftool …” command to review differences. </p>  <p>However this was the first time I had to look at a file further back in time than the head. After a quick search I came across the “<a href="http://ftp.sunet.se/pub/Linux/kernel.org/software/scm/git/docs/gitk.html">gitk</a>” command. gitk is “The git repository browser”. I’ve known about this tool, however am trying to keep with the command line tools. (Except for diffing files)</p>  <p>Below is the UI when running the “gitk build-tasks.ps1” in the root of the <a href="http://statlight.net" target="_blank">StatLight</a> project.</p>  <p>Notice how there’s a list of changes to the file, and under that the diff of the previous version to the selected version.</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btMyZortI/AAAAAAAAAN4/TTo1Bfy1OQc/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/S6btONpjuqI/AAAAAAAAAN8/mrgvUVTrIj8/image_thumb2.png?imgmax=800" width="810" height="638" /></a> </p>  <p>One thing do like about the above, is the list of revisions and how they are right there in your face. Going back in time is really easy. My only problem is I’m not accustomed to the linux style diffing, and still prefer the side/by side file diffing.</p>  <p>On to the feature request…</p>  <h4>What problem is this new feature trying to solve?</h4>  <p>The problem of having a file diff between version E &amp; F and then needing to look at the previous version to E. (easily) <strong>AND</strong> show the different versioned files side by side <strong>AND</strong> make it easy and intuitive to go back in time.</p>  <h4>How might this feature request look?<img style="display: inline; margin-left: 0px; margin-right: 0px" align="right" src="http://i.zdnet.com/blogs/iphone-touchscreen.png" width="130" height="129" /></h4>  <p>Maybe someone is doing this, maybe not. It would be interesting to leverage a (mouse drag – or text command [EX: Ctrl+Alt+Right Arrow]) to “pan” between versions through file diffing view. Kind of like you can drag the pictures on an iPhone to view the previous or next one. I could drag the mouse across the screen to pan to the previous/next view of the diff. </p>  <p>&#160;</p>  <p>Below is a quick mockup of the thought – definitely far from refined. </p>  <p><a href="http://lh4.ggpht.com/_L6Vw0x_R3iw/S6btOnz3LRI/AAAAAAAAAOA/FDCh-WJo2_k/s1600-h/image9.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S6btPwPn4pI/AAAAAAAAAOE/YrXZIPjUtUQ/image_thumb5.png?imgmax=800" width="1017" height="380" /></a></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <p></p>  <h4>One challenge to true implementation?</h4>  <p>The main problem to solve (if you write a generic text diffing tool) is needing to interface with different <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a>’s so you can retrieve the the previous/next versions of the file. Basically having to know what <a href="http://en.wikipedia.org/wiki/Revision_control">SCM</a> the file is under.</p>  <p>&#160;</p>  <p>Anyone mind taking this project on and implementing this in one of the decent open source file diffing tools out there? (ex: <a href="http://winmerge.org/">http://winmerge.org/</a>)&#160; I would love you for it. Well… I’d buy you a beer.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
     <p class="meta">
           <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
@@ -456,66 +473,6 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
 <div class="entry-content">
 <div class='post'>
 <p><a href="http://lh5.ggpht.com/_L6Vw0x_R3iw/Sv-ngaEoLWI/AAAAAAAAAMg/EXgQWVuuS18/s1600-h/image4.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ngh5lO_I/AAAAAAAAAMk/6Mlo3qg3Ysw/image_thumb1.png?imgmax=800" width="569" height="364" /></a>&#160;</p>  <p>What MSDN says: <a href="http://msdn.microsoft.com/en-us/library/sbbt4032.aspx">enum (C# Reference)</a></p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-ng8eAR3I/AAAAAAAAAMo/LlX88s7OQvc/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_L6Vw0x_R3iw/Sv-nhJELZZI/AAAAAAAAAMs/nhAjJrMikiM/image_thumb11.png?imgmax=800" width="572" height="134" /></a></p>  <p>Why can’t this just work?</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/11/massive-search-replace-among-files/">Massive Search &amp; Replace Among Files Checked-in to TFS</a></h1>
-    <p class="meta">
-          <time datetime="2009-11-07T21:03:00.000Z" pubdate data-updated="true">Nov 7th 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content"><p>This post is a note to myself, as the two outlined below contain code/commands I've done (wished I could have done automatically in the past) that I want to save for reference later.</p>
-<p>I spent the last (almost full year) taking baby steps in an effort to make our logic layer a tiny smidgen eency weency bit more testable. Trust me, trying to replace an everything's a Singleton architecture is no easy task. I won't go into my strong dislike for Singletons – take a look at <a href="http://tinyurl.com/yl8bnhj">Singletons are Evil</a>. I've slowly worn the team down into an agreement that we will not propagate any more Singletons in the project.  They've given me a new saying &quot;Read my lips. NO NEW SINGLETONS!&quot;.</p>
-<h5>PowerShell assisted regular expression search and replace.</h5>
-<p>In my case, the specific regular expression needed to find</p>
-<pre><code>    <span class="hljs-tag">SomeBusinessLogicClass</span><span class="hljs-class">.Instance</span><span class="hljs-class">.SomeFooMethod</span>(<span class="hljs-tag">bar</span>);
-</code></pre>
-<p>and replace it with</p>
-<pre><code>    Resolve<span class="hljs-comment">()</span>.SomeFooMethod<span class="hljs-comment">(bar)</span>;
-</code></pre>
-<p>Below is the PowerShell script I used.</p>
-<pre><code class="language-PowerShell"><span class="hljs-comment"># define the find and replacement regular expressions.</span>
-<span class="hljs-variable">$regex_find</span> = <span class="hljs-string">'([a-zA-Z]+)\\.Instance\\.'</span>
-<span class="hljs-variable">$regex_replace</span> = <span class="hljs-string">'Resolve().'</span>
-
-<span class="hljs-comment"># get all the C# files we want to search/replace through</span>
-<span class="hljs-variable">$allFiles</span> = <span class="hljs-built_in">Get-ChildItem</span> -Filter *.cs -Recurse
-
-<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$fileToReplace</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$allFiles</span>)
-{
-    <span class="hljs-variable">$fileString</span> = <span class="hljs-variable">$fileToReplace</span>.FullName
-    <span class="hljs-keyword">if</span>([String]::Join([Environment]::NewLine, (<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>)) <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>)
-    {
-        <span class="hljs-comment"># make the file writable so we can update it</span>
-        <span class="hljs-variable">$fileToReplace</span>.IsReadOnly = <span class="hljs-variable">$false</span>;
-        <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">"applying fix to - <span class="hljs-variable">$fileString</span>"</span>
-
-        <span class="hljs-comment"># here's where we load up the file iterate through each line   </span>
-        <span class="hljs-comment"># replace any of the regex matches</span>
-        <span class="hljs-comment"># and save the file back to the original location</span>
-        <span class="hljs-built_in">Set-Content</span> <span class="hljs-variable">$fileString</span> -Value ((<span class="hljs-built_in">Get-Content</span> -Path <span class="hljs-variable">$fileString</span>) | <span class="hljs-keyword">foreach</span> { <span class="hljs-keyword">if</span>( <span class="hljs-variable">$_</span> <span class="hljs-operator">-match</span> <span class="hljs-variable">$regex_find</span>) { <span class="hljs-variable">$_</span> <span class="hljs-operator">-replace</span> <span class="hljs-variable">$regex_find</span>, <span class="hljs-variable">$regex_replace</span> } <span class="hljs-keyword">else</span> { <span class="hljs-variable">$_</span> } } )
-    }
-}
-</code></pre>
-<blockquote>
-<p>Caveat:</p>
-<ul>
-<li>Some of the files &quot;end of file&quot; changed (added an extra end line in some cases)</li>
-</ul>
-</blockquote>
-<h5>Team Foundation Server tip to detect the changed files.</h5>
-<p>The next step requires you install the <a href="http://msdn.microsoft.com/en-us/teamsystem/bb980963.aspx">TFS Power Tools</a>. Once installed, fire up the PowerShell console given in the start menu</p>
-<p><img src="http://lh4.ggpht.com/_L6Vw0x_R3iw/SvXgh4v7zpI/AAAAAAAAAMc/nqAF3xb87Xk/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
-<p>I then ran the following command to have all edited files automatically detected as modified and can then be set as pending a change in TFS.</p>
-<blockquote>
-<p>tfpt online /adds /diff /recursive .</p>
-</blockquote>
 </div>
 
       

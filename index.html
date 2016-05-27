@@ -85,6 +85,91 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">How to Get Environment Variables Passed Through docker-compose to the Containers</a></h1>
+    <p class="meta">
+          <time datetime="2016-05-26T04:36:41.974Z" pubdate data-updated="true">May 25th 2016</time>
+
+
+        <a href="/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/#disqus_thread" data-disqus-identifier="/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've been playing with a <a href="https://github.com/staxmanade/sample-pouch-couch-databaseperuser">little toy</a> that uses <a href="https://docs.docker.com/compose">docker-compose</a> to bring together a web app, couchdb, and redis container into an easy-ier-ish cohesive unit.</p>
+<p>While working on it (and to make it a bit more generic), my next step was to find a way to pass the database admin user/pass (and other configuraiton options) into the containers as <strong>environment variables</strong> which took me way longer to figure out than it should have...</p>
+<p>Hopefully this posts helps it click for you a little faster than it (didn't) for me :)</p>
+<p>If you land here, you've likely already poured over the different parts of documentation for docker, docker-compose and environment variables.</p>
+<p>Things like:</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/compose-file/#variable-substitution">https://docs.docker.com/compose/compose-file/#variable-substitution</a></li>
+<li><a href="https://docs.docker.com/compose/compose-file/#env-file">https://docs.docker.com/compose/compose-file/#env-file</a></li>
+<li><a href="http://stackoverflow.com/questions/29377853/how-to-use-environment-variables-in-docker-compose">http://stackoverflow.com/questions/29377853/how-to-use-environment-variables-in-docker-compose</a></li>
+<li>Google: <a href="http://lmgtfy.com/?q=docker-compose+environment+variables">docker-compose environment variables</a></li>
+</ul>
+<p>In case things drift in the product or docs, this post was written using <code>docker-compose version 1.7.1, build 0a9ab35</code> so keep that in mind...</p>
+<p>I think the difficult thing for me was piecing the various ways you can get environment variables defined and the necessary mapping required within the <code>docker-compose</code> file.</p>
+<h1>Environment Variable Setup Stages.</h1>
+<p>For me it didn't click until I was able to think about the stages that needed to exist for an environment variable to go from the development computer -&gt; to the -&gt; docker container.</p>
+<p>For now I'm thinking of using the following model...</p>
+<pre><code>
+ ------------------------       --------------------       ------------------
+|<span class="hljs-string">   Env Source           </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> docker-compose.yml </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> Docker Container </span>|
+|<span class="hljs-string">                        </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                    </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+|<span class="hljs-string">   A) .env file         </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> map env vars using </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> echo $DEMO_VAR   </span>|
+|<span class="hljs-string">   B) run-time terminal </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> enterpolation      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+|<span class="hljs-string">       env var          </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> in this file.      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+ ------------------------      ---------------------       ------------------
+</code></pre>
+<h1>A working example.</h1>
+<p>If you want to see all of this in one place <a href="https://github.com/staxmanade/example-working-docker-compose-environment-vars">check out this github example</a> which is outline below.</p>
+<p>The example above is layed out like so...</p>
+<pre><code>.
+|<span class="hljs-string">____.env
+</span>|<span class="hljs-string">____docker-compose.yml
+</span>|<span class="hljs-string">____env-file-test
+</span>|<span class="hljs-string"> </span>|<span class="hljs-string">____docker-entrypoint.sh
+</span>|<span class="hljs-string"> </span>|____Dockerfile
+|<span class="hljs-string">____README.md
+</span></code></pre>
+<h1>The <code>.env</code> file:</h1>
+<p>This is where you can place each of the environment variables you need in here.</p>
+<pre><code>DEMO_VAR=Test <span class="hljs-built_in">value</span> <span class="hljs-built_in">from</span> .env <span class="hljs-built_in">file</span>!
+</code></pre>
+<p>As the <a href="https://docs.docker.com/compose/compose-file/#env-file">docs say</a> you can use <code># as comments</code> and blank lines in the file - all other lines must be in the format of <code>ENV_VAR=ENV_VALUE</code>.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in you're terminal's context will take presedent over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<h1>The <code>docker-compose.yml</code>:</h1>
+<pre><code><span class="hljs-keyword">version</span>: <span class="hljs-string">"2"</span>
+services:
+  some_server:
+    build: ./env-<span class="hljs-keyword">file</span>-<span class="hljs-keyword">test</span>
+    environment:
+     - DEMO_VAR=<span class="hljs-label">${DEMO_VAR}</span>
+</code></pre>
+<p>The above file is the part where I got tripped up, and once I added the <code>environment:</code> section it all clicked.</p>
+<p>You likely don't want every one of you're development or production server's environment variables to show up inside you're container. This file acts a bit like the <code>docker run -e ENV_VAR=FOO</code> option and allows you to select specific environment variables that are to be passed into the container.</p>
+<p>I like the declaritive approach of this file as it makes environment variable dependencies explicit.</p>
+<h1>The <code>env-file-test/Dockerfile</code>:</h1>
+<pre><code><span class="hljs-built_in">FROM</span> alpine
+
+<span class="hljs-built_in">ENV</span> DEMO_VAR WAT
+
+<span class="hljs-built_in">COPY</span> <span class="bash">docker-entrypoint.sh /
+</span><span class="hljs-built_in">ENTRYPOINT</span> <span class="bash">[<span class="hljs-string">"/docker-entrypoint.sh"</span>]
+</span></code></pre>
+<p>Pretty standard <code>Dockerfile</code>, but one thing I learned is you can setup default environment variables using the <a href="https://docs.docker.com/engine/reference/builder/#env">docker <code>ENV</code></a> directive. But these will be overriden by the <code>.env</code> file or variables in you're terminal's environment.</p>
+<h1>The <code>env-file-test/docker-entrypoint.sh</code></h1>
+<pre><code><span class="hljs-shebang">#!/bin/sh</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
+</code></pre>
+<p>This was just a sample script to print out the environment variable.</p>
+<h1>Some other things I learned</h1>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> The docs say you can specify you're own <code>env-file</code> or even multiple files, however I could not get that working. It always wanted to choose the <code>.env</code> file.</p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in you're terminal that also exists in your're <code>.env</code> file the terminal's environment takes presedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>Happy Environment Setup!</p>
+</div>
+
+      <a href="/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/#disqus_thread" data-disqus-identifier="/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">Configuring Git to Use Different Name and Email Depending on Folder Context</a></h1>
     <p class="meta">
           <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
@@ -675,70 +760,6 @@ a Promise to simplify our unit tests.</li>
 </div>
 
       <a href="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/#disqus_thread" data-disqus-identifier="/2015/11/testing-asyncronous-code-with-mochajs-and-es7-async-await/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps</a></h1>
-    <p class="meta">
-          <time datetime="2015-11-07T06:20:41.092Z" pubdate data-updated="true">Nov 6th 2015</time>
-
-
-        <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/#disqus_thread" data-disqus-identifier="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 7</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-        <li>
-            Part 7 - (current) - Changes Should be Taken with Baby Steps
-        </li>
-        <li>
-            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
-        </li>
-    </ul>
-</div></p>
-<p>Have you ever made some code changes and while in the process of making those changes realize you need to change something else, which leads to changes to that thing over there and then again up there, and down here, and over there and since we're in here and I've been meaning to tweak this well... and paused to realize you forgot the original goal of why you are even looking at this module of code? No never? (well I have). <code>git reset --hard</code> and start over :)</p>
-<p>If you're one who likes to apply the ol Boy Scout rule of <code>Always leave the campground cleaner than you found it</code> to your code, just don't, at lest not yet. While I'm a big fan of cleaning up those legacy areas of code that just need a good sweep up, the approach taken here needs to be handled with care. I'm also referring to code that is likely covered well with automated testing.</p>
-<h1>But Why?</h1>
-<p>Before you go around making a bunch of cleanup changes, fixing formatting, changing variable names, general cleanup. Accomplish a tiny part of your overall objective and commit just that change.</p>
-<p>If you see other things along the way, take note and come back to them later. Or if, like me you can't help yourself, just don't check all of those changes in at once. Use something like <code>git add -p</code> to <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregate your code commits into tiny topical changes</a>.</p>
-<p>If the job is to <code>rename a variable</code>, don't also <code>fix spelling, format code, extract method, etc...</code>. Save those other changes for different commits.</p>
-<h3>But what if you don't know what you're planning to change?</h3>
-<p>Sometimes, it's good to go off and spike a big swath of changes just to get an idea how much impact a refactor could have on the architecture or project as a whole. Prototype something to get a good picture of whether a change is possible or not or to see how many coupled items need to be adjusted along the way.</p>
-<p>However, you go into it knowing you will likely just undo all of your changes all together with the goal to surface more knowledgeable and either:</p>
-<p>A) determine that it is a do-able change and should or should not even be attempted in a proper fashion
-B) or you've uncovered some challenges that are not easily overcome and require more thought or prior preparatory refactorings.</p>
-<h1>Use TDD as a forcing mechanism to small changes</h1>
-<p>TDD (Test Driven Development) is a great way to take as tiny a step as possible. With this approach, you can write a test, make it pass (consider that a change) and <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">possibly check it in</a> to source control. One test at a time ensures that you're taking baby steps along the way to solving the bigger problem(s).</p>
-<h1>Baby Steps also when Debugging</h1>
-<p>Taking baby steps is also important when debugging. Running around the codebase changing X, Y, and Z just to see if you can fix a bug will often times get you in a bigger mess than the original bug you tried to fix. Making one change at a time, verifying the bug, then the next change is quite often a better approach. So consider going slow and taking baby steps.</p>
-<p>It doesn't matter if you're making project-wide architectural changes or surgical bug fixes, if you can, <strong>try to take baby steps, commit the changes and verify each change along the way</strong>. It may feel like you're going slower, but in the long haul you may actually save time.</p>
-<p>Happy Baby Steps!</p>
-</div>
-
-      <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/#disqus_thread" data-disqus-identifier="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
