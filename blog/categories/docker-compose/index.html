@@ -85,6 +85,58 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/strange-error-on-docker-compose-up/">Strange error on docker-compose up: oci runtime error: exec format error</a></h1>
+    <p class="meta">
+          <time datetime="2016-05-27T20:18:56.884Z" pubdate data-updated="true">May 27th 2016</time>
+
+
+        <a href="/2016/05/strange-error-on-docker-compose-up/#disqus_thread" data-disqus-identifier="/2016/05/strange-error-on-docker-compose-up/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I ran into a non-intuitive error while mucking around with <a href="https://docs.docker.com/compose/">docker-compose</a> recently on <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">an example</a>.</p>
+<h1>docker-compose up</h1>
+<pre><code>Building some_server
+Step 1 : FROM alpine
+ -<span class="ruby">--&gt; <span class="hljs-number">13</span>e1761bf172
+</span>Step 2 : ENV DEMO_VAR WAT
+ -<span class="ruby">--&gt; <span class="hljs-constant">Using</span> cache
+</span> -<span class="ruby">--&gt; <span class="hljs-number">378</span>dbaa4a048
+</span>Step 3 : COPY docker-entrypoint.sh /
+ -<span class="ruby">--&gt; e5962cef9382
+</span>Removing intermediate container 43fa24c31444
+Step 4 : ENTRYPOINT /docker-entrypoint.sh
+ -<span class="ruby">--&gt; <span class="hljs-constant">Running</span> <span class="hljs-keyword">in</span> <span class="hljs-number">5</span>a2e19bf7a45
+</span> -<span class="ruby">--&gt; <span class="hljs-number">331</span>d2648d969
+</span>Removing intermediate container 5a2e19bf7a45
+Successfully built 331d2648d969
+Recreating exampleworkingdockercomposeenvironmentvars_some_server_1
+</code></pre>
+<h1>The Error</h1>
+<pre><code>ERROR: for some_server  rpc error: code = 2 desc = "oci runtime error: exec format error"
+Traceback (most recent <span class="hljs-operator"><span class="hljs-keyword">call</span> <span class="hljs-keyword">last</span>):
+  <span class="hljs-keyword">File</span> <span class="hljs-string">"&lt;string&gt;"</span>, line <span class="hljs-number">3</span>, <span class="hljs-keyword">in</span> &lt;<span class="hljs-keyword">module</span>&gt;
+  <span class="hljs-keyword">File</span> <span class="hljs-string">"compose/cli/main.py"</span>, line <span class="hljs-number">63</span>, <span class="hljs-keyword">in</span> <span class="hljs-keyword">main</span>
+AttributeError: <span class="hljs-string">'ProjectError'</span> <span class="hljs-keyword">object</span> has <span class="hljs-keyword">no</span> <span class="hljs-keyword">attribute</span> <span class="hljs-string">'msg'</span>
+docker-compose returned -<span class="hljs-number">1</span>
+</span></code></pre>
+<h1>The Actual Problem and Solution:</h1>
+<p>I had a <code>Dockerfile</code> that used an entrypoint that looked like <code>ENTRYPOINT [&quot;/docker-entrypoint.sh&quot;]</code>.</p>
+<p>The real problem was the <code>docker-entrypoint.sh</code> script was missing a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">#shebang</a>.</p>
+<p>So changing this</p>
+<pre><code><span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
+</code></pre>
+<p>to this</p>
+<pre><code><span class="hljs-shebang">#!/bin/sh</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
+</code></pre>
+<p>solved my issue!</p>
+<p>Also note it'll depend on the base image <code>FROM &lt;some linux distro&gt;</code> that may chagne what you're required #shebang should be.</p>
+<p>Whew!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">How to Get Environment Variables Passed Through docker-compose to the Containers</a></h1>
     <p class="meta">
           <time datetime="2016-05-26T04:36:41.974Z" pubdate data-updated="true">May 25th 2016</time>
