@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Networking Brain Fart. - Developing on Staxmanade</title>
+  <title>Reusable React Component with Overridable Inline CSS Styles - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="This one was just too funny to not write down. The epitome of a Brain Fart.  There sure seem to be quote a few posts lately talking about the Software...">
+   <meta name="description" content="React&#x27;s Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exp...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2010/01/networking-brain-fart/">
+  <link rel="canonical" href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,53 +73,91 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/networking-brain-fart/">Networking Brain Fart.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">Reusable React Component with Overridable Inline CSS Styles</a></h1>
     <p class="meta">
-          <time datetime="2010-01-22T01:59:00.000Z" pubdate data-updated="true">Jan 21st 2010</time>
+          <time datetime="2016-06-21T21:31:22.600Z" pubdate data-updated="true">Jun 21st 2016</time>
 
 
-        
+        <a href="/2016/06/reusable-react-component-with-overridable-inline-css-styles/#disqus_thread" data-disqus-identifier="/2016/06/reusable-react-component-with-overridable-inline-css-styles/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>This one was just too funny to not write down. The epitome of a <a href="http://en.wikipedia.org/wiki/Brain_fart">Brain Fart</a>.</p>  <p>There sure seem to be quote a few posts lately talking about the Software (Crafts-Man/Woman/person/whatever); I may have many many more years of Craft practicum to study up on before I can truly consider myself a Craftsman. However, it’s humbling to screw up and remember that we are human. Below is one such story. Luckily there was no software, business value, or puppies hurt in the process.</p>  <h4>Setup:</h4>  <p>I work from home part time. Where I usually just remote desktop into my 64bit, quad-core, 12 gig of ram, supercomputer desktop at work. (I’m sure I’ll read this post in the future and go what? supercomputer? you have no idea young man.) I choose the RDP network latency over not being able to compile (in under XXX_too_much_time_XXX) on my laptop at home. (It’s part time one day a week and not worth the investment to beef up the home setup. -- yet) <strong>Point is: I’m working from home and via remote desktop on my computer at the office</strong>.</p>  <p>So I’m working on this project and…let’s just say I somehow got into a position where I thought my best option was to take my solution offline from TFS. (long story I don’t want to overshadow the “Brain Fart” part of this post)</p>  <p>This is where I got into trouble…</p>  <h4>How do I take my solution offline from TFS?</h4>  <p>I searched for how to take my solution offline and found this great post “<a href="http://ozgrant.com/2008/06/01/force-visual-studio-to-think-tfs-is-offline/">Force Visual Studio to think TFS is offline</a>” which outlines several options…</p>  <blockquote>   <p>Option 1 – Use the ‘tfpt tweakui’ utility</p>    <p>Option 2 – Yank the network cable before starting Visual Studio</p>    <p>Option 3 – Set a registry key</p> </blockquote>  <p><strong>Option 1:</strong> I didn’t think I had TFS Power Tools installed (turns out I did, just didn’t spend the 2 seconds to figure it out - doh).</p>  <p><strong>Option 3</strong>: I couldn’t seem to get the registry key version to work (for some reason???) &amp; wasn’t interested in wasting the day to figure it out.</p>  <p><strong>--- So what was left?</strong></p>  <p><strong>Option 2</strong>: “Yank the network cable before starting Visual Studio”. I didn’t yank the cord because clearly I’m not at the office so how could I do that????, but tried the next best thing. <strong>I disabled my network connection </strong>(so I could open the solution and have it NOT find TFS)<strong>.</strong></p>  <p><img style="display: block; float: none; margin-left: auto; margin-right: auto" src="http://i223.photobucket.com/albums/dd272/Solblade44/You%20Fail/fail-i-told-you.jpg" /></p>  <p>If you missed the detail earlier in the post – I said that I was working through <a href="http://en.wikipedia.org/wiki/Remote_Desktop_Protocol">RDP</a>. </p>  <p>Huh - Not anymore… Sigh!</p>  <p>Some days it may just be safer to work from home (disconnected from the world).</p>  <p>&#160;</p>  <h5>P.S. thanks to a co-worker for getting me back online :)</h5>  </div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-I know there is (supposed to be this button) but for some reason whenever I&#39;m on a machine with Visual Studio &amp; TFS It&#39;s never there... :)</div>
-</div>
-<div class='comment'>
-<div class='author'>justinmchase</div>
-<div class='content'>
-What&#39;s even worse is that there&#39;s a little button on the top of the Solution Explorer when you have a project that&#39;s associated with TFS and you just click it ;)</div>
-</div>
-<div class='comment'>
-<div class='author'>Obsidience</div>
-<div class='content'>
-if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll yank the cable for real :-P</div>
-</div>
-</div>
+<div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
+<p>Let's say we have the following image component.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} /&gt;
+      &lt;/div&gt;
+    );
+  }
+
+}
+</code></pre>
+<p>The above component is very simple and very specific.</p>
+<p>Now let's say we allow our consumers to customize the height or width of the image. You may think, ok, simple we'll just allow the consumer to specify <code>height</code> and <code>width</code> as props to the component.</p>
+<p>So the consumer could just go <code>&lt;Image height=&quot;20&quot; width=&quot;20&quot; src=&quot;someimage.png&quot; /&gt;</code>.</p>
+<p>And you end up with something that could look like this.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    let imageStyle = {
+      height: <span class="hljs-keyword">this</span>.props.height,
+      width: <span class="hljs-keyword">this</span>.props.width
+    };
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} style={imageStyle} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre>
+<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
+<p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
+<h1>One Possible Solution</h1>
+<p>We can use something like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a> to easily accomplish this.</p>
+<p>We can allow the consumers to pass in their own <code>style={...}</code> property and provide a set of sensible defaults for the component, but allow the consumer of our component to completely override a style if necessaryl</p>
+<p>We can update our:</p>
+<pre><code>    let imageStyle = {
+      <span class="hljs-variable">height</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">height</span>,
+      <span class="hljs-variable">width</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">width</span>
+    };
+</code></pre>
+<p>to the following pattern:</p>
+<pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
+      {},                               <span class="hljs-comment">// target (starting with)</span>
+      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
+      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
+    );
+</code></pre>
+<p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
+<p>Happy Componentization!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2010-01-22T01:59:00.000Z" pubdate data-updated="true">Jan 21st 2010</time>
+                          <time datetime="2016-06-21T21:31:22.600Z" pubdate data-updated="true">Jun 21st 2016</time>
 
 
                         
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2010/01/networking-brain-fart/" data-via="staxmanade" data-counturl="http://staxmanade.com/2010/01/networking-brain-fart/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2010/01/unitymoq-automocker-or/" title="Previous Post: Unity/Moq - AutoMocker or AutoMockingContainer">&laquo; Unity/Moq - AutoMocker or AutoMockingContainer</a>
-                        <a class="basic-alignment right" href="/2010/01/c-40-optional-parameters-exploration/" title="Next Post: C# 4.0 Optional Parameters – Exploration.">C# 4.0 Optional Parameters – Exploration. &raquo;</a>
+                        <a class="basic-alignment left" href="/2016/05/strange-error-on-docker-compose-up/" title="Previous Post: Strange error on docker-compose up: oci runtime error: exec format error">&laquo; Strange error on docker-compose up: oci runtime error: exec format error</a>
                     </p>
                 </footer>
             </article>
@@ -230,6 +268,20 @@ if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll y
 </script>
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2016/06/reusable-react-component-with-overridable-inline-css-styles/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 

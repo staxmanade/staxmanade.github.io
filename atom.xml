@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-05-27T20:18:56Z</updated>
+    <updated>2016-06-21T21:31:22Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,75 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Reusable React Component with Overridable Inline CSS Styles]]></title>
+        <id>http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/</id>
+        <link href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">
+        </link>
+        <updated>2016-06-21T21:31:22Z</updated>
+        <summary type="html"><![CDATA[React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exp...]]></summary>
+        <content type="html"><![CDATA[<p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
+<p>Let's say we have the following image component.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} /&gt;
+      &lt;/div&gt;
+    );
+  }
+
+}
+</code></pre>
+<p>The above component is very simple and very specific.</p>
+<p>Now let's say we allow our consumers to customize the height or width of the image. You may think, ok, simple we'll just allow the consumer to specify <code>height</code> and <code>width</code> as props to the component.</p>
+<p>So the consumer could just go <code>&lt;Image height=&quot;20&quot; width=&quot;20&quot; src=&quot;someimage.png&quot; /&gt;</code>.</p>
+<p>And you end up with something that could look like this.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    let imageStyle = {
+      height: <span class="hljs-keyword">this</span>.props.height,
+      width: <span class="hljs-keyword">this</span>.props.width
+    };
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} style={imageStyle} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre>
+<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
+<p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
+<h1>One Possible Solution</h1>
+<p>We can use something like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a> to easily accomplish this.</p>
+<p>We can allow the consumers to pass in their own <code>style={...}</code> property and provide a set of sensible defaults for the component, but allow the consumer of our component to completely override a style if necessaryl</p>
+<p>We can update our:</p>
+<pre><code>    let imageStyle = {
+      <span class="hljs-variable">height</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">height</span>,
+      <span class="hljs-variable">width</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">width</span>
+    };
+</code></pre>
+<p>to the following pattern:</p>
+<pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
+      {},                               <span class="hljs-comment">// target (starting with)</span>
+      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
+      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
+    );
+</code></pre>
+<p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
+<p>Happy Componentization!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Strange error on docker-compose up: oci runtime error: exec format error]]></title>
         <id>http://staxmanade.com/2016/05/strange-error-on-docker-compose-up/</id>
@@ -1490,93 +1559,6 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 </code></pre>
 <p>Now it's not a complicated workflow and it can get a bit trickier, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
 <p>Happy <code>gitting</code>!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tvOS Simulator Remote - Keyboard Shortcuts/Replacement]]></title>
-        <id>http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/</id>
-        <link href="http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">
-        </link>
-        <updated>2015-09-16T05:06:14Z</updated>
-        <summary type="html"><![CDATA[I've begun some baby steps on my journey to learn the new [Apple TV](https://developer.apple.com/tvos/) development tools and platform and we just dis...]]></summary>
-        <content type="html"><![CDATA[<p>I've begun some baby steps on my journey to learn the new <a href="https://developer.apple.com/tvos/">Apple TV</a> development tools and platform and we just discovered that the cumbersome tvOS Simulator Remote can almost be ignored because we can use our development keyboards in it's place.</p>
-<p>Playing around with the new Apple <code>tvOS</code> development kit you may have noticed that using the simulator remote is quite annoying. Not only does it force you to take you hand off the keyboard (to move to the mouse), but's just plain awkward to have to hold down <code>Option</code> while you use the Mouse and <code>Swipe Up/Down/Left/Right</code> when you may be trying to do is navigate the U.I.</p>
-<p>Luckily a coworker stumbled upon the arrow key commands and we quickly figured out a mapping of <code>tvOS Remote Buttons</code> &lt;--&gt; <code>Keyboard Keys</code> that can help any developer navigate and test their <code>tvOS</code> app just a little faster within the simulator.</p>
-<!--
-| Mac Simulator Remote | Developer Keyboard Alias          | Notes                                                       |
-|----------------------|-----------------------------------|-------------------------------------------------------------|
-| Touch Surface (←, ↑, →, ↓)   | Keyboard Arrow Keys (←, ↑, →, ↓)  |                                                             |
-| Touch Surface (click/select)| `<Enter>`                  | Also `<Enter>` on the number pad does NOT appear to work.   |
-| `Menu`               | `Tap <ESC>`                       |                                                             |
-| `Home`               | `Long-Press <ESC>`                |                                                             |
-| `Siri`               | Unknown (so far)                  | Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post |
-| `Play/Pause`         | `<SpaceBar>`                      |                                                             |
-| `Volume Up/Down`     | Unknown (so far)                  |                                                             |
--->
-<style>
-.atvRemoteDisplay table {
-  border-collapse: collapse;
-}
-.atvRemoteDisplay th {
-  font-size: larger;
-  font-weight: bolder;
-}
-.atvRemoteDisplay td, .atvRemoteDisplay th {
-  border: 1px solid #999;
-  padding: 0.5rem;
-  text-align: left;
-}
-</style>
-<table class="atvRemoteDisplay">
-  <tr>
-    <th>Mac Simulator Remote</th>
-    <th>Developer Keyboard Alias</th>
-    <th>Notes</th>
-  </tr>
-  <tr>
-    <td>Touch Surface (←, ↑, →, ↓)</td>
-    <td>Keyboard Arrow Keys (←, ↑, →, ↓)</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>Touch Surface (click/select)</td>
-    <td><code>&lt;Enter&gt;</code></td>
-    <td>Also <code>&lt;Enter&gt;</code> on the number pad does NOT appear to work.</td>
-  </tr>
-  <tr>
-    <td><code>Menu</code></td>
-    <td><code>Tap &lt;ESC&gt;</code></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><code>Home</code></td>
-    <td><code>Long-Press &lt;ESC&gt;</code></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><code>Siri</code></td>
-    <td>Unknown (so far)</td>
-    <td>Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post</td>
-  </tr>
-  <tr>
-    <td><code>Play/Pause</code></td>
-    <td><code>&lt;SpaceBar&gt;`</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><code>Volume Up/Down</code></td>
-    <td>Unknown (so far)</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-<blockquote>
-<p>If you discover what the two <code>Unknown</code> values above map to, leave a comment below and I'll update this post with the complete list.</p>
-</blockquote>
-<h4>Screenshot of Simulator Apple TV Remote</h4>
-<p><img src="../../../images/posts/AppleTVSimulatorRemote.png" alt="Screenshot of Simulator Apple TV Remote"></p>
-<h4>Diagram of actual Apple TV Remote</h4>
-<p><img alt="Diagram of tvOS buttons" style="max-width: 700px;" src="https://developer.apple.com/tvos/human-interface-guidelines/remote-and-interaction/images/remote-and-interaction-remote-diagram_2x.png" /></p>
-<p>Happy tvOS building!</p>
 ]]></content>
     </entry>
 </feed>

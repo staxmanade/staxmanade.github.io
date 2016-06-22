@@ -47,19 +47,7 @@
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +71,98 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">tvOS Simulator Remote - Keyboard Shortcuts/Replacement</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-16T05:06:14.601Z" pubdate data-updated="true">Sep 15th 2015</time>
+
+
+        <a href="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/#disqus_thread" data-disqus-identifier="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've begun some baby steps on my journey to learn the new <a href="https://developer.apple.com/tvos/">Apple TV</a> development tools and platform and we just discovered that the cumbersome tvOS Simulator Remote can almost be ignored because we can use our development keyboards in it's place.</p>
+<p>Playing around with the new Apple <code>tvOS</code> development kit you may have noticed that using the simulator remote is quite annoying. Not only does it force you to take you hand off the keyboard (to move to the mouse), but's just plain awkward to have to hold down <code>Option</code> while you use the Mouse and <code>Swipe Up/Down/Left/Right</code> when you may be trying to do is navigate the U.I.</p>
+<p>Luckily a coworker stumbled upon the arrow key commands and we quickly figured out a mapping of <code>tvOS Remote Buttons</code> &lt;--&gt; <code>Keyboard Keys</code> that can help any developer navigate and test their <code>tvOS</code> app just a little faster within the simulator.</p>
+<!--
+| Mac Simulator Remote | Developer Keyboard Alias          | Notes                                                       |
+|----------------------|-----------------------------------|-------------------------------------------------------------|
+| Touch Surface (←, ↑, →, ↓)   | Keyboard Arrow Keys (←, ↑, →, ↓)  |                                                             |
+| Touch Surface (click/select)| `<Enter>`                  | Also `<Enter>` on the number pad does NOT appear to work.   |
+| `Menu`               | `Tap <ESC>`                       |                                                             |
+| `Home`               | `Long-Press <ESC>`                |                                                             |
+| `Siri`               | Unknown (so far)                  | Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post |
+| `Play/Pause`         | `<SpaceBar>`                      |                                                             |
+| `Volume Up/Down`     | Unknown (so far)                  |                                                             |
+-->
+<style>
+.atvRemoteDisplay table {
+  border-collapse: collapse;
+}
+.atvRemoteDisplay th {
+  font-size: larger;
+  font-weight: bolder;
+}
+.atvRemoteDisplay td, .atvRemoteDisplay th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}
+</style>
+<table class="atvRemoteDisplay">
+  <tr>
+    <th>Mac Simulator Remote</th>
+    <th>Developer Keyboard Alias</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Touch Surface (←, ↑, →, ↓)</td>
+    <td>Keyboard Arrow Keys (←, ↑, →, ↓)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Touch Surface (click/select)</td>
+    <td><code>&lt;Enter&gt;</code></td>
+    <td>Also <code>&lt;Enter&gt;</code> on the number pad does NOT appear to work.</td>
+  </tr>
+  <tr>
+    <td><code>Menu</code></td>
+    <td><code>Tap &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Home</code></td>
+    <td><code>Long-Press &lt;ESC&gt;</code></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Siri</code></td>
+    <td>Unknown (so far)</td>
+    <td>Not sure if this is supported in the simulator, but if you figure it out, let me know and I'll update the post</td>
+  </tr>
+  <tr>
+    <td><code>Play/Pause</code></td>
+    <td><code>&lt;SpaceBar&gt;`</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><code>Volume Up/Down</code></td>
+    <td>Unknown (so far)</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<blockquote>
+<p>If you discover what the two <code>Unknown</code> values above map to, leave a comment below and I'll update this post with the complete list.</p>
+</blockquote>
+<h4>Screenshot of Simulator Apple TV Remote</h4>
+<p><img src="../../../images/posts/AppleTVSimulatorRemote.png" alt="Screenshot of Simulator Apple TV Remote"></p>
+<h4>Diagram of actual Apple TV Remote</h4>
+<p><img alt="Diagram of tvOS buttons" style="max-width: 700px;" src="https://developer.apple.com/tvos/human-interface-guidelines/remote-and-interaction/images/remote-and-interaction-remote-diagram_2x.png" /></p>
+<p>Happy tvOS building!</p>
+</div>
+
+      <a href="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/#disqus_thread" data-disqus-identifier="/2015/09/tvos-simulator-remote---keyboard-shortcuts-replacement/">(Comments)</a>
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
@@ -1125,27 +1205,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 
       <a href="/2015/04/look-at-where-definitelytyped-is-now/#disqus_thread" data-disqus-identifier="/2015/04/look-at-where-definitelytyped-is-now/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/starting-to-build-an-xbox-one-podcast-player/">Starting to build an Xbox One Podcast Player</a></h1>
-    <p class="meta">
-          <time datetime="2015-03-17T03:47:16.590Z" pubdate data-updated="true">Mar 16th 2015</time>
-
-
-        <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/#disqus_thread" data-disqus-identifier="/2015/03/starting-to-build-an-xbox-one-podcast-player/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I'm writing this email to announce  an early sneak peek into a project I've recently started to put some of my free time towards. Here's a preview from a <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">small landing page</a> I've recently put together.</p>
-<blockquote>
-<p>If you, like myself, felt like the Xbox One platform was missing an essential Podcast player app, then you have come to the right place.</p>
-</blockquote>
-<h2>Have any interest in following along with me in this journey?</h2>
-<p>At the bottom of <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">this page</a> is a form, if you share your name and email, you'll get early access and an insider's view of the process of building an Xbox One application.</p>
-<h3>Learn More <a href="http://staxmanade.com/apps/xbox-one-podcast/development/">here...</a></h3>
-</div>
-
-      <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/#disqus_thread" data-disqus-identifier="/2015/03/starting-to-build-an-xbox-one-podcast-player/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/4/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -1241,7 +1300,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
             return;
           }
           document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
+        }, 1000);
       }
 
     } catch(e) {

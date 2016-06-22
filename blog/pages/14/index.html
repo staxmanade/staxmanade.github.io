@@ -47,19 +47,7 @@
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +71,41 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-databind-to-anonymous-type/">Silverlight – DataBind to an Anonymous type (Who knew?)</a></h1>
+    <p class="meta">
+          <time datetime="2010-05-23T02:36:00.000Z" pubdate data-updated="true">May 22nd 2010</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I searched the web for the idea first. I was certain somebody had blogged about this before, and just wanted to quickly confirm it’s truth. Unfortunately all I came across were work-a-rounds and people telling you it’s not possible. So hopefully this post will help the next guy.</p>  <p>Since anonymous types are generated in an assembly as <a href="http://msdn.microsoft.com/en-us/library/7c5ka91b(VS.80).aspx">internal</a> types, by default, if you try to DataBind to an anonymous type, you’ll probably receive a binding error much like the following.</p>  <pre>System.Windows.Data Error: <br />    Cannot get 'Age' value (type 'System.Int32') from '{ Name = World, Age = 23 }' (type '&lt;&gt;f__AnonymousType0`2[System.String,System.Int32]'). <br />    BindingExpression: Path='Age' DataItem='{ Name = World, Age = 23 }' (HashCode=-172495608);<br />    target element is 'System.Windows.Controls.TextBlock' (Name=''); <br />    target property is 'Text' (type 'System.String').. <br />    System.MethodAccessException: Attempt by method 'System.Windows.CLRPropertyListener.get_Value()' <br />    to access method '&lt;&gt;f__AnonymousType0`2&lt;System.__Canon,System.Int32&gt;.get_Age()' failed.<br /><br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.RuntimeMethodHandle.PerformSecurityCheck(Object obj,...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, Bind...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Reflection.RuntimePropertyInfo.GetValue(Object obj, ...<br />   at System.Windows.CLRPropertyListener.get_Value()<br />   at System.Windows.PropertyAccessPathStep.ConnectToPropertyInSo...</pre><br /><br /><h4>Turns out, it _IS_ possible to DataBind to an anonymous type in Silverlight.</h4><br /><br /><p>All you have to do is expose your privates. Placing the following into your AssemblyInfo.cs will give the built in bindings the ability DataBind to your object(s).</p><br /><br /><p><strong><br />    <br />[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;System.Windows&quot;)]</strong></p><br /><br /><p>&#160;</p><br /><br /><p>I’m not going to say whether this is or is not a good idea, and I’m sure there’s many ways to abuse it.</p><br /><br /><p>Don’t inhale too much of this stuff.</p>  </div>
+<h2>Comments</h2>
+<div class='comments'>
+<div class='comment'>
+<div class='author'>Jason.Jarrett</div>
+<div class='content'>
+W.Meints<br /><br />I&#39;m not sure I understand your question. Could you elaborate a little?</div>
+</div>
+<div class='comment'>
+<div class='author'>W.Meints</div>
+<div class='content'>
+What about dynamics, does the same trick apply to those kind of objects as well?</div>
+</div>
+<div class='comment'>
+<div class='author'>Obsidience</div>
+<div class='content'>
+I prefer to keep my privates unexposed, thank you very much! ;)</div>
+</div>
+</div>
+</div>
+
+      
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
@@ -460,23 +483,6 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/11/pdc-2009-talking-about-win7-user/">PDC 2009 – (Talking about Win7 User Experience)</a></h1>
-    <p class="meta">
-          <time datetime="2009-11-24T06:27:00.000Z" pubdate data-updated="true">Nov 23rd 2009</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>As a #NotAtPDC attendee following along from the outside I just had to post this little bit of irony…</p>  <p>While watching one of the PDC 2009 keynotes live they were talking about how great Windows 7 user experience is.</p>  <p>“so we’re going to show you a demo of how “… bla bla great bla…”our user experience has improved”… And the video cuts to this - <strong>here’s my user experience</strong>.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Swt83NRzVBI/AAAAAAAAAMw/VIPamcFhC8w/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Swt832vvF3I/AAAAAAAAAM0/_eNo0gDawWs/image_thumb1.png?imgmax=800" width="669" height="412" /></a> </p>  <p>and we come back to the show (crowds laughing in the background)</p>  <p>I don’t know what he said after rejoining the stream as I started writing this post… </p>  <p>and right after we cut to this.</p>  <p><a href="http://lh3.ggpht.com/_L6Vw0x_R3iw/Swt83NRzVBI/AAAAAAAAAMw/VIPamcFhC8w/s1600-h/image3.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_L6Vw0x_R3iw/Swt832vvF3I/AAAAAAAAAM0/_eNo0gDawWs/image_thumb1.png?imgmax=800" width="649" height="392" /></a> </p>  <p>And then we came back with commentary saying “it’s great to see the reaction”. Don’t know what is so secret they couldn’t broadcast online (but can show thousands in the live audience).</p>  <p>I just thought it was ironic, how much emphasis went into a great user experience blah blah, and the image above is all it was for us :)</p>  <p>Oh well (maybe it’s in the PDC keynote you can watch on line now), or maybe, I’m just jealous I didn’t one of the <a href="http://www.betanews.com/joewilcox/article/Microsoft-gives-free-laptops-to-PDC-2009-attendees/1258566424">netbooks</a>.</p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/15/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -572,7 +578,7 @@ public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method
             return;
           }
           document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
+        }, 1000);
       }
 
     } catch(e) {

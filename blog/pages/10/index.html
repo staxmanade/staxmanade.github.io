@@ -47,19 +47,7 @@
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
 </hgroup>
 
 </header>
@@ -83,6 +71,23 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/">NuGet Project Uncovered: NaturalSpec</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-14T04:45:00.000Z" pubdate data-updated="true">Feb 13th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NaturalSpec" target="_blank">NaturalSpec</a> is a BDD framework written in F#. This one is interesting due to F#’s concise nature and can give you very readable tests/specs.</p>  <p>The below sample was pulled from the <a href="https://github.com/forki/NaturalSpec" target="_blank">github readme</a>.</p>  <blockquote>   <pre>[&lt;Scenario&gt;]<br />let ``When removing an element from a list it should not contain the element``() =<br />  Given [1;2;3;4;5]                 // &quot;Arrange&quot; test context<br />    |&gt; When removing 3              // &quot;Act&quot;<br />    |&gt; It shouldn't contain 3       // &quot;Assert&quot;<br />    |&gt; It should contain 4          // another assertion<br />    |&gt; It should have (length 4)    // Assertion for length<br />    |&gt; It shouldn't have duplicates // Tests if the context contains duplicates<br />    |&gt; Verify                       // Verify scenario</pre><br /></blockquote><br /><br /><p>It says you don’t have to learn F# to use it. Which I’d argue you may not have to learn F# as deep as you might to be able to code a production product in it, but you will definitely benefit from learning some as you go. You will also spend a bit of time learning the DSL that this project has created.</p><br /><br /><p>Regardless, this project has enough interest factor for me to play around with someday.</p>  </div>
+</div>
+
+      
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">NuGet Project Uncovered: SpecsFor</a></h1>
@@ -244,23 +249,6 @@ Honey is sweet, but the bee stings</div>
 
       
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-burro/">NuGet Project Uncovered: Burro</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-03T04:25:00.000Z" pubdate data-updated="true">Feb 2nd 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/thenathanjones/burro" target="_blank">Burro</a> is a project that I only quickly looked at. I don’t know all that it does, or how to get it up and running. In the project’s readme it says </p>  <blockquote>   <p>I'll put some examples up as things progress, for now you'll just have to work it out yourself.</p> </blockquote>  <p>What I do know is that it is supposed to parse build output from a build server in a consistent way. How do I know that? (The github project says).</p>  <blockquote>   <h3>What is it?</h3>    <p>Burro is a tool for parsing output from build servers in a consistent way.</p> </blockquote>  <p>I only put this in here as a project to look at. I think that parsing build output sounds very challenging and props to this project for giving it a go…</p>  </div>
-</div>
-
-      
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/11/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -356,7 +344,7 @@ Honey is sweet, but the bee stings</div>
             return;
           }
           document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
+        }, 1000);
       }
 
     } catch(e) {

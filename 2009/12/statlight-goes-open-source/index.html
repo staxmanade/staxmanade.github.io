@@ -47,19 +47,7 @@
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 
-   <a href="/subscribe" style="
-      font: bold 16px Arial;
-      text-decoration: none;
-      background-color: #ED1C24;
-      color: white;
-      padding: 6px 10px;
-      border-top: 1px solid #CCCCCC;
-      border-right: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      border-left: 1px solid #CCCCCC;
-      position: absolute;
-      right: 20px;
-        ">Subscribe</a>
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
 </hgroup>
 
 </header>
@@ -219,7 +207,7 @@
             return;
           }
           document.querySelector('.jj-signup-form').style.display = "initial";
-        }, 40000);
+        }, 1000);
       }
 
     } catch(e) {
