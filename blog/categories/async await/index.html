@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Powershell Text-To-Speech and fun with a 4yr old. - Developing on Staxmanade</title>
+  <title>Category: async await - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one....">
+   <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2011/09/powershell-text-to-speech-and-fun-with/">
+  <link rel="canonical" href="http://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -43,7 +43,7 @@
 
 </head>
 
-<body  class=" ">
+<body   >
 <header role="banner"><hgroup>
   <h1><a href="/">Developing on Staxmanade</a></h1>
 
@@ -70,49 +70,60 @@
 <div id="main">
     <div id="content">
 
-        <div>
-            <article class="hentry" role="article">
+        <div class="blog-index">
+            <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/09/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Easily simulate slow async calls using JavaScript async/await</a></h1>
     <p class="meta">
-          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Sep 1st 2011</time>
+          <time datetime="2016-07-08T12:34:43.041Z" pubdate data-updated="true">Jul 8th 2016</time>
 
 
-        
+        <a href="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/#disqus_thread" data-disqus-identifier="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
+<div class="entry-content"><p>Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world problems)</p>
+<p>I've really been enjoying the new <code>async/await</code> syntax that can be leveraged in recent JavaScript transpires such as Babel and TypeScript but when it happens so fast on a local development environment, some U.I. interactions could get tough to test out. <strong>So how can we slow this down or more appropriately add some stall time?</strong></p>
+<p>As an example, let's say you have the following <code>async</code> javascript method</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+}
+
+</code></pre>
+<p>If the first or second asynchronous methods in the example above were running too fast (as were in my case), I was pleased to see how easy it was to inject a bit of code to manually stall the operation.</p>
+<p>The snippet below is short and sweet... this just delays continuous execution of an async operation for 3 seconds.</p>
+<pre><code>  await new Promise<span class="hljs-list">(<span class="hljs-keyword">resolve</span> =&gt; setTimeout<span class="hljs-list">(<span class="hljs-keyword">resolve</span>, <span class="hljs-number">3000</span>)</span>)</span><span class="hljs-comment">;</span>
+
+</code></pre>
+<h1>The little baby staller helper</h1>
+<p>Give it a name and make it a bit more re-usable.</p>
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stall</span>(<span class="hljs-params">stallTime = 3000</span>) =&gt; </span>{
+  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(resolve =&gt; setTimeout(resolve, stallTime));
+}
+</code></pre>
+<p>The above helper can be used by just awaiting it (see below)</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+
+  <span class="hljs-keyword">await</span> stall(); <span class="hljs-comment">// stalls for the default 3 seconds</span>
+  <span class="hljs-keyword">await</span> stall(<span class="hljs-number">500</span>); <span class="hljs-comment">// stalls for 1/2 a second</span>
+
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+
+}
+
+</code></pre>
+<p>Now we have an <code>async</code> function that runs slower - isn't that what you always wanted?</p>
+<p>Happy Stalling!</p>
 </div>
 
-                <footer>
-                    <p class="meta">
-                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
-
-                          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Sep 1st 2011</time>
-
-
-                        <span class="categories">
-    <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
-</span>
-
-                    </p>
-                    <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2011/09/powershell-text-to-speech-and-fun-with/" data-via="staxmanade" data-counturl="http://staxmanade.com/2011/09/powershell-text-to-speech-and-fun-with/">Tweet</a>
-</div>
-
-                    <p class="meta">
-                        <a class="basic-alignment left" href="/2011/07/slightly-modified-cd-command-for/" title="Previous Post: Slightly modified “CD” Command for Powershell">&laquo; Slightly modified “CD” Command for Powershell</a>
-                        <a class="basic-alignment right" href="/2011/09/whats-happening-on-nuget-feed/" title="Next Post: What’s happening on the NuGet feed (leveraging OData in an RSS reader)">What’s happening on the NuGet feed (leveraging OData in an RSS reader) &raquo;</a>
-                    </p>
-                </footer>
             </article>
-            <section>
-                <h1>Comments</h1>
-                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-            </section>
+            <div class="pagination">
+                <a href="/blog/archives">Blog Archives</a>
+            </div>
         </div>
 
 

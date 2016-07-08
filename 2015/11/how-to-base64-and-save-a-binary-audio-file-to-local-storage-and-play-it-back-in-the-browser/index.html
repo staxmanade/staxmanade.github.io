@@ -75,7 +75,7 @@
                   <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">How to Base64 and save a binary audio file to local storage and play it back in the browser</a></h1>
     <p class="meta">
-          <time datetime="2015-11-03T06:25:46.857Z" pubdate data-updated="true">Nov 3rd 2015</time>
+          <time datetime="2015-11-03T06:25:46.857Z" pubdate data-updated="true">Nov 2nd 2015</time>
 
 
         <a href="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/#disqus_thread" data-disqus-identifier="/2015/11/how-to-base64-and-save-a-binary-audio-file-to-local-storage-and-play-it-back-in-the-browser/">(Comments)</a>
@@ -111,37 +111,37 @@
 
   <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
-    
+
       <span class="hljs-comment">// Code goes here</span>
       <span class="hljs-keyword">var</span> audioFileUrl = <span class="hljs-string">'&lt;&lt;SampleAudioUrlHere&gt;&gt;'</span>;
-      
+
       <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-        
+
         <span class="hljs-keyword">var</span> downloadButton = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'download'</span>);
         <span class="hljs-keyword">var</span> audioControl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'audio'</span>);
-      
+
         audioControl.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
           <span class="hljs-built_in">console</span>.log(audioControl.error);
         };
-      
+
         downloadButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-          
+
           audioControl.src = <span class="hljs-literal">null</span>;
-          
+
           fetch(audioFileUrl)
             .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
               res.blob().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">blob</span>) </span>{
                 <span class="hljs-keyword">var</span> size = blob.size;
                 <span class="hljs-keyword">var</span> type = blob.type;
-      
+
                 <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> FileReader();
                 reader.addEventListener(<span class="hljs-string">"loadend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-      
+
                   <span class="hljs-comment">// console.log('reader.result:', reader.result);</span>
-                  
+
                   <span class="hljs-comment">// 1: play the base64 encoded data directly works</span>
                   <span class="hljs-comment">// audioControl.src = reader.result;</span>
-      
+
                   <span class="hljs-comment">// 2: Serialize the data to localStorage and read it back then play...</span>
                   <span class="hljs-keyword">var</span> base64FileData = reader.result.toString();
 
@@ -151,26 +151,26 @@
                     type: blob.type,
                     src: base64FileData
                   };
-                  
+
                   <span class="hljs-comment">// save the file info to localStorage</span>
                   localStorage.setItem(<span class="hljs-string">'myTest'</span>, <span class="hljs-built_in">JSON</span>.stringify(mediaFile));
-                  
+
                   <span class="hljs-comment">// read out the file info from localStorage again</span>
                   <span class="hljs-keyword">var</span> reReadItem = <span class="hljs-built_in">JSON</span>.parse(localStorage.getItem(<span class="hljs-string">'myTest'</span>));
-      
+
                   audioControl.src = reReadItem.src;
-      
+
                 });
-      
+
                 reader.readAsDataURL(blob);
-      
+
               });
             });
-          
+
         });
-        
+
       };
-    
+
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
 
@@ -191,11 +191,12 @@
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2015-11-03T06:25:46.857Z" pubdate data-updated="true">Nov 3rd 2015</time>
+                          <time datetime="2015-11-03T06:25:46.857Z" pubdate data-updated="true">Nov 2nd 2015</time>
 
 
                         <span class="categories">
     <a class='category' href='/blog/categories/prototype/'>Prototype</a>
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
 </span>
 
                     </p>

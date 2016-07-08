@@ -73,9 +73,82 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">Reusable React Component with Overridable Inline CSS Styles</a></h1>
+    <p class="meta">
+          <time datetime="2016-06-21T21:31:22.600Z" pubdate data-updated="true">Jun 21st 2016</time>
+
+
+        <a href="/2016/06/reusable-react-component-with-overridable-inline-css-styles/#disqus_thread" data-disqus-identifier="/2016/06/reusable-react-component-with-overridable-inline-css-styles/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
+<p>Let's say we have the following image component.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} /&gt;
+      &lt;/div&gt;
+    );
+  }
+
+}
+</code></pre>
+<p>The above component is very simple and very specific.</p>
+<p>Now let's say we allow our consumers to customize the height or width of the image. You may think, ok, simple we'll just allow the consumer to specify <code>height</code> and <code>width</code> as props to the component.</p>
+<p>So the consumer could just go <code>&lt;Image height=&quot;20&quot; width=&quot;20&quot; src=&quot;someimage.png&quot; /&gt;</code>.</p>
+<p>And you end up with something that could look like this.</p>
+<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
+
+export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
+
+  render() {
+    let imageStyle = {
+      height: <span class="hljs-keyword">this</span>.props.height,
+      width: <span class="hljs-keyword">this</span>.props.width
+    };
+    <span class="hljs-keyword">return</span> (
+      &lt;div&gt;
+        &lt;img src={<span class="hljs-keyword">this</span>.props.src} style={imageStyle} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre>
+<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
+<p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
+<h1>One Possible Solution</h1>
+<p>We can use something like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a> to easily accomplish this.</p>
+<p>We can allow the consumers to pass in their own <code>style={...}</code> property and provide a set of sensible defaults for the component, but allow the consumer of our component to completely override a style if necessaryl</p>
+<p>We can update our:</p>
+<pre><code>    let imageStyle = {
+      <span class="hljs-variable">height</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">height</span>,
+      <span class="hljs-variable">width</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">width</span>
+    };
+</code></pre>
+<p>to the following pattern:</p>
+<pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
+      {},                               <span class="hljs-comment">// target (starting with)</span>
+      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
+      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
+    );
+</code></pre>
+<p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
+<p>Happy Componentization!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">Easily Convert CSS to React Inline Styles</a></h1>
     <p class="meta">
-          <time datetime="2016-04-21T04:52:14.458Z" pubdate data-updated="true">Apr 21st 2016</time>
+          <time datetime="2016-04-21T04:52:14.458Z" pubdate data-updated="true">Apr 20th 2016</time>
 
 
         <a href="/2016/04/easily-convert-css-to-react-inline-styles/#disqus_thread" data-disqus-identifier="/2016/04/easily-convert-css-to-react-inline-styles/">(Comments)</a>
@@ -104,7 +177,7 @@ If you have a suggestion or want to pull-request it your self you can check it o
                   <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Developer Friendly React Component Errors</a></h1>
     <p class="meta">
-          <time datetime="2016-01-31T07:20:41.092Z" pubdate data-updated="true">Jan 31st 2016</time>
+          <time datetime="2016-01-31T07:20:41.092Z" pubdate data-updated="true">Jan 30th 2016</time>
 
 
         <a href="/2016/01/developer-friendly-react-component-errors/#disqus_thread" data-disqus-identifier="/2016/01/developer-friendly-react-component-errors/">(Comments)</a>
@@ -536,7 +609,7 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
                   <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">JSMP/SystemJS Starter Plunker</a></h1>
     <p class="meta">
-          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 9th 2015</time>
+          <time datetime="2015-09-09T05:35:11.207Z" pubdate data-updated="true">Sep 8th 2015</time>
 
 
         <a href="/2015/09/jsmp-systemjs-starter-plunker/#disqus_thread" data-disqus-identifier="/2015/09/jsmp-systemjs-starter-plunker/">(Comments)</a>

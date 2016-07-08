@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies - Developing on Staxmanade</title>
+  <title>Easily simulate slow async calls using JavaScript async/await - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="If you’re unfamiliar with TypeScript, I’d highly recommend checking it out. It’s my new preferred way to write JavaScript based applications.  If you ...">
+   <meta name="description" content="Recently I wanted to manually and visually test some U.I. that I couldn&#x27;t easily see because an async operations was happening two fast. (first world ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2013/11/introducing-totypescriptd-automatic/">
+  <link rel="canonical" href="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,42 +73,72 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/11/introducing-totypescriptd-automatic/">Introducing ToTypeScriptD - Automatic TypeScript Definition files for C++/CX or .Net assemblies</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Easily simulate slow async calls using JavaScript async/await</a></h1>
     <p class="meta">
-          <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Nov 1st 2013</time>
+          <time datetime="2016-07-08T12:34:43.041Z" pubdate data-updated="true">Jul 8th 2016</time>
 
 
-        
+        <a href="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/#disqus_thread" data-disqus-identifier="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>If you’re unfamiliar with <a href="http://typescriptlang.org" target="_blank">TypeScript</a>, I’d highly recommend checking it out. <strong>It’s my new preferred way to write JavaScript based applications.</strong></p>  <p>If you write an application in TypeScript and need to interact with an external set of either JavaScript or <a href="http://en.wikipedia.org/wiki/C%2B%2B/CX" target="_blank">C++/CX</a> dependencies then you will quickly find that you are going to be mucking with some TypeScript Definition files and the more you take a dependency on the WinRT runtime the more type definitions you probably need to manually create.</p>  <p>It’s true that the TypeScript team has created a set of TypeScript Definition files for WinRT and WinJS, but I <a href="https://typescript.codeplex.com/discussions/462409" target="_blank">couldn’t get any comment</a> as to how they were generated. And the more I looked into what was provided, the more I realized that there were inconsistencies and inaccuracies that were not good. Which led me to believe that they weren’t working on a super-secret tool to automatically generate these for us.</p>  <h3>What is <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> ?</h3>  <p><a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">ToTypeScriptD</a> is a quick little attempt at automatically taking the type system provided to us by a C++/CX winmd or .Net assembly file and projecting that into a set of TypeScript Definition files. This tool can basically take anything that is <a href="http://www.ecma-international.org/publications/standards/Ecma-335.htm">Ecma 355</a> Common Language Infrastructure (CLI) and spit out a .d.ts file for you automatically.</p>  <h3>Why would I need this?</h3>  <p>In the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD#can-you-tell-me-why-i-would-use-this" target="_blank">project readme</a> I describe two use-cases that I know of (so far).</p>  <ol>   <li>If you build a 'Modern' (come on, we still call it Metro) Windows 8 app with <code>WinJS</code> and want to leverage <code>TypeScript</code>, wouldn't it be nice to get a set of TypeScript Definition files that reflect the native API's you're calling in the platform without manually creating the definition files?       <br></li>    <li>Say your building an MVC/WebAPI server application. It would be useful if your C.I./Build system could generate a set of TypeScript interfaces that were based on the server objects used to render your JSON API. This can be useful for client side JavaScript/TypeScript libraries that need to consume these objects and also provide a simple way to document the format of the input and output API response objects. </li> </ol>  <h3>How do I get the project and start using it?</h3>  <blockquote>   <p>Before you install the tool and dive in head first, I would like warn you that I have only been working on this for about 2 weeks (in my off-hours) and there is going to be lots of room for improvement. But it’s currently generating a solid set of .d.ts files for .winmd files.</p> </blockquote>  <p>Head over to the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">project home page</a> and check out the <a href="https://github.com/ToTypeScriptD/ToTypeScriptD" target="_blank">Readme</a> for some quick-start information.</p>  <p>I’d would love to hear feedback. If anyone is interested in helping out, you can submit new issues or review the open issues list and start submitting pull requests.</p>  <p>Happy TypeScripting!</p>  </div>
+<div class="entry-content"><p>Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world problems)</p>
+<p>I've really been enjoying the new <code>async/await</code> syntax that can be leveraged in recent JavaScript transpires such as Babel and TypeScript but when it happens so fast on a local development environment, some U.I. interactions could get tough to test out. <strong>So how can we slow this down or more appropriately add some stall time?</strong></p>
+<p>As an example, let's say you have the following <code>async</code> javascript method</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+}
+
+</code></pre>
+<p>If the first or second asynchronous methods in the example above were running too fast (as were in my case), I was pleased to see how easy it was to inject a bit of code to manually stall the operation.</p>
+<p>The snippet below is short and sweet... this just delays continuous execution of an async operation for 3 seconds.</p>
+<pre><code>  await new Promise<span class="hljs-list">(<span class="hljs-keyword">resolve</span> =&gt; setTimeout<span class="hljs-list">(<span class="hljs-keyword">resolve</span>, <span class="hljs-number">3000</span>)</span>)</span><span class="hljs-comment">;</span>
+
+</code></pre>
+<h1>The little baby staller helper</h1>
+<p>Give it a name and make it a bit more re-usable.</p>
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stall</span>(<span class="hljs-params">stallTime = 3000</span>) =&gt; </span>{
+  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(resolve =&gt; setTimeout(resolve, stallTime));
+}
+</code></pre>
+<p>The above helper can be used by just awaiting it (see below)</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+
+  <span class="hljs-keyword">await</span> stall(); <span class="hljs-comment">// stalls for the default 3 seconds</span>
+  <span class="hljs-keyword">await</span> stall(<span class="hljs-number">500</span>); <span class="hljs-comment">// stalls for 1/2 a second</span>
+
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+
+}
+
+</code></pre>
+<p>Now we have an <code>async</code> function that runs slower - isn't that what you always wanted?</p>
+<p>Happy Stalling!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2013-11-01T05:06:00.000Z" pubdate data-updated="true">Nov 1st 2013</time>
+                          <time datetime="2016-07-08T12:34:43.041Z" pubdate data-updated="true">Jul 8th 2016</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/winrt/'>WinRT</a>
-    <a class='category' href='/blog/categories/cplusplus_cx/'>C++/CX</a>
-    <a class='category' href='/blog/categories/totypescriptd/'>ToTypeScriptD</a>
-    <a class='category' href='/blog/categories/typescript/'>TypeScript</a>
-    <a class='category' href='/blog/categories/winjs/'>WinJS</a>
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
+    <a class='category' href='/blog/categories/async%20await/'>async await</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/11/introducing-totypescriptd-automatic/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/11/introducing-totypescriptd-automatic/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2013/08/typescript-presentation-at-northern/" title="Previous Post: TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)">&laquo; TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)</a>
-                        <a class="basic-alignment right" href="/2013/11/convert-existing-winjs-app-to-use/" title="Next Post: Convert an existing WinJS app to use TypeScript">Convert an existing WinJS app to use TypeScript &raquo;</a>
+                        <a class="basic-alignment left" href="/2016/06/one-programmers-letter-to-his-wife/" title="Previous Post: One Programmers Letter to his Wife">&laquo; One Programmers Letter to his Wife</a>
                     </p>
                 </footer>
             </article>
@@ -219,6 +249,20 @@
 </script>
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 

@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-dynamicxaml/">NuGet Project Uncovered: DynamicXaml</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-06T04:31:00.000Z" pubdate data-updated="true">Feb 5th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/DynamicXaml" target="_blank">DynamicXaml</a> takes a fluent approach to building up xaml in code. Following the pattern laid down by the <a href="http://nuget.org/packages/HtmlTags" target="_blank">HtmlTags</a> project, this project provides a very clean way to write out your xaml code in C#.</p>  <p>I’ve copied a sample from the <a href="https://github.com/flq/XamlTags" target="_blank">github readme</a> below.</p>  <blockquote>   <pre><code>var _builder = new XamBuilder();<br />var button = <br />  _builder.Start&lt;Button&gt;()<br />    .Margin(&quot;5,0&quot;)<br />    .WidthAndHeight(200d,30d)<br />    .Create();</code></pre><br /></blockquote><br /><br /><p>One of the things I like about these projects is if you can’t use markup and are pushed to write your xaml in C#, you can apply some great tricks to reduce duplication with your code. (Not sure how this library works out, but I would suspect that if you created a default Button object, it would allow you to override specific properties one at a time or extend with new properties. This way you can create your base controls and only tweak as necessary.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-intx/">NuGet Project Uncovered: IntX</a></h1>
     <p class="meta">
           <time datetime="2012-02-04T04:28:00.000Z" pubdate data-updated="true">Feb 3rd 2012</time>
@@ -228,23 +245,6 @@ Honey is sweet, but the bee stings</div>
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/jfromaniello/Anna" target="_blank">Anna</a> is an event-driven HTTP server library leveraging the <a href="http://msdn.microsoft.com/en-us/data/gg577609" target="_blank">ReactiveExtensions (RX)</a>. </p>  <p>The below sample copied / shortened from the <a href="https://github.com/jfromaniello/Anna" target="_blank">GitHub site</a>.</p>  <blockquote>   <pre>using (var server = new HttpServer(&quot;http://*:1234/&quot;))<br />{<br />    // simple basic usage, all subscriptions will run in a single event-loop<br />    server.GET(&quot;/hello/{Name}&quot;)<br />          .Subscribe(ctx =&gt; ctx.Respond(&quot;Hello, &quot; + ctx.Request.UriArguments.Name + &quot;!&quot;));<br />}</pre></blockquote>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-nfeature/">NuGet Project Uncovered: NFeature</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-26T00:20:00.000Z" pubdate data-updated="true">Jan 25th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NFeature" target="_blank">NFeature</a> looks to be a pretty solid <a href="http://martinfowler.com/bliki/FeatureToggle.html" target="_blank">feature toggle</a> implementation written in .Net C#.</p>  <p>This project peaked my interest because I’ve wanted to try the concept of <a href="http://martinfowler.com/bliki/FeatureToggle.html" target="_blank">feature toggles</a> in a project for a while now. With all the hubub last year about <a href="http://lmgtfy.com/?q=feature+toggle+vs+feature+branches" target="_blank">feature toggles vs feature branches</a>. I’ve wanted to experience feature toggles first hand.</p>  </div>
 </div>
 
       

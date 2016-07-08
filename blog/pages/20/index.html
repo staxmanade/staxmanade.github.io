@@ -73,6 +73,44 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/05/how-best-to-expose-value-that-could/">How best to expose a value that could throw an error?</a></h1>
+    <p class="meta">
+          <time datetime="2008-05-14T22:46:00.000Z" pubdate data-updated="true">May 14th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>If you have a class that needs to expose some value (either by a Property, or a &quot;getter&quot; function) and there is a chance that getting this value could cause an exception. How do you best expose that value?</p>
+<p>I originally had a Property that exposed some value where, if in a certain state, would throw an exception.</p>
+<p>Microsoft FxCop recommends.</p>
+<blockquote>
+<p>Do not explicitly raise exceptions from unexpected
+locations. There are some methods, such as Equals and
+GetHashCode, which users do not expect to raise exceptions.
+Therefore calls to these methods are not commonly
+wrapped in try catch blocks.</p>
+</blockquote>
+<p>So if FxCop recommends not raising an exception from a Property's getter, we'll just throw it in a function. Come to find out now FxCop says...</p>
+<blockquote>
+<p>Properties should be used instead of Get/Set methods
+in most situations. Methods are preferable to properties
+in the following situations: the operation is a conversion,
+is expensive or has an observable side-effect; the
+order of execution is important; calling the member
+twice in succession creates different results; a member
+is static but returns a mutable value; or the member
+returns an array.</p>
+</blockquote>
+<p>So, which is the best method?</p>
+<p>I went back to the Property method because it really is mimicking the usage of a property...</p>
+<p>Any suggestions out there?</p>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/binarysearchordefault/">BinarySearchOrDefault()</a></h1>
     <p class="meta">
           <time datetime="2008-04-14T03:52:00.000Z" pubdate data-updated="true">Apr 13th 2008</time>
