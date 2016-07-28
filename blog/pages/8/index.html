@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/08/typescript-presentation-at-northern/">TypeScript Presentation at the Northern Nevada Software Developers Group (NNSDG)</a></h1>
+    <p class="meta">
+          <time datetime="2013-08-31T17:33:00.000Z" pubdate data-updated="true">Aug 31st 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>This past week I gave a talk on <a href="http://typescriptlang.org" target="_blank">TypeScript</a> which was fun and well received.</p>  <p>If you have any interest in the slides they are hosted up on GitHub</p>  <ul>   <li><a href="http://staxmanade.github.io/TypeScriptPresentation/#/1">http://staxmanade.github.io/TypeScriptPresentation/#/1</a> </li> </ul>  <p>Or if you just want to look at the talk in <a href="http://daringfireball.net/projects/markdown/" target="_blank">MarkDown</a></p>  <ul>   <li><a href="https://github.com/staxmanade/TypeScriptPresentation/blob/master/TypeScriptPresentation.md">https://github.com/staxmanade/TypeScriptPresentation/blob/master/TypeScriptPresentation.md</a> </li> </ul>  <p><font style="background-color: #ffffff">The markdown page is useful for a quick lookup on syntax if you forgot how something should look. I’d like to continue to evolve the presentation, so if you have any feedback or suggestions, please feel free to open a pull request and start a conversation.</font></p>  <p>Thanks to those who attended!</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
     <p class="meta">
           <time datetime="2013-06-20T17:46:00.000Z" pubdate data-updated="true">Jun 20th 2013</time>
@@ -258,23 +275,6 @@ Last weekend I participated in a <a href="http://renohackathon.com/" target="_bl
 <div class="entry-content">
 <div class='post'>
 <p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
-    <p class="meta">
-          <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>After a fresh install of Visual Studio, I often re-configure some options and setup keyboard bindings. This tends to be a bit of a pain as each and every time I have to remember what setting is in what U.I. configuration pane and how do I find/configure that again? I also will often forget about certain settings until the point I need them and it really breaks my coding rhythm down to go hunt for and reconfigure these options.</p>  <p>I recently found a simple solution to get my VS just the way I want it.</p>  <blockquote>   <p>P.S. Some of you may want to tell me all about the VS import/export settings, and you may be right, but I just haven’t spent the time to use/understand/easily find a way to integrate it into my ‘flow’.</p> </blockquote>  <p>So I present to you “MY happy path” to Visual Studio Environment configuration.</p>  <h4>1. Install the NuGet Package Manager Extension</h4>  <p>You’re going to probably install this extension anyway, so go-ahead and <a href="http://docs.nuget.org/docs/start-here/installing-nuget">install it now</a> if you don’t already have it… We need this so you can get access to the NuGet Package Manager Console</p>  <p><a href="http://lh3.ggpht.com/-leOq9kWDh78/UMDKoOAS6vI/AAAAAAAAAb8/xUeM3ZRRhfo/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-vDO9vE_i-y4/UMDKohZ5WdI/AAAAAAAAAcE/6kWeoto-_ao/image_thumb1.png?imgmax=800" width="745" height="209" /></a></p>  <h4>2. Execute Function Set-VisualStudioEnvironmentConfiguration</h4>  <p>Wait! What is “<a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Set-VisualStudioEnvironmentConfiguration.ps1">Set-VisualStudioEnvironmentConfiguration</a>”?</p>  <p>This is a little function that I have in <a href="https://github.com/staxmanade/DevMachineSetup">My PowerShell $Profile</a> which gets setup on all development environment.</p>  <h4>So what’s in this PowerShell script?</h4>  <p>As of writing this, I only have two specific setup commands, but thought I’d share as an example of what you can do:</p>  <ol>   <li>Set a keyboard binding to a specific command.      <pre># Map Ctrl+W to close a tab<br />$DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot;;</pre><br />  </li><br /><br />  <li>ShowLineNumbers for all language files. <br />    <pre># Turn on line numbers for ALL language types<br />($DTE.Properties(&quot;TextEditor&quot;, &quot;AllLanguages&quot;) | where {$_.Name -eq &quot;ShowLineNumbers&quot; } ).Value = $true</pre><br />  </li><br /><br />  <li>Turn on whitespace? <br />    <pre># This doesn't work and I wish it did... <br />$DTE.ExecuteCommand(&quot;Edit.ViewWhiteSpace&quot;)<br /># Fails with: &quot;Command &quot;Edit.ViewWhiteSpace&quot; is not available.&quot;<br /># <strong>Maybe one of you can help me out?</strong></pre><br /><br />    <h4><br />      <ol>How can I find and setup the settings I like?</ol><br />    </h4><br />I’m no VS expert and only know as much about the $DTE object as what I’ve written about here, but I’ll give you some tips and you can go from there… </li><br /></ol><br /><br /><ul><br />  <li>Google/Bing are your friends. Type “DTE Visual Studio {TheThingYouWantToAccomplish}” </li><br /><br />  <li>After your search, most examples you find will be VB macros and as it turns out VB (in this case) translates nicely to PowerShell (EX:&#160; <br /><font size="3" face="Cordia New">&#160; VB Macro:&#160; DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br />      <br />PowerShell: <strong>$</strong>DTE.Commands.Item(&quot;File.Close&quot;).Bindings = &quot;Global::Ctrl+W&quot; <br /><br />      <br /></font>See the difference? (yep just the ‘$’ at the beginning of the PowerShell one) Nifty eh? </li><br /><br />  <li>Don’t be afraid to use PowerShell to search/filter things in the $DTE. Try this: <br />    <br /><font size="3" face="Cordia New">PM&gt;&#160; $DTE.Commands | <strong>where { $_.Name –match ‘Close’</strong> } | select { $_.Name } <br /><br />      <br /></font></li><br /></ul><br /><br /><ul>Happy VS Environment setting-uppers!</ul>  </div>
 </div>
 
       

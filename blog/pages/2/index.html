@@ -73,6 +73,57 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">Oops - how a simple bit of automation put NuGet services on edge...</a></h1>
+    <p class="meta">
+          <time datetime="2016-03-30T20:06:46.955Z" pubdate data-updated="true">Mar 30th 2016</time>
+
+
+        <a href="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/#disqus_thread" data-disqus-identifier="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>This past week I received an email from Microsoft's NuGet team asking if I could look into a bit of an issue with <a href="http://definitelytyped.org/">DefinitelyTyped's</a> NuGet package publishing.</p>
+<h2>Some Background</h2>
+<p>A really long time ago, I wanted to access DefinitelyTyped packages within Visual Studio via the NuGet package manager. So I quickly wrote up a <a href="https://github.com/DefinitelyTyped/NugetAutomation">powershell script</a> to accomplish this. This script has run almost continuously ever since, and primarily without issue.</p>
+<blockquote>
+<p>There's been a couple tweaks/issues along the way - as to be expected, but it's been primarily hands-off.</p>
+</blockquote>
+<p>As of today, <a href="https://www.nuget.org/profiles/DefinitelyTyped">these NuGet packages</a> have been downloaded over <code>5,268,852</code> times - wow.</p>
+<h1>What does the automation do?</h1>
+<p>All of the NuGet packages generated for DefinitelyTyped are run through a build process on the good servers at <a href="https://www.appveyor.com/">AppVeyor</a> (Thanks AppVeyor).</p>
+<p>Every 2 hours the task does some git-fu to figure out what DT packages have updated (since the last run) and publishes updated NuGet packages for each updated DT package.</p>
+<h1>The initial problem report:</h1>
+<p>First let me say that thanks to Yishai and Maarten from Microsoft who brought the issue to my attention and were extremely polite and patient with the raised issue. So thank you, thank you, thank you for the support and being so friendly while working through this...</p>
+<p><img src="/images/posts/nuget-automation-oops-initial-email.png" alt="service status image of problem with nuget"></p>
+<h1>Looking at <a href="http://status.nuget.org">status.nuget.org</a></h1>
+<p>It was pretty easy to see that every 2 hours a large spike in uploads to NuGet was happening.</p>
+<p><img src="/images/posts/nuget-automation-oops-before.png" alt="service status image of problem with nuget"></p>
+<p><img src="/images/posts/nuget-automation-oops-status-text.png" alt="service status image of problem with nuget"></p>
+<blockquote>
+<p>While I can't say for certain this incident report on the status page was due to the NuGet automation, it was around the same time the automation was pushing extra builds (and right before I was contacted by Microsoft).</p>
+</blockquote>
+<h1>Was that my automation oops?</h1>
+<p>I didn't recall getting an error email from AppVeyor so I was initially suspicious. But logging in and looking at build history: hmmm. Looking back at my email, looks like I did receive the first failed build email - but must have been busy day as I didn't happen to notice that one email (when I usually do from other projects).</p>
+<p><img src="/images/posts/nuget-automation-oops-appveyor-status.png" alt="service status image of problem with nuget"></p>
+<p>YIKES!... so I quickly responded to Microsoft saying I'd shut down the automated portion and dig into it.</p>
+<h1>The Problem &amp; Resolution</h1>
+<p>Turns out the problem was due to a <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/pull/8605">large pull request</a> that updated about every package in the DT repo. This meant it had to publish every single package, but for some reason (not showing in the logs) the AppVeyor job was failing at the end and not saving the fact that the packages were being updated on NuGet...</p>
+<p>I have a way to run the NuGet publish manually on a local machine so I pulled down the project and ran the complete build. This took quite a while (almost 3 hours) and eventually I discovered the problem.</p>
+<p>At the end of the script is a <code>git commit -m {msg}</code> command. This is an important step as it records what has been updated/published. The problem was due to the large number of packages published, the <code>{msg}</code> was so big that it was throwing an error saying the command line command was too long to execute. Causing the system to not complete the cycle and end up re-publishing all nuget packages every 2 hours.</p>
+<p>I was able to manually commit with <a href="https://github.com/DefinitelyTyped/NugetAutomation/commit/6d2a95975849749b496e48d12e199b9561dc2cfd">a shorter message</a> and it brought the system back to normal.</p>
+<p>And below is NuGet status after the fix.</p>
+<p><img src="/images/posts/nuget-automation-oops-after.png" alt="service status image of problem with nuget"></p>
+<h1>Thanks NuGet!</h1>
+<p>Turns out the NuGet team put some time into optimizing the publishing process of their service - so maybe there was a benefit to this whole fiasco, but hopefully we won't be hammering the system going forward :)</p>
+<p>So I'd like to say thanks again to the NuGet team for you're kind support email and professional way of handling the issue. This is a great example of how Microsoft is helping the OSS community and their support is really taking off and showing promise!</p>
+<h3>Also Good Point</h3>
+<p><img src="/images/posts/nuget-automation-oops-gates-quote.png" alt="service status image of problem with nuget"></p>
+<p>Happy NuGetting!</p>
+</div>
+
+      <a href="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/#disqus_thread" data-disqus-identifier="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Developer Friendly React Component Errors</a></h1>
     <p class="meta">
           <time datetime="2016-01-31T07:20:41.092Z" pubdate data-updated="true">Jan 30th 2016</time>
@@ -1044,148 +1095,6 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
 </div>
 
       <a href="/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/#disqus_thread" data-disqus-identifier="/2015/10/red--possibly-the-most-important-step-in-red--green--refactor/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">In App Unit test example with JSPM, React, WinJS and Mocha</a></h1>
-    <p class="meta">
-          <time datetime="2015-10-08T16:42:00.666Z" pubdate data-updated="true">Oct 8th 2015</time>
-
-
-        <a href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/#disqus_thread" data-disqus-identifier="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>A while back I wrote about <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a> and have been having too much fun creating little <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">starter plunks</a> on <a href="http://plnkr.co">Plunker</a>. So...</p>
-<p>As a simple demonstration on in-app unit tests I've thrown together a little plunk that shows <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app tests</a> within the a <a href="https://github.com/winjs/winjs">WinJS</a> <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a>. And add to the layers of abstraction I'm using <a href="https://github.com/winjs/react-winjs">react-winjs</a> which I'm LOVING over normal WinJS development.</p>
-<h1>Link to: <a href="http://plnkr.co/edit/feKPEx?p=preview">JSPM/React/WinJS/Mocha Plunk</a></h1>
-<p>If you like this starter, I have it and a few more linked here: <a href="http://staxmanade.com/2015/09/jsmp-systemjs-starter-plunker/">for re-use</a></p>
-<p>I'd like to highlight <a href="http://plnkr.co/edit/feKPEx?p=preview">this particular starter</a> at bit more in this post, not only because there are a few more concepts to this basic plunk, but also because I'm fairly happy with the MochaJS React component that I've now copied around and re-used a few times in some small projects where use <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In App Unit Tests</a>.</p>
-<h1>Plunker file overview</h1>
-<ul>
-<li><code>index.html</code> - The index file is a very basic <a href="http://jspm.io">JSPM</a> bootstrap page that loads the <code>app.jsx</code> react component.</li>
-<li><code>app.jsx</code> - Defines a WinJS Pivot control where we render the in-app <code>MochaTests.jsx</code> React component. This also defines the test file(s) and using MochaJS's global detection we can tell the react <code>MochaTests</code> component what test files to load and run as well as what globals are allowed to exist.</li>
-<li><code>config.js</code> - This is JSPM's config that defines what version of React we're using and to use <code>babel</code> for transpilation.</li>
-<li><code>tests.js</code> - is our Mocha set of unit tests. We can have multiple test files if we want, just have to define what files to load in <code>app.jsx</code>.</li>
-</ul>
-<p>Lastly the <code>MochaTests.jsx</code> which I'll include the full component below:</p>
-<blockquote>
-<p>easier to copy-paste inherit for myself in the future</p>
-</blockquote>
-<pre><code><span class="hljs-keyword">import</span> mocha <span class="hljs-keyword">from</span> <span class="hljs-string">'mocha'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MochaTests</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-
-    static get propTypes() {
-        <span class="hljs-keyword">return</span> {
-            testScripts: React.PropTypes.array.isRequired,
-            allowedGlobals: React.PropTypes.array
-        };
-    }
-
-    constructor(props) {
-        <span class="hljs-keyword">super</span>(props);
-    }
-
-    componentDidMount() {
-
-        <span class="hljs-keyword">var</span> testScripts = <span class="hljs-keyword">this</span>.props.testScripts;
-        <span class="hljs-keyword">var</span> runTests = <span class="hljs-keyword">this</span>.runTests.bind(<span class="hljs-keyword">this</span>);
-
-        <span class="hljs-comment">// for some reason importing mocha with JSPM and ES6 doesn't</span>
-        <span class="hljs-comment">// place the mocha globals on the window object. The below</span>
-        <span class="hljs-comment">// handles that for us - as well as setting up the rest of the</span>
-        <span class="hljs-comment">// test scripts for the first run</span>
-        mocha.suite.on(<span class="hljs-string">'pre-require'</span>, context =&gt; {
-            <span class="hljs-keyword">var</span> exports = <span class="hljs-built_in">window</span>;
-
-            exports.afterEach = context.afterEach || context.teardown;
-            exports.after = context.after || context.suiteTeardown;
-            exports.beforeEach = context.beforeEach || context.setup;
-            exports.before = context.before || context.suiteSetup;
-            exports.describe = context.describe || context.suite;
-            exports.it = context.it || context.test;
-            exports.setup = context.setup || context.beforeEach;
-            exports.suiteSetup = context.suiteSetup || context.before;
-            exports.suiteTeardown = context.suiteTeardown || context.after;
-            exports.suite = context.suite || context.describe;
-            exports.teardown = context.teardown || context.afterEach;
-            exports.test = context.test || context.it;
-            exports.run = context.run;
-
-            <span class="hljs-comment">// now use SystemJS to load all test files</span>
-            <span class="hljs-built_in">Promise</span>
-            .all(testScripts.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">testScript</span>) </span>{
-                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Adding Mocha Test File: "</span>, testScript);
-                <span class="hljs-keyword">return</span> System.import(testScript);
-            })).then(runTests, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
-                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error loading test modules"</span>);
-                <span class="hljs-built_in">console</span>.error(err);
-            });
-
-        });
-        mocha.setup(<span class="hljs-string">'bdd'</span>);
-    }
-
-    runTests() {
-        <span class="hljs-keyword">var</span> allowedGlobals = <span class="hljs-keyword">this</span>.props.allowedGlobals || [];
-
-        <span class="hljs-keyword">this</span>.refs.mocha.getDOMNode().innerHTML = <span class="hljs-string">""</span>;
-
-        mocha.checkLeaks();
-        mocha.globals(allowedGlobals);
-        mocha.run();
-
-    }
-
-    render() {
-        <span class="hljs-keyword">return</span> (
-            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css"><span class="hljs-rules">{"\
-                  #mocha-stats em { \
-                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> inherit</span></span>; \
-                  }</span> \
-                  <span class="hljs-id">#mocha-stats</span> <span class="hljs-rules">{ \
-                    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> inherit</span></span>; \
-                  }</span>\
-                  <span class="hljs-id">#mocha</span> <span class="hljs-class">.test</span><span class="hljs-class">.fail</span> <span class="hljs-tag">pre</span> <span class="hljs-rules">{ \
-                      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; \
-                  }</span> \
-                "}</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
-
-                <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.runTests.bind(this)}</span>&gt;</span>Rerun Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-
-                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-        )</span>;
-    }
-}
-</code></pre>
-<p>Usage example of this React <code>MochaTests</code> component.</p>
-<pre><code>// <span class="hljs-type">Define</span> what test files get loaded by the <span class="hljs-type">MochaTests</span> component
-<span class="hljs-keyword">var</span> testScripts = [
-  './tests.js'
-];
-
-
-<span class="hljs-keyword">var</span> allowedTestGlobals = [
-  // <span class="hljs-type">Declare</span> what globals are allowed to be created during <span class="hljs-type">any</span> test runs.
-];
-
-
-// <span class="hljs-type">Usage</span> <span class="hljs-keyword">of</span> <span class="hljs-type">MochaTests</span> <span class="hljs-keyword">in</span> a react render() <span class="hljs-keyword">method</span>.
-&lt;<span class="hljs-type">MochaTests</span> testScripts={testScripts} allowedGlobals={allowedTestGlobals} /&gt;
-
-</code></pre>
-<p>I'm not expecting to see a large up-tick in WinJS apps out there with in-app unit tests that run in the browser, however hopefully the <code>MochaTests.jsx</code> React Component is of value to you and can be utilized outside of WinJS within almost any React app.</p>
-<p>Please drop a line if you end up using it or if it can be adapted. If there's value in the component, maybe</p>
-<h1>Known Issue</h1>
-<p>If the number of tests starts to go beyond the height of the pivot in this sample, it has an issue where the WinJS Pivot cuts off at the bottom not allowing you to scroll and see the rest of the test output. I haven't dug into it yet because I've been clicking the <code>failures: X</code> link and it filters the U.I. to just the erroring tests.</p>
-<p>If you happen to come up with a good solution, drop me a note - I'd love it. Thanks in advance!</p>
-<p>Happy Testing!</p>
-</div>
-
-      <a href="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/#disqus_thread" data-disqus-identifier="/2015/10/in-app-unit-test-example-with-jspm--react--winjs-and-mocha/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>

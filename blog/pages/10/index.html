@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/">NuGet Project Uncovered: JsValidator</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-17T04:55:00.000Z" pubdate data-updated="true">Feb 16th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/JsValidator" target="_blank">JsValidator</a>, on first glance, is a down right awesome gem of a NuGet. I’ve heard of <a href="http://code.google.com/closure/compiler/" target="_blank">Google’s Closure Compiler</a> before, but have never used it. This NuGet makes it a snap to use inside Visual Studio.</p>  <p>When you first install the package:</p>  <blockquote>   <p><font style="background-color: #ffffff">Install-Package JsValidator;</font></p> </blockquote>  <p>This NuGet tool automatically updates your project so it will execute the tool on compilation. Awesome if you are not an MSBuild expert as it just configures itself for you straight from the package install.</p>  <p>Once installed, run a build on your solution. On first build you get an error. You’re probably thinking '”How can this tool be erroring, we just added it to the project”. This error is a good thing. It’s telling you that you now have a manual step to configure it correctly.</p>  <p>Go check out the <a href="http://jsvalidator.codeplex.com/" target="_blank">codeplex site</a> as it will explain more on how to use it.</p>  <p>I just might consider this on my next new javascript project in Visual Studio.net.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-fastmember/">NuGet Project Uncovered: FastMember</a></h1>
     <p class="meta">
           <time datetime="2012-02-16T04:48:00.000Z" pubdate data-updated="true">Feb 15th 2012</time>
@@ -220,23 +237,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-deleporter/">NuGet Project Uncovered: Deleporter</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-07T04:32:00.000Z" pubdate data-updated="true">Feb 6th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Deleporter" target="_blank">Deleporter</a> is a project I used over a year ago. It allows you to setup a delegate and execute it in a different process.</p>  <p><strong>For Example</strong>: You spin up a unit/integration test project. Over in IIS you have a web site running. Now how do you do things like mock out crazy dependencies, adjust the time in your favorite <a href="http://blog.coreycoogan.com/2009/06/07/mocking-datetime-now/" target="_blank">SystemTime</a> implementation or just tweak the configuration on the fly?</p>  <p>You can leverage Deleporter to execute code over on the web server controlled by your test project.</p>  <p>I’d recommend your go read the introductory blog post</p>  <blockquote>   <p><a href="http://blog.stevensanderson.com/2010/03/09/deleporter-cross-process-code-injection-for-aspnet/" target="_blank">Deleporter: Cross-Process Code Injection for ASP.NET</a></p></blockquote>  </div>
 </div>
 
       

@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-anna/">NuGet Project Uncovered: Anna</a></h1>
+    <p class="meta">
+          <time datetime="2012-01-27T00:21:00.000Z" pubdate data-updated="true">Jan 26th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/jfromaniello/Anna" target="_blank">Anna</a> is an event-driven HTTP server library leveraging the <a href="http://msdn.microsoft.com/en-us/data/gg577609" target="_blank">ReactiveExtensions (RX)</a>. </p>  <p>The below sample copied / shortened from the <a href="https://github.com/jfromaniello/Anna" target="_blank">GitHub site</a>.</p>  <blockquote>   <pre>using (var server = new HttpServer(&quot;http://*:1234/&quot;))<br />{<br />    // simple basic usage, all subscriptions will run in a single event-loop<br />    server.GET(&quot;/hello/{Name}&quot;)<br />          .Subscribe(ctx =&gt; ctx.Respond(&quot;Hello, &quot; + ctx.Request.UriArguments.Name + &quot;!&quot;));<br />}</pre></blockquote>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-nfeature/">NuGet Project Uncovered: NFeature</a></h1>
     <p class="meta">
           <time datetime="2012-01-26T00:20:00.000Z" pubdate data-updated="true">Jan 25th 2012</time>
@@ -252,23 +269,6 @@
 Thanks for sharing. I wasn&#39;t aware, that existing RSS readers would actually be able to understand OData, even though it&#39;s an extension to Atom.<br /><br />By the way, there&#39;s already a project for watching NuGet packages through RSS here: <a href="http://nugetfeed.org" rel="nofollow">NuGetFeed.org</a>.<br /><br />With NuGetFeed.org you will be able to follow your favorite NuGet packages through RSS. There&#39;s a feature called MyFeed, where you will be able to add a list of packages you want to follow. If you use Google Chrome, there&#39;s an extension as well and finally a Visual Studio add-in is also available. Hope you will find NuGetFeed.org useful.</div>
 </div>
 </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
-    <p class="meta">
-          <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I’m not so sure this fits in the “elegant code” theme, but it’s a “fun with code” topic that someone might enjoy. Especially if you have a little one.</p>  <p>My 4yr old is learning how to spell small and simple words like her name, “Mom”, “Dad”, etc, and continuing her exploration with letters on the keyboard. She’s been banging on a keyboard since her early years on <a href="http://www.hanselman.com/babysmash/">babysmash</a>. In fact I came home one day to find my monitor turned 90 degrees and about every possible admin window open in the background because of certain key combinations were not trapped by babysmash. But I digress…</p>  <p>For a while she was typing some text into notepad and asking me what it spelled. </p>  <blockquote>   <p><font style="background-color: #ffffff">“ajlkjwelsl” –&gt; What’s that spell daddy?</font></p> </blockquote>  <p>I then thought it would be fun if the computer could give instant feedback about what she typed and in a matter of a minute or so I whipped up this little “game” which we had fun playing for a bit.</p>  <p>You can view the gist here - <a href="https://gist.github.com/1180060">https://gist.github.com/1180060</a></p>  <p><code></code></p>  <p>Just paste the function above as shown below and run it. Type some text (<strong>make sure your computer’s sound is on</strong>) and press enter to hear it.</p>  <p><a href="http://lh5.ggpht.com/-LEdccB9P5Lg/Tl8Z0vb_LaI/AAAAAAAAARU/kyFyM3CCU-o/s1600-h/image4.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/-WtEbt7GLNSI/Tl8Z07lC9dI/AAAAAAAAARY/2zWzewZtjjc/image_thumb2.png?imgmax=800" width="636" height="390" /></a></p>  <p>I typed some of the usual things we say around the house and my 4yr old wouldn’t stop laughing… </p>  <p>Give it a try with your little ones (or big ones). Even let your non-techie significant other have a go – he/she may have some fun with it.</p>  </div>
 </div>
 
       
