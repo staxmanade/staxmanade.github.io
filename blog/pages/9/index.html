@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
+    <p class="meta">
+          <time datetime="2013-01-23T05:29:00.000Z" pubdate data-updated="true">Jan 22nd 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>I recently started playing with <a href="http://angularjs.org/">AngularJS</a>. After downloading the <a href="https://github.com/angular/angular-seed">seed project</a> and trying to run the tests with <a href="http://vojtajina.github.com/testacular/">Testacular</a>, I bumped into small issue that was not immediately obvious to resolve.</p>  <p>When I ran the “./scripts/test.bat” I would get the following error(s) in my console:</p>  <blockquote>   <p>info: Testacular server started at <a href="http://localhost:9876/">http://localhost:9876/</a>       <br />info (launcher): Starting browser Chrome       <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p>    <p>info (launcher): Trying to start Chrome again.      <br />error (launcher): Cannot start Chrome       <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; CreateProcessW: The system cannot find the path specified.</p> </blockquote>  <p>Tracked down link on a Google thread: <a title="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J" href="https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J">https://groups.google.com/forum/?fromgroups=#!msg/angular/1li0HKtW56U/lKyT_VId0b0J</a></p>  <p>It appears that Testacular looks for the chrome browser in a CHROME_BIN environment variable.</p>  <p>To resolve the issue I ran the following PowerShell script and I was able to run the tests.</p>  <blockquote>   <p>[System.Environment]::SetEnvironmentVariable(&quot;CHROME_BIN&quot;, &quot;C:\Program Files (x86)\Google\Chrome\Application\chrome.exe&quot;)</p> </blockquote>  <p><em>Your path to chrome may vary!</em></p>  <p>&#160;</p>  <p>Happy Testing!</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
     <p class="meta">
           <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
@@ -220,23 +237,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Extended.Wpf.Toolkit" target="_blank">Extended.Wpf.Toolkit</a> is a project that should not need an introduction, and if you follow this blog you’ve probably heard <a href="http://elegantcode.com/about/brian-lagunas/" target="_blank">Brian</a> talk about it. If not, check out some of the posts on the <a href="http://bit.ly/yV7cma" target="_blank">Extended WPF Toolkit! </a></p>  <p>This project is one of the most download on codeplex, discussed on <a href="http://channel9.msdn.com" target="_blank">Channel9</a>, Coding4Fun, and is being leveraged by <a href="http://www.telerik.com" target="_blank">Telerik</a> in their <a href="http://www.telerik.com/products/orm.aspx" target="_blank">Open Access ORM</a> product.</p>  <h5>Below is a sample of some of the controls you can find in the toolkit:    <br />(but make sure you check out the <a href="http://wpftoolkit.codeplex.com/" target="_blank">project site</a> for the full list of controls)</h5>  <ul>   <li>BusyIndicator </li>    <li>Calculator </li>    <li>ChildWindow </li>    <li>ColorCanvas </li>    <li>ColorPicker </li>    <li>DateTimePicker </li>    <li>Magnifier </li>    <li>MultiLineTextEditor </li>    <li>PrimitiveTypeCollectionEditor </li>    <li>RichTextBox </li>    <li>SplitButton </li>    <li>WatermarkTextBox </li>    <li>Wizard</li> </ul>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered/">NuGet Project Uncovered: TranslatorService.Speech</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-18T04:56:00.000Z" pubdate data-updated="true">Feb 17th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/TranslatorService.Speech" target="_blank">TranslatorService.Speech</a> is a small little wrapper around the Bing text to speech API. You will need to get a Bing api key to leverage this.</p>  <p>Below is a sample usage of the library.</p>  <blockquote>   <pre>SpeechSynthesizer speech = new SpeechSynthesizer(APP_ID);   </pre><br /><br />  <pre>// To obtain a Bing Application ID, go to http://msdn.microsoft.com/en-us/library/ff512420.aspx  <br /> <br />string text = &quot;Have a nice day!&quot;; <br />string language = &quot;en&quot;; <br /> <br />using (Stream stream = speech.GetSpeakStream(text, language)) <br />{     <br />    using (SoundPlayer player = new SoundPlayer(stream)) <br />        player.PlaySync(); <br />}</pre><br /></blockquote><br /><br /><p>I threw that into a quick test and was quite impress with how fast it worked.</p><br /><br /><p>Unfortunately I tried to translate a larger “paragraph” or so of text and saw.</p><br /><br /><blockquote><br />  <p>System.Net.WebException : The remote server returned an error: (400) Bad Request. </p><br /><br />  <p>at System.Net.HttpWebRequest.GetResponse() <br />    <br />at TranslatorService.Speech.SpeechSynthesizer.GetSpeakStream(String text, String language) <br /><br />    <br />at NuGetTestProject.Sample.SampleTest() in <a href="projectfile:8A4BCF1F-3D9C-404F-AEC9-AB7DC9F7BFE9%2Ff%3AClass1.cs%3F14%3F1">Class1.cs: line 14</a></p><br /></blockquote><br /><br /><p>I didn’t take the time to diagnose why, whether it’s a Bing problem or this library.</p><br /><br /><p>Some other observations:</p><br /><br /><ul><br />  <li>+ It supports some Async methods as well </li><br /><br />  <li>- The Async methods don’t support the standard APM so I couldn’t easily wrap a task around. (I know there are some ways to make it work, but it’s not out of the box easy…) </li><br /></ul>  </div>
 </div>
 
       

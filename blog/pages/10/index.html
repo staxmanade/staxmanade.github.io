@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered/">NuGet Project Uncovered: TranslatorService.Speech</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-18T04:56:00.000Z" pubdate data-updated="true">Feb 17th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/TranslatorService.Speech" target="_blank">TranslatorService.Speech</a> is a small little wrapper around the Bing text to speech API. You will need to get a Bing api key to leverage this.</p>  <p>Below is a sample usage of the library.</p>  <blockquote>   <pre>SpeechSynthesizer speech = new SpeechSynthesizer(APP_ID);   </pre><br /><br />  <pre>// To obtain a Bing Application ID, go to http://msdn.microsoft.com/en-us/library/ff512420.aspx  <br /> <br />string text = &quot;Have a nice day!&quot;; <br />string language = &quot;en&quot;; <br /> <br />using (Stream stream = speech.GetSpeakStream(text, language)) <br />{     <br />    using (SoundPlayer player = new SoundPlayer(stream)) <br />        player.PlaySync(); <br />}</pre><br /></blockquote><br /><br /><p>I threw that into a quick test and was quite impress with how fast it worked.</p><br /><br /><p>Unfortunately I tried to translate a larger “paragraph” or so of text and saw.</p><br /><br /><blockquote><br />  <p>System.Net.WebException : The remote server returned an error: (400) Bad Request. </p><br /><br />  <p>at System.Net.HttpWebRequest.GetResponse() <br />    <br />at TranslatorService.Speech.SpeechSynthesizer.GetSpeakStream(String text, String language) <br /><br />    <br />at NuGetTestProject.Sample.SampleTest() in <a href="projectfile:8A4BCF1F-3D9C-404F-AEC9-AB7DC9F7BFE9%2Ff%3AClass1.cs%3F14%3F1">Class1.cs: line 14</a></p><br /></blockquote><br /><br /><p>I didn’t take the time to diagnose why, whether it’s a Bing problem or this library.</p><br /><br /><p>Some other observations:</p><br /><br /><ul><br />  <li>+ It supports some Async methods as well </li><br /><br />  <li>- The Async methods don’t support the standard APM so I couldn’t easily wrap a task around. (I know there are some ways to make it work, but it’s not out of the box easy…) </li><br /></ul>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-jsvalidator/">NuGet Project Uncovered: JsValidator</a></h1>
     <p class="meta">
           <time datetime="2012-02-17T04:55:00.000Z" pubdate data-updated="true">Feb 16th 2012</time>
@@ -220,23 +237,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/AboditNLP" target="_blank">AboditNLP</a> is a <a href="http://en.wikipedia.org/wiki/Natural_language_processing" target="_blank">Natural Language Processor</a> library. This kind of stuff in interesting, but not something I have chosen to spend my time on.</p>  <p>It has a demo <a href="http://nlp.abodit.com/home/demo">http://nlp.abodit.com/home/demo</a> which gives you sample things to type to the library. I noticed it was a bit case sensitive, but still, project is one to look into if you were to say build a home automation system.</p></div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-northwinddb/">NuGet Project Uncovered: Northwind.Db</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-08T04:34:00.000Z" pubdate data-updated="true">Feb 7th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Northwind.Db" target="_blank">Northwind.Db</a> is a version of the infamous Northwind database packaged in an awesomely easy install/setup NuGet package. I’ll outline the experience of installing the Northwind.Db into a sample project.</p>  <p>After executing the below command in my <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a></p>  <blockquote>   <p>Install-Package Northwind.Db</p> </blockquote>  <p>I was presented with a wizard where I could choose what type of database model I wanted to use.</p>  <p><a href="http://lh6.ggpht.com/-5_fucogSaAk/Tx-GiO9aQGI/AAAAAAAAAUg/9JBRO1ZlNpk/s1600-h/image_thumb61_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb61_thumb" border="0" alt="image_thumb61_thumb" src="http://lh3.ggpht.com/-B7XJK9duR0g/Tx-GimctstI/AAAAAAAAAUo/zz-Fyqeb9N0/image_thumb61_thumb_thumb.png?imgmax=800" width="244" height="113" /></a></p>  <p>How did I want to generate my model?</p>  <p><a href="http://lh5.ggpht.com/-00Sl6I7mylQ/Tx-Gi1LSb1I/AAAAAAAAAUw/GdIhU6rDkYQ/s1600-h/image_thumb7_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb7_thumb" border="0" alt="image_thumb7_thumb" src="http://lh4.ggpht.com/-JxZ4jRKQL6A/Tx-GjbgbdoI/AAAAAAAAAU4/q3otavXSXKU/image_thumb7_thumb_thumb.png?imgmax=800" width="244" height="220" /></a></p>  <p>Where should it connect to (Notice the Northwind database was already setup for me).</p>  <p><a href="http://lh4.ggpht.com/-8-fQCjFcpJs/Tx-Gj_RZS3I/AAAAAAAAAVA/F2L0qGanSwI/s1600-h/image_thumb8_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb1" border="0" alt="image_thumb8_thumb1" src="http://lh5.ggpht.com/-RO_2cIkbdEE/Tx-GkHot16I/AAAAAAAAAVI/smucDyWxf18/image_thumb8_thumb1_thumb.png?imgmax=800" width="244" height="215" /></a></p>  <p>And now I had the Northwind database all setup and ready to go.</p>  <p><a href="http://lh4.ggpht.com/-5CB8kWlwic8/Tx-GkeaPt0I/AAAAAAAAAVQ/2qFdwA8InhQ/s1600-h/image_thumb9_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb9_thumb" border="0" alt="image_thumb9_thumb" src="http://lh3.ggpht.com/-c333-av8FtM/Tx-GkkqdjoI/AAAAAAAAAVY/F0R_mTQ3Fgg/image_thumb9_thumb_thumb.png?imgmax=800" width="244" height="222" /></a></p>  <blockquote>   <p><font style="background-color: #ffffff">I’m not quite sure why it installed twice. (once in the root of my test project, and the other in the App_Data folder)</font></p> </blockquote>  <p>I also couldn’t use the Uninstall-Package command to remove the project</p>  <blockquote>   <pre>The process cannot access the file '…App_Data\Northwind.MDF' <br />because it is being used by another process.</pre><br /></blockquote><br /><br /><p><font face="Arial">Regardless </font>of some of the issues, if I had to quickly get a sample sql database up and running this would be nice and easy.</p>  </div>
 </div>
 
       

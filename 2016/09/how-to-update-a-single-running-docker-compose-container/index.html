@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Habit of a Solid Developer - Part 11 - FEEDBACK - Developing on Staxmanade</title>
+  <title>How to Update a Single Running docker-compose Container - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="A series of posts about Habit of a Solid Developer - Part 11 - FEEDBACK">
+   <meta name="description" content="As a newbie to the tooling, [docker-compose](https://docs.docker.com/compose/) it&#x27;s great for getting started. To bring up all the service containers ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-feedback/">
+  <link rel="canonical" href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,86 +73,61 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-feedback/">Habit of a Solid Developer - Part 11 - FEEDBACK</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
     <p class="meta">
-          <time datetime="2015-10-08T06:20:41.092Z" pubdate data-updated="true">Oct 7th 2015</time>
+          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
 
 
-        <a href="/2015/10/habit-of-a-solid-developer-feedback/#disqus_thread" data-disqus-identifier="/2015/10/habit-of-a-solid-developer-feedback/">(Comments)</a>
+        <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 11</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
-        </li>
-    </ul>
-</div></p>
-<p>This follows a very similar vein to failing fast, but don't just try to catch your self from failing, but outwardly try to look for ways to improve.</p>
-<p>Ask others for feedback. Don't wait for your companies 1/2 year or once a year review process to get feedback on how you're doing.</p>
-<p>Possibly offer others feedback (but careful how you word it and be sure you have the trust and the ear of the person).</p>
-<h1>Tools to fail fast</h1>
-<ul>
-<li>Design (actually think about it...)</li>
-<li>Compiler (Best first automated test)</li>
-<li>Unit tests and integration tests</li>
-<li>QA</li>
-</ul>
-<h1>Learn the tried and true programming patterns and practices</h1>
-<ul>
-<li>throw exceptions</li>
-<li>design by contract</li>
-<li>principle of least surprise</li>
-<li>S.O.L.I.D.</li>
-<li>Gang of Four</li>
-</ul>
-<p>Happy Improved Feedback Cycle!</p>
+<div class="entry-content"><p>As a newbie to the tooling, <a href="https://docs.docker.com/compose/">docker-compose</a> it's great for getting started. To bring up all the service containers with a simple <code>docker-compose up</code> starts everything. However, what if you want to replace an existing container without tearing down the entire suite of containers?</p>
+<p>For example: I have a <code>docker-compose</code> project that has the following containers.</p>
+<ol>
+<li>Node JS App</li>
+<li>CouchDB</li>
+<li>Redis Cache</li>
+</ol>
+<p>I had a small configuration change within the CouchDB container that I wanted to update and re-start to get going but wasn't sure how to do that.</p>
+<h1>Here's how I did it with little down time.</h1>
+<p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
+<ol>
+<li>Make the necessary change to the container (in my case update the couchdb config).</li>
+<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in you're <code>docker-compose.yml</code> file.)</li>
+</ol>
+<p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
+<ol>
+<li><code>docker-compose stop &lt;service_name&gt;</code> &lt;-- If you want to live on the edge and have the shut-down go faster, try <code>docker-compose kill &lt;service_name&gt;</code></li>
+<li><code>docker-compose up -d --no-deps &lt;service_name&gt;</code> &lt;-- this brings up the service using the newly built container.</li>
+</ol>
+<p>The <code>-d</code> is Detached mode: Run containers in the background, print new container names.</p>
+<p>The <code>--no-deps</code> will not start linked services.</p>
+<p>That's it... at least for me, it's worked to update my running containers with the latest version without tearing down the entire docker-compose set of services.</p>
+<blockquote>
+<p>Again, if you know of a faster/better way to go about this, I'd love to hear it. Or if you know of any down-sides to this approach, I'd love to hear about it before I have to learn the hard way on a production environment.</p>
+</blockquote>
+<p>Happy Container Updating!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2015-10-08T06:20:41.092Z" pubdate data-updated="true">Oct 7th 2015</time>
+                          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/soliddevhabit/'>SolidDevHabit</a>
+    <a class='category' href='/blog/categories/docker/'>Docker</a>
+    <a class='category' href='/blog/categories/docker-compose/'>docker-compose</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/10/habit-of-a-solid-developer-feedback/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/10/habit-of-a-solid-developer-feedback/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2016/09/how-to-update-a-single-running-docker-compose-container/" title="Previous Post: How to Update a Single Running docker-compose Container">&laquo; How to Update a Single Running docker-compose Container</a>
+                        <a class="basic-alignment left" href="/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/" title="Previous Post: Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.">&laquo; Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a>
                     </p>
                 </footer>
             </article>
@@ -275,7 +250,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2015/10/habit-of-a-solid-developer-feedback/';
+    var disqus_identifier = '/2016/09/how-to-update-a-single-running-docker-compose-container/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

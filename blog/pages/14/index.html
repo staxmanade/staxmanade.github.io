@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
+    <p class="meta">
+          <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>Every once in a while I run across a list of url’s that for whatever reason I want to make sure are valid. I have not yet found a good way to do this in PowerShell and finally hit the case where I decided to just write what I needed.</p>  <p>You can download the script here.</p>  <p><a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1">https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Check-Url.ps1</a></p>  <p>Below is an example of how you can use it:</p>  <pre>C:\PS&gt;@('http://www.google.com', 'http://www.asd----fDSAWQSDF-GZz.com') | .\Check-Url.ps1</pre><br /><br /><p>Which generates the following output:</p><br /><br /><pre> IsValid Url                            HttpStatus Error<br /> ------- ---                            ---------- -----<br />    True http://www.google.com                  OK<br />   False http://www.asd----fDSAWQSD...             System.Net.WebException: T...</pre><br /><br /><p>Hopefully someone else finds this useful. And if there are other/better ways of accomplishing this I’d love to hear about it.</p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2010/10/odatas-dataservicequery-and-removing/">OData’s DataServiceQuery and removing the .Expand(“MagicStrings”) –Part II</a></h1>
     <p class="meta">
           <time datetime="2010-10-18T00:56:00.000Z" pubdate data-updated="true">Oct 17th 2010</time>
@@ -256,229 +273,6 @@ What&#39;s even worse is that there&#39;s a little button on the top of the Solu
 if you&#39;re gonna do it, do it right.  next time give me a call and I&#39;ll yank the cable for real :-P</div>
 </div>
 </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/01/unitymoq-automocker-or/">Unity/Moq - AutoMocker or AutoMockingContainer</a></h1>
-    <p class="meta">
-          <time datetime="2010-01-03T16:53:00.000Z" pubdate data-updated="true">Jan 3rd 2010</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content"><h4>What is an Auto Mocking Container?</h4>
-<p>This post started to get a little long, so I won't re-explain the concept.</p>
-<p><a href="http://lostechies.com/joshuaflanagan/">Joshua Flanagan</a> wrote a nice overview at his <a href="http://www.lostechies.com/">Los Techies</a> blog: <a href="http://www.lostechies.com/blogs/joshuaflanagan/archive/2009/02/03/auto-mocking-explained.aspx">Auto mocking Explained</a>.</p>
-<p>My post is mainly here to describe the Unity version of an automocking container I threw together.</p>
-<h4>In Jan 2009 I blogged about my initial version of the Unity AutoMocker - Why am I blogging about it again?</h4>
-<p>I originally wrote the AutoMocker for the Unity container a year ago (Jan 2009, in Silverlight), and finally got around to placing the code up in the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project in June of 2009.</p>
-<p>I'm writing another post today in hopes to:</p>
-<ol>
-<li>Get some feedback on how this little snippet of code should continue.</li>
-<li>Give a little more how-to/example code</li>
-<li>Describe some updates I made since I originally created it.</li>
-</ol>
-<h4>Where can I get it?</h4>
-<p>This is one part where I'd appreciate some feedback.</p>
-<p>I have two slightly different versions out there (currently).</p>
-<p>I have one version at the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode</a> repository where I was working on it, and the other I threw up at <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a>.</p>
-<p>The core of the UnityAutoMockContainer is the same in both places, it's how the tests are separated out that differ.</p>
-<p>In the <a href="http://code.google.com/p/elegantcode/source/browse/#svn/trunk/Coders/JasonJarrett/UnityAutoMocker">ElegantCode repository</a> it's an all in one self contained single file (that you can copy into your own test project(s)). You can then setup a single test in your own testing framework that runs all internal automocker tests (in case you need to modify it yourself, and don't want to break any existing functionality). EX: test</p>
-<pre><code class="language-C#">    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
-    public void Should_run_all_UnityAutoMockContainer_internal_tests<span class="hljs-list">()</span>
-    {
-        Moq.AutoMocking.SelfTesting.UnityAutoMockContainerFixture.RunAllTests<span class="hljs-list">(<span class="hljs-keyword">Console.WriteLine</span>)</span><span class="hljs-comment">;</span>
-    }
-</span></code></pre>
-<p>I kind of like this format as it makes it easy to port between test libraries. Can't say I like having the tests in the same file as the core, but it certainly is not a large chunk of code (so far) so it's relatively small to maintain and definitely easier to manage as a single .cs file than another assembly (which would have to be version dependent on both Unity and Moq).</p>
-<p>The <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> is definitely where I think this helper should end up (and it is there). I just happened to break the tests out into the Silverlight test project and the core is alone in a file.</p>
-<p>It's current state isn't as easy to copy to a test library (Silverlight/Desktop/Unity 1.2/Unity 2.0) as the one at <a href="http://elegantcode.com/">ElegantCode</a>. What does anyone think? Should I put them all together in one file?</p>
-<p>However it ends up (1. all in one file or two (1 test) (1 core)) it will continue to be maintained on the <a href="http://code.google.com/p/moq-contrib/">moq-contrib</a> project.</p>
-<h4>What is the high level API of the container?</h4>
-<p>It's pretty simple, (currently) there are four methods on the container.</p>
-<p>Two for registering items with the container. Say you want to register an already created instance, or say you want to map an interface to a concrete class and <em>not</em> have the container generate mocks automatically for special cases.</p>
-<p>And two for pulling items out of the container. Whether you want a instance of T or a Mock<T>, it gives you ways to retrieve both.</p>
-<blockquote>
-<p><img src="http://lh5.ggpht.com/_L6Vw0x_R3iw/S0DLkezvL7I/AAAAAAAAANQ/3CZqGQAh-fA/image_thumb1.png?imgmax=800" alt="image" title="image"></p>
-</blockquote>
-<h4>How can I setup my own registrations with the container?</h4>
-<p>Say I don't want to have the container generate mocks for specific items and I want to supply specific configuration to the UnityContainer.</p>
-<pre><code class="language-C#"> <span class="hljs-keyword">public</span> UnityAutoMockContainer RegisterInstance&lt;TService&gt;(TService instance)
-
- <span class="hljs-keyword">public</span> UnityAutoMockContainer <span class="hljs-keyword">Register</span>&lt;TService, TImplementation&gt;() 
-     <span class="hljs-keyword">where</span> TImplementation : TService
-</code></pre>
-<p>Note: both of these registration methods return the container itself so you can fluently stack registration. EX:</p>
-<pre><code class="language-C#">    AutoMockContainer
-        .Register<span class="hljs-tag">&lt;<span class="hljs-title">IServiceA,</span> <span class="hljs-attribute">ServiceA</span>&gt;</span>()
-        .Register<span class="hljs-tag">&lt;<span class="hljs-title">IServiceB,</span> <span class="hljs-attribute">ServiceB</span>&gt;</span>();
-</code></pre>
-<p>Let me know: I haven't tested or played around with how this automocking container deals with any container specific xml configuration… So although I don't think you should probably have that in a test assembly (stuff happens). Let me know if there are any issues.</p>
-<h4>How do I get items out of the container?</h4>
-<p>First is the Resolve<T>(). It will pull an item T out of the container. (Creating it if not already existing)</p>
-<p><code>public T Resolve&lt;T&gt;()</code></p>
-<p>When T is an interface Resolve<T> (unless you setup registration specifically with the container) should return basically <code>(new Mock()).Object</code></p>
-<p>When T is a concrete Class, the container should return an instance of T and any of it's dependencies will be satisfied by mocks. (Note that T will not be any sort of mocked instance of T, unless you used the GetMock as described below first)</p>
-<p><code>public Mock GetMock() where T : class</code></p>
-<p>When T is an interface GetMock should return basically <code>(new Mock())</code></p>
-<p>When T is a concrete Class, the container should return a new Mock() and any of it's dependencies will be satisfied by mocks.</p>
-<h4>How do I use the UnityAutoMockContainer?</h4>
-<p>It's pretty basic, you first create an instance of the UnityAutoMockContainer, and from there you can ask it for mocks of an (Interface, Class, or Abstract Class).</p>
-<p>If you request an instance of a concrete class, or abstract class, the UnityAutoMockContainer will stuff mocks in for any constructor dependencies of your concrete class (if it can). You can then request from the container those same dependencies one at a time and either apply mocking setups or verifications.</p>
-<blockquote>
-<p>NOTE: Anything the container creates will live as a singleton instance in the container. So any other requests from the container will always return the originally created instance. Therefore, each distinct scenario in a test suite should have their own instances of the container.</p>
-</blockquote>
-<p>Below his an example of how you can leverage the container in some tests. Given this base fixture class…</p>
-<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FixtureBase</span>
-{
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> UnityAutoMockContainer _autoMockContainer = <span class="hljs-keyword">new</span> UnityAutoMockContainer();
-
-    <span class="hljs-keyword">protected</span> UnityAutoMockContainer AutoMockContainer
-    {
-        <span class="hljs-keyword">get</span> { <span class="hljs-keyword">return</span> _autoMockContainer; }
-    }
-
-    [TestFixtureSetUp]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetupContext_ALL</span>(<span class="hljs-params"></span>)
-    </span>{
-        Before_all_tests();
-        Because();
-    }
-
-    [TestFixtureTearDown]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">TearDownContext_ALL</span>(<span class="hljs-params"></span>)
-    </span>{
-        After_all_tests();
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Before_all_tests</span>(<span class="hljs-params"></span>)
-    </span>{
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Because</span>(<span class="hljs-params"></span>)
-    </span>{
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">After_all_tests</span>(<span class="hljs-params"></span>)
-    </span>{
-    }
-}
-</code></pre>
-<p>If I were given the following system to test.</p>
-<pre><code class="language-C#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceA</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunA</span>(<span class="hljs-params"></span>)</span>; }
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IServiceB</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunB</span>(<span class="hljs-params"></span>)</span>; }
-
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TestComponent</span>
-{
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TestComponent</span>(<span class="hljs-params">IServiceA serviceA, IServiceB serviceB</span>)
-    </span>{
-        ServiceA = serviceA;
-        ServiceB = serviceB;
-    }
-
-    <span class="hljs-keyword">public</span> IServiceA ServiceA { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">public</span> IServiceB ServiceB { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RunAll</span>(<span class="hljs-params"></span>)
-    </span>{
-        <span class="hljs-keyword">if</span> (!HowDidItGo())
-            <span class="hljs-keyword">return</span>;
-        ServiceA.RunA();
-        ServiceB.RunB();
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">HowDidItGo</span>(<span class="hljs-params"></span>)
-    </span>{
-        <span class="hljs-comment">// some really nasty untestable code</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
-    }
-}
-</code></pre>
-<p>The below example demonstrates simply verifying some behavior on the mocked dependencies of the system under test.</p>
-<pre><code class="language-C#"><span class="hljs-list">[<span class="hljs-keyword">TestFixture</span>]
-public class Example__how_to_pull_items_from_the_UnityAutoMockContainer_when_verifying_behavior_after_an_action_was_taken 
-    : FixtureBase
-{
-    private TestComponent _testComponent<span class="hljs-comment">;</span>
-
-    protected override void Before_all_tests<span class="hljs-list">()</span>
-    {
-        base.Before_all_tests<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-        _testComponent = AutoMockContainer.Resolve&lt;TestComponent&gt;<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-    }
-
-    protected override void Because<span class="hljs-list">()</span>
-    {
-        _testComponent.RunAll<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-    }
-
-    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
-    public void Should_run_ServiceA_RunA<span class="hljs-list">()</span>
-    {
-        AutoMockContainer
-            .GetMock&lt;IServiceA&gt;<span class="hljs-list">()</span>
-            .Verify<span class="hljs-list">(<span class="hljs-keyword">v</span> =&gt; v.RunA<span class="hljs-list">()</span>, Times.Once<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
-    }
-
-    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
-    public void Should_run_ServiceB_RunB<span class="hljs-list">()</span>
-    {
-        AutoMockContainer
-            .GetMock&lt;IServiceB&gt;<span class="hljs-list">()</span>
-            .Verify<span class="hljs-list">(<span class="hljs-keyword">v</span> =&gt; v.RunB<span class="hljs-list">()</span>, Times.Once<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
-    }
-}
-</span></span></span></code></pre>
-<p>Next, you may have noticed that the system under test had a complicated internal method (that may not necessarily be testable). You can use the AutoMocker to create the system under test as a Mock itself, so we can override some of the behavior. Here's how you could quickly do that.</p>
-<blockquote>
-<p>Aside: I'm not saying this is a good practice or aids in good component design, just saying it's possible</p>
-</blockquote>
-<pre><code class="language-C#"><span class="hljs-list">[<span class="hljs-keyword">TestFixture</span>]
-public class Example__how_to_use_the_UnityAutoMockContainer_to_override_a_method_on_the_SystemUnderTest_to_test_a_certain_behavior
-    : FixtureBase
-{
-
-    private TestComponent _testComponent<span class="hljs-comment">;</span>
-
-    protected override void Before_all_tests<span class="hljs-list">()</span>
-    {
-        base.Before_all_tests<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-        var mockTestComponent = AutoMockContainer.GetMock&lt;TestComponent&gt;<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-
-        mockTestComponent
-            .Setup<span class="hljs-list">(<span class="hljs-keyword">s</span> =&gt; s.HowDidItGo<span class="hljs-list">()</span>)</span>
-            .Returns<span class="hljs-list">(<span class="hljs-keyword">false</span>)</span><span class="hljs-comment">;</span>
-
-        _testComponent = mockTestComponent.Object<span class="hljs-comment">;</span>
-    }
-
-    protected override void Because<span class="hljs-list">()</span>
-    {
-        _testComponent.RunAll<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-    }
-
-    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
-    public void Should_run_ServiceA_RunA<span class="hljs-list">()</span>
-    {
-        AutoMockContainer
-            .GetMock&lt;IServiceA&gt;<span class="hljs-list">()</span>
-            .Verify<span class="hljs-list">(<span class="hljs-keyword">v</span> =&gt; v.RunA<span class="hljs-list">()</span>, Times.Never<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
-    }
-
-    <span class="hljs-list">[<span class="hljs-keyword">Test</span>]
-    public void Should_run_ServiceB_RunB<span class="hljs-list">()</span>
-    {
-        AutoMockContainer
-            .GetMock&lt;IServiceB&gt;<span class="hljs-list">()</span>
-            .Verify<span class="hljs-list">(<span class="hljs-keyword">v</span> =&gt; v.RunB<span class="hljs-list">()</span>, Times.Never<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
-    }
-}
-</span></span></span></code></pre>
-<p>It's amazing how much redundant test setup code this little helper has saved me in my tests. I hope others can find some use with this as well.</p>
 </div>
 
       
