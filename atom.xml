@@ -43,6 +43,11 @@
 <blockquote>
 <p>Again, if you know of a faster/better way to go about this, I'd love to hear it. Or if you know of any down-sides to this approach, I'd love to hear about it before I have to learn the hard way on a production environment.</p>
 </blockquote>
+<h2>UPDATE:</h2>
+<p>Thanks to Vladimir in the comments below - you can skip several steps above and do it with a single command</p>
+<pre><code><span class="hljs-comment">docker</span><span class="hljs-literal">-</span><span class="hljs-comment">compose</span> <span class="hljs-comment">up</span> <span class="hljs-literal">-</span><span class="hljs-comment">d</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">no</span><span class="hljs-literal">-</span><span class="hljs-comment">deps</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">build</span> &lt;<span class="hljs-comment">service_name</span>&gt;
+</code></pre>
+<p>I tested this and was able to avoid the <code>build</code>, <code>kill</code>, and <code>up</code> commands with this one-liner.</p>
 <p>Happy Container Updating!</p>
 ]]></content>
     </entry>

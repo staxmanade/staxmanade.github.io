@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>How to Update a Single Running docker-compose Container - Developing on Staxmanade</title>
+  <title>Scripted CouchDB Report Sharing Docs Sizes - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="As a newbie to the tooling, [docker-compose](https://docs.docker.com/compose/) it&#x27;s great for getting started. To bring up all the service containers ...">
+   <meta name="description" content="I noticed that some of my CouchDB databases were larger than I had anticipated given the data I thought I was storing in them and wanted a way to list...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">
+  <link rel="canonical" href="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,66 +73,44 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">Scripted CouchDB Report Sharing Docs Sizes</a></h1>
     <p class="meta">
-          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
+          <time datetime="2016-09-10T02:54:43.109Z" pubdate data-updated="true">Sep 9th 2016</time>
 
 
-        <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
+        <a href="/2016/09/scripted-couchdb-report-sharing-docs-sizes/#disqus_thread" data-disqus-identifier="/2016/09/scripted-couchdb-report-sharing-docs-sizes/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>As a newbie to the tooling, <a href="https://docs.docker.com/compose/">docker-compose</a> it's great for getting started. To bring up all the service containers with a simple <code>docker-compose up</code> starts everything. However, what if you want to replace an existing container without tearing down the entire suite of containers?</p>
-<p>For example: I have a <code>docker-compose</code> project that has the following containers.</p>
-<ol>
-<li>Node JS App</li>
-<li>CouchDB</li>
-<li>Redis Cache</li>
-</ol>
-<p>I had a small configuration change within the CouchDB container that I wanted to update and re-start to get going but wasn't sure how to do that.</p>
-<h1>Here's how I did it with little down time.</h1>
-<p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
-<ol>
-<li>Make the necessary change to the container (in my case update the couchdb config).</li>
-<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in you're <code>docker-compose.yml</code> file.)</li>
-</ol>
-<p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
-<ol>
-<li><code>docker-compose stop &lt;service_name&gt;</code> &lt;-- If you want to live on the edge and have the shut-down go faster, try <code>docker-compose kill &lt;service_name&gt;</code></li>
-<li><code>docker-compose up -d --no-deps &lt;service_name&gt;</code> &lt;-- this brings up the service using the newly built container.</li>
-</ol>
-<p>The <code>-d</code> is Detached mode: Run containers in the background, print new container names.</p>
-<p>The <code>--no-deps</code> will not start linked services.</p>
-<p>That's it... at least for me, it's worked to update my running containers with the latest version without tearing down the entire docker-compose set of services.</p>
-<blockquote>
-<p>Again, if you know of a faster/better way to go about this, I'd love to hear it. Or if you know of any down-sides to this approach, I'd love to hear about it before I have to learn the hard way on a production environment.</p>
-</blockquote>
-<h2>UPDATE:</h2>
-<p>Thanks to Vladimir in the comments below - you can skip several steps above and do it with a single command</p>
-<pre><code><span class="hljs-comment">docker</span><span class="hljs-literal">-</span><span class="hljs-comment">compose</span> <span class="hljs-comment">up</span> <span class="hljs-literal">-</span><span class="hljs-comment">d</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">no</span><span class="hljs-literal">-</span><span class="hljs-comment">deps</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">build</span> &lt;<span class="hljs-comment">service_name</span>&gt;
+<div class="entry-content"><p>I noticed that some of my CouchDB databases were larger than I had anticipated given the data I thought I was storing in them and wanted a way to list all of the documents in a Couch database with their size.</p>
+<p>Googling for an answer brought me to this <a href="http://stackoverflow.com/questions/8864364/built-in-way-to-read-couchdb-document-size">SO</a> post which has two ideas. Go check it out</p>
+<pre><code><span class="hljs-variable">$couchdb</span> = <span class="hljs-string">'http://admin-user:admin-password@couchdb.url.com'</span>
+<span class="hljs-variable">$db</span> = <span class="hljs-string">'database-name-here'</span>
+
+<span class="hljs-variable">$allDocsLengths</span> = (curl -s <span class="hljs-string">"$couchdb/$db/_all_docs"</span> | json rows | json -a id | %{ 
+    <span class="hljs-variable">$res</span> = (curl -s -X HEAD -I <span class="hljs-string">"$couchdb/$db/$_"</span>)
+    <span class="hljs-variable">$len</span> = (<span class="hljs-variable">$res</span> | Select-String Content-Length).ToString().Replace(<span class="hljs-string">'Content-Length: '</span>, <span class="hljs-string">""</span>)
+    new-object psobject -property  @{doc = $<span class="hljs-number">_</span>; len = <span class="hljs-variable">$len</span>}
+}
+<span class="hljs-variable">$allDocsLengths</span>
+
 </code></pre>
-<p>I tested this and was able to avoid the <code>build</code>, <code>kill</code>, and <code>up</code> commands with this one-liner.</p>
-<p>Happy Container Updating!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
+                          <time datetime="2016-09-10T02:54:43.109Z" pubdate data-updated="true">Sep 9th 2016</time>
 
 
-                        <span class="categories">
-    <a class='category' href='/blog/categories/docker/'>Docker</a>
-    <a class='category' href='/blog/categories/docker-compose/'>docker-compose</a>
-</span>
-
+                        
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/" title="Previous Post: Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.">&laquo; Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a>
+                        <a class="basic-alignment left" href="/2016/09/how-to-update-a-single-running-docker-compose-container/" title="Previous Post: How to Update a Single Running docker-compose Container">&laquo; How to Update a Single Running docker-compose Container</a>
                     </p>
                 </footer>
             </article>
@@ -255,7 +233,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2016/09/how-to-update-a-single-running-docker-compose-container/';
+    var disqus_identifier = '/2016/09/scripted-couchdb-report-sharing-docs-sizes/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
