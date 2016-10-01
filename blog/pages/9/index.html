@@ -73,6 +73,48 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
+    <p class="meta">
+          <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+   <p>I created an <a href="http://github.com/staxmanade/PowershellPresentation" target="_blank">introductory presentation on PowerShell</a> a while back and posted it <a href="http://github.com/staxmanade/" target="_blank">on my GitHub</a>. I first gave the presentation at the <a href="http://softwaredevelopersgroup.com/">NNSDG</a> and decided to also submit it as a talk to the <a href="http://boisecodecamp.com/">Boise Code Camp</a> this year. (Looks like I'll be going – track me down <a href="https://twitter.com/staxmanade" target="_blank">@staxmanade</a> if you’d like to say hello)</p>
+   <p>I’ve become quite a fan of Markdown lately and thought, “what if this not only looked like PowerShell, but looked even better as Markdown…?”</p>
+   <p>After experimenting a little, I found that it actually works quite well.</p>
+   <p>For example:</p>
+   <p><strong>PowerShell (Markdown)</strong></p>
+   <pre>## String Interpolation<br /><br />### Single quotes `don't` interpolate<br />    'Hello $groupName' <br />    <br />### Double quotes `DO` interpolate<br />    &quot;Hello $groupName&quot;<br />        <br />    <br />### Wrap `$(...)` around expression within an string<br />    &quot;groupName variable is of type: $($groupName.GetType().FullName)&quot;<br />    &quot;2 + 1564 = $(2 + 1564)&quot;<br />    &quot;Current DateTime is = $(get-date)&quot;<br />    &quot;Current DateTime is = $([System.DateTime]::Now)&quot;<br /><br />    <br />### Escape characters with the ` (back-tick)<br />    &quot;Escape a quotation `&quot;This is quoted`&quot;.&quot;</pre>
+
+   <p>&#160;</p>
+
+   <p><strong>Formatted Markdown</strong></p>
+
+   <p><a href="http://lh5.ggpht.com/-lUeiRSS4rBo/URs3LcasBbI/AAAAAAAAAcY/h2NTLneqWP8/s1600-h/image11.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-iNFDygzQL0o/URs3L15uv8I/AAAAAAAAAcg/jbjRHwUTi8E/image_thumb4.png?imgmax=800" width="634" height="628" /></a></p>
+
+   <p>&#160;</p>
+
+   <p>One issue I have is the way GitHub/markdown formats extra whitespace (it doesn’t). So I’ve worked around that so that I can get the vertical whitespace that I need in the Markdown version by placing a link to a spacer image: </p>
+
+   <pre>![vertical space](<a href="http://is.gd/VertSpace">http://is.gd/VertSpace</a>)</pre>
+
+   <p>This isn’t ideal because my PowerShell is littered with this snippet, but something that can easily be search/replaced before using the raw version as a PowerShell script.</p>
+
+   <p>I also think that you could potentially do this with many different programming languages. (At least ones that don’t depend on whitespace and have a form of block comments)</p>
+
+   <p>Nifty eh?</p>
+
+   <p>Happy PowerDowning or MarkShelling!</p>
+</div></div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
     <p class="meta">
           <time datetime="2013-01-23T05:29:00.000Z" pubdate data-updated="true">Jan 22nd 2013</time>
@@ -220,23 +262,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nancy" target="_blank">Nancy</a> is another project founded by an elegant coder. <a href="http://elegantcode.com/about/andreas-hakansson/" target="_blank">Andreas</a> has blogged about it a <a href="http://bit.ly/xIlUmy" target="_blank">number of times here</a> on ElegantCode. </p>  <blockquote>   <p>Nancy is a lightweight HTTP framework for building web services and sites. The framework runs on both the .net framework and <a href="http://mono-project.com/">Mono</a>.</p> </blockquote>  <p>I have not used this project myself, but as I started to look it over I think I might have to spin up a site quickly just to try it out.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_18/">NuGet Project Uncovered: Extended.Wpf.Toolkit</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-19T04:58:00.000Z" pubdate data-updated="true">Feb 18th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Extended.Wpf.Toolkit" target="_blank">Extended.Wpf.Toolkit</a> is a project that should not need an introduction, and if you follow this blog you’ve probably heard <a href="http://elegantcode.com/about/brian-lagunas/" target="_blank">Brian</a> talk about it. If not, check out some of the posts on the <a href="http://bit.ly/yV7cma" target="_blank">Extended WPF Toolkit! </a></p>  <p>This project is one of the most download on codeplex, discussed on <a href="http://channel9.msdn.com" target="_blank">Channel9</a>, Coding4Fun, and is being leveraged by <a href="http://www.telerik.com" target="_blank">Telerik</a> in their <a href="http://www.telerik.com/products/orm.aspx" target="_blank">Open Access ORM</a> product.</p>  <h5>Below is a sample of some of the controls you can find in the toolkit:    <br />(but make sure you check out the <a href="http://wpftoolkit.codeplex.com/" target="_blank">project site</a> for the full list of controls)</h5>  <ul>   <li>BusyIndicator </li>    <li>Calculator </li>    <li>ChildWindow </li>    <li>ColorCanvas </li>    <li>ColorPicker </li>    <li>DateTimePicker </li>    <li>Magnifier </li>    <li>MultiLineTextEditor </li>    <li>PrimitiveTypeCollectionEditor </li>    <li>RichTextBox </li>    <li>SplitButton </li>    <li>WatermarkTextBox </li>    <li>Wizard</li> </ul>  </div>
 </div>
 
       

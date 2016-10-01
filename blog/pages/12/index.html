@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-nspec/">NuGet Project Uncovered: NSpec</a></h1>
+    <p class="meta">
+          <time datetime="2012-01-29T00:23:00.000Z" pubdate data-updated="true">Jan 28th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NSpec" target="_blank">NSpec</a> is one of many flavors of <a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development" target="_blank">BDD</a> framework out there. I’ve never used it, but its <a href="http://www.nspec.org/" target="_blank">website</a> looks good and has some nice documentation and examples.</p>  <p>What is your favorite BDD framework?</p></div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-stimpack/">NuGet Project Uncovered: Stimpack</a></h1>
     <p class="meta">
           <time datetime="2012-01-28T00:22:00.000Z" pubdate data-updated="true">Jan 27th 2012</time>
@@ -244,23 +261,6 @@
 <div class="entry-content">
 <div class='post'>
 <p>I have lots of bittersweet and mushy things to say about my previous employer of 5 years, however I’ll spare you from all that.</p>  <p>Last Monday (10/17/2011) I started my first official day with</p>  <p><a href="http://vertigo.com" target="_blank"><img src="http://vertigo.com/images/logo/7BAF4C_OV_Home.png" /></a> (That’s <a href="http://vertigo.com/" target="_blank">Vertigo</a>)</p>  <p>I’m really looking forward to working with the many great people at <a href="http://vertigo.com/" target="_blank">Vertigo</a> and all the interesting projects that will come my way.</p>  <p>With regards to this blog and my other OSS contributions, I don’t have any plans to change anything. I’m looking forward to possibly blogging about some different and interesting topics, but we’ll have to see.</p>  <p>Happy Coding!</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
-    <p class="meta">
-          <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>If you haven’t heard of it, you’re about to be delighted. Every developer (at least those on Windows) should know about this project, if for nothing more than to make life setting up your dev machine a piece of cake.</p>  <h4>What is Chocolatey?</h4>  <p>Straight from the <a href="http://chocolatey.org">Chocolatey.org</a> site:</p>  <blockquote>   <p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with windows in mind.</p> </blockquote>  <p>If you’ve not ever used a linux machine or understand what the power of an “apt-get” like tool is, well It’s basically the simplest possible way to install an application to your machine. </p>  <p>What could be simpler than finding the app’s website, download the app, and next, next, next through the the installer? How about just typing “chocolaty install notepadplusplus” at a powershell command prompt? That simple little command will download and install Notepad++ right on your machine with virtually no need to interact with the installer. AWESOME!!!</p>  <blockquote>   <p><strong>Disclaimer!</strong></p>    <p>I know there are other installer applications out there that aggregate and install different&#160; programs; however, to be honest, I don’t use any of them. I am also going to assume that most of them aren’t catered to the windows developer (maybe I’m wrong). Either way I like this project and I’m just trying to share it with the community. <strong>So There…</strong></p> </blockquote>  <p>Ok, my above salesmanship is a little loud mouthy, but maybe your interest is peaked enough to give it a try.</p>  <h4>How do I install Chocolatey?</h4>  <p>It’s about as simple to install Chocolatey as it is to use Chocolatey to install other applications. One single powershell command. Just paste the below command in your powershell prompt and let er rip.</p>  <blockquote>   <p>First, make sure you have your powershell environment set to “Unrestricted”.<a href="http://lh6.ggpht.com/-4sSRlJeweTI/TozckReE5MI/AAAAAAAAASA/JG0ULKiPil0/s1600-h/image8.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/-Vviqle2o908/TozclWiZ6TI/AAAAAAAAASE/1-_0QwA6KAs/image_thumb4.png?imgmax=800" width="644" height="235" /></a></p> </blockquote>  <p>Run the Chocolatey install.</p>  <pre>  iex ((new-object net.webclient).DownloadString(&quot;http://bit.ly/psChocInstall&quot;))</pre><br />  <h4>Packages!</h4>  <p>Now that you have chocolatey installed, head over to the <a href="http://Chocolatey.org">Chocolatey.org</a> website and browse the packages you can now install.</p>  <p>EX:</p>  <blockquote>   <p><font style="background-color: #ffffff">C:\Code&gt;<strong>chocolatey install notepadplusplus</strong></font></p> </blockquote>  <h4>How can I know when new packages are added to the Chocolatey.org feed?</h4>  <p>You can get more background on this approach by following my previous post <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">What’s happening on the NuGet feed (leveraging OData in an RSS reader)</a></p>  <p>The direct RSS link I have is as follows:</p>  <blockquote>   <p><a href="http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc">http://chocolatey.org/api/feeds/Packages()?$filter=Id%20ne%20'SymbolSource.TestPackage'&amp;$orderby=Published%20desc</a></p> </blockquote>  <p>Plug that into your RSS reader and you should be notified when new packages are added to the Chocolatey.org feed.</p>  <p>Happy Setting up your Dev Machine!</p></div>
 </div>
 
       

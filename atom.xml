@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-09-09T04:45:17Z</updated>
+    <updated>2016-09-30T17:07:25Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,46 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Better Compact JIRA Board U.I.]]></title>
+        <id>http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</id>
+        <link href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">
+        </link>
+        <updated>2016-09-30T17:07:25Z</updated>
+        <summary type="html"><![CDATA[We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enoug...]]></summary>
+        <content type="html"><![CDATA[<p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
+<p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
+<h1>Before</h1>
+<p><img src="/images/posts/JIRA-Card-BEFORE.png" alt="Jira card before css hack"></p>
+<h1>After CSS Hack</h1>
+<p><img src="/images/posts/JIRA-Card-AFTER.png" alt="Jira card before css hack"></p>
+<h1>How did you do that?</h1>
+<ol>
+<li>Install a CSS style plugin into you're browser. This post all use <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">Stylebot</a> for the Chrome web browser.</li>
+</ol>
+<ul>
+<li>Just install the plugin from the Chrome store by <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">clicking this link</a> and selecting <code>[+ ADD TO CHROME]</code> button on the upper right of the page.</li>
+</ul>
+<ol start="2">
+<li>
+<p>Once the plugin is installed. Close all tabs and re-open a tab to the JIRA kanban board.</p>
+</li>
+<li>
+<p>Click the new Stylebot plugin <code>CSS</code> button and the <code>Open Stylebot...</code> option in you're chrome browser toolbar which will open up a U.I. that allow you to mess around with the page's style.</p>
+</li>
+<li>
+<p>At the bottom of the Stylebot click <code>Edit CSS</code> which will give you a blank text box you can write custom CSS into.</p>
+</li>
+<li>
+<p>Paste in the following CSS and hit <code>Save</code></p>
+</li>
+</ol>
+<pre><code class="language-css"><span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;}</span><span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;}</span><span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">145px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;}</span>
+</code></pre>
+<p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
+<p>Happy (as best you can) JIRA'ing</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How to Update a Single Running docker-compose Container]]></title>
         <id>http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</id>
@@ -1588,55 +1628,6 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
 </span></code></pre>
 <p>Next I'd like to see if I could leverage something like <a href="https://github.com/flatiron/director">flatiron/director</a> for routing and get it to play nice with <code>WinJS.Navigation</code> and if I do, I'll post it as well...</p>
 <p>Hope this helps.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Habit of a Solid Developer - Part 6 - Dig a Little Deeper]]></title>
-        <id>http://staxmanade.com/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/</id>
-        <link href="http://staxmanade.com/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">
-        </link>
-        <updated>2015-10-24T06:20:41Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 6 - Dig a Little Deeper]]></summary>
-        <content type="html"><![CDATA[<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 6</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - (current) - Dig a Little Deeper
-        </li>
-        <li>
-            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
-        </li>
-    </ul>
-</div></p>
-<p>The number of things you can learn in this field is mind blowing. The rate at which change happens, frameworks come and go and the various levels of abstraction can be daunting at times.</p>
-<p>Regardless of how much or little you know, there is always a new level of abstraction you can dive into and get a better understanding of what's going on. I love the example <a href="http://hanselman.com">Scott Hanselman</a> uses about this topic in <a href="http://www.hanselman.com/blog/PleaseLearnToThinkAboutAbstractions.aspx">Please Learn to Think about Abstractions</a>.</p>
-<p>It is amazing how much you can accomplish without having a clue about what is going under your abstractions. But if you were to take a moment now and then to try to understand what those abstractions are hiding from you, it will likely open your eyes to a level of understanding and insight as to how to use the abstraction that you may likely not understand how you made it work without that deeper insight. The understanding may help you get just needed bit of performance improvement, or fault tolerance in your projects, or how to set things up to be more maintainable.</p>
-<p>An example of this for me recently is while working at <a href="http://vertigo.com/">Vertigo</a> I have helped to ship a number of streaming video based products without having to know anything about some of the specifics of say <a href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming">HLS</a>. On this recent project we were having issues with a live stream and it just so happened we could peek through an HTTP Debugger proxy at the raw streaming manifest. This was previously a scary place for me to dig in an try to understand. However, taking the time to understand various parts of the HLS Spec have not only made me appreciate what it takes to put together one of these live streams, but I have now become just that much stronger as a team member on a video related projects.</p>
-<p>As the famous philosopher Dory once said:</p>
-<p><img src="http://cdn.meme.am/instances/55766499.jpg" alt="Dory saying just keep digging, just keep digging, digging, digging"></p>
-<p>Happy Digging!</p>
 ]]></content>
     </entry>
 </feed>

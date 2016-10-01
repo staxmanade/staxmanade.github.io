@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Scripted CouchDB Report Sharing Docs Sizes - Developing on Staxmanade</title>
+  <title>Better Compact JIRA Board U.I. - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I noticed that some of my CouchDB databases were larger than I had anticipated given the data I thought I was storing in them and wanted a way to list...">
+   <meta name="description" content="We use JIRA&#x27;s kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enoug...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">
+  <link rel="canonical" href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,44 +73,65 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">Scripted CouchDB Report Sharing Docs Sizes</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
     <p class="meta">
-          <time datetime="2016-09-10T02:54:43.109Z" pubdate data-updated="true">Sep 9th 2016</time>
+          <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
 
 
-        <a href="/2016/09/scripted-couchdb-report-sharing-docs-sizes/#disqus_thread" data-disqus-identifier="/2016/09/scripted-couchdb-report-sharing-docs-sizes/">(Comments)</a>
+        <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I noticed that some of my CouchDB databases were larger than I had anticipated given the data I thought I was storing in them and wanted a way to list all of the documents in a Couch database with their size.</p>
-<p>Googling for an answer brought me to this <a href="http://stackoverflow.com/questions/8864364/built-in-way-to-read-couchdb-document-size">SO</a> post which has two ideas. Go check it out</p>
-<pre><code><span class="hljs-variable">$couchdb</span> = <span class="hljs-string">'http://admin-user:admin-password@couchdb.url.com'</span>
-<span class="hljs-variable">$db</span> = <span class="hljs-string">'database-name-here'</span>
-
-<span class="hljs-variable">$allDocsLengths</span> = (curl -s <span class="hljs-string">"$couchdb/$db/_all_docs"</span> | json rows | json -a id | %{ 
-    <span class="hljs-variable">$res</span> = (curl -s -X HEAD -I <span class="hljs-string">"$couchdb/$db/$_"</span>)
-    <span class="hljs-variable">$len</span> = (<span class="hljs-variable">$res</span> | Select-String Content-Length).ToString().Replace(<span class="hljs-string">'Content-Length: '</span>, <span class="hljs-string">""</span>)
-    new-object psobject -property  @{doc = $<span class="hljs-number">_</span>; len = <span class="hljs-variable">$len</span>}
-}
-<span class="hljs-variable">$allDocsLengths</span>
-
+<div class="entry-content"><p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
+<p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
+<h1>Before</h1>
+<p><img src="/images/posts/JIRA-Card-BEFORE.png" alt="Jira card before css hack"></p>
+<h1>After CSS Hack</h1>
+<p><img src="/images/posts/JIRA-Card-AFTER.png" alt="Jira card before css hack"></p>
+<h1>How did you do that?</h1>
+<ol>
+<li>Install a CSS style plugin into you're browser. This post all use <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">Stylebot</a> for the Chrome web browser.</li>
+</ol>
+<ul>
+<li>Just install the plugin from the Chrome store by <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">clicking this link</a> and selecting <code>[+ ADD TO CHROME]</code> button on the upper right of the page.</li>
+</ul>
+<ol start="2">
+<li>
+<p>Once the plugin is installed. Close all tabs and re-open a tab to the JIRA kanban board.</p>
+</li>
+<li>
+<p>Click the new Stylebot plugin <code>CSS</code> button and the <code>Open Stylebot...</code> option in you're chrome browser toolbar which will open up a U.I. that allow you to mess around with the page's style.</p>
+</li>
+<li>
+<p>At the bottom of the Stylebot click <code>Edit CSS</code> which will give you a blank text box you can write custom CSS into.</p>
+</li>
+<li>
+<p>Paste in the following CSS and hit <code>Save</code></p>
+</li>
+</ol>
+<pre><code class="language-css"><span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;}</span><span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;}</span><span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">145px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;}</span>
 </code></pre>
+<p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
+<p>Happy (as best you can) JIRA'ing</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2016-09-10T02:54:43.109Z" pubdate data-updated="true">Sep 9th 2016</time>
+                          <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
 
 
-                        
+                        <span class="categories">
+    <a class='category' href='/blog/categories/jira/'>JIRA</a>
+</span>
+
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/09/scripted-couchdb-report-sharing-docs-sizes/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2016/09/better-compact-jira-board-u-i-/" title="Previous Post: Better Compact JIRA Board U.I.">&laquo; Better Compact JIRA Board U.I.</a>
+                        <a class="basic-alignment left" href="/2016/09/how-to-update-a-single-running-docker-compose-container/" title="Previous Post: How to Update a Single Running docker-compose Container">&laquo; How to Update a Single Running docker-compose Container</a>
                     </p>
                 </footer>
             </article>
@@ -233,7 +254,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2016/09/scripted-couchdb-report-sharing-docs-sizes/';
+    var disqus_identifier = '/2016/09/better-compact-jira-board-u-i-/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
