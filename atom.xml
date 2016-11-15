@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-09-30T17:07:25Z</updated>
+    <updated>2016-11-15T05:06:36Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,39 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Evem better dot.dot.dot.dot...]]></title>
+        <id>http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/</id>
+        <link href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">
+        </link>
+        <updated>2016-11-15T05:06:36Z</updated>
+        <summary type="html"><![CDATA[There's this little "CD" utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.]]></summary>
+        <content type="html"><![CDATA[<p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
+<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
+<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
+<p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
+<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
+<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
+<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
+<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
+<span class="hljs-keyword">function</span> ...() { cd ... }
+<span class="hljs-keyword">function</span> ....() { cd .... }
+<span class="hljs-keyword">function</span> .....() { cd ..... }
+<span class="hljs-keyword">function</span> ......() { cd ...... }
+<span class="hljs-keyword">function</span> .......() { cd ....... }
+<span class="hljs-keyword">function</span> ........() { cd ........ }
+</code></pre>
+<p>If you're interested in the evolution of this CD tool:</p>
+<ul>
+<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+</ul>
+<p>SUPER SWEET!</p>
+<p>Happy CD'ing!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Better Compact JIRA Board U.I.]]></title>
         <id>http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</id>
@@ -1396,238 +1429,6 @@ B) or you've uncovered some challenges that are not easily overcome and require 
 </code></pre>
 <p>I hope you found this quick tutorial useful. Would love to hear any feedback or thoughts on the approach.</p>
 <p>As earways, Happy Listening!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Integrate WinJS.Navigation with the Browser's History]]></title>
-        <id>http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/</id>
-        <link href="http://staxmanade.com/2015/10/integrate-winjs-navigation-with-the-browser-s-history/">
-        </link>
-        <updated>2015-10-31T17:30:40Z</updated>
-        <summary type="html"><![CDATA[I've been playing with [WinJS](https://github.com/winjs/winjs) a bit lately, specifically the [React-WinJS](https://github.com/winjs/react-winjs) and ...]]></summary>
-        <content type="html"><![CDATA[<p>I've been playing with <a href="https://github.com/winjs/winjs">WinJS</a> a bit lately, specifically the <a href="https://github.com/winjs/react-winjs">React-WinJS</a> and wanted the native WinJS Navigation to play a little nicer with a web browser. The original/default environment for WinJS app is within a WinRT/Metro application where there is no &quot;url/address&quot; bar to be seen.</p>
-<blockquote>
-<p>My uneducated guess is that the WinJS team decided not to worry about how <code>WinJS.Navigation</code> would integrate with a normal browser's history as there doesn't appear to be native integration or documentation about how to do it so far.</p>
-</blockquote>
-<p>I <a href="https://github.com/winjs/winjs/issues/1532">asked the team</a> if they had plans to work on any integration options, but only asked that last night so don't expect to hear back from over the weekend.</p>
-<h3>UPDATE: I got tired of updating this blog post with my bug fixes/iterations of the idea - so I've moved it over to GitHub: <a href="https://github.com/staxmanade/WinJSBrowserHistory">github.com/staxmanade/WinJSBrowserHistory</a>.</h3>
-<p>So I spent a moment and prototyped one possible solution which works for this simple test using the browser's history api since I'm not looking to support browsers older than IE 10.</p>
-<p>Ideally we could leverage WinJS controls without worrying about how to &quot;integrate&quot; the <code>WinJS.Navigation</code> with anything, but sadly some of the WinJS controls take a dependency on <code>WinJS.Navigation</code> (like the BackButton) so finding a way to play nice with this can be challenging.</p>
-<p>If you want to get this prototype running yourself, you can:</p>
-<ol>
-<li>save both files below to a folder</li>
-<li>start up a simple web server. (I like to use <a href="http://npmjs.com/package/nws">nws</a>)</li>
-</ol>
-<p>This prototype is 2 files:</p>
-<ul>
-<li><code>index.html</code> &lt;-- basic JSPM bootstrapping and configuration</li>
-<li><code>app.jsx</code> &lt;-- my whole navigation app in here...</li>
-</ul>
-<h2>index.html</h2>
-<p>Couple mentions on this bootstrapping code:</p>
-<ol>
-<li>I set the background style to black (since in <code>app.jsx</code> I'm using the WinJS dark css) - this avoids a flash from white to black when the page loads</li>
-<li>This is using <a href="https://github.com/systemjs/systemjs">SystemJS</a> which makes it really easy to prototype and bootstrap dependencies like <a href="https://github.com/winjs/winjs">WinJS</a> and <a href="https://facebook.github.io/react/">React</a>. Please don't deploy something like this to production - follow proper <a href="https://github.com/jspm/jspm-cli/blob/master/docs/production-workflows.md">JSPM production workflow procedures</a>...</li>
-<li>The <code>map</code> section in the <code>System.config</code> defines a pointer to a fork of <code>react-winjs</code> I have that supports <code>React 0.14</code> (so if you find this in the future and need it, try to use the native <code>react-winjs</code> if they've merged in <a href="https://github.com/winjs/react-winjs/pull/33">my pull request</a> instead.)</li>
-</ol>
-<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span>&gt;</span><span class="css"> <span class="hljs-tag">body</span><span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> black</span></span>; }</span> </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://jspm.io/system@0.18.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
-      System.config({
-        transpiler: <span class="hljs-string">'babel'</span>,
-        packages: {
-          <span class="hljs-string">'./'</span>: {
-            defaultExtension: <span class="hljs-literal">false</span>
-          }
-        },
-        map: {
-          <span class="hljs-string">'react'</span>: <span class="hljs-string">'npm:react@0.14'</span>,
-          <span class="hljs-string">'react-winjs'</span>: <span class="hljs-string">'github:staxmanade/react-winjs@2.4.0-react-0.14'</span>,
-        }
-      });
-
-      System.<span class="hljs-keyword">import</span>(<span class="hljs-string">'./app.jsx'</span>);
-
-    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"main"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
-</code></pre>
-<h2>app.jsx</h2>
-<pre><code><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> WinJS <span class="hljs-keyword">from</span> <span class="hljs-string">'npm:winjs'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'npm:winjs/css/ui-dark.css!'</span>;
-<span class="hljs-keyword">import</span> { BackButton } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-winjs'</span>;
-
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WinJSBrowserHistory</span> </span>{
-    isNavigationBeingHandled;
-    isWinJSNavigationBackBeingHandled;
-    isNavigationTriggeredByPopStateEvent;
-
-    constructor(onApplyNavigaitonChange) {
-
-        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> onApplyNavigaitonChange !== <span class="hljs-string">"function"</span>) {
-          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Expecting first argumet to be a function that can take 2 parametes (location, state) =&gt; {}"</span>);
-        }
-
-        <span class="hljs-keyword">this</span>.onApplyNavigaitonChange = onApplyNavigaitonChange;
-
-        WinJS.Navigation.addEventListener(<span class="hljs-string">"beforenavigate"</span>, <span class="hljs-keyword">this</span>.handleBeforeNavigate.bind(<span class="hljs-keyword">this</span>));
-        WinJS.Navigation.addEventListener(<span class="hljs-string">"navigating"</span>, <span class="hljs-keyword">this</span>.handleNavigating.bind(<span class="hljs-keyword">this</span>));
-        WinJS.Navigation.addEventListener(<span class="hljs-string">"navigated"</span>, <span class="hljs-keyword">this</span>.handleNavigated.bind(<span class="hljs-keyword">this</span>));
-
-        <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'popstate'</span>, (eventObject) =&gt; {
-            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'popstate'</span>, <span class="hljs-keyword">this</span>.isNavigationBeingHandled, eventObject);
-
-            <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.isNavigationBeingHandled &amp;&amp; !<span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled) {
-              <span class="hljs-keyword">this</span>.handlePopState(eventObject);
-            }
-            <span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled = <span class="hljs-literal">false</span>;
-        })
-    }
-
-    cleanup() {
-      WinJS.Navigation.removeEventListener(<span class="hljs-string">"navigated"</span>, <span class="hljs-keyword">this</span>.handleNavigated);
-    }
-
-
-    handlePopState(eventObject) {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handlePopState"</span>, eventObject, location.hash);
-
-      <span class="hljs-keyword">this</span>.isNavigationTriggeredByPopStateEvent = <span class="hljs-literal">true</span>;
-
-      WinJS.Navigation.navigate(location.hash, location.state);
-    }
-
-    handleBeforeNavigate(eventObject) {
-        <span class="hljs-keyword">this</span>.isNavigationBeingHandled = <span class="hljs-literal">true</span>;
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleBeforeNavigate:"</span>, eventObject);
-    }
-
-    handleNavigating(eventObject) {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigating:"</span>, eventObject);
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigating delta:"</span>, eventObject.detail.delta);
-
-        <span class="hljs-keyword">var</span> location = eventObject.detail.location;
-        <span class="hljs-keyword">var</span> state = eventObject.detail.state;
-        <span class="hljs-keyword">var</span> delta = eventObject.detail.delta;
-
-        <span class="hljs-keyword">this</span>.onApplyNavigaitonChange(location, state);
-
-        <span class="hljs-keyword">if</span>(delta &lt; <span class="hljs-number">0</span>) {
-            <span class="hljs-keyword">this</span>.isWinJSNavigationBackBeingHandled = <span class="hljs-literal">true</span>;
-            <span class="hljs-built_in">window</span>.history.go(delta);
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-comment">//router.setRoute(location);</span>
-            <span class="hljs-built_in">window</span>.history.pushState(state, <span class="hljs-string">""</span>, <span class="hljs-string">"#"</span> + location);
-        }
-    }
-
-    handleNavigated(eventObject) {
-        <span class="hljs-keyword">this</span>.isNavigationBeingHandled = <span class="hljs-literal">false</span>;
-        <span class="hljs-keyword">this</span>.isNavigationTriggeredByPopStateEvent = <span class="hljs-literal">false</span>;
-
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handleNavigated"</span>, eventObject);
-    }
-
-}
-
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-
-    constructor(props) {
-        <span class="hljs-keyword">super</span>(props);
-
-        <span class="hljs-keyword">this</span>.winJSBrowserHistory = <span class="hljs-keyword">new</span> WinJSBrowserHistory(<span class="hljs-keyword">this</span>.onApplyNavigaitonChange.bind(<span class="hljs-keyword">this</span>));
-
-        <span class="hljs-keyword">this</span>.state = {
-            nav: {
-                state: WinJS.Navigation.state,
-                location: WinJS.Navigation.location
-            }
-        }
-    }
-
-    componentWillMount () {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"componentWillMount"</span>);
-        WinJS.Navigation.navigate(<span class="hljs-keyword">this</span>.state.nav.location, <span class="hljs-keyword">this</span>.state.nav.state);
-    }
-
-    componentWillUnmount () {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"componentWillUnmount"</span>);
-    }
-
-    onApplyNavigaitonChange(location, state) {
-        <span class="hljs-keyword">this</span>.setState({
-            nav: {
-                location: location,
-                state: state
-            }
-        });
-    }
-
-    gotoPage1Nested() {
-        WinJS.Navigation.navigate(<span class="hljs-string">"/page1/nested"</span>);
-    }
-
-    gotoPage1() {
-        WinJS.Navigation.navigate(<span class="hljs-string">"/page1"</span>);
-    }
-
-    render() {
-
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"render() location:"</span>, <span class="hljs-keyword">this</span>.state.nav.location);
-
-        <span class="hljs-keyword">var</span> componentWithBackButton = component =&gt; {
-            <span class="hljs-keyword">return</span> (
-                <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-title">BackButton</span> /&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                        {component}
-                    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-            )</span>;
-        };
-
-        <span class="hljs-keyword">var</span> page;
-
-        <span class="hljs-keyword">switch</span>(<span class="hljs-keyword">this</span>.state.nav.location) {
-            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page1"</span>:
-                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1<span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.gotoPage1Nested.bind(this)}</span>&gt;</span>Goto Page 1 Nested<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-            <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page1/nested"</span>:
-                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1 nested<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-            <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">case</span> <span class="hljs-string">"/page2"</span>:
-                page = componentWithBackButton(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>page 1<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-            <span class="hljs-keyword">break</span>;
-
-            <span class="hljs-keyword">default</span>:
-                page = (
-                    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-                      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.gotoPage1.bind(this)}</span>&gt;</span>Goto Page 1<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-                )</span>;
-        }
-
-        <span class="hljs-keyword">return</span> page;
-    }
-}
-
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">App</span> /&gt;</span>, document.getElementById('main'));
-
-</span></code></pre>
-<p>Next I'd like to see if I could leverage something like <a href="https://github.com/flatiron/director">flatiron/director</a> for routing and get it to play nice with <code>WinJS.Navigation</code> and if I do, I'll post it as well...</p>
-<p>Hope this helps.</p>
 ]]></content>
     </entry>
 </feed>

@@ -73,6 +73,44 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Evem better dot.dot.dot.dot...</a></h1>
+    <p class="meta">
+          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
+
+
+        <a href="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
+<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
+<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
+<p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
+<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
+<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
+<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
+<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
+<span class="hljs-keyword">function</span> ...() { cd ... }
+<span class="hljs-keyword">function</span> ....() { cd .... }
+<span class="hljs-keyword">function</span> .....() { cd ..... }
+<span class="hljs-keyword">function</span> ......() { cd ...... }
+<span class="hljs-keyword">function</span> .......() { cd ....... }
+<span class="hljs-keyword">function</span> ........() { cd ........ }
+</code></pre>
+<p>If you're interested in the evolution of this CD tool:</p>
+<ul>
+<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+</ul>
+<p>SUPER SWEET!</p>
+<p>Happy CD'ing!</p>
+</div>
+
+      <a href="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
     <p class="meta">
           <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
@@ -828,30 +866,6 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 </div>
 
       <a href="/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/#disqus_thread" data-disqus-identifier="/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">How NOT to Start Asynchronous Communication</a></h1>
-    <p class="meta">
-          <time datetime="2016-05-20T21:50:33.499Z" pubdate data-updated="true">May 20th 2016</time>
-
-
-        <a href="/2016/05/how-not-to-start-asynchronous-communication/#disqus_thread" data-disqus-identifier="/2016/05/how-not-to-start-asynchronous-communication/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><div style="height: 100px">&nbsp;</div>
-<h2>Hey!</h2>
-<div style="height: 2000px">&nbsp;</div>
-<h1>Don't you hate it when...</h1>
-<p>...someone is using a beautifully designed asynchronous tool to communicate with you but instead they try to pretend it is synchronous?</p>
-<p>Please!!! If you ever have to communicate with someone through an asynchronous-able tool like a text message, instant messaging, or email don't just say <code>Hey!</code> and wait for a response.</p>
-<p>Try saying <code>Hey! I wonder if you could...</code> or some alternative where the single message can contain both a polite introduction <code>Hey</code> along with some actionable context about why the polite introduction has taken place. If you can't begin to privde the initial context and are waiting for the other person to respond with <code>Hey</code>, you've both wasted their time and yours.</p>
-<p>Often times a single chat message can distract someone who is concentrating hard on a subject. If a hollow <code>Hey!</code> is provided, you've likely pulled whoever you wanted to talk to out of that concetration as well as not provide them enough context to be abel to respond or help you. Instead they're possibly sitting there waiting for you to say something next, or maybe you're waiting for them to say Hey back (which you may never get)...</p>
-<p>Asynchronous communication can be an amazing productivity tool if used efficiently.</p>
-<p>Happy Chatting!</p>
-</div>
-
-      <a href="/2016/05/how-not-to-start-asynchronous-communication/#disqus_thread" data-disqus-identifier="/2016/05/how-not-to-start-asynchronous-communication/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>

@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell. - Developing on Staxmanade</title>
+  <title>Slightly modified “CD” Command for Powershell: Evem better dot.dot.dot.dot... - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="   I created an introductory presentation on PowerShell a while back and posted it on my GitHub. I first gave the presentation at the NNSDG and decide...">
+   <meta name="description" content="There&#x27;s this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">
+  <link rel="canonical" href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,60 +73,58 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Evem better dot.dot.dot.dot...</a></h1>
     <p class="meta">
-          <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
+          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
 
 
-        
+        <a href="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-   <p>I created an <a href="http://github.com/staxmanade/PowershellPresentation" target="_blank">introductory presentation on PowerShell</a> a while back and posted it <a href="http://github.com/staxmanade/" target="_blank">on my GitHub</a>. I first gave the presentation at the <a href="http://softwaredevelopersgroup.com/">NNSDG</a> and decided to also submit it as a talk to the <a href="http://boisecodecamp.com/">Boise Code Camp</a> this year. (Looks like I'll be going – track me down <a href="https://twitter.com/staxmanade" target="_blank">@staxmanade</a> if you’d like to say hello)</p>
-   <p>I’ve become quite a fan of Markdown lately and thought, “what if this not only looked like PowerShell, but looked even better as Markdown…?”</p>
-   <p>After experimenting a little, I found that it actually works quite well.</p>
-   <p>For example:</p>
-   <p><strong>PowerShell (Markdown)</strong></p>
-   <pre>## String Interpolation<br /><br />### Single quotes `don't` interpolate<br />    'Hello $groupName' <br />    <br />### Double quotes `DO` interpolate<br />    &quot;Hello $groupName&quot;<br />        <br />    <br />### Wrap `$(...)` around expression within an string<br />    &quot;groupName variable is of type: $($groupName.GetType().FullName)&quot;<br />    &quot;2 + 1564 = $(2 + 1564)&quot;<br />    &quot;Current DateTime is = $(get-date)&quot;<br />    &quot;Current DateTime is = $([System.DateTime]::Now)&quot;<br /><br />    <br />### Escape characters with the ` (back-tick)<br />    &quot;Escape a quotation `&quot;This is quoted`&quot;.&quot;</pre>
-
-   <p>&#160;</p>
-
-   <p><strong>Formatted Markdown</strong></p>
-
-   <p><a href="http://lh5.ggpht.com/-lUeiRSS4rBo/URs3LcasBbI/AAAAAAAAAcY/h2NTLneqWP8/s1600-h/image11.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-iNFDygzQL0o/URs3L15uv8I/AAAAAAAAAcg/jbjRHwUTi8E/image_thumb4.png?imgmax=800" width="634" height="628" /></a></p>
-
-   <p>&#160;</p>
-
-   <p>One issue I have is the way GitHub/markdown formats extra whitespace (it doesn’t). So I’ve worked around that so that I can get the vertical whitespace that I need in the Markdown version by placing a link to a spacer image: </p>
-
-   <pre>![vertical space](<a href="http://is.gd/VertSpace">http://is.gd/VertSpace</a>)</pre>
-
-   <p>This isn’t ideal because my PowerShell is littered with this snippet, but something that can easily be search/replaced before using the raw version as a PowerShell script.</p>
-
-   <p>I also think that you could potentially do this with many different programming languages. (At least ones that don’t depend on whitespace and have a form of block comments)</p>
-
-   <p>Nifty eh?</p>
-
-   <p>Happy PowerDowning or MarkShelling!</p>
-</div></div>
+<div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
+<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
+<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
+<p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
+<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
+<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
+<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
+<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
+<span class="hljs-keyword">function</span> ...() { cd ... }
+<span class="hljs-keyword">function</span> ....() { cd .... }
+<span class="hljs-keyword">function</span> .....() { cd ..... }
+<span class="hljs-keyword">function</span> ......() { cd ...... }
+<span class="hljs-keyword">function</span> .......() { cd ....... }
+<span class="hljs-keyword">function</span> ........() { cd ........ }
+</code></pre>
+<p>If you're interested in the evolution of this CD tool:</p>
+<ul>
+<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+</ul>
+<p>SUPER SWEET!</p>
+<p>Happy CD'ing!</p>
+</div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
+                          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
 
 
-                        
+                        <span class="categories">
+    <a class='category' href='/blog/categories/powershell/'>PowerShell</a>
+</span>
+
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2013/01/testacular-cannot-find-chrome-on-windows/" title="Previous Post: Testacular cannot find Chrome on windows.">&laquo; Testacular cannot find Chrome on windows.</a>
-                        <a class="basic-alignment right" href="/2013/02/how-do-i-undo-bad-rebase-in-git/" title="Next Post: How do I undo a bad rebase in Git?">How do I undo a bad rebase in Git? &raquo;</a>
+                        <a class="basic-alignment left" href="/2016/09/better-compact-jira-board-u-i-/" title="Previous Post: Better Compact JIRA Board U.I.">&laquo; Better Compact JIRA Board U.I.</a>
                     </p>
                 </footer>
             </article>
@@ -244,6 +242,20 @@
 </script>
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 
