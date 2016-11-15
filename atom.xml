@@ -12,9 +12,9 @@
     <rights>Copyright (C) 2008-2016 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
-        <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Evem better dot.dot.dot.dot...]]></title>
-        <id>http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/</id>
-        <link href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-with-more-dot-dot-dot/">
+        <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...]]></title>
+        <id>http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</id>
+        <link href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">
         </link>
         <updated>2016-11-15T05:06:36Z</updated>
         <summary type="html"><![CDATA[There's this little "CD" utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.]]></summary>
