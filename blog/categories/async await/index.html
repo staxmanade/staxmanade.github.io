@@ -98,7 +98,7 @@
 </code></pre>
 <h1>The little baby staller helper</h1>
 <p>Give it a name and make it a bit more re-usable.</p>
-<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stall</span>(<span class="hljs-params">stallTime = 3000</span>) =&gt; </span>{
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stall</span>(<span class="hljs-params">stallTime = 3000</span>) </span>{
   <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(resolve =&gt; setTimeout(resolve, stallTime));
 }
 </code></pre>

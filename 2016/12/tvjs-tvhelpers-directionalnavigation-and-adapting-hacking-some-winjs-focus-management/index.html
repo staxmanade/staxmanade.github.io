@@ -1,0 +1,472 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much int...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management</a></h1>
+    <p class="meta">
+          <time datetime="2016-12-20T06:17:05.148Z" pubdate data-updated="true">Dec 19th 2016</time>
+
+
+        <a href="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/#disqus_thread" data-disqus-identifier="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much into the history, but honestly I hated it when I first had to use it. But, let me clarify. It wasn't until this last year when I learned that I didn't hate the WinJS controls by themselves, but I despised the way you declared their usage using the specialized <code>win-*</code> html attributes. It felt like a total hack to get an app up and running by littering semantic html with these attributes.</p>
+<p>Then along comes a little toy project they created called <a href="https://github.com/winjs/react-winjs">react-winjs</a> and all of a sudden the <code>WinJS</code> &quot;Components&quot; made total sense. When looking at them through the lense of WinJS through ReactJS components was the first time that I not only clicked with WinJS, but I actually fell in lov... (well I won't go that far), but was excited enough about them to pick them as the primary U.I. control suite while building out a little side-project.</p>
+<p>Fast forward a year of development, and Microsoft essentially <a href="https://github.com/winjs/winjs#status">bailed on WinJS</a> but at least they left it out in the open so I could hack on it and continue to depend on <a href="https://github.com/staxmanade/winjs-self-built">my own fork</a> for the time being.</p>
+<p>Then, they announce a <a href="https://github.com/Microsoft/TVHelpers/">NEW &amp; SHINY</a> library that can be used to help develop UWP and TV/Xbox One apps which is great. Except, WinJS doesn't work with this new library out-of-the-box, and since Microsoft isn't adding new features to WinJS, they likely never will build-in compatibility with the new &amp; shiny library.</p>
+<p>Guess that means we (I) have to figure it out on my own. And although I write this knowing that I'm probably the ONLY developer on the planet using this combination of libraries, I wanted to put out some of the hacks/code I've thrown together to get some WinJS controls to play nice with TVJS with regards to focus management.</p>
+<h2>What is focus management you say?</h2>
+<p>In the context of an Xbox app, the idea is to take your'e web-page-app and get rid of the ugly mouse-like-cursor you'd see if you didn't do this and replace it with a controller navigable approach - so up/down/left/right on the controller moves the visible &quot;focus&quot; around the application and the <code>A</code> button &quot;presses enter&quot; (or invokes) the control/button/etc.</p>
+<h1>What IS provided by TVJS</h1>
+<p>The TVJS library has a helper within it called <code>DirectionalNavigation</code> and is great in that it provides a focused and specific API to enable focus management while developing a Xbox App UWP Javascript (&amp; C#) apps.</p>
+<p>Just dropping the library in is enough to get much of the basics to work with most web apps.</p>
+<p>However, the conflict between this and WinJS comes into play because WinJS also tried to implement some of their own focus management and the mix of these two just doesn't quite cut it.</p>
+<h1>Hack 1: Get rid of mouse cursor</h1>
+<p>Well, this isn't really a hack:</p>
+<p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
+<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of you're start page EX: <code>index.html</code></p>
+<pre><code>    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+        <span class="hljs-comment">// Hide the Xbox/Edge mouse cursor during load.</span>
+        <span class="hljs-keyword">try</span> {
+            navigator.getGamepads();
+        } <span class="hljs-keyword">catch</span>(err) {
+            <span class="hljs-built_in">console</span> &amp;&amp; <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error with navigator.getGamepads()'</span>, err);
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
+<p>Once you've done this and you're app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
+<h1>Dealing with a WinJS Pivot control</h1>
+<p>For my app, the first control I ran into trouble with was the WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a> control. This control already does some focus management all by itself, and it's own management style contradicts the way the DirectionalNavigation helper works. So we basically have to detect focus on it, turn of TVJS focus management and handle it internally (until we leave focus of the Pivot).</p>
+<p>To work through that, I created the following helper function:</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handlePivotNavigation</span>(<span class="hljs-params">pivotElement</span>) </span>{
+  <span class="hljs-keyword">var</span> DirectionalNavigation = TVJS.DirectionalNavigation;
+  <span class="hljs-keyword">var</span> pivotHeader = pivotElement.querySelector(<span class="hljs-string">'.win-pivot-headers'</span>)
+  pivotHeader.addEventListener(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    DirectionalNavigation.enabled = <span class="hljs-literal">false</span>;
+  });
+  pivotHeader.addEventListener(<span class="hljs-string">'keyup'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInfo</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'pivot keyup '</span>, eventInfo.keyCode, eventInfo.key);
+
+    <span class="hljs-keyword">switch</span>(eventInfo.keyCode) {
+      <span class="hljs-keyword">case</span> <span class="hljs-number">204</span>: <span class="hljs-comment">// gampead down</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">40</span>: <span class="hljs-comment">// keyboard down</span>
+        DirectionalNavigation.enabled = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">var</span> target = DirectionalNavigation.findNextFocusElement(<span class="hljs-string">'down'</span>);
+        <span class="hljs-keyword">if</span> (target) {
+          target.focus();
+          eventInfo.preventDefault();
+        }
+        <span class="hljs-keyword">break</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-number">203</span>: <span class="hljs-comment">// gamepad up</span>
+        <span class="hljs-comment">// since the Pivot is at the top of the page - we won't release</span>
+        <span class="hljs-comment">// control, or try to navigate up??? (maybe consider flowing up from the bottom of the page?)</span>
+        <span class="hljs-keyword">break</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-number">205</span>: <span class="hljs-comment">// gamepad left arrow</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">211</span>: <span class="hljs-comment">// gamepad 211 GamepadLeftThumbstickUp</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">200</span>: <span class="hljs-comment">// gamepad left bumper</span>
+        pivotElement.winControl._goPrevious();
+        eventInfo.preventDefault();
+        <span class="hljs-keyword">break</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-number">206</span>: <span class="hljs-comment">// gamepad right arrow</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">213</span>: <span class="hljs-comment">// gamepad 213 GamepadLeftThumbstickRight</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">199</span>: <span class="hljs-comment">// gamepad 199 GamepadRightShoulder</span>
+        pivotElement.winControl._goNext();
+        eventInfo.preventDefault();
+        <span class="hljs-keyword">break</span>;
+    }
+  });
+}
+</code></pre>
+<p>And use it by doing the following in my React page:</p>
+<pre><code class="language-javascript">    componentDidMount() {
+        <span class="hljs-keyword">var</span> pivot = ReactDOM.findDOMNode(<span class="hljs-keyword">this</span>.refs.pivot);
+        handlePivotNavigation(pivot);
+    }
+</code></pre>
+<p>Or if you're not using React you can likely just go:</p>
+<pre><code class="language-javascript">    <span class="hljs-keyword">var</span> pivot = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-pivot-id'</span>);
+    handlePivotNavigation(pivot);
+</code></pre>
+<blockquote>
+<p>It's not pretty, but has been working for me so far.</p>
+</blockquote>
+<p>Now when I navigate around using an Xbox controller I can properly navigate around the WinJS Pivot.</p>
+<h1>Next up are <code>ItemContainer</code>s.</h1>
+<p>This one is a total hack, and I look forward to a better solution, but for now it's been working.</p>
+<p>The issue I was seeing was with WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn255188.aspx">ItemContainers</a> and the TVJS library applying a separate forced &quot;click&quot; on the element when the control itself has already &quot;clicked/invoked&quot; the element.</p>
+<p>The real fix would likely to figure out how to get the ItemContainer to <code>event.preventDefault()</code> and/or <code>event.stopPropagation()</code> and avoid the bubbling up to the <code>document</code> <code>keyup</code> event handler that DirectionalNavigation has under it's control, but WinJS ItemControl management is just so complicated that this hack was easier to figure out at the time I threw it together.</p>
+<p>So what does this do?</p>
+<p>It's basically hijacking the DirectionalNavigation._handleKeyUpEvent function, and re-writing it with one that ignores the <code>keyup</code> event if the currently focused element is an ItemContainer.</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// Hack to avoid Item containers getting double click</span>
+<span class="hljs-keyword">var</span> originalDNKeyUp = TVJS.DirectionalNavigation._handleKeyUpEvent
+TVJS.DirectionalNavigation._handleKeyUpEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Check for itemContaner"</span>, event.target.className)
+  <span class="hljs-keyword">if</span> (e.target.className.split(<span class="hljs-string">" "</span>).indexOf(<span class="hljs-string">"win-itemcontainer"</span>) &gt;= <span class="hljs-number">0</span>) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"MonkeyHack on DirectionalNavigation - SKIPPING CLICK"</span>);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-keyword">return</span> originalDNKeyUp.apply(<span class="hljs-literal">null</span>, <span class="hljs-built_in">arguments</span>);
+}
+<span class="hljs-built_in">document</span>.removeEventListener(<span class="hljs-string">"keyup"</span>, originalDNKeyUp);
+<span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"keyup"</span>, TVJS.DirectionalNavigation._handleKeyUpEvent);
+</code></pre>
+<p>It's not pretty, but meh, is working so far.</p>
+<h1>ItemContainers within a ContentDialog</h1>
+<p>That's just a big mess from what I could figure out. I was able to get it working by using the <code>ContentDialog</code> but manually creat my own buttons as the <code>ItemContainer</code> in combination with the dialog kept swallowing events that didn't allow focus navigation to be sucessful. The internals of what was holding me back didn't appear to be monkey-patch-able from what I could tell... ugh...</p>
+<h1>Next up is a <code>ListView</code> hack,</h1>
+<p>This one is a hack proposed by Todd over on the <a href="https://github.com/winjs/winjs/issues/1546">GitHub issues</a>.</p>
+<p>I've essentially taken the original implementation of WinJS.UI.ListView.prototype._onFocusIn, and if you look for the line starting with <code>/* JJ */</code> below you can see the change there.</p>
+<p>Don't know what this actually could mean from other scenarios, but for now it's allowing the ListView to focus properly on my initial xbox testing.</p>
+<pre><code><span class="hljs-keyword">var</span> _Constants = <span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>;
+<span class="hljs-keyword">var</span> _UI = <span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>;
+
+<span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>.<span class="hljs-type">ListView</span>.prototype._onFocusIn = function <span class="hljs-type">ListView_onFocusIn</span>(event) {
+                    <span class="hljs-keyword">this</span>._hasKeyboardFocus = <span class="hljs-literal">true</span>;
+                    <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+                    function moveFocusToItem(keyboardFocused) {
+                        that._changeFocus(that._selection._getFocused(), <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, keyboardFocused);
+                    }
+                    <span class="hljs-comment">// The keyboardEventsHelper object can get focus through three ways: We give it focus explicitly, in which case _shouldHaveFocus will be true,</span>
+                    <span class="hljs-comment">// or the item that should be focused isn't in the viewport, so keyboard focus could only go to our helper. The third way happens when</span>
+                    <span class="hljs-comment">// focus was already on the keyboard helper and someone alt tabbed away from and eventually back to the app. In the second case, we want to navigate</span>
+                    <span class="hljs-comment">// back to the focused item via changeFocus(). In the third case, we don't want to move focus to a real item. We differentiate between cases two and three</span>
+                    <span class="hljs-comment">// by checking if the flag _keyboardFocusInbound is true. It'll be set to true when the tab manager notifies us about the user pressing tab</span>
+                    <span class="hljs-comment">// to move focus into the listview.</span>
+                    <span class="hljs-keyword">if</span> (event.target === <span class="hljs-keyword">this</span>._keyboardEventsHelper) {
+                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._keyboardEventsHelper._shouldHaveFocus &amp;&amp; <span class="hljs-keyword">this</span>._keyboardFocusInbound) {
+                            moveFocusToItem(<span class="hljs-literal">true</span>);
+                        } <span class="hljs-keyword">else</span> {
+                            <span class="hljs-keyword">this</span>._keyboardEventsHelper._shouldHaveFocus = <span class="hljs-literal">false</span>;
+                        }
+                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.target === <span class="hljs-keyword">this</span>._element) {
+                        <span class="hljs-comment">// If someone explicitly calls .focus() on the listview element, we need to route focus to the item that should be focused</span>
+                        moveFocusToItem();
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._mode.inboundFocusHandled) {
+                            <span class="hljs-keyword">this</span>._mode.inboundFocusHandled = <span class="hljs-literal">false</span>;
+                            <span class="hljs-keyword">return</span>;
+                        }
+
+                        <span class="hljs-comment">// In the event that .focus() is explicitly called on an element, we need to figure out what item got focus and set our state appropriately.</span>
+                        <span class="hljs-keyword">var</span> items = <span class="hljs-keyword">this</span>._view.items,
+                            entity = {},
+                            element = <span class="hljs-keyword">this</span>._getHeaderOrFooterFromElement(event.target),
+                            winItem = <span class="hljs-literal">null</span>;
+                        <span class="hljs-keyword">if</span> (element) {
+                            entity.index = <span class="hljs-number">0</span>;
+                            entity.<span class="hljs-keyword">type</span> = (element === <span class="hljs-keyword">this</span>._header ? _UI.<span class="hljs-type">ObjectType</span>.header : _UI.<span class="hljs-type">ObjectType</span>.footer);
+                            <span class="hljs-keyword">this</span>._lastFocusedElementInGroupTrack = entity;
+                        } <span class="hljs-keyword">else</span> {
+                            element = <span class="hljs-keyword">this</span>._groups.headerFrom(event.target);
+                            <span class="hljs-keyword">if</span> (element) {
+                                entity.<span class="hljs-keyword">type</span> = _UI.<span class="hljs-type">ObjectType</span>.groupHeader;
+                                entity.index = <span class="hljs-keyword">this</span>._groups.index(element);
+                                <span class="hljs-keyword">this</span>._lastFocusedElementInGroupTrack = entity;
+                            } <span class="hljs-keyword">else</span> {
+                                entity.index = items.index(event.target);
+                                entity.<span class="hljs-keyword">type</span> = _UI.<span class="hljs-type">ObjectType</span>.item;
+                                element = items.itemBoxAt(entity.index);
+                                winItem = items.itemAt(entity.index);
+                            }
+                        }
+
+                        <span class="hljs-comment">// In the old layouts, index will be -1 if a group header got focus</span>
+                        <span class="hljs-keyword">if</span> (entity.index !== _Constants._INVALID_INDEX) {
+<span class="hljs-comment">/* JJ */</span>                            <span class="hljs-comment">/*if (this._keyboardFocusInbound || this._selection._keyboardFocused())*/</span> {
+                                <span class="hljs-keyword">if</span> ((entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.groupHeader &amp;&amp; event.target === element) ||
+                                        (entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.item &amp;&amp; event.target.parentNode === element)) {
+                                    <span class="hljs-comment">// For items we check the parentNode because the srcElement is win-item and element is win-itembox,</span>
+                                    <span class="hljs-comment">// for header, they should both be the win-groupheader</span>
+                                    <span class="hljs-keyword">this</span>._drawFocusRectangle(element);
+                                }
+                            }
+                            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._tabManager.childFocus !== element &amp;&amp; <span class="hljs-keyword">this</span>._tabManager.childFocus !== winItem) {
+                                <span class="hljs-keyword">this</span>._selection._setFocused(entity, <span class="hljs-keyword">this</span>._keyboardFocusInbound || <span class="hljs-keyword">this</span>._selection._keyboardFocused());
+                                <span class="hljs-keyword">this</span>._keyboardFocusInbound = <span class="hljs-literal">false</span>;
+                                <span class="hljs-keyword">if</span> (entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.item) {
+                                    element = items.itemAt(entity.index);
+                                }
+                                <span class="hljs-keyword">this</span>._tabManager.childFocus = element;
+
+                                <span class="hljs-keyword">if</span> (that._updater) {
+                                    <span class="hljs-keyword">var</span> elementInfo = that._updater.elements[uniqueID(element)],
+                                        focusIndex = entity.index;
+                                    <span class="hljs-keyword">if</span> (elementInfo &amp;&amp; elementInfo.newIndex) {
+                                        focusIndex = elementInfo.newIndex;
+                                    }
+
+                                    <span class="hljs-comment">// Note to not set old and new focus to the same object</span>
+                                    that._updater.oldFocus = { <span class="hljs-class"><span class="hljs-keyword">type</span>:</span> entity.<span class="hljs-keyword">type</span>, index: focusIndex };
+                                    that._updater.newFocus = { <span class="hljs-class"><span class="hljs-keyword">type</span>:</span> entity.<span class="hljs-keyword">type</span>, index: focusIndex };
+                                }
+                            }
+                        }
+                    }
+                }
+</code></pre>
+<p>One big improvement could be to consider setting up a unit-test that could take the original &quot;string&quot; value of the entire function code, and comparing it to the current version of WinJS library you're using and fail if they're even one character different. This would allow you to detect if say a fix were applied, or you need to update our local hacked version with some remote changes... It's not pretty, but one way to avoid over-writing possible working WinJS code with our potentially not-so-future-proof hacked version.</p>
+<h1>Next one is the WinJS [ToggleSwitch].</h1>
+<p>This control just seemed to have all behavior wrong for me. So I hacked the keyDownHandler and simplified it's implementation which seems to have really made it more usable (for me).</p>
+<pre><code><span class="hljs-keyword">var</span> _ElementUtilities = WinJS.Utilities
+
+WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ToggleSwitch_keyDown</span><span class="hljs-params">(e)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.disabled) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// Toggle checked on spacebar</span>
+    <span class="hljs-keyword">if</span> (e.keyCode === _ElementUtilities.Key.space ||
+        e.keyCode === _ElementUtilities.Key.GamepadA ||
+        e.keyCode === _ElementUtilities.Key.enter) {
+        e.preventDefault();
+        <span class="hljs-keyword">this</span>.checked = !<span class="hljs-keyword">this</span>.checked;
+    }
+
+}
+</code></pre>
+<p>The original had up/down/left/right configured to toggle the switch on/off which meant focus in/out was nearly impossible, it also only listened to <code>space</code> as a toggle option. So by removing the up/down/left/right we can navigate in/around the control and we wanted to listen to <code>space, GamepadA, and enter</code> to toggle the control on/off.</p>
+<h1>What else?</h1>
+<p>The WinJS control set is quite large, and I certainly haven't worked with each control in this manor, however, it's a step forward eh and if you managed to come across this random post on the interweb I hope it was useful?</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2016-12-20T06:17:05.148Z" pubdate data-updated="true">Dec 19th 2016</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/winjs/'>WinJS</a>
+    <a class='category' href='/blog/categories/xbox%20one/'>Xbox One</a>
+    <a class='category' href='/blog/categories/react/'>React</a>
+    <a class='category' href='/blog/categories/tvjs/'>TVJS</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/" title="Previous Post: Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...">&laquo; Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  This work is licensed under a
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    Creative Commons Attribution 4.0 International License
+  </a>.
+
+</p>
+<p>
+  Copyright &copy; 2008-2016 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+
+<style>
+  .jj-signup-form {
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    display: none;
+  }
+</style>
+
+<style>
+    .jj-signup-form {
+        border-width: thin;
+        border-color: black;
+        border-style: solid;
+        background-color: white;
+    }
+</style>
+<div class="jj-signup-form">
+    <button class="jj-signup-form-close">Close</button>
+    <div>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica, Arial, sans-serif;
+            }
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
+                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+                    <h2>Don't miss a post...</h2>
+                    <div class="mc-field-group">
+                        <label for="mce-FNAME">First Name </label>
+                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+                    </div>
+                    <div class="mc-field-group">
+                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    </div>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+            </form>
+        </div>
+        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+        <script type='text/javascript'>
+            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+        </script>
+        <!--End mc_embed_signup-->
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
+<script>
+  (function(){
+    try {
+      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
+        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+            document.querySelector('.jj-signup-form').style.display = "none";
+            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
+        });
+
+        setTimeout(function(){
+          if(window.jjdisableSignupPopup) {
+            return;
+          }
+          document.querySelector('.jj-signup-form').style.display = "initial";
+        }, 1000);
+      }
+
+    } catch(e) {
+        console.log(e);
+    }
+  })();
+
+</script>
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

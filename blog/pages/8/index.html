@@ -73,6 +73,48 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2013/12/format-your-net-exceptions-to-see/">Format your .Net exceptions to see the StackTrace.</a></h1>
+    <p class="meta">
+          <time datetime="2013-12-19T03:50:00.000Z" pubdate data-updated="true">Dec 18th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><h4>TL;DR</h4>
+<p>Check out a dinky little <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> site I threw together so you can quickly format .net exception messages and easily see the StackTrace.</p>
+<h4>Go to the site: <a href="http://staxmanade.com/ExceptionMessageBeautifier/">CLICK HERE</a></h4>
+<h4>Background</h4>
+<p>Over the years, I’ve worked on projects where application exceptions were saved to a SQL database. When querying the logs in Visual Studio or in Sql Management Studio’s table view, I would get a result-set that would not let me copy/paste and review the StackTrace easily. The tool always seemed to leave out the new line characters just like below.</p>
+<pre><code>System<span class="hljs-class">.Exception</span>: Hello Exception!   at TestExceptionGenerator<span class="hljs-class">.Spike</span><span class="hljs-class">.GetException</span>() <span class="hljs-keyword">in</span> c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike<span class="hljs-class">.cs</span>:line <span class="hljs-number">22</span>   at TestExceptionGenerator<span class="hljs-class">.Spike</span><span class="hljs-class">.b__0</span>() <span class="hljs-keyword">in</span> c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike<span class="hljs-class">.cs</span>:line <span class="hljs-number">13</span>   at TestExceptionGenerator<span class="hljs-class">.Extensions</span><span class="hljs-class">.GetExceptionString</span>(Action action) <span class="hljs-keyword">in</span> c:\Code\personal\DotNetExceptionMessageFormatter\TestExceptionGenerator\Spike<span class="hljs-class">.cs</span>:line <span class="hljs-number">34</span>
+</code></pre>
+<p>Now, I know there are ways to get around this, like exporting to CSV, or setting up the query results to return in text view instead of table view. However, when you’re in the heat of tracking down a bug and don’t feel like you have time to find the settings dialog or open up you’re a text editor like <a href="http://notepad-plus-plus.org/">NotePad++</a> and enter a search/replace as I show below over and over with each exception message you review.</p>
+<p><a href="http://lh6.ggpht.com/-FGWJCcb9iUo/UrJs8rxtvqI/AAAAAAAAAik/uWK5NHFfU18/s1600-h/image15.png"><img src="http://lh5.ggpht.com/-Eo5EyWOkIm0/UrJs9Dr20HI/AAAAAAAAAio/9-9wJIb1K1c/image_thumb9.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Just so I could see an exception that looked more like:</p>
+<pre><code>  System<span class="hljs-class">.Exception</span>: Hello Exception!
+  at TestExceptionGenerator<span class="hljs-class">.Spike</span><span class="hljs-class">.GetException</span>() <span class="hljs-keyword">in</span> …
+  at TestExceptionGenerator<span class="hljs-class">.Spike</span><span class="hljs-class">.b__0</span>() <span class="hljs-keyword">in</span> …
+  at TestExceptionGenerator<span class="hljs-class">.Extensions</span><span class="hljs-class">.GetExceptionString</span>(Action action) <span class="hljs-keyword">in</span> …
+</code></pre>
+<p>I finally buckled down and threw together a tool for this.</p>
+<h3>You can check go check out <a href="http://staxmanade.com/ExceptionMessageBeautifier/">Exception Message Beautifier</a> where you can see the sample below.</h3>
+<p><a href="http://lh3.ggpht.com/-Ts_VJAZqmu4/UrJs9i36LfI/AAAAAAAAAiw/j4jZDVL2Z-Y/s1600-h/image3.png"><img src="http://lh6.ggpht.com/-YwT0ZJIBFSA/UrJs93yI9aI/AAAAAAAAAi4/eg2rZr285QE/image_thumb1.png?imgmax=800" alt="image" title="image"></a></p>
+<h4>I’d like to thank...</h4>
+<p>...the following list of tools/resources I leveraged to put the site together relatively quickly over the weekend.</p>
+<ul>
+<li><a href="http://codepen.io/">CodePen.io</a> where I first prototyped/built my site before porting it into the GitHub pages.</li>
+<li><a href="https://github.com">GitHub</a> for providing us with <a href="http://pages.github.com/">GitHub Pages</a>. Made this site a piece of cake to setup.</li>
+<li><a href="http://github.com/approvals/Approvals.NodeJS">Approvals.NodeJS</a> – easily test/verify output. (<em>Disclaimer – I created this nodejs port of <a href="http://approvaltests.sourceforge.net/">Approvals</a> for fun a while back and didn’t get around to throwing some polish on the library till now, where I was able to <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">dog-food</a> it</em>) <img src="http://lh4.ggpht.com/-bZZmkqr5Fqc/UrJs-TZgV2I/AAAAAAAAAjA/22oydAVrbSM/wlEmoticon-smile2.png?imgmax=800" alt="Smile"></li>
+<li><a href="http://angularjs.org/">AngularJS</a> (a bit overkill for this site, OK TOTAL OVERKILL, but was simple, easy, makes my JS very little, and will allow for easy growth down the road if it needs to.)</li>
+<li><a href="https://developers.google.com/speed/libraries/devguide">Google CDN</a> for hosting AngularJS</li>
+<li><a href="http://google.com/analytics/">Google Analytics</a> (so I can see if anyone cares)</li>
+</ul>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/">Leave yourself a breadcrumb for tomorrow.</a></h1>
     <p class="meta">
           <time datetime="2013-12-06T05:56:00.000Z" pubdate data-updated="true">Dec 5th 2013</time>
@@ -221,23 +263,6 @@
 <div class="entry-content">
 <div class='post'>
 Last weekend I participated in a <a href="http://renohackathon.com/" target="_blank">Windows 8 hackathon</a>. In 24 hours of coding I had an app created and submitted to the App Store for certification.<br /><h4>24 hours to create an app?</h4>I'll share details about the app I created in a future post. <strong>For now, I have since removed my app from the review process in the Developer Portal.</strong><br />Before I get into why I (temporarily) removed my app. I would like to first talk about a number of the real benefits I saw with the hackathon.<br /><ul><li>I work from home as a remote employee. <a href="http://www.bobcowherd.com/2013/03/managing-remote-teams.html?m=1">Don't worry I'm not at Yahoo</a>. The event was a fun change of pace; working in a room of developers hacking away on their own ideas. You could feel the energy and this energy is probably why it was possible to burn the midnight oil hacking on my own app. </li><li>This contest forced me to work all the way through submitting an app to the store which I believe to be more of a mental hurdle than an actual one. This process was definitely made easier with Microsoft on hand to answer questions and get over some of the non-obvious steps in the process. </li><li>Working in a room with the others proved to be useful when you got stuck on something. Shouting out <a href="http://twitter.com/#!/jessetanderson/status/308087741256704001">'I'm stuck on problem X</a>’ and have someone there to point you in the right direction and unblock you is great. </li><li>The short timeframe forces you to focus on your <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a>. Work on what is necessary and avoid getting side tracked. </li><li>Related to the focus above I really got into the zone hacking away at my app; this certainly reminded me of why I love this profession. </li><li>Meet developers in the area. </li><li>Learn interesting problem domains and how others tackle them in their apps. </li></ul><h4>Now, why am I really writing this post?</h4><strong>I believe Microsoft is shooting themselves in the foot with how they are running these hackathons.</strong><br />I can’t say I speak for how the hackathons are being run, but my experience showed me the following.<br />With Microsoft’s own employees running these events and <a href="http://idioms.thefreedictionary.com/give+a+lick+and+a+promise" target="_blank">not giving a lick</a> to the quality of the applications being submitted they are setting themselves up for failure.<br /><strike>I can see from a marketing perspective that having a large number of apps in the store will help them drive more people to their platform.</strike> That’s crap. There are far too many reasons Microsoft should be driving <strong>QUALITY</strong> into the store and not quantity.<br />Let’s list a few reasons this is going to backfire:<br /><ul><li>NOBODY wants to use crappy apps developed in 24 hours. NOBODY! </li><li>There are very few apps that can be written in 24 hours without maintaining some sort of a quality bar. </li><li>The certification process will get clogged causing the testers to care less about finding quality issues and pounding through “numbers”. </li><li>We'll have a huge collection of crappy apps where the sheer number of apps will make finding a good quality app nearly impossible. </li></ul><h4>How can they make this better?</h4>Something interesting about this is generally when you talk about Pros/Cons to something, you have to give-up something to fix a Con and that sometimes means taking away from the Pros.<br />However, I feel like we can keep ALL of the pros I listed above while also reducing the amount of Cons if only Microsoft incentivized their employees to drive quality into the store.<br /><ul><li><strong>Do</strong> – push people to get an app done and help them through the app store </li><li><strong>Do</strong> – provide guidance around how to build-in quality </li><li><strong>Do</strong> – provide some metrics that will help the app succeed in the end (design, best practices, possibly even saying, “That’s been done”) </li><li><strong>Do</strong> – recommend they cancel submitting their application if it hasn’t met the developers quality metric. (This isn’t going to save the app store, but would help to reduce the number of write-once-let-die-in-the-store apps) </li><li><strong>Don't – </strong>offer a prize for "the most apps submitted" within 24 hours. </li></ul>I’ve developed on the Microsoft platform for a long time and really hope there is a place for the Microsoft App Store in the future, but with their push for a large number of apps they’re not setting themselves up for an easy road back in the game.</div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">DefinitelyTyped TypeScript definitions now on NuGet</a></h1>
-    <p class="meta">
-          <time datetime="2013-02-24T18:06:00.000Z" pubdate data-updated="true">Feb 24th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I recently started playing with <a href="http://typescriptlang.com">TypeScript</a> on an asp.net MVC web application.</p>  <p>We're leveraging some third party js libraries and found the type definition files over at <a href="https://github.com/DefinitelyTyped">DefinitelyTyped</a> a huge help when dealing with libraries not originally written in TypeScript.</p>  <p>The first thing I tried to do was add them via <a href="http://NuGet.org">NuGet</a> and when I didn’t see them up there, I strolled to the DefinitelyTyped issues list and saw an open GitHub issue requesting the functionality.</p>  <p>So I took on the task.<a href="https://github.com/DefinitelyTyped/NugetAutomation" target="_blank"> Created a PowerShell script</a> to automate publishing and synchronize changes to the DefinitelyTyped repo up to NuGet.</p>  <p>This morning I pulled the trigger and published 127 different NuGet packages for each DefinitelyTyped TypeScript definitions.</p>  <p>As an example:</p>  <p>If you ran this in visual studio <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">NuGet Package Manager console</a></p>  <blockquote>   <p>Install-Package angularjs.TypeScript.DefinitelyTyped</p> </blockquote>  <p>You would get the following installed into your project</p>  <p><a href="http://lh3.ggpht.com/-M-Q0keizTuw/USpWhznpr7I/AAAAAAAAAdY/D-BmRudlu7o/s1600-h/image6.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh3.ggpht.com/-2JCiZc1PA0s/USpWiWDj7YI/AAAAAAAAAdg/65ME1YNxY8Y/image_thumb2.png?imgmax=800" width="251" height="298" /></a></p>  <p>Note how we didn’t ask it to install jQuery? The powershell script leverages the reference path:</p>  <blockquote>   <p>/// &lt;reference path=&quot;../jquery/jquery.d.ts&quot; /&gt;</p> </blockquote>  <p>in each TypeScript definition to help determine dependencies. We then configure the NuGet package with a dependency on the jquery DefinitelyTyped TypeScript definition package.</p>  <p><a href="http://lh6.ggpht.com/-F4LdO6b047w/USpWij91nqI/AAAAAAAAAdo/qfi1WEmIan0/s1600-h/image10.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh4.ggpht.com/-NIwRCVXvDt4/USpWjTbMChI/AAAAAAAAAdw/2qJuHxlECfk/image_thumb4.png?imgmax=800" width="321" height="75" /></a></p>  <p>&#160;</p>  <p>Happy TypeScripting!</p>  </div>
 </div>
 
       
