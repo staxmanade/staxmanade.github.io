@@ -29,7 +29,7 @@
 <p>The TVJS library has a helper within it called <code>DirectionalNavigation</code> and is great in that it provides a focused and specific API to enable focus management while developing a Xbox App UWP Javascript (&amp; C#) apps.</p>
 <p>Just dropping the library in is enough to get much of the basics to work with most web apps.</p>
 <p>However, the conflict between this and WinJS comes into play because WinJS also tried to implement some of their own focus management and the mix of these two just doesn't quite cut it.</p>
-<h1>Hack 1: Get rid of mouse cursor</h1>
+<h1>Get rid of mouse cursor</h1>
 <p>Well, this isn't really a hack:</p>
 <p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
 <p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of you're start page EX: <code>index.html</code></p>
@@ -44,13 +44,67 @@
 </code></pre>
 <p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
 <p>Once you've done this and you're app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
+<h1>Completely Remove XYFocus built-in to WinJS:</h1>
+<p>This is about as ugly as they get...</p>
+<p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>
+<p>This XYFocus handler really creates havoc when we add the XYFocus handler from TVSJ DirectionalNavigation.</p>
+<pre><code>// HacktyHackHack
+<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+  var realAddEventListener = document.addEventListener<span class="hljs-comment">;</span>
+  document.addEventListener = function<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span>{
+    if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
+      console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
+      return<span class="hljs-comment">;</span>
+    }
+    if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleCaptureKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
+      console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleCaptureKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
+      return<span class="hljs-comment">;</span>
+    }
+    return realAddEventListener<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span><span class="hljs-comment">;</span>
+  }<span class="hljs-comment">;</span>
+}<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>By not allowing WinJS to add it's XYFocus handlers, we can avoid many of the issues that I worked through below...</p>
 <h1>Dealing with a WinJS Pivot control</h1>
 <p>For my app, the first control I ran into trouble with was the WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a> control. This control already does some focus management all by itself, and it's own management style contradicts the way the DirectionalNavigation helper works. So we basically have to detect focus on it, turn of TVJS focus management and handle it internally (until we leave focus of the Pivot).</p>
 <p>To work through that, I created the following helper function:</p>
-<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handlePivotNavigation</span>(<span class="hljs-params">pivotElement</span>) </span>{
-  <span class="hljs-keyword">var</span> DirectionalNavigation = TVJS.DirectionalNavigation;
+<pre><code class="language-javascript">
+WinJS.UI.Pivot.prototype._headersKeyDown = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.locked) {
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">if</span> (e.keyCode === Keys.leftArrow ||
+        e.keyCode === Keys.pageUp ||
+        e.keyCode === Keys.GamepadDPadLeft ||
+        e.keyCode === Keys.GamepadLeftThumbstickLeft) {
+        <span class="hljs-keyword">this</span>._rtl ? <span class="hljs-keyword">this</span>._goNext() : <span class="hljs-keyword">this</span>._goPrevious();
+        e.preventDefault();
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e.keyCode === Keys.rightArrow ||
+               e.keyCode === Keys.pageDown ||
+               e.keyCode === Keys.GamepadDPadRight ||
+               e.keyCode === Keys.GamepadLeftThumbstickRight) {
+        <span class="hljs-keyword">this</span>._rtl ? <span class="hljs-keyword">this</span>._goPrevious() : <span class="hljs-keyword">this</span>._goNext();
+        e.preventDefault();
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handlePivotNavigation</span>(<span class="hljs-params">pivotElement</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handlePivotNavigation"</span>, pivotElement);
+  <span class="hljs-keyword">if</span> (!pivotElement) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"handlePivotNavigation cannot use pivotElement as it wasn't passed in"</span>);
+  }
+
   <span class="hljs-keyword">var</span> pivotHeader = pivotElement.querySelector(<span class="hljs-string">'.win-pivot-headers'</span>)
+
+  <span class="hljs-keyword">if</span> (!pivotHeader) {
+    <span class="hljs-keyword">let</span> msg = <span class="hljs-string">"handlePivotNavigation cannot find .win-pivot-headers in"</span>;
+    <span class="hljs-built_in">console</span>.error(msg, pivotElement);
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(msg);
+  }
+
+
   pivotHeader.addEventListener(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"pivotHeader focus"</span>);
     DirectionalNavigation.enabled = <span class="hljs-literal">false</span>;
   });
   pivotHeader.addEventListener(<span class="hljs-string">'keyup'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInfo</span>) </span>{
@@ -70,18 +124,18 @@
         <span class="hljs-comment">// since the Pivot is at the top of the page - we won't release</span>
         <span class="hljs-comment">// control, or try to navigate up??? (maybe consider flowing up from the bottom of the page?)</span>
         <span class="hljs-keyword">break</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-number">205</span>: <span class="hljs-comment">// gamepad left arrow</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-number">211</span>: <span class="hljs-comment">// gamepad 211 GamepadLeftThumbstickUp</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-number">200</span>: <span class="hljs-comment">// gamepad left bumper</span>
-        pivotElement.winControl._goPrevious();
-        eventInfo.preventDefault();
-        <span class="hljs-keyword">break</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-number">206</span>: <span class="hljs-comment">// gamepad right arrow</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-number">213</span>: <span class="hljs-comment">// gamepad 213 GamepadLeftThumbstickRight</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-number">199</span>: <span class="hljs-comment">// gamepad 199 GamepadRightShoulder</span>
-        pivotElement.winControl._goNext();
-        eventInfo.preventDefault();
-        <span class="hljs-keyword">break</span>;
+      <span class="hljs-comment">// case 205: // gamepad left arrow</span>
+      <span class="hljs-comment">// case 211: // gamepad 211 GamepadLeftThumbstickUp</span>
+      <span class="hljs-comment">// case 200: // gamepad left bumper</span>
+      <span class="hljs-comment">//   pivotElement.winControl._goPrevious();</span>
+      <span class="hljs-comment">//   eventInfo.preventDefault();</span>
+      <span class="hljs-comment">//   break;</span>
+      <span class="hljs-comment">// case 206: // gamepad right arrow</span>
+      <span class="hljs-comment">// case 213: // gamepad 213 GamepadLeftThumbstickRight</span>
+      <span class="hljs-comment">// case 199: // gamepad 199 GamepadRightShoulder</span>
+      <span class="hljs-comment">//   pivotElement.winControl._goNext();</span>
+      <span class="hljs-comment">//   eventInfo.preventDefault();</span>
+      <span class="hljs-comment">//   break;</span>
     }
   });
 }
@@ -101,6 +155,10 @@
 </blockquote>
 <p>Now when I navigate around using an Xbox controller I can properly navigate around the WinJS Pivot.</p>
 <h1>Next up are <code>ItemContainer</code>s.</h1>
+<h3>UPDATE:</h3>
+<blockquote>
+<p>With the added (remove XYFocus above - I removed the below hack)</p>
+</blockquote>
 <p>This one is a total hack, and I look forward to a better solution, but for now it's been working.</p>
 <p>The issue I was seeing was with WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn255188.aspx">ItemContainers</a> and the TVJS library applying a separate forced &quot;click&quot; on the element when the control itself has already &quot;clicked/invoked&quot; the element.</p>
 <p>The real fix would likely to figure out how to get the ItemContainer to <code>event.preventDefault()</code> and/or <code>event.stopPropagation()</code> and avoid the bubbling up to the <code>document</code> <code>keyup</code> event handler that DirectionalNavigation has under it's control, but WinJS ItemControl management is just so complicated that this hack was easier to figure out at the time I threw it together.</p>
@@ -121,6 +179,10 @@ TVJS.DirectionalNavigation._handleKeyUpEvent = <span class="hljs-function"><span
 </code></pre>
 <p>It's not pretty, but meh, is working so far.</p>
 <h1>ItemContainers within a ContentDialog</h1>
+<h3>UPDATE</h3>
+<blockquote>
+<p>I gave up on ContentDialog, and just started using <a href="https://github.com/reactjs/react-modal">react-modal</a></p>
+</blockquote>
 <p>That's just a big mess from what I could figure out. I was able to get it working by using the <code>ContentDialog</code> but manually creat my own buttons as the <code>ItemContainer</code> in combination with the dialog kept swallowing events that didn't allow focus navigation to be sucessful. The internals of what was holding me back didn't appear to be monkey-patch-able from what I could tell... ugh...</p>
 <h1>Next up is a <code>ListView</code> hack,</h1>
 <p>This one is a hack proposed by Todd over on the <a href="https://github.com/winjs/winjs/issues/1546">GitHub issues</a>.</p>
