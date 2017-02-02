@@ -112,15 +112,25 @@
 <p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>
 <p>This XYFocus handler really creates havoc when we add the XYFocus handler from TVSJ DirectionalNavigation.</p>
 <pre><code>// HacktyHackHack
+// The goal of this is to remove XYFocus management from WinJS
 <span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
+  var totalRemovedHandlers = <span class="hljs-number">0</span><span class="hljs-comment">;</span>
+  var checkRemovedHandler = function<span class="hljs-list">()</span> {
+    totalRemovedHandlers++<span class="hljs-comment">;</span>
+    if <span class="hljs-list">(<span class="hljs-keyword">totalRemovedHandlers</span> &gt; <span class="hljs-number">2</span>)</span> {
+      console.error<span class="hljs-list">(<span class="hljs-string">"EEEK, removing more than 2 handlers... be sure to validate that we're removing the right ones..."</span>)</span><span class="hljs-comment">;</span>
+    }
+  }<span class="hljs-comment">;</span>
   var realAddEventListener = document.addEventListener<span class="hljs-comment">;</span>
   document.addEventListener = function<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span>{
     if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
       console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
+      checkRemovedHandler<span class="hljs-list">()</span><span class="hljs-comment">;</span>
       return<span class="hljs-comment">;</span>
     }
     if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleCaptureKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
       console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleCaptureKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
+      checkRemovedHandler<span class="hljs-list">()</span><span class="hljs-comment">;</span>
       return<span class="hljs-comment">;</span>
     }
     return realAddEventListener<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span><span class="hljs-comment">;</span>
@@ -406,7 +416,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 
 </p>
 <p>
-  Copyright &copy; 2008-2016 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2017 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 
