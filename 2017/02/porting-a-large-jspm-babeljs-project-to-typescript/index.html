@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Porting a Large JSPM BabelJS project to Typescript - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="I&#x27;ve been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using [BabelJS](https://babeljs.io/)...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1017448-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:staxmanade.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<div id="main">
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">Porting a Large JSPM BabelJS project to Typescript</a></h1>
+    <p class="meta">
+          <time datetime="2017-02-20T06:33:46.360Z" pubdate data-updated="true">Feb 19th 2017</time>
+
+
+        <a href="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/#disqus_thread" data-disqus-identifier="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
+<p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
+<p>It didn't take too long before the project grew beyond a single load into memory. Now I'm mentally paging out components from different files as I work on various sections of the application.</p>
+<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
+<p>However, that didn't stop me from breaking things, making mistakes or just out-right screwing up a javascript file here and there along the way.</p>
+<p>While working on this project, it always niggled me that the project would keep growing without the ability for the most basic of unit-tests to run (the compiler). Almost a year ago I even remember trying to use Typescript but using it with JSPM and without having VisualStudio Code all together, it just never came together (or I just didn't try hard enough).</p>
+<p>But this past week, I gave it another go, and while I'm not totally there (or where I'd like to end up), I'm quite happy with the results I've made so far and am impressed and quite happily working in a project that has completely been ported to Typescript from ES6/7 using BabelJS.</p>
+<h1>First some idea about the project.</h1>
+<p>Now, when it comes to large software projects, I'm pretty sure I shouldn't be calling this project a &quot;large&quot; as the subject of this post seems to label it... But for a system built only by me in some nights and weekends, it is the largest single app I've built alone, so that's where I'm defining &quot;Large&quot;.</p>
+<p>The project has just about a hundred javascript files/components/classes/modules and comes in just above <code>12,000</code> lines of code. That's not counting of course all the dependencies pulled in through JSPM (using both NPM and Github). In fact I really need to look at my dependencies and see where I can trim some fat, but that's not the subject of this post.</p>
+<h1>Porting from Babel to TypeScript</h1>
+<p>With some context about the project this is coming from out of the way, I thought it would be helpful to outline the steps (or stumbles) I took along the way to get my project up and running using TypeScript with JSPM.</p>
+<h1>Pre-migration steps</h1>
+<p>Below are steps I took to get this thing going. I doubt they're perfect or even apply to your or anyone elses projects, but here's hoping they're helpful</p>
+<ol>
+<li>In a fresh temp folder, I used the <code>jspm init</code> command to setup a fresh new project and selected the <code>Typescript</code> transpiler option.</li>
+</ol>
+<blockquote>
+<p>this allowed me to inspect what a &quot;fresh&quot; project from JSPM would look like with Typescript setup.</p>
+</blockquote>
+<ol start="2">
+<li>The next thing I did was review the angular getting started guide to see what Typescript specific configurations they used.</li>
+</ol>
+<blockquote>
+<p>Now, my project isn't Angular (it's actually React based), but I thought I could learn a little something along the way. I don't know if I actually gleaned anything while doing this (as I'm writing this post a ways after I actually did the work, but as an FYI, you might learn something reading it)</p>
+</blockquote>
+<h1>What steps did I take to port the project?</h1>
+<p>Looking back at the series of commits during my port, here's basically what I did. In some cases order doesn't matter below, but I left this list in the order of my projects git commit log.</p>
+<ol>
+<li>Renaming each file with the <code>.jsx</code> extension to <code>.tsx</code> (Typescript's variant of JSX) (note: not renaming anything but code I wrote - so don't touch anything in <code>jspm_packages</code> or <code>node_modules</code> folders etc.</li>
+<li><code>jspm install ts</code> &lt;-- installing the <a href="https://github.com/frankwallis/plugin-Typescript">Typescript jspm plugin</a></li>
+<li>Updated my <code>jspm.config.js</code> <code>transpiler</code> flag with the following:</li>
+</ol>
+<pre><code class="language-diff"><span class="hljs-deletion">-  transpiler: "plugin-babel",</span>
+<span class="hljs-addition">+  transpiler: "Typescript",</span>
+<span class="hljs-addition">+  TypescriptOptions: {</span>
+<span class="hljs-addition">+    "tsconfig": true // indicates that a tsconfig exists that should be used</span>
+<span class="hljs-addition">+  },</span>
+</code></pre>
+<p>Then I updated my <code>jspm.config.js</code>'s <code>app</code> section with the following.</p>
+<pre><code class="language-diff">   packages: {
+<span class="hljs-deletion">-    "app": {</span>
+<span class="hljs-deletion">-      "defaultExtension": false,</span>
+<span class="hljs-deletion">-      "main": "bootstrap.jsx",</span>
+<span class="hljs-deletion">-       "meta": {</span>
+<span class="hljs-deletion">-        "*": {</span>
+<span class="hljs-deletion">-          "babelOptions": {</span>
+<span class="hljs-deletion">-            "plugins": [</span>
+<span class="hljs-deletion">-              "babel-plugin-transform-react-jsx",</span>
+<span class="hljs-deletion">-              "babel-plugin-transform-decorators-legacy"</span>
+<span class="hljs-deletion">-            ]</span>
+<span class="hljs-deletion">-          }</span>
+<span class="hljs-deletion">-        }</span>
+<span class="hljs-deletion">-      }</span>
+<span class="hljs-deletion">-    },</span>
+<span class="hljs-addition">+    "app": { // all files within the app folder</span>
+<span class="hljs-addition">+      "main": "bootstrap.tsx", // main file of the package (will be important later)</span>
+<span class="hljs-addition">+      "format": "system", // module format</span>
+<span class="hljs-addition">+      "defaultExtension": "ts", // default extension of all files</span>
+<span class="hljs-addition">+      "meta": {</span>
+<span class="hljs-addition">+        "*.ts": { // all ts files will be loaded with the ts loader</span>
+<span class="hljs-addition">+          "loader": "ts"</span>
+<span class="hljs-addition">+        },</span>
+<span class="hljs-addition">+        "*.tsx": { // all ts files will be loaded with the ts loader</span>
+<span class="hljs-addition">+          "loader": "ts"</span>
+<span class="hljs-addition">+        },</span>
+<span class="hljs-addition">+      }</span>
+<span class="hljs-addition">+    },</span>
+</code></pre>
+<ol start="4">
+<li>Created a <code>tsconfig.json</code> file</li>
+</ol>
+<pre><code class="language-javascript">{
+ <span class="hljs-string">"compilerOptions"</span>: {
+    <span class="hljs-string">"target"</span>: <span class="hljs-string">"es5"</span>,                <span class="hljs-comment">/* target of the compilation (es5) */</span>
+    <span class="hljs-string">"module"</span>: <span class="hljs-string">"system"</span>,             <span class="hljs-comment">/* System.register([dependencies], function) (in JS)*/</span>
+    <span class="hljs-string">"moduleResolution"</span>: <span class="hljs-string">"node"</span>,     <span class="hljs-comment">/* how module gets resolved (needed for Angular 2)*/</span>
+    <span class="hljs-string">"emitDecoratorMetadata"</span>: <span class="hljs-literal">true</span>,  <span class="hljs-comment">/* needed for decorators */</span>
+    <span class="hljs-string">"experimentalDecorators"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">/* needed for decorators (@Injectable) */</span>
+    <span class="hljs-string">"noImplicitAny"</span>: <span class="hljs-literal">false</span>,         <span class="hljs-comment">/* any has to be written explicitly*/</span>
+    <span class="hljs-string">"jsx"</span>: <span class="hljs-string">"react"</span>
+  },
+  <span class="hljs-string">"exclude"</span>: [   <span class="hljs-comment">/* since compiling these packages could take ages, we want to ignore them*/</span>
+    <span class="hljs-string">"jspm_packages"</span>,
+    <span class="hljs-string">"node_modules"</span>
+  ],
+  <span class="hljs-string">"compileOnSave"</span>: <span class="hljs-literal">false</span>        <span class="hljs-comment">/* on default the compiler will create js files */</span>
+</code></pre>
+<ol start="5">
+<li>Renamed <code>*.js</code> files to <code>*.ts</code>. (Similar to step 1 above with <code>jsx -&gt; tsx</code> but now just the plain JavaScript files)</li>
+<li>In all of my source code where I used to do this: <code>import foo from './foo.js'</code> I removed the <code>.js</code> extensions like <code>import foo from './foo'</code></li>
+<li>I did NOT remove the <code>.jsx</code> extension in my <code>import</code> statements - but renamed them to <code>tsx</code> so <code>import foo from './foo.jsx'</code> became <code>import foo from './foo.tjs'</code></li>
+<li>Next I added a file at the root of my client project called <code>globalTypes.d.ts</code>, this is where I could hack in some type definitions that I use globally in the project.</li>
+<li>Then I started adding my type definitions...</li>
+</ol>
+<p>I used the <a href="https://github.com/typings/typings">typings</a> tool to search for TypeScript type definitions. And if I found one, I would typically try to install them from <code>npm</code>.</p>
+<p>For example: searching for <code>react</code> like <code>typings search react</code> shows me that there is a DefinitelyTyped version of the type defs and <a href="https://blogs.msdn.microsoft.com/Typescript/2016/06/15/the-future-of-declaration-files/">I now know</a> that we can use NPM to install them by typing <code>npm install --save @types/react</code></p>
+<p>So I installed a ton of external library typings.</p>
+<ol start="11">
+<li>Next, started looking around my editor <a href="https://code.visualstudio.com/">VisualStudio Code</a> in hopes to see a bunch of typing errors reported, and was surprised to see very few. No, not because I'm so good at JavaScript that my TypeScript was perfect. Far from it... The problem I had was the <code>tsconfig.json</code> file was not at the root of my project (was at the root of my client site) - but it was nested several folders down from the root of my project. For some reason the editor wasn't picking it up until I opened the editor from the location the <code>tsconfig.json</code> file was rooted, things didn't work.</li>
+</ol>
+<blockquote>
+<p>Honestly, I don't know what the above was about - but was something I ran into. I can't say for certain if it is still an issue - I think I'm starting to see editor features load up regardless of what folder I open things - so your mileage may vary.</p>
+</blockquote>
+<ol start="12">
+<li>Once the TypeScript editor features started lighting up in VS Code, my next steps were start to take the TypeScript's feedback and implement either typing work-arounds or fixing actual bugs the compiler found.</li>
+</ol>
+<p>THE END - ish</p>
+<h1>Where am I now?</h1>
+<p>The above steps were really all I went through to port this project over to TypeScript and it was relatively seamless. That's not to say it was simple or easy, but definitely do-able, and worth it.</p>
+<p>It's been a few weeks since I ported the project to TypeScript and I'm really kicking myself for not doing it sooner.</p>
+<p>The editor assist with intellisense of function calls from internal and external modules and their usage/function signatures saves time researching external documentation.</p>
+<h1>Other observations since the move.</h1>
+<ol>
+<li>Builds seem to be a little faster with TypeScript than Babel. I can't say I can prove this. I didn't do any actual tests on this, but just a feeling I got after migration.</li>
+<li>Sourcemaps seem to actually work. Whenever I used BabelJS, debugging and stepping through async/await it just never seemed to line up right for me. This was likely user-error or in-proper configuration of babel on my part, so who knows... but having working source-maps is AMAZING, especially with the <code>async/await</code> feature.</li>
+<li>One area of concern that I haven't yet worked through. Is the JSPM typescript loading up in the browser - or running <code>jspm bundle app</code> at the command line doesn't report any typescript errors - or fail any builds. However, I'm glad it doesn't because something isn't quite rite with my configuration as every import of a <code>.tsx</code> file reports an error. So, for now I'm just relying on the red squigglies in my VS Code editor to help me catch typing errors.</li>
+</ol>
+<p>If you go for this port in you're own project, I hope this was helpful, and that your port goes well.</p>
+<p>Happy TypeScripting!</p>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2017-02-20T06:33:46.360Z" pubdate data-updated="true">Feb 19th 2017</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/typescript/'>TypeScript</a>
+    <a class='category' href='/blog/categories/jspm/'>JSPM</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/" data-via="staxmanade" data-counturl="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/" title="Previous Post: TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management">&laquo; TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management</a>
+                    </p>
+                </footer>
+            </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  This work is licensed under a
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    Creative Commons Attribution 4.0 International License
+  </a>.
+
+</p>
+<p>
+  Copyright &copy; 2008-2017 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+
+<style>
+  .jj-signup-form {
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    display: none;
+  }
+</style>
+
+<style>
+    .jj-signup-form {
+        border-width: thin;
+        border-color: black;
+        border-style: solid;
+        background-color: white;
+    }
+</style>
+<div class="jj-signup-form">
+    <button class="jj-signup-form-close">Close</button>
+    <div>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica, Arial, sans-serif;
+            }
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
+                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+                    <h2>Don't miss a post...</h2>
+                    <div class="mc-field-group">
+                        <label for="mce-FNAME">First Name </label>
+                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+                    </div>
+                    <div class="mc-field-group">
+                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    </div>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+            </form>
+        </div>
+        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+        <script type='text/javascript'>
+            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+        </script>
+        <!--End mc_embed_signup-->
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
+<script>
+  (function(){
+    try {
+      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
+        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+            document.querySelector('.jj-signup-form').style.display = "none";
+            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
+        });
+
+        setTimeout(function(){
+          if(window.jjdisableSignupPopup) {
+            return;
+          }
+          document.querySelector('.jj-signup-form').style.display = "initial";
+        }, 1000);
+      }
+
+    } catch(e) {
+        console.log(e);
+    }
+  })();
+
+</script>
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>

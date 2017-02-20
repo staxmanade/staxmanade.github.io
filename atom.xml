@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>http://staxmanade.com</link>
-    <updated>2016-12-20T06:17:05Z</updated>
+    <updated>2017-02-20T06:33:46Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>http://staxmanade.com/about</uri>
@@ -11,6 +11,135 @@
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2017 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Porting a Large JSPM BabelJS project to Typescript]]></title>
+        <id>http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</id>
+        <link href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">
+        </link>
+        <updated>2017-02-20T06:33:46Z</updated>
+        <summary type="html"><![CDATA[I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using [BabelJS](https://babeljs.io/)...]]></summary>
+        <content type="html"><![CDATA[<p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
+<p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
+<p>It didn't take too long before the project grew beyond a single load into memory. Now I'm mentally paging out components from different files as I work on various sections of the application.</p>
+<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
+<p>However, that didn't stop me from breaking things, making mistakes or just out-right screwing up a javascript file here and there along the way.</p>
+<p>While working on this project, it always niggled me that the project would keep growing without the ability for the most basic of unit-tests to run (the compiler). Almost a year ago I even remember trying to use Typescript but using it with JSPM and without having VisualStudio Code all together, it just never came together (or I just didn't try hard enough).</p>
+<p>But this past week, I gave it another go, and while I'm not totally there (or where I'd like to end up), I'm quite happy with the results I've made so far and am impressed and quite happily working in a project that has completely been ported to Typescript from ES6/7 using BabelJS.</p>
+<h1>First some idea about the project.</h1>
+<p>Now, when it comes to large software projects, I'm pretty sure I shouldn't be calling this project a &quot;large&quot; as the subject of this post seems to label it... But for a system built only by me in some nights and weekends, it is the largest single app I've built alone, so that's where I'm defining &quot;Large&quot;.</p>
+<p>The project has just about a hundred javascript files/components/classes/modules and comes in just above <code>12,000</code> lines of code. That's not counting of course all the dependencies pulled in through JSPM (using both NPM and Github). In fact I really need to look at my dependencies and see where I can trim some fat, but that's not the subject of this post.</p>
+<h1>Porting from Babel to TypeScript</h1>
+<p>With some context about the project this is coming from out of the way, I thought it would be helpful to outline the steps (or stumbles) I took along the way to get my project up and running using TypeScript with JSPM.</p>
+<h1>Pre-migration steps</h1>
+<p>Below are steps I took to get this thing going. I doubt they're perfect or even apply to your or anyone elses projects, but here's hoping they're helpful</p>
+<ol>
+<li>In a fresh temp folder, I used the <code>jspm init</code> command to setup a fresh new project and selected the <code>Typescript</code> transpiler option.</li>
+</ol>
+<blockquote>
+<p>this allowed me to inspect what a &quot;fresh&quot; project from JSPM would look like with Typescript setup.</p>
+</blockquote>
+<ol start="2">
+<li>The next thing I did was review the angular getting started guide to see what Typescript specific configurations they used.</li>
+</ol>
+<blockquote>
+<p>Now, my project isn't Angular (it's actually React based), but I thought I could learn a little something along the way. I don't know if I actually gleaned anything while doing this (as I'm writing this post a ways after I actually did the work, but as an FYI, you might learn something reading it)</p>
+</blockquote>
+<h1>What steps did I take to port the project?</h1>
+<p>Looking back at the series of commits during my port, here's basically what I did. In some cases order doesn't matter below, but I left this list in the order of my projects git commit log.</p>
+<ol>
+<li>Renaming each file with the <code>.jsx</code> extension to <code>.tsx</code> (Typescript's variant of JSX) (note: not renaming anything but code I wrote - so don't touch anything in <code>jspm_packages</code> or <code>node_modules</code> folders etc.</li>
+<li><code>jspm install ts</code> &lt;-- installing the <a href="https://github.com/frankwallis/plugin-Typescript">Typescript jspm plugin</a></li>
+<li>Updated my <code>jspm.config.js</code> <code>transpiler</code> flag with the following:</li>
+</ol>
+<pre><code class="language-diff"><span class="hljs-deletion">-  transpiler: "plugin-babel",</span>
+<span class="hljs-addition">+  transpiler: "Typescript",</span>
+<span class="hljs-addition">+  TypescriptOptions: {</span>
+<span class="hljs-addition">+    "tsconfig": true // indicates that a tsconfig exists that should be used</span>
+<span class="hljs-addition">+  },</span>
+</code></pre>
+<p>Then I updated my <code>jspm.config.js</code>'s <code>app</code> section with the following.</p>
+<pre><code class="language-diff">   packages: {
+<span class="hljs-deletion">-    "app": {</span>
+<span class="hljs-deletion">-      "defaultExtension": false,</span>
+<span class="hljs-deletion">-      "main": "bootstrap.jsx",</span>
+<span class="hljs-deletion">-       "meta": {</span>
+<span class="hljs-deletion">-        "*": {</span>
+<span class="hljs-deletion">-          "babelOptions": {</span>
+<span class="hljs-deletion">-            "plugins": [</span>
+<span class="hljs-deletion">-              "babel-plugin-transform-react-jsx",</span>
+<span class="hljs-deletion">-              "babel-plugin-transform-decorators-legacy"</span>
+<span class="hljs-deletion">-            ]</span>
+<span class="hljs-deletion">-          }</span>
+<span class="hljs-deletion">-        }</span>
+<span class="hljs-deletion">-      }</span>
+<span class="hljs-deletion">-    },</span>
+<span class="hljs-addition">+    "app": { // all files within the app folder</span>
+<span class="hljs-addition">+      "main": "bootstrap.tsx", // main file of the package (will be important later)</span>
+<span class="hljs-addition">+      "format": "system", // module format</span>
+<span class="hljs-addition">+      "defaultExtension": "ts", // default extension of all files</span>
+<span class="hljs-addition">+      "meta": {</span>
+<span class="hljs-addition">+        "*.ts": { // all ts files will be loaded with the ts loader</span>
+<span class="hljs-addition">+          "loader": "ts"</span>
+<span class="hljs-addition">+        },</span>
+<span class="hljs-addition">+        "*.tsx": { // all ts files will be loaded with the ts loader</span>
+<span class="hljs-addition">+          "loader": "ts"</span>
+<span class="hljs-addition">+        },</span>
+<span class="hljs-addition">+      }</span>
+<span class="hljs-addition">+    },</span>
+</code></pre>
+<ol start="4">
+<li>Created a <code>tsconfig.json</code> file</li>
+</ol>
+<pre><code class="language-javascript">{
+ <span class="hljs-string">"compilerOptions"</span>: {
+    <span class="hljs-string">"target"</span>: <span class="hljs-string">"es5"</span>,                <span class="hljs-comment">/* target of the compilation (es5) */</span>
+    <span class="hljs-string">"module"</span>: <span class="hljs-string">"system"</span>,             <span class="hljs-comment">/* System.register([dependencies], function) (in JS)*/</span>
+    <span class="hljs-string">"moduleResolution"</span>: <span class="hljs-string">"node"</span>,     <span class="hljs-comment">/* how module gets resolved (needed for Angular 2)*/</span>
+    <span class="hljs-string">"emitDecoratorMetadata"</span>: <span class="hljs-literal">true</span>,  <span class="hljs-comment">/* needed for decorators */</span>
+    <span class="hljs-string">"experimentalDecorators"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">/* needed for decorators (@Injectable) */</span>
+    <span class="hljs-string">"noImplicitAny"</span>: <span class="hljs-literal">false</span>,         <span class="hljs-comment">/* any has to be written explicitly*/</span>
+    <span class="hljs-string">"jsx"</span>: <span class="hljs-string">"react"</span>
+  },
+  <span class="hljs-string">"exclude"</span>: [   <span class="hljs-comment">/* since compiling these packages could take ages, we want to ignore them*/</span>
+    <span class="hljs-string">"jspm_packages"</span>,
+    <span class="hljs-string">"node_modules"</span>
+  ],
+  <span class="hljs-string">"compileOnSave"</span>: <span class="hljs-literal">false</span>        <span class="hljs-comment">/* on default the compiler will create js files */</span>
+</code></pre>
+<ol start="5">
+<li>Renamed <code>*.js</code> files to <code>*.ts</code>. (Similar to step 1 above with <code>jsx -&gt; tsx</code> but now just the plain JavaScript files)</li>
+<li>In all of my source code where I used to do this: <code>import foo from './foo.js'</code> I removed the <code>.js</code> extensions like <code>import foo from './foo'</code></li>
+<li>I did NOT remove the <code>.jsx</code> extension in my <code>import</code> statements - but renamed them to <code>tsx</code> so <code>import foo from './foo.jsx'</code> became <code>import foo from './foo.tjs'</code></li>
+<li>Next I added a file at the root of my client project called <code>globalTypes.d.ts</code>, this is where I could hack in some type definitions that I use globally in the project.</li>
+<li>Then I started adding my type definitions...</li>
+</ol>
+<p>I used the <a href="https://github.com/typings/typings">typings</a> tool to search for TypeScript type definitions. And if I found one, I would typically try to install them from <code>npm</code>.</p>
+<p>For example: searching for <code>react</code> like <code>typings search react</code> shows me that there is a DefinitelyTyped version of the type defs and <a href="https://blogs.msdn.microsoft.com/Typescript/2016/06/15/the-future-of-declaration-files/">I now know</a> that we can use NPM to install them by typing <code>npm install --save @types/react</code></p>
+<p>So I installed a ton of external library typings.</p>
+<ol start="11">
+<li>Next, started looking around my editor <a href="https://code.visualstudio.com/">VisualStudio Code</a> in hopes to see a bunch of typing errors reported, and was surprised to see very few. No, not because I'm so good at JavaScript that my TypeScript was perfect. Far from it... The problem I had was the <code>tsconfig.json</code> file was not at the root of my project (was at the root of my client site) - but it was nested several folders down from the root of my project. For some reason the editor wasn't picking it up until I opened the editor from the location the <code>tsconfig.json</code> file was rooted, things didn't work.</li>
+</ol>
+<blockquote>
+<p>Honestly, I don't know what the above was about - but was something I ran into. I can't say for certain if it is still an issue - I think I'm starting to see editor features load up regardless of what folder I open things - so your mileage may vary.</p>
+</blockquote>
+<ol start="12">
+<li>Once the TypeScript editor features started lighting up in VS Code, my next steps were start to take the TypeScript's feedback and implement either typing work-arounds or fixing actual bugs the compiler found.</li>
+</ol>
+<p>THE END - ish</p>
+<h1>Where am I now?</h1>
+<p>The above steps were really all I went through to port this project over to TypeScript and it was relatively seamless. That's not to say it was simple or easy, but definitely do-able, and worth it.</p>
+<p>It's been a few weeks since I ported the project to TypeScript and I'm really kicking myself for not doing it sooner.</p>
+<p>The editor assist with intellisense of function calls from internal and external modules and their usage/function signatures saves time researching external documentation.</p>
+<h1>Other observations since the move.</h1>
+<ol>
+<li>Builds seem to be a little faster with TypeScript than Babel. I can't say I can prove this. I didn't do any actual tests on this, but just a feeling I got after migration.</li>
+<li>Sourcemaps seem to actually work. Whenever I used BabelJS, debugging and stepping through async/await it just never seemed to line up right for me. This was likely user-error or in-proper configuration of babel on my part, so who knows... but having working source-maps is AMAZING, especially with the <code>async/await</code> feature.</li>
+<li>One area of concern that I haven't yet worked through. Is the JSPM typescript loading up in the browser - or running <code>jspm bundle app</code> at the command line doesn't report any typescript errors - or fail any builds. However, I'm glad it doesn't because something isn't quite rite with my configuration as every import of a <code>.tsx</code> file reports an error. So, for now I'm just relying on the red squigglies in my VS Code editor to help me catch typing errors.</li>
+</ol>
+<p>If you go for this port in you're own project, I hope this was helpful, and that your port goes well.</p>
+<p>Happy TypeScripting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management]]></title>
         <id>http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</id>
@@ -1556,65 +1685,6 @@ a Promise to simplify our unit tests.</li>
 <h1>In closing.</h1>
 <p>This post may have seemed like quite a journey to get to the little poorly named <code>mochaAsync</code> or learn to use Mocha's Promise support but I hope it was helpful and I can't wait for the <code>async/await</code> syntax to become mainstream in JavaScript, but until then I'm thankful we have transpiling tools like <a href="http://babeljs.io">Babel</a> so we can take advantage of these features now. ESNext-pecially in our tests...</p>
 <p>Happy Testing!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps]]></title>
-        <id>http://staxmanade.com/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/</id>
-        <link href="http://staxmanade.com/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">
-        </link>
-        <updated>2015-11-07T06:20:41Z</updated>
-        <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 7 - Changes Should be Taken with Baby Steps]]></summary>
-        <content type="html"><![CDATA[<p>﻿
-<div class="seriesNote">
-    <p>This article is <strong>Part 7</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
-        </li>
-        <li>
-            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
-        </li>
-        <li>
-            Part 7 - (current) - Changes Should be Taken with Baby Steps
-        </li>
-        <li>
-            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
-        </li>
-    </ul>
-</div></p>
-<p>Have you ever made some code changes and while in the process of making those changes realize you need to change something else, which leads to changes to that thing over there and then again up there, and down here, and over there and since we're in here and I've been meaning to tweak this well... and paused to realize you forgot the original goal of why you are even looking at this module of code? No never? (well I have). <code>git reset --hard</code> and start over :)</p>
-<p>If you're one who likes to apply the ol Boy Scout rule of <code>Always leave the campground cleaner than you found it</code> to your code, just don't, at lest not yet. While I'm a big fan of cleaning up those legacy areas of code that just need a good sweep up, the approach taken here needs to be handled with care. I'm also referring to code that is likely covered well with automated testing.</p>
-<h1>But Why?</h1>
-<p>Before you go around making a bunch of cleanup changes, fixing formatting, changing variable names, general cleanup. Accomplish a tiny part of your overall objective and commit just that change.</p>
-<p>If you see other things along the way, take note and come back to them later. Or if, like me you can't help yourself, just don't check all of those changes in at once. Use something like <code>git add -p</code> to <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregate your code commits into tiny topical changes</a>.</p>
-<p>If the job is to <code>rename a variable</code>, don't also <code>fix spelling, format code, extract method, etc...</code>. Save those other changes for different commits.</p>
-<h3>But what if you don't know what you're planning to change?</h3>
-<p>Sometimes, it's good to go off and spike a big swath of changes just to get an idea how much impact a refactor could have on the architecture or project as a whole. Prototype something to get a good picture of whether a change is possible or not or to see how many coupled items need to be adjusted along the way.</p>
-<p>However, you go into it knowing you will likely just undo all of your changes all together with the goal to surface more knowledgeable and either:</p>
-<p>A) determine that it is a do-able change and should or should not even be attempted in a proper fashion
-B) or you've uncovered some challenges that are not easily overcome and require more thought or prior preparatory refactorings.</p>
-<h1>Use TDD as a forcing mechanism to small changes</h1>
-<p>TDD (Test Driven Development) is a great way to take as tiny a step as possible. With this approach, you can write a test, make it pass (consider that a change) and <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">possibly check it in</a> to source control. One test at a time ensures that you're taking baby steps along the way to solving the bigger problem(s).</p>
-<h1>Baby Steps also when Debugging</h1>
-<p>Taking baby steps is also important when debugging. Running around the codebase changing X, Y, and Z just to see if you can fix a bug will often times get you in a bigger mess than the original bug you tried to fix. Making one change at a time, verifying the bug, then the next change is quite often a better approach. So consider going slow and taking baby steps.</p>
-<p>It doesn't matter if you're making project-wide architectural changes or surgical bug fixes, if you can, <strong>try to take baby steps, commit the changes and verify each change along the way</strong>. It may feel like you're going slower, but in the long haul you may actually save time.</p>
-<p>Happy Baby Steps!</p>
 ]]></content>
     </entry>
 </feed>

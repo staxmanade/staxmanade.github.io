@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-enum-metadata/">NuGet Project Uncovered: Enum Metadata Library</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-01T00:26:00.000Z" pubdate data-updated="true">Jan 31st 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/EnumMetadata.Core" target="_blank">EnumMetadata.Core</a> provides some clean extensions over enums that give you access to metadata you place on enum values. This project’s approach is to use attributes on an Enum and some fancy extension methods to get at the data stored in attributes in a strongly typed way.</p>  <p>I couldn’t quickly get this project up and running on my x64 machine. I received the good ol BadImageFormat exception. I didn’t take enough interest to get it working at the time, and was able to get a pretty good picture of how to use it from the tests (if I had to). Just knowing this project is here is good enough for me at the moment.</p>  <p><strong>Side Note: </strong>It’s a different approach to the problem. Another strongly typed approach I tend to prefer can be found at the following <a href="https://gist.github.com/1604923" target="_blank">Gist here</a>. Not exactly an “enum” but gives a similar feel with access to more metadata and gives the possibility of adding behavior to each item.</p></div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-verifyargs/">NuGet Project Uncovered: VerifyArgs</a></h1>
     <p class="meta">
           <time datetime="2012-01-31T00:25:00.000Z" pubdate data-updated="true">Jan 30th 2012</time>
@@ -220,47 +237,6 @@
 <div class="entry-content">
 <div class='post'>
 <p>A while back I posted about <a href="http://elegantcode.com/2011/09/27/whats-happening-on-the-nuget-feed-leveraging-odata-in-an-rss-reader/" target="_blank">following the NuGet feed via an RSS reader</a>. For some strange reason I’ve been reviewing this feed since then on an almost daily basis in my RSS reader. Throughout that time I’ve kept a small list of what I think are interesting projects that have put out a release since that time. Today we’re going to start a journey through projects that I’ve found during my review of the feed. Some projects are interesting because I could find a use for them, some are interesting because they are unique, and others solve an interesting problem.</p>  <h4>Why were these packages chosen to post about over others?</h4>  <p>There wasn’t any scientific process in place to decide what projects made this list or not but as I think back over my time reviewing the feed, below are some items that came to mind.</p>  <h5>Some reasons I may have chosen a project:</h5>  <ul>   <li>I could <strong>potentially</strong> see myself investigating its usage someday. </li>    <li>It solved a problem in an interesting way. </li>    <li>Preferred small, focused, unique packages. </li>    <li>Preferred projects that were Open Source as in FREE.      <ul>       <li>Although I didn’t bother to look at any of the licenses so be sure to read into those before you use any yourself. </li>     </ul>   </li>    <li>Preferred projects that have a “<strong>Project Site</strong>” where I could browse the source code see examples or even documentation.     <br /><a href="http://lh5.ggpht.com/-xn_JwxZNUGU/TxylshXCQUI/AAAAAAAAATA/cECY7x7WnzI/s1600-h/image%25255B30%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/-sXoFslcjE_c/Txyls-rcxuI/AAAAAAAAATI/X6ZPfYNGt_k/image_thumb%25255B15%25255D.png?imgmax=800" width="138" height="98" /></a></li>    <li>For some reason if I saw it was hosted on GitHub I preferred those to sites that had their own dedicated location (Can’t explain why – just did…) </li> </ul>  <h5>Some reasons I may have NOT have chosen a project:</h5>  <ul>   <li>Tended to avoid projects that posted large numbers of packages even though many of them are still very good projects.    <br />EX:       <ul>       <li>NServiceBus </li>        <li>FubuMvc </li>     </ul>   </li>    <li>For some reason I tended to stay away from anything MVC related. There are probably very interesting projects for MVC on there, but I probably avoided them because I’m not doing anything MVC related at the moment. </li>    <li>Avoided packages that had “utilities” or “common” or “helpers” in the package name.      <ul>       <li>But it might still be worthwhile checking out some of those open source “utility” projects. Just to get an idea of what others consider “needed on every project” and different approaches to the problems. </li>     </ul> <!--EndFragment--></li> </ul>  <h4>Some items to consider with these little NuGet gems.</h4>  <ul>   <li>Make sure you read and understand any license the project has before including or using them in your own work. </li>    <li>These posts won’t be full project analysis, but a generally a first impression.</li>    <li>Be sure to research any project before using. I’m only mentioning them because they piqued my interest. Not because I have extensive knowledge of the projects or know their stability.</li> </ul></div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">You are responsible for making that feature work. Write a test. Just do it…</a></h1>
-    <p class="meta">
-          <time datetime="2012-01-07T05:59:00.000Z" pubdate data-updated="true">Jan 6th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Today the <a href="http://en.wikipedia.org/wiki/Project_manager">PM</a> of a project I am working on sent an email with a small list of issues that we needed to get resolved before shipping an early build to the customer for a weekly review. In his list of issues MY NAME was tagged next to a feature that I KNOW was working. I dev’d it, tested, saw it work.</p>
-<p>Now the project I’m working on encourages unit tested code, which is a fantastic project to be on since I am a big proponent of Unit/Integration/Automated tests. Heck I wrote a tool to help run them easier (<a href="http://statlight.codeplex.com/">StatLight</a>).</p>
-<h4>What I did.</h4>
-<p>The problem was this. I dev’d a feature out in like 5 minutes, took about 2 seconds to decide if I should write a unit test to prove my feature worked and <b>this</b>
-<b>
-  <i>
-  </i>
-</b>
-<b>is where I failed</b>. Manually verified my change checked in the production code without its test and I was hurriedly moved on to the next task.</p>
-<p>About 20 min later I get a quick <a href="http://en.wikipedia.org/wiki/Instant_messaging">I.M.</a> from a co-worker saying he had a small merge conflict in the file I just checked-in. Quickly told him how to get around his merge issue (not realizing after he checked in) that my “quick 5min dev task” was accidently removed in the merge.</p>
-<h4>What I SHOULD have done!</h4>
-<p>What I<b> should </b>have done was write the <strong>2 lines of test code first</strong>. <i>(you can argue test after/test first, I prefer test-first)</i>. Proven my code wasn’t working, by running the test, and then implement the 5 min feature making the test pass. Then when my co-worker ran into his merge issue.</p>
-<p>
-  <img src="http://boldandfab.files.wordpress.com/2010/11/pow.jpg" width="179" height="126" />
-</p>
-<p>Test would have failed telling him his merge didn’t go as planned.</p>
-<h4>This would have also avoided</h4>
-<ul>
-  <li>PM wouldn’t have had to discover the issue, Screenshot and write up an email. </li>
-  <li>I wouldn’t have had to peruse source control history to understand why my “working” feature wasn’t working. </li>
-  <li>I wouldn’t have had to willingly confess my sins in this post.</li>
-</ul>
-<p>If your feature doesn’t have a coinciding automated test. How do you know it’s still working?</p>
-<p>Happy Testing!</p>
-</div>
 </div>
 
       

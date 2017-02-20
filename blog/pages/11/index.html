@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/">NuGet Project Uncovered: Disruptor-net</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-12T04:40:00.000Z" pubdate data-updated="true">Feb 11th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Disruptor" target="_blank">Disruptor-net</a> is a port of the LMAX Disruptor which is a concurrent programming framework. The answer in this <a href="http://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work" target="_blank">StackOverflow question</a> gave a pretty good explanation of the project/pattern used.</p>  <p>Project Source: <a href="https://github.com/odeheurles/Disruptor-net">https://github.com/odeheurles/Disruptor-net</a></p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-nukito/">NuGet Project Uncovered: Nukito</a></h1>
     <p class="meta">
           <time datetime="2012-02-11T04:39:00.000Z" pubdate data-updated="true">Feb 10th 2012</time>
@@ -221,23 +238,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/List/Packages/Chronic" target="_blank">Chronic</a> is a port of <a href="https://github.com/mojombo/chronic" target="_blank">Ruby’s Chronic</a> providing some natural language parsing for dates.</p>  <p>This is a pretty cool little utility as it lets you take some input like "tomorrow” or “two weeks ago” and turn that into a DateTime object.</p>  <p>Take a look at some tests I pulled from <a href="https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs">https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs</a>.</p>  <blockquote>   <p>[Fact]    <br />public void seven_days_from_now_at_midnight()     <br />{     <br />Parse(" seven days from now at midnight")     <br />.AssertEquals(Time.New(2006, 8, 24));     <br />}</p>    <p>[Fact]    <br />public void _2_weeks_ago()     <br />{     <br />Parse("2 weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br />}</p>    <p>[Fact]    <br />public void two_weeks_ago()     <br />{     <br />Parse("two weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br /></p> </blockquote>  <p>I tried playing with it a bit. There seem to be some cases sensitivity issues with the codebase now as “tomorrow” works but “Tomorrow” doesn’t. But I think that’s a great reason to be on GitHub. Fork, fix, and send a pull request. All better…</p></div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/01/nuget-project-uncovered-enum-metadata/">NuGet Project Uncovered: Enum Metadata Library</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-01T00:26:00.000Z" pubdate data-updated="true">Jan 31st 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/EnumMetadata.Core" target="_blank">EnumMetadata.Core</a> provides some clean extensions over enums that give you access to metadata you place on enum values. This project’s approach is to use attributes on an Enum and some fancy extension methods to get at the data stored in attributes in a strongly typed way.</p>  <p>I couldn’t quickly get this project up and running on my x64 machine. I received the good ol BadImageFormat exception. I didn’t take enough interest to get it working at the time, and was able to get a pretty good picture of how to use it from the tests (if I had to). Just knowing this project is here is good enough for me at the moment.</p>  <p><strong>Side Note: </strong>It’s a different approach to the problem. Another strongly typed approach I tend to prefer can be found at the following <a href="https://gist.github.com/1604923" target="_blank">Gist here</a>. Not exactly an “enum” but gives a similar feel with access to more metadata and gives the possibility of adding behavior to each item.</p></div>
 </div>
 
       
