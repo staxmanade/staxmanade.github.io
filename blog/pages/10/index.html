@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_22/">NuGet Project Uncovered: SpecificationExtensions.[MSTest | NUnit | Xunit]</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-23T05:05:00.000Z" pubdate data-updated="true">Feb 22nd 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become it’s introductory post.</p> </blockquote>  <p>The SpecificationExtensions.[MSTest | NUnit | Xunit] are a set of NuGet packages that add C# <a href="/2009/02/fluent-specification-extensions" target="_blank">fluent specification extensions</a> to your test project. I first blogged about this in early 2009 and have had a set of these that I take with me for every project I work on.</p>  <p>There are a number of other options out there for specification extensions, but since I first created my original set, I haven’t used anything else (although I should as I might be able to learn a little from each).</p>  <p><a href="http://lh5.ggpht.com/-uJQhZwjPHio/Tx-N8pcbXNI/AAAAAAAAAXk/-25MlBkeCDE/s1600-h/image_thumb10_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb10_thumb" border="0" alt="image_thumb10_thumb" src="http://lh6.ggpht.com/-2Bi6oO8kpwo/Tx-N9KJezHI/AAAAAAAAAXs/QGkMIlrCWSs/image_thumb10_thumb_thumb.png?imgmax=800" width="339" height="202" /></a></p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered_21/">NuGet Project Uncovered: EventAggregator.Net</a></h1>
     <p class="meta">
           <time datetime="2012-02-22T05:04:00.000Z" pubdate data-updated="true">Feb 21st 2012</time>
@@ -220,23 +237,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/NaturalSpec" target="_blank">NaturalSpec</a> is a BDD framework written in F#. This one is interesting due to F#’s concise nature and can give you very readable tests/specs.</p>  <p>The below sample was pulled from the <a href="https://github.com/forki/NaturalSpec" target="_blank">github readme</a>.</p>  <blockquote>   <pre>[&lt;Scenario&gt;]<br />let ``When removing an element from a list it should not contain the element``() =<br />  Given [1;2;3;4;5]                 // &quot;Arrange&quot; test context<br />    |&gt; When removing 3              // &quot;Act&quot;<br />    |&gt; It shouldn't contain 3       // &quot;Assert&quot;<br />    |&gt; It should contain 4          // another assertion<br />    |&gt; It should have (length 4)    // Assertion for length<br />    |&gt; It shouldn't have duplicates // Tests if the context contains duplicates<br />    |&gt; Verify                       // Verify scenario</pre><br /></blockquote><br /><br /><p>It says you don’t have to learn F# to use it. Which I’d argue you may not have to learn F# as deep as you might to be able to code a production product in it, but you will definitely benefit from learning some as you go. You will also spend a bit of time learning the DSL that this project has created.</p><br /><br /><p>Regardless, this project has enough interest factor for me to play around with someday.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">NuGet Project Uncovered: SpecsFor</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-13T04:41:00.000Z" pubdate data-updated="true">Feb 12th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/SpecsFor" target="_blank">SpecsFor</a> is a BDD framework. This project is nice in that it has packaged many of my favorite testing tools all into one package. Instead of pulling down <a href="http://nunit.org/" target="_blank">NUnit</a>, <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>, <a href="http://should.codeplex.com/" target="_blank">Should</a>, <a href="http://structuremap.net/structuremap/AutoMocker.htm" target="_blank">Automocking</a>, and <a href="https://github.com/derekgreer/expectedObjects" target="_blank">ExpectedObjects</a> creating your own base fixture class. This project wraps all that up for you with a solid base spec class.</p>  <p>The creator of this project spent some time and created a <a href="http://specsfor.com/" target="_blank">nice project site</a> with examples and documentation. </p>  </div>
 </div>
 
       

@@ -73,6 +73,52 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">How to Download and Convert an Image to Base64 Data Url</a></h1>
+    <p class="meta">
+          <time datetime="2017-02-27T05:06:20.088Z" pubdate data-updated="true">Feb 26th 2017</time>
+
+
+        <a href="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/#disqus_thread" data-disqus-identifier="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is a ton written out there, I didn't immediately find the specific steps in a snippet of code. (Also, I can't say I looked very hard).</p>
+<p>So what does any programmer do when he's not satisfied with what he can't find? He writes his own. Now that I've put it together I'm just going to post this here so I can find it again down the road when I need to. :)</p>
+<p>Below is a utility function that I threw together that will take an <code>imageUrl</code> parameter and will return through a Promise a base64 encoded image data string. You can see from the example usage below that we're just setting an HTML image <code>.src</code> property to the result of this function and it should just work.</p>
+<blockquote>
+<p>NOTE: also if you look at the code that accomplish this below, it may look a bit like &quot;futuristic&quot; JavaScript right now. With all the <code>async/await</code>, <code>arrow functions</code>, <code>http fetch</code> and all, but the cool thing is you should be able to just copy/paste the below into a JSBin/Plnkr/Codepen without issue (in Chrome). No need for Babel/TypeScript/transpiler if you're just prototyping something (as I was). Don't rely on this to work in all browsers yet but I'm sure when I'll be googling myself for this snippet in the future, this should work in most browsers so I'll just leave this here for now.</p>
+</blockquote>
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBase64ImageFromUrl</span>(<span class="hljs-params">imageUrl</span>) </span>{
+  <span class="hljs-keyword">var</span> res = <span class="hljs-keyword">await</span> fetch(imageUrl);
+  <span class="hljs-keyword">var</span> blob = <span class="hljs-keyword">await</span> res.blob();
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+    <span class="hljs-keyword">var</span> reader  = <span class="hljs-keyword">new</span> FileReader();
+    reader.addEventListener(<span class="hljs-string">"load"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        resolve(reader.result);
+    }, <span class="hljs-literal">false</span>);
+
+    reader.onerror = () =&gt; {
+      <span class="hljs-keyword">return</span> reject(<span class="hljs-keyword">this</span>);
+    };
+    reader.readAsDataURL(blob);
+  })
+}
+</code></pre>
+<p>An example usage of the above:</p>
+<pre><code>getBase64ImageFromUrl('http://approvaltests.com/images/logo.png')
+    .then(<span class="hljs-literal">result</span> =&gt; testImage.src = <span class="hljs-literal">result</span>)
+    .catch(err =&gt; console.error(err));
+</code></pre>
+<p>As an alternative to base64 encoded <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">FileReader</a> approach above, you can also also use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">URL.createObjectURL</a> <code>return URL.createObjectURL(blob);</code></p>
+<p>There's of course a number of <a href="http://lmgtfy.com/?q=convert+image+to+base64+online+tool">online tools</a> that do this for you already.</p>
+<p>Hope this helps future me find the implementation a min or two faster some day.</p>
+<p>Happy Encoding!</p>
+</div>
+
+      <a href="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/#disqus_thread" data-disqus-identifier="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">Porting a Large JSPM BabelJS project to Typescript</a></h1>
     <p class="meta">
           <time datetime="2017-02-20T06:33:46.360Z" pubdate data-updated="true">Feb 19th 2017</time>
@@ -584,7 +630,49 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 <p>Paste in the following CSS and hit <code>Save</code></p>
 </li>
 </ol>
-<pre><code class="language-css"><span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;}</span><span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;}</span><span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;}</span><span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">145px</span></span></span>;}</span><span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;}</span>
+<pre><code class="language-css"><span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">145px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
+}</span>
+
 </code></pre>
 <p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
 <p>Happy (as best you can) JIRA'ing</p>
@@ -1115,59 +1203,6 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 </div>
 
       <a href="/2016/06/reusable-react-component-with-overridable-inline-css-styles/#disqus_thread" data-disqus-identifier="/2016/06/reusable-react-component-with-overridable-inline-css-styles/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/strange-error-on-docker-compose-up/">Strange error on docker-compose up: oci runtime error: exec format error</a></h1>
-    <p class="meta">
-          <time datetime="2016-05-27T20:18:56.884Z" pubdate data-updated="true">May 27th 2016</time>
-
-
-        <a href="/2016/05/strange-error-on-docker-compose-up/#disqus_thread" data-disqus-identifier="/2016/05/strange-error-on-docker-compose-up/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I ran into a non-intuitive error while mucking around with <a href="https://docs.docker.com/compose/">docker-compose</a> recently on <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">an example</a>.</p>
-<h1>docker-compose up</h1>
-<pre><code>Building some_server
-Step 1 : FROM alpine
- -<span class="ruby">--&gt; <span class="hljs-number">13</span>e1761bf172
-</span>Step 2 : ENV DEMO_VAR WAT
- -<span class="ruby">--&gt; <span class="hljs-constant">Using</span> cache
-</span> -<span class="ruby">--&gt; <span class="hljs-number">378</span>dbaa4a048
-</span>Step 3 : COPY docker-entrypoint.sh /
- -<span class="ruby">--&gt; e5962cef9382
-</span>Removing intermediate container 43fa24c31444
-Step 4 : ENTRYPOINT /docker-entrypoint.sh
- -<span class="ruby">--&gt; <span class="hljs-constant">Running</span> <span class="hljs-keyword">in</span> <span class="hljs-number">5</span>a2e19bf7a45
-</span> -<span class="ruby">--&gt; <span class="hljs-number">331</span>d2648d969
-</span>Removing intermediate container 5a2e19bf7a45
-Successfully built 331d2648d969
-Recreating exampleworkingdockercomposeenvironmentvars_some_server_1
-</code></pre>
-<h1>The Error</h1>
-<pre><code>ERROR: for some_server  rpc error: code = 2 desc = "oci runtime error: exec format error"
-Traceback (most recent <span class="hljs-operator"><span class="hljs-keyword">call</span> <span class="hljs-keyword">last</span>):
-  <span class="hljs-keyword">File</span> <span class="hljs-string">"&lt;string&gt;"</span>, line <span class="hljs-number">3</span>, <span class="hljs-keyword">in</span> &lt;<span class="hljs-keyword">module</span>&gt;
-  <span class="hljs-keyword">File</span> <span class="hljs-string">"compose/cli/main.py"</span>, line <span class="hljs-number">63</span>, <span class="hljs-keyword">in</span> <span class="hljs-keyword">main</span>
-AttributeError: <span class="hljs-string">'ProjectError'</span> <span class="hljs-keyword">object</span> has <span class="hljs-keyword">no</span> <span class="hljs-keyword">attribute</span> <span class="hljs-string">'msg'</span>
-docker-compose returned -<span class="hljs-number">1</span>
-</span></code></pre>
-<h1>The Actual Problem and Solution:</h1>
-<p>I had a <code>Dockerfile</code> that used an entrypoint that looked like <code>ENTRYPOINT [&quot;/docker-entrypoint.sh&quot;]</code>.</p>
-<p>The real problem was the <code>docker-entrypoint.sh</code> script was missing a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">#shebang</a>.</p>
-<p>So changing this</p>
-<pre><code><span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
-</code></pre>
-<p>to this</p>
-<pre><code><span class="hljs-shebang">#!/bin/sh</span>
-<span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
-</code></pre>
-<p>solved my issue!</p>
-<p>Also note it'll depend on the base image <code>FROM &lt;some linux distro&gt;</code> that may chagne what you're required #shebang should be.</p>
-<p>Whew!</p>
-</div>
-
-      <a href="/2016/05/strange-error-on-docker-compose-up/#disqus_thread" data-disqus-identifier="/2016/05/strange-error-on-docker-compose-up/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>

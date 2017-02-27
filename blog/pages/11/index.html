@@ -73,6 +73,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-specsfor/">NuGet Project Uncovered: SpecsFor</a></h1>
+    <p class="meta">
+          <time datetime="2012-02-13T04:41:00.000Z" pubdate data-updated="true">Feb 12th 2012</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/SpecsFor" target="_blank">SpecsFor</a> is a BDD framework. This project is nice in that it has packaged many of my favorite testing tools all into one package. Instead of pulling down <a href="http://nunit.org/" target="_blank">NUnit</a>, <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>, <a href="http://should.codeplex.com/" target="_blank">Should</a>, <a href="http://structuremap.net/structuremap/AutoMocker.htm" target="_blank">Automocking</a>, and <a href="https://github.com/derekgreer/expectedObjects" target="_blank">ExpectedObjects</a> creating your own base fixture class. This project wraps all that up for you with a solid base spec class.</p>  <p>The creator of this project spent some time and created a <a href="http://specsfor.com/" target="_blank">nice project site</a> with examples and documentation. </p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-disruptor-net/">NuGet Project Uncovered: Disruptor-net</a></h1>
     <p class="meta">
           <time datetime="2012-02-12T04:40:00.000Z" pubdate data-updated="true">Feb 11th 2012</time>
@@ -221,23 +238,6 @@
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="https://github.com/thenathanjones/burro" target="_blank">Burro</a> is a project that I only quickly looked at. I don’t know all that it does, or how to get it up and running. In the project’s readme it says </p>  <blockquote>   <p>I'll put some examples up as things progress, for now you'll just have to work it out yourself.</p> </blockquote>  <p>What I do know is that it is supposed to parse build output from a build server in a consistent way. How do I know that? (The github project says).</p>  <blockquote>   <h3>What is it?</h3>    <p>Burro is a tool for parsing output from build servers in a consistent way.</p> </blockquote>  <p>I only put this in here as a project to look at. I think that parsing build output sounds very challenging and props to this project for giving it a go…</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/02/nuget-project-uncovered-chronic/">NuGet Project Uncovered: Chronic</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-02T00:23:00.000Z" pubdate data-updated="true">Feb 1st 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/List/Packages/Chronic" target="_blank">Chronic</a> is a port of <a href="https://github.com/mojombo/chronic" target="_blank">Ruby’s Chronic</a> providing some natural language parsing for dates.</p>  <p>This is a pretty cool little utility as it lets you take some input like "tomorrow” or “two weeks ago” and turn that into a DateTime object.</p>  <p>Take a look at some tests I pulled from <a href="https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs">https://github.com/robertwilczynski/nChronic/blob/master/src/Chronic.Tests/CustomParsingTest.cs</a>.</p>  <blockquote>   <p>[Fact]    <br />public void seven_days_from_now_at_midnight()     <br />{     <br />Parse(" seven days from now at midnight")     <br />.AssertEquals(Time.New(2006, 8, 24));     <br />}</p>    <p>[Fact]    <br />public void _2_weeks_ago()     <br />{     <br />Parse("2 weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br />}</p>    <p>[Fact]    <br />public void two_weeks_ago()     <br />{     <br />Parse("two weeks ago")     <br />.AssertEquals(Time.New(2006, 8, 02, 14));     <br /></p> </blockquote>  <p>I tried playing with it a bit. There seem to be some cases sensitivity issues with the codebase now as “tomorrow” works but “Tomorrow” doesn’t. But I think that’s a great reason to be on GitHub. Fork, fix, and send a pull request. All better…</p></div>
 </div>
 
       

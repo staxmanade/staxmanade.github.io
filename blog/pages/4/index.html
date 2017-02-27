@@ -73,6 +73,85 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-14T06:20:41.092Z" pubdate data-updated="true">Sep 13th 2015</time>
+
+
+        <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 3</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - (current) - Self Prescribed Code Reviews
+        </li>
+        <li>
+            Part 4 - <a href="/2015/09/habit-of-a-solid-developer-git-dance/">Git Dance</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
+        </li>
+    </ul>
+</div></p>
+<blockquote>
+<p>One technique I use regularly when working with a team or even by myself is lots of individual code reviews.</p>
+</blockquote>
+<h1>This is not a formal (sit down with someone) code review.</h1>
+<p>This is a personal practice I found extremely useful.</p>
+<p>Granted, I'm not talking about reviewing every commit in a repository the <a href="https://www.youtube.com/watch?v=X0VH78ye4yY">size of Facebooks</a>. Most of the projects I have participated in are on small enough teams (between 1-10 people) that reviewing code changes either as they come in or in some block during the day is completely feasible.</p>
+<p>Depending on the project, how many developers, time zones of committers, I shift how often or how thorough I review the changes but I try to review each and every commit (or at least the branch merge). This is one reason why <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregating your code commits into tiny topical changes</a> is important.</p>
+<p>If you're working with a source control that doesn't have an easy way to do <a href="http://git-scm.com/docs/git-request-pull">pull requests</a>. Or some other code review functionality, you can still use the source control system to manually review changes or diffs between branches. Way back when I was <strong>forced</strong> to use TFS source control this was a much more manual process. I would open up Visual Studio, browse our TFS server and begin reviewing. These days, the power of a pull request is generally suffecient for this purpose.</p>
+<h1>What happens in this review?</h1>
+<p>One approach I've taken in the past is to block some time, possibly while warming up with a cup of coffee to begin reviewing the previous day's commits. I would use this time to not only review other developer's changes, but I would also re-review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Reviewing code the next day provided time for my mental perspective to have shifted. I was probably thinking about things a little more clearly after a nights rest. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made that day.</p>
+<p>Some other benefits the morning review process provided include:</p>
+<ul>
+<li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.</li>
+<li>I could take notes on changes other's had made that were not clear. (Note: this is generally done in an environment that didn't perscribe peer-reviewing code changes). So I essentially took the job on personally to review other's changes. Provide feedback, or ask question to get more understanding of their changes.</li>
+<li>Easily catch when the project conventions were not being followed, when the <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">convention was not automated</a>.</li>
+<li>Potentially spot bugs being introduced.</li>
+<li>Suggest potentially better approaches.</li>
+</ul>
+<p>However, the most important thing I gained by doing this was:</p>
+<ul>
+<li>Gain a better understanding of the entire project.</li>
+<li>Learn from others. I'd like to think I'm a pretty good develoepr, but there is so much to know and learn that reading other's code provides a great way to learn something new (or possibly what not to do).</li>
+</ul>
+<p>I once had a fellow developer say to me that they were blown away at how quick I could spin up on a brownfield project and get an architectural understanding that I could apply that knowledge and not only contribute quickly, but spot the places where we could improve general architectural patterns or jump in and become productive on a problem set.</p>
+<p>I believe that reviewing the changes going into a code base each day allowed me to keep a strong perspective on what is shifting within the project and be able to talk intelligibly when others start to get stuck on their work.</p>
+<h1>Formal Code Reviews</h1>
+<p>If your team practices some form of code review workflow, this is great for those participating in the review process. However, it leaves the rest of the developers out of that specific review.</p>
+<p>This should not stop those not in the review room (or pull request) from participating and learning from the changes.</p>
+<p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I can not only come up to speed on a project but can be helpful to all aspects of the project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
+<h1>Just Review Everything</h1>
+<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
+<p>Happy Reviewing!</p>
+</div>
+
+      <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Habit of a Solid Developer - Part 2 - Automatically Enforce Project Conventions</a></h1>
     <p class="meta">
           <time datetime="2015-09-09T06:20:41.092Z" pubdate data-updated="true">Sep 8th 2015</time>
@@ -1054,42 +1133,6 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 </div>
 
       <a href="/2015/03/starting-to-build-an-xbox-one-podcast-player/#disqus_thread" data-disqus-identifier="/2015/03/starting-to-build-an-xbox-one-podcast-player/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/03/in-app-unit-tests/">In-App Unit Tests</a></h1>
-    <p class="meta">
-          <time datetime="2015-03-07T06:19:53.583Z" pubdate data-updated="true">Mar 6th 2015</time>
-
-
-        <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>How often do you run your unit tests? Do you even have a test project? Is running your test suite automatic or does it only run when you choose to run them? If the latter is true, then how often do you run them?</p>
-<p>For most, running tests is a simple command line tool like <code>gulp test</code> or <code>rake test</code> or a builtin function in your IDE. You may even have your system covered by a Continuous Integration server, or if you want to catch issues earlier possibly even a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">git pre-commit hook</a>.</p>
-<p>One thing we all probably know is the more difficult it is to run your tests, the less often they get run.</p>
-<p>What if you're building in an environment that does not allow for easy test automation? What if there are no current command line task runners for the environment you're developing in?</p>
-<p>You could spend way too much of your free time/life building a tool that can get the job done for you (cough - <a href="http://statlight.codeplex.com">long live StatLight/Silverlight</a> - cough). I would not necessarily recommend this approach unless you have the spare cycles to contribute a project like this to the broader community.</p>
-<p>So, given that there are no external tools to rely on, and you don't want to spend however long it will take to create one for the development environment you are in, how about finding a way to integrate some sort of test run within your existing application?</p>
-<p>I have always wanted to setup some unit tests that could run inside of an existing application. If you developed an app that had to ship on lots of devices (thinking android or iOS) and you could ask your users out in the wild to go to the settings page of your app and press a &quot;run tests&quot; button, how awesome would it be if this test run could collect data and send the test results back to you?</p>
-<p>This is not a new idea, nor terribly unique, but I've pondered this for quite some time and until recently have not had a project were I was forced to execute on it, until now...</p>
-<p>I'm playing with an app that is currently living inside a WinJS (Windows 8) (Metro - err do they call it that anymore?) environment and there are not any CLI tools out there that can be used to automate tests. However, it was easy enough to get <a href="http://mochajs.org/">Mocha</a> running within the app.</p>
-<p>With MochaJS in place, I proceeded to setup a WinJS Hub in my hub-based application, after make this testing hub the first hub in my project I now have test that run after every F5 (run) of the application.</p>
-<p>This will eventually have to be something I move out of the main landing U.I. when I get closer to shipping my app, but I'm liking the idea of being able to toggle my test U.I. and have them run right within my application, instantly on startup.</p>
-<h1>A few benefits of this approach:</h1>
-<ul>
-<li>It allows me to actually write tests in an application that doesn't natively support a testing runner.</li>
-<li>Fewer test gotch-ya's because of environmental reasons</li>
-<li>Instant feedback on each run</li>
-<li>It's an easy reminder to keep using and driving my development through tests, because the workflow is enabling it (and encouraging it).</li>
-<li>(this could be considered a down side but...) since the tests are living within the actual application, I have to be careful to construct my components no to depend too heavily on the environment or configuration as we wouldn't want unit tests to mess up the running application. While it could be seen as a bit of a pain, I'm really liking how this is forcing me to write loosely coupled, highly compossable components that can be easy to swap in/out.</li>
-</ul>
-<h3>Will I Actually Ship In-App Tests?</h3>
-<p>This one is up in the air, but so far I'm of the mind-set that I'll hide the unit-test run from the main hub, place a button deep in some about or setting page and modify the reporter to send send any failed test results, along with some metadata about the environment or system it's running on, like versions, screen size, or whatever is needed...</p>
-<p>Happy Testing!</p>
-</div>
-
-      <a href="/2015/03/in-app-unit-tests/#disqus_thread" data-disqus-identifier="/2015/03/in-app-unit-tests/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/5/">&larr; Older</a>

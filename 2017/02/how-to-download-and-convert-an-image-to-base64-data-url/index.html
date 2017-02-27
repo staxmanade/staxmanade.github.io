@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called. - Developing on Staxmanade</title>
+  <title>How to Download and Convert an Image to Base64 Data Url - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="While working on a little WinRT app I recently spent WAY too much time trying to figure out why I was getting the following exception     System.Unaut...">
+   <meta name="description" content="Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I&#x27;m sure there is...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">
+  <link rel="canonical" href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -73,38 +73,71 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a></h1>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">How to Download and Convert an Image to Base64 Data Url</a></h1>
     <p class="meta">
-          <time datetime="2013-03-20T04:06:00.000Z" pubdate data-updated="true">Mar 19th 2013</time>
+          <time datetime="2017-02-27T05:06:20.088Z" pubdate data-updated="true">Feb 26th 2017</time>
 
 
-        
+        <a href="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/#disqus_thread" data-disqus-identifier="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content">
-<div class='post'>
-<p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
+<div class="entry-content"><p>Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is a ton written out there, I didn't immediately find the specific steps in a snippet of code. (Also, I can't say I looked very hard).</p>
+<p>So what does any programmer do when he's not satisfied with what he can't find? He writes his own. Now that I've put it together I'm just going to post this here so I can find it again down the road when I need to. :)</p>
+<p>Below is a utility function that I threw together that will take an <code>imageUrl</code> parameter and will return through a Promise a base64 encoded image data string. You can see from the example usage below that we're just setting an HTML image <code>.src</code> property to the result of this function and it should just work.</p>
+<blockquote>
+<p>NOTE: also if you look at the code that accomplish this below, it may look a bit like &quot;futuristic&quot; JavaScript right now. With all the <code>async/await</code>, <code>arrow functions</code>, <code>http fetch</code> and all, but the cool thing is you should be able to just copy/paste the below into a JSBin/Plnkr/Codepen without issue (in Chrome). No need for Babel/TypeScript/transpiler if you're just prototyping something (as I was). Don't rely on this to work in all browsers yet but I'm sure when I'll be googling myself for this snippet in the future, this should work in most browsers so I'll just leave this here for now.</p>
+</blockquote>
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBase64ImageFromUrl</span>(<span class="hljs-params">imageUrl</span>) </span>{
+  <span class="hljs-keyword">var</span> res = <span class="hljs-keyword">await</span> fetch(imageUrl);
+  <span class="hljs-keyword">var</span> blob = <span class="hljs-keyword">await</span> res.blob();
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+    <span class="hljs-keyword">var</span> reader  = <span class="hljs-keyword">new</span> FileReader();
+    reader.addEventListener(<span class="hljs-string">"load"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        resolve(reader.result);
+    }, <span class="hljs-literal">false</span>);
+
+    reader.onerror = () =&gt; {
+      <span class="hljs-keyword">return</span> reject(<span class="hljs-keyword">this</span>);
+    };
+    reader.readAsDataURL(blob);
+  })
+}
+</code></pre>
+<p>An example usage of the above:</p>
+<pre><code>getBase64ImageFromUrl('http://approvaltests.com/images/logo.png')
+    .then(<span class="hljs-literal">result</span> =&gt; testImage.src = <span class="hljs-literal">result</span>)
+    .catch(err =&gt; console.error(err));
+</code></pre>
+<p>As an alternative to base64 encoded <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">FileReader</a> approach above, you can also also use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">URL.createObjectURL</a> <code>return URL.createObjectURL(blob);</code></p>
+<p>There's of course a number of <a href="http://lmgtfy.com/?q=convert+image+to+base64+online+tool">online tools</a> that do this for you already.</p>
+<p>Hope this helps future me find the implementation a min or two faster some day.</p>
+<p>Happy Encoding!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2013-03-20T04:06:00.000Z" pubdate data-updated="true">Mar 19th 2013</time>
+                          <time datetime="2017-02-27T05:06:20.088Z" pubdate data-updated="true">Feb 26th 2017</time>
 
 
                         
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/" data-via="staxmanade" data-counturl="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/" data-via="staxmanade" data-counturl="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2013/03/windows-8-share-charm-data-inspector/" title="Previous Post: Windows 8 Share Charm Data Inspector">&laquo; Windows 8 Share Charm Data Inspector</a>
-                        <a class="basic-alignment right" href="/2013/05/developer-humor/" title="Next Post: Developer humor">Developer humor &raquo;</a>
+                        <a class="basic-alignment left" href="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/" title="Previous Post: Porting a Large JSPM BabelJS project to Typescript">&laquo; Porting a Large JSPM BabelJS project to Typescript</a>
                     </p>
                 </footer>
             </article>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
         </div>
 
 
@@ -214,6 +247,20 @@
 </script>
 </footer>
   
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 
 
 
