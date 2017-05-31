@@ -3,8 +3,23 @@ body {
     max-width: 95%;
 }
 
+.exBeautifier-content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 .exBeautifier {
     text-align: center;
+    width: 100%;
+}
+.adUnit {
+    margin-left: 10px;
+}
+
+@media (max-width: 900px) {
+    .adUnit {
+        display: none;
+    }
 }
 
 .exInput, .exOutput {
@@ -20,7 +35,7 @@ body {
 }
 
 .exOutput {
-    height: 300px;
+    height: 512px;
 }
 
 .animate-show {

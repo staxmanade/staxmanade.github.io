@@ -45,27 +45,41 @@
 
             <section id="main_content">
                 <h3>Paste your exception message below...</h3>
-                <div class="exBeautifier" ng-controller="ExBeautifierCtrl">
-                    <div>
-                        <input class='exInput' placeholder="Paste an exception message here" type="text" ng-model="exInput"
-                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        />
+
+                <div class="exBeautifier-content-wrapper">
+
+                    <div class="exBeautifier" ng-controller="ExBeautifierCtrl">
+                        <div>
+                            <input class='exInput' placeholder="Paste an exception message here" type="text" ng-model="exInput"
+                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                            />
+                        </div>
+                        <div>
+                            <textarea class='exOutput' ng-model="exOutput" wrap="off"
+                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                            ></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <textarea class='exOutput' ng-model="exOutput" wrap="off"
-                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        ></textarea>
+
+                    <div class="adUnit">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- ExceptionMessageBeautifier -->
+                        <ins class="adsbygoogle"
+                            style="display:inline-block;width:300px;height:600px"
+                            data-ad-client="ca-pub-6814534742514314"
+                            data-ad-slot="6557338149"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                     </div>
+
                 </div>
+
 
             </section>
 
             <footer>
                 Exception Beautifier was created and maintained by <a href="https://github.com/staxmanade">staxmanade</a>
-
-                <div class="implant_ad" style="margin-top: 15px;">
-                    Tired of remoting into servers and relying on users to report problem details? <a href="https://www.implantsoftware.net/c/88ec">Implant helps to gather exceptions from your .NET code in the field.</a>
-                </div>
             </footer>
 
             <script type="text/javascript">
