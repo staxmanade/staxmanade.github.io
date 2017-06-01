@@ -79,6 +79,28 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a></h1>
+    <p class="meta">
+          <time datetime="2014-03-15T19:17:00.000Z" pubdate data-updated="true">Mar 15th 2014</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>The other day I set out to create an iOS UICollectionView that allowed a user to scroll vertically through an infinite-ish list of items where the data came from a paginated back-end web service. Most of the examples out there deal with synchronous in-memory. I needed an asynchronous paginated example.</p>
+<p>I'm new enough to iOS development that solutions don't yet roll off the wire of my keyboard, so I still google for how others attack a problem and adapt their strategy to fit my needs.</p>
+<p>It seemed like it took me all day to track down the pieces I needed to put together a solution. But I found enough to put together a prototype.</p>
+<p>If you need something like this, I've pushed my prototype up to <a href="https://github.com/staxmanade/PaginatedCollectionView">GitHub</a> and hopefully it'll give you enough hints to get started on your own implementation.</p>
+<p>I'm open to feedback. Post any suggestions/alternative ideas to the github repo.</p>
+<h1>Where do I get it?</h1>
+<h2><a href="https://github.com/staxmanade/PaginatedCollectionView">HERE</a></h2>
+<p>Hope you find this useful.</p>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
     <p class="meta">
           <time datetime="2014-03-02T05:41:00.000Z" pubdate data-updated="true">Mar 1st 2014</time>
@@ -271,23 +293,6 @@
 <div class="entry-content">
 <div class='post'>
 <p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/03/richeditbox-gives-unauthorizedaccessexc/">RichEditBox gives UnauthorizedAccessException (Access is denied) error when SetText called.</a></h1>
-    <p class="meta">
-          <time datetime="2013-03-20T04:06:00.000Z" pubdate data-updated="true">Mar 19th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>While working on a little <a href="http://apps.microsoft.com/windows/en-US/app/share-data-inspector/c33bae47-43d7-4d1b-bbee-01f09850d6dc" target="_blank">WinRT app</a> I recently spent WAY too much time trying to figure out why I was getting the following exception</p>  <blockquote>   <p>System.UnauthorizedAccessException was unhandled by user code      <br />&#160; HResult=-2147024891       <br />&#160; Message=Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))       <br />&#160; Source=Windows.UI       <br />&#160; StackTrace:       <br />&#160;&#160;&#160;&#160;&#160;&#160; at Windows.UI.Text.ITextDocument.SetText(TextSetOptions options, String value)</p> </blockquote>  <p>when all I was trying to do was programmatically set the text of a RichEditBox. EX:</p>  <blockquote>   <p>theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);</p> </blockquote>  <p>After searching and searching and eventually taking a walk to cool down, I decided that I would play with the IsReadOnly flag. I have it set to “True” in the XAML because I don’t want users to edit the text. I then wondered if this was causing the problem.</p>  <p>I tweaked the code as shown below and it magically started working. Notice how I’m turning off the IsReadOnly flag off, then setting the text, and returning the read only state after the text has changed.</p>  <blockquote>   <p>theRichEditBox.<strong>IsReadOnly = false;</strong>       <br />theRichEditBox.<strong>Document.SetText</strong>(Windows.UI.Text.TextSetOptions.FormatRtf, textValue);       <br />theRichEditBox.<strong>IsReadOnly = true;</strong></p> </blockquote>  <p>Dear Exception: you were not helpful. Sigh.</p>  </div>
 </div>
 
       

@@ -79,6 +79,23 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/is-my-hsa-trying-to-tell-me-something/">Is my HSA trying to tell me something?</a></h1>
+    <p class="meta">
+          <time datetime="2008-12-05T19:02:00.000Z" pubdate data-updated="true">Dec 5th 2008</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+<p>&#160;</p>  <p>This is my &quot;randomly&quot; generated &quot;Site Key&quot;. My login's special word...</p>  <p>Would anyone else feel a little uneasy about this in a health related site?</p>  <p>&#160;</p>  <p><a href="http://lh6.ggpht.com/_L6Vw0x_R3iw/STl6u1XNFFI/AAAAAAAAACM/syZlgV1dL68/s1600-h/clip_image002%5B3%5D.jpg"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="80" alt="clip_image002" src="http://lh5.ggpht.com/_L6Vw0x_R3iw/STl6vJTTr-I/AAAAAAAAACQ/M2cJwdsnlBE/clip_image002_thumb.jpg?imgmax=800" width="244" border="0" /></a></p>  </div>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2008/12/i4o-with-silverlight-compiles-first-try/">i4o with Silverlight (Compiles first try)</a></h1>
     <p class="meta">
           <time datetime="2008-12-03T06:48:00.000Z" pubdate data-updated="true">Dec 2nd 2008</time>
@@ -484,36 +501,6 @@ returns an array.</p>
 <div class="entry-content">
 <div class='post'>
 When you need to use BinarySearch on a large List&lt;T&gt;, you need to declare a long to hold the return index value of the search. When the item in the list is not found the value returned from the binary search is negative and depending on it's value can mean different things. However most of the time I use this search method I don't care about these other options. Either give me the value I am searching for or give me the default value of &lt;T&gt;.<br /><br />I wrote a little helper extension that will return the found object or if the item could not be fount it returns default(T).<br /><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">static</span> T BinarySearchOrDefault&lt;T&gt;(<span class="kwrd">this</span><br />   List&lt;T&gt; list,<br />   T item,<br />   IComparer&lt;T&gt; comparer)<br />{<br />   <span class="kwrd">int</span> returnIndex = list.BinarySearch(item, comparer);<br /><br />   <span class="kwrd">if</span> (returnIndex &gt;= 0)<br />       <span class="kwrd">return</span> list[returnIndex];<br />   <span class="kwrd">else</span><br />       <span class="kwrd">return</span> <span class="kwrd">default</span>(T);<br />}<br /></pre></div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2008/04/timing-debug-code-using-lamdas/">Timing Debug Code Using Lambda&#x27;s</a></h1>
-    <p class="meta">
-          <time datetime="2008-04-11T15:29:00.000Z" pubdate data-updated="true">Apr 11th 2008</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-In applications that require responsiveness it's sometimes hard, while in the middle of development to test what implementation of some code is faster.<br /><br />Below I've created an example of an easy way to time some action or group of actions within a method to quickly determine how long it would take to do it one way or another.<br /><br /><!-- code formatted by http://manoli.net/csharpformat/ --><br /><pre class="csharpcode"><br /><span class="kwrd">public</span> <span class="kwrd">void</span> SomeMethodIAmWorkingOn()<br />{<br /> TimeAction(<br />   () =&gt;<br />   {<br />     <span class="kwrd">for</span>  (<span class="kwrd">int</span> i = 0;  i &lt;  100; i++)<br />       SomeMethodIAmTiming();<br />     SomeNextStep();<br />   },<br />   <span class="str">"Timing method SomeMethodIAmTiming 100 times..."</span>);<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action, <span class="kwrd"><br /> string</span> debugNote)<br />{<br /> <span class="kwrd">long</span> time = TimeAction(action);<br /><br /> System.Diagnostics.Debug.WriteLine(<br />   <span class="kwrd">string</span>.Format(<br />   <span class="str">"TimeAction:{0}ms, NOTE: {1},"</span>,<br />   time,<br />   debugNote)<br /> );<br /><br /> <span class="kwrd">return</span> time;<br />}<br /><br /><span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">long</span> TimeAction(<br /> System.Action action)<br />{<br /> Stopwatch watch = Stopwatch.StartNew();<br /> action();<br /> watch.Stop();<br /> <span class="kwrd">return</span> watch.ElapsedMilliseconds;<br />}</pre></div>
-<h2>Comments</h2>
-<div class='comments'>
-<div class='comment'>
-<div class='author'>Jason.Jarrett</div>
-<div class='content'>
-whoops - Thanks for the suggested update...</div>
-</div>
-<div class='comment'>
-<div class='author'>Anonymous</div>
-<div class='content'>
-Lambda, not lamda. ;)</div>
-</div>
-</div>
 </div>
 
       

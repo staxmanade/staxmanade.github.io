@@ -79,6 +79,82 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
+    <p class="meta">
+          <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
+
+
+        <a href="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/#disqus_thread" data-disqus-identifier="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build process that creates a bundle before the code gets checked in.</p>
+<p>There are two parts to this.</p>
+<ol>
+<li>The raw source code. The ES6+7+next and all the nifty new js features I want to leverage today.</li>
+<li>The bundled es5 output.</li>
+</ol>
+<p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
+<p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
+<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
+<h1>So what is this thing?</h1>
+<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
+<p>This ensures that whatever <a href="http://bundle.js">bundle.js</a> is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
+<h1>First get a pre-commit tool</h1>
+<p>There are some good options in the npm/node world for pre-commit hooks. Check out <a href="https://github.com/typicode/husky">husky</a> or <a href="https://github.com/observing/pre-commit">pre-commit</a>. However you get your precommit hook setup - great...</p>
+<p>In my case I used <code>husky</code> and here are the relevant bits to my <code>package.json</code>.</p>
+<pre><code class="language-diff">{
+  ...
+
+  "devDependencies": {
+<span class="hljs-addition">+    "husky": "^0.13.4"</span>
+  }
+  "scripts": {
+<span class="hljs-addition">+    "precommit": "node ./pre-commit-build.js"</span>
+  }
+}
+</code></pre>
+<h1>The <code>pre-commit-build.js</code> script I used</h1>
+<p>The below is the short, but complete pre-commit script I use to enforce this workflow.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> exec = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).exec;
+
+<span class="hljs-keyword">var</span> bundleFileName = <span class="hljs-string">'./dist/bundle.js'</span>;
+
+<span class="hljs-keyword">var</span> getShaOfBundle = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> distFile = fs.readFileSync(bundleFileName);
+    <span class="hljs-keyword">var</span> sha = crypto.createHash(<span class="hljs-string">'sha1'</span>).update(distFile).digest(<span class="hljs-string">"hex"</span>);
+    <span class="hljs-keyword">return</span> sha;
+}
+
+<span class="hljs-comment">// make sure we only bundle/build what is staged to get a proper</span>
+<span class="hljs-comment">// view of what will be committed</span>
+exec(<span class="hljs-string">'git stash --keep-index'</span>);
+
+<span class="hljs-comment">// Get a snapshot of the original bundle</span>
+<span class="hljs-keyword">var</span> beforeSha = getShaOfBundle();
+
+<span class="hljs-comment">// run our build</span>
+exec(<span class="hljs-string">'./node_modules/.bin/webpack'</span>);
+
+<span class="hljs-comment">// snapshot the bundle after the build</span>
+<span class="hljs-keyword">var</span> afterSha = getShaOfBundle();
+
+<span class="hljs-comment">// reset anything that was stashed</span>
+exec(<span class="hljs-string">'git stash pop'</span>);
+
+<span class="hljs-keyword">if</span> (beforeSha !== afterSha) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Need to bundle before committing"</span>);
+}
+</code></pre>
+<p>Now whenever I make a change to the raw source code - this pre-commit script makes sure that the <code>dist/bundle.js</code> is correctly mapped to the raw source.</p>
+<p>Happy committing!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">Configuring Git to Use Different Name and Email Depending on Folder Context</a></h1>
     <p class="meta">
           <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
@@ -268,9 +344,9 @@ git add .
 <p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.js%22%3Emerge-wrapper.js%3C%2Fa%3E"></script></p>
 <p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.sh%22%3Emerge-wrapper.sh%3C%2Fa%3E"></script></p>
 <h1>Setup <code>~/.gitconfig</code></h1>
 <p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>

@@ -79,6 +79,83 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
+    <p class="meta">
+          <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
+
+
+        <a href="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/#disqus_thread" data-disqus-identifier="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build process that creates a bundle before the code gets checked in.</p>
+<p>There are two parts to this.</p>
+<ol>
+<li>The raw source code. The ES6+7+next and all the nifty new js features I want to leverage today.</li>
+<li>The bundled es5 output.</li>
+</ol>
+<p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
+<p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
+<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
+<h1>So what is this thing?</h1>
+<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
+<p>This ensures that whatever <a href="http://bundle.js">bundle.js</a> is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
+<h1>First get a pre-commit tool</h1>
+<p>There are some good options in the npm/node world for pre-commit hooks. Check out <a href="https://github.com/typicode/husky">husky</a> or <a href="https://github.com/observing/pre-commit">pre-commit</a>. However you get your precommit hook setup - great...</p>
+<p>In my case I used <code>husky</code> and here are the relevant bits to my <code>package.json</code>.</p>
+<pre><code class="language-diff">{
+  ...
+
+  "devDependencies": {
+<span class="hljs-addition">+    "husky": "^0.13.4"</span>
+  }
+  "scripts": {
+<span class="hljs-addition">+    "precommit": "node ./pre-commit-build.js"</span>
+  }
+}
+</code></pre>
+<h1>The <code>pre-commit-build.js</code> script I used</h1>
+<p>The below is the short, but complete pre-commit script I use to enforce this workflow.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> exec = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).exec;
+
+<span class="hljs-keyword">var</span> bundleFileName = <span class="hljs-string">'./dist/bundle.js'</span>;
+
+<span class="hljs-keyword">var</span> getShaOfBundle = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> distFile = fs.readFileSync(bundleFileName);
+    <span class="hljs-keyword">var</span> sha = crypto.createHash(<span class="hljs-string">'sha1'</span>).update(distFile).digest(<span class="hljs-string">"hex"</span>);
+    <span class="hljs-keyword">return</span> sha;
+}
+
+<span class="hljs-comment">// make sure we only bundle/build what is staged to get a proper</span>
+<span class="hljs-comment">// view of what will be committed</span>
+exec(<span class="hljs-string">'git stash --keep-index'</span>);
+
+<span class="hljs-comment">// Get a snapshot of the original bundle</span>
+<span class="hljs-keyword">var</span> beforeSha = getShaOfBundle();
+
+<span class="hljs-comment">// run our build</span>
+exec(<span class="hljs-string">'./node_modules/.bin/webpack'</span>);
+
+<span class="hljs-comment">// snapshot the bundle after the build</span>
+<span class="hljs-keyword">var</span> afterSha = getShaOfBundle();
+
+<span class="hljs-comment">// reset anything that was stashed</span>
+exec(<span class="hljs-string">'git stash pop'</span>);
+
+<span class="hljs-keyword">if</span> (beforeSha !== afterSha) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Need to bundle before committing"</span>);
+}
+</code></pre>
+<p>Now whenever I make a change to the raw source code - this pre-commit script makes sure that the <code>dist/bundle.js</code> is correctly mapped to the raw source.</p>
+<p>Happy committing!</p>
+</div>
+
+      <a href="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/#disqus_thread" data-disqus-identifier="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">How to Download and Convert an Image to Base64 Data Url</a></h1>
     <p class="meta">
           <time datetime="2017-02-27T05:06:20.088Z" pubdate data-updated="true">Feb 26th 2017</time>
@@ -1177,80 +1254,6 @@ docker rmi &lt;old_qa_image_id&gt;
 </div>
 
       <a href="/2016/06/one-programmers-letter-to-his-wife/#disqus_thread" data-disqus-identifier="/2016/06/one-programmers-letter-to-his-wife/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">Reusable React Component with Overridable Inline CSS Styles</a></h1>
-    <p class="meta">
-          <time datetime="2016-06-21T21:31:22.600Z" pubdate data-updated="true">Jun 21st 2016</time>
-
-
-        <a href="/2016/06/reusable-react-component-with-overridable-inline-css-styles/#disqus_thread" data-disqus-identifier="/2016/06/reusable-react-component-with-overridable-inline-css-styles/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
-<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
-<p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
-<p>Let's say we have the following image component.</p>
-<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
-
-export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
-
-  render() {
-    <span class="hljs-keyword">return</span> (
-      &lt;div&gt;
-        &lt;img src={<span class="hljs-keyword">this</span>.props.src} /&gt;
-      &lt;/div&gt;
-    );
-  }
-
-}
-</code></pre>
-<p>The above component is very simple and very specific.</p>
-<p>Now let's say we allow our consumers to customize the height or width of the image. You may think, ok, simple we'll just allow the consumer to specify <code>height</code> and <code>width</code> as props to the component.</p>
-<p>So the consumer could just go <code>&lt;Image height=&quot;20&quot; width=&quot;20&quot; src=&quot;someimage.png&quot; /&gt;</code>.</p>
-<p>And you end up with something that could look like this.</p>
-<pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
-
-export <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> {</span>
-
-  render() {
-    let imageStyle = {
-      height: <span class="hljs-keyword">this</span>.props.height,
-      width: <span class="hljs-keyword">this</span>.props.width
-    };
-    <span class="hljs-keyword">return</span> (
-      &lt;div&gt;
-        &lt;img src={<span class="hljs-keyword">this</span>.props.src} style={imageStyle} /&gt;
-      &lt;/div&gt;
-    );
-  }
-}
-</code></pre>
-<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
-<p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
-<p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
-<h1>One Possible Solution</h1>
-<p>We can use something like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a> to easily accomplish this.</p>
-<p>We can allow the consumers to pass in their own <code>style={...}</code> property and provide a set of sensible defaults for the component, but allow the consumer of our component to completely override a style if necessaryl</p>
-<p>We can update our:</p>
-<pre><code>    let imageStyle = {
-      <span class="hljs-variable">height</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">height</span>,
-      <span class="hljs-variable">width</span>: <span class="hljs-keyword">this</span>.props.<span class="hljs-variable">width</span>
-    };
-</code></pre>
-<p>to the following pattern:</p>
-<pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
-      {},                               <span class="hljs-comment">// target (starting with)</span>
-      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
-      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
-    );
-</code></pre>
-<p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
-<p>Happy Componentization!</p>
-</div>
-
-      <a href="/2016/06/reusable-react-component-with-overridable-inline-css-styles/#disqus_thread" data-disqus-identifier="/2016/06/reusable-react-component-with-overridable-inline-css-styles/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
