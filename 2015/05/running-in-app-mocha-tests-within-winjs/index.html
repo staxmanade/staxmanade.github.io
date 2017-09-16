@@ -8,7 +8,7 @@
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="&gt; I described a while back a scenario about running [in-app unit tests](http://staxmanade.com/2015/03/in-app-unit-tests/). So if you&#x27;d like some backg...">
+   <meta name="description" content="&gt; I described a while back a scenario about running [in-app unit tests](https://staxmanade.com/2015/03/in-app-unit-tests/). So if you&#x27;d like some back...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">
+  <link rel="canonical" href="https://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -94,7 +94,7 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a></h1>
     <p class="meta">
           <time datetime="2015-05-23T21:32:45.540Z" pubdate data-updated="true">May 23rd 2015</time>
 
@@ -103,7 +103,7 @@
     </p>
 </header>
 <div class="entry-content"><blockquote>
-<p>I described a while back a scenario about running <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit tests</a>. So if you'd like some background on the subject have a look there before reading here.</p>
+<p>I described a while back a scenario about running <a href="https://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit tests</a>. So if you'd like some background on the subject have a look there before reading here.</p>
 </blockquote>
 <p>This post is going to give some specifics about how to run <a href="http://mochajs.org/">MochaJS</a> tests within a Microsoft Windows JavaScript application (WinJS).</p>
 <h2>Prerequisites</h2>
@@ -157,7 +157,7 @@
             <span class="hljs-comment">&lt;!-- define a button that we can use to manually run or re-run tests --&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mochaTestsRun"</span>&gt;</span>Run Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
 
-            <span class="hljs-comment">&lt;!-- define a checkbox that allow us to toggle auto-run 
+            <span class="hljs-comment">&lt;!-- define a checkbox that allow us to toggle auto-run
                  of the tests when we start up the app --&gt;</span>
             Auto start <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mochaTestsRunOnStart"</span> /&gt;</span>
 
@@ -178,7 +178,7 @@
     <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-comment">// clear any current test results since mocha just appends.</span>
         element.querySelector(<span class="hljs-string">'#mocha'</span>).innerHTML = <span class="hljs-string">""</span>;
-    
+
         <span class="hljs-comment">// If you want your tests to verify nothing is leaked globally...</span>
         mocha.checkLeaks();
 
@@ -192,9 +192,9 @@
     }
 
     <span class="hljs-keyword">var</span> ControlConstructor = WinJS.UI.Pages.define(<span class="hljs-string">"/js/tests/tests.html"</span>, {
-        <span class="hljs-comment">// This function is called after the page control contents </span>
-        <span class="hljs-comment">// have been loaded, controls have been activated, and </span>
-        <span class="hljs-comment">// the resulting elements have been parented to the DOM. </span>
+        <span class="hljs-comment">// This function is called after the page control contents</span>
+        <span class="hljs-comment">// have been loaded, controls have been activated, and</span>
+        <span class="hljs-comment">// the resulting elements have been parented to the DOM.</span>
         ready: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element, options</span>) </span>{
             options = options || {};
 
@@ -217,7 +217,7 @@
             <span class="hljs-keyword">if</span> (runOnStart &amp;&amp; !<span class="hljs-built_in">window</span>.hasRunMochaTestsAtLeastOnce) {
                 <span class="hljs-comment">// this value is used to avoid extra test runs as we navigation around the app.</span>
                 <span class="hljs-comment">// EX: if the test control is on a home pivot - we nav away and come back home</span>
-                <span class="hljs-comment">// we probably don't want to auto-run the tests again. (use the menu button </span>
+                <span class="hljs-comment">// we probably don't want to auto-run the tests again. (use the menu button</span>
                 <span class="hljs-comment">// instead if you want another test run)</span>
                 <span class="hljs-built_in">window</span>.hasRunMochaTestsAtLeastOnce = <span class="hljs-literal">true</span>;
                 runMochaTests();
@@ -226,9 +226,9 @@
         },
     });
 
-    <span class="hljs-comment">// The following lines expose this control constructor as a global. </span>
-    <span class="hljs-comment">// This lets you use the control as a declarative control inside the </span>
-    <span class="hljs-comment">// data-win-control attribute. </span>
+    <span class="hljs-comment">// The following lines expose this control constructor as a global.</span>
+    <span class="hljs-comment">// This lets you use the control as a declarative control inside the</span>
+    <span class="hljs-comment">// data-win-control attribute.</span>
 
     WinJS.Namespace.define(<span class="hljs-string">"MyApp.Testing.Controls"</span>, {
         TestsControl: ControlConstructor
@@ -261,8 +261,8 @@
         <span class="hljs-comment">// their handlers, but it's working for me so far...</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.onerror &amp;&amp; errorMessage) {
             <span class="hljs-built_in">window</span>.onerror(errorMessage, errorLine, errorUrl);
-            
-            <span class="hljs-comment">// return true signalling that the error's been </span>
+
+            <span class="hljs-comment">// return true signalling that the error's been</span>
             <span class="hljs-comment">// handled (keeping the whole app from crashing)</span>
             <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
         }
@@ -350,7 +350,7 @@
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/" data-via="staxmanade" data-counturl="http://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/" data-via="staxmanade" data-counturl="https://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Tweet</a>
 </div>
 
                     <p class="meta">

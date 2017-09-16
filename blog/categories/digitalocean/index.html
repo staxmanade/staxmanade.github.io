@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="https://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -79,7 +79,7 @@
         <div class="blog-index">
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a></h1>
     <p class="meta">
           <time datetime="2016-07-27T05:24:03.338Z" pubdate data-updated="true">Jul 26th 2016</time>
 
@@ -196,7 +196,7 @@ networks:
 <p>This file is all about:</p>
 <ol>
 <li>The <code>build: ./app/</code> is the directory where our <code>Dockerfile</code> build is.</li>
-<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
+<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
 <li>The <code>ports</code> example is also important. We don't want to access the container by going <code>my-docker-test-site.com:8001</code> or whatever port we're actually running the container on because we want to use the <code>VIRTUAL_HOST</code> feature of nginx-proxy to allow us to say <code>qa.my-docker-test-site.com</code>. This configuration sets it up to only listen on the loopback network so the nginx-proxy can proxy to these containers but they aren't accessible from the inter-webs.</li>
 <li>Lastly the <code>networks:</code> we define a <code>default</code> network for the web app to use the <code>service-tier</code> that we setup earlier. This allows the nginx-proxy and our running instances of the web container to correctly talk to each other. (I actually have no idea what I'm saying  here - but it is simple enough to setup and I think it's all good - so I'm going with it for now...)</li>
 </ol>
@@ -218,7 +218,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-built_in">export</span> VIRTUAL_HOST=<span class="hljs-variable">$BASE_SITE</span>
 docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span class="hljs-operator">-d</span>
 </code></pre>
-<p>This script is <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
+<p>This script is <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
 <h1>Project Name</h1>
 <p>What we said just before this headline is a key part to this. What enables us to run essentially the same project (docker-compose/Dockerfile) but with different environment variables that define things like <code>qa</code> vs <code>prod</code> is when we run <code>docker-compose</code> we're also passing in a <code>-p</code> or <code>--project-name</code> parameter. This allows us to create multiple container instances with different environment variables that all run on <strong>different ports</strong> and in theory isolate themselves from the other environments.</p>
 <p>The thinking here is you could have a single <code>docker-compose.yml</code> file that has multiple server definitions like say a <code>nodejs web</code>, <code>couchdb</code>, and <code>redis</code> database all running isolated within their environment.  You can then use the environment variables to drive various items such as feature-toggling newly developed features in a <code>qa</code> environment, but are not necessarily ready to run in a production environment.</p>

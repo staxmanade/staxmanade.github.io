@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="https://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -79,7 +79,7 @@
         <div class="blog-index">
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
     <p class="meta">
           <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
 
@@ -95,7 +95,7 @@
 </ol>
 <p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
 <p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
-<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
 <p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>

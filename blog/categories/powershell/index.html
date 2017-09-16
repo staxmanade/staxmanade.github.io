@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="https://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -79,7 +79,7 @@
         <div class="blog-index">
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
     <p class="meta">
           <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
 
@@ -89,7 +89,7 @@
 </header>
 <div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
 <p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
-<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
 <p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
 <p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
 <p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
@@ -105,9 +105,9 @@
 </code></pre>
 <p>If you're interested in the evolution of this CD tool:</p>
 <ul>
-<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
-<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
-<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
 </ul>
 <p>SUPER SWEET!</p>
 <p>Happy CD'ing!</p>
@@ -116,7 +116,7 @@
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></h1>
     <p class="meta">
           <time datetime="2016-04-10T16:40:42.307Z" pubdate data-updated="true">Apr 10th 2016</time>
 
@@ -125,7 +125,7 @@
     </p>
 </header>
 <div class="entry-content"><p>A while back I wrote about a replacement for the <code>cd</code> command on powershell that I wrote which provides some fun features such as history tracking, support cd'ing to a folder when a file path is given, etc... It's been a while since I've touched this helpful little tool which sometimes I even forget I wrote it because it's something that's used practically every day and &quot;it just works&quot;.</p>
-<p>For more information, check out the older posts about it here <a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
+<p>For more information, check out the older posts about it here <a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
 <h1>It now supports <code>cd ...</code></h1>
 <p>Well, today I threw a quick feature into this utility that I've become accustomed to using in zsh on my Mac.</p>
 <p>On many *nix command prompts you can type something like <code>cd ....</code>. This command translates indo <code>cd ..; cd ..; cd ..</code> (but executed as one command). The first <code>..</code> counts as one directory and then each ane every <code>.</code> after that counts as another directory up the tree.</p>
@@ -137,7 +137,7 @@
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/05/introducing-commandallthings/">Introducing CommandAllThings</a></h1>
     <p class="meta">
           <time datetime="2014-05-24T20:27:55.480Z" pubdate data-updated="true">May 24th 2014</time>
 
@@ -173,7 +173,7 @@
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2012/12/easily-set-visual-studio-keyboard/">Easily set Visual Studio keyboard bindings with the Nuget Package Manager Console</a></h1>
     <p class="meta">
           <time datetime="2012-12-06T16:41:00.000Z" pubdate data-updated="true">Dec 6th 2012</time>
 
@@ -189,7 +189,7 @@
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></h1>
     <p class="meta">
           <time datetime="2012-11-01T16:55:00.000Z" pubdate data-updated="true">Nov 1st 2012</time>
 
@@ -205,7 +205,7 @@ A while back I wrote about a <a href="http://elegantcode.com/2011/07/16/slightly
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2012/10/powershell-presentation-at-northern/">PowerShell Presentation at the Northern Nevada Software Dev Group.</a></h1>
     <p class="meta">
           <time datetime="2012-10-26T04:43:00.000Z" pubdate data-updated="true">Oct 25th 2012</time>
 
@@ -221,7 +221,7 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2011/10/chocolatey-free-and-open-source-windows/">Chocolatey - The free and open source windows app store.</a></h1>
     <p class="meta">
           <time datetime="2011-10-05T22:39:00.000Z" pubdate data-updated="true">Oct 5th 2011</time>
 
@@ -237,7 +237,7 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2011/08/powershell-text-to-speech-and-fun-with/">Powershell Text-To-Speech and fun with a 4yr old.</a></h1>
     <p class="meta">
           <time datetime="2011-09-01T05:36:00.000Z" pubdate data-updated="true">Aug 31st 2011</time>
 
@@ -253,7 +253,7 @@ Last night I gave a talk on PowerShell to the <a href="http://softwaredevelopers
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></h1>
     <p class="meta">
           <time datetime="2011-07-17T02:33:00.000Z" pubdate data-updated="true">Jul 16th 2011</time>
 
@@ -282,7 +282,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2010/11/powershell-url-checker-check-if-list-of/">PowerShell url checker (Check if a list of url’s is valid)</a></h1>
     <p class="meta">
           <time datetime="2010-11-11T02:20:00.000Z" pubdate data-updated="true">Nov 10th 2010</time>
 
@@ -298,7 +298,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2010/05/silverlight-profiling-powershell-helper/">Silverlight Profiling PowerShell helper.</a></h1>
     <p class="meta">
           <time datetime="2010-05-15T16:50:00.000Z" pubdate data-updated="true">May 15th 2010</time>
 
@@ -314,7 +314,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2010/02/powershell-background-task-that-speaks/">PowerShell – background task that speaks to me</a></h1>
     <p class="meta">
           <time datetime="2010-02-16T05:11:00.000Z" pubdate data-updated="true">Feb 15th 2010</time>
 
@@ -330,7 +330,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/12/powershell-load-assembly-without/">Powershell: Load assembly without locking file.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2009/12/powershell-load-assembly-without/">Powershell: Load assembly without locking file.</a></h1>
     <p class="meta">
           <time datetime="2009-12-23T05:40:00.000Z" pubdate data-updated="true">Dec 22nd 2009</time>
 
@@ -346,7 +346,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/10/integration-test-brought-to-you-by/">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2009/10/integration-test-brought-to-you-by/">Integration Test Brought to you by Powershell &amp; NUnit – with a Little Specification Syntax for Flavoring</a></h1>
     <p class="meta">
           <time datetime="2009-10-26T05:02:00.000Z" pubdate data-updated="true">Oct 25th 2009</time>
 
@@ -362,7 +362,7 @@ If you want some more *nix features, including cd - you may want to look at pscx
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2009/09/powershell-compiling-with-cscexe-more/">PowerShell – Compiling with csc.exe – more of a headache that it should have been. It is possible…</a></h1>
     <p class="meta">
           <time datetime="2009-10-01T01:46:00.000Z" pubdate data-updated="true">Sep 30th 2009</time>
 

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <link>http://staxmanade.com</link>
+    <link>https://staxmanade.com</link>
     <updated>2017-06-01T21:58:03Z</updated>
     <author>
         <name>Jason Jarrett</name>
-        <uri>http://staxmanade.com/about</uri>
+        <uri>https://staxmanade.com/about</uri>
     </author>
-    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2017 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
         <title type="html"><![CDATA[How to block git commit if webpack bundle has changed]]></title>
-        <id>http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/</id>
-        <link href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">
+        <id>https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/</id>
+        <link href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">
         </link>
         <updated>2017-06-01T21:58:03Z</updated>
         <summary type="html"><![CDATA[I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build pr...]]></summary>
@@ -26,7 +26,7 @@
 </ol>
 <p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
 <p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
-<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
 <p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
@@ -85,8 +85,8 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </entry>
     <entry>
         <title type="html"><![CDATA[How to Download and Convert an Image to Base64 Data Url]]></title>
-        <id>http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/</id>
-        <link href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">
+        <id>https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/</id>
+        <link href="https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">
         </link>
         <updated>2017-02-27T05:06:20Z</updated>
         <summary type="html"><![CDATA[Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is...]]></summary>
@@ -126,15 +126,15 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </entry>
     <entry>
         <title type="html"><![CDATA[Porting a Large JSPM BabelJS project to Typescript]]></title>
-        <id>http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</id>
-        <link href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">
+        <id>https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</id>
+        <link href="https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">
         </link>
         <updated>2017-02-20T06:33:46Z</updated>
         <summary type="html"><![CDATA[I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using [BabelJS](https://babeljs.io/)...]]></summary>
         <content type="html"><![CDATA[<p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
 <p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
 <p>It didn't take too long before the project grew beyond a single load into memory. Now I'm mentally paging out components from different files as I work on various sections of the application.</p>
-<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
+<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="https://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="https://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
 <p>However, that didn't stop me from breaking things, making mistakes or just out-right screwing up a javascript file here and there along the way.</p>
 <p>While working on this project, it always niggled me that the project would keep growing without the ability for the most basic of unit-tests to run (the compiler). Almost a year ago I even remember trying to use Typescript but using it with JSPM and without having VisualStudio Code all together, it just never came together (or I just didn't try hard enough).</p>
 <p>But this past week, I gave it another go, and while I'm not totally there (or where I'd like to end up), I'm quite happy with the results I've made so far and am impressed and quite happily working in a project that has completely been ported to Typescript from ES6/7 using BabelJS.</p>
@@ -255,8 +255,8 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </entry>
     <entry>
         <title type="html"><![CDATA[TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management]]></title>
-        <id>http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</id>
-        <link href="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">
+        <id>https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</id>
+        <link href="https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">
         </link>
         <updated>2016-12-20T06:17:05Z</updated>
         <summary type="html"><![CDATA[So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much int...]]></summary>
@@ -554,14 +554,14 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </entry>
     <entry>
         <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...]]></title>
-        <id>http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</id>
-        <link href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">
+        <id>https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</id>
+        <link href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">
         </link>
         <updated>2016-11-15T05:06:36Z</updated>
         <summary type="html"><![CDATA[There's this little "CD" utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.]]></summary>
         <content type="html"><![CDATA[<p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
 <p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
-<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
 <p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
 <p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
 <p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
@@ -577,9 +577,9 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </code></pre>
 <p>If you're interested in the evolution of this CD tool:</p>
 <ul>
-<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
-<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
-<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
 </ul>
 <p>SUPER SWEET!</p>
 <p>Happy CD'ing!</p>
@@ -587,8 +587,8 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </entry>
     <entry>
         <title type="html"><![CDATA[Better Compact JIRA Board U.I.]]></title>
-        <id>http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</id>
-        <link href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">
+        <id>https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</id>
+        <link href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">
         </link>
         <updated>2016-09-30T17:07:25Z</updated>
         <summary type="html"><![CDATA[We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enoug...]]></summary>
@@ -711,8 +711,8 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </entry>
     <entry>
         <title type="html"><![CDATA[How to Update a Single Running docker-compose Container]]></title>
-        <id>http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</id>
-        <link href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">
+        <id>https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</id>
+        <link href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">
         </link>
         <updated>2016-09-09T04:45:17Z</updated>
         <summary type="html"><![CDATA[As a newbie to the tooling, [docker-compose](https://docs.docker.com/compose/) it's great for getting started. To bring up all the service containers ...]]></summary>
@@ -751,8 +751,8 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </entry>
     <entry>
         <title type="html"><![CDATA[Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.]]></title>
-        <id>http://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/</id>
-        <link href="http://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">
+        <id>https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/</id>
+        <link href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">
         </link>
         <updated>2016-07-27T05:24:03Z</updated>
         <summary type="html"><![CDATA[So, I'm playing around with some personal projects and looking to deploy some simple things with [Docker](https://www.docker.com/) to DigitalOcean. Th...]]></summary>
@@ -865,7 +865,7 @@ networks:
 <p>This file is all about:</p>
 <ol>
 <li>The <code>build: ./app/</code> is the directory where our <code>Dockerfile</code> build is.</li>
-<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
+<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
 <li>The <code>ports</code> example is also important. We don't want to access the container by going <code>my-docker-test-site.com:8001</code> or whatever port we're actually running the container on because we want to use the <code>VIRTUAL_HOST</code> feature of nginx-proxy to allow us to say <code>qa.my-docker-test-site.com</code>. This configuration sets it up to only listen on the loopback network so the nginx-proxy can proxy to these containers but they aren't accessible from the inter-webs.</li>
 <li>Lastly the <code>networks:</code> we define a <code>default</code> network for the web app to use the <code>service-tier</code> that we setup earlier. This allows the nginx-proxy and our running instances of the web container to correctly talk to each other. (I actually have no idea what I'm saying  here - but it is simple enough to setup and I think it's all good - so I'm going with it for now...)</li>
 </ol>
@@ -887,7 +887,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-built_in">export</span> VIRTUAL_HOST=<span class="hljs-variable">$BASE_SITE</span>
 docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span class="hljs-operator">-d</span>
 </code></pre>
-<p>This script is <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
+<p>This script is <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
 <h1>Project Name</h1>
 <p>What we said just before this headline is a key part to this. What enables us to run essentially the same project (docker-compose/Dockerfile) but with different environment variables that define things like <code>qa</code> vs <code>prod</code> is when we run <code>docker-compose</code> we're also passing in a <code>-p</code> or <code>--project-name</code> parameter. This allows us to create multiple container instances with different environment variables that all run on <strong>different ports</strong> and in theory isolate themselves from the other environments.</p>
 <p>The thinking here is you could have a single <code>docker-compose.yml</code> file that has multiple server definitions like say a <code>nodejs web</code>, <code>couchdb</code>, and <code>redis</code> database all running isolated within their environment.  You can then use the environment variables to drive various items such as feature-toggling newly developed features in a <code>qa</code> environment, but are not necessarily ready to run in a production environment.</p>
@@ -1070,8 +1070,8 @@ docker rmi &lt;old_qa_image_id&gt;
     </entry>
     <entry>
         <title type="html"><![CDATA[Easily simulate slow async calls using JavaScript async/await]]></title>
-        <id>http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/</id>
-        <link href="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">
+        <id>https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/</id>
+        <link href="https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">
         </link>
         <updated>2016-07-08T12:34:43Z</updated>
         <summary type="html"><![CDATA[Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world ...]]></summary>
@@ -1116,8 +1116,8 @@ docker rmi &lt;old_qa_image_id&gt;
     </entry>
     <entry>
         <title type="html"><![CDATA[One Programmers Letter to his Wife]]></title>
-        <id>http://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/</id>
-        <link href="http://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">
+        <id>https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/</id>
+        <link href="https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">
         </link>
         <updated>2016-06-29T01:46:02Z</updated>
         <summary type="html"><![CDATA[One of my core natures is as a builder and creator. I'm strongly introverted so much of my time is spent in my own head. My best and sometimes worst t...]]></summary>
@@ -1141,8 +1141,8 @@ docker rmi &lt;old_qa_image_id&gt;
     </entry>
     <entry>
         <title type="html"><![CDATA[Reusable React Component with Overridable Inline CSS Styles]]></title>
-        <id>http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/</id>
-        <link href="http://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">
+        <id>https://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/</id>
+        <link href="https://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">
         </link>
         <updated>2016-06-21T21:31:22Z</updated>
         <summary type="html"><![CDATA[React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exp...]]></summary>
@@ -1210,12 +1210,12 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
     </entry>
     <entry>
         <title type="html"><![CDATA[Strange error on docker-compose up: oci runtime error: exec format error]]></title>
-        <id>http://staxmanade.com/2016/05/strange-error-on-docker-compose-up/</id>
-        <link href="http://staxmanade.com/2016/05/strange-error-on-docker-compose-up/">
+        <id>https://staxmanade.com/2016/05/strange-error-on-docker-compose-up/</id>
+        <link href="https://staxmanade.com/2016/05/strange-error-on-docker-compose-up/">
         </link>
         <updated>2016-05-27T20:18:56Z</updated>
-        <summary type="html"><![CDATA[I ran into a non-intuitive error while mucking around with [docker-compose](https://docs.docker.com/compose/) recently on [an example](http://staxmana...]]></summary>
-        <content type="html"><![CDATA[<p>I ran into a non-intuitive error while mucking around with <a href="https://docs.docker.com/compose/">docker-compose</a> recently on <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">an example</a>.</p>
+        <summary type="html"><![CDATA[I ran into a non-intuitive error while mucking around with [docker-compose](https://docs.docker.com/compose/) recently on [an example](https://staxman...]]></summary>
+        <content type="html"><![CDATA[<p>I ran into a non-intuitive error while mucking around with <a href="https://docs.docker.com/compose/">docker-compose</a> recently on <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">an example</a>.</p>
 <h1>docker-compose up</h1>
 <pre><code>Building some_server
 Step 1 : FROM alpine
@@ -1258,8 +1258,8 @@ docker-compose returned -<span class="hljs-number">1</span>
     </entry>
     <entry>
         <title type="html"><![CDATA[How to Get Environment Variables Passed Through docker-compose to the Containers]]></title>
-        <id>http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/</id>
-        <link href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">
+        <id>https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/</id>
+        <link href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">
         </link>
         <updated>2016-05-26T04:36:41Z</updated>
         <summary type="html"><![CDATA[I've been playing with a [little toy](https://github.com/staxmanade/sample-pouch-couch-databaseperuser) that uses [docker-compose](https://docs.docker...]]></summary>
@@ -1338,8 +1338,8 @@ services:
     </entry>
     <entry>
         <title type="html"><![CDATA[Configuring Git to Use Different Name and Email Depending on Folder Context]]></title>
-        <id>http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</id>
-        <link href="http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">
+        <id>https://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</id>
+        <link href="https://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">
         </link>
         <updated>2016-05-25T22:16:39Z</updated>
         <summary type="html"><![CDATA[Thought I'd share how I'm configuring `user.name` and `user.email` for git on my work computer. This is really just a post so when I forget how I did ...]]></summary>
@@ -1384,8 +1384,8 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
     </entry>
     <entry>
         <title type="html"><![CDATA[How NOT to Start Asynchronous Communication]]></title>
-        <id>http://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/</id>
-        <link href="http://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">
+        <id>https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/</id>
+        <link href="https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">
         </link>
         <updated>2016-05-20T21:50:33Z</updated>
         <summary type="html"><![CDATA[Hey!]]></summary>
@@ -1403,13 +1403,13 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
     </entry>
     <entry>
         <title type="html"><![CDATA[Easily Convert CSS to React Inline Styles]]></title>
-        <id>http://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/</id>
-        <link href="http://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">
+        <id>https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/</id>
+        <link href="https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">
         </link>
         <updated>2016-04-21T04:52:14Z</updated>
         <summary type="html"><![CDATA[### TL;DR]]></summary>
-        <content type="html"><![CDATA[<p><a target="blank" href="http://staxmanade.com/CssToReact/">
-<img align="right" src="http://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
+        <content type="html"><![CDATA[<p><a target="blank" href="https://staxmanade.com/CssToReact/">
+<img align="right" src="https://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
 </a></p>
 <h3>TL;DR</h3>
 <p>Click the logo to jump the tool...</p>
@@ -1417,8 +1417,8 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <p>So you're working on a React app. It's up and running in you're favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
 <p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in you're React component.</p>
 <p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="http://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste you're <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
-<p>You can see the project here: <a href="http://staxmanade.com/CssToReact/">CssToReact</a>
+<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste you're <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
+<p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
 If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
 <blockquote>
 <p>Aside: This should really be a plugin to my text editor where we can right click and say &quot;Paste as React Style&quot; instead, but for now it's a single simple little web page that will automate the translation for you. (I haven't looked for the plugin - if it exists or ever is created let me know in the comments...)</p>
@@ -1428,13 +1428,13 @@ If you have a suggestion or want to pull-request it your self you can check it o
     </entry>
     <entry>
         <title type="html"><![CDATA[Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...]]></title>
-        <id>http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/</id>
-        <link href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">
+        <id>https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/</id>
+        <link href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">
         </link>
         <updated>2016-04-10T16:40:42Z</updated>
         <summary type="html"><![CDATA[A while back I wrote about a replacement for the `cd` command on powershell that I wrote which provides some fun features such as history tracking, su...]]></summary>
         <content type="html"><![CDATA[<p>A while back I wrote about a replacement for the <code>cd</code> command on powershell that I wrote which provides some fun features such as history tracking, support cd'ing to a folder when a file path is given, etc... It's been a while since I've touched this helpful little tool which sometimes I even forget I wrote it because it's something that's used practically every day and &quot;it just works&quot;.</p>
-<p>For more information, check out the older posts about it here <a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
+<p>For more information, check out the older posts about it here <a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
 <h1>It now supports <code>cd ...</code></h1>
 <p>Well, today I threw a quick feature into this utility that I've become accustomed to using in zsh on my Mac.</p>
 <p>On many *nix command prompts you can type something like <code>cd ....</code>. This command translates indo <code>cd ..; cd ..; cd ..</code> (but executed as one command). The first <code>..</code> counts as one directory and then each ane every <code>.</code> after that counts as another directory up the tree.</p>
@@ -1445,8 +1445,8 @@ If you have a suggestion or want to pull-request it your self you can check it o
     </entry>
     <entry>
         <title type="html"><![CDATA[Oops - how a simple bit of automation put NuGet services on edge...]]></title>
-        <id>http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/</id>
-        <link href="http://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">
+        <id>https://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/</id>
+        <link href="https://staxmanade.com/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">
         </link>
         <updated>2016-03-30T20:06:46Z</updated>
         <summary type="html"><![CDATA[This past week I received an email from Microsoft's NuGet team asking if I could look into a bit of an issue with [DefinitelyTyped's](http://definitel...]]></summary>
@@ -1491,12 +1491,12 @@ If you have a suggestion or want to pull-request it your self you can check it o
     </entry>
     <entry>
         <title type="html"><![CDATA[Developer Friendly React Component Errors]]></title>
-        <id>http://staxmanade.com/2016/01/developer-friendly-react-component-errors/</id>
-        <link href="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">
+        <id>https://staxmanade.com/2016/01/developer-friendly-react-component-errors/</id>
+        <link href="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">
         </link>
         <updated>2016-01-31T07:20:41Z</updated>
         <summary type="html"><![CDATA[One of the biggest pain points I've run into while building an application with Facebook's [React](https://facebook.github.io/react/) is when you goof...]]></summary>
-        <content type="html"><![CDATA[<p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="http://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
+        <content type="html"><![CDATA[<p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
 <p>If I google for <code>react try catch</code> the first search result hit landed me on this <a href="https://github.com/facebook/react/issues/2461">GitHub issue on error boundaries</a> (status: <code>open</code> as of this writing). There is a pull-request with what looks to be a potential work around, but until this lands and it provides enough of a solution I hope the below can help you.</p>
 <p>If you read the comments of this post you'll see <a href="https://github.com/facebook/react/issues/2461#issuecomment-114155631">this helpful comment</a> where Skiano links to a <a href="https://github.com/skiano/react-safe-render/blob/feature/safe-methods/index.js">github repo</a> with a pretty good wrapper that re-writes React components so the lifecycle methods get a useful <code>try/catch</code> and can properly log errors.</p>
 <p>I liked the approach provided above but since I'm working on a project that is using <a href="https://babeljs.io">BabelJS</a> and <code>ES6/7</code>, I wanted to see if I could try using the new <a href="https://github.com/wycats/javascript-decorators">ES7 Decorators</a> which Babel supports to allow tagging certain ES6 React classes with this try/catch wrapper.</p>
@@ -1542,8 +1542,8 @@ wrapReactComponentMethodsWithTryCatch(MyComponent);
     </entry>
     <entry>
         <title type="html"><![CDATA[Habit of a Solid Developer - Part 9 - Rapid Feedback]]></title>
-        <id>http://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/</id>
-        <link href="http://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">
+        <id>https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/</id>
+        <link href="https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">
         </link>
         <updated>2016-01-31T06:20:41Z</updated>
         <summary type="html"><![CDATA[A series of posts about Habit of a Solid Developer - Part 9 - Rapid Feedback]]></summary>

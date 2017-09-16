@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <link>http://staxmanade.com</link>
+    <link>https://staxmanade.com</link>
     <updated>2015-04-13T04:18:37Z</updated>
     <author>
         <name>Jason Jarrett</name>
-        <uri>http://staxmanade.com/about</uri>
+        <uri>https://staxmanade.com/about</uri>
     </author>
-    <link rel="alternate" href="http://staxmanade.com"/>
+    <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="/blog/ec.xml"/>
     <rights>Copyright (C) 2008-2017 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
     <entry>
         <title type="html"><![CDATA[Look at where DefinitelyTyped is Now]]></title>
-        <id>http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/</id>
-        <link href="http://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">
+        <id>https://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/</id>
+        <link href="https://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">
         </link>
         <updated>2015-04-13T04:18:37Z</updated>
         <summary type="html"><![CDATA[# A Little Wondering]]></summary>
@@ -22,7 +22,7 @@
 <p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
 <p>While looking over the project template, I was surprised to see a familiar folder structure <code>typings/cordova/*</code> in the project.</p>
 <h2>Why is this folder structure familiar?</h2>
-<p>Because I created it almost 2 years ago when I <a href="http://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
+<p>Because I created it almost 2 years ago when I <a href="https://staxmanade.com/2013/02/definitelytyped-typescript-definitions/">threw together</a> a <a href="https://github.com/DefinitelyTyped/NugetAutomation">PowerShell script</a> that chucks <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a> TypeScript definitions up onto <a href="http://www.nuget.org/">NuGet</a>.</p>
 <p>Another example of the folder structure, while I can't say for certain, but I can only guess that when the <a href="https://github.com/winjs/winjs">winjs</a> started converting over to TypeScript that they chose to put their type definitions into the same structure. I won't claim to have inspired it, but would be cool to say I did.</p>
 <p>It was a bit surprising and humbling to discover Microsoft had in one of their default templates a reference to some TypeScript type definitions that (while I didn't have anything to do with the creation of the definitions, nor <a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a>) I did created the simple little utility that runs continuously up on <a href="http://teamcity.codebetter.com/">TeamCity.CodeBetter.com</a> and tirelessly updates NuGet packages as they change over on DefinitelyTyped.</p>
 <p>This reminded me, that I hadn't checked up on the NuGet user account for DefinitelyTyped in quite a while so I decided to head over to the <a href="http://NuGet.org">NuGet.org</a>, take a glance at the account and check out how many downloads there had been?</p>
@@ -41,8 +41,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Build Command with Auditory Feedback]]></title>
-        <id>http://staxmanade.com/2015/02/build-command-with-auditory-feedback/</id>
-        <link href="http://staxmanade.com/2015/02/build-command-with-auditory-feedback/">
+        <id>https://staxmanade.com/2015/02/build-command-with-auditory-feedback/</id>
+        <link href="https://staxmanade.com/2015/02/build-command-with-auditory-feedback/">
         </link>
         <updated>2015-02-28T21:36:32Z</updated>
         <summary type="html"><![CDATA[Here's a short and fun little ditty I'm going to throw up here so I can find it later... *(because why would I try to memorize something so simple whe...]]></summary>
@@ -64,8 +64,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Resgrid is a BizSpark Featured Startup]]></title>
-        <id>http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
-        <link href="http://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">
+        <id>https://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
+        <link href="https://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">
         </link>
         <updated>2015-01-15T00:17:25Z</updated>
         <summary type="html"><![CDATA[Today Microsoft published an article on their [BizSpark Featured Startups](http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/tr...]]></summary>
@@ -78,8 +78,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Use different Git Diff Tools Per File Extension]]></title>
-        <id>http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>
-        <link href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
+        <id>https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>
+        <link href="https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
         </link>
         <updated>2014-12-29T16:12:11Z</updated>
         <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
@@ -120,11 +120,11 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Introducing SkypeIt - Command Line Skype Phone Calls]]></title>
-        <id>http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
-        <link href="http://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">
+        <id>https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
+        <link href="https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">
         </link>
         <updated>2014-12-24T22:22:17Z</updated>
-        <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit) ]]></summary>
+        <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit)]]></summary>
         <content type="html"><![CDATA[<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
 <p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
 <h2>What is it?</h2>
@@ -149,7 +149,7 @@
 </ol>
 <p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
 <h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>If you <a href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
 <p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
 <blockquote>
 <p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
@@ -161,8 +161,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Thoughts on Working Remotely from Home]]></title>
-        <id>http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/</id>
-        <link href="http://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">
+        <id>https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/</id>
+        <link href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">
         </link>
         <updated>2014-12-14T00:45:43Z</updated>
         <summary type="html"><![CDATA[> This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of ...]]></summary>
@@ -212,7 +212,7 @@
 <ul>
 <li>I often joke with my fellow Californian commute ridden co-workers when they complain about traffic that day that I narrowly avoided a 3 (lego) car pile-up on my way to the office.</li>
 <li>I live where it's cold in the winter and not having to scrape the ice off of the windshield of my car in the morning due to the icy dew is a HUGE benefit.</li>
-<li>Plus there's the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="http://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
+<li>Plus there's the, well not commuting part. While I enjoyed using the commute to zone out to my <a href="https://staxmanade.com/about/podcasts.html">favorite podcasts</a>, I still find time to keep up with my podcast when doing things like laundry, dishes, etc.</li>
 </ul>
 </li>
 <li>More family time overall. Since my coffee, water, bathroom breaks all lead to opportunities where I can say hello to the family.</li>
@@ -250,8 +250,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Updating git branches.]]></title>
-        <id>http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</id>
-        <link href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">
+        <id>https://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</id>
+        <link href="https://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">
         </link>
         <updated>2014-06-03T16:38:06Z</updated>
         <summary type="html"><![CDATA[# How to update a git branch OTHER than the one you're currently on.]]></summary>
@@ -288,8 +288,8 @@ git push origin release
     </entry>
     <entry>
         <title type="html"><![CDATA[Introducing CommandAllThings]]></title>
-        <id>http://staxmanade.com/2014/05/introducing-commandallthings/</id>
-        <link href="http://staxmanade.com/2014/05/introducing-commandallthings/">
+        <id>https://staxmanade.com/2014/05/introducing-commandallthings/</id>
+        <link href="https://staxmanade.com/2014/05/introducing-commandallthings/">
         </link>
         <updated>2014-05-24T20:27:55Z</updated>
         <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
@@ -320,8 +320,8 @@ git push origin release
     </entry>
     <entry>
         <title type="html"><![CDATA[How to compile plain *.js (JavaScript) files with the TypeScript Compiler]]></title>
-        <id>http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
-        <link href="http://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
+        <id>https://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
+        <link href="https://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
         </link>
         <updated>2014-05-18T17:27:29Z</updated>
         <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>

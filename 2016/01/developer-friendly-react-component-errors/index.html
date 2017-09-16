@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">
+  <link rel="canonical" href="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -94,7 +94,7 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Developer Friendly React Component Errors</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Developer Friendly React Component Errors</a></h1>
     <p class="meta">
           <time datetime="2016-01-31T07:20:41.092Z" pubdate data-updated="true">Jan 30th 2016</time>
 
@@ -102,7 +102,7 @@
         <a href="/2016/01/developer-friendly-react-component-errors/#disqus_thread" data-disqus-identifier="/2016/01/developer-friendly-react-component-errors/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="http://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
+<div class="entry-content"><p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
 <p>If I google for <code>react try catch</code> the first search result hit landed me on this <a href="https://github.com/facebook/react/issues/2461">GitHub issue on error boundaries</a> (status: <code>open</code> as of this writing). There is a pull-request with what looks to be a potential work around, but until this lands and it provides enough of a solution I hope the below can help you.</p>
 <p>If you read the comments of this post you'll see <a href="https://github.com/facebook/react/issues/2461#issuecomment-114155631">this helpful comment</a> where Skiano links to a <a href="https://github.com/skiano/react-safe-render/blob/feature/safe-methods/index.js">github repo</a> with a pretty good wrapper that re-writes React components so the lifecycle methods get a useful <code>try/catch</code> and can properly log errors.</p>
 <p>I liked the approach provided above but since I'm working on a project that is using <a href="https://babeljs.io">BabelJS</a> and <code>ES6/7</code>, I wanted to see if I could try using the new <a href="https://github.com/wycats/javascript-decorators">ES7 Decorators</a> which Babel supports to allow tagging certain ES6 React classes with this try/catch wrapper.</p>
@@ -160,7 +160,7 @@ wrapReactComponentMethodsWithTryCatch(MyComponent);
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/" data-via="staxmanade" data-counturl="http://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/" data-via="staxmanade" data-counturl="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Tweet</a>
 </div>
 
                     <p class="meta">

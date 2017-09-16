@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com">
+  <link rel="canonical" href="https://staxmanade.com">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -79,7 +79,7 @@
         <div class="blog-index">
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
     <p class="meta">
           <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
 
@@ -95,7 +95,7 @@
 </ol>
 <p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
 <p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
-<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
 <p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
@@ -155,7 +155,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">Configuring Git to Use Different Name and Email Depending on Folder Context</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">Configuring Git to Use Different Name and Email Depending on Folder Context</a></h1>
     <p class="meta">
           <time datetime="2016-05-25T22:16:39.455Z" pubdate data-updated="true">May 25th 2016</time>
 
@@ -205,7 +205,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Habit of a Solid Developer - Part 3 - Self Prescribed Code Reviews</a></h1>
     <p class="meta">
           <time datetime="2015-09-14T06:20:41.092Z" pubdate data-updated="true">Sep 13th 2015</time>
 
@@ -252,7 +252,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <h1>This is not a formal (sit down with someone) code review.</h1>
 <p>This is a personal practice I found extremely useful.</p>
 <p>Granted, I'm not talking about reviewing every commit in a repository the <a href="https://www.youtube.com/watch?v=X0VH78ye4yY">size of Facebooks</a>. Most of the projects I have participated in are on small enough teams (between 1-10 people) that reviewing code changes either as they come in or in some block during the day is completely feasible.</p>
-<p>Depending on the project, how many developers, time zones of committers, I shift how often or how thorough I review the changes but I try to review each and every commit (or at least the branch merge). This is one reason why <a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregating your code commits into tiny topical changes</a> is important.</p>
+<p>Depending on the project, how many developers, time zones of committers, I shift how often or how thorough I review the changes but I try to review each and every commit (or at least the branch merge). This is one reason why <a href="https://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">segregating your code commits into tiny topical changes</a> is important.</p>
 <p>If you're working with a source control that doesn't have an easy way to do <a href="http://git-scm.com/docs/git-request-pull">pull requests</a>. Or some other code review functionality, you can still use the source control system to manually review changes or diffs between branches. Way back when I was <strong>forced</strong> to use TFS source control this was a much more manual process. I would open up Visual Studio, browse our TFS server and begin reviewing. These days, the power of a pull request is generally suffecient for this purpose.</p>
 <h1>What happens in this review?</h1>
 <p>One approach I've taken in the past is to block some time, possibly while warming up with a cup of coffee to begin reviewing the previous day's commits. I would use this time to not only review other developer's changes, but I would also re-review my own commits. This helped remind me what I worked on and possibly what I was struggling through the previous day. Reviewing code the next day provided time for my mental perspective to have shifted. I was probably thinking about things a little more clearly after a nights rest. Maybe I'd learned something that could be applied to the problem being worked on and provide better setup for changes needing to be made that day.</p>
@@ -260,7 +260,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <ul>
 <li>It was a bit of a meditative process in the early morning that put my brain on a code thinking track for the day.</li>
 <li>I could take notes on changes other's had made that were not clear. (Note: this is generally done in an environment that didn't perscribe peer-reviewing code changes). So I essentially took the job on personally to review other's changes. Provide feedback, or ask question to get more understanding of their changes.</li>
-<li>Easily catch when the project conventions were not being followed, when the <a href="http://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">convention was not automated</a>.</li>
+<li>Easily catch when the project conventions were not being followed, when the <a href="https://staxmanade.com/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">convention was not automated</a>.</li>
 <li>Potentially spot bugs being introduced.</li>
 <li>Suggest potentially better approaches.</li>
 </ul>
@@ -283,7 +283,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
     <p class="meta">
           <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
 
@@ -314,7 +314,7 @@ git add .
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
     <p class="meta">
           <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
 
@@ -360,7 +360,7 @@ git add .
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">Updating git branches.</a></h1>
     <p class="meta">
           <time datetime="2014-06-03T16:38:06.494Z" pubdate data-updated="true">Jun 3rd 2014</time>
 
@@ -402,7 +402,7 @@ git push origin release
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">rake, psake, grunt, gulp, jake, make, cake, brunch, ant, bash, maven, or fabric. as long as you putOnAHelmet</a></h1>
     <p class="meta">
           <time datetime="2014-03-02T05:41:00.000Z" pubdate data-updated="true">Mar 1st 2014</time>
 
@@ -418,7 +418,7 @@ git push origin release
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/02/segregate-your-code-commits-into-tiny/">Segregate your code commits into tiny topical changes.</a></h1>
     <p class="meta">
           <time datetime="2014-02-17T18:25:00.000Z" pubdate data-updated="true">Feb 17th 2014</time>
 
@@ -453,7 +453,7 @@ git push origin release
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2013/06/authentication-error-connecting-to-git/">Authentication error connecting to Git on TFS</a></h1>
     <p class="meta">
           <time datetime="2013-06-20T17:46:00.000Z" pubdate data-updated="true">Jun 20th 2013</time>
 
@@ -469,7 +469,7 @@ git push origin release
             </article>
             <article>
                   <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2011/06/git-on-windows-creating-network-shared/">Git on Windows: Creating a network shared central repository.</a></h1>
     <p class="meta">
           <time datetime="2011-06-18T17:15:00.000Z" pubdate data-updated="true">Jun 18th 2011</time>
 

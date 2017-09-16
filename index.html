@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="http://staxmanade.com/index.html">
+  <link rel="canonical" href="https://staxmanade.com/index.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -79,7 +79,7 @@
 <div class="blog-index">
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
     <p class="meta">
           <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
 
@@ -95,7 +95,7 @@
 </ol>
 <p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
 <p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
-<p>I'm a <a href="http://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
+<p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
 <p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
@@ -156,7 +156,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">How to Download and Convert an Image to Base64 Data Url</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">How to Download and Convert an Image to Base64 Data Url</a></h1>
     <p class="meta">
           <time datetime="2017-02-27T05:06:20.088Z" pubdate data-updated="true">Feb 26th 2017</time>
 
@@ -202,7 +202,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">Porting a Large JSPM BabelJS project to Typescript</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">Porting a Large JSPM BabelJS project to Typescript</a></h1>
     <p class="meta">
           <time datetime="2017-02-20T06:33:46.360Z" pubdate data-updated="true">Feb 19th 2017</time>
 
@@ -213,7 +213,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
 <div class="entry-content"><p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
 <p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
 <p>It didn't take too long before the project grew beyond a single load into memory. Now I'm mentally paging out components from different files as I work on various sections of the application.</p>
-<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="http://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="http://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="http://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
+<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="https://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="https://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
 <p>However, that didn't stop me from breaking things, making mistakes or just out-right screwing up a javascript file here and there along the way.</p>
 <p>While working on this project, it always niggled me that the project would keep growing without the ability for the most basic of unit-tests to run (the compiler). Almost a year ago I even remember trying to use Typescript but using it with JSPM and without having VisualStudio Code all together, it just never came together (or I just didn't try hard enough).</p>
 <p>But this past week, I gave it another go, and while I'm not totally there (or where I'd like to end up), I'm quite happy with the results I've made so far and am impressed and quite happily working in a project that has completely been ported to Typescript from ES6/7 using BabelJS.</p>
@@ -336,7 +336,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">TVJS TVHelpers DirectionalNavigation and Adapting/Hacking some WinJS Focus Management</a></h1>
     <p class="meta">
           <time datetime="2016-12-20T06:17:05.148Z" pubdate data-updated="true">Dec 19th 2016</time>
 
@@ -640,7 +640,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
     <p class="meta">
           <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
 
@@ -650,7 +650,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </header>
 <div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
 <p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
-<p>In my <a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
 <p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
 <p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
 <p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
@@ -666,9 +666,9 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </code></pre>
 <p>If you're interested in the evolution of this CD tool:</p>
 <ul>
-<li><a href="http://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
-<li><a href="http://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
-<li><a href="http://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
 </ul>
 <p>SUPER SWEET!</p>
 <p>Happy CD'ing!</p>
@@ -678,7 +678,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
     <p class="meta">
           <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
 
@@ -807,7 +807,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
     <p class="meta">
           <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
 
@@ -852,7 +852,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a></h1>
     <p class="meta">
           <time datetime="2016-07-27T05:24:03.338Z" pubdate data-updated="true">Jul 26th 2016</time>
 
@@ -969,7 +969,7 @@ networks:
 <p>This file is all about:</p>
 <ol>
 <li>The <code>build: ./app/</code> is the directory where our <code>Dockerfile</code> build is.</li>
-<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
+<li>The list of <code>environment</code> variables are important. The <code>VIRTUAL_HOST</code> and <code>VIRTUAL_PORT</code> are used by the nginx-proxy to know what port to proxy requests for and at what host/domain name. (We'll show an example later) You can see an earlier exploratory post I wrote <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">explaining more about environment vars</a>.</li>
 <li>The <code>ports</code> example is also important. We don't want to access the container by going <code>my-docker-test-site.com:8001</code> or whatever port we're actually running the container on because we want to use the <code>VIRTUAL_HOST</code> feature of nginx-proxy to allow us to say <code>qa.my-docker-test-site.com</code>. This configuration sets it up to only listen on the loopback network so the nginx-proxy can proxy to these containers but they aren't accessible from the inter-webs.</li>
 <li>Lastly the <code>networks:</code> we define a <code>default</code> network for the web app to use the <code>service-tier</code> that we setup earlier. This allows the nginx-proxy and our running instances of the web container to correctly talk to each other. (I actually have no idea what I'm saying  here - but it is simple enough to setup and I think it's all good - so I'm going with it for now...)</li>
 </ol>
@@ -991,7 +991,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-built_in">export</span> VIRTUAL_HOST=<span class="hljs-variable">$BASE_SITE</span>
 docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span class="hljs-operator">-d</span>
 </code></pre>
-<p>This script is <a href="http://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
+<p>This script is <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">setting some environment variables</a> that are then used by the <code>docker-compose</code> command where and we're also setting a unique <strong>project name</strong> with <code>-p ${VIRTUAL_HOST}</code>.</p>
 <h1>Project Name</h1>
 <p>What we said just before this headline is a key part to this. What enables us to run essentially the same project (docker-compose/Dockerfile) but with different environment variables that define things like <code>qa</code> vs <code>prod</code> is when we run <code>docker-compose</code> we're also passing in a <code>-p</code> or <code>--project-name</code> parameter. This allows us to create multiple container instances with different environment variables that all run on <strong>different ports</strong> and in theory isolate themselves from the other environments.</p>
 <p>The thinking here is you could have a single <code>docker-compose.yml</code> file that has multiple server definitions like say a <code>nodejs web</code>, <code>couchdb</code>, and <code>redis</code> database all running isolated within their environment.  You can then use the environment variables to drive various items such as feature-toggling newly developed features in a <code>qa</code> environment, but are not necessarily ready to run in a production environment.</p>
@@ -1176,7 +1176,7 @@ docker rmi &lt;old_qa_image_id&gt;
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Easily simulate slow async calls using JavaScript async/await</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Easily simulate slow async calls using JavaScript async/await</a></h1>
     <p class="meta">
           <time datetime="2016-07-08T12:34:43.041Z" pubdate data-updated="true">Jul 8th 2016</time>
 
@@ -1227,7 +1227,7 @@ docker rmi &lt;old_qa_image_id&gt;
     </article>
     <article>
         <header>
-    <h1 class="entry-title"><a href="http://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">One Programmers Letter to his Wife</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">One Programmers Letter to his Wife</a></h1>
     <p class="meta">
           <time datetime="2016-06-29T01:46:02.830Z" pubdate data-updated="true">Jun 28th 2016</time>
 
