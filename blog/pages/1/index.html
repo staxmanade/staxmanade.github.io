@@ -79,6 +79,90 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">How to Access Two Mac Accounts at the Same Time</a></h1>
+    <p class="meta">
+          <time datetime="2017-10-09T15:55:51.649Z" pubdate data-updated="true">Oct 9th 2017</time>
+
+
+        <a href="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/#disqus_thread" data-disqus-identifier="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>From a single Mac if you wanted to access two unique accounts at the same time, I found out through a <a href="https://apple.stackexchange.com/a/151160">neat little trick</a> how to accomplish this.</p>
+<p>This allows you to log in to a second unique Mac user while already being logged into the first account already. It can be done without having to logout/login to each one individually (one at a time).</p>
+<h2>Why would I need to do this?</h2>
+<p>The reasons could vary but here are a couple examples:</p>
+<ul>
+<li>If you use one user for work, and one for personal to keep some separate context, but while at work maybe need to access a file or email from the personal account.</li>
+<li>You'd like to access a separate iMessage account without it getting mixed into yours. Say you want to spy on the kid. (Not saying whether this is ethical or not - depends on your parenting style - just proposing a reason for using this tool).</li>
+</ul>
+<h2>Disclaimer</h2>
+<blockquote>
+<p>To accomplish this we're going to be turning on some services/features that have the potential to open security vulnerabilities so please use with caution and learn/know you're risks.</p>
+</blockquote>
+<h2>Setup/Configuration</h2>
+<p>To accomplish this your Mac needs to have the proper permissions and configuration in place to allow this to happen.</p>
+<p>First we need to access the system preferences:</p>
+<p><img src="/images/posts/dual-login/access-preferences.png" alt="access mac system preferences"></p>
+<p>Then open the <code>Sharing</code> preferences:</p>
+<p><img src="/images/posts/dual-login/preferences-highlight-sharing.png" alt="mac sharing preferences"></p>
+<p>Then enable <code>Screen Sharing</code> and don't forget to add the specific users you want to allow screen to be shared for.</p>
+<blockquote>
+<p>Note: I blocked out this specific user-name - but assume the blacked out user is the Mac account's user that I want to log into using the Screen Sharing application</p>
+</blockquote>
+<p><img src="/images/posts/dual-login/screen-sharing-preference.png" alt="screen sharing preference"></p>
+<p>I had to enable enable remote login to allow the up-coming <code>ssh</code> command to run. Here is the configuration I used:</p>
+<p><img src="/images/posts/dual-login/remote-login.png" alt="remote login preference"></p>
+<h2>Startup an SSH Session</h2>
+<p>From the currently logged in session, open a <code>Terminal</code> and run the following command:</p>
+<pre><code>ssh -NL <span class="hljs-number">5901</span>:localhost:<span class="hljs-number">5900</span> localhost
+</code></pre>
+<p>The <code>-L</code> has this to say in ssh's man pages</p>
+<pre><code>     -L [bind_address:]port:host:hostport
+     -L [bind_address:]port:remote_socket
+     -L local_socket:host:hostport
+     -L local_socket:remote_socket
+             Specifies <span class="hljs-keyword">that</span> connections <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">given</span> TCP port <span class="hljs-keyword">or</span> Unix socket <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> (client) host are <span class="hljs-keyword">to</span> be forwarded <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span>
+             <span class="hljs-keyword">given</span> host <span class="hljs-keyword">and</span> port, <span class="hljs-keyword">or</span> Unix socket, <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> remote side.  This works <span class="hljs-keyword">by</span> allocating a socket <span class="hljs-keyword">to</span> listen <span class="hljs-keyword">to</span> either a TCP port
+             <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> side, optionally bound <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> specified bind_address, <span class="hljs-keyword">or</span> <span class="hljs-keyword">to</span> a Unix socket.  Whenever a connection <span class="hljs-keyword">is</span> made <span class="hljs-keyword">to</span>
+             <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> port <span class="hljs-keyword">or</span> socket, <span class="hljs-keyword">the</span> connection <span class="hljs-keyword">is</span> forwarded <span class="hljs-keyword">over</span> <span class="hljs-keyword">the</span> secure channel, <span class="hljs-keyword">and</span> a connection <span class="hljs-keyword">is</span> made <span class="hljs-keyword">to</span> either host
+             port hostport, <span class="hljs-keyword">or</span> <span class="hljs-keyword">the</span> Unix socket remote_socket, <span class="hljs-keyword">from</span> <span class="hljs-keyword">the</span> remote machine.
+
+             Port forwardings can also be specified <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> configuration <span class="hljs-type">file</span>.  Only <span class="hljs-keyword">the</span> superuser can forward privileged ports.  IPv6
+             addresses can be specified <span class="hljs-keyword">by</span> enclosing <span class="hljs-keyword">the</span> address <span class="hljs-keyword">in</span> square brackets.
+
+             By default, <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> port <span class="hljs-keyword">is</span> bound <span class="hljs-keyword">in</span> accordance <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> GatewayPorts setting.  However, an explicit bind_address may be
+             used <span class="hljs-keyword">to</span> bind <span class="hljs-keyword">the</span> connection <span class="hljs-keyword">to</span> a specific address.  The bind_address <span class="hljs-keyword">of</span> ``localhost'' indicates <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> listening port be
+             bound <span class="hljs-keyword">for</span> <span class="hljs-keyword">local</span> use only, <span class="hljs-keyword">while</span> an empty address <span class="hljs-keyword">or</span> `*' indicates <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> port should be available <span class="hljs-keyword">from</span> all interfaces.
+</code></pre>
+<p>For <code>-N</code>:</p>
+<pre><code>     -N      <span class="hljs-operator"><span class="hljs-keyword">Do</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">execute</span> a remote command.  This <span class="hljs-keyword">is</span> useful <span class="hljs-keyword">for</span> just forwarding ports.
+</span></code></pre>
+<p>Here's what it looks like when I ran it locally:</p>
+<pre><code>&gt; ssh -NL <span class="hljs-number">5901</span>:localhost:<span class="hljs-number">5900</span> localhost
+The authenticity <span class="hljs-keyword">of</span> host 'localhost (::<span class="hljs-number">1</span>)' can't be established.
+ECDSA key fingerprint <span class="hljs-keyword">is</span> SHA256:ytfRv5WDPuTjGbBugJjmc8gOhsHga7ozGqNgjOXpdRM.
+Are you sure you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">continue</span> connecting (yes/no)? yes
+Warning: Permanently added 'localhost' (ECDSA) <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> <span class="hljs-type">list</span> <span class="hljs-keyword">of</span> known hosts.
+Password: &lt;I entered <span class="hljs-keyword">my</span> account/admin password&gt;
+</code></pre>
+<h2>Use Screen Sharing to login</h2>
+<p>Once that ssh command above is up and running, we're now ready to log into the other account using Screen Sharing.</p>
+<p>Open the <code>Screen Sharing</code> Mac app located in: <code>/System/Library/CoreServices/Screen Sharing.app</code>. You can also use <code>CMD+&lt;Space&gt;</code> (Spotlight) and type <code>Screen Sharing</code> to open the app.</p>
+<p>Then enter <code>localhost:5901</code> to start the process.</p>
+<p>It should look like this:</p>
+<p><img src="/images/posts/dual-login/screen-sharing-startup.png" alt="screen sharing app startup view"></p>
+<p>In the below screen entered the username/password that you want to login as. (Not the current account - the other one)</p>
+<p><img src="/images/posts/dual-login/screen-sharing-login.png" alt="screen sharing app login view"></p>
+<p>Now select that you want to login as &quot;yourself&quot; where &quot;yourself&quot; is really &quot;other account&quot;:</p>
+<p><img src="/images/posts/dual-login/screen-sharing-select-user.png" alt="screen sharing app access user strategy view"></p>
+<p>...and boom, you should now able to use two separate accounts on a single Mac session.</p>
+<p>Happy Spying (wink wink)!</p>
+</div>
+
+      <a href="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/#disqus_thread" data-disqus-identifier="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">How to block git commit if webpack bundle has changed</a></h1>
     <p class="meta">
           <time datetime="2017-06-01T21:58:03.582Z" pubdate data-updated="true">Jun 1st 2017</time>
@@ -1224,36 +1308,6 @@ docker rmi &lt;old_qa_image_id&gt;
 </div>
 
       <a href="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/#disqus_thread" data-disqus-identifier="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">One Programmers Letter to his Wife</a></h1>
-    <p class="meta">
-          <time datetime="2016-06-29T01:46:02.830Z" pubdate data-updated="true">Jun 28th 2016</time>
-
-
-        <a href="/2016/06/one-programmers-letter-to-his-wife/#disqus_thread" data-disqus-identifier="/2016/06/one-programmers-letter-to-his-wife/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>One of my core natures is as a builder and creator. I'm strongly introverted so much of my time is spent in my own head. My best and sometimes worst times are regularly spent by myself. I know you already know many things about introverts, but as a refresher I'd like you to read this.</p>
-<blockquote>
-<p><a href="http://www.theatlantic.com/magazine/archive/2003/03/caring-for-your-introvert/302696/">Caring for your introvert</a></p>
-</blockquote>
-<p>As a creator, one of the happiest moments we can experience is getting into a state of &quot;flow&quot;.</p>
-<blockquote>
-<p>In positive psychology, flow, also known as the zone, is the mental state of operation in which a person performing an activity is fully immersed in a feeling of energized focus, full involvement, and enjoyment in the process of the activity.
-<a href="">https://en.wikipedia.org/wiki/Flow_(psychology)</a></p>
-</blockquote>
-<p>I've heard this flow state described as a process where the mind is so focus on the task at hand, so engulfed in the spirit of the process that all other external processing of our environment and even our own bodily needs can be ignored. The brain puts so much energy and focus into this, that things like the need to eat, sleep, or sometimes even ignoring the restroom (for as long as possible - waiting until my bladder is SCREAMING at me).</p>
-<p>I'm quite happy when I'm making progress on my creation(s) as they can often invoke this flow state. While the opposite of the &quot;enjoyment&quot; can certainly happen while working on projects as they can frustrate the heck out of me sometimes and if it ever bleeds into our relationship I'm sorry for that.</p>
-<p>I wish I could convey the highs I can experience while in &quot;flow&quot; as strongly as you've likely see my frustrations about the lows. Sadly, without the lows, struggle, up hill battles, cussing at the computer I could possibly never really experience the feelings of success or overcoming that struggle and enjoy them as much as I do.</p>
-<p>Between work, family time, children, shopping, housework, sleep and whatever else we fill our days with, it often times feels like I get to apply very little time to this thing that I am truly driven (maybe slightly addicted to) and excited about.</p>
-<p>I know you try to give me time to work on these things. There are times you think you've given a Saturday morning or an evening for me to work on my thing. However, sadly for it to truly be a successful session, I need time and space with room to concentrate. An hour before bedtime makes me feel like I shouldn't even try, because it could take at least 30-40 min to get back into the project leaving so little time to be productive that it's not even worth starting. These are times when I decide to blow any amount of time I've been given and just waste it watching a show on Netflix. Not because I don't want to work on my thing, but because I know the amount of effort it will take to get into the flow state will take far too long to make it worth it. If I were to get into flow, I'm then going to want to stay there and likely push past my bed time (which is getting harder and harder to recover from).</p>
-<p>I don't want this to sound like this creation/building thing is more important than my family. In fact it's not. If you look at my actions and track record, the amount of time I have pushed aside so I could help you with your endeavors by watching kids, taking on extra shopping trips, house duties as well as the financial obligation (and strain), and still finding time to spend with you in the evenings at the expense of this thing I want to do should prove that my commitment to the family (and you) is still a priority.</p>
-<p>I don't know how to close this out an wrap it up, other than to say I love you. I love my children. I also love what I build. I would like to work with you to find a way to balance these items a little better.</p>
-</div>
-
-      <a href="/2016/06/one-programmers-letter-to-his-wife/#disqus_thread" data-disqus-identifier="/2016/06/one-programmers-letter-to-his-wife/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>

@@ -79,6 +79,61 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Migrating from BlogSpot to Octopress - Part 1 - Introduction</a></h1>
+    <p class="meta">
+          <time datetime="2014-04-13T03:19:53.000Z" pubdate data-updated="true">Apr 12th 2014</time>
+
+
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="http://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>After hosting my blog on <a href="http://blogspot.com">BlogSpot.com</a> for over 5 years, it was time to move.</p>
+<p>As someone with the development background I have and constantly growing knowledge of the web, it always bugged me that my blog was hosted on BlogSpot.</p>
+<p>When I first started blogging over 5 years ago, it was a great starter site. Free, simple, easy to configure and it was a great place to throw content up with very little friction. But my desire to write posts using <a href="http://en.m.wikipedia.org/wiki/Markdown">Markdown</a>, host my content on a site where I felt like I had complete control, and lets face it, I just wanted a codebase I could tinker with and throw up coding experiments.</p>
+<p>I recently completed migration of my <a href="https://staxmanade.blogspot.com">staxmanade.blogspot.com</a> site to its new location here on <a href="https://staxmanade.com">staxmanade.com</a> which is graciously being hosted for free by <a href="https://github.com">GitHub</a>.</p>
+<p>If you currently have a blog on BlogSpot/Blogger and are interested in migrating to Octopress or any other blog, the following series of posts may be of use.</p>
+<p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 1</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - (current) - Introduction
+        </li>
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
+        </li>
+    </ul>
+</div></p>
+</div>
+
+      <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2014/03/infinite-scrolling-uicollectionview/">Infinite Scrolling UICollectionView with Asyncronously Loading</a></h1>
     <p class="meta">
           <time datetime="2014-03-15T19:17:00.000Z" pubdate data-updated="true">Mar 15th 2014</time>
@@ -276,23 +331,6 @@
 <div class="entry-content">
 <div class='post'>
 <p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2013/05/developer-humor/">Developer humor</a></h1>
-    <p class="meta">
-          <time datetime="2013-05-09T17:43:00.000Z" pubdate data-updated="true">May 9th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>I literally cried this morning as I scanned these posts.</p>  <blockquote>   <p>Note: Don't have a drink in hand or mouth when reading these.</p> </blockquote>  <p>Enjoy:</p>  <ul>   <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life" href="http://martinvalasek.com/blog/pictures-from-a-developers-life">http://martinvalasek.com/blog/pictures-from-a-developers-life</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-2</a> </li>    <li><a title="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3" href="http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3">http://martinvalasek.com/blog/pictures-from-a-developers-life-part-3</a> </li> </ul>  <p>If you’re a git user.</p>  <ul>   <li><a title="http://wheningit.tumblr.com/" href="http://wheningit.tumblr.com/">http://wheningit.tumblr.com/</a> </li> </ul>  </div>
 </div>
 
       
