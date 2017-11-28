@@ -205,7 +205,7 @@
 <li>Sourcemaps seem to actually work. Whenever I used BabelJS, debugging and stepping through async/await it just never seemed to line up right for me. This was likely user-error or in-proper configuration of babel on my part, so who knows... but having working source-maps is AMAZING, especially with the <code>async/await</code> feature.</li>
 <li>One area of concern that I haven't yet worked through. Is the JSPM typescript loading up in the browser - or running <code>jspm bundle app</code> at the command line doesn't report any typescript errors - or fail any builds. However, I'm glad it doesn't because something isn't quite rite with my configuration as every import of a <code>.tsx</code> file reports an error. So, for now I'm just relying on the red squigglies in my VS Code editor to help me catch typing errors.</li>
 </ol>
-<p>If you go for this port in you're own project, I hope this was helpful, and that your port goes well.</p>
+<p>If you go for this port in your own project, I hope this was helpful, and that your port goes well.</p>
 <p>Happy TypeScripting!</p>
 </div>
 
@@ -397,13 +397,13 @@
     </p>
 </header>
 <div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
-<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from your JS code itself. You can write your JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
 <h1>TL;DR</h1>
 <p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/LLQQqg?p=preview">plnkr.co</a> go right ahead!</p>
 <h1>How to run our first Mocha test</h1>
 <p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily componentize my code for cleaner extraction into a project, gist or other...</p>
 <p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
-<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open your browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
 <p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
 <pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>

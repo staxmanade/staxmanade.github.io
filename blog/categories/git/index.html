@@ -165,7 +165,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
 </header>
 <div class="entry-content"><p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
 <p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
-<p>For most, <code>user.name</code> shouldn't change, unless you're company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
+<p>For most, <code>user.name</code> shouldn't change, unless your company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
 <p>When I clone projects I always clone them into a folder structure that looks like</p>
 <pre><code>|____~/code
 | |____personal/  &lt;--- <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> where I would put some OSS projects <span class="hljs-literal">that</span> I may be working <span class="hljs-literal">on</span> <span class="hljs-keyword">or</span> contributing <span class="hljs-keyword">to</span>.
@@ -200,6 +200,88 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <h1>What did this do?</h1>
 <p>Each time we <code>cd</code> into either a <code>personal/</code> or <code>work/</code> folder <code>direnv</code> will setup our shell with environment variables contained in that folder's <code>.envrc</code> file. This will then allow Git which respects these env vars and now we don't have to think about committing the wrong name/email to the wrong Git repositories.</p>
 <p>Happy Gitting!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/09/habit-of-a-solid-developer-git-dance/">Habit of a Solid Developer - Part 4 - Git Dance</a></h1>
+    <p class="meta">
+          <time datetime="2015-09-30T06:20:41.092Z" pubdate data-updated="true">Sep 29th 2015</time>
+
+
+        <a href="/2015/09/habit-of-a-solid-developer-git-dance/#disqus_thread" data-disqus-identifier="/2015/09/habit-of-a-solid-developer-git-dance/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>﻿
+<div class="seriesNote">
+    <p>This article is <strong>Part 4</strong> of <strong>11</strong> in a series about <strong>Habit of a Solid Developer</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2015/08/habit-of-a-solid-developer-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2015/09/habit-of-a-solid-developer-automatically-enforce-project-conventions/">Automatically Enforce Project Conventions</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">Self Prescribed Code Reviews</a>
+        </li>
+        <li>
+            Part 4 - (current) - Git Dance
+        </li>
+        <li>
+            Part 5 - <a href="/2015/10/habit-of-a-solid-developer-update-or-add-documentation-while-reading-code/">Update or Add Documentation while Reading Code</a>
+        </li>
+        <li>
+            Part 6 - <a href="/2015/10/habit-of-a-solid-developer-dig-a-little-deeper/">Dig a Little Deeper</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2015/11/habit-of-a-solid-developer-changes-should-be-taken-with-baby-steps/">Changes Should be Taken with Baby Steps</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2015/11/habit-of-a-solid-developer-podcasts/">Podcasts</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2016/01/habit-of-a-solid-developer-rapid-feedback/">Rapid Feedback</a>
+        </li>
+    </ul>
+</div></p>
+<p>When it comes to solid dev habits, source control should be on the top of your list as a given. So much so that I'm not going to talk about the pro's and pro's (see what I did there?) of source control. I did however, want to walk through something I call my <code>git dance</code> which is mostly just the rhythmic steps I take while pulling in changes from a remote repository while working on a project.</p>
+<p>For a little context, this workflow is what I usually do while working on an internal project using git with a team where we may or may not be using pull requests, but the goal of this dance is to bring in any remote changes and layer my changes in on the <code>master</code> branch (or whatever branch we're developing on).</p>
+<p>My favorite thing about git is there is no &quot;right way&quot; to do things and when you get good enough at it the 'rules' people place on using git can mostly be wiped away. However, the below steps, while not always followed, are generally what I use to stay happy and healthy when dealing with others changes.</p>
+<h1><a href="http://git-scm.com/docs/git-fetch">Fetch</a> remote changes (don't <a href="http://git-scm.com/docs/git-pull">pull</a>)</h1>
+<p>So if we know or don't know that there are changes remotely</p>
+<pre><code>git fetch
+</code></pre>
+<p>or sometimes (if I have multiple remotes)</p>
+<pre><code>git fetch --all
+</code></pre>
+<p>Why use <code>fetch</code> when I could be using <code>pull</code>?</p>
+<p>I prefer to <code>fetch</code> any changes as this gives me the opportunity to review a visual of the commit graph before any action is taken. This allows me to take different paths depending on what the before commit graph looks like vs what I want the after to look like. <code>Git pull</code> is essentially a short-cut for both <code>fetch</code>ing and <code>merge</code>ing the code and I often don't want to just merge a remote change.</p>
+<p>After I have any remote changes pulled (err fetched) locally I like to get a mental model of the recent commits.</p>
+<h1>Review remote changes</h1>
+<pre><code>gitk --all
+</code></pre>
+<p>Now the <code>gitk</code> U.I. is horrible to look at (and I'm sure you have your favorite git visualizer), but it provides enough info to review changes between the current <code>HEAD</code> of my local branch and any remote changes that have come in with the <code>git fetch</code> step above. The <code>--all</code> is important in gitk, as it will show you all branches (including remote branches) that were fetched.</p>
+<p>I use this overview to not only <a href="https://staxmanade.com/2015/09/habit-of-a-solid-developer-self-prescribed-code-reviews/">code review changes</a>, but to help determine whether I want to <code>merge</code> or <code>rebase</code> with the remote changes.</p>
+<h1>Merge or Rebase</h1>
+<p>Once my review is complete, I've taken a look at the overall changes, and I have a mental model of what the current commit graph looks like. I generate a mental visual of what I want the commit graph to look like when I'm done. I will decide to either:</p>
+<h2>Merge</h2>
+<pre><code>git merge [origin/master | otherBranch]
+</code></pre>
+<p>Or</p>
+<h2>Rebase</h2>
+<pre><code>git rebase [origin/master | otherBranch]
+</code></pre>
+<p>Once my changes have been synced up with the remote changes, I push them up.</p>
+<h1>Ship changes up to the origin</h1>
+<pre><code>git push origin master
+</code></pre>
+<p>or</p>
+<pre><code>git push origin &lt;branchName&gt;
+</code></pre>
+<p>Now it's not a complicated workflow and it can get a bit trickier, but the key here is doing the fetch, review, integrate workflow over automatically pulling in remote changes. This allows me the space to potentially <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">interactive rebase</a> or muck with my commits locally before pushing anything public.</p>
+<p>Happy <code>gitting</code>!</p>
 </div>
 
             </article>
@@ -276,7 +358,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <p>This should not stop those not in the review room (or pull request) from participating and learning from the changes.</p>
 <p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I can not only come up to speed on a project but can be helpful to all aspects of the project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
 <h1>Just Review Everything</h1>
-<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
+<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and your team will likely be better off.</p>
 <p>Happy Reviewing!</p>
 </div>
 
@@ -464,6 +546,35 @@ git push origin release
 <div class="entry-content">
 <div class='post'>
 <p>I’m throwing this out there since I couldn’t find much on this specific problem. #payingItForward</p>  <h4>Problem</h4>  <p>I struggled getting the git command line to authenticate with Git Team Foundation Service online.</p>  <p>My current environment is Windows 8, msysgit, with the git-credential-winstore tool installed. (Love that credential tool)</p>  <p>When I first tried to (push, fetch, or pull) from a newly created TFS Git repository I received git-credential-winstore authentication dialog, entered my credentials and received the following error,</p>  <blockquote>   <p>Failed to erase credential: Element not found      <br />fatal: Authentication failed</p> </blockquote>  <p>After googling that error I found this link <a href="http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/">http://blog.jennysjottings.co.uk/2013/01/20/github-glitch/</a> who’s approach did not work in my case.</p>  <h4>Solution: Short Version</h4>  <ol>   <li>Log into your TFS account (online)</li>    <li>go to your account settings then credentials </li>    <li>setup the alternate login</li> </ol>  <h4>Solution: Long version</h4>  <ol>   <li>First go to the following link:&#160; <a href="http://tfs.visualstudio.com/en-us/learn/use-git-and-xcode-with-tfs.aspx" target="_blank">Use Git&#160; and XCode with TFS</a> </li>    <li>scroll down to the section titled:      <h4>Enable basic authentication for your account</h4>   </li>    <li>Follow those directions</li> </ol>  <h5>Hope this helps.</h5>  <p>Happy Git-ing!</p>  </div>
+</div>
+
+            </article>
+            <article>
+                  <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/">How do I undo a bad rebase in Git?</a></h1>
+    <p class="meta">
+          <time datetime="2013-02-24T02:42:00.000Z" pubdate data-updated="true">Feb 23rd 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>If you use <a href="http://git-scm.com/">git</a> and leverage the <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> command, you've probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish I had a ‘do-over’.</p>
+<p>If you’re still in the middle of a rebase it's easy to start over:</p>
+<blockquote>
+<p>git rebase --abort</p>
+</blockquote>
+<p>But let's say you started with this:</p>
+<p><a href="http://lh6.ggpht.com/-S4iRqI3gJ9A/USl-FkXa8GI/AAAAAAAAAcw/DIiCekbZNNc/s1600-h/image3.png"><img src="http://lh3.ggpht.com/-VUhs8KUeoYw/USl-GO4JjUI/AAAAAAAAAc4/ZIW6B8i84Jk/image_thumb1.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Did a git rebase and are now looking at:</p>
+<p><a href="http://lh6.ggpht.com/-wKnvAJZeBE8/USl-GZw_02I/AAAAAAAAAdA/Rjrc0ACrf3A/s1600-h/image7.png"><img src="http://lh5.ggpht.com/-Vm2Z6nDv_ow/USl-Gh_VygI/AAAAAAAAAdI/4JeII5vjceE/image_thumb3.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Except you screwed up during a merge conflict and now un-sure how you can get your ‘do-over’.</p>
+<p>I was pleasantly surprised at how easy it was. (If you know the key)</p>
+<p>Leveraging the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html">git reflog</a>, you can go back in time and check out your branch as though the rebase never happened.</p>
+<p>In the following link, I put together a set of steps to create a git repo that puts you into this position (of a bad rebase) and then describes how to get out of it.</p>
+<p><a href="https://github.com/staxmanade/GitRebaseReflogFixSample">https://github.com/staxmanade/GitRebaseReflogFixSample</a></p>
+<p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>
+<p>Happy Git'ing!</p>
 </div>
 
             </article>

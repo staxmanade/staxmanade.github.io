@@ -101,7 +101,7 @@
 <h1>Get rid of mouse cursor</h1>
 <p>Well, this isn't really a hack:</p>
 <p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
-<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of you're start page EX: <code>index.html</code></p>
+<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of your start page EX: <code>index.html</code></p>
 <pre><code>    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
         <span class="hljs-comment">// Hide the Xbox/Edge mouse cursor during load.</span>
         <span class="hljs-keyword">try</span> {
@@ -112,7 +112,7 @@
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
-<p>Once you've done this and you're app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
+<p>Once you've done this and your app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
 <h1>Completely Remove XYFocus built-in to WinJS:</h1>
 <p>This is about as ugly as they get...</p>
 <p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>

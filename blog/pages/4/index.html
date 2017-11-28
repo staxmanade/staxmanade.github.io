@@ -325,7 +325,7 @@
 <p>This should not stop those not in the review room (or pull request) from participating and learning from the changes.</p>
 <p>Many of the places I've worked don't have a formal review process in place, so by putting this little ritual in place for myself I can not only come up to speed on a project but can be helpful to all aspects of the project. Reviewing changes every day allows me to more easily understand what people were working on when they announce it during the morning standup.</p>
 <h1>Just Review Everything</h1>
-<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and you're team will likely be better off.</p>
+<p>If you project is small enough and you can - spend a moment each day and review everything going on in the project. You and your team will likely be better off.</p>
 <p>Happy Reviewing!</p>
 </div>
 
@@ -447,13 +447,13 @@
     </p>
 </header>
 <div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
-<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from your JS code itself. You can write your JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
 <h1>TL;DR</h1>
 <p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/LLQQqg?p=preview">plnkr.co</a> go right ahead!</p>
 <h1>How to run our first Mocha test</h1>
 <p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily componentize my code for cleaner extraction into a project, gist or other...</p>
 <p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
-<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open your browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
 <p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
 <pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
@@ -1163,7 +1163,7 @@ The methods <span class="hljs-operator">in</span> <span class="hljs-operator">th
 <p>If you write any async code (difficult not to these days) an exception or assertion failure will not be trapped by the internal try/catch mechanism's of Mocha in a Windows WinJS environment.</p>
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
-<p>In you're <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
+<p>In your <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
 <pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
 
         <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;

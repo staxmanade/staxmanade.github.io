@@ -239,7 +239,7 @@
 <p>If you write any async code (difficult not to these days) an exception or assertion failure will not be trapped by the internal try/catch mechanism's of Mocha in a Windows WinJS environment.</p>
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
-<p>In you're <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
+<p>In your <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
 <pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
 
         <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;

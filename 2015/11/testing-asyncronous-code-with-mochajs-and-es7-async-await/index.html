@@ -194,7 +194,7 @@
 <p>Async tests can be accomplished in two ways. The first is the already shown <code>done</code> callback. The second is if you returned a <code>Promise</code> object from the test. This a great building block. The above example test has become a little verbose with all the usages of <code>done</code> and the <code>try/catch</code> - it just gets a little cumbersome to write.</p>
 <p>If we wanted to re-write the above test we can simplify it to return just promise.</p>
 <blockquote>
-<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - you're mileage may vary.</p>
+<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - your mileage may vary.</p>
 </blockquote>
 <p>Here's an example of returning a <code>Promise</code> that correctly fails the test with the readable error message from Chaijs.</p>
 <pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function() {

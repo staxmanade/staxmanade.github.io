@@ -101,7 +101,7 @@
 <h1>Get rid of mouse cursor</h1>
 <p>Well, this isn't really a hack:</p>
 <p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
-<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of you're start page EX: <code>index.html</code></p>
+<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of your start page EX: <code>index.html</code></p>
 <pre><code>    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
         <span class="hljs-comment">// Hide the Xbox/Edge mouse cursor during load.</span>
         <span class="hljs-keyword">try</span> {
@@ -112,7 +112,7 @@
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
-<p>Once you've done this and you're app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
+<p>Once you've done this and your app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
 <h1>Completely Remove XYFocus built-in to WinJS:</h1>
 <p>This is about as ugly as they get...</p>
 <p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>
@@ -391,7 +391,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     </p>
 </header>
 <div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
-<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of your component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of your component) may want...</p>
 <p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
 <p>Let's say we have the following image component.</p>
 <pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
@@ -429,7 +429,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
   }
 }
 </code></pre>
-<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Now this works for a while, the consumers of your component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
 <p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
 <p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
 <h1>One Possible Solution</h1>
@@ -469,10 +469,10 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 <h3>TL;DR</h3>
 <p>Click the logo to jump the tool...</p>
 <h2>The More Info Stuff</h2>
-<p>So you're working on a React app. It's up and running in you're favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
-<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in you're React component.</p>
+<p>So you're working on a React app. It's up and running in your favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
+<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in your React component.</p>
 <p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste you're <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
+<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste your <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
 <p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
 If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
 <blockquote>

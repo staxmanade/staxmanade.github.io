@@ -138,7 +138,7 @@
     </p>
 </header>
 <div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
-<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of your component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of your component) may want...</p>
 <p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
 <p>Let's say we have the following image component.</p>
 <pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
@@ -176,7 +176,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
   }
 }
 </code></pre>
-<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Now this works for a while, the consumers of your component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
 <p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
 <p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
 <h1>One Possible Solution</h1>
@@ -216,10 +216,10 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 <h3>TL;DR</h3>
 <p>Click the logo to jump the tool...</p>
 <h2>The More Info Stuff</h2>
-<p>So you're working on a React app. It's up and running in you're favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
-<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in you're React component.</p>
+<p>So you're working on a React app. It's up and running in your favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
+<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in your React component.</p>
 <p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste you're <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
+<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste your <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
 <p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
 If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
 <blockquote>
@@ -386,7 +386,7 @@ wrapReactComponentMethodsWithTryCatch(MyComponent);
 <p>Async tests can be accomplished in two ways. The first is the already shown <code>done</code> callback. The second is if you returned a <code>Promise</code> object from the test. This a great building block. The above example test has become a little verbose with all the usages of <code>done</code> and the <code>try/catch</code> - it just gets a little cumbersome to write.</p>
 <p>If we wanted to re-write the above test we can simplify it to return just promise.</p>
 <blockquote>
-<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - you're mileage may vary.</p>
+<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - your mileage may vary.</p>
 </blockquote>
 <p>Here's an example of returning a <code>Promise</code> that correctly fails the test with the readable error message from Chaijs.</p>
 <pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function() {
@@ -805,13 +805,13 @@ a Promise to simplify our unit tests.</li>
     </p>
 </header>
 <div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
-<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from your JS code itself. You can write your JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
 <h1>TL;DR</h1>
 <p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/LLQQqg?p=preview">plnkr.co</a> go right ahead!</p>
 <h1>How to run our first Mocha test</h1>
 <p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily componentize my code for cleaner extraction into a project, gist or other...</p>
 <p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
-<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open your browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
 <p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
 <pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>

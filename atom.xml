@@ -28,7 +28,7 @@
 </ul>
 <h2>Disclaimer</h2>
 <blockquote>
-<p>To accomplish this we're going to be turning on some services/features that have the potential to open security vulnerabilities so please use with caution and learn/know you're risks.</p>
+<p>To accomplish this we're going to be turning on some services/features that have the potential to open security vulnerabilities so please use with caution and learn/know your risks.</p>
 </blockquote>
 <h2>Setup/Configuration</h2>
 <p>To accomplish this your Mac needs to have the proper permissions and configuration in place to allow this to happen.</p>
@@ -328,7 +328,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
 <li>Sourcemaps seem to actually work. Whenever I used BabelJS, debugging and stepping through async/await it just never seemed to line up right for me. This was likely user-error or in-proper configuration of babel on my part, so who knows... but having working source-maps is AMAZING, especially with the <code>async/await</code> feature.</li>
 <li>One area of concern that I haven't yet worked through. Is the JSPM typescript loading up in the browser - or running <code>jspm bundle app</code> at the command line doesn't report any typescript errors - or fail any builds. However, I'm glad it doesn't because something isn't quite rite with my configuration as every import of a <code>.tsx</code> file reports an error. So, for now I'm just relying on the red squigglies in my VS Code editor to help me catch typing errors.</li>
 </ol>
-<p>If you go for this port in you're own project, I hope this was helpful, and that your port goes well.</p>
+<p>If you go for this port in your own project, I hope this was helpful, and that your port goes well.</p>
 <p>Happy TypeScripting!</p>
 ]]></content>
     </entry>
@@ -353,7 +353,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
 <h1>Get rid of mouse cursor</h1>
 <p>Well, this isn't really a hack:</p>
 <p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
-<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of you're start page EX: <code>index.html</code></p>
+<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of your start page EX: <code>index.html</code></p>
 <pre><code>    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
         <span class="hljs-comment">// Hide the Xbox/Edge mouse cursor during load.</span>
         <span class="hljs-keyword">try</span> {
@@ -364,7 +364,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
     </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
-<p>Once you've done this and you're app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
+<p>Once you've done this and your app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
 <h1>Completely Remove XYFocus built-in to WinJS:</h1>
 <p>This is about as ugly as they get...</p>
 <p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>
@@ -642,7 +642,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 <p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
 <p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
 <p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
-<p>For example if you pasted the following into you're PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
+<p>For example if you pasted the following into your PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
 <p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
 <p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
 <p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
@@ -807,7 +807,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 <p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
 <ol>
 <li>Make the necessary change to the container (in my case update the couchdb config).</li>
-<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in you're <code>docker-compose.yml</code> file.)</li>
+<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in your <code>docker-compose.yml</code> file.)</li>
 </ol>
 <p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
 <ol>
@@ -972,7 +972,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <p>The thinking here is you could have a single <code>docker-compose.yml</code> file that has multiple server definitions like say a <code>nodejs web</code>, <code>couchdb</code>, and <code>redis</code> database all running isolated within their environment.  You can then use the environment variables to drive various items such as feature-toggling newly developed features in a <code>qa</code> environment, but are not necessarily ready to run in a production environment.</p>
 <h1>Running/testing this out locally</h1>
 <p>You probably want to play with this idea and test it out locally before trying to push it to a remote system.</p>
-<p>One easy way to do this is to modify your <code>/etc/hosts</code> file (on *nix) or follow <a href="http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/">this on windows</a> to map the specific domain names you have setup for you're environments to the actual service running docker. This will allow the <code>nginx-proxy</code> to do it's magic.</p>
+<p>One easy way to do this is to modify your <code>/etc/hosts</code> file (on *nix) or follow <a href="http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/">this on windows</a> to map the specific domain names you have setup for your environments to the actual service running docker. This will allow the <code>nginx-proxy</code> to do it's magic.</p>
 <p>I'm currently still using <code>docker-machine</code> to run my docker environment in a VirtualBox VM so my <code>/etc/hosts</code> file looks like this.</p>
 <pre><code><span class="hljs-preprocessor">##</span>
 <span class="hljs-preprocessor"># Host Database</span>
@@ -1016,9 +1016,9 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <h2>Create a Docker Droplet (this was way-cool)</h2>
 <p>Next we're going to use a cool feature of <a href="https://docs.docker.com/machine/">docker-machine</a> where we can leverage the <a href="https://docs.docker.com/machine/drivers/digital-ocean/">DigitalOcean driver</a> to help us create and manage our docker images.</p>
 <p>Complete <code>Step 1</code> and <code>Step 2</code> in the following post <a href="https://docs.docker.com/machine/examples/ocean/">DigitalOcean example</a> to acquire a DigitalOcean personal access token.</p>
-<p>Now that you have you're DigitalOcean api token, you do right? Either pass it direclty into the below command (in place of <code>$DOTOKEN</code> or set a local var as demonstrated.</p>
-<pre><code>DOTOKEN=XXXX &lt;<span class="hljs-comment">-- you're token there...</span>
-docker-machine <span class="hljs-built_in">create</span> <span class="hljs-comment">--driver digitalocean --digitalocean-access-token $DOTOKEN docker-multi-environment</span>
+<p>Now that you have your DigitalOcean api token, you do right? Either pass it direclty into the below command (in place of <code>$DOTOKEN</code> or set a local var as demonstrated.</p>
+<pre><code>DOTOKEN=XXXX &lt;-- your token there...
+docker-machine create --driver digitalocean --digitalocean-access-token <span class="hljs-variable">$DOTOKEN</span> docker-multi-environment
 </code></pre>
 <blockquote>
 <p>NOTE: There was an issue where (this used to work but stopped with the the docker-machine DigitalOcean default image <a href="https://github.com/docker/machine/issues/3394">reported here</a>). To work around this try using a different image name</p>
@@ -1027,7 +1027,7 @@ docker-machine <span class="hljs-built_in">create</span> <span class="hljs-comme
 <pre><code>DIGITALOCEAN_IMAGE=<span class="hljs-string">"ubuntu-16-04-x64"</span>
 docker-machine create --driver digitalocean --digitalocean-access-token <span class="hljs-variable">$DOTOKEN</span> docker-multi-environment
 </code></pre>
-<p>If you refreshed you're DigitalOcean's <a href="https://cloud.digitalocean.com/droplets">droplets page</a> you should see a new droplet called <code>docker-multi-environment</code>.</p>
+<p>If you refreshed your DigitalOcean's <a href="https://cloud.digitalocean.com/droplets">droplets page</a> you should see a new droplet called <code>docker-multi-environment</code>.</p>
 <p>We can now configure our local terminal to allow all docker commands to run against this remotely running docker environment on our newly created droplet.</p>
 <pre><code><span class="hljs-keyword">eval</span> <span class="hljs-variable">$(</span>docker-machine <span class="hljs-keyword">env</span> docker-multi-environment)
 </code></pre>
@@ -1055,7 +1055,7 @@ docker-machine create --driver digitalocean --digitalocean-access-token <span cl
 <p>I know this post has gotten a bit long, but if you've made it this far we're almost there...</p>
 <p>If you were to run the following script in our local project's folder where we have the <code>docker-compose.yml</code> file:</p>
 <blockquote>
-<p>Be sure to update <code>BASE_SITE=my-docker-test-site.com</code> with you're domain name or sub-domain like <code>BASE_SITE=multi-env.my-docker-test-site.com</code></p>
+<p>Be sure to update <code>BASE_SITE=my-docker-test-site.com</code> with your domain name or sub-domain like <code>BASE_SITE=multi-env.my-docker-test-site.com</code></p>
 </blockquote>
 <pre><code>BASE_SITE=my-docker-test-site.com
 
@@ -1072,7 +1072,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-built_in">export</span> VIRTUAL_HOST=<span class="hljs-variable">$BASE_SITE</span>
 docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span class="hljs-operator">-d</span>
 </code></pre>
-<p>You should now be able to run <code>docker ps</code> or <code>docker-compose ps</code> and see 3 containers running. The <code>nginx-proxy</code>, you're <code>qa</code> site and also the <code>prod</code> site.</p>
+<p>You should now be able to run <code>docker ps</code> or <code>docker-compose ps</code> and see 3 containers running. The <code>nginx-proxy</code>, your <code>qa</code> site and also the <code>prod</code> site.</p>
 <p>All that's left is to make sure DNS is configured and pointing to our <code>nginx-proxy</code> front-end...</p>
 <p>While playing with this - I kept tearing down droplets and re-building them as I worked through this tutorial and I kept forgetting to adjust my DNS settings. However right in the middle of writing this tutorial DigitalOcean came out with <a href="https://www.digitalocean.com/community/tutorials/how-to-use-floating-ips-on-digitalocean">Floating Ip's</a> which wasn't perfect, but definitely made this easier to work with. I didn't have to always update the IP address of my droplet, but instead just update the floating ip to point to the newly created droplet.</p>
 <h2>Configure our DNS (domain name)</h2>
@@ -1122,7 +1122,7 @@ docker-compose -p ${VIRTUAL_HOST}x2 up -d
 <p>This will bring up another docker container with our updated web application and to my surprise the nginx-proxy automatically chose this new container to send requests to.</p>
 <p>So if you <code>docker ps</code> you should see 4 containers running. 1 nginx-proxy, 1 prod container, 2 qa containers (with different names).</p>
 <p>You can think about leaving both containers running for the moment while  you test out the new release.</p>
-<p>One neat thing you can think about with this is if there was something seriously wrong with the new qa release you could just stop the new container and (<code>docker stop &lt;new_container_id&gt;</code>) and the proxy will start redirecting back to the old qa container. (That only works of course if you're deployment was immutable - meaning you didn't have the new container run some one way database migration script... but that's not something I want to think about or cover in this post).</p>
+<p>One neat thing you can think about with this is if there was something seriously wrong with the new qa release you could just stop the new container and (<code>docker stop &lt;new_container_id&gt;</code>) and the proxy will start redirecting back to the old qa container. (That only works of course if your deployment was immutable - meaning you didn't have the new container run some one way database migration script... but that's not something I want to think about or cover in this post).</p>
 <p>Once you're comfortable running the new version you can now bring down and cleanup the older version.</p>
 <pre><code>docker <span class="hljs-keyword">ps</span> # <span class="hljs-keyword">to</span> <span class="hljs-keyword">list</span> the containers running
 docker <span class="hljs-keyword">stop</span> &lt;old_qa_container_id&gt;
@@ -1226,7 +1226,7 @@ docker rmi &lt;old_qa_image_id&gt;
         <updated>2016-06-21T21:31:22Z</updated>
         <summary type="html"><![CDATA[React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exp...]]></summary>
         <content type="html"><![CDATA[<p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
-<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of your component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of your component) may want...</p>
 <p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
 <p>Let's say we have the following image component.</p>
 <pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
@@ -1264,7 +1264,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
   }
 }
 </code></pre>
-<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Now this works for a while, the consumers of your component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
 <p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
 <p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
 <h1>One Possible Solution</h1>
@@ -1331,7 +1331,7 @@ docker-compose returned -<span class="hljs-number">1</span>
 <span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
 </code></pre>
 <p>solved my issue!</p>
-<p>Also note it'll depend on the base image <code>FROM &lt;some linux distro&gt;</code> that may chagne what you're required #shebang should be.</p>
+<p>Also note it'll depend on the base image <code>FROM &lt;some linux distro&gt;</code> that may change what you're required #shebang should be.</p>
 <p>Whew!</p>
 ]]></content>
     </entry>
@@ -1383,7 +1383,7 @@ docker-compose returned -<span class="hljs-number">1</span>
 <pre><code>DEMO_VAR=Test <span class="hljs-built_in">value</span> <span class="hljs-built_in">from</span> .env <span class="hljs-built_in">file</span>!
 </code></pre>
 <p>As the <a href="https://docs.docker.com/compose/compose-file/#env-file">docs say</a> you can use <code># as comments</code> and blank lines in the file - all other lines must be in the format of <code>ENV_VAR=ENV_VALUE</code>.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in you're terminal's context will take presedent over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in your terminal's context will take presedent over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <h1>The <code>docker-compose.yml</code>:</h1>
 <pre><code><span class="hljs-keyword">version</span>: <span class="hljs-string">"2"</span>
 services:
@@ -1393,7 +1393,7 @@ services:
      - DEMO_VAR=<span class="hljs-label">${DEMO_VAR}</span>
 </code></pre>
 <p>The above file is the part where I got tripped up, and once I added the <code>environment:</code> section it all clicked.</p>
-<p>You likely don't want every one of you're development or production server's environment variables to show up inside you're container. This file acts a bit like the <code>docker run -e ENV_VAR=FOO</code> option and allows you to select specific environment variables that are to be passed into the container.</p>
+<p>You likely don't want every one of your development or production server's environment variables to show up inside your container. This file acts a bit like the <code>docker run -e ENV_VAR=FOO</code> option and allows you to select specific environment variables that are to be passed into the container.</p>
 <p>I like the declaritive approach of this file as it makes environment variable dependencies explicit.</p>
 <h1>The <code>env-file-test/Dockerfile</code>:</h1>
 <pre><code><span class="hljs-built_in">FROM</span> alpine
@@ -1403,7 +1403,7 @@ services:
 <span class="hljs-built_in">COPY</span> <span class="bash">docker-entrypoint.sh /
 </span><span class="hljs-built_in">ENTRYPOINT</span> <span class="bash">[<span class="hljs-string">"/docker-entrypoint.sh"</span>]
 </span></code></pre>
-<p>Pretty standard <code>Dockerfile</code>, but one thing I learned is you can setup default environment variables using the <a href="https://docs.docker.com/engine/reference/builder/#env">docker <code>ENV</code></a> directive. But these will be overriden by the <code>.env</code> file or variables in you're terminal's environment.</p>
+<p>Pretty standard <code>Dockerfile</code>, but one thing I learned is you can setup default environment variables using the <a href="https://docs.docker.com/engine/reference/builder/#env">docker <code>ENV</code></a> directive. But these will be overriden by the <code>.env</code> file or variables in your terminal's environment.</p>
 <h1>The <code>env-file-test/docker-entrypoint.sh</code></h1>
 <pre><code><span class="hljs-shebang">#!/bin/sh</span>
 <span class="hljs-built_in">echo</span> <span class="hljs-string">"ENV Var Passed in: <span class="hljs-variable">$DEMO_VAR</span>"</span>
@@ -1411,7 +1411,7 @@ services:
 <p>This was just a sample script to print out the environment variable.</p>
 <h1>Some other things I learned</h1>
 <p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> The docs say you can specify you're own <code>env-file</code> or even multiple files, however I could not get that working. It always wanted to choose the <code>.env</code> file.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in you're terminal that also exists in your're <code>.env</code> file the terminal's environment takes presedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in your terminal that also exists in your're <code>.env</code> file the terminal's environment takes presedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>Happy Environment Setup!</p>
 ]]></content>
     </entry>
@@ -1424,7 +1424,7 @@ services:
         <summary type="html"><![CDATA[Thought I'd share how I'm configuring `user.name` and `user.email` for git on my work computer. This is really just a post so when I forget how I did ...]]></summary>
         <content type="html"><![CDATA[<p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
 <p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
-<p>For most, <code>user.name</code> shouldn't change, unless you're company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
+<p>For most, <code>user.name</code> shouldn't change, unless your company ties your <code>user.name</code> to something specific to the company like a username. (Contrast: <code>user.name = Jason Jarrett</code> and <code>user.name = jjarrett</code>).</p>
 <p>When I clone projects I always clone them into a folder structure that looks like</p>
 <pre><code>|____~/code
 | |____personal/  &lt;--- <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> where I would put some OSS projects <span class="hljs-literal">that</span> I may be working <span class="hljs-literal">on</span> <span class="hljs-keyword">or</span> contributing <span class="hljs-keyword">to</span>.
@@ -1493,10 +1493,10 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <h3>TL;DR</h3>
 <p>Click the logo to jump the tool...</p>
 <h2>The More Info Stuff</h2>
-<p>So you're working on a React app. It's up and running in you're favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
-<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in you're React component.</p>
+<p>So you're working on a React app. It's up and running in your favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
+<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in your React component.</p>
 <p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste you're <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
+<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste your <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
 <p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
 If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
 <blockquote>
@@ -1562,7 +1562,7 @@ If you have a suggestion or want to pull-request it your self you can check it o
 <p><img src="/images/posts/nuget-automation-oops-after.png" alt="service status image of problem with nuget"></p>
 <h1>Thanks NuGet!</h1>
 <p>Turns out the NuGet team put some time into optimizing the publishing process of their service - so maybe there was a benefit to this whole fiasco, but hopefully we won't be hammering the system going forward :)</p>
-<p>So I'd like to say thanks again to the NuGet team for you're kind support email and professional way of handling the issue. This is a great example of how Microsoft is helping the OSS community and their support is really taking off and showing promise!</p>
+<p>So I'd like to say thanks again to the NuGet team for your kind support email and professional way of handling the issue. This is a great example of how Microsoft is helping the OSS community and their support is really taking off and showing promise!</p>
 <h3>Also Good Point</h3>
 <p><img src="/images/posts/nuget-automation-oops-gates-quote.png" alt="service status image of problem with nuget"></p>
 <p>Happy NuGetting!</p>

@@ -103,7 +103,7 @@
     </p>
 </header>
 <div class="entry-content"><p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
-<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of you're component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of you're component) may want...</p>
+<p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of your component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of your component) may want...</p>
 <p>As an example, let's create simple <code>img</code> component to illustrate the point.</p>
 <p>Let's say we have the following image component.</p>
 <pre><code><span class="hljs-keyword">import</span> <span class="hljs-type">React</span> from <span class="hljs-symbol">'reac</span>t';
@@ -141,7 +141,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
   }
 }
 </code></pre>
-<p>Now this works for a while, the consumers of you're component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
+<p>Now this works for a while, the consumers of your component are happy they can control the <code>height</code> and <code>width</code> and everyone's humming along merrily.</p>
 <p>Then someone comes to you and says they are having some layout issues and need to control something like <code>float</code>, or <code>margin</code>, or <code>padding</code>... This idea of extending the component with more props could become cumbersome if we have to do this for each and every potential layout option available.</p>
 <p>How could we extend this generic pattern into something that allows the component to define a general set of happy defaults, while still giving the consumer complete control over layout?</p>
 <h1>One Possible Solution</h1>

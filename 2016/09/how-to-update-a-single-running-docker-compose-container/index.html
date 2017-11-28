@@ -114,7 +114,7 @@
 <p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
 <ol>
 <li>Make the necessary change to the container (in my case update the couchdb config).</li>
-<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in you're <code>docker-compose.yml</code> file.)</li>
+<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in your <code>docker-compose.yml</code> file.)</li>
 </ol>
 <p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
 <ol>

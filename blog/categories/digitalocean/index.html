@@ -224,7 +224,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <p>The thinking here is you could have a single <code>docker-compose.yml</code> file that has multiple server definitions like say a <code>nodejs web</code>, <code>couchdb</code>, and <code>redis</code> database all running isolated within their environment.  You can then use the environment variables to drive various items such as feature-toggling newly developed features in a <code>qa</code> environment, but are not necessarily ready to run in a production environment.</p>
 <h1>Running/testing this out locally</h1>
 <p>You probably want to play with this idea and test it out locally before trying to push it to a remote system.</p>
-<p>One easy way to do this is to modify your <code>/etc/hosts</code> file (on *nix) or follow <a href="http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/">this on windows</a> to map the specific domain names you have setup for you're environments to the actual service running docker. This will allow the <code>nginx-proxy</code> to do it's magic.</p>
+<p>One easy way to do this is to modify your <code>/etc/hosts</code> file (on *nix) or follow <a href="http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/">this on windows</a> to map the specific domain names you have setup for your environments to the actual service running docker. This will allow the <code>nginx-proxy</code> to do it's magic.</p>
 <p>I'm currently still using <code>docker-machine</code> to run my docker environment in a VirtualBox VM so my <code>/etc/hosts</code> file looks like this.</p>
 <pre><code><span class="hljs-preprocessor">##</span>
 <span class="hljs-preprocessor"># Host Database</span>
@@ -268,9 +268,9 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <h2>Create a Docker Droplet (this was way-cool)</h2>
 <p>Next we're going to use a cool feature of <a href="https://docs.docker.com/machine/">docker-machine</a> where we can leverage the <a href="https://docs.docker.com/machine/drivers/digital-ocean/">DigitalOcean driver</a> to help us create and manage our docker images.</p>
 <p>Complete <code>Step 1</code> and <code>Step 2</code> in the following post <a href="https://docs.docker.com/machine/examples/ocean/">DigitalOcean example</a> to acquire a DigitalOcean personal access token.</p>
-<p>Now that you have you're DigitalOcean api token, you do right? Either pass it direclty into the below command (in place of <code>$DOTOKEN</code> or set a local var as demonstrated.</p>
-<pre><code>DOTOKEN=XXXX &lt;<span class="hljs-comment">-- you're token there...</span>
-docker-machine <span class="hljs-built_in">create</span> <span class="hljs-comment">--driver digitalocean --digitalocean-access-token $DOTOKEN docker-multi-environment</span>
+<p>Now that you have your DigitalOcean api token, you do right? Either pass it direclty into the below command (in place of <code>$DOTOKEN</code> or set a local var as demonstrated.</p>
+<pre><code>DOTOKEN=XXXX &lt;-- your token there...
+docker-machine create --driver digitalocean --digitalocean-access-token <span class="hljs-variable">$DOTOKEN</span> docker-multi-environment
 </code></pre>
 <blockquote>
 <p>NOTE: There was an issue where (this used to work but stopped with the the docker-machine DigitalOcean default image <a href="https://github.com/docker/machine/issues/3394">reported here</a>). To work around this try using a different image name</p>
@@ -279,7 +279,7 @@ docker-machine <span class="hljs-built_in">create</span> <span class="hljs-comme
 <pre><code>DIGITALOCEAN_IMAGE=<span class="hljs-string">"ubuntu-16-04-x64"</span>
 docker-machine create --driver digitalocean --digitalocean-access-token <span class="hljs-variable">$DOTOKEN</span> docker-multi-environment
 </code></pre>
-<p>If you refreshed you're DigitalOcean's <a href="https://cloud.digitalocean.com/droplets">droplets page</a> you should see a new droplet called <code>docker-multi-environment</code>.</p>
+<p>If you refreshed your DigitalOcean's <a href="https://cloud.digitalocean.com/droplets">droplets page</a> you should see a new droplet called <code>docker-multi-environment</code>.</p>
 <p>We can now configure our local terminal to allow all docker commands to run against this remotely running docker environment on our newly created droplet.</p>
 <pre><code><span class="hljs-keyword">eval</span> <span class="hljs-variable">$(</span>docker-machine <span class="hljs-keyword">env</span> docker-multi-environment)
 </code></pre>
@@ -307,7 +307,7 @@ docker-machine create --driver digitalocean --digitalocean-access-token <span cl
 <p>I know this post has gotten a bit long, but if you've made it this far we're almost there...</p>
 <p>If you were to run the following script in our local project's folder where we have the <code>docker-compose.yml</code> file:</p>
 <blockquote>
-<p>Be sure to update <code>BASE_SITE=my-docker-test-site.com</code> with you're domain name or sub-domain like <code>BASE_SITE=multi-env.my-docker-test-site.com</code></p>
+<p>Be sure to update <code>BASE_SITE=my-docker-test-site.com</code> with your domain name or sub-domain like <code>BASE_SITE=multi-env.my-docker-test-site.com</code></p>
 </blockquote>
 <pre><code>BASE_SITE=my-docker-test-site.com
 
@@ -324,7 +324,7 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-built_in">export</span> VIRTUAL_HOST=<span class="hljs-variable">$BASE_SITE</span>
 docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span class="hljs-operator">-d</span>
 </code></pre>
-<p>You should now be able to run <code>docker ps</code> or <code>docker-compose ps</code> and see 3 containers running. The <code>nginx-proxy</code>, you're <code>qa</code> site and also the <code>prod</code> site.</p>
+<p>You should now be able to run <code>docker ps</code> or <code>docker-compose ps</code> and see 3 containers running. The <code>nginx-proxy</code>, your <code>qa</code> site and also the <code>prod</code> site.</p>
 <p>All that's left is to make sure DNS is configured and pointing to our <code>nginx-proxy</code> front-end...</p>
 <p>While playing with this - I kept tearing down droplets and re-building them as I worked through this tutorial and I kept forgetting to adjust my DNS settings. However right in the middle of writing this tutorial DigitalOcean came out with <a href="https://www.digitalocean.com/community/tutorials/how-to-use-floating-ips-on-digitalocean">Floating Ip's</a> which wasn't perfect, but definitely made this easier to work with. I didn't have to always update the IP address of my droplet, but instead just update the floating ip to point to the newly created droplet.</p>
 <h2>Configure our DNS (domain name)</h2>
@@ -374,7 +374,7 @@ docker-compose -p ${VIRTUAL_HOST}x2 up -d
 <p>This will bring up another docker container with our updated web application and to my surprise the nginx-proxy automatically chose this new container to send requests to.</p>
 <p>So if you <code>docker ps</code> you should see 4 containers running. 1 nginx-proxy, 1 prod container, 2 qa containers (with different names).</p>
 <p>You can think about leaving both containers running for the moment while  you test out the new release.</p>
-<p>One neat thing you can think about with this is if there was something seriously wrong with the new qa release you could just stop the new container and (<code>docker stop &lt;new_container_id&gt;</code>) and the proxy will start redirecting back to the old qa container. (That only works of course if you're deployment was immutable - meaning you didn't have the new container run some one way database migration script... but that's not something I want to think about or cover in this post).</p>
+<p>One neat thing you can think about with this is if there was something seriously wrong with the new qa release you could just stop the new container and (<code>docker stop &lt;new_container_id&gt;</code>) and the proxy will start redirecting back to the old qa container. (That only works of course if your deployment was immutable - meaning you didn't have the new container run some one way database migration script... but that's not something I want to think about or cover in this post).</p>
 <p>Once you're comfortable running the new version you can now bring down and cleanup the older version.</p>
 <pre><code>docker <span class="hljs-keyword">ps</span> # <span class="hljs-keyword">to</span> <span class="hljs-keyword">list</span> the containers running
 docker <span class="hljs-keyword">stop</span> &lt;old_qa_container_id&gt;

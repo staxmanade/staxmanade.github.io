@@ -179,7 +179,7 @@
 <p>Async tests can be accomplished in two ways. The first is the already shown <code>done</code> callback. The second is if you returned a <code>Promise</code> object from the test. This a great building block. The above example test has become a little verbose with all the usages of <code>done</code> and the <code>try/catch</code> - it just gets a little cumbersome to write.</p>
 <p>If we wanted to re-write the above test we can simplify it to return just promise.</p>
 <blockquote>
-<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - you're mileage may vary.</p>
+<p>IMPORTANT: if you want to return a promise, you have to remove the <code>done</code> callback or mocha will assume you'll be using that first and not look for a promise return. Although I've seen comments in Mocha's github issues list where some people depend on it working with both a callback and a promise - your mileage may vary.</p>
 </blockquote>
 <p>Here's an example of returning a <code>Promise</code> that correctly fails the test with the readable error message from Chaijs.</p>
 <pre><code>it(<span class="hljs-string">"Using a Promise that resolves successfully with wrong expectation!"</span>, function() {
@@ -566,13 +566,13 @@ describe(<span class="hljs-string">"feed cache"</span>, <span class="hljs-functi
     </p>
 </header>
 <div class="entry-content"><p>I've been poking at <a href="https://github.com/systemjs/systemjs">SystemJS</a> (you may have heard of it through <a href="http://jspm.io">JSPM</a>) and one of the first things I like to setup when playing with a new JS framework is a way to run <a href="https://mochajs.org">MochaJS</a> unit tests which allow me to test-drive my prototypes and in this case the best part is we don't have to do any local command line installations or crazy gulp/grunt builds. We can right in the browser start writing plain ES6 and prototype using a library from <a href="https://npmjs.org">npm</a> or <a href="https://github.com">github</a>.</p>
-<p>SystemJS is a very exciting project with it's ability to import modules/code right from you're JS code itself. You can write you're JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
+<p>SystemJS is a very exciting project with it's ability to import modules/code right from your JS code itself. You can write your JS using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">ES6 import</a> syntax and in many cases SystemJS will magically import code via NPM or GitHub directly.</p>
 <h1>TL;DR</h1>
 <p>If you want to skip the details below and just see the <a href="http://plnkr.co/edit/LLQQqg?p=preview">plnkr.co</a> go right ahead!</p>
 <h1>How to run our first Mocha test</h1>
 <p>First we need to get a simple web page setup. I'm going to use <a href="http://plnkr.co/">plnkr.co</a> as it allows me to specify multiple files. This will allow me to more easily componentize my code for cleaner extraction into a project, gist or other...</p>
 <p>Once you have a basic Plunker setup go ahead and delete everything except <code>index.html</code> of for now.</p>
-<p>Now we're ready to start throwing our code in here... But before you do open you're browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
+<p>Now we're ready to start throwing our code in here... But before you do open your browser's developer tools. I'm using Chrome on the Mac so <code>Cmd+Option+j</code> will do it. We need to be able to see the javascript console in case we see any errors with SystemJS loading of modules.</p>
 <p><code>index.html</code> &lt;- paste the below in for you're Plunker <code>index.html</code>.</p>
 <pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
@@ -851,7 +851,7 @@ mocha.setup(<span class="hljs-string">'bdd'</span>);
 <p>If you write any async code (difficult not to these days) an exception or assertion failure will not be trapped by the internal try/catch mechanism's of Mocha in a Windows WinJS environment.</p>
 <p>We have to give Mocha a hint on how to hook into global exceptions.</p>
 <p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
-<p>In you're <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
+<p>In your <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
 <pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
 
         <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;
