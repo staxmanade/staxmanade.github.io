@@ -1363,7 +1363,7 @@ docker-compose returned -<span class="hljs-number">1</span>
 |<span class="hljs-string">   Env Source           </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> docker-compose.yml </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> Docker Container </span>|
 |<span class="hljs-string">                        </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                    </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
 |<span class="hljs-string">   A) .env file         </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> map env vars using </span>|<span class="hljs-string"> --&gt; </span>|<span class="hljs-string"> echo $DEMO_VAR   </span>|
-|<span class="hljs-string">   B) run-time terminal </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> enterpolation      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
+|<span class="hljs-string">   B) run-time terminal </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> interpolation      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
 |<span class="hljs-string">       env var          </span>|<span class="hljs-string">     </span>|<span class="hljs-string"> in this file.      </span>|<span class="hljs-string">     </span>|<span class="hljs-string">                  </span>|
  ------------------------      ---------------------       ------------------
 </code></pre>
@@ -1383,7 +1383,7 @@ docker-compose returned -<span class="hljs-number">1</span>
 <pre><code>DEMO_VAR=Test <span class="hljs-built_in">value</span> <span class="hljs-built_in">from</span> .env <span class="hljs-built_in">file</span>!
 </code></pre>
 <p>As the <a href="https://docs.docker.com/compose/compose-file/#env-file">docs say</a> you can use <code># as comments</code> and blank lines in the file - all other lines must be in the format of <code>ENV_VAR=ENV_VALUE</code>.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in your terminal's context will take presedent over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> environment variables in your terminal's context will take president over the values in the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <h1>The <code>docker-compose.yml</code>:</h1>
 <pre><code><span class="hljs-keyword">version</span>: <span class="hljs-string">"2"</span>
 services:
@@ -1394,7 +1394,7 @@ services:
 </code></pre>
 <p>The above file is the part where I got tripped up, and once I added the <code>environment:</code> section it all clicked.</p>
 <p>You likely don't want every one of your development or production server's environment variables to show up inside your container. This file acts a bit like the <code>docker run -e ENV_VAR=FOO</code> option and allows you to select specific environment variables that are to be passed into the container.</p>
-<p>I like the declaritive approach of this file as it makes environment variable dependencies explicit.</p>
+<p>I like the declarative approach of this file as it makes environment variable dependencies explicit.</p>
 <h1>The <code>env-file-test/Dockerfile</code>:</h1>
 <pre><code><span class="hljs-built_in">FROM</span> alpine
 
@@ -1411,7 +1411,7 @@ services:
 <p>This was just a sample script to print out the environment variable.</p>
 <h1>Some other things I learned</h1>
 <p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> The docs say you can specify your own <code>env-file</code> or even multiple files, however I could not get that working. It always wanted to choose the <code>.env</code> file.</p>
-<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in your terminal that also exists in your're <code>.env</code> file the terminal's environment takes presedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> Also note: that if you have an environment variable specified in your terminal that also exists in your <code>.env</code> file the terminal's environment takes precedence over the <code>.env</code> file. <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>Happy Environment Setup!</p>
 ]]></content>
     </entry>
