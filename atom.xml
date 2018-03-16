@@ -2,15 +2,83 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Developing on Staxmanade]]></title>
     <link>https://staxmanade.com</link>
-    <updated>2017-10-09T15:55:51Z</updated>
+    <updated>2018-03-16T06:00:00Z</updated>
     <author>
         <name>Jason Jarrett</name>
         <uri>https://staxmanade.com/about</uri>
     </author>
     <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
-    <rights>Copyright (C) 2008-2017 Jason Jarrett</rights>
+    <rights>Copyright (C) 2008-2018 Jason Jarrett</rights>
     <generator>Feed for Node.js</generator>
+    <entry>
+        <title type="html"><![CDATA[Should I Use JavaScript Single (') or Double (") Quotes?]]></title>
+        <id>https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/</id>
+        <link href="https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/">
+        </link>
+        <updated>2018-03-16T06:00:00Z</updated>
+        <summary type="html"><![CDATA[The topic of using JavaScript single `'` or double `"` quotes comes up often enough that I thought I'd create a bit of an amalgamation of items around...]]></summary>
+        <content type="html"><![CDATA[<p>The topic of using JavaScript single <code>'</code> or double <code>&quot;</code> quotes comes up often enough that I thought I'd create a bit of an amalgamation of items around the topic for future reference.</p>
+<p>Today, it came up at work when someone sent a PR to our internal standard <a href="https://eslint.org/">eslint</a> config repository and there were some various points brought up with no real final solid winner or resolution.</p>
+<p>In this post, I'm not (sadly) going to write anything interesting or profound or even original. Just wanted to aggregate some pros/cons as I've seen splattered in various locations around the web on the topic.</p>
+<h1>The most important point or the TL;DR</h1>
+<ul>
+<li>Define one standard and stick to it. Do not use one in one file, and a different one in another file, or even especially avoid mixing quotes within the same file if possible.</li>
+</ul>
+<h2>Basic qualities they both share</h2>
+<ul>
+<li>They both represent strings (yay! strings!)</li>
+<li>Which ever one you start with, must be the same one you end the string with.</li>
+<li>There is really no difference in the end between using single or double quotes, meaning they both represent a string in the end. The system doesn't really care which one you use (but you might?).</li>
+<li>No need to escape the other character within a string. So a double quoted string can have single quotes without escaping them, and a single quoted string can have double quotes within it without having to escape them.
+<ul>
+<li><code>&quot;Double quotes with a single ( ' ) quote in the middle&quot;</code></li>
+<li><code>'Single quotes with a double ( &quot; ) quote in the middle'</code></li>
+</ul>
+</li>
+<li>Each type must escape their own type
+<ul>
+<li><code>&quot;double quotes ( \&quot; ) must escape a double quote&quot;</code></li>
+<li><code>'single quotes ( \' ) must escape a single quote'</code></li>
+</ul>
+</li>
+<li>On German, Hungarian, Austrian, and many other keyboards, you have to use the Shift key for both single or double quotes.</li>
+<li>On Turkish Q keyboards it's apparently the other way around (need <code>&lt;Shift&gt;</code> for single quote vs double).</li>
+</ul>
+<h2>Pros for single quotes:</h2>
+<ul>
+<li>One popular argument for single quotes is when you have to write html within javascript:
+<ul>
+<li>If you use single quotes you can write <code>var html = '&lt;div id=&quot;some_div&quot;&gt;&lt;/div&gt;'</code></li>
+<li>If you use double quotes you must escape each nested <code>&quot;</code> EX: <code>var html = &quot;&lt;div id=\&quot;some_div\&quot;&gt;&lt;/div&gt;&quot;</code> which can get annoying. Or you could use single quotes within the html string, but I don't want to cover quotes for html here (that would just hurt)...</li>
+</ul>
+</li>
+<li>Single quotes can often look better when you're using them to represent an empty string <code>''</code> vs <code>&quot;&quot;</code> (too many little marks in the latter and can be difficult read - ahhh)</li>
+</ul>
+<h2>Cons for single quotes:</h2>
+<p>Only real con I can come up with is copying/pasting between JSON and JavaScript files - single quotes are not supported within JSON files, so you'd have to do a host of search/replace (and escaping of double quotes)...</p>
+<h2>Pros for double quotes:</h2>
+<ul>
+<li>JSON only allows double quotes (unless you control the data, and can use a library that is more liberal at parsing JSON - but a JSON file with single quotes is not truly a JSON file)</li>
+<li>Most likely noobies to JS will be familiar with double quotes from their previous programming languages</li>
+<li>Double quotes eliminate the need to escape apostrophes when writing english sentences.</li>
+</ul>
+<h2>Cons for Double quotes:</h2>
+<ul>
+<li>Must press an extra key <code>&lt;Shift&gt;</code> when wanting to use double quotes</li>
+</ul>
+<h1>In the end</h1>
+<p>I recommend single quotes as a solid standard. Unless you are copying JSON objects in JavaScript and pasting them into JS files a ton - it's generally my personal preference.</p>
+<h1>Some References:</h1>
+<ul>
+<li><a href="https://stackoverflow.com/questions/242813/when-to-use-double-or-single-quotes-in-javascript">https://stackoverflow.com/questions/242813/when-to-use-double-or-single-quotes-in-javascript</a></li>
+<li><a href="https://stackoverflow.com/questions/9959928/double-quotes-vs-single-quotes-in-javascript">https://stackoverflow.com/questions/9959928/double-quotes-vs-single-quotes-in-javascript</a></li>
+<li><a href="https://stackoverflow.com/questions/3149192/difference-between-single-quotes-and-double-quotes-in-javascript">https://stackoverflow.com/questions/3149192/difference-between-single-quotes-and-double-quotes-in-javascript</a></li>
+<li><a href="https://plus.google.com/+DouglasCrockfordEsq/posts/EBky2K9erKt">https://plus.google.com/+DouglasCrockfordEsq/posts/EBky2K9erKt</a></li>
+</ul>
+<p>Happy Quoting!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How to Access Two Mac Accounts at the Same Time]]></title>
         <id>https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/</id>
@@ -1566,57 +1634,6 @@ If you have a suggestion or want to pull-request it your self you can check it o
 <h3>Also Good Point</h3>
 <p><img src="/images/posts/nuget-automation-oops-gates-quote.png" alt="service status image of problem with nuget"></p>
 <p>Happy NuGetting!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Developer Friendly React Component Errors]]></title>
-        <id>https://staxmanade.com/2016/01/developer-friendly-react-component-errors/</id>
-        <link href="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">
-        </link>
-        <updated>2016-01-31T07:20:41Z</updated>
-        <summary type="html"><![CDATA[One of the biggest pain points I've run into while building an application with Facebook's [React](https://facebook.github.io/react/) is when you goof...]]></summary>
-        <content type="html"><![CDATA[<p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
-<p>If I google for <code>react try catch</code> the first search result hit landed me on this <a href="https://github.com/facebook/react/issues/2461">GitHub issue on error boundaries</a> (status: <code>open</code> as of this writing). There is a pull-request with what looks to be a potential work around, but until this lands and it provides enough of a solution I hope the below can help you.</p>
-<p>If you read the comments of this post you'll see <a href="https://github.com/facebook/react/issues/2461#issuecomment-114155631">this helpful comment</a> where Skiano links to a <a href="https://github.com/skiano/react-safe-render/blob/feature/safe-methods/index.js">github repo</a> with a pretty good wrapper that re-writes React components so the lifecycle methods get a useful <code>try/catch</code> and can properly log errors.</p>
-<p>I liked the approach provided above but since I'm working on a project that is using <a href="https://babeljs.io">BabelJS</a> and <code>ES6/7</code>, I wanted to see if I could try using the new <a href="https://github.com/wycats/javascript-decorators">ES7 Decorators</a> which Babel supports to allow tagging certain ES6 React classes with this try/catch wrapper.</p>
-<p>Below is what it looks like if you end up using it.</p>
-<h1>Usage with an es7 @decorator</h1>
-<pre><code><span class="hljs-literal">import</span> React from <span class="hljs-string">'react'</span>;
-<span class="hljs-literal">import</span> wrapReactLifecycleMethodsWithTryCatch from <span class="hljs-string">'react-component-errors'</span>
-
-<span class="hljs-annotation">@wrapReactLifecycleMethodsWithTryCatch</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyComponent</span> : <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  componentDidMount(){
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Test error"</span>);
-  }
-  render(){
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello&lt;/div&gt;;
-  }
-}
-</code></pre>
-<p>But you can also use this without the decorator pattern just by passing the class through the wrapper function.</p>
-<h1>Usage without a decorator</h1>
-<pre><code><span class="hljs-keyword">import</span> wrapReactComponentMethodsWithTryCatch from `react-log-errors.js`
-
-<span class="hljs-keyword">var</span> MyComponent = React.createClass({
-  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Test error"</span>);
-  },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello&lt;/div&gt;;
-  }
-});
-
-wrapReactComponentMethodsWithTryCatch(MyComponent);
-</code></pre>
-<h1>How to get it?</h1>
-<ul>
-<li>NPM: <a href="https://www.npmjs.com/package/react-component-errors">react-component-errors</a></li>
-<li>GitHub: <a href="https://github.com/staxmanade/react-component-errors">staxmanade/react-component-errors</a></li>
-</ul>
-<h1>NOT tested for performance...</h1>
-<p>FYI: this is primarily built as a development tool and has not been performance tested. While I haven't noticed any performance issues - I wouldn't recommend sending to production as is without a deeper impact analysis.</p>
-<p>Happy React Debugging!</p>
 ]]></content>
     </entry>
 </feed>

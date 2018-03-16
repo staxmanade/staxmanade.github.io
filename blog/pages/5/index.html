@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
@@ -77,6 +77,251 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/05/running-in-app-mocha-tests-within-winjs/">Running in-app mocha tests within WinJS</a></h1>
+    <p class="meta">
+          <time datetime="2015-05-23T21:32:45.540Z" pubdate data-updated="true">May 23rd 2015</time>
+
+
+        <a href="/2015/05/running-in-app-mocha-tests-within-winjs/#disqus_thread" data-disqus-identifier="/2015/05/running-in-app-mocha-tests-within-winjs/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><blockquote>
+<p>I described a while back a scenario about running <a href="https://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit tests</a>. So if you'd like some background on the subject have a look there before reading here.</p>
+</blockquote>
+<p>This post is going to give some specifics about how to run <a href="http://mochajs.org/">MochaJS</a> tests within a Microsoft Windows JavaScript application (WinJS).</p>
+<h2>Prerequisites</h2>
+<p>These steps assume you already have a WinJS application, possibly using the universal template or other. In the end it doesn't matter. As long as you have a project that probably has a <code>default.html</code> file and the ability to add <code>js</code> &amp; <code>css</code> files to.</p>
+<h2>Get Mocha</h2>
+<p>You can acquire the mocha library however you want, <a href="http://bower.io/">Bower</a>, <a href="http://npmjs.com/">Npm</a>, or download it manually from the site (<a href="http://mochajs.org/">mochajs.org</a>).</p>
+<h2>Reference Mocha Within Project &amp; App</h2>
+<p>However you get the mocha source, you need to both add references to the mocha js and css files into your project file either in a <code>*.jsproj</code> file or if using a universal shared app, in the shared project.</p>
+<p>Then you need to include a reference to the code in your <code>default.html</code> file.</p>
+<p>In my example below you can see I used bower to download the <a href="http://mochajs.org">MochaJS</a> library.</p>
+<p>The <code>mocha.setup('bdd')</code> tells mocha to use the BDD style of tests which defines the <code>describe(...)</code>, <code>it(...)</code>, etc functions.</p>
+<pre><code class="language-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>MyApp.Windows<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- WinJS references --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/winjs/css/ui-light.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/base.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/winjs/js/ui.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- TESTS--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/bower_components/mocha/mocha.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
+        mocha.setup(<span class="hljs-string">'bdd'</span>);
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- My Project js/css files below... --&gt;</span>
+
+...Rest of default.html file excluded
+</code></pre>
+<h2>Create a WinJS Control for hosting Mocha reporting.</h2>
+<p>Below is a sample WinJS control that can be used to host the mocha html report.</p>
+<pre><code class="language-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+        <span class="hljs-id">#mocha</span> <span class="hljs-rules">{
+            <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">800px</span></span></span>;
+            <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">600px</span></span></span>;
+            <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> scroll</span></span>;
+        }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"fragment section1page"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">aria-label</span>=<span class="hljs-value">"Main content"</span> <span class="hljs-attribute">role</span>=<span class="hljs-value">"main"</span>&gt;</span>
+
+            <span class="hljs-comment">&lt;!-- define a button that we can use to manually run or re-run tests --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mochaTestsRun"</span>&gt;</span>Run Tests<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
+            <span class="hljs-comment">&lt;!-- define a checkbox that allow us to toggle auto-run
+                 of the tests when we start up the app --&gt;</span>
+            Auto start <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mochaTestsRunOnStart"</span> /&gt;</span>
+
+
+            <span class="hljs-comment">&lt;!-- this is a blank div we use to inject U.I. related tests --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"testElementContainer"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+            <span class="hljs-comment">&lt;!-- mocha throws the html output in the below div --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<pre><code class="language-javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-pi">    "use strict"</span>;
+
+    <span class="hljs-keyword">var</span> runMochaTests = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-comment">// clear any current test results since mocha just appends.</span>
+        element.querySelector(<span class="hljs-string">'#mocha'</span>).innerHTML = <span class="hljs-string">""</span>;
+
+        <span class="hljs-comment">// If you want your tests to verify nothing is leaked globally...</span>
+        mocha.checkLeaks();
+
+        <span class="hljs-comment">// specify any globals that you are OK with your tests leaking</span>
+        mocha.globals([
+            <span class="hljs-string">'someGlobalIAmExpecting'</span>
+        ]);
+
+        <span class="hljs-comment">// start the test run</span>
+        mocha.run();
+    }
+
+    <span class="hljs-keyword">var</span> ControlConstructor = WinJS.UI.Pages.define(<span class="hljs-string">"/js/tests/tests.html"</span>, {
+        <span class="hljs-comment">// This function is called after the page control contents</span>
+        <span class="hljs-comment">// have been loaded, controls have been activated, and</span>
+        <span class="hljs-comment">// the resulting elements have been parented to the DOM.</span>
+        ready: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element, options</span>) </span>{
+            options = options || {};
+
+            <span class="hljs-comment">// get our possibly already cached value of whether to run the tests on startup.</span>
+            <span class="hljs-keyword">var</span> runOnStart = (<span class="hljs-built_in">JSON</span>.parse(localStorage.getItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>) || <span class="hljs-string">"true"</span>));
+
+            <span class="hljs-comment">// checkbox to manage auto-run state</span>
+            <span class="hljs-keyword">var</span> runOnStartCheckbox = element.querySelector(<span class="hljs-string">'#mochaTestsRunOnStart'</span>);
+            runOnStartCheckbox.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                localStorage.setItem(<span class="hljs-string">"mochaTestsRunOnStart"</span>, runOnStartCheckbox.checked);
+            });
+
+            <span class="hljs-comment">// button to manually trigger a test run</span>
+            <span class="hljs-keyword">var</span> mochaTestsRunButton = element.querySelector(<span class="hljs-string">'#mochaTestsRun'</span>);
+            mochaTestsRunButton.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+                runMochaTests();
+            })
+            runOnStartCheckbox.checked = runOnStart;
+
+            <span class="hljs-keyword">if</span> (runOnStart &amp;&amp; !<span class="hljs-built_in">window</span>.hasRunMochaTestsAtLeastOnce) {
+                <span class="hljs-comment">// this value is used to avoid extra test runs as we navigation around the app.</span>
+                <span class="hljs-comment">// EX: if the test control is on a home pivot - we nav away and come back home</span>
+                <span class="hljs-comment">// we probably don't want to auto-run the tests again. (use the menu button</span>
+                <span class="hljs-comment">// instead if you want another test run)</span>
+                <span class="hljs-built_in">window</span>.hasRunMochaTestsAtLeastOnce = <span class="hljs-literal">true</span>;
+                runMochaTests();
+            }
+
+        },
+    });
+
+    <span class="hljs-comment">// The following lines expose this control constructor as a global.</span>
+    <span class="hljs-comment">// This lets you use the control as a declarative control inside the</span>
+    <span class="hljs-comment">// data-win-control attribute.</span>
+
+    WinJS.Namespace.define(<span class="hljs-string">"MyApp.Testing.Controls"</span>, {
+        TestsControl: ControlConstructor
+    });
+})();
+</code></pre>
+<h2>Handle global exceptions</h2>
+<p>If you write any async code (difficult not to these days) an exception or assertion failure will not be trapped by the internal try/catch mechanism's of Mocha in a Windows WinJS environment.</p>
+<p>We have to give Mocha a hint on how to hook into global exceptions.</p>
+<p>Mocha tries to attach to the browser's global <code>window.onerror</code> method, and since a WinJS app doesn't use this same handler, we have to forward the exceptions and to mocha's attached <code>window.onerror</code> handler.</p>
+<p>In your <code>default.js</code> or wherever you configure the <code>app</code> you can attach to the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh974768.aspx"><code>WinJS.Application.onerror</code></a> and after some exception massaging we can hand the exceptions to mocha so when a test fails it can be reported correctly.</p>
+<pre><code class="language-javascript">    WinJS.Application.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ex</span>) </span>{
+
+        <span class="hljs-keyword">var</span> errorMessage, errorLine, errorUrl;
+        <span class="hljs-keyword">if</span> (ex.detail.errorMessage) {
+            errorMessage = ex.detail.errorMessage;
+            errorLine = ex.detail.errorLine;
+            errorUrl = ex.detail.errorUrl;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ex &amp;&amp;
+            ex.detail &amp;&amp;
+            ex.detail.exception &amp;&amp;
+            ex.detail.exception.stack) {
+            errorMessage = ex.detail.exception.stack;
+            errorLine = <span class="hljs-literal">null</span>;
+            errorUrl = <span class="hljs-literal">null</span>;
+        }
+
+        <span class="hljs-comment">// if window.onerror exists, assume mochajs is here and call it's error handler</span>
+        <span class="hljs-comment">// This may be a poor assumption because 3rd party libraries could also attach</span>
+        <span class="hljs-comment">// their handlers, but it's working for me so far...</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.onerror &amp;&amp; errorMessage) {
+            <span class="hljs-built_in">window</span>.onerror(errorMessage, errorLine, errorUrl);
+
+            <span class="hljs-comment">// return true signalling that the error's been</span>
+            <span class="hljs-comment">// handled (keeping the whole app from crashing)</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+
+        <span class="hljs-comment">// if we get here, assuming mochajs isn't running</span>
+        <span class="hljs-comment">// let's log out the errors...</span>
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">var</span> exMessage = <span class="hljs-built_in">JSON</span>.stringify(ex, <span class="hljs-literal">null</span>, <span class="hljs-string">'  '</span>);
+            <span class="hljs-built_in">console</span>.error(exMessage);
+        } <span class="hljs-keyword">catch</span> (e) {
+            <span class="hljs-comment">// can't JSON serialize exception object here (probably circular reference)</span>
+            <span class="hljs-comment">// log what we can...</span>
+            <span class="hljs-built_in">console</span>.error(ex);
+            <span class="hljs-built_in">console</span>.error(e);
+        }
+
+        <span class="hljs-comment">// I like to be stopped while debugging to possibly</span>
+        <span class="hljs-comment">// poke around and do further inspection</span>
+        <span class="hljs-keyword">debugger</span>;
+    }
+</code></pre>
+<h2>Reference the test control.</h2>
+<p>While developing out the application, I like to throw it front and center in the first hub of my apps home page hub control.</p>
+<p>Here's an example of how to reference the above control:</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>hubPage<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/pages/hub/hub.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/js/tests/tests.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+...page details trimmed for brevity...
+
+            <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"hub"</span> <span class="hljs-attribute">data-win-control</span>=<span class="hljs-value">"WinJS.UI.Hub"</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sectionTests"</span>
+                     <span class="hljs-attribute">data-win-control</span>=<span class="hljs-value">"WinJS.UI.HubSection"</span>
+                     <span class="hljs-attribute">data-win-options</span>=<span class="hljs-value">"{ isHeaderStatic: true }"</span>
+                     <span class="hljs-attribute">data-win-res</span>=<span class="hljs-value">"{ winControl: {'header': 'TestSection'} }"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"sectionTestscontenthost"</span> <span class="hljs-attribute">data-win-control</span>=<span class="hljs-value">"MyApp.Testing.TestsControl"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+...rest of page details trimmed for brevity...
+
+</code></pre>
+<p>If you manage to get everything wired up correctly above, when you run the app (<code>F5</code>) your mocha tests should be all set and run automatically. Oh wait, let's not forget to add a mocha test :)...</p>
+<pre><code class="language-javascript">describe(<span class="hljs-string">'Mocha test spike'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+
+    it(<span class="hljs-string">"should report a passing test"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+      <span class="hljs-comment">// doing nothing should be a passing test</span>
+    });
+
+    it(<span class="hljs-string">"should fail on a synchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports a test failure"</span>)
+    });
+
+    it(<span class="hljs-string">"should fail on an asynchronous exception"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">done</span>)</span>{
+        setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports an async test failure"</span>)
+            done();
+        }, <span class="hljs-number">100</span>);
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Some test error to make sure mocha reports a test failure"</span>)
+    });
+
+});
+</code></pre>
+<p>Save the above as your first test file, include it so it runs on startup and verify your tests run and report correctly within the test control.</p>
+<p>Happy testing!</p>
+</div>
+
+      <a href="/2015/05/running-in-app-mocha-tests-within-winjs/#disqus_thread" data-disqus-identifier="/2015/05/running-in-app-mocha-tests-within-winjs/">(Comments)</a>
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">Look at where DefinitelyTyped is Now</a></h1>
@@ -446,89 +691,6 @@ git add .
 
       <a href="/2015/02/approval-tests---command-line-tool--cli-/#disqus_thread" data-disqus-identifier="/2015/02/approval-tests---command-line-tool--cli-/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2015/01/approval-tests---overview/">Approval Tests - Overview</a></h1>
-    <p class="meta">
-          <time datetime="2015-01-30T16:38:06.494Z" pubdate data-updated="true">Jan 30th 2015</time>
-
-
-        <a href="/2015/01/approval-tests---overview/#disqus_thread" data-disqus-identifier="/2015/01/approval-tests---overview/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>I first started using the <code>.Net</code> version of Approval Tests and found so much value in it, I <a href="https://github.com/approvals/Approvals.NodeJS">created a port of the tool</a> that I can use in <a href="http://nodejs.org">Node.JS</a>. This post is intended as a rough overview of Approval Tests, and will be using the <a href="https://github.com/approvals/Approvals.NodeJS">NodeJS port</a> in my examples below.</p>
-<blockquote>
-<p>There is support for other programming languages, so head over to the Approval Tests site at <a href="http://approvaltests.com">ApprovalTests.com</a> and check them out.</p>
-</blockquote>
-<h2>What are Approval Tests?</h2>
-<p>At it's core, Approval Tests are a very different way to execute the assertion step of a unit test.</p>
-<p>Think of this as another tool in the bag and not a replacement for the good old fashion <code>assert.equal(...)</code> or your favorite assertion tool. But for certain types of tests, it <strong>IS</strong> the best tool to grab.</p>
-<p>Typically, when we create assertions in our unit tests, we assert on very specific things. This property equals that value.</p>
-<p>With Approval Tests, you can take whatever output you're wanting to Assert against, turn it into either a string representation or an image (say screenshot of app), and use our favorite diff tool to compare it with the previously <em>approved</em> version.</p>
-<p>The diff tool is a great way to visualize change between failing/approved data which can help to raise the level of abstraction of your test. Instead of comparing a single value in an assertion, we can serialize an entire object graph to a string and use the diff tool to review any changes to the diff of the previously approved version.</p>
-<p>The work to find and start up your favorite diff tool comparing previously &quot;approved&quot; files is where the <a href="https://approvaltests.com">libraries provided by Approval Tests</a> come in handy.</p>
-<h1>Let's walk through an example</h1>
-<p>If you've done any testing before, by now you have probably heard of the AAA (Arrange, Act, Assert) style of tests. Below I've contrive a sample test using the AAA style in JavaScript.</p>
-<pre><code><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>);
-describe(<span class="hljs-string">"when testing something"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-    it(<span class="hljs-string">"should do something special"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-
-        <span class="hljs-comment">// Arrange</span>
-        <span class="hljs-comment">// setup the initial state for the test</span>
-        <span class="hljs-keyword">var</span> obj = { valueA: <span class="hljs-string">"test"</span>, valueB: <span class="hljs-number">1234</span> };
-
-        <span class="hljs-comment">// Act - Do some business logic on the object</span>
-        obj.valueC = <span class="hljs-literal">true</span>;
-
-        <span class="hljs-comment">// Assert - verify the state of the item under test</span>
-        assert.equal(obj.valueA, <span class="hljs-string">"test"</span>)
-        assert.equal(obj.valueB, <span class="hljs-number">1234</span>);
-        assert.equal(obj.valueC, <span class="hljs-literal">true</span>);
-    });
-});
-</code></pre>
-<p>At a high level, if you are writing tests with an object, and have a way to translate that object's state into a text or image representation, wouldn't it be great if you could save that state into a file, essentially locking down the state of the test?</p>
-<p>This would allow future runs of the test to easily detect a change by comparing the previous state with the new state (strings of course) - but using the power of our diff tools to quickly highlight what is different.</p>
-<h1>Let's turn our AAA test above into an Approval Test</h1>
-<pre><code class="language-diff">var approvals = require('approvals');
-describe("when testing something", function(){
-    it("should do something special", function(){
-
-        // Arrange
-        // setup the initial state for the test
-        var obj = { valueA: "test", valueB: 1234 };
-
-        // Act - Do some business logic on the object
-        obj.valueC = true;
-
-        // Assert - verify the state of the item under test
-<span class="hljs-deletion">-        assert.equal(obj.valueA, "test")</span>
-<span class="hljs-deletion">-        assert.equal(obj.valueB, 1234);</span>
-<span class="hljs-deletion">-        assert.equal(obj.valueC, true);</span>
-<span class="hljs-addition">+        approvals.verifyAsJSON(__dirname, "sampleTest", obj);</span>
-    });
-});
-</code></pre>
-<p>Notice how the 3 <code>assert's</code> turned into 1 <code>approvals.verifyAsJSON</code>?</p>
-<h1>How Approval Tests Work</h1>
-<p>Approval Tests works by taking the object or value you're trying to verify, serializing it to a text file (or image) and saving it to a file labeled with the name of your test and <code>*.received.txt</code>. It will then try to compare this <code>*.received.txt</code> file with a <code>*.approved.txt</code> file. If the file doesn't exist, then we will see a diff tool present with our received file on the left and an empty approved file on the right.</p>
-<p>At this point we have to choose between a number of options:</p>
-<ul>
-<li>We could take the received output and copy/save it to the approved file. Essentially approving the test.</li>
-<li>We may only want parts of the received file, and copy over just the parts of what we want to the approved file.</li>
-<li>Or we do nothing as we want to start over...</li>
-</ul>
-<p>Now we run our test again and if the test passes - then we know that we've finished as what was re-generated in the received file matches the approved file. But if we see our diff tool appear, we can analyze the differences in the diff tool and determine if we need to either adjust the approved file or adjust our code that generates the received file.</p>
-<blockquote>
-<p>If the above explanation still isn't clear, I'd recommend watching <a href="https://twitter.com/llewellynfalco">@LlewellynFalco's</a> video's on the topic that can be found at <a href="http://approvaltests.com">approvaltests.com</a>. He does a good job describing the concepts.</p>
-</blockquote>
-<h1>Next Steps!</h1>
-<p>Browse the <a href="https://github.com/approvals">github org</a>,  <a href="http://approvaltests.com/videos/">watch videos</a> or <a href="http://approvaltests.com/resources/">read documentation</a> on <a href="http://approvaltests.com">approvaltests.com</a>.</p>
-<p>Happy Approving!</p>
-</div>
-
-      <a href="/2015/01/approval-tests---overview/#disqus_thread" data-disqus-identifier="/2015/01/approval-tests---overview/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/6/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -547,7 +709,7 @@ describe("when testing something", function(){
 
 </p>
 <p>
-  Copyright &copy; 2008-2017 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 

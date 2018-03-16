@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
@@ -77,6 +77,57 @@
     <div id="content">
         
 <div class="blog-index">
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">Easily simulate slow async calls using JavaScript async/await</a></h1>
+    <p class="meta">
+          <time datetime="2016-07-08T12:34:43.041Z" pubdate data-updated="true">Jul 8th 2016</time>
+
+
+        <a href="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/#disqus_thread" data-disqus-identifier="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world problems)</p>
+<p>I've really been enjoying the new <code>async/await</code> syntax that can be leveraged in recent JavaScript transpires such as Babel and TypeScript but when it happens so fast on a local development environment, some U.I. interactions could get tough to test out. <strong>So how can we slow this down or more appropriately add some stall time?</strong></p>
+<p>As an example, let's say you have the following <code>async</code> javascript method</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+}
+
+</code></pre>
+<p>If the first or second asynchronous methods in the example above were running too fast (as were in my case), I was pleased to see how easy it was to inject a bit of code to manually stall the operation.</p>
+<p>The snippet below is short and sweet... this just delays continuous execution of an async operation for 3 seconds.</p>
+<pre><code>  await new Promise<span class="hljs-list">(<span class="hljs-keyword">resolve</span> =&gt; setTimeout<span class="hljs-list">(<span class="hljs-keyword">resolve</span>, <span class="hljs-number">3000</span>)</span>)</span><span class="hljs-comment">;</span>
+
+</code></pre>
+<h1>The little baby staller helper</h1>
+<p>Give it a name and make it a bit more re-usable.</p>
+<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stall</span>(<span class="hljs-params">stallTime = 3000</span>) </span>{
+  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(resolve =&gt; setTimeout(resolve, stallTime));
+}
+</code></pre>
+<p>The above helper can be used by just awaiting it (see below)</p>
+<pre><code>
+<span class="hljs-keyword">var</span> doSomething = <span class="hljs-keyword">async</span> () =&gt; {
+
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> someRemoteOperation();
+
+  <span class="hljs-keyword">await</span> stall(); <span class="hljs-comment">// stalls for the default 3 seconds</span>
+  <span class="hljs-keyword">await</span> stall(<span class="hljs-number">500</span>); <span class="hljs-comment">// stalls for 1/2 a second</span>
+
+  <span class="hljs-keyword">await</span> doSomethingElse(data);
+
+}
+
+</code></pre>
+<p>Now we have an <code>async</code> function that runs slower - isn't that what you always wanted?</p>
+<p>Happy Stalling!</p>
+</div>
+
+      <a href="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/#disqus_thread" data-disqus-identifier="/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">(Comments)</a>
+    </article>
     <article>
         <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">One Programmers Letter to his Wife</a></h1>
@@ -497,62 +548,6 @@ If you have a suggestion or want to pull-request it your self you can check it o
 
       <a href="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/#disqus_thread" data-disqus-identifier="/2016/03/oops---how-a-simple-bit-of-automation-put-nuget-on-edge---/">(Comments)</a>
     </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/01/developer-friendly-react-component-errors/">Developer Friendly React Component Errors</a></h1>
-    <p class="meta">
-          <time datetime="2016-01-31T07:20:41.092Z" pubdate data-updated="true">Jan 30th 2016</time>
-
-
-        <a href="/2016/01/developer-friendly-react-component-errors/#disqus_thread" data-disqus-identifier="/2016/01/developer-friendly-react-component-errors/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>One of the biggest pain points I've run into while building an application with Facebook's <a href="https://facebook.github.io/react/">React</a> is when you goof something up and you get an error in one of the React component lifecycle methods such as <code>render</code>, <code>componentWillMount</code>, <code>componentDidUpdate</code>, etc. The biggest problem is the lack of a <a href="https://staxmanade.com/2016/01/habit-of-a-solid-developer-rapid-feedback/">feedback loop</a> because React is swallowing exceptions, so you don't see the reported error in your developer console or any global error handlers called. There's even a chance you don't know something is going wrong (yet).</p>
-<p>If I google for <code>react try catch</code> the first search result hit landed me on this <a href="https://github.com/facebook/react/issues/2461">GitHub issue on error boundaries</a> (status: <code>open</code> as of this writing). There is a pull-request with what looks to be a potential work around, but until this lands and it provides enough of a solution I hope the below can help you.</p>
-<p>If you read the comments of this post you'll see <a href="https://github.com/facebook/react/issues/2461#issuecomment-114155631">this helpful comment</a> where Skiano links to a <a href="https://github.com/skiano/react-safe-render/blob/feature/safe-methods/index.js">github repo</a> with a pretty good wrapper that re-writes React components so the lifecycle methods get a useful <code>try/catch</code> and can properly log errors.</p>
-<p>I liked the approach provided above but since I'm working on a project that is using <a href="https://babeljs.io">BabelJS</a> and <code>ES6/7</code>, I wanted to see if I could try using the new <a href="https://github.com/wycats/javascript-decorators">ES7 Decorators</a> which Babel supports to allow tagging certain ES6 React classes with this try/catch wrapper.</p>
-<p>Below is what it looks like if you end up using it.</p>
-<h1>Usage with an es7 @decorator</h1>
-<pre><code><span class="hljs-literal">import</span> React from <span class="hljs-string">'react'</span>;
-<span class="hljs-literal">import</span> wrapReactLifecycleMethodsWithTryCatch from <span class="hljs-string">'react-component-errors'</span>
-
-<span class="hljs-annotation">@wrapReactLifecycleMethodsWithTryCatch</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyComponent</span> : <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  componentDidMount(){
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Test error"</span>);
-  }
-  render(){
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello&lt;/div&gt;;
-  }
-}
-</code></pre>
-<p>But you can also use this without the decorator pattern just by passing the class through the wrapper function.</p>
-<h1>Usage without a decorator</h1>
-<pre><code><span class="hljs-keyword">import</span> wrapReactComponentMethodsWithTryCatch from `react-log-errors.js`
-
-<span class="hljs-keyword">var</span> MyComponent = React.createClass({
-  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Test error"</span>);
-  },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> &lt;div&gt;Hello&lt;/div&gt;;
-  }
-});
-
-wrapReactComponentMethodsWithTryCatch(MyComponent);
-</code></pre>
-<h1>How to get it?</h1>
-<ul>
-<li>NPM: <a href="https://www.npmjs.com/package/react-component-errors">react-component-errors</a></li>
-<li>GitHub: <a href="https://github.com/staxmanade/react-component-errors">staxmanade/react-component-errors</a></li>
-</ul>
-<h1>NOT tested for performance...</h1>
-<p>FYI: this is primarily built as a development tool and has not been performance tested. While I haven't noticed any performance issues - I wouldn't recommend sending to production as is without a deeper impact analysis.</p>
-<p>Happy React Debugging!</p>
-</div>
-
-      <a href="/2016/01/developer-friendly-react-component-errors/#disqus_thread" data-disqus-identifier="/2016/01/developer-friendly-react-component-errors/">(Comments)</a>
-    </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>
     <a href="/blog/archives">Blog Archives</a>
@@ -571,7 +566,7 @@ wrapReactComponentMethodsWithTryCatch(MyComponent);
 
 </p>
 <p>
-  Copyright &copy; 2008-2017 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 
