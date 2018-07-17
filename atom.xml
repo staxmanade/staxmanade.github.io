@@ -851,6 +851,18 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
     <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
 }</span>
 
+<span class="hljs-tag">span</span><span class="hljs-class">.ghx-extra-field</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+}</span>
+
+<span class="hljs-tag">span</span><span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-extra-field-estimate</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding-bottom</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+}</span>
 </code></pre>
 <p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
 <p>Happy (as best you can) JIRA'ing</p>
