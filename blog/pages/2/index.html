@@ -79,6 +79,51 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
+    <p class="meta">
+          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
+
+
+        <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>As a newbie to the tooling, <a href="https://docs.docker.com/compose/">docker-compose</a> it's great for getting started. To bring up all the service containers with a simple <code>docker-compose up</code> starts everything. However, what if you want to replace an existing container without tearing down the entire suite of containers?</p>
+<p>For example: I have a <code>docker-compose</code> project that has the following containers.</p>
+<ol>
+<li>Node JS App</li>
+<li>CouchDB</li>
+<li>Redis Cache</li>
+</ol>
+<p>I had a small configuration change within the CouchDB container that I wanted to update and re-start to get going but wasn't sure how to do that.</p>
+<h1>Here's how I did it with little down time.</h1>
+<p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
+<ol>
+<li>Make the necessary change to the container (in my case update the couchdb config).</li>
+<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in your <code>docker-compose.yml</code> file.)</li>
+</ol>
+<p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
+<ol>
+<li><code>docker-compose stop &lt;service_name&gt;</code> &lt;-- If you want to live on the edge and have the shut-down go faster, try <code>docker-compose kill &lt;service_name&gt;</code></li>
+<li><code>docker-compose up -d --no-deps &lt;service_name&gt;</code> &lt;-- this brings up the service using the newly built container.</li>
+</ol>
+<p>The <code>-d</code> is Detached mode: Run containers in the background, print new container names.</p>
+<p>The <code>--no-deps</code> will not start linked services.</p>
+<p>That's it... at least for me, it's worked to update my running containers with the latest version without tearing down the entire docker-compose set of services.</p>
+<blockquote>
+<p>Again, if you know of a faster/better way to go about this, I'd love to hear it. Or if you know of any down-sides to this approach, I'd love to hear about it before I have to learn the hard way on a production environment.</p>
+</blockquote>
+<h2>UPDATE:</h2>
+<p>Thanks to Vladimir in the comments below - you can skip several steps above and do it with a single command</p>
+<pre><code><span class="hljs-comment">docker</span><span class="hljs-literal">-</span><span class="hljs-comment">compose</span> <span class="hljs-comment">up</span> <span class="hljs-literal">-</span><span class="hljs-comment">d</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">no</span><span class="hljs-literal">-</span><span class="hljs-comment">deps</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">build</span> &lt;<span class="hljs-comment">service_name</span>&gt;
+</code></pre>
+<p>I tested this and was able to avoid the <code>build</code>, <code>kill</code>, and <code>up</code> commands with this one-liner.</p>
+<p>Happy Container Updating!</p>
+</div>
+
+      <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">Run Multiple Docker Environments (qa, stage, prod) from the Same docker-compose File.</a></h1>
     <p class="meta">
           <time datetime="2016-07-27T05:24:03.338Z" pubdate data-updated="true">Jul 26th 2016</time>
@@ -798,28 +843,6 @@ If you have a suggestion or want to pull-request it your self you can check it o
 </div>
 
       <a href="/2016/04/easily-convert-css-to-react-inline-styles/#disqus_thread" data-disqus-identifier="/2016/04/easily-convert-css-to-react-inline-styles/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></h1>
-    <p class="meta">
-          <time datetime="2016-04-10T16:40:42.307Z" pubdate data-updated="true">Apr 10th 2016</time>
-
-
-        <a href="/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/#disqus_thread" data-disqus-identifier="/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>A while back I wrote about a replacement for the <code>cd</code> command on powershell that I wrote which provides some fun features such as history tracking, support cd'ing to a folder when a file path is given, etc... It's been a while since I've touched this helpful little tool which sometimes I even forget I wrote it because it's something that's used practically every day and &quot;it just works&quot;.</p>
-<p>For more information, check out the older posts about it here <a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a> and here: <a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a>.</p>
-<h1>It now supports <code>cd ...</code></h1>
-<p>Well, today I threw a quick feature into this utility that I've become accustomed to using in zsh on my Mac.</p>
-<p>On many *nix command prompts you can type something like <code>cd ....</code>. This command translates indo <code>cd ..; cd ..; cd ..</code> (but executed as one command). The first <code>..</code> counts as one directory and then each ane every <code>.</code> after that counts as another directory up the tree.</p>
-<p>So now within PowerShell when I <code>cd</code> down into a deep folder structure, I can now use <code>cd .......</code> to go back up <code>N</code> folders.</p>
-<p>NOICE!</p>
-<p>Happy CD'ing!</p>
-</div>
-
-      <a href="/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/#disqus_thread" data-disqus-identifier="/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>

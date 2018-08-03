@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine - Developing on Staxmanade</title>
+  <title>Using script=module to Quicky Spike Some Mocha Tests - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I&#x27;ve been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to [setup deploy and ...">
+   <meta name="description" content="I&#x27;ll be honest, I secretly hoped JSPM would win the front end over and become our standard, and while I haven&#x27;t truly followed it closely in the last ...">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">
+  <link rel="canonical" href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -92,46 +92,170 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Using script=module to Quicky Spike Some Mocha Tests</a></h1>
     <p class="meta">
-          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+          <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>
 
 
-        <a href="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/#disqus_thread" data-disqus-identifier="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">(Comments)</a>
+        <a href="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/#disqus_thread" data-disqus-identifier="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I've been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to <a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">setup deploy and manage different environments</a>.</p>
-<p>The work of creating, deploying and essentially managing all of my containers up on Digital Ocean worked great, but only from the computer I initiated this process with. For this example, we're going to walk through how I was able to not only build/deploy from my Mac like I originaly did, but what steps I took to allow me to switch over to a Windows machine and do the exact same thing.</p>
-<p>It's not obvious how to do it, and if you do some googling you'll most certanly land</p>
+<div class="entry-content"><p>I'll be honest, I secretly hoped JSPM would win the front end over and become our standard, and while I haven't truly followed it closely in the last year or so I recently tried this out and was blown away at how beautifully simple it is (at least on the surface).</p>
+<p>Say I want to quickly run some Mocha test in a browser. Like say I'm spiking something, wanting to use tests in something like jsbin or plunkr and just get code running quickly.</p>
+<p>Most browsers now <a href="https://caniuse.com/#feat=es6-module">support tye script=module</a> tag which allows you to use <code>import</code> statements withing browser script tags. O_O</p>
+<p>So how could I use this to <code>import mocha</code> and write some quick tests? I'm so glad you asked.</p>
 <ol>
-<li>copy/zip folder on Mac</li>
-<li>unzip in same directory on Windows</li>
-<li>when I tried to run the docker-machine env command it failed because of the <code>pem</code> file not found - I had to manually create that directory on windows and copy the cert files in...</li>
-<li>Had to update the config.json and replace <code>{{HOME}}</code> with <code>C:/Users/Jason</code></li>
+<li>Mocha's browser U.I. looks for an element with <code>id=mocha</code> so let's add that.</li>
 </ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+<span class="hljs-addition">+  &lt;div id="mocha"&gt;&lt;/div&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="2">
+<li>now let's add some javascript to import mocha</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+<span class="hljs-addition">+  &lt;script type="module"&gt;</span>
+<span class="hljs-addition">+    import "https://dev.jspm.io/mocha"</span>
+<span class="hljs-addition">+    console.log("Mocha:", Mocha);</span>
+<span class="hljs-addition">+  &lt;/script&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>This package is loaded using the <code>import</code> functionality built into our browsers now and JSPM which allows us to load some <code>npm</code> packages right through the browser. MAGIC!</p>
 <blockquote>
-<p>after looking at it I probably could have skipped step 3 above and just modified the <code>config.json</code> to point to the proper directories (instead of copying files around).</p>
+<p>WARNING: DO NOT do this for a production-type environment. This is just a quick prototype tool leveraging JSPM's dev hosted servers that allow us to use import to load packages via NPM through their servers. Thank you JSPM.</p>
 </blockquote>
+<ol start="3">
+<li>Now we can do some browser-specific steps to get mocha to run.</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+<span class="hljs-deletion">-    console.log("Mocha:", Mocha);</span>
+<span class="hljs-addition">+    mocha.setup('bdd');</span>
+<span class="hljs-addition">+</span>
+<span class="hljs-addition">+    mocha.run();</span>
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="4">
+<li>Let's add some tests.</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+    mocha.setup('bdd');
+
+<span class="hljs-addition">+    describe("some awesome tests", function () {</span>
+<span class="hljs-addition">+        it("Should pass", function (){</span>
+<span class="hljs-addition">+            console.log("passing test");</span>
+<span class="hljs-addition">+        });</span>
+<span class="hljs-addition">+        it("Should fail", function (){</span>
+<span class="hljs-addition">+            throw new Error("OH NO!!!");</span>
+<span class="hljs-addition">+        });</span>
+<span class="hljs-addition">+    });</span>
+
+    mocha.run();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>THAT'S IT - using almost nothing but our browser's capabilities (and maybe a complicated JSPM back-end tool) we can easily write some in-browser tests to spike something, or just play around.</p>
+<ol start="5">
+<li>But wait - this looks like meh</li>
+</ol>
+<p>That's true, let's bring in some styles</p>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+<span class="hljs-addition">+  &lt;link rel="stylesheet" href="https://dev.jspm.io/mocha/mocha.css"&gt;</span>
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+    mocha.setup('bdd');
+
+    describe("some awesome tests", function () {
+        it("Should pass", function (){
+            console.log("passing test");
+        });
+        it("Should fail", function (){
+            throw new Error("OH NO!!!");
+        });
+    });
+
+    mocha.run();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>NOTE: Prob better to use a CDN version instead of pounding JSPM servers (sorry).</p>
+</blockquote>
+<h1>Final</h1>
+<pre><code>
+<span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://dev.jspm.io/mocha/mocha.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"module"</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">import</span> <span class="hljs-string">"https://dev.jspm.io/mocha"</span>
+    mocha.setup(<span class="hljs-string">'bdd'</span>);
+
+    describe(<span class="hljs-string">"some awesome tests"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        it(<span class="hljs-string">"Should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"passing test"</span>);
+        });
+        it(<span class="hljs-string">"Should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"OH NO!!!"</span>);
+        });
+    });
+
+    mocha.run();
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Cake!</p>
+<p>I've done this a few times lately, and am almost able to do it without looking up api and syntax O_O. I also don't need webpack, gulp, servers, or anything but a wee-bit of html/js and some luck (that JSPM servers will hang in there).</p>
+<p>Happy Testing!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+                          <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/docker/'>Docker</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
+    <a class='category' href='/blog/categories/mochajs/'>MochaJS</a>
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
+    <a class='category' href='/blog/categories/jspm/'>JSPM</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/" data-via="staxmanade" data-counturl="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/" data-via="staxmanade" data-counturl="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/" title="Previous Post: Using script=module to Quicky Spike Some Mocha Tests">&laquo; Using script=module to Quicky Spike Some Mocha Tests</a>
+                        <a class="basic-alignment left" href="/2018/08/how-to-json.stringify-and-order-dictionary-result/" title="Previous Post: How to JSON.stringify and Order Dictionary Result">&laquo; How to JSON.stringify and Order Dictionary Result</a>
                     </p>
                 </footer>
             </article>
@@ -256,7 +380,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/';
+    var disqus_identifier = '/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

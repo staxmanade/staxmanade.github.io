@@ -79,6 +79,153 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Using script=module to Quicky Spike Some Mocha Tests</a></h1>
+    <p class="meta">
+          <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>
+
+
+        <a href="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/#disqus_thread" data-disqus-identifier="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>I'll be honest, I secretly hoped JSPM would win the front end over and become our standard, and while I haven't truly followed it closely in the last year or so I recently tried this out and was blown away at how beautifully simple it is (at least on the surface).</p>
+<p>Say I want to quickly run some Mocha test in a browser. Like say I'm spiking something, wanting to use tests in something like jsbin or plunkr and just get code running quickly.</p>
+<p>Most browsers now <a href="https://caniuse.com/#feat=es6-module">support tye script=module</a> tag which allows you to use <code>import</code> statements withing browser script tags. O_O</p>
+<p>So how could I use this to <code>import mocha</code> and write some quick tests? I'm so glad you asked.</p>
+<ol>
+<li>Mocha's browser U.I. looks for an element with <code>id=mocha</code> so let's add that.</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+<span class="hljs-addition">+  &lt;div id="mocha"&gt;&lt;/div&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="2">
+<li>now let's add some javascript to import mocha</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+<span class="hljs-addition">+  &lt;script type="module"&gt;</span>
+<span class="hljs-addition">+    import "https://dev.jspm.io/mocha"</span>
+<span class="hljs-addition">+    console.log("Mocha:", Mocha);</span>
+<span class="hljs-addition">+  &lt;/script&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>This package is loaded using the <code>import</code> functionality built into our browsers now and JSPM which allows us to load some <code>npm</code> packages right through the browser. MAGIC!</p>
+<blockquote>
+<p>WARNING: DO NOT do this for a production-type environment. This is just a quick prototype tool leveraging JSPM's dev hosted servers that allow us to use import to load packages via NPM through their servers. Thank you JSPM.</p>
+</blockquote>
+<ol start="3">
+<li>Now we can do some browser-specific steps to get mocha to run.</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+<span class="hljs-deletion">-    console.log("Mocha:", Mocha);</span>
+<span class="hljs-addition">+    mocha.setup('bdd');</span>
+<span class="hljs-addition">+</span>
+<span class="hljs-addition">+    mocha.run();</span>
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="4">
+<li>Let's add some tests.</li>
+</ol>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+    mocha.setup('bdd');
+
+<span class="hljs-addition">+    describe("some awesome tests", function () {</span>
+<span class="hljs-addition">+        it("Should pass", function (){</span>
+<span class="hljs-addition">+            console.log("passing test");</span>
+<span class="hljs-addition">+        });</span>
+<span class="hljs-addition">+        it("Should fail", function (){</span>
+<span class="hljs-addition">+            throw new Error("OH NO!!!");</span>
+<span class="hljs-addition">+        });</span>
+<span class="hljs-addition">+    });</span>
+
+    mocha.run();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>THAT'S IT - using almost nothing but our browser's capabilities (and maybe a complicated JSPM back-end tool) we can easily write some in-browser tests to spike something, or just play around.</p>
+<ol start="5">
+<li>But wait - this looks like meh</li>
+</ol>
+<p>That's true, let's bring in some styles</p>
+<pre><code class="language-diff">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div id="mocha"&gt;&lt;/div&gt;
+<span class="hljs-addition">+  &lt;link rel="stylesheet" href="https://dev.jspm.io/mocha/mocha.css"&gt;</span>
+  &lt;script type="module"&gt;
+    import "https://dev.jspm.io/mocha"
+    mocha.setup('bdd');
+
+    describe("some awesome tests", function () {
+        it("Should pass", function (){
+            console.log("passing test");
+        });
+        it("Should fail", function (){
+            throw new Error("OH NO!!!");
+        });
+    });
+
+    mocha.run();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>NOTE: Prob better to use a CDN version instead of pounding JSPM servers (sorry).</p>
+</blockquote>
+<h1>Final</h1>
+<pre><code>
+<span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://dev.jspm.io/mocha/mocha.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"module"</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">import</span> <span class="hljs-string">"https://dev.jspm.io/mocha"</span>
+    mocha.setup(<span class="hljs-string">'bdd'</span>);
+
+    describe(<span class="hljs-string">"some awesome tests"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        it(<span class="hljs-string">"Should pass"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"passing test"</span>);
+        });
+        it(<span class="hljs-string">"Should fail"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"OH NO!!!"</span>);
+        });
+    });
+
+    mocha.run();
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Cake!</p>
+<p>I've done this a few times lately, and am almost able to do it without looking up api and syntax O_O. I also don't need webpack, gulp, servers, or anything but a wee-bit of html/js and some luck (that JSPM servers will hang in there).</p>
+<p>Happy Testing!</p>
+</div>
+
+      <a href="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/#disqus_thread" data-disqus-identifier="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/how-to-json.stringify-and-order-dictionary-result/">How to JSON.stringify and Order Dictionary Result</a></h1>
     <p class="meta">
           <time datetime="2018-08-02T02:14:57.050Z" pubdate data-updated="true">Aug 1st 2018</time>
@@ -992,51 +1139,6 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </div>
 
       <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
-    <p class="meta">
-          <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
-
-
-        <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>As a newbie to the tooling, <a href="https://docs.docker.com/compose/">docker-compose</a> it's great for getting started. To bring up all the service containers with a simple <code>docker-compose up</code> starts everything. However, what if you want to replace an existing container without tearing down the entire suite of containers?</p>
-<p>For example: I have a <code>docker-compose</code> project that has the following containers.</p>
-<ol>
-<li>Node JS App</li>
-<li>CouchDB</li>
-<li>Redis Cache</li>
-</ol>
-<p>I had a small configuration change within the CouchDB container that I wanted to update and re-start to get going but wasn't sure how to do that.</p>
-<h1>Here's how I did it with little down time.</h1>
-<p>I'm hoping there are better ways to go about this (I'm still learning), but the following steps are what I used to replace a running docker container with the latest build.</p>
-<ol>
-<li>Make the necessary change to the container (in my case update the couchdb config).</li>
-<li>Run <code>docker-compose build couchdb</code> (<code>docker-compose build &lt;service_name&gt;</code> where <code>service_name</code> is the name of the docker container defined in your <code>docker-compose.yml</code> file.)</li>
-</ol>
-<p>Once the change has been made and container re-built, we need to get that new container running (without affecting the other containers that were started by docker-compose).</p>
-<ol>
-<li><code>docker-compose stop &lt;service_name&gt;</code> &lt;-- If you want to live on the edge and have the shut-down go faster, try <code>docker-compose kill &lt;service_name&gt;</code></li>
-<li><code>docker-compose up -d --no-deps &lt;service_name&gt;</code> &lt;-- this brings up the service using the newly built container.</li>
-</ol>
-<p>The <code>-d</code> is Detached mode: Run containers in the background, print new container names.</p>
-<p>The <code>--no-deps</code> will not start linked services.</p>
-<p>That's it... at least for me, it's worked to update my running containers with the latest version without tearing down the entire docker-compose set of services.</p>
-<blockquote>
-<p>Again, if you know of a faster/better way to go about this, I'd love to hear it. Or if you know of any down-sides to this approach, I'd love to hear about it before I have to learn the hard way on a production environment.</p>
-</blockquote>
-<h2>UPDATE:</h2>
-<p>Thanks to Vladimir in the comments below - you can skip several steps above and do it with a single command</p>
-<pre><code><span class="hljs-comment">docker</span><span class="hljs-literal">-</span><span class="hljs-comment">compose</span> <span class="hljs-comment">up</span> <span class="hljs-literal">-</span><span class="hljs-comment">d</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">no</span><span class="hljs-literal">-</span><span class="hljs-comment">deps</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">build</span> &lt;<span class="hljs-comment">service_name</span>&gt;
-</code></pre>
-<p>I tested this and was able to avoid the <code>build</code>, <code>kill</code>, and <code>up</code> commands with this one-liner.</p>
-<p>Happy Container Updating!</p>
-</div>
-
-      <a href="/2016/09/how-to-update-a-single-running-docker-compose-container/#disqus_thread" data-disqus-identifier="/2016/09/how-to-update-a-single-running-docker-compose-container/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>
