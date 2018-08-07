@@ -923,7 +923,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </li>
 </ol>
 <pre><code class="language-css">
-<span class="hljs-comment">/** Version 2.1
+<span class="hljs-comment">/** Version 2.2
  ** Copyright Jason Jarrett
  **/</span>
 
