@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://staxmanade.com</id>
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <link>https://staxmanade.com</link>
-    <updated>2018-08-03T21:42:53Z</updated>
+    <updated>2018-08-03T21:42:53.703Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Jason Jarrett</name>
         <uri>https://staxmanade.com/about</uri>
     </author>
     <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
-    <rights>Copyright (C) 2008-2018 Jason Jarrett</rights>
-    <generator>Feed for Node.js</generator>
+    <rights>Copyright (C) 2008-2019 Jason Jarrett</rights>
     <entry>
         <title type="html"><![CDATA[Using script=module to Quicky Spike Some Mocha Tests]]></title>
         <id>https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/</id>
         <link href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">
         </link>
-        <updated>2018-08-03T21:42:53Z</updated>
+        <updated>2018-08-03T21:42:53.703Z</updated>
         <summary type="html"><![CDATA[I'll be honest, I secretly hoped JSPM would win the front end over and become our standard, and while I haven't truly followed it closely in the last ...]]></summary>
         <content type="html"><![CDATA[<p>I'll be honest, I secretly hoped JSPM would win the front end over and become our standard, and while I haven't truly followed it closely in the last year or so I recently tried this out and was blown away at how beautifully simple it is (at least on the surface).</p>
 <p>Say I want to quickly run some Mocha test in a browser. Like say I'm spiking something, wanting to use tests in something like jsbin or plunkr and just get code running quickly.</p>
@@ -158,7 +158,7 @@
         <id>https://staxmanade.com/2018/08/how-to-json.stringify-and-order-dictionary-result/</id>
         <link href="https://staxmanade.com/2018/08/how-to-json.stringify-and-order-dictionary-result/">
         </link>
-        <updated>2018-08-02T02:14:57Z</updated>
+        <updated>2018-08-02T02:14:57.050Z</updated>
         <summary type="html"><![CDATA[The other day I had the desire to serialize a simple Javascript Object and have it's keys ordered in the output.]]></summary>
         <content type="html"><![CDATA[<p>The other day I had the desire to serialize a simple Javascript Object and have it's keys ordered in the output.</p>
 <p>Sorting before saving the object to a file like in <a href="https://github.com/approvals/Approvals.NodeJS">approvals</a> makes it much easier to diff two JSON documents that may not originally be in the same order.</p>
@@ -172,7 +172,7 @@
         <id>https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/</id>
         <link href="https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/">
         </link>
-        <updated>2018-03-16T06:00:00Z</updated>
+        <updated>2018-03-16T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[The topic of using JavaScript single `'` or double `"` quotes comes up often enough that I thought I'd create a bit of an amalgamation of items around...]]></summary>
         <content type="html"><![CDATA[<p>The topic of using JavaScript single <code>'</code> or double <code>&quot;</code> quotes comes up often enough that I thought I'd create a bit of an amalgamation of items around the topic for future reference.</p>
 <p>Today, it came up at work when someone sent a PR to our internal standard <a href="https://eslint.org/">eslint</a> config repository and there were some various points brought up with no real final solid winner or resolution.</p>
@@ -240,7 +240,7 @@
         <id>https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/</id>
         <link href="https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">
         </link>
-        <updated>2017-10-09T15:55:51Z</updated>
+        <updated>2017-10-09T15:55:51.649Z</updated>
         <summary type="html"><![CDATA[From a single Mac if you wanted to access two unique accounts at the same time, I found out through a [neat little trick](https://apple.stackexchange....]]></summary>
         <content type="html"><![CDATA[<p>From a single Mac if you wanted to access two unique accounts at the same time, I found out through a <a href="https://apple.stackexchange.com/a/151160">neat little trick</a> how to accomplish this.</p>
 <p>This allows you to log in to a second unique Mac user while already being logged into the first account already. It can be done without having to logout/login to each one individually (one at a time).</p>
@@ -319,7 +319,7 @@ Password: &lt;I entered <span class="hljs-keyword">my</span> account/admin passw
         <id>https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/</id>
         <link href="https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">
         </link>
-        <updated>2017-06-01T21:58:03Z</updated>
+        <updated>2017-06-01T21:58:03.582Z</updated>
         <summary type="html"><![CDATA[I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build pr...]]></summary>
         <content type="html"><![CDATA[<p>I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build process that creates a bundle before the code gets checked in.</p>
 <p>There are two parts to this.</p>
@@ -332,8 +332,8 @@ Password: &lt;I entered <span class="hljs-keyword">my</span> account/admin passw
 <p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
-<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
-<p>This ensures that whatever <a href="http://bundle.js">bundle.js</a> is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
+<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the bundle.js currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the bundle.js didn't change, we can commit.</p>
+<p>This ensures that whatever bundle.js is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
 <h1>First get a pre-commit tool</h1>
 <p>There are some good options in the npm/node world for pre-commit hooks. Check out <a href="https://github.com/typicode/husky">husky</a> or <a href="https://github.com/observing/pre-commit">pre-commit</a>. However you get your precommit hook setup - great...</p>
 <p>In my case I used <code>husky</code> and here are the relevant bits to my <code>package.json</code>.</p>
@@ -391,7 +391,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <id>https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/</id>
         <link href="https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">
         </link>
-        <updated>2017-02-27T05:06:20Z</updated>
+        <updated>2017-02-27T05:06:20.088Z</updated>
         <summary type="html"><![CDATA[Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is...]]></summary>
         <content type="html"><![CDATA[<p>Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is a ton written out there, I didn't immediately find the specific steps in a snippet of code. (Also, I can't say I looked very hard).</p>
 <p>So what does any programmer do when he's not satisfied with what he can't find? He writes his own. Now that I've put it together I'm just going to post this here so I can find it again down the road when I need to. :)</p>
@@ -432,7 +432,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <id>https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</id>
         <link href="https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">
         </link>
-        <updated>2017-02-20T06:33:46Z</updated>
+        <updated>2017-02-20T06:33:46.360Z</updated>
         <summary type="html"><![CDATA[I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using [BabelJS](https://babeljs.io/)...]]></summary>
         <content type="html"><![CDATA[<p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
 <p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
@@ -561,7 +561,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <id>https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</id>
         <link href="https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">
         </link>
-        <updated>2016-12-20T06:17:05Z</updated>
+        <updated>2016-12-20T06:17:05.148Z</updated>
         <summary type="html"><![CDATA[So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much int...]]></summary>
         <content type="html"><![CDATA[<p>So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much into the history, but honestly I hated it when I first had to use it. But, let me clarify. It wasn't until this last year when I learned that I didn't hate the WinJS controls by themselves, but I despised the way you declared their usage using the specialized <code>win-*</code> html attributes. It felt like a total hack to get an app up and running by littering semantic html with these attributes.</p>
 <p>Then along comes a little toy project they created called <a href="https://github.com/winjs/react-winjs">react-winjs</a> and all of a sudden the <code>WinJS</code> &quot;Components&quot; made total sense. When looking at them through the lense of WinJS through ReactJS components was the first time that I not only clicked with WinJS, but I actually fell in lov... (well I won't go that far), but was excited enough about them to pick them as the primary U.I. control suite while building out a little side-project.</p>
@@ -860,7 +860,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
         <id>https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</id>
         <link href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">
         </link>
-        <updated>2016-11-15T05:06:36Z</updated>
+        <updated>2016-11-15T05:06:36.036Z</updated>
         <summary type="html"><![CDATA[There's this little "CD" utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.]]></summary>
         <content type="html"><![CDATA[<p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
 <p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
@@ -893,7 +893,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
         <id>https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</id>
         <link href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">
         </link>
-        <updated>2016-09-30T17:07:25Z</updated>
+        <updated>2016-09-30T17:07:25.328Z</updated>
         <summary type="html"><![CDATA[We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enoug...]]></summary>
         <content type="html"><![CDATA[<p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
 <p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
@@ -1036,7 +1036,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
         <id>https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</id>
         <link href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">
         </link>
-        <updated>2016-09-09T04:45:17Z</updated>
+        <updated>2016-09-09T04:45:17.565Z</updated>
         <summary type="html"><![CDATA[As a newbie to the tooling, [docker-compose](https://docs.docker.com/compose/) it's great for getting started. To bring up all the service containers ...]]></summary>
         <content type="html"><![CDATA[<p>As a newbie to the tooling, <a href="https://docs.docker.com/compose/">docker-compose</a> it's great for getting started. To bring up all the service containers with a simple <code>docker-compose up</code> starts everything. However, what if you want to replace an existing container without tearing down the entire suite of containers?</p>
 <p>For example: I have a <code>docker-compose</code> project that has the following containers.</p>
@@ -1076,7 +1076,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
         <id>https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/</id>
         <link href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">
         </link>
-        <updated>2016-07-27T05:24:03Z</updated>
+        <updated>2016-07-27T05:24:03.338Z</updated>
         <summary type="html"><![CDATA[So, I'm playing around with some personal projects and looking to deploy some simple things with [Docker](https://www.docker.com/) to DigitalOcean. Th...]]></summary>
         <content type="html"><![CDATA[<p>So, I'm playing around with some personal projects and looking to deploy some simple things with <a href="https://www.docker.com/">Docker</a> to DigitalOcean. This personal project is a small site, and I'd like to set myself up with a repeatable deployment solution (that may be automated as much as possible) so I don't trip over myself with server hosting as I build out the web application.</p>
 <p>I'm not really strong with server infrastructure and some of this is &quot;figure it out as I go&quot;, while more of it is asking for help from a good friend <a href="https://twitter.com/icecreammatt">@icecreammatt</a> who has been a HUGE help as I stumble through this.</p>
@@ -1096,7 +1096,7 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 <h1>Structure of post:</h1>
 <p>What we want to do is essentially walk through how I'm thinking about accomplishing the above high level requirements using a simple <a href="https://nodejs.org/en/">node js</a> hello world application. This app is a basic node app that renders some environment information just to prove that we can correctly configure and deploy various docker containers for environments such as <code>qa</code>, <code>stage</code> or <code>prod</code>.</p>
 <p>In the end, we should end up with something that I like to imagine looks a bit like this diagram:</p>
-<p><img alt="diagram of nginx-proxy in front of web app containers on a DigitalOcean droplet" src="/images/posts/VisualOfContainers.svg" style="border:0; box-shadow: none" /></p>
+<img alt="diagram of nginx-proxy in front of web app containers on a DigitalOcean droplet" src="/images/posts/VisualOfContainers.svg" style="border:0; box-shadow: none" />
 <p>I'm going to use <a href="https://m.do.co/c/451940554550">DigitalOcean</a> as the cloud provider in this case, but I think this pattern could be to other docker hosting environments.</p>
 <h1>Example Web App Structure</h1>
 <p>Below is a basic view of the file structure of our site. If you're following along, go ahead and create this structure with empty files, we can fill them in as we go...</p>
@@ -1223,8 +1223,8 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-preprocessor"># localhost is used to configure the loopback interface</span>
 <span class="hljs-preprocessor"># when the system is booting.  Do not change this entry.</span>
 <span class="hljs-preprocessor">##</span>
-<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>   localhost
-<span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span> broadcasthost
+<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>	localhost
+<span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span>	broadcasthost
 ::<span class="hljs-number">1</span>             localhost
 
 <span class="hljs-number">192.168</span><span class="hljs-number">.99</span><span class="hljs-number">.100</span> qa.my-docker-test-site.com
@@ -1395,7 +1395,7 @@ docker rmi &lt;old_qa_image_id&gt;
         <id>https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/</id>
         <link href="https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/">
         </link>
-        <updated>2016-07-08T12:34:43Z</updated>
+        <updated>2016-07-08T12:34:43.041Z</updated>
         <summary type="html"><![CDATA[Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world ...]]></summary>
         <content type="html"><![CDATA[<p>Recently I wanted to manually and visually test some U.I. that I couldn't easily see because an async operations was happening two fast. (first world problems)</p>
 <p>I've really been enjoying the new <code>async/await</code> syntax that can be leveraged in recent JavaScript transpires such as Babel and TypeScript but when it happens so fast on a local development environment, some U.I. interactions could get tough to test out. <strong>So how can we slow this down or more appropriately add some stall time?</strong></p>
@@ -1441,7 +1441,7 @@ docker rmi &lt;old_qa_image_id&gt;
         <id>https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/</id>
         <link href="https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/">
         </link>
-        <updated>2016-06-29T01:46:02Z</updated>
+        <updated>2016-06-29T01:46:02.830Z</updated>
         <summary type="html"><![CDATA[One of my core natures is as a builder and creator. I'm strongly introverted so much of my time is spent in my own head. My best and sometimes worst t...]]></summary>
         <content type="html"><![CDATA[<p>One of my core natures is as a builder and creator. I'm strongly introverted so much of my time is spent in my own head. My best and sometimes worst times are regularly spent by myself. I know you already know many things about introverts, but as a refresher I'd like you to read this.</p>
 <blockquote>
@@ -1466,7 +1466,7 @@ docker rmi &lt;old_qa_image_id&gt;
         <id>https://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/</id>
         <link href="https://staxmanade.com/2016/06/reusable-react-component-with-overridable-inline-css-styles/">
         </link>
-        <updated>2016-06-21T21:31:22Z</updated>
+        <updated>2016-06-21T21:31:22.600Z</updated>
         <summary type="html"><![CDATA[React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exp...]]></summary>
         <content type="html"><![CDATA[<p>React's Component model is great at allowing the component creator to define the interface that consumers of the component interact with. (What is exposed vs what is abstracted away).</p>
 <p>If you're building a component and using any in-line styles and you're not careful you can lock the consumer of your component out of potential customizations they may require for their specific use-case (that you can't think of or foresee). Trying to build components to be reusable and a little more <a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a> can be challenging especially with how difficult it can be to get css layouts the way you (or the consumer of your component) may want...</p>
@@ -1521,9 +1521,9 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 </code></pre>
 <p>to the following pattern:</p>
 <pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
-      {},                               <span class="hljs-comment">// target (starting with)</span>
-      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
-      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
+      {},								<span class="hljs-comment">// target (starting with)</span>
+      { ...sensible defaults... },	<span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
+      <span class="hljs-keyword">this</span>.props.style				<span class="hljs-comment">// allow consumers to override properties</span>
     );
 </code></pre>
 <p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
@@ -1535,7 +1535,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
         <id>https://staxmanade.com/2016/05/strange-error-on-docker-compose-up/</id>
         <link href="https://staxmanade.com/2016/05/strange-error-on-docker-compose-up/">
         </link>
-        <updated>2016-05-27T20:18:56Z</updated>
+        <updated>2016-05-27T20:18:56.884Z</updated>
         <summary type="html"><![CDATA[I ran into a non-intuitive error while mucking around with [docker-compose](https://docs.docker.com/compose/) recently on [an example](https://staxman...]]></summary>
         <content type="html"><![CDATA[<p>I ran into a non-intuitive error while mucking around with <a href="https://docs.docker.com/compose/">docker-compose</a> recently on <a href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">an example</a>.</p>
 <h1>docker-compose up</h1>
@@ -1583,7 +1583,7 @@ docker-compose returned -<span class="hljs-number">1</span>
         <id>https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/</id>
         <link href="https://staxmanade.com/2016/05/how-to-get-environment-variables-passed-through-docker-compose-to-the-containers/">
         </link>
-        <updated>2016-05-26T04:36:41Z</updated>
+        <updated>2016-05-26T04:36:41.974Z</updated>
         <summary type="html"><![CDATA[I've been playing with a [little toy](https://github.com/staxmanade/sample-pouch-couch-databaseperuser) that uses [docker-compose](https://docs.docker...]]></summary>
         <content type="html"><![CDATA[<p>I've been playing with a <a href="https://github.com/staxmanade/sample-pouch-couch-databaseperuser">little toy</a> that uses <a href="https://docs.docker.com/compose">docker-compose</a> to bring together a web app, couchdb, and redis container into an easy-ier-ish cohesive unit.</p>
 <p>While working on it (and to make it a bit more generic), my next step was to find a way to pass the database admin user/pass (and other configuraiton options) into the containers as <strong>environment variables</strong> which took me way longer to figure out than it should have...</p>
@@ -1663,7 +1663,7 @@ services:
         <id>https://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/</id>
         <link href="https://staxmanade.com/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">
         </link>
-        <updated>2016-05-25T22:16:39Z</updated>
+        <updated>2016-05-25T22:16:39.455Z</updated>
         <summary type="html"><![CDATA[Thought I'd share how I'm configuring `user.name` and `user.email` for git on my work computer. This is really just a post so when I forget how I did ...]]></summary>
         <content type="html"><![CDATA[<p>Thought I'd share how I'm configuring <code>user.name</code> and <code>user.email</code> for git on my work computer. This is really just a post so when I forget how I did in the future I can google my own blog and be reminded...</p>
 <p>I have always struggled with accidentally committing to an OSS project my work name/email or visa-versa, committing to a work git repo with my personal name/email.</p>
@@ -1709,7 +1709,7 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
         <id>https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/</id>
         <link href="https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">
         </link>
-        <updated>2016-05-20T21:50:33Z</updated>
+        <updated>2016-05-20T21:50:33.499Z</updated>
         <summary type="html"><![CDATA[Hey!]]></summary>
         <content type="html"><![CDATA[<div style="height: 100px">&nbsp;</div>
 <h2>Hey!</h2>
@@ -1728,11 +1728,11 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
         <id>https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/</id>
         <link href="https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">
         </link>
-        <updated>2016-04-21T04:52:14Z</updated>
+        <updated>2016-04-21T04:52:14.458Z</updated>
         <summary type="html"><![CDATA[### TL;DR]]></summary>
-        <content type="html"><![CDATA[<p><a target="blank" href="https://staxmanade.com/CssToReact/">
-<img align="right" src="https://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
-</a></p>
+        <content type="html"><![CDATA[<a target="blank" href="https://staxmanade.com/CssToReact/">
+    <img align="right" src="https://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
+</a>
 <h3>TL;DR</h3>
 <p>Click the logo to jump the tool...</p>
 <h2>The More Info Stuff</h2>

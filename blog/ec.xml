@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://staxmanade.com</id>
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <link>https://staxmanade.com</link>
-    <updated>2015-04-13T04:18:37Z</updated>
+    <updated>2015-04-13T04:18:37.055Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Jason Jarrett</name>
         <uri>https://staxmanade.com/about</uri>
     </author>
     <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="/blog/ec.xml"/>
-    <rights>Copyright (C) 2008-2018 Jason Jarrett</rights>
-    <generator>Feed for Node.js</generator>
+    <rights>Copyright (C) 2008-2019 Jason Jarrett</rights>
     <entry>
         <title type="html"><![CDATA[Look at where DefinitelyTyped is Now]]></title>
         <id>https://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/</id>
         <link href="https://staxmanade.com/2015/04/look-at-where-definitelytyped-is-now/">
         </link>
-        <updated>2015-04-13T04:18:37Z</updated>
+        <updated>2015-04-13T04:18:37.055Z</updated>
         <summary type="html"><![CDATA[# A Little Wondering]]></summary>
         <content type="html"><![CDATA[<h1>A Little Wondering</h1>
 <p>I installed Visual Studio 2015 the other night and was just poking around and stumbled upon the <a href="http://cordova.apache.org/">Cordova</a> Project Template that is provided. This not necessarily that new, but is new to me as I spend most of my time these days working on a Mac doing iOS, Docker (for server-side stuff) and other projects. Though, I miss and still enjoy the benefits of Visual Studio for some projects.</p>
@@ -44,7 +44,7 @@
         <id>https://staxmanade.com/2015/02/build-command-with-auditory-feedback/</id>
         <link href="https://staxmanade.com/2015/02/build-command-with-auditory-feedback/">
         </link>
-        <updated>2015-02-28T21:36:32Z</updated>
+        <updated>2015-02-28T21:36:32.671Z</updated>
         <summary type="html"><![CDATA[Here's a short and fun little ditty I'm going to throw up here so I can find it later... *(because why would I try to memorize something so simple whe...]]></summary>
         <content type="html"><![CDATA[<p>Here's a short and fun little ditty I'm going to throw up here so I can find it later... <em>(because why would I try to memorize something so simple when I can put it here and share with you all?)</em>.</p>
 <h1>My Builds Are Speaking to Me</h1>
@@ -67,7 +67,7 @@
         <id>https://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/</id>
         <link href="https://staxmanade.com/2015/01/resgrid-on-bizspark-featured-startups/">
         </link>
-        <updated>2015-01-15T00:17:25Z</updated>
+        <updated>2015-01-15T00:17:25.470Z</updated>
         <summary type="html"><![CDATA[Today Microsoft published an article on their [BizSpark Featured Startups](http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/tr...]]></summary>
         <content type="html"><![CDATA[<p>Today Microsoft published an article on their <a href="http://blogs.technet.com/b/bizspark_featured_startups/archive/2015/01/13/trustworthy-cloud-logistics-for-first-responders.aspx">BizSpark Featured Startups</a> blog about <a href="http://resgrid.com">Resgrid</a>!</p>
 <h3>What is Resgrid?</h3>
@@ -81,14 +81,14 @@
         <id>https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/</id>
         <link href="https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">
         </link>
-        <updated>2014-12-29T16:12:11Z</updated>
+        <updated>2014-12-29T16:12:11.868Z</updated>
         <summary type="html"><![CDATA[How to setup git to allow different merge/diff tools based on file extension.]]></summary>
         <content type="html"><![CDATA[<p>How to setup git to allow different merge/diff tools based on file extension.</p>
 <p>I'm going to put this here so I can find it later...</p>
 <h1>Create a merge-wrapper script</h1>
 <p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
 <blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with <a href="http://Node.JS">Node.JS</a>.</p>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
 </blockquote>
 <h3>Customize the <code>merge-wrapper.js</code></h3>
 <ol>
@@ -105,16 +105,16 @@
 <p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
 </li>
 </ol>
-<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
+<p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>#!/usr/bin/env node&#10;&#39;use strict&#39;;&#10;/*&#10;#!/bin/bash&#10;#&#10;# Wrapper script for git mergetool&#10;# This requires ~/.gitconfig file to have&#10;# the following (adjusting for paths):&#10;#&#10;#  [merge]&#10;#    tool = merge_wrapper&#10;#  [mergetool &#34;merge_wrapper&#34;]&#10;#    cmd = $HOME/merge-wrapper.js \&#34;$BASE\&#34; \&#34;$LOCAL\&#34; \&#34;$REMOTE\&#34; \&#34;$MERGED\&#34;&#10;#&#10;# Save this script in your $HOME&#10;#&#10;# How to create p4merge command?&#10;# http://answers.perforce.com/articles/KB_Article/Command-line-P4Merge-on-Mac-OS-X&#10;*/&#10;&#10;// BASE=$1&#10;// LOCAL=$2&#10;// REMOTE=$3&#10;// MERGED=$4&#10;&#10;var path = require(&#39;path&#39;);&#10;var spawn = require(&#39;child_process&#39;).spawn;&#10;var diffArgs = process.argv.slice(2);&#10;&#10;diffArgs = {&#10;  BASE: diffArgs[0],&#10;  LOCAL: diffArgs[1],&#10;  REMOTE: diffArgs[2],&#10;  MERGED: diffArgs[3],&#10;  REST: diffArgs.slice(4),&#10;  ALL: diffArgs.slice(0),&#10;};&#10;&#10;var diffOptions;&#10;&#10;function createP4MergeCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;p4merge&#34;,&#10;    args: args.ALL&#10;  };&#10;&#10;&#10;  // p4merge doesn&#39;t like to be called with the extra REMOTE=3/MERGED=4&#10;  // args so we lop them off before loading it up for images.&#10;  if(isImage(args.BASE)) {&#10;    result.args = [args.BASE, args.LOCAL];&#10;  }&#10;&#10;  return result;&#10;}&#10;&#10;function createOpenDiffCommand(args) {&#10;&#10;  var result = {&#10;    cmd: &#34;opendiff&#34;,&#10;    args: [args.BASE, args.LOCAL]&#10;  };&#10;&#10;  return result;&#10;}&#10;&#10;var isImage = function (path) {&#10;&#10;  var imageExtensions = [&#10;    &#34;bmp&#34;, &#34;gif&#34;, &#34;jpg&#34;, &#34;jpeg&#34;,&#10;    &#34;png&#34;, &#34;pbm&#34;, &#34;pgm&#34;, &#34;ppm&#34;,&#10;    &#34;tiff&#34;, &#34;xbm&#34;, &#34;xpm&#34;&#10;  ];&#10;&#10;  return imageExtensions.some(function (ext) {&#10;    return new RegExp(&#34;.&#34; + ext + &#34;$&#34;, &#39;i&#39;).test(path);&#10;  });&#10;};&#10;&#10;function launch(diffOptions) {&#10;  var cmd = spawn(diffOptions.cmd, diffOptions.args);&#10;&#10;  cmd.stdout.on(&#39;data&#39;, function (data) {&#10;    console.log(data);&#10;  });&#10;&#10;  cmd.stderr.on(&#39;data&#39;, function (data) {&#10;    console.error(data.toString());&#10;  });&#10;&#10;  cmd.on(&#39;close&#39;, function (code) {&#10;    process.exit(code);&#10;  });&#10;}&#10;&#10;var diffLookup = {&#10;  &#34;.bmp&#34;: createP4MergeCommand,&#10;  &#34;.gif&#34;: createP4MergeCommand,&#10;  &#34;.jpg&#34;: createP4MergeCommand,&#10;  &#34;.jpeg&#34;: createP4MergeCommand,&#10;  &#34;.png&#34;: createP4MergeCommand,&#10;  &#34;.pbm&#34;: createP4MergeCommand,&#10;  &#34;.pgm&#34;: createP4MergeCommand,&#10;  &#34;.ppm&#34;: createP4MergeCommand,&#10;  &#34;.tiff&#34;: createP4MergeCommand,&#10;  &#34;.xbm&#34;: createP4MergeCommand,&#10;  &#34;.xpm&#34;: createP4MergeCommand,&#10;&#10;// EX: using different diff command&#10;//  &#34;.js&#34;: createOpenDiffCommand,&#10;&#10;  &#34;DEFAULT&#34;: createP4MergeCommand&#10;};&#10;&#10;var fileExt = (path.extname(diffArgs.BASE) || &#39;&#39;).toLowerCase();&#10;&#10;diffOptions = (diffLookup[fileExt] || diffLookup.DEFAULT)(diffArgs);&#10;&#10;//console.log(diffOptions);&#10;&#10;launch(diffOptions);&#10;</code></pre></noscript></div></p>
 <p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
 <p><div><script src='https://gist.github.com/staxmanade/69db226ae58bdce518cb'></script><noscript><pre><code>400: Invalid request&#10;</code></pre></noscript></div></p>
 <h1>Setup <code>~/.gitconfig</code></h1>
 <p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
 <p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
 <pre><code>[merge]
-    tool = merge_wrapper
+	tool = merge_wrapper
 [mergetool <span class="hljs-string">"merge_wrapper"</span>]
-    cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
+	cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
 </code></pre>
 ]]></content>
     </entry>
@@ -123,7 +123,7 @@
         <id>https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/</id>
         <link href="https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">
         </link>
-        <updated>2014-12-24T22:22:17Z</updated>
+        <updated>2014-12-24T22:22:17.461Z</updated>
         <summary type="html"><![CDATA[# [SkypeIt](https://github.com/staxmanade/skypeit)]]></summary>
         <content type="html"><![CDATA[<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
 <p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
@@ -164,7 +164,7 @@
         <id>https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/</id>
         <link href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">
         </link>
-        <updated>2014-12-14T00:45:43Z</updated>
+        <updated>2014-12-14T00:45:43.863Z</updated>
         <summary type="html"><![CDATA[> This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of ...]]></summary>
         <content type="html"><![CDATA[<blockquote>
 <p>This post may seem a bit longer than my usual posts. It's one I've slowly been extending over the last couple years while working remotely. Many of the points may be obvious ones, but if you're considering a work-from-home (remotely) type of position that you consider some of these topics.</p>
@@ -253,7 +253,7 @@
         <id>https://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/</id>
         <link href="https://staxmanade.com/2014/06/move-a-git-branch-while-on-a-different-branch/">
         </link>
-        <updated>2014-06-03T16:38:06Z</updated>
+        <updated>2014-06-03T16:38:06.494Z</updated>
         <summary type="html"><![CDATA[# How to update a git branch OTHER than the one you're currently on.]]></summary>
         <content type="html"><![CDATA[<h1>How to update a git branch OTHER than the one you're currently on.</h1>
 <pre><code>git branch -f {branch-to-change} {commit-to-change-to}
@@ -291,7 +291,7 @@ git push origin release
         <id>https://staxmanade.com/2014/05/introducing-commandallthings/</id>
         <link href="https://staxmanade.com/2014/05/introducing-commandallthings/">
         </link>
-        <updated>2014-05-24T20:27:55Z</updated>
+        <updated>2014-05-24T20:27:55.480Z</updated>
         <summary type="html"><![CDATA[Introducing CommandAllThings. Productivity scripts that allow you to easily type the wrong task running program like (grunt, gulpjs, rake, etc) and it will re-route that command to the current project's task runner program.]]></summary>
         <content type="html"><![CDATA[<p>I'd like to introduce a simple little tool/(set of scripts) I threw together last weekend called <a href="https://github.com/staxmanade/CommandAllThings">CommandAllThings</a>.</p>
 <h1>Some background</h1>
@@ -323,7 +323,7 @@ git push origin release
         <id>https://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/</id>
         <link href="https://staxmanade.com/2014/05/how-to-compile-plain-star-dot-js-javascript-files-with-the-typescript-compiler/">
         </link>
-        <updated>2014-05-18T17:27:29Z</updated>
+        <updated>2014-05-18T17:27:29.000Z</updated>
         <summary type="html"><![CDATA[How to conver the tsc compiler to easily prototype porting a project to TypeScript by first using the tsc compiler to compile existing javascript.]]></summary>
         <content type="html"><![CDATA[<h1>Challenge</h1>
 <p>Let's say you've been tasked with researching what porting your existing JavaScript solution to <a href="http://typescriptlang.com">TypeScript</a> may look like or maybe you're curious what this process would be like before you propose it to a lead or project manager.</p>

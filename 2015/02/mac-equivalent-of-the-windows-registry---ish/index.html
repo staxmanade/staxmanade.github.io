@@ -165,7 +165,7 @@ com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><
 <p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> WARNING <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
 <p>Most of these settings can be changed by navigating to the application or system's respective preferences U.I. and just changing settings manually. However, the whole reason I ran down this path was to learn how to automate these setting changes.</p>
 <p>When I first tried to change the settings I tried manually modifying the plist files with a GUI tool built into the Xcode developer tools.</p>
-<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <strong><em>I probably have that all wrong - but was an observation I had.</em></strong></p>
+<p>However, and I have yet to understand the internals of this, after I made the changes to the plist file they would automatically get overwritten after a few seconds. So it seems that there is some official source of these values somewhere that for some reason overwrite the ones in these folder. <em><strong>I probably have that all wrong - but was an observation I had.</strong></em></p>
 <h3>So if my understanding above is somewhat correct, how did I update the source?</h3>
 <p>Similar to reading property list values you can use the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/defaults.1.html">defaults</a> command line tool to <code>write</code> changes back to the <code>.plist</code> files.</p>
 <p>As an example, here's how I update <a href="http://support.apple.com/en-us/HT201732">Finder</a> to show file extensions.</p>
@@ -222,7 +222,7 @@ com<span class="hljs-class">.skype</span><span class="hljs-class">.skype</span><
 
 </p>
 <p>
-  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2019 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 

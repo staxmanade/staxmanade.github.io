@@ -157,7 +157,7 @@
 <h1>Structure of post:</h1>
 <p>What we want to do is essentially walk through how I'm thinking about accomplishing the above high level requirements using a simple <a href="https://nodejs.org/en/">node js</a> hello world application. This app is a basic node app that renders some environment information just to prove that we can correctly configure and deploy various docker containers for environments such as <code>qa</code>, <code>stage</code> or <code>prod</code>.</p>
 <p>In the end, we should end up with something that I like to imagine looks a bit like this diagram:</p>
-<p><img alt="diagram of nginx-proxy in front of web app containers on a DigitalOcean droplet" src="/images/posts/VisualOfContainers.svg" style="border:0; box-shadow: none" /></p>
+<img alt="diagram of nginx-proxy in front of web app containers on a DigitalOcean droplet" src="/images/posts/VisualOfContainers.svg" style="border:0; box-shadow: none" />
 <p>I'm going to use <a href="https://m.do.co/c/451940554550">DigitalOcean</a> as the cloud provider in this case, but I think this pattern could be to other docker hosting environments.</p>
 <h1>Example Web App Structure</h1>
 <p>Below is a basic view of the file structure of our site. If you're following along, go ahead and create this structure with empty files, we can fill them in as we go...</p>
@@ -284,8 +284,8 @@ docker-compose -p <span class="hljs-variable">${VIRTUAL_HOST}</span> up <span cl
 <span class="hljs-preprocessor"># localhost is used to configure the loopback interface</span>
 <span class="hljs-preprocessor"># when the system is booting.  Do not change this entry.</span>
 <span class="hljs-preprocessor">##</span>
-<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>   localhost
-<span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span> broadcasthost
+<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>	localhost
+<span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span>	broadcasthost
 ::<span class="hljs-number">1</span>             localhost
 
 <span class="hljs-number">192.168</span><span class="hljs-number">.99</span><span class="hljs-number">.100</span> qa.my-docker-test-site.com
@@ -605,7 +605,7 @@ services:
 
 </p>
 <p>
-  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2019 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 

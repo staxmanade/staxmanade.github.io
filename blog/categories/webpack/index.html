@@ -106,8 +106,8 @@
 <p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
 <p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
 <h1>So what is this thing?</h1>
-<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the <a href="http://bundle.js">bundle.js</a> currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the <a href="http://bundle.js">bundle.js</a> didn't change, we can commit.</p>
-<p>This ensures that whatever <a href="http://bundle.js">bundle.js</a> is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
+<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the bundle.js currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the bundle.js didn't change, we can commit.</p>
+<p>This ensures that whatever bundle.js is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
 <h1>First get a pre-commit tool</h1>
 <p>There are some good options in the npm/node world for pre-commit hooks. Check out <a href="https://github.com/typicode/husky">husky</a> or <a href="https://github.com/observing/pre-commit">pre-commit</a>. However you get your precommit hook setup - great...</p>
 <p>In my case I used <code>husky</code> and here are the relevant bits to my <code>package.json</code>.</p>
@@ -178,7 +178,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
 
 </p>
 <p>
-  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2019 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 

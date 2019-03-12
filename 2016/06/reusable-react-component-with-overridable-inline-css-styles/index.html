@@ -161,9 +161,9 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 </code></pre>
 <p>to the following pattern:</p>
 <pre><code>    <span class="hljs-keyword">let</span> imageStyle = Object.<span class="hljs-keyword">assign</span>(
-      {},                               <span class="hljs-comment">// target (starting with)</span>
-      { ...sensible defaults... },  <span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
-      <span class="hljs-keyword">this</span>.props.style              <span class="hljs-comment">// allow consumers to override properties</span>
+      {},								<span class="hljs-comment">// target (starting with)</span>
+      { ...sensible defaults... },	<span class="hljs-comment">// some pre-defined default React inline-style for the component</span>
+      <span class="hljs-keyword">this</span>.props.style				<span class="hljs-comment">// allow consumers to override properties</span>
     );
 </code></pre>
 <p>Now if the consumer calls the component with <code>&lt;Image style={{height: &quot;21px&quot;, width: &quot;21px&quot;}} src=&quot;someImage.png&quot; /&gt;</code> the component's consumers' values will override any defaults provided. And they can extend the style with anything else they may need.</p>
@@ -214,7 +214,7 @@ export <span class="hljs-keyword">default</span> <span class="hljs-class"><span 
 
 </p>
 <p>
-  Copyright &copy; 2008-2018 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+  Copyright &copy; 2008-2019 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
 </p>
 
 
