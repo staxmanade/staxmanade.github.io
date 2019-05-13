@@ -86,6 +86,79 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/02/fail-fast-with-ios-images/">Fail Fast With iOS Images</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-12T17:06:12.682Z" pubdate data-updated="true">Feb 12th 2015</time>
+
+
+        <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1>Problem: iOS app has unwieldy, unorganized and poorly named images</h1>
+<p>I've been working on a team that took over a good sized legacy iOS project where it's usage of images became a little unwieldy. Between the various app clones (targets), shared images, and images that aren't even used we'd like to reorganize, rename and just clean up the app in general.</p>
+<p>But, one thing that makes me nervous is how easy it is to rename an image, forget or miss a magic-string that tries to load that image and now we've introduced a bug that may be difficult to diagnose or even discover that we introduced it.</p>
+<h1>Let's fail fast?</h1>
+<p>Failing fast in this context means, how can we, during development and testing time quickly fail when running the app to determine where an image attempting to be loaded does not.</p>
+<blockquote>
+<p>Ideally we wouldn't even have these magic-strings to deal with. Using some tool to automatically generate a compile-time safe construct that we can use to load images. However until both A) I find the darn tool that I once-upon stumbled across that does this (please leave a comment to remind me if you find it before I do...) and B) we get sed tool integrated, I threw this little helper to quickly fail fast and help us find broken image references within our iOS applications.</p>
+</blockquote>
+<h1>How does it work?</h1>
+<p>It's a simple little <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html">Category</a> that overrides the <code>imageNamed:</code> selector of <code>UIImage</code> and if the original cannot load an image (returns <code>nil</code>) then it will fail with a helpful assertion message.</p>
+<p>This utility allowed us to quickly find images that were missing while doing our big clean sweep.</p>
+<h1>How to integrate?</h1>
+<p>It should be as simple as adding the <code>.h</code> &amp; <code>.m</code> files to your project and their respective targets and you should be off to the races.</p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.h"></script></p>
+<p><script src="https://gist.github.com/6f462e1829a9976783c0.js?file=UIImage%2BFailFast.m"></script></p>
+<h1>For DEBUG mode only...</h1>
+<p>If you look closely you'll notice <code>#if DEBUG</code> wraps the implementation so when we ship to the app store we don't end up causing a crash in production if a missing image sneaks by.</p>
+<p>Happy Missing Image Bashing!</p>
+</div>
+
+      <a href="/2015/02/fail-fast-with-ios-images/#disqus_thread" data-disqus-identifier="/2015/02/fail-fast-with-ios-images/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2015/02/how-to-diff-two-xcode-targets/">How to Diff Two Xcode Targets</a></h1>
+    <p class="meta">
+          <time datetime="2015-02-11T01:23:02.196Z" pubdate data-updated="true">Feb 10th 2015</time>
+
+
+        <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>If you've ever used different Xcode targets to manage different version or clones of a similar app and then had to debug why one target builds while another doesn't, finding a way to diff two targets was always challenging.</p>
+<p>Sometimes it's because you forgot to check a box including a new class in multiple targets, or maybe you've integrated a new framework with <code>targetA</code> but forgot to include the framework reference in the Build Phases for <code>targetB</code>.</p>
+<blockquote>
+<p>I'm actually hoping that I just haven't learned the obvious way to resolve these problems and you (dear reader) will leave a comment telling me how simple it is to do with the built in tools. Until then, here's something that I hope will help others that are trying to see what two Xcode targets have different between them.</p>
+</blockquote>
+<h1>How about a little CLI tool: <a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a></h1>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets">diffXcodeTargets</a> is a command line utility I threw together that allows you to visualize the differences between two Xcode project targets using a diff tool.</p>
+<h1>Install it with <a href="https://npm.org">npm</a></h1>
+<pre><code>npm install -g diffxcodetargets
+</code></pre>
+<h1>How to use it?</h1>
+<p>You can first call it by passing in the path to your project file and no targets and it will print out what targets are available.</p>
+<pre><code>&gt; diffXcodeTargets ./myProject.xcodeproj/project.pbxproj
+
+Could not find TargetA ''. Possible targets are:
+  - targetA
+  - targetB
+</code></pre>
+<p>Now you know your available targets and you can call it with the two targets you want to diff:</p>
+<pre><code>diffXcodeTargets ./myProject.xcodeproj/project.pbxproj targetA targetB
+</code></pre>
+<h1>How does it work?</h1>
+<p>If you're curious how this tool does it's job it is actually quite simple and would love to hear any feedback...</p>
+<p><a href="https://github.com/staxmanade/diffXcodeTargets"> diffXcodeTargets</a> uses the <a href="https://npmjs.org/packages/xcode">xcode</a> npm module to read/parse xcode projects and then <a href="https://github.com/approvals/Approvals.NodeJS">approvals</a> to show a difftool with two different files.</p>
+<h1>What's missing?</h1>
+<p>I threw this together quickly to help diagnose some issues with a project I was working on. It does not yet support all of the various scenarios that may be needed when diffing two Xcode targets, but if you have any suggestions or ideas feel free to leave a <a href="https://github.com/staxmanade/diffXcodeTargets/issues">github issue</a>.</p>
+<p>Happy Diffing!</p>
+</div>
+
+      <a href="/2015/02/how-to-diff-two-xcode-targets/#disqus_thread" data-disqus-identifier="/2015/02/how-to-diff-two-xcode-targets/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2015/02/how-to-remove-files-in-git-that-should-have-been-ignored/">How to Remove Files in Git that Should Have Been Ignored</a></h1>
     <p class="meta">
           <time datetime="2015-02-10T00:50:58.037Z" pubdate data-updated="true">Feb 9th 2015</time>
@@ -550,99 +623,6 @@ clang-<span class="hljs-keyword">format</span> --<span class="hljs-keyword">help
 </div>
 
       <a href="/2015/01/custom-static-blog-generator---no-longer-using-octopress/#disqus_thread" data-disqus-identifier="/2015/01/custom-static-blog-generator---no-longer-using-octopress/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
-    <p class="meta">
-          <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
-
-
-        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
-<p>I'm going to put this here so I can find it later...</p>
-<h1>Create a merge-wrapper script</h1>
-<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
-<blockquote>
-<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
-</blockquote>
-<h3>Customize the <code>merge-wrapper.js</code></h3>
-<ol>
-<li>
-<p>Extend with other diff tool support:</p>
-<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
-</li>
-<li>
-<p>Modify which diff tool is used per extension:</p>
-<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
-</li>
-<li>
-<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
-<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
-</li>
-</ol>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
-<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
-<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.sh%22%3Emerge-wrapper.sh%3C%2Fa%3E"></script></p>
-<h1>Setup <code>~/.gitconfig</code></h1>
-<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
-<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
-<pre><code>[merge]
-	tool = merge_wrapper
-[mergetool <span class="hljs-string">"merge_wrapper"</span>]
-	cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
-</code></pre>
-</div>
-
-      <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a></h1>
-    <p class="meta">
-          <time datetime="2014-12-24T22:22:17.461Z" pubdate data-updated="true">Dec 24th 2014</time>
-
-
-        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
-<p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
-<h2>What is it?</h2>
-<p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
-<h1>What pain does this solve?</h1>
-<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
-<p>This typically involves:</p>
-<ol>
-<li>Opening the Outlook appointment</li>
-<li>Copying just the conference phone number (without extension)</li>
-<li>Pasting it in Skype to dial</li>
-<li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
-<li>Pasting in Skype's number pad area</li>
-<li>Type or use the mouse to press the final <code>#</code> key.</li>
-</ol>
-<h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
-<p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
-<ol>
-<li>Open the Outlook appointment</li>
-<li>Copy the conference phone number &amp; extension (if there is one) in one shot.</li>
-<li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
-</ol>
-<p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
-<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
-<p>If you <a href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
-<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
-<blockquote>
-<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
-</blockquote>
-<h1>Still early...</h1>
-<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
-<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
-</div>
-
-      <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/7/">&larr; Older</a>

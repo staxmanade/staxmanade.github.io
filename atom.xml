@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://staxmanade.com</id>
     <title><![CDATA[Developing on Staxmanade]]></title>
-    <updated>2018-08-03T21:42:53.703Z</updated>
+    <updated>2019-05-12T17:54:12.628Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Jason Jarrett</name>
@@ -11,6 +11,79 @@
     <link rel="alternate" href="https://staxmanade.com"/>
     <link rel="self" href="http://feeds.feedburner.com/DevelopingOnStaxmande"/>
     <rights>Copyright (C) 2008-2019 Jason Jarrett</rights>
+    <entry>
+        <title type="html"><![CDATA[Spend the Effort to Make Your Tests Better Documentation]]></title>
+        <id>https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/</id>
+        <link href="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">
+        </link>
+        <updated>2019-05-12T17:54:12.628Z</updated>
+        <summary type="html"><![CDATA[You may be writing tests, but are they describing the behavior well enough to know what business case it's covering a year from now?]]></summary>
+        <content type="html"><![CDATA[<p>You may be writing tests, but are they describing the behavior well enough to know what business case it's covering a year from now?</p>
+<p>Today's lesson or re-lesson. <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">Don't just write your tests</a>, <em>write it so you can understand the intricacies a year from now</em>.</p>
+<p>The other day I was pairing on a what we first thought was a bug in our software. I was explaining something we saw.. &quot;oh yea, that's a bug, oh and look at these tests, they look wrong also. Why is this so wrong? How did we not catch this last year? Something is off here... etc...&quot;</p>
+<p>While I had some tests to cover a business requirement a year ago when we wrote the software, I had not properly described the business case within the test to document it's purpose.</p>
+<p>The subtle, bug-look-a-likes turned out to be proper behavior. If only I had not just documented the expected behavior via a test, but had properly describe WHY this behavior existed within the test, we could have avoided potentially breaking it (by &quot;trying to fix it&quot;) and the test could have better communicated the WHY of this strange case.</p>
+<p>This is just a reminder to myself to write better tests. Doing tests, great. Well documented, business explanation of the WHY in the tests? Way better!</p>
+<p>Happy testing!</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript - Refactoring too many function params]]></title>
+        <id>https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/</id>
+        <link href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">
+        </link>
+        <updated>2019-05-12T00:24:41.588Z</updated>
+        <summary type="html"><![CDATA[A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.]]></summary>
+        <content type="html"><![CDATA[<p>A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.</p>
+<p>EX:</p>
+<pre><code>myFunction(<span class="hljs-string">"val1"</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+</code></pre>
+<p>Looking at the above, we can sort of tell that the first param is some string, maybe we can even tell what it's purpose is, the second a number maybe we even know why if we understand the codebase. But the booleans that follow? What are those representing? How do you know you're providing the right value for the right argument?</p>
+<p>One approach is to refactor those parameters into variable names to help give them meaning.</p>
+<p>EX:</p>
+<pre><code><span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>Now at least when we look at each parameter we can see it's name and that helps give some context of what it represents.</p>
+<p>But as this parameter list grows it can be difficult to maintain. We could argue it's already too long.</p>
+<p>What if you have to add a parameter in the middle?</p>
+<p>How can you be sure all the callers get updated correctly?</p>
+<p>Another approach would be to refactor this list of parameters into an object of properties.</p>
+<p>This comes with some benefits like, you can add/remove properties without worrying about parameter ordering, as long as they can be optional and have solid defaults.</p>
+<p>One cool thing I found with ES6 destructuring and enhanced object literals is if our function definition AND our caller follow a similar pattern. Meaning the variable names used in the caller are the same as the parameter names within the function.</p>
+<p>EX:</p>
+<pre><code>function myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy) {}
+
+<span class="hljs-comment">//**</span>
+
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>To refactor this we can simply have the caller pass an object, and have the function use destructuring of that object. It simply becomes.</p>
+<pre><code>function myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy}) {}
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy});
+</code></pre>
+<p>This is cool because it's simple, requires very little work, and now we can gain the benefits of using an object instead of an ordered set of parameters.</p>
+<p>This opens the door to quit a few other organization options.</p>
+<p>Happy Cleanup!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Using script=module to Quicky Spike Some Mocha Tests]]></title>
         <id>https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/</id>
@@ -1702,50 +1775,6 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 <h1>What did this do?</h1>
 <p>Each time we <code>cd</code> into either a <code>personal/</code> or <code>work/</code> folder <code>direnv</code> will setup our shell with environment variables contained in that folder's <code>.envrc</code> file. This will then allow Git which respects these env vars and now we don't have to think about committing the wrong name/email to the wrong Git repositories.</p>
 <p>Happy Gitting!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How NOT to Start Asynchronous Communication]]></title>
-        <id>https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/</id>
-        <link href="https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">
-        </link>
-        <updated>2016-05-20T21:50:33.499Z</updated>
-        <summary type="html"><![CDATA[Hey!]]></summary>
-        <content type="html"><![CDATA[<div style="height: 100px">&nbsp;</div>
-<h2>Hey!</h2>
-<div style="height: 2000px">&nbsp;</div>
-<h1>Don't you hate it when...</h1>
-<p>...someone is using a beautifully designed asynchronous tool to communicate with you but instead they try to pretend it is synchronous?</p>
-<p>Please!!! If you ever have to communicate with someone through an asynchronous-able tool like a text message, instant messaging, or email don't just say <code>Hey!</code> and wait for a response.</p>
-<p>Try saying <code>Hey! I wonder if you could...</code> or some alternative where the single message can contain both a polite introduction <code>Hey</code> along with some actionable context about why the polite introduction has taken place. If you can't begin to privde the initial context and are waiting for the other person to respond with <code>Hey</code>, you've both wasted their time and yours.</p>
-<p>Often times a single chat message can distract someone who is concentrating hard on a subject. If a hollow <code>Hey!</code> is provided, you've likely pulled whoever you wanted to talk to out of that concetration as well as not provide them enough context to be abel to respond or help you. Instead they're possibly sitting there waiting for you to say something next, or maybe you're waiting for them to say Hey back (which you may never get)...</p>
-<p>Asynchronous communication can be an amazing productivity tool if used efficiently.</p>
-<p>Happy Chatting!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Easily Convert CSS to React Inline Styles]]></title>
-        <id>https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/</id>
-        <link href="https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">
-        </link>
-        <updated>2016-04-21T04:52:14.458Z</updated>
-        <summary type="html"><![CDATA[### TL;DR]]></summary>
-        <content type="html"><![CDATA[<a target="blank" href="https://staxmanade.com/CssToReact/">
-    <img align="right" src="https://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
-</a>
-<h3>TL;DR</h3>
-<p>Click the logo to jump the tool...</p>
-<h2>The More Info Stuff</h2>
-<p>So you're working on a React app. It's up and running in your favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
-<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in your React component.</p>
-<p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste your <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
-<p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
-If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
-<blockquote>
-<p>Aside: This should really be a plugin to my text editor where we can right click and say &quot;Paste as React Style&quot; instead, but for now it's a single simple little web page that will automate the translation for you. (I haven't looked for the plugin - if it exists or ever is created let me know in the comments...)</p>
-</blockquote>
-<p>Happy CSS Conversions!</p>
 ]]></content>
     </entry>
 </feed>

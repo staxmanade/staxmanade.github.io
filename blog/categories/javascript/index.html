@@ -87,6 +87,67 @@
         <div class="blog-index">
             <article>
                   <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">JavaScript - Refactoring too many function params</a></h1>
+    <p class="meta">
+          <time datetime="2019-05-12T00:24:41.588Z" pubdate data-updated="true">May 11th 2019</time>
+
+
+        <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.</p>
+<p>EX:</p>
+<pre><code>myFunction(<span class="hljs-string">"val1"</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+</code></pre>
+<p>Looking at the above, we can sort of tell that the first param is some string, maybe we can even tell what it's purpose is, the second a number maybe we even know why if we understand the codebase. But the booleans that follow? What are those representing? How do you know you're providing the right value for the right argument?</p>
+<p>One approach is to refactor those parameters into variable names to help give them meaning.</p>
+<p>EX:</p>
+<pre><code><span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>Now at least when we look at each parameter we can see it's name and that helps give some context of what it represents.</p>
+<p>But as this parameter list grows it can be difficult to maintain. We could argue it's already too long.</p>
+<p>What if you have to add a parameter in the middle?</p>
+<p>How can you be sure all the callers get updated correctly?</p>
+<p>Another approach would be to refactor this list of parameters into an object of properties.</p>
+<p>This comes with some benefits like, you can add/remove properties without worrying about parameter ordering, as long as they can be optional and have solid defaults.</p>
+<p>One cool thing I found with ES6 destructuring and enhanced object literals is if our function definition AND our caller follow a similar pattern. Meaning the variable names used in the caller are the same as the parameter names within the function.</p>
+<p>EX:</p>
+<pre><code>function myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy) {}
+
+<span class="hljs-comment">//**</span>
+
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>To refactor this we can simply have the caller pass an object, and have the function use destructuring of that object. It simply becomes.</p>
+<pre><code>function myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy}) {}
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy});
+</code></pre>
+<p>This is cool because it's simple, requires very little work, and now we can gain the benefits of using an object instead of an ordered set of parameters.</p>
+<p>This opens the door to quit a few other organization options.</p>
+<p>Happy Cleanup!</p>
+</div>
+
+            </article>
+            <article>
+                  <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Using script=module to Quicky Spike Some Mocha Tests</a></h1>
     <p class="meta">
           <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>

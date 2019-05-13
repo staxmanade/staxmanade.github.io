@@ -86,6 +86,192 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
+    <p class="meta">
+          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
+
+
+        <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
+<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
+<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
+<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
+<p>For example if you pasted the following into your PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
+<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
+<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
+<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
+<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
+<span class="hljs-keyword">function</span> ...() { cd ... }
+<span class="hljs-keyword">function</span> ....() { cd .... }
+<span class="hljs-keyword">function</span> .....() { cd ..... }
+<span class="hljs-keyword">function</span> ......() { cd ...... }
+<span class="hljs-keyword">function</span> .......() { cd ....... }
+<span class="hljs-keyword">function</span> ........() { cd ........ }
+</code></pre>
+<p>If you're interested in the evolution of this CD tool:</p>
+<ul>
+<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
+<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
+<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
+</ul>
+<p>SUPER SWEET!</p>
+<p>Happy CD'ing!</p>
+</div>
+
+      <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
+    <p class="meta">
+          <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
+
+
+        <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
+<p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
+<h1>Before</h1>
+<p><img src="/images/posts/JIRA-Card-BEFORE.png" alt="Jira card before css hack"></p>
+<h1>After CSS Hack</h1>
+<p><img src="/images/posts/JIRA-Card-AFTER.png" alt="Jira card before css hack"></p>
+<h1>How did you do that?</h1>
+<ol>
+<li>Install a CSS style plugin into your browser. This post all use <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">Stylebot</a> for the Chrome web browser.</li>
+</ol>
+<ul>
+<li>Just install the plugin from the Chrome store by <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">clicking this link</a> and selecting <code>[+ ADD TO CHROME]</code> button on the upper right of the page.</li>
+</ul>
+<ol start="2">
+<li>
+<p>Once the plugin is installed. Close all tabs and re-open a tab to the JIRA kanban board.</p>
+</li>
+<li>
+<p>Click the new Stylebot plugin <code>CSS</code> button and the <code>Open Stylebot...</code> option in your chrome browser toolbar which will open up a U.I. that allow you to mess around with the page's style.</p>
+</li>
+<li>
+<p>At the bottom of the Stylebot click <code>Edit CSS</code> which will give you a blank text box you can write custom CSS into.</p>
+</li>
+<li>
+<p>Paste in the following CSS and hit <code>Save</code></p>
+</li>
+</ol>
+<pre><code class="language-css">
+<span class="hljs-comment">/** Version 2.3
+ ** Copyright Jason Jarrett
+ **/</span>
+
+<span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-extra-fields</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-highlighted-fields</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
+}</span>
+
+<span class="hljs-comment">/* the below adjusts the backlog view */</span>
+
+<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> right</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -<span class="hljs-number">15px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">18px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-issue-content</span>, <span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-comment">/* filters */</span>
+<span class="hljs-class">.js-quickfilter-button</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+<span class="hljs-class">.js-sprintfilter</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value"> nowrap</span></span>;
+}</span>
+<span class="hljs-class">.js-sprintfilter</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+<span class="hljs-tag">dl</span> <span class="hljs-tag">dt</span>, <span class="hljs-tag">dd</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-tag">span</span><span class="hljs-class">.ghx-extra-field</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+}</span>
+
+<span class="hljs-tag">span</span><span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-extra-field-estimate</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">padding-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding-bottom</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.ghx-issue-compact</span> <span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
+}</span>
+<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+</code></pre>
+<p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
+<p>Happy (as best you can) JIRA'ing</p>
+</div>
+
+      <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/">How to Update a Single Running docker-compose Container</a></h1>
     <p class="meta">
           <time datetime="2016-09-09T04:45:17.565Z" pubdate data-updated="true">Sep 8th 2016</time>
@@ -796,60 +982,6 @@ export GIT_COMMITTER_NAME=<span class="hljs-tag">&lt;<span class="hljs-title">yo
 </div>
 
       <a href="/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/#disqus_thread" data-disqus-identifier="/2016/05/configuring-git-to-use-different-name-and-email-depending-on-folder-context/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/05/how-not-to-start-asynchronous-communication/">How NOT to Start Asynchronous Communication</a></h1>
-    <p class="meta">
-          <time datetime="2016-05-20T21:50:33.499Z" pubdate data-updated="true">May 20th 2016</time>
-
-
-        <a href="/2016/05/how-not-to-start-asynchronous-communication/#disqus_thread" data-disqus-identifier="/2016/05/how-not-to-start-asynchronous-communication/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><div style="height: 100px">&nbsp;</div>
-<h2>Hey!</h2>
-<div style="height: 2000px">&nbsp;</div>
-<h1>Don't you hate it when...</h1>
-<p>...someone is using a beautifully designed asynchronous tool to communicate with you but instead they try to pretend it is synchronous?</p>
-<p>Please!!! If you ever have to communicate with someone through an asynchronous-able tool like a text message, instant messaging, or email don't just say <code>Hey!</code> and wait for a response.</p>
-<p>Try saying <code>Hey! I wonder if you could...</code> or some alternative where the single message can contain both a polite introduction <code>Hey</code> along with some actionable context about why the polite introduction has taken place. If you can't begin to privde the initial context and are waiting for the other person to respond with <code>Hey</code>, you've both wasted their time and yours.</p>
-<p>Often times a single chat message can distract someone who is concentrating hard on a subject. If a hollow <code>Hey!</code> is provided, you've likely pulled whoever you wanted to talk to out of that concetration as well as not provide them enough context to be abel to respond or help you. Instead they're possibly sitting there waiting for you to say something next, or maybe you're waiting for them to say Hey back (which you may never get)...</p>
-<p>Asynchronous communication can be an amazing productivity tool if used efficiently.</p>
-<p>Happy Chatting!</p>
-</div>
-
-      <a href="/2016/05/how-not-to-start-asynchronous-communication/#disqus_thread" data-disqus-identifier="/2016/05/how-not-to-start-asynchronous-communication/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/04/easily-convert-css-to-react-inline-styles/">Easily Convert CSS to React Inline Styles</a></h1>
-    <p class="meta">
-          <time datetime="2016-04-21T04:52:14.458Z" pubdate data-updated="true">Apr 20th 2016</time>
-
-
-        <a href="/2016/04/easily-convert-css-to-react-inline-styles/#disqus_thread" data-disqus-identifier="/2016/04/easily-convert-css-to-react-inline-styles/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><a target="blank" href="https://staxmanade.com/CssToReact/">
-    <img align="right" src="https://staxmanade.com/CssToReact/images/CssToReact-logo.svg">
-</a>
-<h3>TL;DR</h3>
-<p>Click the logo to jump the tool...</p>
-<h2>The More Info Stuff</h2>
-<p>So you're working on a React app. It's up and running in your favorite browser but you notice an issue with some layout. You think, ok, this should be easy to fix. You open up the developer tools, hack on some CSS within the browser till you get it looking just the way you want it to. Maybe it's several CSS properties you added or tweaked so you copy each of them into the clipboard so you can transfer them back to your application.</p>
-<p>Then you realize, these styles aren't coming from a CSS style sheet, they're in-line styles right in your React component.</p>
-<p>Now you're like, FINE, I'll manually translate this to React-style-inline-CSS. This is no biggie if you do it once in a while. Except that time when you missed removing a dash or mis-cased a letter or maybe you forgot a JSON comma, or left a CSS semicolon. Never happened to you? Oh, you are so amazing if only I was as super cool as you. For myself and probably another 1 or 2 of you out there these problems do come up, but don't have to.</p>
-<p>I hacked together a <a href="https://staxmanade.com/CssToReact/">little tool</a> that automates this translation. Allows you to paste your <code>CSS</code> into a <code>textarea</code>, it translates to React inline style JSON CSS and you can copy it out while avoiding translation bugs.</p>
-<p>You can see the project here: <a href="https://staxmanade.com/CssToReact/">CssToReact</a>
-If you have a suggestion or want to pull-request it your self you can check it out here: <a href="https://github.com/staxmanade/CssToReact">Source to Project</a></p>
-<blockquote>
-<p>Aside: This should really be a plugin to my text editor where we can right click and say &quot;Paste as React Style&quot; instead, but for now it's a single simple little web page that will automate the translation for you. (I haven't looked for the plugin - if it exists or ever is created let me know in the comments...)</p>
-</blockquote>
-<p>Happy CSS Conversions!</p>
-</div>
-
-      <a href="/2016/04/easily-convert-css-to-react-inline-styles/#disqus_thread" data-disqus-identifier="/2016/04/easily-convert-css-to-react-inline-styles/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/3/">&larr; Older</a>

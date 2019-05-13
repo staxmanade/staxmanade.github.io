@@ -86,6 +86,78 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2013/02/how-do-i-undo-bad-rebase-in-git/">How do I undo a bad rebase in Git?</a></h1>
+    <p class="meta">
+          <time datetime="2013-02-24T02:42:00.000Z" pubdate data-updated="true">Feb 23rd 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content"><p>If you use <a href="http://git-scm.com/">git</a> and leverage the <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> command, you've probably run across a merge issue during the rebase and if you’ve ever felt like, “man, I wish I had a ‘do-over’.</p>
+<p>If you’re still in the middle of a rebase it's easy to start over:</p>
+<blockquote>
+<p>git rebase --abort</p>
+</blockquote>
+<p>But let's say you started with this:</p>
+<p><a href="http://lh6.ggpht.com/-S4iRqI3gJ9A/USl-FkXa8GI/AAAAAAAAAcw/DIiCekbZNNc/s1600-h/image3.png"><img src="http://lh3.ggpht.com/-VUhs8KUeoYw/USl-GO4JjUI/AAAAAAAAAc4/ZIW6B8i84Jk/image_thumb1.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Did a git rebase and are now looking at:</p>
+<p><a href="http://lh6.ggpht.com/-wKnvAJZeBE8/USl-GZw_02I/AAAAAAAAAdA/Rjrc0ACrf3A/s1600-h/image7.png"><img src="http://lh5.ggpht.com/-Vm2Z6nDv_ow/USl-Gh_VygI/AAAAAAAAAdI/4JeII5vjceE/image_thumb3.png?imgmax=800" alt="image" title="image"></a></p>
+<p>Except you screwed up during a merge conflict and now un-sure how you can get your ‘do-over’.</p>
+<p>I was pleasantly surprised at how easy it was. (If you know the key)</p>
+<p>Leveraging the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html">git reflog</a>, you can go back in time and check out your branch as though the rebase never happened.</p>
+<p>In the following link, I put together a set of steps to create a git repo that puts you into this position (of a bad rebase) and then describes how to get out of it.</p>
+<p><a href="https://github.com/staxmanade/GitRebaseReflogFixSample">https://github.com/staxmanade/GitRebaseReflogFixSample</a></p>
+<p>I'd love to hear any feedback on this repo. Or try submitting a pull request or post a GitHub issue.</p>
+<p>Happy Git'ing!</p>
+</div>
+
+      
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2013/02/it-markdown-no-powershell-wait-its/">It&#x27;s Markdown, no, PowerShell. Wait its Markdown formatted PowerShell.</a></h1>
+    <p class="meta">
+          <time datetime="2013-02-13T06:48:00.000Z" pubdate data-updated="true">Feb 12th 2013</time>
+
+
+        
+    </p>
+</header>
+<div class="entry-content">
+<div class='post'>
+   <p>I created an <a href="http://github.com/staxmanade/PowershellPresentation" target="_blank">introductory presentation on PowerShell</a> a while back and posted it <a href="http://github.com/staxmanade/" target="_blank">on my GitHub</a>. I first gave the presentation at the <a href="http://softwaredevelopersgroup.com/">NNSDG</a> and decided to also submit it as a talk to the <a href="http://boisecodecamp.com/">Boise Code Camp</a> this year. (Looks like I'll be going – track me down <a href="https://twitter.com/staxmanade" target="_blank">@staxmanade</a> if you’d like to say hello)</p>
+   <p>I’ve become quite a fan of Markdown lately and thought, “what if this not only looked like PowerShell, but looked even better as Markdown…?”</p>
+   <p>After experimenting a little, I found that it actually works quite well.</p>
+   <p>For example:</p>
+   <p><strong>PowerShell (Markdown)</strong></p>
+   <pre>## String Interpolation<br /><br />### Single quotes `don't` interpolate<br />    'Hello $groupName' <br />    <br />### Double quotes `DO` interpolate<br />    &quot;Hello $groupName&quot;<br />        <br />    <br />### Wrap `$(...)` around expression within an string<br />    &quot;groupName variable is of type: $($groupName.GetType().FullName)&quot;<br />    &quot;2 + 1564 = $(2 + 1564)&quot;<br />    &quot;Current DateTime is = $(get-date)&quot;<br />    &quot;Current DateTime is = $([System.DateTime]::Now)&quot;<br /><br />    <br />### Escape characters with the ` (back-tick)<br />    &quot;Escape a quotation `&quot;This is quoted`&quot;.&quot;</pre>
+
+   <p>&#160;</p>
+
+   <p><strong>Formatted Markdown</strong></p>
+
+   <p><a href="http://lh5.ggpht.com/-lUeiRSS4rBo/URs3LcasBbI/AAAAAAAAAcY/h2NTLneqWP8/s1600-h/image11.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; margin: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh5.ggpht.com/-iNFDygzQL0o/URs3L15uv8I/AAAAAAAAAcg/jbjRHwUTi8E/image_thumb4.png?imgmax=800" width="634" height="628" /></a></p>
+
+   <p>&#160;</p>
+
+   <p>One issue I have is the way GitHub/markdown formats extra whitespace (it doesn’t). So I’ve worked around that so that I can get the vertical whitespace that I need in the Markdown version by placing a link to a spacer image: </p>
+
+   <pre>![vertical space](<a href="http://is.gd/VertSpace">http://is.gd/VertSpace</a>)</pre>
+
+   <p>This isn’t ideal because my PowerShell is littered with this snippet, but something that can easily be search/replaced before using the raw version as a PowerShell script.</p>
+
+   <p>I also think that you could potentially do this with many different programming languages. (At least ones that don’t depend on whitespace and have a form of block comments)</p>
+
+   <p>Nifty eh?</p>
+
+   <p>Happy PowerDowning or MarkShelling!</p>
+</div></div>
+
+      
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2013/01/testacular-cannot-find-chrome-on-windows/">Testacular cannot find Chrome on windows.</a></h1>
     <p class="meta">
           <time datetime="2013-01-23T05:29:00.000Z" pubdate data-updated="true">Jan 22nd 2013</time>
@@ -216,40 +288,6 @@ I’d like to share a powerful workflow I originally found using <a href="http:/
 <div class="entry-content">
 <div class='post'>
 <blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <blockquote>   <p>NOTE: this project is one I created and as it turns out this has now become its introductory post.</p> </blockquote>  <p><a href="http://nuget.org/packages/DumpToText" target="_blank">DumpToText</a> is a single C# extension I wrote a little while back. The inspiration from this came from the need to view the values of an object graph quickly and easily during a TDD session.</p>  <p>Have you ever been doing TDD and something isn’t working quite as expected? Would it be nice to just dump out the values of an object quickly without having to spin up the debugger?</p>  <p>The inspiration for this project came from an amazing feature of <a href="http://www.linqpad.net/" target="_blank">LINQPad</a>. If you have ever used <a href="http://www.linqpad.net/" target="_blank">LINQPad</a> then you’re aware of the amazing ability for it to take any object and create a view of it’s data. Take the simple anonymous type below.</p>  <p><a href="http://lh5.ggpht.com/-FUvQoj6frYE/Tx-M2hAvSBI/AAAAAAAAAVw/Y4i1otS5L1k/s1600-h/image_thumb2_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb2_thumb" border="0" alt="image_thumb2_thumb" src="http://lh3.ggpht.com/-al7xfLogmlo/Tx-M28w8cWI/AAAAAAAAAV4/1okKyOMCZXo/image_thumb2_thumb_thumb.png?imgmax=800" width="471" height="315" /></a></p>  <p>Now wouldn’t it be great to have that “.Dump()” extension method at hand anywhere in your code and during a TDD session?</p>  <p>That’s why I create <a href="https://github.com/staxmanade/DumpToText" target="_blank">DumpToText</a>.</p>  <p>Now if I have a test as follows and want to see it’s data. I can use the ‘.DumpToText()” extension method to have it print out an ASCII based representation of the object graph.</p>  <p><a href="http://lh3.ggpht.com/-skkqYdCd2xM/Tx-M3FJvFuI/AAAAAAAAAWA/Pj8HLy2gP2E/s1600-h/image_thumb4_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb4_thumb" border="0" alt="image_thumb4_thumb" src="http://lh4.ggpht.com/-AAcGZRujy6o/Tx-M3YkzlsI/AAAAAAAAAWI/tB5hBy3iff8/image_thumb4_thumb_thumb.png?imgmax=800" width="323" height="178" /></a></p>  <p><a href="http://lh4.ggpht.com/-yhBKG4UbDVo/Tx-M3isuUYI/AAAAAAAAAWQ/e4StcIAJXwY/s1600-h/image_thumb6_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb6_thumb" border="0" alt="image_thumb6_thumb" src="http://lh4.ggpht.com/-4NWr0JakVmU/Tx-M4OgEzYI/AAAAAAAAAWY/Y5spI1MEfTo/image_thumb6_thumb_thumb.png?imgmax=800" width="390" height="156" /></a></p>  <p>By default this just uses the System.Diagnostics.Trace(…) to write the output to, but you can override the “write” implementation by giving your own delegate as shown below.</p>  <p><a href="http://lh3.ggpht.com/-WqWFeyFE9-w/Tx-M4J_zk_I/AAAAAAAAAWg/PgFlXKctwzk/s1600-h/image_thumb8_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb8_thumb" border="0" alt="image_thumb8_thumb" src="http://lh3.ggpht.com/-ZVMsOTKUgRo/Tx-M4ftO9JI/AAAAAAAAAWo/7MzVtczsP3o/image_thumb8_thumb_thumb.png?imgmax=800" width="871" height="52" /></a></p>  <p>The below shows an example of a nested object that also has an array of items.</p>  <p><a href="http://lh6.ggpht.com/-ggox20Cy7Uo/Tx-M478HrOI/AAAAAAAAAWw/evox5Gb8UoU/s1600-h/image_thumb14_thumb%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb14_thumb" border="0" alt="image_thumb14_thumb" src="http://lh5.ggpht.com/-YAC_6gYOxPk/Tx-M5PrZCnI/AAAAAAAAAW4/hYIHCALLCVg/image_thumb14_thumb_thumb.png?imgmax=800" width="264" height="171" /></a></p>  <p><a href="http://lh5.ggpht.com/-BG258OCC7hw/Tx-M5JXdreI/AAAAAAAAAXA/7gusCQdc-EA/s1600-h/image_thumb13_thumb1%25255B2%25255D.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image_thumb13_thumb1" border="0" alt="image_thumb13_thumb1" src="http://lh6.ggpht.com/-ALeIoiAbOSA/Tx-M5oEQkJI/AAAAAAAAAXI/0ldXcIpDxmM/image_thumb13_thumb1_thumb.png?imgmax=800" width="573" height="349" /></a></p>  <h5>Anyone out there using <a href="http://approvaltests.sourceforge.net/" target="_blank">ApprovalTests</a>? (You can get it on NuGet)</h5>  <p>I’ve not taken the chance to use ApprovalTests yet in a project, but I have a strong feeling that my DumpToText helper could be very useful when leveraged in conjunction with ApprovalTests. If anyone out there is using ApprovalTests, I’d love to hear how it’s going, and if you think that DumpToText would be useful there.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2012/02/nuget-project-uncovered-nancy/">NuGet Project Uncovered: Nancy</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-20T04:59:00.000Z" pubdate data-updated="true">Feb 19th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Nancy" target="_blank">Nancy</a> is another project founded by an elegant coder. <a href="http://elegantcode.com/about/andreas-hakansson/" target="_blank">Andreas</a> has blogged about it a <a href="http://bit.ly/xIlUmy" target="_blank">number of times here</a> on ElegantCode. </p>  <blockquote>   <p>Nancy is a lightweight HTTP framework for building web services and sites. The framework runs on both the .net framework and <a href="http://mono-project.com/">Mono</a>.</p> </blockquote>  <p>I have not used this project myself, but as I started to look it over I think I might have to spin up a site quickly just to try it out.</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2012/02/nuget-project-uncovered_18/">NuGet Project Uncovered: Extended.Wpf.Toolkit</a></h1>
-    <p class="meta">
-          <time datetime="2012-02-19T04:58:00.000Z" pubdate data-updated="true">Feb 18th 2012</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<blockquote>   <p>If you are coming to this series of posts for the first time you might check out <a href="http://elegantcode.com/2012/01/22/nuget-project-uncovered-an-introduction-to-the-series/" target="_blank">my introductory post</a> for a little context.</p> </blockquote>  <p><a href="http://nuget.org/packages/Extended.Wpf.Toolkit" target="_blank">Extended.Wpf.Toolkit</a> is a project that should not need an introduction, and if you follow this blog you’ve probably heard <a href="http://elegantcode.com/about/brian-lagunas/" target="_blank">Brian</a> talk about it. If not, check out some of the posts on the <a href="http://bit.ly/yV7cma" target="_blank">Extended WPF Toolkit! </a></p>  <p>This project is one of the most download on codeplex, discussed on <a href="http://channel9.msdn.com" target="_blank">Channel9</a>, Coding4Fun, and is being leveraged by <a href="http://www.telerik.com" target="_blank">Telerik</a> in their <a href="http://www.telerik.com/products/orm.aspx" target="_blank">Open Access ORM</a> product.</p>  <h5>Below is a sample of some of the controls you can find in the toolkit:    <br />(but make sure you check out the <a href="http://wpftoolkit.codeplex.com/" target="_blank">project site</a> for the full list of controls)</h5>  <ul>   <li>BusyIndicator </li>    <li>Calculator </li>    <li>ChildWindow </li>    <li>ColorCanvas </li>    <li>ColorPicker </li>    <li>DateTimePicker </li>    <li>Magnifier </li>    <li>MultiLineTextEditor </li>    <li>PrimitiveTypeCollectionEditor </li>    <li>RichTextBox </li>    <li>SplitButton </li>    <li>WatermarkTextBox </li>    <li>Wizard</li> </ul>  </div>
 </div>
 
       

@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine - Developing on Staxmanade</title>
+  <title>Spend the Effort to Make Your Tests Better Documentation - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I&#x27;ve been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to [setup deploy and ...">
+   <meta name="description" content="You may be writing tests, but are they describing the behavior well enough to know what business case it&#x27;s covering a year from now?">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">
+  <link rel="canonical" href="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -100,46 +100,41 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">Spend the Effort to Make Your Tests Better Documentation</a></h1>
     <p class="meta">
-          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+          <time datetime="2019-05-12T17:54:12.628Z" pubdate data-updated="true">May 12th 2019</time>
 
 
-        <a href="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/#disqus_thread" data-disqus-identifier="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">(Comments)</a>
+        <a href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/#disqus_thread" data-disqus-identifier="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I've been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to <a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">setup deploy and manage different environments</a>.</p>
-<p>The work of creating, deploying and essentially managing all of my containers up on Digital Ocean worked great, but only from the computer I initiated this process with. For this example, we're going to walk through how I was able to not only build/deploy from my Mac like I originaly did, but what steps I took to allow me to switch over to a Windows machine and do the exact same thing.</p>
-<p>It's not obvious how to do it, and if you do some googling you'll most certanly land</p>
-<ol>
-<li>copy/zip folder on Mac</li>
-<li>unzip in same directory on Windows</li>
-<li>when I tried to run the docker-machine env command it failed because of the <code>pem</code> file not found - I had to manually create that directory on windows and copy the cert files in...</li>
-<li>Had to update the config.json and replace <code>{{HOME}}</code> with <code>C:/Users/Jason</code></li>
-</ol>
-<blockquote>
-<p>after looking at it I probably could have skipped step 3 above and just modified the <code>config.json</code> to point to the proper directories (instead of copying files around).</p>
-</blockquote>
+<div class="entry-content"><p>You may be writing tests, but are they describing the behavior well enough to know what business case it's covering a year from now?</p>
+<p>Today's lesson or re-lesson. <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">Don't just write your tests</a>, <em>write it so you can understand the intricacies a year from now</em>.</p>
+<p>The other day I was pairing on a what we first thought was a bug in our software. I was explaining something we saw.. &quot;oh yea, that's a bug, oh and look at these tests, they look wrong also. Why is this so wrong? How did we not catch this last year? Something is off here... etc...&quot;</p>
+<p>While I had some tests to cover a business requirement a year ago when we wrote the software, I had not properly described the business case within the test to document it's purpose.</p>
+<p>The subtle, bug-look-a-likes turned out to be proper behavior. If only I had not just documented the expected behavior via a test, but had properly describe WHY this behavior existed within the test, we could have avoided potentially breaking it (by &quot;trying to fix it&quot;) and the test could have better communicated the WHY of this strange case.</p>
+<p>This is just a reminder to myself to write better tests. Doing tests, great. Well documented, business explanation of the WHY in the tests? Way better!</p>
+<p>Happy testing!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+                          <time datetime="2019-05-12T17:54:12.628Z" pubdate data-updated="true">May 12th 2019</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/docker/'>Docker</a>
+    <a class='category' href='/blog/categories/testing/'>Testing</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/" data-via="staxmanade" data-counturl="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/" data-via="staxmanade" data-counturl="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/" title="Previous Post: Spend the Effort to Make Your Tests Better Documentation">&laquo; Spend the Effort to Make Your Tests Better Documentation</a>
+                        <a class="basic-alignment left" href="/2019/05/javascript---refactoring-too-many-function-params/" title="Previous Post: JavaScript - Refactoring too many function params">&laquo; JavaScript - Refactoring too many function params</a>
                     </p>
                 </footer>
             </article>
@@ -264,7 +259,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/';
+    var disqus_identifier = '/2019/05/spend-the-effort-to-make-your-tests-better-documentation/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

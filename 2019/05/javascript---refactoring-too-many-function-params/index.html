@@ -4,11 +4,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine - Developing on Staxmanade</title>
+  <title>JavaScript - Refactoring too many function params - Developing on Staxmanade</title>
   <meta name="author" content="Jason Jarrett">
 
 
-   <meta name="description" content="I&#x27;ve been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to [setup deploy and ...">
+   <meta name="description" content="A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="canonical" href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">
+  <link rel="canonical" href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
@@ -100,46 +100,83 @@
         <div>
             <article class="hentry" role="article">
                   <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Deploying and Managing Docker Instances on Digital Ocean From Both a Mac and Windows Machine</a></h1>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">JavaScript - Refactoring too many function params</a></h1>
     <p class="meta">
-          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+          <time datetime="2019-05-12T00:24:41.588Z" pubdate data-updated="true">May 11th 2019</time>
 
 
-        <a href="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/#disqus_thread" data-disqus-identifier="/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">(Comments)</a>
+        <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I've been working on a project that is hosted using Docker containers up on Digital Ocean. In an earlier post I walk through how to <a href="https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/">setup deploy and manage different environments</a>.</p>
-<p>The work of creating, deploying and essentially managing all of my containers up on Digital Ocean worked great, but only from the computer I initiated this process with. For this example, we're going to walk through how I was able to not only build/deploy from my Mac like I originaly did, but what steps I took to allow me to switch over to a Windows machine and do the exact same thing.</p>
-<p>It's not obvious how to do it, and if you do some googling you'll most certanly land</p>
-<ol>
-<li>copy/zip folder on Mac</li>
-<li>unzip in same directory on Windows</li>
-<li>when I tried to run the docker-machine env command it failed because of the <code>pem</code> file not found - I had to manually create that directory on windows and copy the cert files in...</li>
-<li>Had to update the config.json and replace <code>{{HOME}}</code> with <code>C:/Users/Jason</code></li>
-</ol>
-<blockquote>
-<p>after looking at it I probably could have skipped step 3 above and just modified the <code>config.json</code> to point to the proper directories (instead of copying files around).</p>
-</blockquote>
+<div class="entry-content"><p>A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.</p>
+<p>EX:</p>
+<pre><code>myFunction(<span class="hljs-string">"val1"</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+</code></pre>
+<p>Looking at the above, we can sort of tell that the first param is some string, maybe we can even tell what it's purpose is, the second a number maybe we even know why if we understand the codebase. But the booleans that follow? What are those representing? How do you know you're providing the right value for the right argument?</p>
+<p>One approach is to refactor those parameters into variable names to help give them meaning.</p>
+<p>EX:</p>
+<pre><code><span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>Now at least when we look at each parameter we can see it's name and that helps give some context of what it represents.</p>
+<p>But as this parameter list grows it can be difficult to maintain. We could argue it's already too long.</p>
+<p>What if you have to add a parameter in the middle?</p>
+<p>How can you be sure all the callers get updated correctly?</p>
+<p>Another approach would be to refactor this list of parameters into an object of properties.</p>
+<p>This comes with some benefits like, you can add/remove properties without worrying about parameter ordering, as long as they can be optional and have solid defaults.</p>
+<p>One cool thing I found with ES6 destructuring and enhanced object literals is if our function definition AND our caller follow a similar pattern. Meaning the variable names used in the caller are the same as the parameter names within the function.</p>
+<p>EX:</p>
+<pre><code>function myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy) {}
+
+<span class="hljs-comment">//**</span>
+
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>To refactor this we can simply have the caller pass an object, and have the function use destructuring of that object. It simply becomes.</p>
+<pre><code>function myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy}) {}
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy});
+</code></pre>
+<p>This is cool because it's simple, requires very little work, and now we can gain the benefits of using an object instead of an ordered set of parameters.</p>
+<p>This opens the door to quit a few other organization options.</p>
+<p>Happy Cleanup!</p>
 </div>
 
                 <footer>
                     <p class="meta">
                         <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
 
-                          <time datetime="2017-01-17T00:54:29.111Z" pubdate data-updated="true">Jan 16th 2017</time>
+                          <time datetime="2019-05-12T00:24:41.588Z" pubdate data-updated="true">May 11th 2019</time>
 
 
                         <span class="categories">
-    <a class='category' href='/blog/categories/docker/'>Docker</a>
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
 </span>
 
                     </p>
                     <div class="sharing">
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/" data-via="staxmanade" data-counturl="https://staxmanade.com/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/">Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/" data-via="staxmanade" data-counturl="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">Tweet</a>
 </div>
 
                     <p class="meta">
-                        <a class="basic-alignment left" href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/" title="Previous Post: Spend the Effort to Make Your Tests Better Documentation">&laquo; Spend the Effort to Make Your Tests Better Documentation</a>
+                        <a class="basic-alignment left" href="/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/" title="Previous Post: Using script=module to Quicky Spike Some Mocha Tests">&laquo; Using script=module to Quicky Spike Some Mocha Tests</a>
+                        <a class="basic-alignment right" href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/" title="Next Post: Spend the Effort to Make Your Tests Better Documentation">Spend the Effort to Make Your Tests Better Documentation &raquo;</a>
                     </p>
                 </footer>
             </article>
@@ -264,7 +301,7 @@
   var disqus_shortname = 'developingonstaxmanade';
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
     var disqus_shortname = 'developingonstaxmanade';
-    var disqus_identifier = '/2017/01/how-i-am-able-to-develop-in-docker-on-digital-ocean-from-both-my-mac-and-windows-machine/';
+    var disqus_identifier = '/2019/05/javascript---refactoring-too-many-function-params/';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

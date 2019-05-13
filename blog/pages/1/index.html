@@ -86,6 +86,89 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">Spend the Effort to Make Your Tests Better Documentation</a></h1>
+    <p class="meta">
+          <time datetime="2019-05-12T17:54:12.628Z" pubdate data-updated="true">May 12th 2019</time>
+
+
+        <a href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/#disqus_thread" data-disqus-identifier="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>You may be writing tests, but are they describing the behavior well enough to know what business case it's covering a year from now?</p>
+<p>Today's lesson or re-lesson. <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">Don't just write your tests</a>, <em>write it so you can understand the intricacies a year from now</em>.</p>
+<p>The other day I was pairing on a what we first thought was a bug in our software. I was explaining something we saw.. &quot;oh yea, that's a bug, oh and look at these tests, they look wrong also. Why is this so wrong? How did we not catch this last year? Something is off here... etc...&quot;</p>
+<p>While I had some tests to cover a business requirement a year ago when we wrote the software, I had not properly described the business case within the test to document it's purpose.</p>
+<p>The subtle, bug-look-a-likes turned out to be proper behavior. If only I had not just documented the expected behavior via a test, but had properly describe WHY this behavior existed within the test, we could have avoided potentially breaking it (by &quot;trying to fix it&quot;) and the test could have better communicated the WHY of this strange case.</p>
+<p>This is just a reminder to myself to write better tests. Doing tests, great. Well documented, business explanation of the WHY in the tests? Way better!</p>
+<p>Happy testing!</p>
+</div>
+
+      <a href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/#disqus_thread" data-disqus-identifier="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">JavaScript - Refactoring too many function params</a></h1>
+    <p class="meta">
+          <time datetime="2019-05-12T00:24:41.588Z" pubdate data-updated="true">May 11th 2019</time>
+
+
+        <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.</p>
+<p>EX:</p>
+<pre><code>myFunction(<span class="hljs-string">"val1"</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+</code></pre>
+<p>Looking at the above, we can sort of tell that the first param is some string, maybe we can even tell what it's purpose is, the second a number maybe we even know why if we understand the codebase. But the booleans that follow? What are those representing? How do you know you're providing the right value for the right argument?</p>
+<p>One approach is to refactor those parameters into variable names to help give them meaning.</p>
+<p>EX:</p>
+<pre><code><span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>Now at least when we look at each parameter we can see it's name and that helps give some context of what it represents.</p>
+<p>But as this parameter list grows it can be difficult to maintain. We could argue it's already too long.</p>
+<p>What if you have to add a parameter in the middle?</p>
+<p>How can you be sure all the callers get updated correctly?</p>
+<p>Another approach would be to refactor this list of parameters into an object of properties.</p>
+<p>This comes with some benefits like, you can add/remove properties without worrying about parameter ordering, as long as they can be optional and have solid defaults.</p>
+<p>One cool thing I found with ES6 destructuring and enhanced object literals is if our function definition AND our caller follow a similar pattern. Meaning the variable names used in the caller are the same as the parameter names within the function.</p>
+<p>EX:</p>
+<pre><code>function myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy) {}
+
+<span class="hljs-comment">//**</span>
+
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>To refactor this we can simply have the caller pass an object, and have the function use destructuring of that object. It simply becomes.</p>
+<pre><code>function myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy}) {}
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy});
+</code></pre>
+<p>This is cool because it's simple, requires very little work, and now we can gain the benefits of using an object instead of an ordered set of parameters.</p>
+<p>This opens the door to quit a few other organization options.</p>
+<p>Happy Cleanup!</p>
+</div>
+
+      <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Using script=module to Quicky Spike Some Mocha Tests</a></h1>
     <p class="meta">
           <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>
@@ -967,192 +1050,6 @@ WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><
 </div>
 
       <a href="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/#disqus_thread" data-disqus-identifier="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
-    <p class="meta">
-          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
-
-
-        <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
-<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
-<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
-<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
-<p>For example if you pasted the following into your PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
-<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
-<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
-<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
-<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
-<span class="hljs-keyword">function</span> ...() { cd ... }
-<span class="hljs-keyword">function</span> ....() { cd .... }
-<span class="hljs-keyword">function</span> .....() { cd ..... }
-<span class="hljs-keyword">function</span> ......() { cd ...... }
-<span class="hljs-keyword">function</span> .......() { cd ....... }
-<span class="hljs-keyword">function</span> ........() { cd ........ }
-</code></pre>
-<p>If you're interested in the evolution of this CD tool:</p>
-<ul>
-<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
-<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
-<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
-</ul>
-<p>SUPER SWEET!</p>
-<p>Happy CD'ing!</p>
-</div>
-
-      <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
-    <p class="meta">
-          <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
-
-
-        <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
-<p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
-<h1>Before</h1>
-<p><img src="/images/posts/JIRA-Card-BEFORE.png" alt="Jira card before css hack"></p>
-<h1>After CSS Hack</h1>
-<p><img src="/images/posts/JIRA-Card-AFTER.png" alt="Jira card before css hack"></p>
-<h1>How did you do that?</h1>
-<ol>
-<li>Install a CSS style plugin into your browser. This post all use <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">Stylebot</a> for the Chrome web browser.</li>
-</ol>
-<ul>
-<li>Just install the plugin from the Chrome store by <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">clicking this link</a> and selecting <code>[+ ADD TO CHROME]</code> button on the upper right of the page.</li>
-</ul>
-<ol start="2">
-<li>
-<p>Once the plugin is installed. Close all tabs and re-open a tab to the JIRA kanban board.</p>
-</li>
-<li>
-<p>Click the new Stylebot plugin <code>CSS</code> button and the <code>Open Stylebot...</code> option in your chrome browser toolbar which will open up a U.I. that allow you to mess around with the page's style.</p>
-</li>
-<li>
-<p>At the bottom of the Stylebot click <code>Edit CSS</code> which will give you a blank text box you can write custom CSS into.</p>
-</li>
-<li>
-<p>Paste in the following CSS and hit <code>Save</code></p>
-</li>
-</ol>
-<pre><code class="language-css">
-<span class="hljs-comment">/** Version 2.3
- ** Copyright Jason Jarrett
- **/</span>
-
-<span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-extra-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-highlighted-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-
-<span class="hljs-comment">/* the below adjusts the backlog view */</span>
-
-<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> right</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -<span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">18px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-issue-content</span>, <span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-comment">/* filters */</span>
-<span class="hljs-class">.js-quickfilter-button</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-<span class="hljs-class">.js-sprintfilter</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value"> nowrap</span></span>;
-}</span>
-<span class="hljs-class">.js-sprintfilter</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-<span class="hljs-tag">dl</span> <span class="hljs-tag">dt</span>, <span class="hljs-tag">dd</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">span</span><span class="hljs-class">.ghx-extra-field</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
-}</span>
-
-<span class="hljs-tag">span</span><span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-extra-field-estimate</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding-bottom</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-compact</span> <span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-</code></pre>
-<p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
-<p>Happy (as best you can) JIRA'ing</p>
-</div>
-
-      <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>

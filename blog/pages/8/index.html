@@ -86,6 +86,193 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a></h1>
+    <p class="meta">
+          <time datetime="2014-04-17T03:20:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
+
+
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>
+<div class="seriesNote">
+    <p>This article is <strong>Part 6</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        <li>
+            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
+        </li>
+        <li>
+            Part 6 - (current) - 301 Redirect Old Posts to New Location
+        </li>
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
+        </li>
+    </ul>
+</div></p>
+<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I'll talk about how I setup automatic redirection from the old blog to the new blog.</p>
+<blockquote>
+<p>Sorry, this post gets a little long, mostly because there is lots evolved, and I took some time to explain it along the way.</p>
+</blockquote>
+<p>So, I'm not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let's not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
+<h3>Reasons for redirection:</h3>
+<ul>
+<li>I'd like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
+<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to 'migrate' not, start fresh.</li>
+</ul>
+<p>I probably won't ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I've made in the past, but at least they will end up at my new blog.</p>
+<h3>Goals for the redirection.</h3>
+<ul>
+<li>
+<p>Users who click on a link to the old blog should redirect successfully to the new site.</p>
+</li>
+<li>
+<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog's search rankings would carry over to my new blog.</p>
+<blockquote>
+<p>DISCLAIMER: Given the steps in the post, I'm not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
+</blockquote>
+</li>
+</ul>
+<p>Now, while I'm not 100% confident my search rankings carried over, I'm fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
+<h1>What's involved for redirection?</h1>
+<ol>
+<li>Tell BlogSpot to redirect each post at <code>staxmanade.blogspot.com</code> to the new location.</li>
+<li>Handle that redirection on the Octopress side.</li>
+</ol>
+<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don't have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
+<h3>Let's get into why this wasn't as straight forward.</h3>
+<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you'll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
+<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don't provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can't use on our static site.</p>
+<p>The direction I took was to use the <code>&lt;$BlogItemNumber$&gt;</code> which is like a really long <code>id</code> value, leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">Jekyll alias generator</a> and end up doing two redirects.</p>
+<ol>
+<li>from <code>staxmanade.blogspot.com/SomeBlogUrl</code> -&gt; <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code></li>
+<li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
+</ol>
+<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that's installed, we need to update all of our blog posts to add in the 'alias' that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
+<p><script src="https://gist.github.com/10562366.js?file=InsertBloggerAliasIntoJekyllPost.ps1"></script></p>
+<p>In summary, the above code is:</p>
+<ol>
+<li>Parsing the blogger xml</li>
+<li>Extracting the post url (slug) and BlogSpot blog <code>id</code></li>
+<li>Matching each post with a post in our Octopress <code>_posts</code> <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content">that we recently exported</a></li>
+<li>And injecting an <code>alias: /blog/{id}</code> into the header <code>YAML</code></li>
+</ol>
+<p>Look in your blogger xml for a sample ID, it looks like</p>
+<pre><code>&lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
+</code></pre>
+<p>What we care about is the <code>BigNumber</code> after the &quot;...post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
+<p>If you completed the above and run <code>rake generate</code> and <code>rake preview</code>, test out that your redirections are correct.</p>
+<p>After I completed this and on my blog, <a href="https://staxmanade.com/blog/7515836382847059837">staxmanade.com/blog/7515836382847059837</a> should redirect me to an actual post.</p>
+<p>Once you're happy with your Octopress's blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
+<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url's, we can go back to BlogSpot and update our template to redirect to our static site.</p>
+<p>I used the below template (note search/replace your domain etc) before dropping this into your site.</p>
+<h1>Update Blogger template to redirect.</h1>
+<ol>
+<li>Go back to your BlogSpot admin page and select the <code>Template</code> tab.</li>
+<li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
+<li>Modify the below template for your own site.</li>
+</ol>
+<p><script src="https://gist.github.com/10562366.js?file=BloggerRedirect.html"></script></p>
+<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don't see the middle/transition page.</p>
+<blockquote>
+<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
+</blockquote>
+</div>
+
+      <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a></h1>
+    <p class="meta">
+          <time datetime="2014-04-17T03:19:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
+
+
+        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
+I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
+</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
+<p>
+<div class="seriesNote">
+    <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
+    <ul>
+        <li>
+            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
+        </li>
+        <li>
+            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
+        </li>
+        <li>
+            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
+        </li>
+        <li>
+            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
+        </li>
+        <li>
+            Part 5 - (current) - Fix Links
+        </li>
+        <li>
+            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
+        </li>
+        <li>
+            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
+        </li>
+        <li>
+            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
+        </li>
+        <li>
+            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
+        </li>
+    </ul>
+</div></p>
+<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
+<ol>
+<li>Cross-Post links (where I referenced one of my other posts)</li>
+<li>Broken links.</li>
+</ol>
+<h2>Cross post links</h2>
+<p>I used a text editor and some command line magic to search for <code>http://staxmanade.blogspot.com/</code> and replace it with <code>/blog/</code> so that my cross-referencing posts could link to a relative version of the blog instead of the full blogspot domain.</p>
+<p>Depending on how you configure your <a href="http://jekyllrb.com/docs/permalinks/">permalinks</a> you may need to do some more link manipulation. I had to search <code>.html</code> at the end of my cross-referencign posts and be sure to delete it since my old reference would look like</p>
+<pre><code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html
+</code></pre>
+<p>but now should link to</p>
+<pre><code>/blog/2013/12/format-your-net-exceptions-to-see
+</code></pre>
+<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
+<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
+<h2>Fix broken links</h2>
+<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
+<p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
+<p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
+<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
+</div>
+
+      <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Migrating from BlogSpot to Octopress - Part 4 - Import Content into Octopress</a></h1>
     <p class="meta">
           <time datetime="2014-04-16T03:19:53.000Z" pubdate data-updated="true">Apr 15th 2014</time>
@@ -498,41 +685,6 @@ I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-l
 <li><a href="https://developers.google.com/speed/libraries/devguide">Google CDN</a> for hosting AngularJS</li>
 <li><a href="http://google.com/analytics/">Google Analytics</a> (so I can see if anyone cares)</li>
 </ul>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2013/12/leave-yourself-breadcrumb-for-tomorrow/">Leave yourself a breadcrumb for tomorrow.</a></h1>
-    <p class="meta">
-          <time datetime="2013-12-06T05:56:00.000Z" pubdate data-updated="true">Dec 5th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content">
-<div class='post'>
-<p>Have you ever arrived at work and sat down, not exactly sure what you were working on the day before? You spend some time going through emails. Start looking at your codebase, maybe the last couple commits you made trying to get back into the mental groove you were in the day before.</p>  <p>There is a <a href="http://lmgtfy.com/?q=get+back+into+programming+after+interruption" target="_blank">lot of information</a> about how long it takes to get back into the programming zone. <strong>If you leave yourself a breadcrumb or two, it is much easier to get started when you come back to your task.</strong></p>  <h3>Some of my favorite breadcrumbs.</h3>  <h4>Leave a failing unit test.</h4>  <p>If you practice any sort of test driven development, leaving a failing test to pick up the next day can be one of the most useful methods to get going again when you come back to the problem. If you’ve spent the time to think through the problem enough to write a failing unit test, this can help to ease you into the task at hand and get rolling the next day. </p>  <h4>Explicitly leave a note or compiler error in the code.</h4>  <p>Now, it’s probably common to check your working code in at the end of the day, but sometimes you just can’t work it to completion. That’s ok, and if you use a tool that supports something like this, leave yourself a breadcrumb of one or more compiler errors.</p>  <p>If I’m writing some C# I sometimes use the <a href="http://msdn.microsoft.com/en-us/library/vstudio/x5hedts0.aspx" target="_blank">#error precompiler</a> directive with a helpful message.</p>  <p><a href="http://lh4.ggpht.com/-3BSP6C9ismg/UqFnBqT43GI/AAAAAAAAAiI/BvwY-gpVO-o/s1600-h/image3.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="http://lh6.ggpht.com/-XgX7jyzCT_c/UqFnCTtDw7I/AAAAAAAAAiQ/o5EgtBxl_vA/image_thumb1.png?imgmax=800" width="531" height="177" /></a></p>  <p>This allows me to come in the next day. Hit build on the project and immediately see where I was in the codebase last and need to pick up again.</p>  <h4>Other, less specific, but useful options:</h4>  <ul>   <li>Send yourself an email describing what you’re working on and what still needs to be done. </li>    <li>Write in your favorite notes app. I like to use OneNote to keep track of my ‘scrum notes’ which help me describe what I did today and what I plan on doing tomorrow. </li>    <li>Sticky note? (can’t say I’ve used a pen/paper in a while – but if it works for you go for it)</li> </ul>  <p>It doesn’t have to be anything special, just a little note to yourself that can help you get a jump start on your next task at hand.</p>  <p>What other methods do you use to get back into the problem at hand?</p>  </div>
-</div>
-
-      
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2013/11/convert-existing-winjs-app-to-use/">Convert an existing WinJS app to use TypeScript</a></h1>
-    <p class="meta">
-          <time datetime="2013-11-29T19:38:00.000Z" pubdate data-updated="true">Nov 29th 2013</time>
-
-
-        
-    </p>
-</header>
-<div class="entry-content"><p>I recently published a <a href="https://github.com/ToTypeScriptD/SampleWin8">little sample project</a> up in the <a href="https://github.com/ToTypeScriptD">ToTypeScriptD</a> github organization that walks through converting a new <a href="http://www.amazon.com/gp/product/B00EDSI7QO/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00EDSI7QO&amp;linkCode=as2&amp;tag=staxmanadecom-20&amp;linkId=A6Q7RZBFEARWWT2L">Windows 8</a> WinJS application to TypeScript.</p></p>
-<p>It’s intended to show some of the basic first steps it takes to convert a project over to TypeScript and also how you can leverage <a href="https://github.com/ToTypeScriptD/ToTypeScriptD">ToTypeScriptD</a> to help automatically generate .d.ts based on the windows *.winmd assemblies.</p>
-<p>If you’re writing any TypeScript WinJS apps, feel free to check it out. I’d appreciate any feedback you have that can improve on this guide’s steps/approach for porting an existing WinJS library over to TypeScript.</p>
-<p>Happy Scripting!</p>
 </div>
 
       

@@ -87,6 +87,89 @@
 <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">Spend the Effort to Make Your Tests Better Documentation</a></h1>
+    <p class="meta">
+          <time datetime="2019-05-12T17:54:12.628Z" pubdate data-updated="true">May 12th 2019</time>
+
+
+        <a href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/#disqus_thread" data-disqus-identifier="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>You may be writing tests, but are they describing the behavior well enough to know what business case it's covering a year from now?</p>
+<p>Today's lesson or re-lesson. <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">Don't just write your tests</a>, <em>write it so you can understand the intricacies a year from now</em>.</p>
+<p>The other day I was pairing on a what we first thought was a bug in our software. I was explaining something we saw.. &quot;oh yea, that's a bug, oh and look at these tests, they look wrong also. Why is this so wrong? How did we not catch this last year? Something is off here... etc...&quot;</p>
+<p>While I had some tests to cover a business requirement a year ago when we wrote the software, I had not properly described the business case within the test to document it's purpose.</p>
+<p>The subtle, bug-look-a-likes turned out to be proper behavior. If only I had not just documented the expected behavior via a test, but had properly describe WHY this behavior existed within the test, we could have avoided potentially breaking it (by &quot;trying to fix it&quot;) and the test could have better communicated the WHY of this strange case.</p>
+<p>This is just a reminder to myself to write better tests. Doing tests, great. Well documented, business explanation of the WHY in the tests? Way better!</p>
+<p>Happy testing!</p>
+</div>
+
+      <a href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/#disqus_thread" data-disqus-identifier="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/">JavaScript - Refactoring too many function params</a></h1>
+    <p class="meta">
+          <time datetime="2019-05-12T00:24:41.588Z" pubdate data-updated="true">May 11th 2019</time>
+
+
+        <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>A code smell that can creep into your JavaScript codebase and quickly make the code difficult to follow is when a function has too many parameters.</p>
+<p>EX:</p>
+<pre><code>myFunction(<span class="hljs-string">"val1"</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>);
+</code></pre>
+<p>Looking at the above, we can sort of tell that the first param is some string, maybe we can even tell what it's purpose is, the second a number maybe we even know why if we understand the codebase. But the booleans that follow? What are those representing? How do you know you're providing the right value for the right argument?</p>
+<p>One approach is to refactor those parameters into variable names to help give them meaning.</p>
+<p>EX:</p>
+<pre><code><span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>Now at least when we look at each parameter we can see it's name and that helps give some context of what it represents.</p>
+<p>But as this parameter list grows it can be difficult to maintain. We could argue it's already too long.</p>
+<p>What if you have to add a parameter in the middle?</p>
+<p>How can you be sure all the callers get updated correctly?</p>
+<p>Another approach would be to refactor this list of parameters into an object of properties.</p>
+<p>This comes with some benefits like, you can add/remove properties without worrying about parameter ordering, as long as they can be optional and have solid defaults.</p>
+<p>One cool thing I found with ES6 destructuring and enhanced object literals is if our function definition AND our caller follow a similar pattern. Meaning the variable names used in the caller are the same as the parameter names within the function.</p>
+<p>EX:</p>
+<pre><code>function myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy) {}
+
+<span class="hljs-comment">//**</span>
+
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction(firstName, age, isCool, isHungry, isSleeping, isHappy);
+</code></pre>
+<p>To refactor this we can simply have the caller pass an object, and have the function use destructuring of that object. It simply becomes.</p>
+<pre><code>function myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy}) {}
+<span class="hljs-variable"><span class="hljs-keyword">var</span> firstName</span> = <span class="hljs-string">"val1"</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> age</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isCool</span> = <span class="hljs-literal">true</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHungry</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isSleeping</span> = <span class="hljs-literal">false</span>;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> isHappy</span> = <span class="hljs-literal">true</span>;
+myFunction({firstName, age, isCool, isHungry, isSleeping, isHappy});
+</code></pre>
+<p>This is cool because it's simple, requires very little work, and now we can gain the benefits of using an object instead of an ordered set of parameters.</p>
+<p>This opens the door to quit a few other organization options.</p>
+<p>Happy Cleanup!</p>
+</div>
+
+      <a href="/2019/05/javascript---refactoring-too-many-function-params/#disqus_thread" data-disqus-identifier="/2019/05/javascript---refactoring-too-many-function-params/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2018/08/using-script-module-to-quicky-spike-some-mocha-tests/">Using script=module to Quicky Spike Some Mocha Tests</a></h1>
     <p class="meta">
           <time datetime="2018-08-03T21:42:53.703Z" pubdate data-updated="true">Aug 3rd 2018</time>
@@ -261,66 +344,7 @@
         <a href="/2018/03/should-i-use-javascript-single-or-double-quotes/#disqus_thread" data-disqus-identifier="/2018/03/should-i-use-javascript-single-or-double-quotes/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>The topic of using JavaScript single <code>'</code> or double <code>&quot;</code> quotes comes up often enough that I thought I'd create a bit of an amalgamation of items around the topic for future reference.</p>
-<p>Today, it came up at work when someone sent a PR to our internal standard <a href="https://eslint.org/">eslint</a> config repository and there were some various points brought up with no real final solid winner or resolution.</p>
-<p>In this post, I'm not (sadly) going to write anything interesting or profound or even original. Just wanted to aggregate some pros/cons as I've seen splattered in various locations around the web on the topic.</p>
-<h1>The most important point or the TL;DR</h1>
-<ul>
-<li>Define one standard and stick to it. Do not use one in one file, and a different one in another file, or even especially avoid mixing quotes within the same file if possible.</li>
-</ul>
-<h2>Basic qualities they both share</h2>
-<ul>
-<li>They both represent strings (yay! strings!)</li>
-<li>Which ever one you start with, must be the same one you end the string with.</li>
-<li>There is really no difference in the end between using single or double quotes, meaning they both represent a string in the end. The system doesn't really care which one you use (but you might?).</li>
-<li>No need to escape the other character within a string. So a double quoted string can have single quotes without escaping them, and a single quoted string can have double quotes within it without having to escape them.
-<ul>
-<li><code>&quot;Double quotes with a single ( ' ) quote in the middle&quot;</code></li>
-<li><code>'Single quotes with a double ( &quot; ) quote in the middle'</code></li>
-</ul>
-</li>
-<li>Each type must escape their own type
-<ul>
-<li><code>&quot;double quotes ( \&quot; ) must escape a double quote&quot;</code></li>
-<li><code>'single quotes ( \' ) must escape a single quote'</code></li>
-</ul>
-</li>
-<li>On German, Hungarian, Austrian, and many other keyboards, you have to use the Shift key for both single or double quotes.</li>
-<li>On Turkish Q keyboards it's apparently the other way around (need <code>&lt;Shift&gt;</code> for single quote vs double).</li>
-</ul>
-<h2>Pros for single quotes:</h2>
-<ul>
-<li>One popular argument for single quotes is when you have to write html within javascript:
-<ul>
-<li>If you use single quotes you can write <code>var html = '&lt;div id=&quot;some_div&quot;&gt;&lt;/div&gt;'</code></li>
-<li>If you use double quotes you must escape each nested <code>&quot;</code> EX: <code>var html = &quot;&lt;div id=\&quot;some_div\&quot;&gt;&lt;/div&gt;&quot;</code> which can get annoying. Or you could use single quotes within the html string, but I don't want to cover quotes for html here (that would just hurt)...</li>
-</ul>
-</li>
-<li>Single quotes can often look better when you're using them to represent an empty string <code>''</code> vs <code>&quot;&quot;</code> (too many little marks in the latter and can be difficult read - ahhh)</li>
-</ul>
-<h2>Cons for single quotes:</h2>
-<p>Only real con I can come up with is copying/pasting between JSON and JavaScript files - single quotes are not supported within JSON files, so you'd have to do a host of search/replace (and escaping of double quotes)...</p>
-<h2>Pros for double quotes:</h2>
-<ul>
-<li>JSON only allows double quotes (unless you control the data, and can use a library that is more liberal at parsing JSON - but a JSON file with single quotes is not truly a JSON file)</li>
-<li>Most likely noobies to JS will be familiar with double quotes from their previous programming languages</li>
-<li>Double quotes eliminate the need to escape apostrophes when writing english sentences.</li>
-</ul>
-<h2>Cons for Double quotes:</h2>
-<ul>
-<li>Must press an extra key <code>&lt;Shift&gt;</code> when wanting to use double quotes</li>
-</ul>
-<h1>In the end</h1>
-<p>I recommend single quotes as a solid standard. Unless you are copying JSON objects in JavaScript and pasting them into JS files a ton - it's generally my personal preference.</p>
-<h1>Some References:</h1>
-<ul>
-<li><a href="https://stackoverflow.com/questions/242813/when-to-use-double-or-single-quotes-in-javascript">https://stackoverflow.com/questions/242813/when-to-use-double-or-single-quotes-in-javascript</a></li>
-<li><a href="https://stackoverflow.com/questions/9959928/double-quotes-vs-single-quotes-in-javascript">https://stackoverflow.com/questions/9959928/double-quotes-vs-single-quotes-in-javascript</a></li>
-<li><a href="https://stackoverflow.com/questions/3149192/difference-between-single-quotes-and-double-quotes-in-javascript">https://stackoverflow.com/questions/3149192/difference-between-single-quotes-and-double-quotes-in-javascript</a></li>
-<li><a href="https://plus.google.com/+DouglasCrockfordEsq/posts/EBky2K9erKt">https://plus.google.com/+DouglasCrockfordEsq/posts/EBky2K9erKt</a></li>
-</ul>
-<p>Happy Quoting!</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2018/03/should-i-use-javascript-single-or-double-quotes/#disqus_thread" data-disqus-identifier="/2018/03/should-i-use-javascript-single-or-double-quotes/">(Comments)</a>
     </article>
@@ -334,77 +358,7 @@
         <a href="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/#disqus_thread" data-disqus-identifier="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>From a single Mac if you wanted to access two unique accounts at the same time, I found out through a <a href="https://apple.stackexchange.com/a/151160">neat little trick</a> how to accomplish this.</p>
-<p>This allows you to log in to a second unique Mac user while already being logged into the first account already. It can be done without having to logout/login to each one individually (one at a time).</p>
-<h2>Why would I need to do this?</h2>
-<p>The reasons could vary but here are a couple examples:</p>
-<ul>
-<li>If you use one user for work, and one for personal to keep some separate context, but while at work maybe need to access a file or email from the personal account.</li>
-<li>You'd like to access a separate iMessage account without it getting mixed into yours. Say you want to spy on the kid. (Not saying whether this is ethical or not - depends on your parenting style - just proposing a reason for using this tool).</li>
-</ul>
-<h2>Disclaimer</h2>
-<blockquote>
-<p>To accomplish this we're going to be turning on some services/features that have the potential to open security vulnerabilities so please use with caution and learn/know your risks.</p>
-</blockquote>
-<h2>Setup/Configuration</h2>
-<p>To accomplish this your Mac needs to have the proper permissions and configuration in place to allow this to happen.</p>
-<p>First we need to access the system preferences:</p>
-<p><img src="/images/posts/dual-login/access-preferences.png" alt="access mac system preferences"></p>
-<p>Then open the <code>Sharing</code> preferences:</p>
-<p><img src="/images/posts/dual-login/preferences-highlight-sharing.png" alt="mac sharing preferences"></p>
-<p>Then enable <code>Screen Sharing</code> and don't forget to add the specific users you want to allow screen to be shared for.</p>
-<blockquote>
-<p>Note: I blocked out this specific user-name - but assume the blacked out user is the Mac account's user that I want to log into using the Screen Sharing application</p>
-</blockquote>
-<p><img src="/images/posts/dual-login/screen-sharing-preference.png" alt="screen sharing preference"></p>
-<p>I had to enable enable remote login to allow the up-coming <code>ssh</code> command to run. Here is the configuration I used:</p>
-<p><img src="/images/posts/dual-login/remote-login.png" alt="remote login preference"></p>
-<h2>Startup an SSH Session</h2>
-<p>From the currently logged in session, open a <code>Terminal</code> and run the following command:</p>
-<pre><code>ssh -NL <span class="hljs-number">5901</span>:localhost:<span class="hljs-number">5900</span> localhost
-</code></pre>
-<p>The <code>-L</code> has this to say in ssh's man pages</p>
-<pre><code>     -L [bind_address:]port:host:hostport
-     -L [bind_address:]port:remote_socket
-     -L local_socket:host:hostport
-     -L local_socket:remote_socket
-             Specifies <span class="hljs-keyword">that</span> connections <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">given</span> TCP port <span class="hljs-keyword">or</span> Unix socket <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> (client) host are <span class="hljs-keyword">to</span> be forwarded <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span>
-             <span class="hljs-keyword">given</span> host <span class="hljs-keyword">and</span> port, <span class="hljs-keyword">or</span> Unix socket, <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> remote side.  This works <span class="hljs-keyword">by</span> allocating a socket <span class="hljs-keyword">to</span> listen <span class="hljs-keyword">to</span> either a TCP port
-             <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> side, optionally bound <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> specified bind_address, <span class="hljs-keyword">or</span> <span class="hljs-keyword">to</span> a Unix socket.  Whenever a connection <span class="hljs-keyword">is</span> made <span class="hljs-keyword">to</span>
-             <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> port <span class="hljs-keyword">or</span> socket, <span class="hljs-keyword">the</span> connection <span class="hljs-keyword">is</span> forwarded <span class="hljs-keyword">over</span> <span class="hljs-keyword">the</span> secure channel, <span class="hljs-keyword">and</span> a connection <span class="hljs-keyword">is</span> made <span class="hljs-keyword">to</span> either host
-             port hostport, <span class="hljs-keyword">or</span> <span class="hljs-keyword">the</span> Unix socket remote_socket, <span class="hljs-keyword">from</span> <span class="hljs-keyword">the</span> remote machine.
-
-             Port forwardings can also be specified <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> configuration <span class="hljs-type">file</span>.  Only <span class="hljs-keyword">the</span> superuser can forward privileged ports.  IPv6
-             addresses can be specified <span class="hljs-keyword">by</span> enclosing <span class="hljs-keyword">the</span> address <span class="hljs-keyword">in</span> square brackets.
-
-             By default, <span class="hljs-keyword">the</span> <span class="hljs-keyword">local</span> port <span class="hljs-keyword">is</span> bound <span class="hljs-keyword">in</span> accordance <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> GatewayPorts setting.  However, an explicit bind_address may be
-             used <span class="hljs-keyword">to</span> bind <span class="hljs-keyword">the</span> connection <span class="hljs-keyword">to</span> a specific address.  The bind_address <span class="hljs-keyword">of</span> ``localhost'' indicates <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> listening port be
-             bound <span class="hljs-keyword">for</span> <span class="hljs-keyword">local</span> use only, <span class="hljs-keyword">while</span> an empty address <span class="hljs-keyword">or</span> `*' indicates <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> port should be available <span class="hljs-keyword">from</span> all interfaces.
-</code></pre>
-<p>For <code>-N</code>:</p>
-<pre><code>     -N      <span class="hljs-operator"><span class="hljs-keyword">Do</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">execute</span> a remote command.  This <span class="hljs-keyword">is</span> useful <span class="hljs-keyword">for</span> just forwarding ports.
-</span></code></pre>
-<p>Here's what it looks like when I ran it locally:</p>
-<pre><code>&gt; ssh -NL <span class="hljs-number">5901</span>:localhost:<span class="hljs-number">5900</span> localhost
-The authenticity <span class="hljs-keyword">of</span> host 'localhost (::<span class="hljs-number">1</span>)' can't be established.
-ECDSA key fingerprint <span class="hljs-keyword">is</span> SHA256:ytfRv5WDPuTjGbBugJjmc8gOhsHga7ozGqNgjOXpdRM.
-Are you sure you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">continue</span> connecting (yes/no)? yes
-Warning: Permanently added 'localhost' (ECDSA) <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> <span class="hljs-type">list</span> <span class="hljs-keyword">of</span> known hosts.
-Password: &lt;I entered <span class="hljs-keyword">my</span> account/admin password&gt;
-</code></pre>
-<h2>Use Screen Sharing to login</h2>
-<p>Once that ssh command above is up and running, we're now ready to log into the other account using Screen Sharing.</p>
-<p>Open the <code>Screen Sharing</code> Mac app located in: <code>/System/Library/CoreServices/Screen Sharing.app</code>. You can also use <code>CMD+&lt;Space&gt;</code> (Spotlight) and type <code>Screen Sharing</code> to open the app.</p>
-<p>Then enter <code>localhost:5901</code> to start the process.</p>
-<p>It should look like this:</p>
-<p><img src="/images/posts/dual-login/screen-sharing-startup.png" alt="screen sharing app startup view"></p>
-<p>In the below screen entered the username/password that you want to login as. (Not the current account - the other one)</p>
-<p><img src="/images/posts/dual-login/screen-sharing-login.png" alt="screen sharing app login view"></p>
-<p>Now select that you want to login as &quot;yourself&quot; where &quot;yourself&quot; is really &quot;other account&quot;:</p>
-<p><img src="/images/posts/dual-login/screen-sharing-select-user.png" alt="screen sharing app access user strategy view"></p>
-<p>...and boom, you should now able to use two separate accounts on a single Mac session.</p>
-<p>Happy Spying (wink wink)!</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/#disqus_thread" data-disqus-identifier="/2017/10/how-to-access-two-mac-accounts-at-the-same-time/">(Comments)</a>
     </article>
@@ -418,70 +372,7 @@ Password: &lt;I entered <span class="hljs-keyword">my</span> account/admin passw
         <a href="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/#disqus_thread" data-disqus-identifier="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I sometimes write little web app utilities that are often statically hosted. But to use some of the new ES features means I need to drop in a build process that creates a bundle before the code gets checked in.</p>
-<p>There are two parts to this.</p>
-<ol>
-<li>The raw source code. The ES6+7+next and all the nifty new js features I want to leverage today.</li>
-<li>The bundled es5 output.</li>
-</ol>
-<p>In some of these projects it means I also check in the bundled code into git. A common use case is to be able to use github's pages feature to host this content (err bundled output) as well as the raw source.</p>
-<p>The problem we can run into is if you make a change to the source, commit and push - nothing happened... Because the bundled code didn't get re-bundled, the github hosted pages page doesn't pull the latest changes in.</p>
-<p>I'm a <a href="https://staxmanade.com/2014/03/rake-psake-grunt-gulp-jake-make-cake/">fan of using</a> git <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">pre-commit hooks</a> to catch you early in the development life cycle to on things like test errors (or in this case a bundle issues).</p>
-<p>So I came up with an example that allows me to make code changes and catch myself from committing when the raw source has changed, but the bundle did not reflect that.</p>
-<h1>So what is this thing?</h1>
-<p>The gist is it's a <code>.js</code> script that runs a set of actions and tests for the bundle.js currently vs what's about to be committed. Failing to commit if the current bundle doesn't match what the previous bundle is... Meaning, when we run our build (webpack in this case) if the bundle.js didn't change, we can commit.</p>
-<p>This ensures that whatever bundle.js is committed is tied to the code-change the original source. Avoiding &quot;fixing&quot; something in the source and it not actually getting deployed because the bundle is out of date.</p>
-<h1>First get a pre-commit tool</h1>
-<p>There are some good options in the npm/node world for pre-commit hooks. Check out <a href="https://github.com/typicode/husky">husky</a> or <a href="https://github.com/observing/pre-commit">pre-commit</a>. However you get your precommit hook setup - great...</p>
-<p>In my case I used <code>husky</code> and here are the relevant bits to my <code>package.json</code>.</p>
-<pre><code class="language-diff">{
-  ...
-
-  "devDependencies": {
-<span class="hljs-addition">+    "husky": "^0.13.4"</span>
-  }
-  "scripts": {
-<span class="hljs-addition">+    "precommit": "node ./pre-commit-build.js"</span>
-  }
-}
-</code></pre>
-<h1>The <code>pre-commit-build.js</code> script I used</h1>
-<p>The below is the short, but complete pre-commit script I use to enforce this workflow.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">var</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
-<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
-<span class="hljs-keyword">var</span> exec = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>).exec;
-
-<span class="hljs-keyword">var</span> bundleFileName = <span class="hljs-string">'./dist/bundle.js'</span>;
-
-<span class="hljs-keyword">var</span> getShaOfBundle = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> distFile = fs.readFileSync(bundleFileName);
-    <span class="hljs-keyword">var</span> sha = crypto.createHash(<span class="hljs-string">'sha1'</span>).update(distFile).digest(<span class="hljs-string">"hex"</span>);
-    <span class="hljs-keyword">return</span> sha;
-}
-
-<span class="hljs-comment">// make sure we only bundle/build what is staged to get a proper</span>
-<span class="hljs-comment">// view of what will be committed</span>
-exec(<span class="hljs-string">'git stash --keep-index'</span>);
-
-<span class="hljs-comment">// Get a snapshot of the original bundle</span>
-<span class="hljs-keyword">var</span> beforeSha = getShaOfBundle();
-
-<span class="hljs-comment">// run our build</span>
-exec(<span class="hljs-string">'./node_modules/.bin/webpack'</span>);
-
-<span class="hljs-comment">// snapshot the bundle after the build</span>
-<span class="hljs-keyword">var</span> afterSha = getShaOfBundle();
-
-<span class="hljs-comment">// reset anything that was stashed</span>
-exec(<span class="hljs-string">'git stash pop'</span>);
-
-<span class="hljs-keyword">if</span> (beforeSha !== afterSha) {
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Need to bundle before committing"</span>);
-}
-</code></pre>
-<p>Now whenever I make a change to the raw source code - this pre-commit script makes sure that the <code>dist/bundle.js</code> is correctly mapped to the raw source.</p>
-<p>Happy committing!</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/#disqus_thread" data-disqus-identifier="/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/">(Comments)</a>
     </article>
@@ -495,39 +386,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <a href="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/#disqus_thread" data-disqus-identifier="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>Today I was playing around with a side-oss-project and had the desire to take an image from the web and base64 data encode it. While I'm sure there is a ton written out there, I didn't immediately find the specific steps in a snippet of code. (Also, I can't say I looked very hard).</p>
-<p>So what does any programmer do when he's not satisfied with what he can't find? He writes his own. Now that I've put it together I'm just going to post this here so I can find it again down the road when I need to. :)</p>
-<p>Below is a utility function that I threw together that will take an <code>imageUrl</code> parameter and will return through a Promise a base64 encoded image data string. You can see from the example usage below that we're just setting an HTML image <code>.src</code> property to the result of this function and it should just work.</p>
-<blockquote>
-<p>NOTE: also if you look at the code that accomplish this below, it may look a bit like &quot;futuristic&quot; JavaScript right now. With all the <code>async/await</code>, <code>arrow functions</code>, <code>http fetch</code> and all, but the cool thing is you should be able to just copy/paste the below into a JSBin/Plnkr/Codepen without issue (in Chrome). No need for Babel/TypeScript/transpiler if you're just prototyping something (as I was). Don't rely on this to work in all browsers yet but I'm sure when I'll be googling myself for this snippet in the future, this should work in most browsers so I'll just leave this here for now.</p>
-</blockquote>
-<pre><code><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBase64ImageFromUrl</span>(<span class="hljs-params">imageUrl</span>) </span>{
-  <span class="hljs-keyword">var</span> res = <span class="hljs-keyword">await</span> fetch(imageUrl);
-  <span class="hljs-keyword">var</span> blob = <span class="hljs-keyword">await</span> res.blob();
-
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
-    <span class="hljs-keyword">var</span> reader  = <span class="hljs-keyword">new</span> FileReader();
-    reader.addEventListener(<span class="hljs-string">"load"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        resolve(reader.result);
-    }, <span class="hljs-literal">false</span>);
-
-    reader.onerror = () =&gt; {
-      <span class="hljs-keyword">return</span> reject(<span class="hljs-keyword">this</span>);
-    };
-    reader.readAsDataURL(blob);
-  })
-}
-</code></pre>
-<p>An example usage of the above:</p>
-<pre><code>getBase64ImageFromUrl('http://approvaltests.com/images/logo.png')
-    .then(<span class="hljs-literal">result</span> =&gt; testImage.src = <span class="hljs-literal">result</span>)
-    .catch(err =&gt; console.error(err));
-</code></pre>
-<p>As an alternative to base64 encoded <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">FileReader</a> approach above, you can also also use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">URL.createObjectURL</a> <code>return URL.createObjectURL(blob);</code></p>
-<p>There's of course a number of <a href="http://lmgtfy.com/?q=convert+image+to+base64+online+tool">online tools</a> that do this for you already.</p>
-<p>Hope this helps future me find the implementation a min or two faster some day.</p>
-<p>Happy Encoding!</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/#disqus_thread" data-disqus-identifier="/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/">(Comments)</a>
     </article>
@@ -541,127 +400,7 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <a href="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/#disqus_thread" data-disqus-identifier="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>I've been working on a project for over a year now that was originally written in ES6 with (some async/await ES7) using <a href="https://babeljs.io/">BabelJS</a> to transpile and really enjoying the experience of using the latest javascript.</p>
-<p>ES6/7 was great at the beginning, when I had 1, then 2... then 5 files. The project was small, I could pretty much load the entire application into my own head at once, reason, tweak, plow forward.</p>
-<p>It didn't take too long before the project grew beyond a single load into memory. Now I'm mentally paging out components from different files as I work on various sections of the application.</p>
-<p>Just like anything, once the project grew to this point, it became a little more difficult to maintain. Now, I consider myself a <a href="https://staxmanade.com/2015/08/habit-of-a-solid-developer-introduction/">fairly solid developer</a>, and that's likely how I made it this far without a compiler as my components were small, surface areas tight and the interactions between them were well managed. I also had a decent number of <a href="https://staxmanade.com/2015/03/in-app-unit-tests/">in-app unit and integration tests</a> because generally (but not always) I'm a <a href="https://staxmanade.com/2012/01/you-are-responsible-for-making-that/">test-first kind of guy</a>.</p>
-<p>However, that didn't stop me from breaking things, making mistakes or just out-right screwing up a javascript file here and there along the way.</p>
-<p>While working on this project, it always niggled me that the project would keep growing without the ability for the most basic of unit-tests to run (the compiler). Almost a year ago I even remember trying to use Typescript but using it with JSPM and without having VisualStudio Code all together, it just never came together (or I just didn't try hard enough).</p>
-<p>But this past week, I gave it another go, and while I'm not totally there (or where I'd like to end up), I'm quite happy with the results I've made so far and am impressed and quite happily working in a project that has completely been ported to Typescript from ES6/7 using BabelJS.</p>
-<h1>First some idea about the project.</h1>
-<p>Now, when it comes to large software projects, I'm pretty sure I shouldn't be calling this project a &quot;large&quot; as the subject of this post seems to label it... But for a system built only by me in some nights and weekends, it is the largest single app I've built alone, so that's where I'm defining &quot;Large&quot;.</p>
-<p>The project has just about a hundred javascript files/components/classes/modules and comes in just above <code>12,000</code> lines of code. That's not counting of course all the dependencies pulled in through JSPM (using both NPM and Github). In fact I really need to look at my dependencies and see where I can trim some fat, but that's not the subject of this post.</p>
-<h1>Porting from Babel to TypeScript</h1>
-<p>With some context about the project this is coming from out of the way, I thought it would be helpful to outline the steps (or stumbles) I took along the way to get my project up and running using TypeScript with JSPM.</p>
-<h1>Pre-migration steps</h1>
-<p>Below are steps I took to get this thing going. I doubt they're perfect or even apply to your or anyone elses projects, but here's hoping they're helpful</p>
-<ol>
-<li>In a fresh temp folder, I used the <code>jspm init</code> command to setup a fresh new project and selected the <code>Typescript</code> transpiler option.</li>
-</ol>
-<blockquote>
-<p>this allowed me to inspect what a &quot;fresh&quot; project from JSPM would look like with Typescript setup.</p>
-</blockquote>
-<ol start="2">
-<li>The next thing I did was review the angular getting started guide to see what Typescript specific configurations they used.</li>
-</ol>
-<blockquote>
-<p>Now, my project isn't Angular (it's actually React based), but I thought I could learn a little something along the way. I don't know if I actually gleaned anything while doing this (as I'm writing this post a ways after I actually did the work, but as an FYI, you might learn something reading it)</p>
-</blockquote>
-<h1>What steps did I take to port the project?</h1>
-<p>Looking back at the series of commits during my port, here's basically what I did. In some cases order doesn't matter below, but I left this list in the order of my projects git commit log.</p>
-<ol>
-<li>Renaming each file with the <code>.jsx</code> extension to <code>.tsx</code> (Typescript's variant of JSX) (note: not renaming anything but code I wrote - so don't touch anything in <code>jspm_packages</code> or <code>node_modules</code> folders etc.</li>
-<li><code>jspm install ts</code> &lt;-- installing the <a href="https://github.com/frankwallis/plugin-Typescript">Typescript jspm plugin</a></li>
-<li>Updated my <code>jspm.config.js</code> <code>transpiler</code> flag with the following:</li>
-</ol>
-<pre><code class="language-diff"><span class="hljs-deletion">-  transpiler: "plugin-babel",</span>
-<span class="hljs-addition">+  transpiler: "Typescript",</span>
-<span class="hljs-addition">+  TypescriptOptions: {</span>
-<span class="hljs-addition">+    "tsconfig": true // indicates that a tsconfig exists that should be used</span>
-<span class="hljs-addition">+  },</span>
-</code></pre>
-<p>Then I updated my <code>jspm.config.js</code>'s <code>app</code> section with the following.</p>
-<pre><code class="language-diff">   packages: {
-<span class="hljs-deletion">-    "app": {</span>
-<span class="hljs-deletion">-      "defaultExtension": false,</span>
-<span class="hljs-deletion">-      "main": "bootstrap.jsx",</span>
-<span class="hljs-deletion">-       "meta": {</span>
-<span class="hljs-deletion">-        "*": {</span>
-<span class="hljs-deletion">-          "babelOptions": {</span>
-<span class="hljs-deletion">-            "plugins": [</span>
-<span class="hljs-deletion">-              "babel-plugin-transform-react-jsx",</span>
-<span class="hljs-deletion">-              "babel-plugin-transform-decorators-legacy"</span>
-<span class="hljs-deletion">-            ]</span>
-<span class="hljs-deletion">-          }</span>
-<span class="hljs-deletion">-        }</span>
-<span class="hljs-deletion">-      }</span>
-<span class="hljs-deletion">-    },</span>
-<span class="hljs-addition">+    "app": { // all files within the app folder</span>
-<span class="hljs-addition">+      "main": "bootstrap.tsx", // main file of the package (will be important later)</span>
-<span class="hljs-addition">+      "format": "system", // module format</span>
-<span class="hljs-addition">+      "defaultExtension": "ts", // default extension of all files</span>
-<span class="hljs-addition">+      "meta": {</span>
-<span class="hljs-addition">+        "*.ts": { // all ts files will be loaded with the ts loader</span>
-<span class="hljs-addition">+          "loader": "ts"</span>
-<span class="hljs-addition">+        },</span>
-<span class="hljs-addition">+        "*.tsx": { // all ts files will be loaded with the ts loader</span>
-<span class="hljs-addition">+          "loader": "ts"</span>
-<span class="hljs-addition">+        },</span>
-<span class="hljs-addition">+      }</span>
-<span class="hljs-addition">+    },</span>
-</code></pre>
-<ol start="4">
-<li>Created a <code>tsconfig.json</code> file</li>
-</ol>
-<pre><code class="language-javascript">{
- <span class="hljs-string">"compilerOptions"</span>: {
-    <span class="hljs-string">"target"</span>: <span class="hljs-string">"es5"</span>,                <span class="hljs-comment">/* target of the compilation (es5) */</span>
-    <span class="hljs-string">"module"</span>: <span class="hljs-string">"system"</span>,             <span class="hljs-comment">/* System.register([dependencies], function) (in JS)*/</span>
-    <span class="hljs-string">"moduleResolution"</span>: <span class="hljs-string">"node"</span>,     <span class="hljs-comment">/* how module gets resolved (needed for Angular 2)*/</span>
-    <span class="hljs-string">"emitDecoratorMetadata"</span>: <span class="hljs-literal">true</span>,  <span class="hljs-comment">/* needed for decorators */</span>
-    <span class="hljs-string">"experimentalDecorators"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">/* needed for decorators (@Injectable) */</span>
-    <span class="hljs-string">"noImplicitAny"</span>: <span class="hljs-literal">false</span>,         <span class="hljs-comment">/* any has to be written explicitly*/</span>
-    <span class="hljs-string">"jsx"</span>: <span class="hljs-string">"react"</span>
-  },
-  <span class="hljs-string">"exclude"</span>: [   <span class="hljs-comment">/* since compiling these packages could take ages, we want to ignore them*/</span>
-    <span class="hljs-string">"jspm_packages"</span>,
-    <span class="hljs-string">"node_modules"</span>
-  ],
-  <span class="hljs-string">"compileOnSave"</span>: <span class="hljs-literal">false</span>        <span class="hljs-comment">/* on default the compiler will create js files */</span>
-</code></pre>
-<ol start="5">
-<li>Renamed <code>*.js</code> files to <code>*.ts</code>. (Similar to step 1 above with <code>jsx -&gt; tsx</code> but now just the plain JavaScript files)</li>
-<li>In all of my source code where I used to do this: <code>import foo from './foo.js'</code> I removed the <code>.js</code> extensions like <code>import foo from './foo'</code></li>
-<li>I did NOT remove the <code>.jsx</code> extension in my <code>import</code> statements - but renamed them to <code>tsx</code> so <code>import foo from './foo.jsx'</code> became <code>import foo from './foo.tjs'</code></li>
-<li>Next I added a file at the root of my client project called <code>globalTypes.d.ts</code>, this is where I could hack in some type definitions that I use globally in the project.</li>
-<li>Then I started adding my type definitions...</li>
-</ol>
-<p>I used the <a href="https://github.com/typings/typings">typings</a> tool to search for TypeScript type definitions. And if I found one, I would typically try to install them from <code>npm</code>.</p>
-<p>For example: searching for <code>react</code> like <code>typings search react</code> shows me that there is a DefinitelyTyped version of the type defs and <a href="https://blogs.msdn.microsoft.com/Typescript/2016/06/15/the-future-of-declaration-files/">I now know</a> that we can use NPM to install them by typing <code>npm install --save @types/react</code></p>
-<p>So I installed a ton of external library typings.</p>
-<ol start="11">
-<li>Next, started looking around my editor <a href="https://code.visualstudio.com/">VisualStudio Code</a> in hopes to see a bunch of typing errors reported, and was surprised to see very few. No, not because I'm so good at JavaScript that my TypeScript was perfect. Far from it... The problem I had was the <code>tsconfig.json</code> file was not at the root of my project (was at the root of my client site) - but it was nested several folders down from the root of my project. For some reason the editor wasn't picking it up until I opened the editor from the location the <code>tsconfig.json</code> file was rooted, things didn't work.</li>
-</ol>
-<blockquote>
-<p>Honestly, I don't know what the above was about - but was something I ran into. I can't say for certain if it is still an issue - I think I'm starting to see editor features load up regardless of what folder I open things - so your mileage may vary.</p>
-</blockquote>
-<ol start="12">
-<li>Once the TypeScript editor features started lighting up in VS Code, my next steps were start to take the TypeScript's feedback and implement either typing work-arounds or fixing actual bugs the compiler found.</li>
-</ol>
-<p>THE END - ish</p>
-<h1>Where am I now?</h1>
-<p>The above steps were really all I went through to port this project over to TypeScript and it was relatively seamless. That's not to say it was simple or easy, but definitely do-able, and worth it.</p>
-<p>It's been a few weeks since I ported the project to TypeScript and I'm really kicking myself for not doing it sooner.</p>
-<p>The editor assist with intellisense of function calls from internal and external modules and their usage/function signatures saves time researching external documentation.</p>
-<h1>Other observations since the move.</h1>
-<ol>
-<li>Builds seem to be a little faster with TypeScript than Babel. I can't say I can prove this. I didn't do any actual tests on this, but just a feeling I got after migration.</li>
-<li>Sourcemaps seem to actually work. Whenever I used BabelJS, debugging and stepping through async/await it just never seemed to line up right for me. This was likely user-error or in-proper configuration of babel on my part, so who knows... but having working source-maps is AMAZING, especially with the <code>async/await</code> feature.</li>
-<li>One area of concern that I haven't yet worked through. Is the JSPM typescript loading up in the browser - or running <code>jspm bundle app</code> at the command line doesn't report any typescript errors - or fail any builds. However, I'm glad it doesn't because something isn't quite rite with my configuration as every import of a <code>.tsx</code> file reports an error. So, for now I'm just relying on the red squigglies in my VS Code editor to help me catch typing errors.</li>
-</ol>
-<p>If you go for this port in your own project, I hope this was helpful, and that your port goes well.</p>
-<p>Happy TypeScripting!</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/#disqus_thread" data-disqus-identifier="/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/">(Comments)</a>
     </article>
@@ -675,485 +414,9 @@ exec(<span class="hljs-string">'git stash pop'</span>);
         <a href="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/#disqus_thread" data-disqus-identifier="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">(Comments)</a>
     </p>
 </header>
-<div class="entry-content"><p>So, Microsoft created what really turned out to be an amazing set of HTML/JS/CSS controls when they released the WinJS library. Not to go too much into the history, but honestly I hated it when I first had to use it. But, let me clarify. It wasn't until this last year when I learned that I didn't hate the WinJS controls by themselves, but I despised the way you declared their usage using the specialized <code>win-*</code> html attributes. It felt like a total hack to get an app up and running by littering semantic html with these attributes.</p>
-<p>Then along comes a little toy project they created called <a href="https://github.com/winjs/react-winjs">react-winjs</a> and all of a sudden the <code>WinJS</code> &quot;Components&quot; made total sense. When looking at them through the lense of WinJS through ReactJS components was the first time that I not only clicked with WinJS, but I actually fell in lov... (well I won't go that far), but was excited enough about them to pick them as the primary U.I. control suite while building out a little side-project.</p>
-<p>Fast forward a year of development, and Microsoft essentially <a href="https://github.com/winjs/winjs#status">bailed on WinJS</a> but at least they left it out in the open so I could hack on it and continue to depend on <a href="https://github.com/staxmanade/winjs-self-built">my own fork</a> for the time being.</p>
-<p>Then, they announce a <a href="https://github.com/Microsoft/TVHelpers/">NEW &amp; SHINY</a> library that can be used to help develop UWP and TV/Xbox One apps which is great. Except, WinJS doesn't work with this new library out-of-the-box, and since Microsoft isn't adding new features to WinJS, they likely never will build-in compatibility with the new &amp; shiny library.</p>
-<p>Guess that means we (I) have to figure it out on my own. And although I write this knowing that I'm probably the ONLY developer on the planet using this combination of libraries, I wanted to put out some of the hacks/code I've thrown together to get some WinJS controls to play nice with TVJS with regards to focus management.</p>
-<h2>What is focus management you say?</h2>
-<p>In the context of an Xbox app, the idea is to take your'e web-page-app and get rid of the ugly mouse-like-cursor you'd see if you didn't do this and replace it with a controller navigable approach - so up/down/left/right on the controller moves the visible &quot;focus&quot; around the application and the <code>A</code> button &quot;presses enter&quot; (or invokes) the control/button/etc.</p>
-<h1>What IS provided by TVJS</h1>
-<p>The TVJS library has a helper within it called <code>DirectionalNavigation</code> and is great in that it provides a focused and specific API to enable focus management while developing a Xbox App UWP Javascript (&amp; C#) apps.</p>
-<p>Just dropping the library in is enough to get much of the basics to work with most web apps.</p>
-<p>However, the conflict between this and WinJS comes into play because WinJS also tried to implement some of their own focus management and the mix of these two just doesn't quite cut it.</p>
-<h1>Get rid of mouse cursor</h1>
-<p>Well, this isn't really a hack:</p>
-<p>If you're looking at building a UWP JavaScript app for the Xbox, and tried to run your app on the Xbox (in dev mode), you may have noticed that your app behaves almost like it was just another web-page and doesn't default the cursor focus the way other xbox apps work. You're app just has a mouse-like cursor.</p>
-<p>The way to deal with this is just by accessing the browser's gamepad api. Now, the Microsoft TVJS TVHelpers DirectionalNavigation library automatically does this for you, but for a better experience if you don't want to wait for the browser to download this library, you can manually access the api to hide the mouse cursor by throwing this at the top of your start page EX: <code>index.html</code></p>
-<pre><code>    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
-        <span class="hljs-comment">// Hide the Xbox/Edge mouse cursor during load.</span>
-        <span class="hljs-keyword">try</span> {
-            navigator.getGamepads();
-        } <span class="hljs-keyword">catch</span>(err) {
-            <span class="hljs-built_in">console</span> &amp;&amp; <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error with navigator.getGamepads()'</span>, err);
-        }
-    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-</code></pre>
-<p>Just by calling <code>navigator.getGamepads()</code>, this tells the browser/hosted web app that you are going to take control of the app's focus management and to hide the mouse cursor.</p>
-<p>Once you've done this and your app loads up with the TVJS DirectionalNavigation library and in my case some WinJS controls, focus management mostly works (sort-of).</p>
-<h1>Completely Remove XYFocus built-in to WinJS:</h1>
-<p>This is about as ugly as they get...</p>
-<p>The below code is bascially looking for the XYFocus handlers that WinJS is trying add to the document and we wan to not allow it to get added.</p>
-<p>This XYFocus handler really creates havoc when we add the XYFocus handler from TVSJ DirectionalNavigation.</p>
-<pre><code>// HacktyHackHack
-// The goal of this is to remove XYFocus management from WinJS
-<span class="hljs-list">(<span class="hljs-keyword">function</span><span class="hljs-list">()</span> {
-  var totalRemovedHandlers = <span class="hljs-number">0</span><span class="hljs-comment">;</span>
-  var checkRemovedHandler = function<span class="hljs-list">()</span> {
-    totalRemovedHandlers++<span class="hljs-comment">;</span>
-    if <span class="hljs-list">(<span class="hljs-keyword">totalRemovedHandlers</span> &gt; <span class="hljs-number">2</span>)</span> {
-      console.error<span class="hljs-list">(<span class="hljs-string">"EEEK, removing more than 2 handlers... be sure to validate that we're removing the right ones..."</span>)</span><span class="hljs-comment">;</span>
-    }
-  }<span class="hljs-comment">;</span>
-  var realAddEventListener = document.addEventListener<span class="hljs-comment">;</span>
-  document.addEventListener = function<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span>{
-    if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
-      console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
-      checkRemovedHandler<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-      return<span class="hljs-comment">;</span>
-    }
-    if <span class="hljs-list">(<span class="hljs-keyword">handler</span>.toString<span class="hljs-list">()</span>.indexOf<span class="hljs-list">(<span class="hljs-quoted">'function</span> _handleCaptureKeyEvent<span class="hljs-list">(<span class="hljs-keyword">e</span>)</span>')</span> &gt;= <span class="hljs-number">0</span>)</span> {
-      console.warn<span class="hljs-list">(<span class="hljs-string">"Ignoring _handleCaptureKeyEvent..."</span>, eventName, handler, c)</span><span class="hljs-comment">;</span>
-      checkRemovedHandler<span class="hljs-list">()</span><span class="hljs-comment">;</span>
-      return<span class="hljs-comment">;</span>
-    }
-    return realAddEventListener<span class="hljs-list">(<span class="hljs-keyword">eventName</span>, handler, c)</span><span class="hljs-comment">;</span>
-  }<span class="hljs-comment">;</span>
-}<span class="hljs-list">()</span>)</span><span class="hljs-comment">;</span>
-</code></pre>
-<p>By not allowing WinJS to add it's XYFocus handlers, we can avoid many of the issues that I worked through below...</p>
-<h1>Dealing with a WinJS Pivot control</h1>
-<p>For my app, the first control I ran into trouble with was the WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn624879.aspx">Pivot</a> control. This control already does some focus management all by itself, and it's own management style contradicts the way the DirectionalNavigation helper works. So we basically have to detect focus on it, turn of TVJS focus management and handle it internally (until we leave focus of the Pivot).</p>
-<p>To work through that, I created the following helper function:</p>
-<pre><code class="language-javascript">
-WinJS.UI.Pivot.prototype._headersKeyDown = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.locked) {
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-keyword">if</span> (e.keyCode === Keys.leftArrow ||
-        e.keyCode === Keys.pageUp ||
-        e.keyCode === Keys.GamepadDPadLeft ||
-        e.keyCode === Keys.GamepadLeftThumbstickLeft) {
-        <span class="hljs-keyword">this</span>._rtl ? <span class="hljs-keyword">this</span>._goNext() : <span class="hljs-keyword">this</span>._goPrevious();
-        e.preventDefault();
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e.keyCode === Keys.rightArrow ||
-               e.keyCode === Keys.pageDown ||
-               e.keyCode === Keys.GamepadDPadRight ||
-               e.keyCode === Keys.GamepadLeftThumbstickRight) {
-        <span class="hljs-keyword">this</span>._rtl ? <span class="hljs-keyword">this</span>._goPrevious() : <span class="hljs-keyword">this</span>._goNext();
-        e.preventDefault();
-    }
-};
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handlePivotNavigation</span>(<span class="hljs-params">pivotElement</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"handlePivotNavigation"</span>, pivotElement);
-  <span class="hljs-keyword">if</span> (!pivotElement) {
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"handlePivotNavigation cannot use pivotElement as it wasn't passed in"</span>);
-  }
-
-  <span class="hljs-keyword">var</span> pivotHeader = pivotElement.querySelector(<span class="hljs-string">'.win-pivot-headers'</span>)
-
-  <span class="hljs-keyword">if</span> (!pivotHeader) {
-    <span class="hljs-keyword">let</span> msg = <span class="hljs-string">"handlePivotNavigation cannot find .win-pivot-headers in"</span>;
-    <span class="hljs-built_in">console</span>.error(msg, pivotElement);
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(msg);
-  }
-
-
-  pivotHeader.addEventListener(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"pivotHeader focus"</span>);
-    DirectionalNavigation.enabled = <span class="hljs-literal">false</span>;
-  });
-  pivotHeader.addEventListener(<span class="hljs-string">'keyup'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInfo</span>) </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'pivot keyup '</span>, eventInfo.keyCode, eventInfo.key);
-
-    <span class="hljs-keyword">switch</span>(eventInfo.keyCode) {
-      <span class="hljs-keyword">case</span> <span class="hljs-number">204</span>: <span class="hljs-comment">// gampead down</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-number">40</span>: <span class="hljs-comment">// keyboard down</span>
-        DirectionalNavigation.enabled = <span class="hljs-literal">true</span>;
-        <span class="hljs-keyword">var</span> target = DirectionalNavigation.findNextFocusElement(<span class="hljs-string">'down'</span>);
-        <span class="hljs-keyword">if</span> (target) {
-          target.focus();
-          eventInfo.preventDefault();
-        }
-        <span class="hljs-keyword">break</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-number">203</span>: <span class="hljs-comment">// gamepad up</span>
-        <span class="hljs-comment">// since the Pivot is at the top of the page - we won't release</span>
-        <span class="hljs-comment">// control, or try to navigate up??? (maybe consider flowing up from the bottom of the page?)</span>
-        <span class="hljs-keyword">break</span>;
-      <span class="hljs-comment">// case 205: // gamepad left arrow</span>
-      <span class="hljs-comment">// case 211: // gamepad 211 GamepadLeftThumbstickUp</span>
-      <span class="hljs-comment">// case 200: // gamepad left bumper</span>
-      <span class="hljs-comment">//   pivotElement.winControl._goPrevious();</span>
-      <span class="hljs-comment">//   eventInfo.preventDefault();</span>
-      <span class="hljs-comment">//   break;</span>
-      <span class="hljs-comment">// case 206: // gamepad right arrow</span>
-      <span class="hljs-comment">// case 213: // gamepad 213 GamepadLeftThumbstickRight</span>
-      <span class="hljs-comment">// case 199: // gamepad 199 GamepadRightShoulder</span>
-      <span class="hljs-comment">//   pivotElement.winControl._goNext();</span>
-      <span class="hljs-comment">//   eventInfo.preventDefault();</span>
-      <span class="hljs-comment">//   break;</span>
-    }
-  });
-}
-</code></pre>
-<p>And use it by doing the following in my React page:</p>
-<pre><code class="language-javascript">    componentDidMount() {
-        <span class="hljs-keyword">var</span> pivot = ReactDOM.findDOMNode(<span class="hljs-keyword">this</span>.refs.pivot);
-        handlePivotNavigation(pivot);
-    }
-</code></pre>
-<p>Or if you're not using React you can likely just go:</p>
-<pre><code class="language-javascript">    <span class="hljs-keyword">var</span> pivot = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-pivot-id'</span>);
-    handlePivotNavigation(pivot);
-</code></pre>
-<blockquote>
-<p>It's not pretty, but has been working for me so far.</p>
-</blockquote>
-<p>Now when I navigate around using an Xbox controller I can properly navigate around the WinJS Pivot.</p>
-<h1>Next up are <code>ItemContainer</code>s.</h1>
-<h3>UPDATE:</h3>
-<blockquote>
-<p>With the added (remove XYFocus above - I removed the below hack)</p>
-</blockquote>
-<p>This one is a total hack, and I look forward to a better solution, but for now it's been working.</p>
-<p>The issue I was seeing was with WinJS <a href="https://msdn.microsoft.com/en-us/library/windows/apps/dn255188.aspx">ItemContainers</a> and the TVJS library applying a separate forced &quot;click&quot; on the element when the control itself has already &quot;clicked/invoked&quot; the element.</p>
-<p>The real fix would likely to figure out how to get the ItemContainer to <code>event.preventDefault()</code> and/or <code>event.stopPropagation()</code> and avoid the bubbling up to the <code>document</code> <code>keyup</code> event handler that DirectionalNavigation has under it's control, but WinJS ItemControl management is just so complicated that this hack was easier to figure out at the time I threw it together.</p>
-<p>So what does this do?</p>
-<p>It's basically hijacking the DirectionalNavigation._handleKeyUpEvent function, and re-writing it with one that ignores the <code>keyup</code> event if the currently focused element is an ItemContainer.</p>
-<pre><code class="language-javascript"><span class="hljs-comment">// Hack to avoid Item containers getting double click</span>
-<span class="hljs-keyword">var</span> originalDNKeyUp = TVJS.DirectionalNavigation._handleKeyUpEvent
-TVJS.DirectionalNavigation._handleKeyUpEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Check for itemContaner"</span>, event.target.className)
-  <span class="hljs-keyword">if</span> (e.target.className.split(<span class="hljs-string">" "</span>).indexOf(<span class="hljs-string">"win-itemcontainer"</span>) &gt;= <span class="hljs-number">0</span>) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"MonkeyHack on DirectionalNavigation - SKIPPING CLICK"</span>);
-    <span class="hljs-keyword">return</span>;
-  }
-  <span class="hljs-keyword">return</span> originalDNKeyUp.apply(<span class="hljs-literal">null</span>, <span class="hljs-built_in">arguments</span>);
-}
-<span class="hljs-built_in">document</span>.removeEventListener(<span class="hljs-string">"keyup"</span>, originalDNKeyUp);
-<span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"keyup"</span>, TVJS.DirectionalNavigation._handleKeyUpEvent);
-</code></pre>
-<p>It's not pretty, but meh, is working so far.</p>
-<h1>ItemContainers within a ContentDialog</h1>
-<h3>UPDATE</h3>
-<blockquote>
-<p>I gave up on ContentDialog, and just started using <a href="https://github.com/reactjs/react-modal">react-modal</a></p>
-</blockquote>
-<p>That's just a big mess from what I could figure out. I was able to get it working by using the <code>ContentDialog</code> but manually creat my own buttons as the <code>ItemContainer</code> in combination with the dialog kept swallowing events that didn't allow focus navigation to be sucessful. The internals of what was holding me back didn't appear to be monkey-patch-able from what I could tell... ugh...</p>
-<h1>Next up is a <code>ListView</code> hack,</h1>
-<p>This one is a hack proposed by Todd over on the <a href="https://github.com/winjs/winjs/issues/1546">GitHub issues</a>.</p>
-<p>I've essentially taken the original implementation of WinJS.UI.ListView.prototype._onFocusIn, and if you look for the line starting with <code>/* JJ */</code> below you can see the change there.</p>
-<p>Don't know what this actually could mean from other scenarios, but for now it's allowing the ListView to focus properly on my initial xbox testing.</p>
-<pre><code><span class="hljs-keyword">var</span> _Constants = <span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>;
-<span class="hljs-keyword">var</span> _UI = <span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>;
-
-<span class="hljs-type">WinJS</span>.<span class="hljs-type">UI</span>.<span class="hljs-type">ListView</span>.prototype._onFocusIn = function <span class="hljs-type">ListView_onFocusIn</span>(event) {
-                    <span class="hljs-keyword">this</span>._hasKeyboardFocus = <span class="hljs-literal">true</span>;
-                    <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
-                    function moveFocusToItem(keyboardFocused) {
-                        that._changeFocus(that._selection._getFocused(), <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, keyboardFocused);
-                    }
-                    <span class="hljs-comment">// The keyboardEventsHelper object can get focus through three ways: We give it focus explicitly, in which case _shouldHaveFocus will be true,</span>
-                    <span class="hljs-comment">// or the item that should be focused isn't in the viewport, so keyboard focus could only go to our helper. The third way happens when</span>
-                    <span class="hljs-comment">// focus was already on the keyboard helper and someone alt tabbed away from and eventually back to the app. In the second case, we want to navigate</span>
-                    <span class="hljs-comment">// back to the focused item via changeFocus(). In the third case, we don't want to move focus to a real item. We differentiate between cases two and three</span>
-                    <span class="hljs-comment">// by checking if the flag _keyboardFocusInbound is true. It'll be set to true when the tab manager notifies us about the user pressing tab</span>
-                    <span class="hljs-comment">// to move focus into the listview.</span>
-                    <span class="hljs-keyword">if</span> (event.target === <span class="hljs-keyword">this</span>._keyboardEventsHelper) {
-                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._keyboardEventsHelper._shouldHaveFocus &amp;&amp; <span class="hljs-keyword">this</span>._keyboardFocusInbound) {
-                            moveFocusToItem(<span class="hljs-literal">true</span>);
-                        } <span class="hljs-keyword">else</span> {
-                            <span class="hljs-keyword">this</span>._keyboardEventsHelper._shouldHaveFocus = <span class="hljs-literal">false</span>;
-                        }
-                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.target === <span class="hljs-keyword">this</span>._element) {
-                        <span class="hljs-comment">// If someone explicitly calls .focus() on the listview element, we need to route focus to the item that should be focused</span>
-                        moveFocusToItem();
-                    } <span class="hljs-keyword">else</span> {
-                        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._mode.inboundFocusHandled) {
-                            <span class="hljs-keyword">this</span>._mode.inboundFocusHandled = <span class="hljs-literal">false</span>;
-                            <span class="hljs-keyword">return</span>;
-                        }
-
-                        <span class="hljs-comment">// In the event that .focus() is explicitly called on an element, we need to figure out what item got focus and set our state appropriately.</span>
-                        <span class="hljs-keyword">var</span> items = <span class="hljs-keyword">this</span>._view.items,
-                            entity = {},
-                            element = <span class="hljs-keyword">this</span>._getHeaderOrFooterFromElement(event.target),
-                            winItem = <span class="hljs-literal">null</span>;
-                        <span class="hljs-keyword">if</span> (element) {
-                            entity.index = <span class="hljs-number">0</span>;
-                            entity.<span class="hljs-keyword">type</span> = (element === <span class="hljs-keyword">this</span>._header ? _UI.<span class="hljs-type">ObjectType</span>.header : _UI.<span class="hljs-type">ObjectType</span>.footer);
-                            <span class="hljs-keyword">this</span>._lastFocusedElementInGroupTrack = entity;
-                        } <span class="hljs-keyword">else</span> {
-                            element = <span class="hljs-keyword">this</span>._groups.headerFrom(event.target);
-                            <span class="hljs-keyword">if</span> (element) {
-                                entity.<span class="hljs-keyword">type</span> = _UI.<span class="hljs-type">ObjectType</span>.groupHeader;
-                                entity.index = <span class="hljs-keyword">this</span>._groups.index(element);
-                                <span class="hljs-keyword">this</span>._lastFocusedElementInGroupTrack = entity;
-                            } <span class="hljs-keyword">else</span> {
-                                entity.index = items.index(event.target);
-                                entity.<span class="hljs-keyword">type</span> = _UI.<span class="hljs-type">ObjectType</span>.item;
-                                element = items.itemBoxAt(entity.index);
-                                winItem = items.itemAt(entity.index);
-                            }
-                        }
-
-                        <span class="hljs-comment">// In the old layouts, index will be -1 if a group header got focus</span>
-                        <span class="hljs-keyword">if</span> (entity.index !== _Constants._INVALID_INDEX) {
-<span class="hljs-comment">/* JJ */</span>                            <span class="hljs-comment">/*if (this._keyboardFocusInbound || this._selection._keyboardFocused())*/</span> {
-                                <span class="hljs-keyword">if</span> ((entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.groupHeader &amp;&amp; event.target === element) ||
-                                        (entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.item &amp;&amp; event.target.parentNode === element)) {
-                                    <span class="hljs-comment">// For items we check the parentNode because the srcElement is win-item and element is win-itembox,</span>
-                                    <span class="hljs-comment">// for header, they should both be the win-groupheader</span>
-                                    <span class="hljs-keyword">this</span>._drawFocusRectangle(element);
-                                }
-                            }
-                            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._tabManager.childFocus !== element &amp;&amp; <span class="hljs-keyword">this</span>._tabManager.childFocus !== winItem) {
-                                <span class="hljs-keyword">this</span>._selection._setFocused(entity, <span class="hljs-keyword">this</span>._keyboardFocusInbound || <span class="hljs-keyword">this</span>._selection._keyboardFocused());
-                                <span class="hljs-keyword">this</span>._keyboardFocusInbound = <span class="hljs-literal">false</span>;
-                                <span class="hljs-keyword">if</span> (entity.<span class="hljs-keyword">type</span> === _UI.<span class="hljs-type">ObjectType</span>.item) {
-                                    element = items.itemAt(entity.index);
-                                }
-                                <span class="hljs-keyword">this</span>._tabManager.childFocus = element;
-
-                                <span class="hljs-keyword">if</span> (that._updater) {
-                                    <span class="hljs-keyword">var</span> elementInfo = that._updater.elements[uniqueID(element)],
-                                        focusIndex = entity.index;
-                                    <span class="hljs-keyword">if</span> (elementInfo &amp;&amp; elementInfo.newIndex) {
-                                        focusIndex = elementInfo.newIndex;
-                                    }
-
-                                    <span class="hljs-comment">// Note to not set old and new focus to the same object</span>
-                                    that._updater.oldFocus = { <span class="hljs-class"><span class="hljs-keyword">type</span>:</span> entity.<span class="hljs-keyword">type</span>, index: focusIndex };
-                                    that._updater.newFocus = { <span class="hljs-class"><span class="hljs-keyword">type</span>:</span> entity.<span class="hljs-keyword">type</span>, index: focusIndex };
-                                }
-                            }
-                        }
-                    }
-                }
-</code></pre>
-<p>One big improvement could be to consider setting up a unit-test that could take the original &quot;string&quot; value of the entire function code, and comparing it to the current version of WinJS library you're using and fail if they're even one character different. This would allow you to detect if say a fix were applied, or you need to update our local hacked version with some remote changes... It's not pretty, but one way to avoid over-writing possible working WinJS code with our potentially not-so-future-proof hacked version.</p>
-<h1>Next one is the WinJS [ToggleSwitch].</h1>
-<p>This control just seemed to have all behavior wrong for me. So I hacked the keyDownHandler and simplified it's implementation which seems to have really made it more usable (for me).</p>
-<pre><code><span class="hljs-keyword">var</span> _ElementUtilities = WinJS.Utilities
-
-WinJS.UI.ToggleSwitch.prototype._keyDownHandler =  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ToggleSwitch_keyDown</span><span class="hljs-params">(e)</span> </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.disabled) {
-        <span class="hljs-keyword">return</span>;
-    }
-
-    <span class="hljs-comment">// Toggle checked on spacebar</span>
-    <span class="hljs-keyword">if</span> (e.keyCode === _ElementUtilities.Key.space ||
-        e.keyCode === _ElementUtilities.Key.GamepadA ||
-        e.keyCode === _ElementUtilities.Key.enter) {
-        e.preventDefault();
-        <span class="hljs-keyword">this</span>.checked = !<span class="hljs-keyword">this</span>.checked;
-    }
-
-}
-</code></pre>
-<p>The original had up/down/left/right configured to toggle the switch on/off which meant focus in/out was nearly impossible, it also only listened to <code>space</code> as a toggle option. So by removing the up/down/left/right we can navigate in/around the control and we wanted to listen to <code>space, GamepadA, and enter</code> to toggle the control on/off.</p>
-<h1>What else?</h1>
-<p>The WinJS control set is quite large, and I certainly haven't worked with each control in this manor, however, it's a step forward eh and if you managed to come across this random post on the interweb I hope it was useful?</p>
-</div>
+<div class="entry-content"></div>
 
       <a href="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/#disqus_thread" data-disqus-identifier="/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">Slightly modified “CD” Command for Powershell: Even better dot.dot.dot.dot...</a></h1>
-    <p class="meta">
-          <time datetime="2016-11-15T05:06:36.036Z" pubdate data-updated="true">Nov 14th 2016</time>
-
-
-        <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>There's this little &quot;CD&quot; utility that I iterate on every once in while but has become one of my favorite PowerShell tools on Windows.</p>
-<p>Not because it's really that great, but more because there are some navigation habits I acquire over on a Mac in a ZSH terminal that become challenging to not have on a Windows PowerShell terminal and each time I iterate on it, it synchronizes my workflows on both Mac and Windows environments.</p>
-<p>In my <a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">previous update</a> I added support for typing <code>cd ...N</code> where <code>cd ..</code> will go up 1 directory, so <code>cd ....</code> will go up 3 directories.</p>
-<p>Well today I found out that I can declare a function in powershell with a name <code>..</code> - WHO KNEW?</p>
-<p>For example if you pasted the following into your PowerShell terminal: <code>function ..() { echo &quot;HELLO&quot;; }; ..</code></p>
-<p>This would define the function <code>..</code> as well as run it and print out <code>HELLO</code>.</p>
-<p>This was a fantastic stumbling on my part because on my Mac I often go up 1-n directories by typing <code>..</code> at the terminal or <code>.....</code> &lt;-- however many I want to go up.</p>
-<p>So today I updated the <a href="https://github.com/staxmanade/DevMachineSetup/blob/master/GlobalScripts/Change-Directory.ps1">Change-Directory.ps1</a> with the following shortcuts:</p>
-<pre><code class="language-powershell"><span class="hljs-keyword">function</span> ..() { cd .. }
-<span class="hljs-keyword">function</span> ...() { cd ... }
-<span class="hljs-keyword">function</span> ....() { cd .... }
-<span class="hljs-keyword">function</span> .....() { cd ..... }
-<span class="hljs-keyword">function</span> ......() { cd ...... }
-<span class="hljs-keyword">function</span> .......() { cd ....... }
-<span class="hljs-keyword">function</span> ........() { cd ........ }
-</code></pre>
-<p>If you're interested in the evolution of this CD tool:</p>
-<ul>
-<li><a href="https://staxmanade.com/2011/07/slightly-modified-cd-command-for/">Slightly modified “CD” Command for Powershell</a></li>
-<li><a href="https://staxmanade.com/2012/11/more-than-slightly-modified-cd-command/">More than slightly modified “CD” command for PowerShell</a></li>
-<li><a href="https://staxmanade.com/2016/04/slightly-modified--cd--command-for-powershell--now-with-dot-dot-dot-dot---/">Slightly modified “CD” Command for Powershell: Now with dot.dot.dot.dot...</a></li>
-</ul>
-<p>SUPER SWEET!</p>
-<p>Happy CD'ing!</p>
-</div>
-
-      <a href="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/#disqus_thread" data-disqus-identifier="/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/">Better Compact JIRA Board U.I.</a></h1>
-    <p class="meta">
-          <time datetime="2016-09-30T17:07:25.328Z" pubdate data-updated="true">Sep 30th 2016</time>
-
-
-        <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p>We use JIRA's kanban board for daily workflow of tasks. I started having an issue with the default JIRA board layout where the cards do not show enough of a task's title, especially when you pseudo-group tickets by prefixing their title with some context.</p>
-<p>Given that, I decided to hack the CSS of JIRA's board to improve this. Take a look at an example before/after of the tweaks below, then I'll walk through how you can get it if you so desire.</p>
-<h1>Before</h1>
-<p><img src="/images/posts/JIRA-Card-BEFORE.png" alt="Jira card before css hack"></p>
-<h1>After CSS Hack</h1>
-<p><img src="/images/posts/JIRA-Card-AFTER.png" alt="Jira card before css hack"></p>
-<h1>How did you do that?</h1>
-<ol>
-<li>Install a CSS style plugin into your browser. This post all use <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">Stylebot</a> for the Chrome web browser.</li>
-</ol>
-<ul>
-<li>Just install the plugin from the Chrome store by <a href="https://chrome.google.com/webstore/detail/stylebot/oiaejidbmkiecgbjeifoejpgmdaleoha?hl=en">clicking this link</a> and selecting <code>[+ ADD TO CHROME]</code> button on the upper right of the page.</li>
-</ul>
-<ol start="2">
-<li>
-<p>Once the plugin is installed. Close all tabs and re-open a tab to the JIRA kanban board.</p>
-</li>
-<li>
-<p>Click the new Stylebot plugin <code>CSS</code> button and the <code>Open Stylebot...</code> option in your chrome browser toolbar which will open up a U.I. that allow you to mess around with the page's style.</p>
-</li>
-<li>
-<p>At the bottom of the Stylebot click <code>Edit CSS</code> which will give you a blank text box you can write custom CSS into.</p>
-</li>
-<li>
-<p>Paste in the following CSS and hit <code>Save</code></p>
-</li>
-</ol>
-<pre><code class="language-css">
-<span class="hljs-comment">/** Version 2.3
- ** Copyright Jason Jarrett
- **/</span>
-
-<span class="hljs-class">.ghx-avatar-img</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-band-1</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> auto</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> -<span class="hljs-number">3px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-band-3</span> <span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-avatar</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-extra-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-flags</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-highlighted-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span> <span class="hljs-class">.ghx-type</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-content</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-class">.ghx-key</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-avatar</span> <span class="hljs-class">.ghx-issue-fields</span>, <span class="hljs-class">.ghx-issue</span><span class="hljs-class">.ghx-has-corner</span> <span class="hljs-class">.ghx-issue-fields</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-
-<span class="hljs-comment">/* the below adjusts the backlog view */</span>
-
-<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> right</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> -<span class="hljs-number">15px</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">18px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-issue-content</span>, <span class="hljs-class">.ghx-backlog-column</span> <span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-comment">/* filters */</span>
-<span class="hljs-class">.js-quickfilter-button</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-<span class="hljs-class">.js-sprintfilter</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value"> nowrap</span></span>;
-}</span>
-<span class="hljs-class">.js-sprintfilter</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-<span class="hljs-tag">dl</span> <span class="hljs-tag">dt</span>, <span class="hljs-tag">dd</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">span</span><span class="hljs-class">.ghx-extra-field</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
-}</span>
-
-<span class="hljs-tag">span</span><span class="hljs-class">.ghx-end</span><span class="hljs-class">.ghx-extra-field-estimate</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">padding-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-    <span class="hljs-rule"><span class="hljs-attribute">padding-bottom</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-
-<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
-}</span>
-
-<span class="hljs-class">.ghx-issue-compact</span> <span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>;
-}</span>
-<span class="hljs-tag">div</span><span class="hljs-class">.ghx-plan-extra-fields</span><span class="hljs-class">.ghx-plan-extra-fields-1</span><span class="hljs-class">.ghx-row</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-}</span>
-</code></pre>
-<p>Now you should get a little bit more visible data on the page and be able to avoid hovering over titles to get enough context of the ticket to immediately know what it is.</p>
-<p>Happy (as best you can) JIRA'ing</p>
-</div>
-
-      <a href="/2016/09/better-compact-jira-board-u-i-/#disqus_thread" data-disqus-identifier="/2016/09/better-compact-jira-board-u-i-/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/2/">&larr; Older</a>

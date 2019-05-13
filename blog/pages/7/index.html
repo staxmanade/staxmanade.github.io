@@ -86,6 +86,99 @@
         <div class="blog-index">
     <article>
         <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/use-different-git-diff-tools-per-file-extension/">Use different Git Diff Tools Per File Extension</a></h1>
+    <p class="meta">
+          <time datetime="2014-12-29T16:12:11.868Z" pubdate data-updated="true">Dec 29th 2014</time>
+
+
+        <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>How to setup git to allow different merge/diff tools based on file extension.</p>
+<p>I'm going to put this here so I can find it later...</p>
+<h1>Create a merge-wrapper script</h1>
+<p>To allow us the flexibility we want to determine which diff tool should be used for different file extensions, we need to break out the logic in to an external script. Below I have 2 samples of a merge script. I started with the <code>.sh</code> file (bottom), but changed over to the <code>.js</code> version (above that) since it is easier for me to maintain.</p>
+<blockquote>
+<p>I haven't yet tried to run this on windows, but suspect we can wrap the <code>merge-wrapper.js</code> in a <code>.cmd</code> file calling it with Node.JS.</p>
+</blockquote>
+<h3>Customize the <code>merge-wrapper.js</code></h3>
+<ol>
+<li>
+<p>Extend with other diff tool support:</p>
+<p>If you want to extend the script to add support for your own diff tool, just create a new function that returns an object following the pattern of the existing <code>createP4MergeCommand</code> or <code>createOpenDiffCommand</code>.</p>
+</li>
+<li>
+<p>Modify which diff tool is used per extension:</p>
+<p>If you want to change which tool is used per file extensions you can modify the <code>diffLookup</code> hash to map various extensions to whatever tool you setup.</p>
+</li>
+<li>
+<p>Leave me a comment (either here - or in the gist) of what diff tool you added.</p>
+<p>I'd be happy to take contributions of other diff tools in this gist if you leave a comment with yours...</p>
+</li>
+</ol>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=merge-wrapper.js"></script></p>
+<p>Below was an attempt at using a bash script to manage what I do above, it'll work for some, but I didn't want to maintain this - prefer the JS version instead.</p>
+<p><script src="https://gist.github.com/69db226ae58bdce518cb.js?file=%3Ca%20href%3D%22http%3A%2F%2Fmerge-wrapper.sh%22%3Emerge-wrapper.sh%3C%2Fa%3E"></script></p>
+<h1>Setup <code>~/.gitconfig</code></h1>
+<p>Now that we've created our merge wrapper script we need to tell git how to use it.</p>
+<p>Say we placed our merge script in the following directory: <code>$HOME/dotfiles/tools/merge-wrapper.js</code>. You can add the below to your <code>~/.gitconfig</code> file and when you use <code>git difftool</code> our new merge-wrapper will be used to pick diff tools based on file extension.</p>
+<pre><code>[merge]
+	tool = merge_wrapper
+[mergetool <span class="hljs-string">"merge_wrapper"</span>]
+	cmd = <span class="hljs-variable">$HOME</span>/dotfiles/tools/merge-wrapper.js \<span class="hljs-string">"<span class="hljs-variable">$BASE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$LOCAL</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$REMOTE</span>\"</span> \<span class="hljs-string">"<span class="hljs-variable">$MERGED</span>\"</span>
+</code></pre>
+</div>
+
+      <a href="/2014/12/use-different-git-diff-tools-per-file-extension/#disqus_thread" data-disqus-identifier="/2014/12/use-different-git-diff-tools-per-file-extension/">(Comments)</a>
+    </article>
+    <article>
+        <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/introducing-skypeit---command-line-skype-phone-calls/">Introducing SkypeIt - Command Line Skype Phone Calls</a></h1>
+    <p class="meta">
+          <time datetime="2014-12-24T22:22:17.461Z" pubdate data-updated="true">Dec 24th 2014</time>
+
+
+        <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a></h1>
+<p>In short <code>npm install -g skypeit</code> and enjoy quickly jumping on conference calls.</p>
+<h2>What is it?</h2>
+<p>A simple little command line utility that can be used to efficiently jump on a conference call and automatically dials the extension or conference ID.</p>
+<h1>What pain does this solve?</h1>
+<p>I've recently been working on a number of projects where often times more than twice a day I have to jump on a conference bridge.</p>
+<p>This typically involves:</p>
+<ol>
+<li>Opening the Outlook appointment</li>
+<li>Copying just the conference phone number (without extension)</li>
+<li>Pasting it in Skype to dial</li>
+<li>While Skype is dialing, I go back to Outlook and copy the extension/conference id.</li>
+<li>Pasting in Skype's number pad area</li>
+<li>Type or use the mouse to press the final <code>#</code> key.</li>
+</ol>
+<h1>How does <a href="https://github.com/staxmanade/skypeit">SkypeIt</a> improve this?</h1>
+<p><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> takes the 6 steps and cuts them in half or more.</p>
+<ol>
+<li>Open the Outlook appointment</li>
+<li>Copy the conference phone number &amp; extension (if there is one) in one shot.</li>
+<li>At the (already open command line - because we developers usually have a command line open) paste in <code>skypeit &quot;&lt;paste here&gt;&quot; &lt;press enter&gt;</code></li>
+</ol>
+<p>The problem this solves may seem like a first world problem, but a big annoyance factor when running through the original steps to get on a conference call is, people who setup these meetings, rarely include the final <code>#</code> sign needed at the end of a conference ID/extension #. So when I paste the extension into Skype, I still have to manually get the <code>#</code> in there.</p>
+<h1><a href="https://github.com/staxmanade/skypeit">SkypeIt</a> even better with teams!</h1>
+<p>If you <a href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">work remotely as I do</a>, then you're probably communicating through things like HipChat, Skype, Slack, AOL (I-kid, I-kid), etc. Instead of I.M.ing your team to remind them to jump on a call where they would have to repeat the long steps above, you can just paste the <code>skypeIt ###-###-### ######</code> command necessary to immediately jump on a call. This serves to remind them a call is coming up or already started and saves time from having to find the number/extension as they can copy/paste it directly at the command line.</p>
+<p>Or even better, if you're on a Mac and using ZSH at the command line, SkypeIt has tab completion support and a YAML config strategy, so you can easily configure a project with your standard phone numbers (say daily standup conference number) and check in a <code>.skypeitrc</code> file to the project. When you're in the context of the project you can just type <code>skypeit stand&lt;tab&gt;</code> and jump on your daily standup conference call.</p>
+<blockquote>
+<p>Does anyone who works remotely actually stand-up on a daily standup call? hmmm...</p>
+</blockquote>
+<h1>Still early...</h1>
+<p>SkypeIt was written to solve a personal pain-point and is not yet a complete solution for all conference call situations. If you'd like to see your scenario supported, head on over to the <a href="https://github.com/staxmanade/skypeit/issues">SkypeIt Issues</a> on GitHub and drop me a line.</p>
+<p>I'm not currently using a windows machine - but with the windows protocol activation capabilities, we can probably easily add support for windows to <a href="https://github.com/staxmanade/skypeit">SkypeIt</a>.</p>
+</div>
+
+      <a href="/2014/12/introducing-skypeit---command-line-skype-phone-calls/#disqus_thread" data-disqus-identifier="/2014/12/introducing-skypeit---command-line-skype-phone-calls/">(Comments)</a>
+    </article>
+    <article>
+        <header>
     <h1 class="entry-title"><a href="https://staxmanade.com/2014/12/thoughts-on-working-remotely-from-home/">Thoughts on Working Remotely from Home</a></h1>
     <p class="meta">
           <time datetime="2014-12-14T00:45:43.863Z" pubdate data-updated="true">Dec 13th 2014</time>
@@ -560,193 +653,6 @@ I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-l
 </div>
 
       <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">Migrating from BlogSpot to Octopress - Part 6 - 301 Redirect Old Posts to New Location</a></h1>
-    <p class="meta">
-          <time datetime="2014-04-17T03:20:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
-
-
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>
-<div class="seriesNote">
-    <p>This article is <strong>Part 6</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Fix Links</a>
-        </li>
-        <li>
-            Part 6 - (current) - 301 Redirect Old Posts to New Location
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>So far we have mostly delt with getting the old blog content into our new Octopress blog. In this post I'll talk about how I setup automatic redirection from the old blog to the new blog.</p>
-<blockquote>
-<p>Sorry, this post gets a little long, mostly because there is lots evolved, and I took some time to explain it along the way.</p>
-</blockquote>
-<p>So, I'm not an SEO expert or even novice, and I hope the steps I took below actually gave me my end goal. I <em>think</em> they did, but let's not get ahead of ourselves. If you have any feedback, please drop me a line in the comments or in a <a href="https://github.com/staxmanade/staxmanade.github.io/issues">github issue for this blog</a>.</p>
-<h3>Reasons for redirection:</h3>
-<ul>
-<li>I'd like people to arrive at my new site even if they followed a link to the old BlogSpot location and get all the benefits of the new site (new theme, broken links fixed, etc)</li>
-<li>The whole reason <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction">I did this</a> was to 'migrate' not, start fresh.</li>
-</ul>
-<p>I probably won't ever <code>delete</code> my <code>staxmanade.blogspot.com</code> blog due to outside blogs, articles and sites that have linked to posts I've made in the past, but at least they will end up at my new blog.</p>
-<h3>Goals for the redirection.</h3>
-<ul>
-<li>
-<p>Users who click on a link to the old blog should redirect successfully to the new site.</p>
-</li>
-<li>
-<p>I would love it if Google and other search engines could follow a <a href="http://en.wikipedia.org/wiki/HTTP_301">301 Moved Permanently</a> redirection with the hopes that my old blog's search rankings would carry over to my new blog.</p>
-<blockquote>
-<p>DISCLAIMER: Given the steps in the post, I'm not 100% confident that this goal was accomplished, but I think it may have worked (maybe, possibly, ???)</p>
-</blockquote>
-</li>
-</ul>
-<p>Now, while I'm not 100% confident my search rankings carried over, I'm fairly confident that Google found out about my new blog because after just 2 days of the below steps being implemented, Google had already indexed the new site.</p>
-<h1>What's involved for redirection?</h1>
-<ol>
-<li>Tell BlogSpot to redirect each post at <code>staxmanade.blogspot.com</code> to the new location.</li>
-<li>Handle that redirection on the Octopress side.</li>
-</ol>
-<p>There are a number of posts out there that describe how to accomplish this with WordPress or other blogs that can host a dynamic server side component. However with Octopress or other statically generated sites we don't have as easy a time. I belive this has more to do with the lack of programmability on the BlogSpot side (or my lack of knowledge of how far you can go with it on their side) than the static-ness of our Octopress blog.</p>
-<h3>Let's get into why this wasn't as straight forward.</h3>
-<p>If you look at how to redirect from a <a href="http://www.shoutmeloud.com/how-to-migrate-from-blogspot-to-wordpress-with-301-permanent-redirection-without-loosing-traffic.html">BlogSpot blog to say WordPress</a> you'll see that they are basically passing the FULL original url EX:<code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html</code> to a server-side component, where it can dynamically translate that into the correct 301 redirect response needed for each page.</p>
-<p>The problem we have is the <a href="https://support.google.com/blogger/answer/42095?hl=en">BlogSpot template tags</a> are limited. They don't provide a <em>relative blog url</em> parameter which would have made it easy. Instead they provide only the full URL <code>&lt;$BlogItemURL$&gt;</code> which we can't use on our static site.</p>
-<p>The direction I took was to use the <code>&lt;$BlogItemNumber$&gt;</code> which is like a really long <code>id</code> value, leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">Jekyll alias generator</a> and end up doing two redirects.</p>
-<ol>
-<li>from <code>staxmanade.blogspot.com/SomeBlogUrl</code> -&gt; <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code></li>
-<li>then from <code>staxmanade.github.io/blog/&lt;$BlogItemNumber$&gt;</code> -&gt; <code>staxmanade.github.io/blog/finalBlogUrl</code></li>
-</ol>
-<p>On the Octopress side we are going to leverage the <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> plugin. Once that's installed, we need to update all of our blog posts to add in the 'alias' that will point to th e<code>/blog/{really_long_id}. My scripting hammer is</code>PowerShell<code>*(sorry if you're reading this on a mac - hey, maybe [Pash](https://github.com/Pash-Project/Pash) can help you if you're not on Windows)* and I wrote the below script to help in the task. Even if you don't know</code>PowerShell`, take a moment to read the comments in the code to get an idea of what it is doing.</p>
-<p><script src="https://gist.github.com/10562366.js?file=InsertBloggerAliasIntoJekyllPost.ps1"></script></p>
-<p>In summary, the above code is:</p>
-<ol>
-<li>Parsing the blogger xml</li>
-<li>Extracting the post url (slug) and BlogSpot blog <code>id</code></li>
-<li>Matching each post with a post in our Octopress <code>_posts</code> <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content">that we recently exported</a></li>
-<li>And injecting an <code>alias: /blog/{id}</code> into the header <code>YAML</code></li>
-</ol>
-<p>Look in your blogger xml for a sample ID, it looks like</p>
-<pre><code>&lt;id&gt;tag:blogger.com,1999:blog-4726251688144615011.post-7515836382847059837&lt;/id&gt;
-</code></pre>
-<p>What we care about is the <code>BigNumber</code> after the &quot;...post-<BigNumber>&quot;. This is the <code>id</code> used in the above script to generate our new <code>/blog/&lt;BitNumber&gt;</code> <a href="https://github.com/tsmango/jekyll_alias_generator">alias</a> url.</p>
-<p>If you completed the above and run <code>rake generate</code> and <code>rake preview</code>, test out that your redirections are correct.</p>
-<p>After I completed this and on my blog, <a href="https://staxmanade.com/blog/7515836382847059837">staxmanade.com/blog/7515836382847059837</a> should redirect me to an actual post.</p>
-<p>Once you're happy with your Octopress's blogger redirections, <strong>SHIP IT</strong>. Publish them to your blog and test them out on gihub <code>rake gen_deploy</code>.</p>
-<p>Now that we have our static site redirecting the special <code>/blog/{id}</code> url's, we can go back to BlogSpot and update our template to redirect to our static site.</p>
-<p>I used the below template (note search/replace your domain etc) before dropping this into your site.</p>
-<h1>Update Blogger template to redirect.</h1>
-<ol>
-<li>Go back to your BlogSpot admin page and select the <code>Template</code> tab.</li>
-<li>On the lower right you may have to select (forgetting the exact text - but something like) <code>Revert to classic template</code></li>
-<li>Modify the below template for your own site.</li>
-</ol>
-<p><script src="https://gist.github.com/10562366.js?file=BloggerRedirect.html"></script></p>
-<p>This will change all pages/posts on your old BlogSpot site (even your home page). You can now go test it out - see that it hopefully transitions you from your blogger site -&gt; to the new static redirect - and then to your final post location. It happens so fast I sometimes don't see the middle/transition page.</p>
-<blockquote>
-<p>Note: I had to run through this a few times before I got it right so be careful doing this (especially if you have a popular blog as it may interrupt users at the current time). I'm not that cool, so my blog could handle some downtime :P</p>
-</blockquote>
-</div>
-
-      <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">(Comments)</a>
-    </article>
-    <article>
-        <header>
-    <h1 class="entry-title"><a href="https://staxmanade.com/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">Migrating from BlogSpot to Octopress - Part 5 - Fix Links</a></h1>
-    <p class="meta">
-          <time datetime="2014-04-17T03:19:53.000Z" pubdate data-updated="true">Apr 16th 2014</time>
-
-
-        <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
-    </p>
-</header>
-<div class="entry-content"><p><img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"> <span class="warning-highlight">
-I've <a href="https://staxmanade.com/2015/01/custom-static-blog-generator---no-longer-using-octopress/">migrated away from Octopress</a> and this site is now built using <a href="https://togglejs.github.io">ToggleJS</a> with a custom <a href="http://gulpjs.com">GulpJS</a> file.
-</span> <img class="emoji" title="warning" alt="warning" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></p>
-<p>
-<div class="seriesNote">
-    <p>This article is <strong>Part 5</strong> of <strong>9</strong> in a series about <strong>Migrating from BlogSpot to Octopress</strong>.</p>
-    <ul>
-        <li>
-            Part 1 - <a href="/2014/04/migrating-blogspot-to-octopress-part-1-introduction/">Introduction</a>
-        </li>
-        <li>
-            Part 2 - <a href="/2014/04/migrating-blogspot-to-octopress-part-2-setup-octopress/">Setup Octopress</a>
-        </li>
-        <li>
-            Part 3 - <a href="/2014/04/migrating-blogspot-to-octopress-part-3-export-blogspot-content/">Export BlogSpot Content</a>
-        </li>
-        <li>
-            Part 4 - <a href="/2014/04/migrating-blogspot-to-octopress-part-4-import-content-into-ctopress/">Import Content into Octopress</a>
-        </li>
-        <li>
-            Part 5 - (current) - Fix Links
-        </li>
-        <li>
-            Part 6 - <a href="/2014/04/migrating-blogspot-to-octopress-part-6-301-redirect-old-posts-to-new-location/">301 Redirect Old Posts to New Location</a>
-        </li>
-        <li>
-            Part 7 - <a href="/2014/04/migrating-blogspot-to-octopress-part-7-setup-a-custom-domain/">Setup a Custom Domain</a>
-        </li>
-        <li>
-            Part 8 - <a href="/2014/04/migrating-blogspot-to-octopress-part-8-redirect-atomrss-in-feedburner/">Redirect Atom/RSS in FeedBurner</a>
-        </li>
-        <li>
-            Part 9 - <a href="/2014/04/migrating-blogspot-to-octopress-part-9-whats-left/">What's left?</a>
-        </li>
-    </ul>
-</div></p>
-<p>Once you've ported your content into Octopress there were several steps I used to fixup links. The two types of links I cared about at this stage were:</p>
-<ol>
-<li>Cross-Post links (where I referenced one of my other posts)</li>
-<li>Broken links.</li>
-</ol>
-<h2>Cross post links</h2>
-<p>I used a text editor and some command line magic to search for <code>http://staxmanade.blogspot.com/</code> and replace it with <code>/blog/</code> so that my cross-referencing posts could link to a relative version of the blog instead of the full blogspot domain.</p>
-<p>Depending on how you configure your <a href="http://jekyllrb.com/docs/permalinks/">permalinks</a> you may need to do some more link manipulation. I had to search <code>.html</code> at the end of my cross-referencign posts and be sure to delete it since my old reference would look like</p>
-<pre><code>http://staxmanade.blogspot.com/2013/12/format-your-net-exceptions-to-see.html
-</code></pre>
-<p>but now should link to</p>
-<pre><code>/blog/2013/12/format-your-net-exceptions-to-see
-</code></pre>
-<p>If you're on Windows and not interested in figuring out a <code>PowerShell</code> or other command to quickly search and replace, a friend of mine <a href="http://programmerpayback.com/about/">Tim Greenfield</a> has a great utility GUI tool for easy <a href="https://seeker.codeplex.com">search and replace</a>.</p>
-<p>I don't recall exactly what I did, I think I either used <code>sed</code> or a python command on my Mac for the initial search/replace. I'll let you figure out the rest of how to get that task done.</p>
-<h2>Fix broken links</h2>
-<p>Once you're done fixing up cross-post links, we want to make sure we didn't mess anything up, and while we're at it, fix any old or out-dated links.</p>
-<p>One great feature of <a href="http://octopress.org">Octopress</a> is that we can run the site locally and use a spider tool to search for broken links.  Run <code>rake generate</code> and <code>rake preview</code> locally to browse your site.</p>
-<p>I used the <a href="http://peacockmedia.co.uk/integrity/">Integrity link checker</a> on my Mac to search the <code>http://localhost:4000</code> site locally. There are lots of these tools out there, so feel free to use what you feel happy with.</p>
-<p>This was a great exercise. Not only debugging any <em>oopsies</em> from the above cross-post fixup step, but allowed me to find any external links to blogs/images/etc that were out of date. I wasn't able to fix up all of my external links, but that's the way of the web unfortunately. I haven't done it yet, but have consider going back and linking the out-dated links to a version out on the <a href="http://web.archive.org/">Way Back Machine</a>.</p>
-</div>
-
-      <a href="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/#disqus_thread" data-disqus-identifier="/2014/04/migrating-blogspot-to-octopress-part-5-fix-links/">(Comments)</a>
     </article>
   <div class="pagination">
       <a class="prev" href="/blog/pages/8/">&larr; Older</a>
