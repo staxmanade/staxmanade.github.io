@@ -1,19 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
   <url>
-    <loc>https://staxmanade.com/2012/02/nuget-project-uncovered_18/</loc>
+    <loc>https://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2018/08/how-to-json.stringify-and-order-dictionary-result/</loc>
+    <loc>https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/</loc>
+    <loc>https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/</loc>
+    <loc>https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
@@ -417,7 +437,7 @@
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2012/02/nuget-project-uncovered-naturalspec/</loc>
+    <loc>https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
@@ -437,7 +457,7 @@
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/</loc>
+    <loc>https://staxmanade.com/2012/02/nuget-project-uncovered_18/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
@@ -781,43 +801,11 @@
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2016/06/one-programmers-letter-to-his-wife/</loc>
+    <loc>https://staxmanade.com/blog/archives</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/2016/07/easily-simulate-slow-async-calls-using-javascript-async-await/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2016/09/how-to-update-a-single-running-docker-compose-container/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2016/09/better-compact-jira-board-u-i-/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2016/11/slightly-modified-cd-command-for-powershell-even-better-dot-dot-dot/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2016/12/tvjs-tvhelpers-directionalnavigation-and-adapting-hacking-some-winjs-focus-management/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2017/02/porting-a-large-jspm-babeljs-project-to-typescript/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2017/02/how-to-download-and-convert-an-image-to-base64-data-url/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/index.html</loc>
+    <loc>https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
@@ -825,15 +813,23 @@
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/robots.txt</loc>
+    <loc>https://staxmanade.com/2018/08/how-to-json.stringify-and-order-dictionary-result/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2018/03/should-i-use-javascript-single-or-double-quotes/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2017/10/how-to-access-two-mac-accounts-at-the-same-time/</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/2017/06/how-to-block-git-commit-if-webpack-bundle-has-changed/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
     <loc>https://staxmanade.com/2019/05/javascript---refactoring-too-many-function-params/</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
-    <loc>https://staxmanade.com/2019/05/spend-the-effort-to-make-your-tests-better-documentation/</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
@@ -849,15 +845,19 @@
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
-    <loc>https://staxmanade.com/blog/archives</loc>
-    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
-  </url>
-  <url>
     <loc>https://staxmanade.com/blog/categories</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
     <loc>https://staxmanade.com/boxen-search</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/index.html</loc>
+    <lastmod>2019-05-12T17:54:12.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://staxmanade.com/robots.txt</loc>
     <lastmod>2019-05-12T17:54:12.628Z</lastmod>
   </url>
   <url>
