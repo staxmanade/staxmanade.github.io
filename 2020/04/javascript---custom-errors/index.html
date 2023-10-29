@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>JavaScript - Custom Errors - Developing on Staxmanade</title>
+  <meta name="author" content="Jason Jarrett">
+
+
+   <meta name="description" content="Ok, lets dive a little into [JavaScript Errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error).">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="canonical" href="https://staxmanade.com/2020/04/javascript---custom-errors/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="alternate" title="Developing on Staxmanade" type="application/atom+xml">
+    <script src="/js/modernizr-2.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./js/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-6814534742514314",
+          enable_page_level_ads: true
+     });
+</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V1NWNYBG3E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-V1NWNYBG3E');
+  </script>
+
+
+
+</head>
+
+<body  class=" ">
+<header role="banner"><hgroup>
+  <h1><a href="/">Developing on Staxmanade</a></h1>
+
+   <a class="subscribe-button" href="/subscribe">Subscribe</a>
+</hgroup>
+
+</header>
+<nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/DevelopingOnStaxmande" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+<div>
+  <form action="//www.google.com" id="cse-search-box">
+    <div>
+      <input type="hidden" name="cx" value="partner-pub-6814534742514314:2581894146" />
+      <input type="hidden" name="ie" value="UTF-8" />
+      <input type="text" name="q" size="25" />
+      <input type="submit" name="sa" value="Search" />
+    </div>
+  </form>
+
+  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=en"></script>
+</div>
+</nav>
+<div id="main">
+    <div role="advertisement"><div align="center">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- staxmanade.com 1 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6814534742514314"
+        data-ad-slot="3273224940"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+</div>
+    <div id="content">
+
+        <div>
+            <article class="hentry" role="article">
+                  <header>
+    <h1 class="entry-title"><a href="https://staxmanade.com/2020/04/javascript---custom-errors/">JavaScript - Custom Errors</a></h1>
+    <p class="meta">
+          <time datetime="2020-04-18T22:51:28.873Z" pubdate data-updated="true">Apr 18th 2020</time>
+
+
+        <a href="/2020/04/javascript---custom-errors/#disqus_thread" data-disqus-identifier="/2020/04/javascript---custom-errors/">(Comments)</a>
+    </p>
+</header>
+<div class="entry-content"><p>Ok, lets dive a little into <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">JavaScript Errors</a>.</p>
+<p>A coworker and I were trying to figure out how to create or update our current custom <code>Error</code> that we use wrap other errors.</p>
+<h1>Why would you want a custom <code>Error</code>?</h1>
+<p>I work on an internal team that responsible for producing a JavaScript library that our front end developers consume. As such, one of the ways we can best communicate issues to our fellow developers is through errors raised by the library.</p>
+<p>If you haven't run into it, a JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a> object is a bit fiddly. Depending on what browser or device you're looking at the base Error metadata can vary. We can pretty much guarantee the <code>message</code> property exists on an <code>Error</code> and that's about it. Some come with a <code>stack</code> some come with a <code>lineNumber</code> some with <code>line</code> some with... come on browsers WTF.</p>
+<p>Now I'm not here to solve the inconsistencies of the browser, unfortunately the metadata like stack trace or the line number an error was thrown is a bit out of what we can even touch in user land within the browser.</p>
+<p>Regardless of the browser issue, what about our applications? There's almost always some extra context within our application (in our case the library we build) where appending a little extra metadata could really help out the front end developers. For example, what if we have an internal http error? Just throwing a <code>JSON.parse</code> error message isn't very helpful. What if we thew an error that included the <code>url</code> that was loaded? Or what if we need to include some extra error information that our custom back-end service could be passing along...</p>
+<p>Given this, we want to present the best (or as best we can) error to our users.</p>
+<p>We came up with two different approaches.</p>
+<blockquote>
+<p>Sadly there are some tradeoffs with each approach so I'll present these two options and given your needs, you can pick your poison.</p>
+</blockquote>
+<h3>Options</h3>
+<ol>
+<li>
+<p>Inheriting (or extending) from <code>Error</code> and adding in the extra metadata.</p>
+<p><code>class MyError extends Error {...}</code></p>
+</li>
+<li>
+<p>Not inheriting - just a plain object that holds whatever information you'd like.</p>
+<p><code>class MyError {...}</code></p>
+</li>
+</ol>
+<p>Below is a little table we came up with the various comparisons:</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">(Extends Error)</th>
+<th style="text-align:center">(Custom Object)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Has a <code>stack</code> property</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>Has a <code>name</code> property</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅ (because we put it there)</td>
+</tr>
+<tr>
+<td>Has a <code>message</code> property</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>Can view other properties in console</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>Can read the stack trace in the console</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">😬ish</td>
+</tr>
+<tr>
+<td>Can read the inner error's stack trace in console</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">😬ish</td>
+</tr>
+<tr>
+<td><code>instanceof Error</code></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Not sure how many out there care if the custom errors become <code>instanceof Error</code> but if that's important for you - your options get a bit limited.</p>
+<hr>
+<h2>So why not just go with option 1 and be done?</h2>
+<p>That big ❌ on the <code>Can view other properties in console</code> line... Yup. If we create a custom error and extend it with our own properties and metadata. Then <code>console.error(myCustomError);</code> - WE DON'T GET TO SEE OUR METADATA.</p>
+<p>This is a huge problem for our team when it comes to generic <code>console.log</code> or <code>error/warn/etc</code> with our browsers. Say we threw an error that included an important <code>errorCode</code> property. Logging our custom error to the console we'd never get to see that anywhere?</p>
+<blockquote>
+<p>Maybe our browser vendors did this for security reasons? I'd love if someone who actually knows could share the rational. Why don't they log errors the same way they log every other object?</p>
+</blockquote>
+<p>On to the implementations...</p>
+<h2>Option 1: Implementation</h2>
+<p>Below is our <code>CustomError</code> that extends the core JavaScript <code>Errors</code>:</p>
+<pre><code class="language-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomError</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Error</span> </span>{
+    constructor({message, error, ...otherProps }) {
+        <span class="hljs-keyword">super</span>(message);
+
+        <span class="hljs-keyword">this</span>.innerError = error;
+
+        <span class="hljs-built_in">Object</span>.assign(<span class="hljs-keyword">this</span>, otherProps);
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Error</span>.captureStackTrace === <span class="hljs-string">'function'</span>) {
+            <span class="hljs-comment">// we could show more lines by adjusting this</span>
+            <span class="hljs-comment">// Error.stackTraceLimit = 30;</span>
+            <span class="hljs-built_in">Error</span>.captureStackTrace(<span class="hljs-keyword">this</span>, CustomError);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// not in V8</span>
+            <span class="hljs-keyword">this</span>.stack = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>()).stack;
+        }
+
+        <span class="hljs-keyword">if</span> (error) {
+            <span class="hljs-keyword">this</span>.stack = <span class="hljs-string">`<span class="hljs-subst">${this.stack}</span>\nInner Error:\n  <span class="hljs-subst">${error.stack}</span>`</span>;
+        }
+    }
+}
+</code></pre>
+<h3>Option 1: Console output</h3>
+<p><img src="/images/posts/CustomExtendedErrorLog.png" alt=""></p>
+<p>Yea, that's it - no other metadata, pretty much whatever is in the <code>stack</code> string property is all we get to see on our console.</p>
+<p>But one feature we do get with this, often times our browsers make these stack traces navigable. Meaning you can click on a line in the stack trace and the browser will jump you to that line of code somewhere in the source code view/debugger screens. This is powerful as a developer, to be able to jump around, and inspect code at various parts of the stack trace.</p>
+<blockquote>
+<p>NOTE: Just because you don't see the other object properties doesn't mean they are not there - so if in code you still need them you can access this metadata <code>ex.myMetadata</code>.</p>
+</blockquote>
+<h2>Option 2: Implementation</h2>
+<p>Notice it does NOT <code>extends</code> it's just plain ol object.</p>
+<pre><code>        <span class="hljs-keyword">class</span> CustomErrorWrapper {
+            <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(</span>{message, error, ...otherProps }) {
+
+                <span class="hljs-keyword">this</span>.message = message;
+                <span class="hljs-keyword">this</span>.innerError = error;
+                <span class="hljs-built_in">Object</span>.assign(<span class="hljs-keyword">this</span>, otherProps);
+
+                <span class="hljs-keyword">this</span>.name = <span class="hljs-keyword">this</span>.constructor.name;
+
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Error</span>.captureStackTrace === <span class="hljs-string">'function'</span>) {
+                    <span class="hljs-comment">// we could show more lines by adjusting this</span>
+                    <span class="hljs-comment">// Error.stackTraceLimit = 30;</span>
+                    <span class="hljs-built_in">Error</span>.captureStackTrace(<span class="hljs-keyword">this</span>, CustomErrorWrapper);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-comment">// not in V8</span>
+                    <span class="hljs-keyword">this</span>.stack = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>()).stack;
+                }
+
+                <span class="hljs-keyword">if</span> (error) {
+                    <span class="hljs-keyword">this</span>.stack = `${<span class="hljs-keyword">this</span>.stack}\nInner <span class="hljs-built_in">Error</span>:\n  ${error.stack}`;
+                }
+            }
+        }
+</code></pre>
+<h3>Option 2: Console output</h3>
+<p><img src="/images/posts/CustomWrapperErrorLog.png" alt=""></p>
+<p>Now you can see that we get to view all of that other metadata right? This is good right? Well yea it is - but what if navigating to some point in the stack trace was important like what we get in Option 1? Well, tradeoffs sadly. Now the <code>stack</code> is still there - it's just not as easily navigable. It's now just a big long string property that you have to copy/paste, put somewhere like a text editor and look over like we're debugging our browsers back in the mid 2000's...</p>
+<p>Here's an example of the stack trace after double-clicked on the <code>innerExceptoin.stack</code> property in Chrome devtools:</p>
+<p><img src="/images/posts/CustomWrapperErrorLogInnerStack.png" alt=""></p>
+<h1>What will you choose?</h1>
+<p>How best to communicate errors up to your users?</p>
+<p>Now there are some work-arounds to Option 1 above not logging our extra metadata if you really wanted to keep your navigable stack traces. Just not ideal...</p>
+<ol>
+<li><code>console.log</code> the metadata when the new custom error is created - this could work for your team - or be too noisy for others YMMV.</li>
+<li>Define a strict metadata contract to follow like always have a <code>data</code> property on the <code>CustomError</code> and communicate to other developers - when the log any of these errors to the console - to also be sure to log <code>customError.data</code> as well - so they can see the added metadata.</li>
+</ol>
+<p>I'm sure there are other ways to go about this that I'm not thinking of - if you now of one - please do share.</p>
+<h1>Other Error resources:</h1>
+<p>For fun I'm linking to some resources regarding errors that I found interesting.</p>
+<p><a href="https://v8.dev/docs/stack-trace-api">https://v8.dev/docs/stack-trace-api</a></p>
+<p><a href="https://github.com/tc39/proposal-error-stacks">https://github.com/tc39/proposal-error-stacks</a></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw</a></p>
+<p><a href="https://stackoverflow.com/questions/6163807/customized-stack-traces-in-google-chrome-developer-tools">https://stackoverflow.com/questions/6163807/customized-stack-traces-in-google-chrome-developer-tools</a></p>
+<p><a href="https://stackoverflow.com/questions/1382107/whats-a-good-way-to-extend-error-in-javascript">https://stackoverflow.com/questions/1382107/whats-a-good-way-to-extend-error-in-javascript</a></p>
+<h1>Oh, I almost forgot...</h1>
+<p>Don't <code>throw &quot;some string&quot;</code> &lt;-- that's highly discouraged.</p>
+<p>See: <a href="https://eslint.org/docs/rules/no-throw-literal">https://eslint.org/docs/rules/no-throw-literal</a></p>
+<h1>The Codes!</h1>
+<p>This snippet could be copy/pasted into something <a href="https://jsbin.com/">https://jsbin.com/</a> to run/play with it.</p>
+<pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"width=device-width"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>JavaScript Error Tests<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://dev.jspm.io/mocha/mocha.css"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"module"</span>&gt;</span><span class="javascript">
+        <span class="hljs-keyword">import</span> <span class="hljs-string">"https://dev.jspm.io/mocha"</span>
+        <span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">"https://dev.jspm.io/chai"</span>;
+
+        <span class="hljs-keyword">const</span> { expect } = chai;
+
+        mocha.setup(<span class="hljs-string">'bdd'</span>);
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomError</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Error</span> </span>{
+            constructor({message, error, ...otherProps }) {
+                <span class="hljs-keyword">super</span>(message);
+
+                <span class="hljs-keyword">this</span>.innerError = error;
+
+                <span class="hljs-built_in">Object</span>.assign(<span class="hljs-keyword">this</span>, otherProps);
+
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Error</span>.captureStackTrace === <span class="hljs-string">'function'</span>) {
+                    <span class="hljs-comment">// we could show more lines by adjusting this</span>
+                    <span class="hljs-comment">// Error.stackTraceLimit = 30;</span>
+                    <span class="hljs-built_in">Error</span>.captureStackTrace(<span class="hljs-keyword">this</span>, CustomError);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-comment">// not in V8</span>
+                    <span class="hljs-keyword">this</span>.stack = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>()).stack;
+                }
+
+                <span class="hljs-keyword">if</span> (error) {
+                    <span class="hljs-keyword">this</span>.stack = <span class="hljs-string">`<span class="hljs-subst">${this.stack}</span>\nInner Error:\n  <span class="hljs-subst">${error.stack}</span>`</span>;
+                }
+            }
+        }
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomErrorWrapper</span> </span>{
+            constructor({message, error, ...otherProps }) {
+
+                <span class="hljs-keyword">this</span>.message = message;
+                <span class="hljs-keyword">this</span>.innerError = error;
+                <span class="hljs-built_in">Object</span>.assign(<span class="hljs-keyword">this</span>, otherProps);
+
+                <span class="hljs-keyword">this</span>.name = <span class="hljs-keyword">this</span>.constructor.name;
+
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Error</span>.captureStackTrace === <span class="hljs-string">'function'</span>) {
+                    <span class="hljs-comment">// we could show more lines by adjusting this</span>
+                    <span class="hljs-comment">// Error.stackTraceLimit = 30;</span>
+                    <span class="hljs-built_in">Error</span>.captureStackTrace(<span class="hljs-keyword">this</span>, CustomErrorWrapper);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-comment">// not in V8</span>
+                    <span class="hljs-keyword">this</span>.stack = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>()).stack;
+                }
+
+                <span class="hljs-keyword">if</span> (error) {
+                    <span class="hljs-keyword">this</span>.stack = <span class="hljs-string">`<span class="hljs-subst">${this.stack}</span>\nInner Error:\n  <span class="hljs-subst">${error.stack}</span>`</span>;
+                }
+            }
+        }
+
+        <span class="hljs-comment">// helper that runs mocha tests against the passed in error</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateError</span>(<span class="hljs-params">errorDescription, error</span>) </span>{
+            describe(<span class="hljs-string">`Type: <span class="hljs-subst">${errorDescription}</span>`</span>, () =&gt; {
+                before(() =&gt; {
+                    <span class="hljs-comment">// just to help separate the</span>
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">''</span>);
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`******** Type: <span class="hljs-subst">${errorDescription}</span>`</span>);
+                });
+
+                it(<span class="hljs-string">'has message'</span>, () =&gt; {
+                    expect(error.message).to.exist;
+                });
+
+                it(<span class="hljs-string">'has stack'</span>, () =&gt; {
+                    expect(error.stack).to.exist;
+                });
+
+                it(<span class="hljs-string">'has name property'</span>, () =&gt; {
+                    expect(error.name).to.exist;
+                });
+
+                it(<span class="hljs-string">'can be seen in console log? (open console to view)'</span>, () =&gt; {
+                    <span class="hljs-built_in">console</span>.log(error);
+                });
+
+            });
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throwPlainError</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'plain error'</span>);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throwCustomErrorWrappingPlainError</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">try</span> {
+                throwPlainError();
+            } <span class="hljs-keyword">catch</span> (ex) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> CustomError({
+                    message: <span class="hljs-string">"Extended error caught"</span>,
+                    error: ex,
+                    some: <span class="hljs-string">"other options"</span>
+                });
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throwCustomErrorWrapperWrappingPlainError</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">try</span> {
+                throwPlainError();
+            } <span class="hljs-keyword">catch</span> (ex) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> CustomErrorWrapper({
+                    message: <span class="hljs-string">"Plain object error"</span>,
+                    error: ex,
+                    some: <span class="hljs-string">"other options"</span>
+                });
+            }
+        }
+
+        <span class="hljs-keyword">try</span> {
+            throwCustomErrorWrappingPlainError();
+        } <span class="hljs-keyword">catch</span> (ex) {
+            validateError(<span class="hljs-string">'Extends Error'</span>, ex);
+        }
+
+        <span class="hljs-keyword">try</span> {
+            throwCustomErrorWrapperWrappingPlainError();
+        } <span class="hljs-keyword">catch</span> (ex) {
+            validateError(<span class="hljs-string">'Custom Error Object'</span>, ex);
+        }
+
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">throw</span> {};
+        } <span class="hljs-keyword">catch</span> (ex) {
+            validateError(<span class="hljs-string">'Plain Object'</span>, ex);
+        }
+
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">throw</span> <span class="hljs-string">"thrown string here..."</span>;
+        } <span class="hljs-keyword">catch</span> (ex) {
+            validateError(<span class="hljs-string">'string'</span>, ex);
+        }
+
+        mocha.run();
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</span></code></pre>
+</div>
+
+                <footer>
+                    <p class="meta">
+                        <span class="byline author vcard">Posted by <span class="fn">Jason Jarrett</span></span>
+
+                          <time datetime="2020-04-18T22:51:28.873Z" pubdate data-updated="true">Apr 18th 2020</time>
+
+
+                        <span class="categories">
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
+</span>
+
+                    </p>
+                    <div class="sharing">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://staxmanade.com/2020/04/javascript---custom-errors/" data-via="staxmanade" data-counturl="https://staxmanade.com/2020/04/javascript---custom-errors/">Tweet</a>
+</div>
+
+                    <p class="meta">
+                        <a class="basic-alignment left" href="/2019/05/spend-the-effort-to-make-your-tests-better-documentation/" title="Previous Post: Spend the Effort to Make Your Tests Better Documentation">&laquo; Spend the Effort to Make Your Tests Better Documentation</a>
+                    </p>
+                </footer>
+            </article>
+            <div role="advertisement">
+</div>
+            <section>
+                <h1>Comments</h1>
+                <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </section>
+        </div>
+
+
+
+    </div>
+</div>
+<footer role="contentinfo"><p>
+  This work is licensed under a
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    Creative Commons Attribution 4.0 International License
+  </a>.
+
+</p>
+<p>
+  Copyright &copy; 2008-2023 - <a href="/about">Jason Jarrett</a> - <span class="credit">Powered by <a href="http://togglejs.github.io">Toggle</a></span>
+</p>
+
+
+<style>
+  .jj-signup-form {
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    display: none;
+  }
+</style>
+
+<style>
+    .jj-signup-form {
+        border-width: thin;
+        border-color: black;
+        border-style: solid;
+        background-color: white;
+    }
+</style>
+<div class="jj-signup-form">
+    <button class="jj-signup-form-close">Close</button>
+    <div>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica, Arial, sans-serif;
+            }
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+            <form action="//staxmanade.us8.list-manage.com/subscribe/post?u=9a6f3f89fc58e1bbbddf5c3f8&amp;id=9e5406be65" method="post"
+                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+                    <h2>Don't miss a post...</h2>
+                    <div class="mc-field-group">
+                        <label for="mce-FNAME">First Name </label>
+                        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+                    </div>
+                    <div class="mc-field-group">
+                        <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    </div>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9a6f3f89fc58e1bbbddf5c3f8_9e5406be65" tabindex="-1" value=""></div>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+            </form>
+        </div>
+        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+        <script type='text/javascript'>
+            (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+        </script>
+        <!--End mc_embed_signup-->
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
+<script>
+  (function(){
+    try {
+      if (Cookies.get('IKnowItIsACrappyPopupButMeh') !== "clicked") {
+        document.querySelector('.jj-signup-form-close').addEventListener('click', function(){
+            document.querySelector('.jj-signup-form').style.display = "none";
+            Cookies.set("IKnowItIsACrappyPopupButMeh", "clicked", { expires: 180 });
+        });
+
+        setTimeout(function(){
+          if(window.jjdisableSignupPopup) {
+            return;
+          }
+          document.querySelector('.jj-signup-form').style.display = "initial";
+        }, 1000);
+      }
+
+    } catch(e) {
+        console.log(e);
+    }
+  })();
+
+</script>
+</footer>
+  
+
+<script type="text/javascript">
+  var disqus_shortname = 'developingonstaxmanade';
+    /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
+    var disqus_shortname = 'developingonstaxmanade';
+    var disqus_identifier = '/2020/04/javascript---custom-errors/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+</body>
+</html>
